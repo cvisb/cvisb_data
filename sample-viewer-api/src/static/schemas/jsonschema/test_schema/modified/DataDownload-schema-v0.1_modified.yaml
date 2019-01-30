@@ -1,0 +1,414 @@
+- '@id': cvisb:DataDownload
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing DataDownload in the Center for Viral Systems Biology
+  rdfs:label: DataDownload
+  rdfs:subClassOf:
+    '@id': schema:DataDownload
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      '@id':
+        format: cvisb-url
+        type: string
+      additionalType:
+        enum:
+        - raw data
+        - analyzed data
+        - summary data
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      author:
+        oneOf:
+        - $ref: http://data.cvisb.org/jsonschema/Organization.json
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      contentUrl:
+        format: cvisb-url
+        type: string
+      contentUrlIdentifier:
+        type: string
+      contentUrlRepository:
+        enum:
+        - SRA
+        - AWS
+        type: string
+      dateCreated:
+        format: cvisb-date
+        type: string
+      dateModified:
+        format: cvisb-date
+        type: string
+      datePublished:
+        format: cvisb-date
+        type: string
+      description:
+        type: string
+      encodingFormat:
+        enum:
+        - text/csv
+        - text/plain
+        - text/fasta
+        - text/bed
+        - text/html
+        - application/json
+        - application/bam
+        - application/vnd.ms-excel
+        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+        - application/xml
+        - application/zip
+        - application/gzip
+        type: string
+      experimentParameters:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      identifier:
+        type: string
+      isBasedOn:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      keywords:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      measurementTechnique:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      name:
+        type: string
+      patientIDs:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      publisher:
+        oneOf:
+        - $ref: http://data.cvisb.org/jsonschema/Organization.json
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      sameAs:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - items:
+          - format: cvisb-url
+            type: string
+          type: array
+      sourceCode:
+        oneOf:
+        - $ref: http://data.cvisb.org/jsonschema/SoftwareSourceCode.json
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/SoftwareSourceCode.json
+          type: array
+      version:
+        type: string
+    required:
+    - name
+    - identifier
+    - version
+    - contentUrl
+    - additionalType
+    - dateModified
+    - author
+    type: object
+- '@id': cvisb:name
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Descriptive name of the data file
+  rdfs:label: name
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:name
+- '@id': cvisb:description
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Short summary describing a data file
+  rdfs:label: description
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:description
+- '@id': cvisb:identifier
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 'A unique identifier for the dataset. Note: should be an internal
+    representation; DOIs should go in @id'
+  rdfs:label: identifier
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:@id
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: A unique identifier for the dataset, preferably a DOI
+  rdfs:label: '@id'
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:URL
+- '@id': cvisb:isBasedOn
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A reference to the identifier of a parent file(s), e.g. raw data that
+    this analysis file is based on
+  rdfs:label: isBasedOn
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:isBasedOn
+- '@id': cvisb:version
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Version of data file
+  rdfs:label: version
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:version
+- '@id': cvisb:contentUrl
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: URL pointing to the actual location of the file
+  rdfs:label: contentUrl
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:contentUrl
+- '@id': cvisb:contentUrlRepository
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Name of the repository where the file is stored, e.g. the NIH's Sequence
+    Read Archive
+  rdfs:label: contentUrlRepository
+  schema:Enumeration:
+  - SRA
+  - AWS
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:contentUrlIdentifier
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Unique identifier used at the contentUrl location, for instance the
+    NIH SRA id for the file
+  rdfs:label: contentUrlIdentifier
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:sameAs
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: multiple
+  rdfs:comment: URL to cross-reference other copies of the data file
+  rdfs:label: sameAs
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:sameAs
+- '@id': cvisb:additionalType
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: multiple
+  rdfs:comment: Type of data download file, such as raw data, processed data, summary
+    data
+  rdfs:label: additionalType
+  schema:Enumeration:
+  - raw data
+  - analyzed data
+  - summary data
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+- '@id': cvisb:keywords
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: multiple
+  rdfs:comment: Comma-seperated keywords to summarize the dataset
+  rdfs:label: keywords
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:keywords
+- '@id': cvisb:patientIDs
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of patient IDs contained within the data file
+  rdfs:label: patientIDs
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:measurementTechnique
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A technique or technology used in a Dataset (or DataDownload, DataCatalog),
+    corresponding to the method used for measuring the corresponding variable(s) (described
+    using variableMeasured).
+  rdfs:label: measurementTechnique
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:measurementTechnique
+- '@id': cvisb:encodingFormat
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: File extension
+  rdfs:label: encodingFormat
+  schema:Enumeration:
+  - text/csv
+  - text/plain
+  - text/fasta
+  - text/bed
+  - text/html
+  - application/json
+  - application/bam
+  - application/vnd.ms-excel
+  - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+  - application/xml
+  - application/zip
+  - application/gzip
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:encodingFormat
+- '@id': cvisb:dateCreated
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Date of first creation
+  rdfs:label: dateCreated
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateCreated
+- '@id': cvisb:datePublished
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Date of first broadcast/publication
+  rdfs:label: datePublished
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:datePublished
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date on which the dataset was most recently modified
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:author
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: multiple
+  rdfs:comment: Author of this dataset, can be a person or an organization
+  rdfs:label: author
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:author
+- '@id': cvisb:publisher
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: multiple
+  rdfs:comment: Publisher of this dataset, usually the host organization
+  rdfs:label: publisher
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:publisher
+- '@id': cvisb:sourceCode
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: 'Computer programming source code. Example: Full (compile ready) solutions,
+    code snippet samples, scripts, templates.'
+  rdfs:label: sourceCode
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': cvisb:SoftwareSourceCode
+- '@id': cvisb:experimentParameters
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Metadata describing how the data were generated, processed, and analysed.
+  rdfs:label: experimentParameters
+  schema:domainIncludes:
+  - '@id': cvisb:DataDownload
+  schema:rangeIncludes:
+  - '@id': schema:Text

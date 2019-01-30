@@ -1,0 +1,43 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.dataset-links {
+  ul {
+    list-style-type: none;
+
+    &.level0 {
+      padding: 0 30px;
+    }
+
+    &.level1 {
+      padding: 0;
+    }
+  }
+
+  li {
+    cursor: pointer;
+    text-align: right;
+
+    a {
+      text-decoration: none;
+      color: $default-color;
+    }
+  }
+
+  .link:hover {
+    font-weight: 400;
+  }
+
+  .level0 > li {
+    text-transform: uppercase;
+    font-size: 1.25em;
+    margin-bottom: 40px;
+    border-top: $cvisb-theme 1px solid;
+    padding: 3px 0;
+  }
+
+  .level1 > li {
+    text-transform: none;
+    margin: 10px 0;
+  }
+}

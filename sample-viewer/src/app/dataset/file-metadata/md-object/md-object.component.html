@@ -1,0 +1,10 @@
+<div *ngFor="let key of keys" class="metadata-pair indented" [ngClass]="{'missing' : ! metadata[key]}">
+  <div class="metadata-key">
+    {{ key }}
+  </div>
+
+  <div class="metadata-value" >
+    {{metadata[key] || "n/a" }}
+  </div>
+
+</div>

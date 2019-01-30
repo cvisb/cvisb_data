@@ -1,0 +1,32 @@
+<h3 id="compare">Compare allelic frequencies</h3>
+<div class="helper-text">
+  Select two cohorts to compare allelic frequencies at each HLA locus
+</div>
+
+<div class="select-cohort">
+  <form class="cohort-form">
+    <mat-form-field class="cohort-select cohort-select--right">
+      <input type="text" placeholder="left cohort" aria-label="select a cohort to compare"
+      matInput [formControl]="leftControl" [matAutocomplete]="autoL"
+      (keyup.enter)="chooseFirstOption()">
+      <mat-autocomplete #autoL="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptionsL | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <form class="cohort-form">
+    <mat-form-field class="cohort-select cohort-select--right">
+      <input type="text" placeholder="right cohort" aria-label="select a cohort to compare" matInput [formControl]="rightControl" [matAutocomplete]="autoR">
+      <mat-autocomplete #autoR="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptionsR | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+<app-small-multiple-comparison [right_params]="rightParams" [left_params]="leftParams"></app-small-multiple-comparison>

@@ -1,0 +1,14 @@
+<div class="filter filter-files">
+  <h4 class="filter-label">file type</h4>
+
+  <!-- <ng-container *ngFor="let type of types">
+    <div class="filter-pair">
+      <div class="filter-key file-type mat-shadow" [ngClass]="type.type.replace(' ', '-')"> {{type.type}}
+        <span class="filter-value">{{ type.value }}</span>
+      </div>
+    </div>
+  </ng-container> -->
+
+  <app-mini-barplot [data]="types" [name_var]="'type'" [height]="70" [spacing]="0.35"></app-mini-barplot>
+
+</div>

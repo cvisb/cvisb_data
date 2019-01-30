@@ -1,0 +1,14 @@
+<div class="centered">
+  <h1>CViSB data schema</h1>
+  <section class="schema-intro">
+    <span [outerHTML]="description | sloppyMarkdown"></span>
+  </section>
+
+  <div class='schema-list about-text about-group'>
+    <h4>Derived schema</h4>
+    <div class='schema' *ngFor="let schema of schemas">
+      <a (click)="routeSchema(schema)">{{ schema }}</a>
+    </div>
+
+  </div>
+</div>

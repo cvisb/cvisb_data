@@ -1,0 +1,20 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+th {
+  line-height: 0 !important;
+}
+
+#positive {
+  color: accent-redder(A700);
+  // color: map-get($mat-pink, A700);
+  // color: $ebola-md;
+}
+
+#negative {
+  color: $sierraleone-blue;
+}
+
+#unknown {
+  color: $grey-400;
+}

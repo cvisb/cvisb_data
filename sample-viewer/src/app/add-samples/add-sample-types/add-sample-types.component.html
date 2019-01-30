@@ -1,0 +1,131 @@
+<!-- <mat-form-field> -->
+<!-- <input matInput placeholder="Address" formControlName="secondCtrl" required> -->
+
+<mat-accordion>
+
+
+  <mat-expansion-panel id="plasma" [expanded]="checked" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-checkbox [(ngModel)]="checked">plasma</mat-checkbox>
+
+    </mat-expansion-panel-header>
+
+    <form class="form1">
+      <div class="location">
+        <mat-form-field>
+          <input matInput placeholder="Number of aliquots" [value]="num_aliquots" class="aliquots-input" type="number" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_lab" placeholder="Lab" required>
+            <mat-option>Unknown</mat-option>
+            <mat-option *ngFor="let lab of labs" [value]="lab">{{ lab.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button color="warn">
+          <mat-icon aria-label="Add additional locations">delete_outline</mat-icon>
+        </button>
+
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Add additional locations">add_box</mat-icon>
+        </button>
+      </div>
+
+      <div class="params">
+        <mat-form-field>
+          <mat-select [(value)]="selected_dilution" placeholder="dilution factor" required>
+            <mat-option value="1">undiluted</mat-option>
+            <mat-option value="0.5">1:2</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_source" placeholder="sample_source" required>
+            <mat-option value="blood_purple-EDTA">purple-topped blood (+ EDTA)</mat-option>
+            <mat-option value="blood_blue-citrate">blue-topped blood (+ citrate)</mat-option>
+            <mat-option value="blood_mixed">mixed purple and blue topped blood</mat-option>
+            <mat-option value="blood_unknown">blood of unknown origin</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_buffer" placeholder="freezing buffer">
+            <mat-option value="PBS">PBS</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </form>
+
+    <!-- <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>aliquots</button> -->
+  </mat-expansion-panel>
+
+  <mat-expansion-panel id="plasma" [expanded]="checked2" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-checkbox [(ngModel)]="checked2">serum</mat-checkbox>
+
+    </mat-expansion-panel-header>
+
+    <form class="form1">
+      <div class="location">
+        <mat-form-field>
+          <input matInput placeholder="Number of aliquots" [value]="num_aliquots" class="aliquots-input" type="number" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_lab" placeholder="Lab" required>
+            <mat-option>Unknown</mat-option>
+            <mat-option *ngFor="let lab of labs" [value]="lab">{{ lab.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button color="warn">
+          <mat-icon aria-label="Add additional locations">delete_outline</mat-icon>
+        </button>
+
+        <button mat-icon-button color="primary">
+          <mat-icon aria-label="Add additional locations">add_box</mat-icon>
+        </button>
+      </div>
+
+      <div class="params">
+        <mat-form-field>
+          <mat-select [(value)]="selected_dilution" placeholder="dilution factor" required>
+            <mat-option value="1">undiluted</mat-option>
+            <mat-option value="0.5">1:2</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_source" placeholder="sample_source" required>
+            <mat-option value="blood_purple-EDTA">purple-topped blood (+ EDTA)</mat-option>
+            <mat-option value="blood_blue-citrate">blue-topped blood (+ citrate)</mat-option>
+            <mat-option value="mixed_blood">mixed purple and blue topped blood</mat-option>
+            <mat-option value="unknown_blood">blood of unknown origin</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- <mat-form-field> -->
+          <mat-checkbox [(value)]="avl">AVL-inactivated</mat-checkbox>
+        <!-- </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-select [(value)]="selected_buffer" placeholder="freezing buffer">
+            <mat-option value="PBS">PBS</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    </form>
+
+    <!-- <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>aliquots</button> -->
+  </mat-expansion-panel>
+
+
+
+
+</mat-accordion>
+<!-- </mat-form-field> -->

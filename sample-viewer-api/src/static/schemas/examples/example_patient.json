@@ -1,0 +1,72 @@
+    {
+      "@context": "https://health-lifesci.schema.org/",
+      "@type": "Patient",
+
+      "patientID": "G-0000",
+      "alternateIdentifier": ["S-0000"],
+      "relatedTo": ["C1-0000", "C2-0000", "C3-0000"],
+      "associatedSamples": ["G0000-1_plasma20171108", "G0000-2_plasma20171109", "G0000-3_plasma20171110",
+        "G0000-4_plasma20171111", "G0000-5_plasma20171114", "G0000-6_plasma20171117",
+        "G0000-1_PBMC20171108", "G0000-2_PBMC20171109", "G0000-3_PBMC20171110",
+        "G0000-4_PBMC20171111", "G0000-5_PBMC20171114", "G0000-6_PBMC20171117"
+      ],
+      "cohort": "Lassa",
+      "outcome": "survivor",
+      "gender": "Male",
+      "age": 27,
+      "geographicArea": {
+        "@type": "Country",
+        "name": "SL"
+      },
+      "homeLocation": [{
+          "@type": "AdministrativeArea",
+          "name": "Kenema"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "L/Bambara"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Labour camp"
+        }
+      ],
+      "admitDate": "2017-11",
+      "daysOnset": 7,
+      "ELISA": [{
+          "@type": "elisaResult",
+          "virus": "Lassa",
+          "assayType": "IgG",
+          "result": "positive"
+        },
+        {
+          "@type": "elisaResult",
+          "virus": "Lassa",
+          "assayType": "IgM",
+          "result": "positive"
+        },
+        {
+          "@type": "elisaResult",
+          "virus": "Lassa",
+          "assayType": "Ag",
+          "result": "positive"
+        }
+      ],
+      "RDT": [{
+          "@type": "RDT",
+          "virus": "Lassa",
+          "result": "positive"
+        },
+        {
+          "@type": "RDT",
+          "virus": "Ebola",
+          "result": "negative"
+        }
+      ],
+      "RT-PCR": [{
+        "@type": "rt_pcrResult",
+        "virus": "Lassa",
+        "result": "negative"
+      }]
+
+    }

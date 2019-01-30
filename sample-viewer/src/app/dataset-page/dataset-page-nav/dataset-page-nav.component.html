@@ -1,0 +1,7 @@
+<nav class="dataset-links">
+  <ul class="level0">
+    <li *ngFor="let link of links[id]">
+      <a class="link" [routerLink]="['../', id]" [fragment]="link.key" (click)="onAnchorClick(link.key)">{{link.name}}</a>
+    </li>
+  </ul>
+</nav>

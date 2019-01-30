@@ -1,0 +1,73 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss'; // --- Containers ---
+
+.metadata {
+  position: fixed;
+  padding: 5px 15px 15px;
+  width: 30%;
+  overflow-y: auto;
+  position: fixed;
+  top: 100px;
+  left: calc(70% - 8px);
+  left: -webkit-calc(70% - 8px);
+  left: -moz-calc(70% - 8px);
+  height: calc(100% - 135px);
+  height: -webkit-calc(100% - 135px);
+  height: -moz-calc(100% - 135px);
+}
+
+#expt-metadata,
+#file-metadata {
+  background: accent(50);
+  border-bottom: 1px solid accent(500);
+}
+
+// Metadata pair CSS
+.metadata-header:hover {
+  background: accent(100) !important;
+}
+
+.metadata-pair {
+  margin-bottom: 10px;
+}
+
+.metadata-key {
+  font-weight: 400;
+}
+
+.metadata-value {
+    font-weight: 300 !important;
+}
+
+// --- Links ---
+
+.file-name {
+  text-decoration: underline;
+}
+// --- Fonts ---
+
+.metadata h4 {
+  margin: 0.5em 0 0;
+  background: lighten(accent(100), 5%);
+  border-bottom: 1px solid accent(500);
+  padding: 5px;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.metadata h5 {
+  // border-top: 1px solid $default-color;
+  // border-bottom: 1px solid $default-color;
+  padding: 5px 0;
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+#expt-metadata mat-expansion-panel-header,
+#file-metadata mat-expansion-panel-header {
+  background: lighten(accent(100), 12%);
+}
+
+.missing {
+  // opacity: 0.6;
+  color: accent(700);
+}

@@ -1,0 +1,110 @@
+- '@id': cvisb:PostalAddress
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing an PostalAddress for the Center for Viral Systems
+    Biology
+  rdfs:label: PostalAddress
+  rdfs:subClassOf:
+    '@id': schema:PostalAddress
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  schema:sameAs:
+    '@id': schema:PostalAddress
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      addressCountry:
+        $ref: http://data.cvisb.org/jsonschema/Country.json
+      addressLocality:
+        type: string
+      addressRegion:
+        type: string
+      postalCode:
+        type: string
+      streetAddress:
+        type: string
+    required:
+    - streetAddress
+    - streetAddress
+    - addressLocality
+    - addressRegion
+    - postalCode
+    - addressCountry
+    type: object
+- '@id': cvisb:streetAddress
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The street address. For example, 1600 Amphitheatre Pkwy
+  rdfs:label: streetAddress
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:streetAddress
+- '@id': cvisb:streetAddress
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The street address. For example, 1600 Amphitheatre Pkwy
+  rdfs:label: streetAddress
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:streetAddress
+- '@id': cvisb:addressLocality
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The locality (e.g. city). For example, Mountain View.
+  rdfs:label: addressLocality
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:addressLocality
+- '@id': cvisb:addressRegion
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The region (e.g. state/Adm 2). For example, CA.
+  rdfs:label: addressRegion
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:addressRegion
+- '@id': cvisb:postalCode
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The postal code. For example, 94043.
+  rdfs:label: postalCode
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:postalCode
+- '@id': cvisb:addressCountry
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: The country object (containing name, ISO code/identifier, link to
+    ISO page)
+  rdfs:label: addressCountry
+  schema:domainIncludes:
+  - '@id': cvisb:PostalAddress
+  schema:rangeIncludes:
+  - '@id': cvisb:Country
+  schema:sameAs:
+    '@id': schema:addressCountry

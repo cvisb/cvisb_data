@@ -1,0 +1,304 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Schema built on top of https://schema.org/Dataset
+# Cross-referencing where applicable:
+#   BioSchemas/Dataset:    http://bioschemas.org/specifications/Dataset/
+#   DataCite's Schema for Research Data: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+#   Invenio's data model structure: https://invenio.readthedocs.io/en/latest/datamodel/build-a-datamodel.html#define-a-jsonschema
+# Verified structure using:
+# https://json-ld.org/playground/
+# https://search.google.com/structured-data/testing-tool#
+# https://www.jsonschemavalidator.net/
+
+---
+"@context":
+  dct:                     "http://purl.org/dc/terms/"
+  owl:                     "http://www.w3.org/2002/07/owl#"
+  rdf:                     "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfa:                    "http://www.w3.org/ns/rdfa#"
+  rdfs:                    "http://www.w3.org/2000/01/rdf-schema#"
+  schema:                  "http://schema.org/"
+  xsd:                     "http://www.w3.org/2001/XMLSchema#"
+
+  # bsc:                   "http://bioschemas.org/"
+  # bts:                   "http://schema.biothings.io/"
+  niaid:                   "http://schema.biothings.io/niaid"
+
+"@id":                     "http://schema.biothings.io/niaid/Dataset/0.1"
+
+"@graph":
+
+- "@id":                   niaid:Dataset
+  "@type":                 rdfs:Class
+  rdfs:comment:            A schema describing Dataset common across NIAID
+  rdfs:label:              Dataset
+  rdfs:subClassOf:
+    "@id":                 schema:Dataset
+  schema:isPartOf:
+    "@id":                 http://schema.biothings.io/niaid
+
+# name
+- "@id":                   niaid:name
+  "@type":                 rdf:Property
+  rdfs:comment:            Descriptive name of the dataset
+  rdfs:label:              name
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               xsd:string
+    - "@id":               schema:Text
+  schema:sameAs:
+    "@id":                 schema:name
+  owl:cardinality:             one
+  marginality:             required
+
+# description
+- "@id":                   niaid:description
+  "@type":                 rdf:Property
+  rdfs:comment:            Short summary describing a dataset
+  rdfs:label:              description
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               xsd:string
+    - "@id":               schema:Text
+  schema:sameAs:
+    "@id":                 schema:description
+  owl:cardinality:             one
+  marginality:             required
+
+# measurement type
+- "@id":                   niaid:measurementTechnique
+  "@type":                 rdf:Property
+  rdfs:comment:            A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
+  rdfs:label:              measurementTechnique
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               xsd:string
+    - "@id":               schema:Text
+  schema:sameAs:
+    "@id":                 schema:measurementTechnique
+  owl:cardinality:             many
+  marginality:             required
+  schema:Enumeration:                    [HLA sequencing, viral sequencing, metagenome sequencing, BCR sequencing, TCR sequencing, Systems Serology, Metabolomics, other]
+
+- "@id":                   niaid:variableMeasured
+  "@type":                 rdf:Property
+  rdfs:comment:            A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
+  rdfs:label:              variableMeasured
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               xsd:string
+    - "@id":               schema:Text
+    - "@id":               schema:PropertyValue
+  schema:sameAs:
+    "@id":                 schema:variableMeasured
+  owl:cardinality:             many
+  marginality:             optional
+
+# URL
+- "@id":                   niaid:url
+  "@type":                 rdf:Property
+  rdfs:comment:            Location of a page describing the dataset
+  rdfs:label:              url
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:URL
+  schema:sameAs:
+    "@id":                 schema:url
+  owl:cardinality:             one
+  marginality:             optional
+
+# External data catalogue
+- "@id":                   niaid:includedInDataCatalog
+  "@type":                 rdf:Property
+  rdfs:comment:            A data catalog which contains this dataset
+  rdfs:label:              includedInDataCatalog
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:DataCatalog
+  schema:sameAs:
+    "@id":                 schema:includedInDataCatalog
+  owl:cardinality:             multiple
+  marginality:             recommended
+
+# DOI
+- "@id":                   niaid:identifier
+  "@type":                 rdf:Property
+  rdfs:comment:            A unique identifier for the dataset (e.g. a DOI)
+  rdfs:label:              identifier
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 xsd:string
+  schema:sameAs:
+    "@id":                 schema:identifier
+  owl:cardinality:             multiple
+  marginality:             recommended
+
+# duplicate source
+- "@id":                   niaid:sameAs
+  "@type":                 rdf:Property
+  rdfs:comment:            URL to cross-reference other copies of the dataset
+  rdfs:label:              sameAs
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:URL
+  schema:sameAs:
+    "@id":                 schema:sameAs
+  owl:cardinality:             multiple
+  marginality:             optional
+
+# keywords
+- "@id":                   niaid:keywords
+  "@type":                 rdf:Property
+  rdfs:comment:            Comma-seperated keywords to summarize the dataset
+  rdfs:label:              keywords
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 xsd:string
+  schema:sameAs:
+    "@id":                 schema:keywords
+  owl:cardinality:             multiple
+  marginality:             recommended
+
+# dates
+- "@id":                   niaid:datePublished
+  "@type":                 rdf:Property
+  rdfs:comment:            Date of first broadcast/publication
+  rdfs:label:              datePublished
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:Date
+  schema:sameAs:
+    "@id":                 "schema:datePublished"
+  owl:cardinality:             one
+  marginality:             recommended
+
+- "@id":                   niaid:dateModified
+  "@type":                 rdf:Property
+  rdfs:comment:            Date on which the dataset was most recently modified
+  rdfs:label:              dateModified
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:Date
+  schema:sameAs:
+    "@id":                 "schema:dateModified"
+  owl:cardinality:             one
+  marginality:             required
+
+- "@id":                   niaid:temporalCoverage
+  "@type":                 rdf:Property
+  rdfs:comment:            The temporalCoverage of a dataset indicates the period that the content applies to, i.e. that it describes, either as a DateTime or as a textual string indicating a time period in ISO 8601 time interval format.
+  rdfs:label:              temporalCoverage
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:Date
+  schema:sameAs:
+    "@id":                 "schema:temporalCoverage"
+  owl:cardinality:             one
+  marginality:             recommended
+
+  # geo
+- "@id":                   niaid:spatialCoverage
+  "@type":                 rdf:Property
+  rdfs:comment:            "The spatialCoverage of a CreativeWork indicates the place(s) which are the focus of the content. It is a subproperty of contentLocation intended primarily for more technical and detailed materials. For example with a Dataset, it indicates areas that the dataset describes: a dataset of New York weather would have spatialCoverage which was the place: the state of New York."
+  rdfs:label:              spatialCoverage
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    "@id":                 schema:Place
+  schema:sameAs:
+    "@id":                 "schema:spatialCoverage"
+  owl:cardinality:             many
+  marginality:             recommended
+
+# Author
+- "@id":                   niaid:author
+  "@type":                 rdf:Property
+  rdfs:comment:            Author of this dataset, can be a person or an organization
+  rdfs:label:              author
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               "schema:Person"
+    - "@id":               "schema:Organization"
+  schema:sameAs:
+    "@id":                 "schema:author"
+  owl:cardinality:             multiple
+  marginality:             required
+
+- "@id":                   niaid:publisher
+  "@type":                 rdf:Property
+  rdfs:comment:            Publisher of this dataset, usually the host organization
+  rdfs:label:              publisher
+  schema:domainIncludes:
+    - "@id":               niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":               "schema:Person"
+    - "@id":               "schema:Organization"
+  schema:sameAs:
+    "@id":                 "schema:publisher"
+  owl:cardinality:             multiple
+  marginality:             recommended
+
+  # versions
+- "@id":                 niaid:version
+  "@type":               rdf:Property
+  rdfs:comment:          Version of dataset
+  rdfs:label:            version
+  schema:domainIncludes:
+    - "@id":             niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:           one
+  marginality:           required
+
+- "@id":                 niaid:schemaVersion
+  "@type":               rdf:Property
+  rdfs:comment:          Version of Dataset schema
+  rdfs:label:            schemaVersion
+  schema:domainIncludes:
+    - "@id":             niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":             schema:URL
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:schemaVersion
+  owl:cardinality:           one
+  marginality:           recommended
+
+# Data location
+- "@id":                 niaid:distribution
+  "@type":               rdf:Property
+  rdfs:comment:          A downloadable form of this dataset, at a specific location, in a specific format.
+  rdfs:label:            distribution
+  schema:domainIncludes:
+    - "@id":             niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":             niaid:DataDownload
+  owl:cardinality:           many
+  marginality:           required
+
+# Code location
+- "@id":                 niaid:sourceCode
+  "@type":               rdf:Property
+  rdfs:comment:          "Computer programming source code. Example: Full (compile ready) solutions, code snippet samples, scripts, templates."
+  rdfs:label:            sourceCode
+  schema:domainIncludes:
+    - "@id":             niaid:Dataset
+  schema:rangeIncludes:
+    - "@id":             schema:SoftwareSourceCode
+  owl:cardinality:           many
+  marginality:           recommended

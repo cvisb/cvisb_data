@@ -1,0 +1,56 @@
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../_services';
+import { Title } from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent {
+
+  message: string;
+  page: string;
+  loggedIn: boolean;
+  user: Object;
+
+  constructor(
+    public authSvc: AuthService,
+    private titleSvc: Title,
+    private route: ActivatedRoute,
+    public router: Router) {
+
+
+    this.authSvc.redirectUrlState$.subscribe((url: string) => {
+      this.page = url;
+    });
+
+    authSvc.userState$.subscribe((user: Object) => {
+      this.user = user;
+    })
+
+    authSvc.authState$.subscribe((loggedIn: boolean) => {
+      this.loggedIn = loggedIn;
+    })
+
+    // set page title
+    this.titleSvc.setTitle(this.route.snapshot.data.title);
+
+    // call authentication service to check if logged in
+    // authSvc.checkLogin();
+  }
+
+
+  login() {
+    this.message = 'Trying to log in ...';
+
+    this.authSvc.login();
+    this.message = null;
+  }
+
+  logout() {
+    this.authSvc.logout();
+  }
+
+}

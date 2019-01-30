@@ -1,0 +1,111 @@
+@import "../../../sass/variables.scss";
+@import "../../../sass/material-theme.scss"; // --- table ---
+
+.mat-cell,
+.mat-header-cell {
+  padding: 15px;
+  cursor: pointer;
+
+  &.mat-column-cohort {
+    padding-right: 0;
+    text-align: end;
+  }
+
+  &.mat-column-outcome {
+    padding-left: 0;
+    // display: flex;
+    // justify-content: flex-end;
+  }
+}
+// --- links ---
+
+a {
+  color: $default-color;
+
+  &:visited {
+    color: $grey-600;
+  }
+}
+
+.patient-id {
+  font-weight: 400;
+  font-size: 1em;
+}
+// --- icons ---
+$icon-size: 45px;
+
+.expt-type {
+  display: inline-block;
+  margin: 0.5em 1.5em 0.5em 0;
+  padding: 5px 8px 5px 5px;
+  border-radius: 5px;
+}
+
+svg-icon {
+  height: $icon-size;
+  width: $icon-size;
+  vertical-align: middle;
+}
+
+.hla {
+  background: lighten($female-color, 41%);
+}
+
+.tcr {
+  background: accent(50);
+}
+
+.bcr {
+  background: lighten($cvisb-bright, 50%);
+}
+
+.systemsserology {
+  background: lighten($lassa-lt, 20%);
+}
+
+.elisa {
+  // background: #f3ffe4;
+  background: #faffd7;
+}
+
+.rt_pcr {
+  background: #fff8fb;
+}
+
+.rdt {
+  background: lighten($sierraleone-blue, 56%);
+}
+// --- timepoints ---
+
+.timepoints {
+  display: inline-block;
+}
+
+.timepoint {
+  text-align: center;
+
+  &.dead {
+    color: accent-redder(500);
+    background: accent-redder(50);
+  }
+
+  &.contact {
+    color: $cvisb-dark;
+    background: lighten($cvisb-bright, 51%);
+  }
+
+  .fas {
+    margin-right: 3px;
+  }
+}
+
+.timepoint::before {
+  // content: "T";
+}
+
+// --- related patients ---
+.related {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75em;
+}

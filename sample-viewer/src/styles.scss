@@ -1,0 +1,438 @@
+// Custom color specifications
+@import '/sass/variables'; // custom variables, usually colors
+// @import 'sass/variables'; // custom variables, usually colors
+@import '/sass/styles';
+@import '/sass/material-theme'; // @import 'custom_colors';
+@import "~@ng-select/ng-select/themes/default.theme.css"; // Fonts
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800|Material+Icons'); // --- Basics ---
+
+body {
+  font-family: $font-default;
+  font-weight: 300;
+  color: $default-color;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.centered {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.about-text {
+  h4 {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-top: 0.25em;
+  }
+
+  .about-group {
+    margin-bottom: 1.75em;
+  }
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: default !important;
+}
+
+a {
+  color: $cvisb-theme;
+  cursor: pointer;
+
+  &:visited {
+    color: $cvisb-dark;
+  }
+}
+
+.nodata {
+  color: $grey-400;
+}
+
+.page-header {
+  font-family: 'Open Sans';
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 4.5em;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+  letter-spacing: 0.15em;
+  word-spacing: 0.15em;
+  text-shadow: 5px 5px 7px $grey-200;
+}
+// --- Icons ---
+@mixin mat-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}
+
+.small-icon mat-icon {
+  @include mat-icon-size(18px);
+}
+
+.small-icon {
+  padding: 2px;
+  line-height: 0;
+  margin: 1px;
+  cursor: pointer;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+}
+// $custom-typography: mat-typography-config($font-family: 'Open Sans, Helvetica Neue, sans-serif');
+// Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+// @include mat-base-typography($custom-typography);
+//
+// // Override typography for a specific Angular Material components.
+// @include mat-checkbox-typography($custom-typography);
+// @include mat-input-typography($custom-typography);
+// @include mat-select-typography($custom-typography);
+//
+// // Override typography for all Angular Material, including mat-base-typography and all components.
+// @include angular-material-typography($custom-typography);
+// @include mat-core($custom-typography);
+// --- File Filter Controls ---
+
+.mat-shadow {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.filter {
+  // margin-bottom: 25px;
+}
+
+.filter-key,
+.filter-pair,
+.filter-value {
+  display: inline-block;
+}
+
+.filter-pair {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.filter-label {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: $grey-400;
+  font-size: 0.8em;
+  background: $grey-50;
+  padding: 2px 5px;
+  flex-basis: 100%;
+}
+
+.filter-sublabel {
+  display: inline-block;
+  margin: 0;
+  // color: $cvisb-dark;
+  color: $cvisb-bright;
+  font-size: 0.8em;
+  font-weight: 300;
+}
+
+.filter-sublabel::before {
+  content: "\2014 \00a0";
+}
+
+.filter-sublabel::after {
+  content: "\00a0 \2014";
+}
+
+.patient-type {
+  display: inline-block;
+  padding-right: 0.85em;
+}
+// --- File type ---
+
+.file-type {
+  display: inline-block;
+  padding: 2px 5px;
+  font-size: 0.8em;
+  font-weight: 400;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  background: $grey-200;
+  border-color: $grey-400;
+  color: $grey-400;
+  margin: 0 10px;
+}
+
+.summary-data {
+  background: accent-redder(200);
+  color: accent-redder(900);
+  border-color: accent-redder(900);
+}
+
+.unknown-type {
+  background-color: #f3f3f3;
+}
+// --- Dataset header ---
+
+.dataset-header h4 {
+  // color: $default-color;
+  margin-bottom: 0.5em;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.dataset-description {
+  color: $grey-400;
+  font-size: 0.9em;
+}
+
+.keyword {
+  background: $grey-50;
+  margin: 0 5px;
+  font-size: x-small;
+  padding: 3px 5px;
+  font-weight: 400;
+}
+// --- icons ---
+// --- sex ---
+
+.Female {
+  color: $female-color;
+}
+
+.Male {
+  color: accent-redder(500);
+}
+
+.sex-icon {
+  font-size: 1.75em;
+}
+
+svg-icon.country-icon {
+  height: 30px;
+  width: 30px;
+  padding-left: 3px;
+
+  &.SL {
+    fill: $sierraleone-blue;
+  }
+
+  &.NG {
+    fill: $nigeria-green;
+  }
+}
+
+.hla-icon,
+.hla-icon {
+  stroke: $default-color;
+  stroke-width: 0.75;
+  fill: $grey-300;
+}
+
+.systemsserology-icon {
+  fill: $grey-200;
+  stroke: $nigeria-green;
+}
+// --- filters ---
+
+.filter-container {
+  display: flex;
+  // background: red;
+  padding: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-bottom: 10px solid $grey-200;
+
+  &.inactive {
+    opacity: 0.4;
+  }
+}
+
+.filter-header,
+.filter-item {
+  // background: tomato;
+  // border: 1px solid red;
+  // padding: 10px;
+}
+// Header
+
+.filter-header {
+  flex-basis: 100%;
+  padding-bottom: 0;
+
+  h2 {
+    margin: 0;
+    font-weight: 300;
+    font-variant: small-caps;
+  }
+
+  .container {
+    justify-content: space-between;
+
+    .mat-raised-button,
+    .mat-stroked-button {
+      min-height: 23px !important;
+      min-width: 46px !important;
+      font-size: 0.8em !important;
+      line-height: 0;
+
+      &:hover {
+        // background: accent(400);
+      }
+    }
+  }
+}
+
+.pull-right {
+  display: inline-flex;
+}
+//  --- cohort outcomes ---
+// --- Patient cohorts ---
+// Cohort type
+
+.cohort {
+  font-weight: 400;
+  padding: 5px;
+  margin-right: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.cohort.Lassa,
+.outcome.Lassa {
+  background-color: $lassa-color;
+  border: $lassa-color 1px solid;
+  color: white;
+}
+
+.cohort.Ebola,
+.outcome.Ebola {
+  background-color: $ebola-color;
+  border: $ebola-color 1px solid;
+  color: white;
+}
+
+.cohort.control {
+  background-color: $grey-400;
+  color: white;
+  border: $grey-600 1px solid;
+}
+// --- Patient outcome: living or dead ---
+
+.outcome {
+  padding: 5px;
+  margin-left: 0;
+  border-radius: 0 5px 5px 0;
+  border: $grey-600 1px solid;
+  border-left-width: 0;
+  font-weight: 400;
+  // border-left: whitesmoke solid 3px;
+  &.control {
+    background-color: $grey-200;
+    color: $default-color;
+    border-color: $grey-600;
+  }
+
+  &.contact.Ebola {
+    background-color: lighten($ebola-lt, 12%);
+    color: $ebola-color;
+  }
+
+  &.contact.Lassa {
+    background-color: lighten($lassa-lt, 15%);
+    color: $lassa-color;
+  }
+
+  &.unknown {
+    background: white;
+
+    &.Lassa {
+      color: $lassa-dk;
+    }
+
+    &.Ebola {
+      color: $ebola-dk;
+    }
+
+    &.control {
+      color: $default-color;
+    }
+  }
+}
+
+.dead.Lassa,
+.died.Lassa {
+  background-color: $lassa-lt;
+  color: $default-color;
+}
+
+.survivor.Lassa {
+  background-color: $lassa-md;
+  color: $default-color;
+}
+
+.dead.Ebola,
+.died.Ebola {
+  background-color: $ebola-lt;
+  color: $default-color;
+}
+
+.survivor.Ebola {
+  background-color: $ebola-md;
+  color: $default-color;
+}
+// --- alternate IDs ---
+.altID {
+  &::after {
+    content: ", ";
+  }
+
+  &:last-child::after {
+    content: "";
+  }
+}
+// patient sub page
+
+h4.patient {
+  margin-bottom: 0;
+  text-transform: capitalize;
+  border-bottom: 1px solid $default-color;
+}
+
+h4.patient-data {
+  margin-bottom: 0;
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+h5.patient-data {
+  margin: 0.5em 0 0.25em;
+  font-size: 0.75em;
+  color: $grey-400;
+
+  &::before {
+    content: "\2014\00a0";
+  }
+
+  &::after {
+    content: " \2014";
+  }
+}
+// --- dataset page ---
+
+.dataset-page h3 {
+  margin-bottom: 0.1em;
+}
+
+
+.updated {
+  color: $ebola-color;
+  font-size: 0.8em;
+}

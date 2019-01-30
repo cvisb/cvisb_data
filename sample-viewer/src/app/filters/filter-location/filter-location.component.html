@@ -1,0 +1,14 @@
+<div class="filter filter-adm0" *ngIf="countries">
+  <h4 class="filter-label">location</h4>
+
+  <div class="location mat-shadow" *ngFor="let ctry of countries" [ngClass]="{'disabled': ctry.value === 0 }">
+    <svg-icon [icon]="ctry.key" [class]="ctry.key + '-icon'" *ngIf="ctry.name"></svg-icon>
+    <mat-icon *ngIf="! ctry.name || ctry.name === 'unknown'" [ngClass]="ctry.key + '-icon'">help_outline</mat-icon>
+
+    <div class="filter-pair">
+      <div class="adm0-name">{{ ctry.name || 'unknown'}}</div>
+      <div class="adm0-count">{{ ctry.value }}</div>
+    </div>
+
+  </div>
+</div>

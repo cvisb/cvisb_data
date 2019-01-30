@@ -1,0 +1,373 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "http://schema.cvisb.org/"
+  },
+  "version": 0.1,
+  "@id": "http://schema.cvisb.org/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:Patient",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a Patient/Person in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "Patient",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://schema.cvisb.org"
+      }
+    },
+    {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique ID for patient (G-number, S-number, or C-number)",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required"
+    },
+    {
+      "@id": "cvisb:alternateIdentifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternative ID used for patient",
+      "rdfs:label": "alternateIdentifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:cohort",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Cohort for virus exposure: Ebola, Lassa, or Control",
+      "rdfs:label": "cohort",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa",
+        "control"
+      ]
+    },
+    {
+      "@id": "cvisb:outcome",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Outcome for patient: control, survivor, contact, dead",
+      "rdfs:label": "outcome",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "control",
+        "survivor",
+        "contact",
+        "dead",
+        "not admitted",
+        "unknown"
+      ]
+    },
+    {
+      "@id": "cvisb:geographicArea",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Country where Patient lives / was treated",
+      "rdfs:label": "geographicArea",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Country"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:geographicArea"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "SL",
+        "NG"
+      ]
+    },
+    {
+      "@id": "cvisb:homeLocation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A contact location for a person's residence. Should include country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village + displaced GPS coordinates (optional)",
+      "rdfs:label": "homeLocation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Place"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:homeLocation"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended"
+    },
+    {
+      "@id": "cvisb:admitDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of admission",
+      "rdfs:label": "admitDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:daysOnset",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Number of days between onset of symptoms and hospital admission",
+      "rdfs:label": "daysOnset",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:deathDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of death",
+      "rdfs:label": "deathDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:deathDate"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:gender",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Gender",
+      "rdfs:label": "gender",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:GenderType"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:gender"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        "Male",
+        "Female",
+        "Unknown"
+      ]
+    },
+    {
+      "@id": "cvisb:relatedTo",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A list of related household contacts",
+      "rdfs:label": "relatedTo",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:age",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Age at time of first presentation",
+      "rdfs:label": "age",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "minimum": 1,
+      "maximum": 100
+    },
+    {
+      "@id": "cvisb:associatedSamples",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of Samples associated with the patient",
+      "rdfs:label": "associatedSamples",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        },
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended"
+    },
+    {
+      "@id": "cvisb:ELISA",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient",
+      "rdfs:label": "ELISA",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:elisaResult"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended"
+    },
+    {
+      "@id": "cvisb:rapidDiagostics",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of rapid Ebola/Lassa dipstick diagnostic results for the patient",
+      "rdfs:label": "rapidDiagostics",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:RDT"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended"
+    },
+    {
+      "@id": "cvisb:RT_PCR",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of RT-PCR results for the patient",
+      "rdfs:label": "RT_PCR",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:rt_pcrResult"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended"
+    }
+  ]
+}
