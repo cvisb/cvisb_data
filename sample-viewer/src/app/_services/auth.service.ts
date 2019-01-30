@@ -107,7 +107,7 @@ export class AuthService {
       let url: string = this.router.url;
       this.redirectUrlSubject.next(url);
       console.log('unauthorized!')
-      // this.router.navigate(['/unauthorized']);
+      this.router.navigate(['/unauthorized']);
     }
   }
 
