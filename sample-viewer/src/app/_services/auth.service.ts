@@ -105,9 +105,9 @@ export class AuthService {
   redirectUnauthorized(err) {
     if (err.status === 401 || err.status === 403) {
       let url: string = this.router.url;
-      this.redirectUrlSubject.next(url);
+      // this.redirectUrlSubject.next(url);
       console.log('unauthorized!')
-      this.router.navigate(['/unauthorized']);
+      // this.router.navigate(['/unauthorized']);
     }
   }
 
