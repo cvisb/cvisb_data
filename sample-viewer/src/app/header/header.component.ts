@@ -1,16 +1,20 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { AuthService } from '../_services';
 
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
 
   @Input() links: Object[];
   user: any;
   loggedIn: boolean;
+  prodEnvironment: boolean;
 
   constructor(public authSvc: AuthService) {
     // call authentication service to check if logged in
@@ -24,9 +28,12 @@ export class HeaderComponent implements OnInit {
     authSvc.userState$.subscribe((user: Object) => {
       this.user = user;
       // console.log(this.user)
-      this.loggedIn = Object.keys(this.user).length > 0  ? true : false;
+      this.loggedIn = Object.keys(this.user).length > 0 ? true : false;
       // console.log(this.loggedIn)
     })
+
+    this.prodEnvironment = environment.production;
+
   }
 
   ngOnInit() {
