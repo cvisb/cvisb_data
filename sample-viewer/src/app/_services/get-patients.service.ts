@@ -236,7 +236,7 @@ export class GetPatientsService {
     console.log('calling backend to get patients');
     console.log(this.patients);
 
-    this.patientsSubject.next(this.patients);
+
 
     this.http.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
       // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
@@ -251,7 +251,8 @@ export class GetPatientsService {
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
 
       // send new patients to subscription services.
-      this.patientsSubject.next(patients);
+      // this.patientsSubject.next(patients);
+      this.patientsSubject.next(this.patients);
 
     },
       err => {
