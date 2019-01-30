@@ -1,8 +1,24 @@
 @import '../../sass/variables.scss'; // custom variables, usually colors
 
+.cvisb-header {
+  padding: 12px $lr-padding;
+}
+
 .blue-gradient {
   background: linear-gradient(270deg, $cvisb-dark, $cvisb-bright);
-  padding: 12px $lr-padding;
+}
+
+.blue-gradient {
+  // background: linear-gradient(270deg, $cvisb-dark, #8c77bb);
+  background: linear-gradient(270deg,#716194,#8c77bb);
+}
+
+.dev-warning {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: accent(50);
+  letter-spacing: 4.3px;
 }
 
 img {
