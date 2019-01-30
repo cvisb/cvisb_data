@@ -1,0 +1,72 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Schema built on top of https://schema.org/Patient
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "http://schema.cvisb.org/"
+#
+# "@id":                 "http://schema.cvisb.org/RTPCR/0.1"
+#
+# "@graph":
+- "@id":                 cvisb:RTPCR
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing a RT-PCR result for a Patient in the Center for Viral Systems Biology experiments
+  rdfs:label:            RTPCR
+  rdfs:subClassOf:
+    "@id":               schema:Thing
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+# identifier
+- "@id":                 cvisb:virus
+  "@type":               rdf:Property
+  rdfs:comment:          Virus tested in RT-PCR (Ebola or Lassa)
+  rdfs:label:            virus
+  schema:domainIncludes:
+    - "@id":             cvisb:RTPCR
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  schema:Enumeration:
+                         - Ebola
+                         - Lassa
+
+- "@id":                 cvisb:RTPCRresult
+  "@type":               rdf:Property
+  rdfs:comment:          Result of RT-PCR, either positive/negative/indeterminate
+  rdfs:label:            RTPCRresult
+  schema:domainIncludes:
+    - "@id":             cvisb:RTPCR
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  schema:Enumeration:
+                         - positive
+                         - negative
+                         - indeterminate
+
+- "@id":                 cvisb:RTPCRvalue
+  "@type":               rdf:Property
+  rdfs:comment:          Result of RT-PCR, Ct value
+  rdfs:label:            RTPCRvalue
+  schema:domainIncludes:
+    - "@id":             cvisb:RTPCR
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  owl:cardinality:       one
+  marginality:           recommended

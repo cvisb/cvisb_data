@@ -1,0 +1,82 @@
+- '@id': cvisb:SampleLocation
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a the location of a sample in the Center for Viral
+    Systems Biology
+  rdfs:label: SampleLocation
+  rdfs:subClassOf:
+    '@id': schema:Place
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      lab:
+        enum:
+        - KGH
+        - TSRI-Andersen
+        - MGH-Alter
+        - TSRI-Briney
+        - TSRI-Sullivan
+        - Tulane-Schieffelin
+        type: string
+      numAliquots:
+        type: integer
+      updated:
+        format: cvisb-date
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - lab
+    - numAliquots
+    type: object
+- '@id': cvisb:lab
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Current location of sample
+  rdfs:label: lab
+  schema:Enumeration:
+  - KGH
+  - TSRI-Andersen
+  - MGH-Alter
+  - TSRI-Briney
+  - TSRI-Sullivan
+  - Tulane-Schieffelin
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:numAliquots
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Number of aliquots for a particular sampleID at a particular lab location.
+    If sample has been used up, numAliquots = 0
+  rdfs:label: numAliquots
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Integer
+- '@id': cvisb:updated
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Date of last update (YYYY-MM-DD)
+  rdfs:label: updated
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Date
+- '@id': cvisb:updatedBy
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Person who updated the sample location
+  rdfs:label: updatedBy
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text

@@ -1,0 +1,21 @@
+@import '../../../sass/variables.scss';
+
+.highlight {
+  font-weight: 600;
+}
+
+.locus {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
+.allele-container {
+  flex-direction: row;
+}
+
+.allele-group {
+  cursor: default;
+  padding: 3px 10px;
+  margin-right: 5px;
+  border-radius: 3px;
+}

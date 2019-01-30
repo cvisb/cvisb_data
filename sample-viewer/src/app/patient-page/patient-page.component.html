@@ -1,0 +1,39 @@
+<div class="container" id="patientID" *ngIf="patient">
+  <div class="patient-container">
+
+    <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort"></app-patient-nav>
+
+    <div class="patient-content">
+
+      <div class="patient-header">
+        <h2 class="page-header" [ngClass]="patient.cohort">Patient {{patientID}}</h2>
+
+        <div class="cohort-group">
+          <span class="cohort" [ngClass]="patient.cohort">{{ patient.cohort }}</span>
+          <span class="outcome" [ngClass]="[patient.outcome, patient.cohort]">{{ patient.outcome }}</span>
+        </div>
+      </div>
+
+    <div class="updated">
+      updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+    </div>
+
+    <div class="altIDs" *ngIf="patient.alternateIdentifier">
+      alternate ID: <span class="altID" *ngFor="let id of patient.alternateIdentifier">{{ id }}</span>
+    </div>
+
+    <app-patient-samples [patient]="patient"></app-patient-samples>
+
+    <app-patient-demographics [patient]="patient"></app-patient-demographics>
+    <app-patient-related [patient]="patient"></app-patient-related>
+
+    <div class="patient-data">
+      <h4 class="patient" id="data">Data</h4>
+      <app-patient-hla [patient]="patient"></app-patient-hla>
+
+      <app-patient-serology [patient]="patient"></app-patient-serology>
+    </div>
+  </div>
+  </div>
+
+</div>

@@ -1,0 +1,50 @@
+'@graph':
+- '@id': cvisb:Place
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a geographic Place in the Center for Viral Systems
+    Biology. Used typically to specify exact GPS coordinates
+  rdfs:label: Place
+  rdfs:subClassOf:
+    '@id': schema:Place
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  schema:sameAs:
+    '@id': schema:Place
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      containedInPlace:
+        $ref: http://data.cvisb.org/jsonschema/AdministrativeArea.json
+      geo:
+        oneOf:
+        - format: cvisb-geocoordinates
+          type: string
+        - format: cvisb-geoshape
+          type: string
+    type: object
+- '@id': cvisb:geo
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Geocoordinates of the place
+  rdfs:label: geo
+  schema:domainIncludes:
+  - '@id': cvisb:Place
+  schema:rangeIncludes:
+  - '@id': schema:GeoCoordinates
+  - '@id': schema:GeoShape
+  schema:sameAs:
+    '@id': schema:geo
+- '@id': cvisb:containedInPlace
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Additional administrative units that the GPS coordinates are located
+    within
+  rdfs:label: containedInPlace
+  schema:domainIncludes:
+  - '@id': cvisb:Place
+  schema:rangeIncludes:
+  - '@id': cvisb:AdministrativeArea
+  schema:sameAs:
+    '@id': schema:containedInPlace

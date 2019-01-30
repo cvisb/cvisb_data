@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <url><loc>https://data.cvisb.org/</loc></url>
+   <url><loc>https://data.cvisb.org/home</loc></url>
+   <url><loc>https://data.cvisb.org/sample</loc></url>
+   <url><loc>https://data.cvisb.org/sample/upload</loc></url>
+   <url><loc>https://data.cvisb.org/dataset</loc></url>
+   <url><loc>https://data.cvisb.org/dataset/hla</loc></url>
+   <url><loc>https://data.cvisb.org/dataset/systemsserology</loc></url>
+</urlset>

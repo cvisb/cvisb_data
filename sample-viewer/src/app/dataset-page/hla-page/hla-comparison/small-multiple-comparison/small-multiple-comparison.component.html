@@ -1,0 +1,8 @@
+<div class="container small-multiple-container" *ngIf="right && left">
+  <ng-container *ngFor="let locus of loci; let idx = index">
+    <div class="small-multiple">
+      <h4>{{ locus }}</h4>
+      <app-comparison-barplot [data]="{left: left[idx].values, params_left: [left_params], data_right: right[idx].values, params_right:[right_params]}"></app-comparison-barplot>
+    </div>
+  </ng-container>
+</div>

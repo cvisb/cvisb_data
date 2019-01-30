@@ -1,0 +1,83 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.patient-links {
+  ul {
+    list-style-type: none;
+
+    &.level0 {
+      padding: 0 30px;
+    }
+
+    &.level1 {
+      padding: 0;
+    }
+  }
+
+  li {
+    cursor: pointer;
+    text-align: right;
+  }
+
+  .link:hover {
+    font-weight: 400;
+  }
+
+  .level0 > li {
+    text-transform: uppercase;
+    font-size: 1.25em;
+    margin-bottom: 40px;
+    border-top: $ebola-color 1px solid;
+    padding: 3px 0;
+  }
+
+  .level1 > li {
+    text-transform: none;
+    margin: 10px 0;
+  }
+}
+
+.Ebola {
+  a {
+    color: $ebola-color;
+    text-decoration: none;
+  }
+
+  ul > li > ul > li a {
+    color: $ebola-md;
+  }
+
+  .level0 > li {
+    border-top: $ebola-dk 1px solid;
+  }
+}
+
+.Lassa {
+  a {
+    color: $lassa-color;
+    text-decoration: none;
+  }
+
+  ul > li > ul > li a {
+    color: $lassa-md;
+  }
+
+  .level0 > li {
+    border-top: $lassa-dk 1px solid;
+  }
+}
+
+.control {
+  a {
+    color: $grey-600;
+    text-decoration: none;
+  }
+
+  ul > li > ul > li a {
+    color: $grey-400;
+  }
+
+  .level0 > li {
+    border-top: $default-color 1px solid;
+  }
+}

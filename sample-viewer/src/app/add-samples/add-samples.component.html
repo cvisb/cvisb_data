@@ -1,0 +1,61 @@
+<mat-horizontal-stepper linear="true" #stepper>
+
+  <mat-step [stepControl]="patientsFormGroup">
+    <form [formGroup]="patientsFormGroup">
+      <ng-template matStepLabel>Enter patient IDs</ng-template>
+
+        <mat-form-field class="id-input">
+        <textarea matInput placeholder="Sample IDs" formControlName="patientsCtrl" required matAutosizeMaxRows="8" matTextareaAutosize="true"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="date-input">
+        <input matInput [matDatepicker]="picker" placeholder="Sample isolation date" formControlName="dateCtrl" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <div class="button-row">
+        <button mat-stroked-button>Clear</button>
+        <button mat-stroked-button color="primary">Add samples from different date</button>
+        <button mat-raised-button color="accent" matStepperNext>Continue</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- <mat-step [stepControl]="patientReviewFormGroup">
+    <form [formGroup]="patientReviewFormGroup">
+      <ng-template matStepLabel>Review patients</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step> -->
+
+  <mat-step [stepControl]="samplesFormGroup">
+    <form [formGroup]="samplesFormGroup">
+      <ng-template matStepLabel>Enter sample types</ng-template>
+      <app-add-sample-types></app-add-sample-types>
+      <!-- <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field> -->
+      <div>
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="accent" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Submit to database</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

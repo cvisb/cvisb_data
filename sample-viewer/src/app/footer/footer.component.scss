@@ -1,0 +1,118 @@
+@import '../../sass/variables.scss'; // vars
+
+$footer_text: #ccc;
+$fTop_bg: #252525;
+$fBottom_bg: #1c1c1c; // Organization
+
+footer {
+  background: $fTop_bg;
+  font-weight: 400;
+  color: $footer_text;
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.row {
+  padding-left: $lr-padding;
+  padding-right: $lr-padding;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-basis: 100%;
+
+  &.footer-top {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+
+  &.footer-top {
+    padding-top: 55px;
+    padding-bottom: 25px;
+  }
+}
+
+.column {
+  flex-basis: 33%;
+}
+
+.footer-bottom {
+  background: $fBottom_bg;
+  color: $footer_text;
+}
+// Links, common text
+
+a {
+  text-decoration: none;
+  color: $footer_text;
+
+  &:hover {
+    color: $cvisb-bright;
+  }
+}
+
+h4 {
+  text-transform: uppercase;
+  color: #777;
+  font-size: 12px;
+  margin: 0 0 20px;
+}
+
+ul {
+  list-style: none;
+}
+// Address / contact info
+.contact-info {
+  .org-name {
+    font-weight: 600;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: $cvisb-bright;
+    }
+  }
+}
+// Navigation to other pages
+
+.navigation {
+  ul {
+    padding: 0;
+  }
+
+  li {
+    padding: 8px 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #444;
+    text-transform: capitalize;
+  }
+}
+// CViSB logo
+
+.logo {
+  width: 200px;
+  margin: 0 0 30px;
+}
+// Bottom footer
+
+.copyright, .citation, .terms, .updated {
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 400;
+  margin: auto 75px auto 0px;
+}
+
+.updated {
+  color: $ebola-md;
+}
+// Social media icons
+
+.social {
+  font-size: 20px;
+
+  li {
+    margin-left: 20px;
+    display: inline-block;
+  }
+}

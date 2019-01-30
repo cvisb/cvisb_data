@@ -1,0 +1,40 @@
+# --- HLA ---
+- HLA:
+  # ---- .csv summary file ----
+  - ".csv":
+    "@type":              "DataDownload"
+    description:          "summary table of all HLA genotype assignments"
+    additionalType:       "summary data"
+    encodingFormat:       "text/csv"
+# Stuff which I'll probably just inherit from Dataset... (unless there's anything unique you want)
+    keywords:
+            - "HLA"
+            - "human leukocyte antigen"
+            - "Ebola virus"
+            - "EBOV"
+            - "Lassa virus"
+            - "LASV"
+    measurementTechnique: "HLA sequencing"
+
+  # ---- .bam raw file ----
+  - ".bam"
+    "@type":              "DataDownload"
+    description:          "raw sequencing data for " # !!! Need to append name to it
+    additionalType:       "raw data"
+    encodingFormat:       "application/bam"
+# Stuff which I'll probably just inherit from Dataset... (unless there's anything unique you want)
+    keywords:
+            - "HLA"
+            - "human leukocyte antigen"
+            - "Ebola virus"
+            - "EBOV"
+            - "Lassa virus"
+            - "LASV"
+    measurementTechnique: "HLA sequencing"
+
+  # ---- analyzed file ----
+  - "<analysis file  extension ???>"
+      "@type":            "DataDownload"
+      additionalType:     "analyzed data"
+      encodingFormat:
+      description:

@@ -1,0 +1,122 @@
+# Forked from https://github.com/data2health/schemas/blob/master/PostalAddress/PostalAddress.yaml
+# Schema built on top of https://schema.org/PostalAddress
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "http://schema.cvisb.org/"
+#
+# "@id":                 "http://schema.cvisb.org/PostalAddress/0.1"
+#
+# "@graph":
+- "@id":                 cvisb:PostalAddress
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing an PostalAddress for the Center for Viral Systems Biology
+  rdfs:label:            PostalAddress
+  rdfs:subClassOf:
+    "@id":               schema:PostalAddress
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+  schema:sameAs:
+    "@id":               schema:PostalAddress
+
+# streetAddress
+- "@id":                 cvisb:streetAddress
+  "@type":               rdf:Property
+  rdfs:comment:          The street address. For example, 1600 Amphitheatre Pkwy
+  rdfs:label:            streetAddress
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:streetAddress
+  owl:cardinality:       one
+  marginality:           required
+
+# streetAddress
+- "@id":                 cvisb:streetAddress
+  "@type":               rdf:Property
+  rdfs:comment:          The street address. For example, 1600 Amphitheatre Pkwy
+  rdfs:label:            streetAddress
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:streetAddress
+  owl:cardinality:       one
+  marginality:           required
+
+# addressLocality
+- "@id":                 cvisb:addressLocality
+  "@type":               rdf:Property
+  rdfs:comment:          The locality (e.g. city). For example, Mountain View.
+  rdfs:label:            addressLocality
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:addressLocality
+  owl:cardinality:       one
+  marginality:           required
+
+# addressRegion
+- "@id":                 cvisb:addressRegion
+  "@type":               rdf:Property
+  rdfs:comment:          The region (e.g. state/Adm 2). For example, CA.
+  rdfs:label:            addressRegion
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:addressRegion
+  owl:cardinality:       one
+  marginality:           required
+
+# postalCode
+- "@id":                 cvisb:postalCode
+  "@type":               rdf:Property
+  rdfs:comment:          The postal code. For example, 94043.
+  rdfs:label:            postalCode
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:postalCode
+  owl:cardinality:       one
+  marginality:           required
+
+# addressCountry
+- "@id":                 cvisb:addressCountry
+  "@type":               rdf:Property
+  rdfs:comment:          The country object (containing name, ISO code/identifier, link to ISO page)
+  rdfs:label:            addressCountry
+  schema:domainIncludes:
+    - "@id":             cvisb:PostalAddress
+  schema:rangeIncludes:
+    - "@id":             cvisb:Country
+  schema:sameAs:
+    "@id":               schema:addressCountry
+  owl:cardinality:       one
+  marginality:           required

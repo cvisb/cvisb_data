@@ -1,0 +1,13 @@
+<div class="patient-type-filter container" *ngIf="viruses && outcomes">
+  <h4 class="filter-label">patient type</h4>
+
+  <div class="filter-subtype filter-virus">
+    <h5 class="filter-sublabel">virus</h5>
+    <app-mini-donut [data]="viruses" [height]="plot_height"></app-mini-donut>
+  </div>
+
+  <div class="filter-subtype filter-outcome">
+    <h5 class="filter-sublabel">outcome</h5>
+    <app-mini-barplot [data]="outcomes" [name_var]="'key'" [height]="plot_height"></app-mini-barplot>
+  </div>
+</div>

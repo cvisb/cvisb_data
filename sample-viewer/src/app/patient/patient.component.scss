@@ -1,0 +1,8 @@
+@import '../../sass/variables';
+@import '../../sass/material-theme';
+
+.page-header {
+  color: lighten($ebola-md, 5%);
+  -webkit-text-stroke-color: $ebola-color;
+  -webkit-text-stroke-width: 1px;
+}

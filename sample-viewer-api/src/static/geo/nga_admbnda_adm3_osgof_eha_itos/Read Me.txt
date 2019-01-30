@@ -1,0 +1,20 @@
+Admin 3 (Wards for Adamawa, Borno and Yobe States)	
+											
+Field			DESCRIPTION											
+admin3Name		This is the recommended field to be used in reporting Admin level 3 (Wards)											
+admin3Pcode *		This field contains a unique pcode for each admin level 3 (Wards)	
+
+INEC_code		This field contains the ward codes contained in the INEC list
+
+eHealth_code		The field contains the ward codes used by eHealth Africa
+											
+admin3RefName		This field contains the same information as the admin3Name_en without apostrophes or special characters in the spelling											
+admin3AltName		This field contains the reference name for the admin level 3 (wards) using the INEC list											
+admin3AltName1		Empty	
+										
+admin2Name		This field contains the admin level 2 ( Local Government Areas) Name to which the admin level 3 (ward) belongs to											
+admin2Pcode		This field contains a unique pcode for the admin level 2 (Local Government Area) the admin level 3 (Ward) belongs to											
+admin1Name		This field contains the name of the admin level 1 (State) the admin level 3 (Ward) belongs to											
+admin1Pcode		This field contains a unique pcode for the admin level 1 (State) the admin level 3 (Ward) belongs to											
+admin0Name		This field contains the name of the admin level 0 (Country) the admin level 3 (Ward) belongs to											
+admin0Pcode		This field contains a unique pcode for the admin level 0 (Country) the admin level 3 (Ward) belongs to											

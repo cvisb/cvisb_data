@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /sample/
+
+User-agent: *
+Disallow: /patient/
+
+User-agent: *
+Allow: /
+
+Sitemap: http:data.cvisb.org/sitemap.xml

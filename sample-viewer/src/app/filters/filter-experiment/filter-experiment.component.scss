@@ -1,0 +1,42 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+svg-icon {
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  // background: yellow;
+}
+
+.expt-name {
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.expt-container {
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+}
+
+.expt-type {
+  display: inline-block;
+  // margin-right: 3em;
+  margin-right: 1.5em;
+  margin-bottom: 1em;
+  // background: #f7ffcd;
+  background-color: lighten($grey-200, 10%);
+  padding: 5px 8px 5px 5px;
+  border-radius: 5px;
+}
+
+.file-count {
+  // background: #7fff004f;
+  // padding: 7px;
+  border-left: 1px solid $grey-400;
+  padding-left: 5px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 7px;
+}

@@ -1,0 +1,60 @@
+// fonts
+$font-default: "Open Sans", "Helvetica Neue", sans-serif;
+
+// placement
+$lr-padding: 55px;
+
+// cvisb-style colors
+$cvisb-theme: #3399cb;
+$cvisb-dark: #426eb5;
+$cvisb-bright: #00abe5;
+$cvisb-accent: #fc8742; // redder #fd7a56; // #F2947A; //#F3AA7F
+
+// from https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=3398cb&secondary.color=fd7a56
+$primary-color: #3398cc;
+$primary-lightcolor: #70c9ff;
+$primary-darkcolor: #006a9b;
+$secondary-color: #fd7a56;
+$secondary-lightcolor: #ffab84;
+$secondary-darkcolor: #c54a2b;
+
+// greys
+$default-color: #212529;
+$grey-800: $default-color;
+$grey-600: #484d51;
+$grey-400: #73797d;
+$grey-300: #a2a8ac;
+$grey-200: #d3d9de;
+$grey-100: lighten(#d3d9de, 5%);
+$grey-50: #eef1f4;
+
+
+// Virus colors
+$lassa-color: #0c5934;
+$lassa-dk:    #41875E;
+$lassa-md:    #70b78b;
+$lassa-lt:    #a1eabb;
+
+$ebola-color: #c2185b;
+$ebola-dk:    #E91E63;
+$ebola-md:    #F06292;
+$ebola-lt:    #F8BBD0;
+
+// Sex colors
+// $male-color: #f57f17;
+$male-color: #fe643b;
+$female-color: #7e57c2;
+
+
+// sample status
+$abandoned-color: white;
+$nosample-color: $grey-200;
+$notstarted-color: #CFBF98; //#ded4bb;
+$started-color: #F1E462;
+$raw-color: #C8E76E;
+$complete-color: #70b78b;
+
+// Country colors
+$nigeria-green: #008753;
+$sierraleone-green: #1EB53A;
+$sierraleone-blue: #0072C6;

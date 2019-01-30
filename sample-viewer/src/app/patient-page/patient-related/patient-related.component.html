@@ -1,0 +1,11 @@
+<h4 class="patient" id="related-patients">Related Patients</h4>
+
+<div class="related" *ngIf="patient.relatedTo; else nodata">
+  <div class="related-link" *ngFor="let contact of patient.relatedTo">
+    <a [routerLink]="['/patient', contact]">{{ contact }}</a>
+  </div>
+</div>
+
+<ng-template #nodata>
+  <span class="nodata">no known relations</span>
+</ng-template>
