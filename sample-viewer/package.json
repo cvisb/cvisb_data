@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:dev": "npm run dev-bundles && npm run webpack:server",
+    "build:dev": "npm run build:dev-bundles && npm run webpack:server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "serve:ssr": "node dist/server",
     "build:dev-bundles": "ng build && ng run sample-viewer:server",
