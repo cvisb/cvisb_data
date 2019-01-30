@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,7 +23,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private titleSvc: Title, private route: ActivatedRoute) {
     // set page title
-    this.titleSvc.setTitle(this.route.snapshot.data.title);
+    let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;
+    this.titleSvc.setTitle(title);
   }
 
   ngOnInit() {
