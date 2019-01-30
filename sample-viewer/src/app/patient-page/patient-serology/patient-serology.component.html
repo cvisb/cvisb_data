@@ -1,0 +1,48 @@
+<h4 class="patient-data" id="Systems-Serology">Systems Serology</h4>
+
+
+<ng-container *ngIf="data; else nodata">
+  <div class="updated">
+    updated: {{data.dateModified ? (data.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+  </div>
+
+  <div class="serology-files">
+    <h5 class="patient-data">files</h5>
+    <div *ngFor="let file of files">
+      <a>{{ file }}</a>
+    </div>
+  </div>
+
+  <div class="serology-data">
+    <h5 class="patient-data">data</h5>
+    <table>
+      <tr>
+        <th>
+          Assay type
+        </th>
+        <th>
+          Measurement
+        </th>
+      </tr>
+
+      <tbody>
+        <tr *ngFor="let measurement of data">
+          <td class="assay-type">
+            {{ measurement.assay }}
+          </td>
+          <td class="assay-value">
+            {{ measurement.value }}
+          </td>
+        </tr>
+
+      </tbody>
+      <tr>
+
+      </tr>
+    </table>
+  </div>
+</ng-container>
+
+<ng-template #nodata>
+  <span class="nodata">not available</span>
+</ng-template>

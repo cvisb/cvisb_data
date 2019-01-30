@@ -1,0 +1,88 @@
+'@graph':
+- '@id': cvisb:ELISA
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing an ELISA result for a Patient in the Center for
+    Viral Systems Biology experiments
+  rdfs:label: ELISA
+  rdfs:subClassOf:
+    '@id': schema:Thing
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      ELISAresult:
+        enum:
+        - positive
+        - negative
+        - indeterminate
+        type: string
+      ELISAvalue:
+        type: number
+      assayType:
+        enum:
+        - IgG
+        - IgM
+        - Ag
+        type: string
+      virus:
+        enum:
+        - Ebola
+        - Lassa
+        type: string
+    required:
+    - virus
+    - assayType
+    - ELISAresult
+    type: object
+- '@id': cvisb:virus
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Virus tested in ELISA (Ebola or Lassa)
+  rdfs:label: virus
+  schema:Enumeration:
+  - Ebola
+  - Lassa
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:assayType
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 'Type of ELISA: IgG, IgM, or Ag'
+  rdfs:label: assayType
+  schema:Enumeration:
+  - IgG
+  - IgM
+  - Ag
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:ELISAresult
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Result of ELISA, either positive/negative/indeterminate
+  rdfs:label: ELISAresult
+  schema:Enumeration:
+  - positive
+  - negative
+  - indeterminate
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:ELISAvalue
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Result of ELISA, as a quantitative calibrated value
+  rdfs:label: ELISAvalue
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Number

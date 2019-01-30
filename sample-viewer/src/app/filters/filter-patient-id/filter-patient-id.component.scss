@@ -1,0 +1,18 @@
+.patient-id-filter {
+  width: 250px;
+}
+
+.patient-ids {
+  height: 70px;
+  flex-basis: 100%;
+}
+
+.include-contacts {
+  font-size: 0.8em;
+}
+
+/deep/ .include-contacts .mat-checkbox-inner-container {
+  $check-width: 14px;
+  width: $check-width !important;
+  height: $check-width !important;
+}

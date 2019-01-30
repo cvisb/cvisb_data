@@ -1,0 +1,23 @@
+@import '../../sass/variables.scss';
+
+.dataset-container {
+  display: flex;
+  flex: 1;
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.dataset-content {
+  flex: 1;
+}
+
+.dataset-nav {
+  flex: 0 0 12em;
+  order: -1;
+  margin: -18px 2em -18px -63px;
+  padding-top: 149px;
+  // 18+98+27+22-16;
+  background: lighten($cvisb-theme, 40%);
+}

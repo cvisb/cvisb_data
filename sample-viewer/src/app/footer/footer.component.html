@@ -1,0 +1,93 @@
+<footer>
+
+  <div class="container">
+
+    <div class="row footer-top">
+
+      <div class="contact-info column">
+        <a routerLink="/about"><h4>About</h4></a>
+        <a [href]="contactInfo.url">
+          <img src="/assets/img/cvisb_icon_300px.png" class="logo" />
+        </a>
+
+        <div class="org-name">
+          <a [href]="contactInfo.url"> {{ contactInfo.name }} </a>
+        </div>
+
+        <div class="parent-name">
+          <a [href]="contactInfo.parentOrganization.url" target="_blank" rel="noreferrer">{{ contactInfo.parentOrganization.name }}</a>
+        </div>
+
+        <div class="address">
+          <div class="address-street">
+            {{ contactInfo.address.streetAddress }}
+          </div>
+
+          <div class="address-location">
+            {{ contactInfo.address.addressLocality }}, {{ contactInfo.address.addressRegion }} {{ contactInfo.address.postalCode }}
+          </div>
+
+          <div class="address-country">
+            {{ contactInfo.address.addressCountry.name }}
+          </div>
+        </div>
+
+        <div class="email">
+          <a [href]="'mailto:' + contactInfo.contactPoint.email">{{ contactInfo.contactPoint.email }}</a>
+        </div>
+      </div>
+
+      <div class="column navigation">
+        <h4>Navigation</h4>
+
+        <ul>
+          <li class="icon" *ngFor="let link of links">
+            <a [routerLink]="link.path">
+            {{ link.label }}
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+
+
+    <div class="row footer-bottom">
+      <div class="container">
+        <div class="copyright">
+          &copy; {{ currentYear }} <a [href]="contactInfo.url" target="_blank" rel="noreferrer">{{ contactInfo.name }}</a>
+        </div>
+
+        <div class="citation">
+          <a routerLink="/citation">How to cite</a>
+        </div>
+
+        <div class="terms">
+          <a routerLink="/terms">Terms of use</a>
+        </div>
+
+        <div class="updated">
+          data updated: {{ dataUpdated | date: "d MMMM yyyy" }}
+        </div>
+
+      </div>
+
+
+      <div class="social">
+        <ul>
+          <li class="icon" *ngFor="let link of social_links">
+            <a [href]="link.url" target="_blank" rel="noreferrer">
+              <i class="fab" [ngClass]="link.icon"></i>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Add in Google structured data: CViSB contact info -->
+<span *embedJsonld="contactInfo"></span>

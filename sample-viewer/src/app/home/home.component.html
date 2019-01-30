@@ -1,0 +1,40 @@
+<div class="centered">
+  <h1>Center for Viral Systems Biology Data</h1>
+
+  <section class="intro">
+    <summary class="description">
+      CViSB is committed to making our scientific research and data available to the public. Here are a few of the things we're working on.
+    </summary>
+  </section>
+
+  <section class="container card-container">
+
+
+    <div class="card" *ngFor="let card of cards">
+      <a [routerLink]="card.path">
+        <h4 class="card-title">
+        {{ card.label }}
+        </h4>
+
+        <div class="card-tbd" *ngIf="card.tbd">
+          coming soon
+        </div>
+
+        <div class="card-warning" *ngIf="card.warning">
+          {{ card.warning }}
+        </div>
+      </a>
+
+      <div class="card-description">
+        <span [outerHTML]="card.description | sloppyMarkdown"></span>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+      <a routerLink="/about" class="link"> Learn more about CViSB data</a>
+  </section>
+
+
+</div>

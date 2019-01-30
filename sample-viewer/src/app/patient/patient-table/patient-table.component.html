@@ -1,0 +1,101 @@
+<div class="patient-lists">
+  <table mat-table [dataSource]="patientSource" matSort id="patients">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="patientID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">ID</th>
+      <td mat-cell *matCellDef="let element" class="patient-id">
+        {{ element.patientID }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="alternateIdentifier">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">alt. ID</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="altID" *ngFor="let id of element.alternateIdentifier">{{ id }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="associatedSamples">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">timepoints</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome">
+            <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i>
+            <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
+            <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
+            <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }}
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cohort">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="outcome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">country</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.country.name }}
+        <svg-icon [icon]="element.country.identifier" class="country-icon" [ngClass]="element.country.identifier"></svg-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">sex</th>
+      <td mat-cell *matCellDef="let element">
+
+        <span class="sex-icon" [ngClass]="element.gender">
+          <span *ngIf="element.gender === 'Female'"><i class="fas fa-venus"></i></span>
+          <span *ngIf="element.gender === 'Male'"><i class="fas fa-mars"></i></span>
+        </span>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">age</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.age }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="relatedTo">
+      <th mat-header-cell *matHeaderCellDef>related patients</th>
+      <td mat-cell *matCellDef="let element">
+        <div>
+          <a [routerLink]="['/patient', contact]" *ngFor="let contact of element.relatedTo" class="related">{{ contact }}</a>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="availableData">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">available data</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="expt-type mat-shadow" *ngFor="let expt of element.availableData" [matTooltip]="expt.name" matTooltipPosition="above" [ngClass]="expt.identifier">
+          <a [routerLink]="['/patient', element.patientID]" [fragment]="expt.name | stripWhitespace">
+            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
+          </a>
+        </div>
+
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
+</div>

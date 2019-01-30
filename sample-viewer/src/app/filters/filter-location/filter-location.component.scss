@@ -1,0 +1,40 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.NG-icon,
+.SL-icon,
+.unknown-icon {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin: auto 10px auto 3px;
+}
+
+.SL-icon {
+  fill: $sierraleone-blue;
+}
+
+.NG-icon {
+  fill: $nigeria-green;
+}
+
+.unknown-icon {
+  color: $grey-400;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  background-color: lighten($grey-200, 10%);
+  margin-right: 25px;
+}
+
+.adm0-name {
+  text-transform: uppercase;
+  color: $grey-400;
+  font-size: 0.7em;
+}
+
+.disabled {
+  cursor: default;
+}

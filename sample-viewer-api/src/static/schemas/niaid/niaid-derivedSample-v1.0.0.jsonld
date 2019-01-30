@@ -1,0 +1,120 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "niaid": "http://schema.biothings.io/niaid"
+  },
+  "@id": "http://schema.biothings.io/niaid/derivedSample/0.1",
+  "@graph": [
+    {
+      "@id": "niaid:derivedSample",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a derived sample from a primary source across NIAID experiments",
+      "rdfs:label": "derivedSample",
+      "rdfs:subClassOf": {
+        "@id": "niaid:Sample"
+      },
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io/niaid"
+      }
+    },
+    {
+      "@id": "niaid:derivedSampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique ID for the derived sample",
+      "rdfs:label": "derivedSampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "niaid:derivedSample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required"
+    },
+    {
+      "@id": "niaid:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the derived sample",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "niaid:derivedSample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "niaid:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Short description of the derived sample",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "niaid:derivedSample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "niaid:sourceSampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sample ID for the primary source of the derived sample",
+      "rdfs:label": "sourceSampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "niaid:derivedSample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "niaid:Sample"
+        },
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required"
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                   "http://purl.org/dc/terms/"
+#   owl:                   "http://www.w3.org/2002/07/owl#"
+#   rdf:                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                  "http://www.w3.org/ns/rdfa#"
+#   rdfs:                  "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:                "http://schema.org/"
+#   health:                "https://health-lifesci.schema.org/"
+#   xsd:                   "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:                 "http://bioschemas.org/"
+#   # bts:                 "http://schema.biothings.io/"
+#   cvisb:                 "http://schema.cvisb.org/"
+#
+# "@id":                   "http://schema.cvisb.org/SoftwareSourceCode/0.1"
+
+"@graph":
+- "@id":                 cvisb:SoftwareSourceCode
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing SoftwareSourceCode in the Center for Viral Systems Biology
+  rdfs:label:            SoftwareSourceCode
+  rdfs:subClassOf:
+    "@id":               schema:SoftwareSourceCode
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+  schema:sameAs:
+    "@id":               schema:SoftwareSourceCode
+
+# identifier
+- "@id":                 cvisb:identifier
+  "@type":               rdf:Property
+  rdfs:comment:          DOI or unique identifier for code
+  rdfs:label:            identifier
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           optional
+
+# name
+- "@id":                 cvisb:name
+  "@type":               rdf:Property
+  rdfs:comment:          Name of code
+  rdfs:label:            name
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:name
+  owl:cardinality:       one
+  marginality:           recommended
+
+# description
+- "@id":                 cvisb:description
+  "@type":               rdf:Property
+  rdfs:comment:          Description of code
+  rdfs:label:            description
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:description
+  owl:cardinality:       one
+  marginality:           optional
+
+# code repository location
+- "@id":                 cvisb:codeRepository
+  "@type":               rdf:Property
+  rdfs:comment:          Link to the repository where the un-compiled, human readable code and related code is located (SVN, github, CodePlex).
+  rdfs:label:            codeRepository
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    # - "@id":             xsd:string
+    # - "@id":             schema:Text
+    - "@id":             schema:URL
+  schema:sameAs:
+    "@id":               schema:codeRepository
+  owl:cardinality:       one
+  marginality:           required
+
+# programming language
+- "@id":                 cvisb:programmingLanguage
+  "@type":               rdf:Property
+  rdfs:comment:          Computer programming language.
+  rdfs:label:            programmingLanguage
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:programmingLanguage
+  owl:cardinality:       many
+  marginality:           optional
+
+# author
+- "@id":                 cvisb:author
+  "@type":               rdf:Property
+  rdfs:comment:          Author(s) of the code repository
+  rdfs:label:            author
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             cvisb:Person
+    - "@id":             cvisb:Organization
+  schema:sameAs:
+    "@id":               schema:author
+  owl:cardinality:       many
+  marginality:           recommended
+
+# Publications
+- "@id":                 cvisb:publication
+  "@type":               rdf:Property
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:label:            publication
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:sameAs:
+    "@id":               schema:publication
+  owl:cardinality:       many
+  marginality:           recommended
+
+- "@id":                 cvisb:citation
+  "@type":               rdf:Property
+  rdfs:comment:          Citation string (not an object) for the journal article or other publication associated with the dataset
+  rdfs:label:            citation
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:citation
+  owl:cardinality:       many
+  marginality:           recommended
+
+# license
+- "@id":                 cvisb:license
+  "@type":               rdf:Property
+  rdfs:comment:          Computer programming language.
+  rdfs:label:            license
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             schema:URL
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:license
+  owl:cardinality:       one
+  marginality:           recommended
+
+# dates
+- "@id":                 cvisb:datePublished
+  "@type":               rdf:Property
+  rdfs:comment:          Date of first broadcast/publication
+  rdfs:label:            datePublished
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    "@id":               schema:Date
+  schema:sameAs:
+    "@id":               "schema:datePublished"
+  owl:cardinality:       one
+  marginality:           recommended
+
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date on which the code was most recently modified
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    "@id":               schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           recommended

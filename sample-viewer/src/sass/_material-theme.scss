@@ -1,0 +1,156 @@
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@import '~@angular/material/theming';
+// @include mat-core();
+
+@import 'variables'; // custom variables, usually colors
+
+$custom-typography: mat-typography-config($font-family: "'Open Sans', 'Helvetica Neue', sans-serif");
+@include mat-core($custom-typography);
+
+// Primary palette
+// https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=3398cb&secondary.color=fd7a56
+// https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=39a6d9&secondary.color=fd7a56
+$custom-primary: (
+  50:   #e2f4fa, // 100-light
+  100:  #b5e4f3, // 500-light
+  200:  #88d2eb,
+  300:  #61c0e2,
+  400:  #49b3de,
+  500:  #39a6d9,
+  600:  $cvisb-theme,
+  700:  #2b86b8, // 500-dark
+  800:  #2875a4,
+  900:  #1e5682, // 700-dark
+  A100: #aaeafe,
+  A200: #77dbfc, // accent button
+  A400: $cvisb-bright,
+  A700: #0392e0,
+  contrast: (
+    50: $default-color,
+    100: $default-color,
+    200: $default-color,
+    300: $default-color,
+    400: $default-color,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $default-color,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+// Secondary palette
+// from https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+$custom-accent: (
+  50:   #fef3e2,
+  100:  #fee0b5,
+  200:  #ffcc83,
+  300:  #ffb751,
+  400:  #ffa62c,
+  500:  #ff970f,
+  600:  #fc8b0f,
+  700:  #f57c0d,
+  800:  #ef6c0c,
+  900:  #e6510a,
+  A100: #fee0b5,
+  A200: #ffcc83, // accent button
+  A400: #ffa62c,
+  A700: #f57c0d,
+  contrast: (
+    50: $default-color,
+    100: $default-color,
+    200: $default-color,
+    300: $default-color,
+    400: $default-color,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $default-color,
+    A200: $default-color,
+    A400: white,
+    A700: white,
+  )
+);
+
+$custom-accent-redder: (
+  50:   #f9eae9,
+  100:  #fdcfc2,
+  200:  #fdb09b,
+  300:  #fd9274,
+  400:  #fd7a56,
+  500:  #fe643b,
+  600:  #f35e37,
+  700:  #e45732,
+  800:  #d6512e,
+  900:  #bd4526,
+  A100: #ff8a80,
+  A200: #ff7266, // accent button
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $default-color,
+    100: $default-color,
+    200: $default-color,
+    300: $default-color,
+    400: $default-color,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $default-color,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+@function primary($key) {
+  @if map-has-key($custom-primary, $key) {
+    @return map-get($custom-primary, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $custom-accent-redder.";
+  @return null;
+}
+
+@function accent($key) {
+  @if map-has-key($custom-accent, $key) {
+    @return map-get($custom-accent, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $custom-accent-redder.";
+  @return null;
+}
+
+@function accent-redder($key) {
+  @if map-has-key($custom-accent-redder, $key) {
+    @return map-get($custom-accent-redder, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $custom-accent-redder.";
+  @return null;
+}
+
+$candy-app-primary: mat-palette($custom-primary);
+$candy-app-accent:  mat-palette($custom-accent, A200, A100, A400);
+$candy-app-warn: mat-palette($custom-accent-redder);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+
+@include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
+// @include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, mat-palette($mat-pink)));

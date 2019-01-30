@@ -1,0 +1,48 @@
+
+  <div class="bulk-edit">
+    <!-- <h3>Bulk edit options</h3> -->
+    <button mat-stroked-button color="primary" type="button" (click)="switchBulk()">
+    {{ bulk ? 'Disable' : 'Enable'}} bulk editing
+  </button>
+
+    <div class="bulk-opts" *ngIf="bulk">
+      <div class="select-all">
+        <!-- <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"> -->
+        <mat-checkbox>
+        </mat-checkbox> Select all
+      </div>
+
+      <div class="delete-selected">
+        Add ngIf selected
+        <button mat-raised-button class="delete" type="button">
+      <mat-icon aria-label="Delete">delete_outline</mat-icon>
+      <span class="delete-label">Delete selected</span>
+      </button>
+      </div>
+
+      <div class="move-selected">
+        <!-- <button mat-raised-button class="delete" type="button">
+      <mat-icon aria-label="Move">delete_outline</mat-icon> -->
+        <mat-form-field>
+          <mat-select [(value)]="loc" placeholder="Location of selected samples">
+            <mat-option value="location">option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- </button> -->
+      </div>
+
+      <div class="aliquots-selected">
+        <!-- <button mat-raised-button class="delete" type="button">
+      <mat-icon aria-label="Move">delete_outline</mat-icon> -->
+        <mat-form-field>
+          <input matInput type="text" name="aliquots" [value]="num_aliquots" placeholder="number of aliquots">
+        </mat-form-field>
+        <!-- </button> -->
+      </div>
+
+
+    </div>
+
+  </div>

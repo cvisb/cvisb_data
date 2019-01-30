@@ -1,0 +1,27 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+// .axis--x line,
+.axis--x line {
+  display: none;
+}
+
+rect {
+  stroke-width: 1px;
+  shape-rendering: crispedges;
+  fill: $grey-300;
+  stroke: $grey-400;
+  cursor: pointer;
+}
+
+rect:hover {
+  fill: primary(300);
+  stroke: primary(500);
+}
+
+// .bar--annot text {
+//   text-anchor: end;
+//   dominant-baseline: middle;
+//   fill: $default-color;
+//   font-family: $font-default;
+// }

@@ -1,0 +1,77 @@
+- '@id': cvisb:SequencingExperiment
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a Sequencing Experiment in the Center for Viral
+    Systems Biology
+  rdfs:label: SequencingExperiment
+  rdfs:subClassOf:
+    '@id': cvisb:Experiment
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      instrumentID:
+        type: string
+      readLength:
+        type: integer
+      sequencingCenter:
+        type: string
+      sequencingPlatform:
+        type: string
+      sequencingTechnology:
+        type: string
+    type: object
+- '@id': cvisb:sequencingTechnology
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Sequencing Technology (e.g. Illumina)
+  rdfs:label: sequencingTechnology
+  schema:domainIncludes:
+  - '@id': cvisb:SequencingExperiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:sequencingPlatform
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Sequencing Platform (e.g. MiSeq)
+  rdfs:label: sequencingPlatform
+  schema:domainIncludes:
+  - '@id': cvisb:SequencingExperiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:instrumentID
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Sequencing instrument ID
+  rdfs:label: instrumentID
+  schema:domainIncludes:
+  - '@id': cvisb:SequencingExperiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:sequencingCenter
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Sequencing Center (e.g. TSRI, Broad)
+  rdfs:label: sequencingCenter
+  schema:domainIncludes:
+  - '@id': cvisb:SequencingExperiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:readLength
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: read length
+  rdfs:label: readLength
+  schema:domainIncludes:
+  - '@id': cvisb:SequencingExperiment
+  schema:rangeIncludes:
+  - '@id': schema:Integer

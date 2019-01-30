@@ -1,0 +1,20 @@
+{
+  "@context": "http://schema.cvisb.org/",
+  "@type": "Sample",
+  "patient_id": "S0026",
+  "visit_code": 4,
+  "patient_cohort": "Ebola",
+  "patient_type": "survivor",
+  "isolation_date": "2018-06-27",
+  "sample_type": "PBMC",
+  "num_aliquots": 1,
+  "sample_source": "blood_purple-EDTA",
+  "protocol": "viable_PBMC_protocol_v1.0.0.docx",
+  "freezing_buffer": "",
+  "dilution_factor": "NA",
+  "sample_id": "S-0026-4_PBMC20180627",
+  "location": "Tulane",
+  "species": "human",
+  "updated": "2018-10-01",
+  "updated_by": "Laura Hughes"
+}

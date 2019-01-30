@@ -1,0 +1,36 @@
+<header class="container blue-gradient">
+  <div class="logo">
+    <a href="./" alt="home link">
+      <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo"/>
+    </a>
+  </div>
+
+  <div class="menu-items">
+    <!-- <div class="slide-out-widget-area-toggle mobile-icon std-menu slide-out-from-right" data-icon-animation="simple-transform">
+      <div> <a id="toggle-nav" href="#sidewidgetarea" class="closed"> <span> <i class="lines-button x2"> <i class="lines"></i> </i> </span> </a> </div>
+    </div> -->
+
+    <nav class="menu-nav">
+      <ul class="sf-menu">
+        <li class="menu-item page_item" *ngFor="let link of links">
+          <a [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}">
+          {{ link.label }}
+        </a>
+        </li>
+
+        <li class="menu-item page_item" *ngIf="!loggedIn">
+          <a routerLink="login" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}">
+              login
+            </a>
+        </li>
+
+      </ul>
+
+      <ng-container *ngIf="loggedIn" >
+        <a routerLink="login" class="user-photo" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}">
+          <img [src]="user.picture"/>
+        </a>
+      </ng-container>
+    </nav>
+  </div>
+</header>

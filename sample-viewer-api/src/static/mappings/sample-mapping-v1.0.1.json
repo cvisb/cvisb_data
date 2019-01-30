@@ -1,0 +1,85 @@
+{
+    "settings": {
+        "index": {
+            "analysis": {
+                "normalizer": {
+                    "keyword_lowercase_normalizer": {
+                        "filter": ["lowercase"],
+                        "type": "custom",
+                        "char_filter": []
+                    }
+                },
+                "analyzer": {
+                    "string_lowercase": {
+                        "filter": "lowercase",
+                        "tokenizer": "keyword"
+                    },
+                    "whitespace_lowercase": {
+                        "filter": "lowercase",
+                        "tokenizer": "whitespace"
+                    }
+                }
+            },
+            "number_of_shards": "10",
+            "auto_expand_replicas": "0-all"
+        }
+    },
+    "mappings": {
+        "sample": {
+            "dynamic": false,
+            "properties": {
+                "all": {
+                    "type": "text"
+                },
+                "sample_id": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer",
+                    "copy_to": ["all"]
+                },
+                "patient_id": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer",
+                    "copy_to": ["all"]
+                },
+                "visit_code": {
+                    "type": "integer"
+                },
+                "isolation_date": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd||MM-dd-yyyy||yyyy-dd-MM||dd-MM-yyyy"
+                },
+                "source_tissue": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer"
+                },
+                "sample_type": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer"
+                },
+                "species": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer"
+                },
+                "protocol_version": {
+                    "type": "text",
+                    "analyzer": "whitespace_lowercase"
+                }, 
+                "location": {
+                    "type": "keyword",
+                    "normalizer": "keyword_lowercase_normalizer"
+                },
+                "num_aliquots": {
+                    "type": "integer"
+                },
+                "updated": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd||MM-dd-yyyy||yyyy-dd-MM||dd-MM-yyyy"
+                },
+                "updated_by": {
+                    "type": "text",
+                    "analyzer": "whitespace_lowercase"
+                }
+            }
+        }
+    }
+}

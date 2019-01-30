@@ -1,0 +1,11 @@
+<div class="filter filter-expts" *ngIf="expts">
+  <h4 class="filter-label">experiment type</h4>
+
+  <div class="expt-container">
+    <div class="filter-pair expt-type mat-shadow" *ngFor="let expt of expts" [ngClass]="{'disabled' : expt.value === 0}">
+      <svg-icon [icon]="expt.key" [class]="expt.key + '-icon'"></svg-icon>
+      <div class="expt-name">{{ expt.name }}</div>
+      <div class="file-count">{{ expt.value }}</div>
+    </div>
+  </div>
+</div>
