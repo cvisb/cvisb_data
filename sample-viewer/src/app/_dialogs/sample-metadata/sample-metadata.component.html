@@ -1,0 +1,10 @@
+<h4>Metadata for {{data['sample_id']}}</h4>
+
+<div *ngFor="let key of sample_vars" class="metadata-pair">
+  <div class="metadata-key">
+    {{ key }}
+  </div>
+  <div class="metadata-value">
+    {{ data[key] || 'n/a' }}
+  </div>
+</div>

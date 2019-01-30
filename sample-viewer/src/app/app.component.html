@@ -1,0 +1,9 @@
+<main class="main-container">
+  <app-header [links]="links" class="header"></app-header>
+
+  <section class="router-outlet">
+    <router-outlet (activate)="changeRoutes()"></router-outlet>
+  </section>
+
+  <app-footer [links]="links" class="header"></app-footer>
+</main>

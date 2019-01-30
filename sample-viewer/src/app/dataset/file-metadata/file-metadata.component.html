@@ -1,0 +1,96 @@
+<div *ngIf="metadata" class="metadata">
+  <h4>Metadata for <span class="file-name">{{metadata.name}}</span></h4>
+
+  <!-- FILES -->
+  <mat-expansion-panel id="file-metadata" (click)="accordionClicked($event)">
+    <mat-expansion-panel-header class="metadata-header">
+      <mat-panel-title>
+        <h5>File metadata</h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- Expansion panel content -->
+    <div *ngFor="let key of mdkeys" class="metadata-pair" [ngClass]="{'missing' : ! metadata[key]}">
+      <!-- <ng-container [ngTemplateOutlet]="key !== 'experimentParameters' ? files : expts" [ngTemplateOutletContext]="{metadata:metadata, key:key}">
+      </ng-container> -->
+
+
+      <!-- <ng-template #files let-key="key" let-metadata="metadata"> -->
+      <div class="metadata-key">
+        {{ key }}
+      </div>
+
+      <ng-container [ngTemplateOutlet]="isObject(metadata[key]) ? md_object: md_string" [ngTemplateOutletContext]="{metadata:metadata, key:key}">
+      </ng-container>
+
+      <ng-template #md_string let-metadata="metadata" let-key="key" class="metadata-value" >
+        {{metadata[key] || "n/a" }}
+      </ng-template>
+
+      <ng-template #md_object let-metadata="metadata" let-key="key" >
+        <app-md-object [metadata]="metadata[key]"></app-md-object>
+      </ng-template>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- EXPERIMENT -->
+
+  <mat-expansion-panel id="expt-metadata" (click)="accordionClicked($event)" *ngIf="mdtype === 'DataDownload'">
+    <mat-expansion-panel-header class="metadata-header">
+      <mat-panel-title>
+        <h5>Experiment metadata</h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-container [ngTemplateOutlet]="metadata['experimentParameters'] ? expts : karthik" [ngTemplateOutletContext]="{metadata:metadata, key:key}">
+    </ng-container>
+
+  </mat-expansion-panel>
+
+
+
+
+
+  <ng-template #expts let-key="key" let-metadata="metadata">
+    <div *ngFor="let expt of metadata['experimentParameters']">
+      <div class="expt-metadata metadata-pair" *ngFor="let expt_key of expt_md" [ngClass]="{'missing' : ! expt[expt_key]}">
+
+        <div class="metadata-key">
+          {{ expt_key }}
+        </div>
+        <div class="metadata-value">
+          {{ expt[expt_key] || "n/a"}}
+        </div>
+      </div>
+
+      <h5>Sample metadata</h5>
+
+      <div class="sample-metadata">
+
+        <div class="metadata-key">
+          sampleIDs
+        </div>
+        <div class="metadata-value">
+          <ng-container *ngFor="let sample of expt['sampleIDs']; let i=index">{{ sample }}<span *ngIf="i < expt['sampleIDs'].length - 1">, </span></ng-container>
+        </div>
+
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #karthik let-key="key" let-metadata="metadata">
+    <div class="expt-metadata metadata-pair" *ngFor="let expt_key of expt_md" [ngClass]="{'missing' : ! metadata[expt_key]}">
+
+      <div class="metadata-key">
+        {{ expt_key }}
+      </div>
+      <div class="metadata-value">
+        {{ metadata[expt_key] || "n/a"}}
+      </div>
+    </div>
+
+
+
+  </ng-template>
+</div>

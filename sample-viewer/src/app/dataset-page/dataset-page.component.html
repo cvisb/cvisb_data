@@ -1,0 +1,42 @@
+<div class="container" id="dataset.identifier">
+
+  <div class="dataset-container dataset-page" *ngIf="dataset">
+
+    <app-dataset-page-nav [id]="dataset.identifier" class="nav dataset-nav"></app-dataset-page-nav>
+
+    <div class="dataset-content">
+      <a [routerLink]="'/dataset'" class="back-button">Return to all files</a>
+
+      <div class="dataset-header" id="summary">
+        <h2>
+          <a (click)="selectDataset($event, dataset)" [matTooltip]="'view metadata for ' + dataset.name + ' dataset'">{{ dataset.name }}</a>
+          <span class="keyword" *ngFor="let keyword of dataset.keywords">{{ keyword }}</span>
+        </h2>
+
+        <div class="dataset-description">
+          {{dataset.description}}
+        </div>
+
+        <div class="updated">
+          updated: {{dataset.dateModified ? (dataset.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+        </div>
+      </div>
+
+      <ng-container *ngIf="dataset.identifier === 'hla'" id="compare">
+        <app-hla-page></app-hla-page>
+      </ng-container>
+
+      <div id="files">
+        <h3>Download files and view metadata</h3>
+
+        <app-file-list [dataset]="dataset"></app-file-list>
+
+        <div class="grid-item metadata">
+          <app-file-metadata></app-file-metadata>
+        </div>
+      </div>
+
+      <span *embedJsonld="schema_dataset"></span>
+    </div>
+  </div>
+</div>

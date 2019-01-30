@@ -1,0 +1,100 @@
+'@graph':
+- '@id': cvisb:Country
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a Country in the Center for Viral Systems Biology
+    experiments
+  rdfs:label: Country
+  rdfs:subClassOf:
+    '@id': schema:Country
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  schema:sameAs:
+    '@id': schema:Country
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      alternateName:
+        oneOf:
+        - type: string
+        - items:
+          - type: string
+          type: array
+      identifier:
+        enum:
+        - SL
+        - NG
+        type: string
+      name:
+        enum:
+        - Sierra Leone
+        - Nigeria
+        type: string
+      url:
+        enum:
+        - https://www.iso.org/obp/ui/#iso:code:3166:SL
+        - https://www.iso.org/obp/ui/#iso:code:3166:NG
+        type: string
+    required:
+    - identifier
+    type: object
+- '@id': cvisb:identifier
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 2 letter ISO code of the country, e.g. SL
+  rdfs:label: identifier
+  schema:Enumeration:
+  - SL
+  - NG
+  schema:domainIncludes:
+  - '@id': cvisb:Country
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:url
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Link to the ISO country page
+  rdfs:label: url
+  schema:Enumeration:
+  - https://www.iso.org/obp/ui/#iso:code:3166:SL
+  - https://www.iso.org/obp/ui/#iso:code:3166:NG
+  schema:domainIncludes:
+  - '@id': cvisb:Country
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:url
+- '@id': cvisb:name
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Name of the country, e.g. Sierra Leone
+  rdfs:label: name
+  schema:Enumeration:
+  - Sierra Leone
+  - Nigeria
+  schema:domainIncludes:
+  - '@id': cvisb:Country
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:name
+- '@id': cvisb:alternateName
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: Alternative name of the country, for instance in a different language
+  rdfs:label: alternateName
+  schema:domainIncludes:
+  - '@id': cvisb:Country
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:alternateName

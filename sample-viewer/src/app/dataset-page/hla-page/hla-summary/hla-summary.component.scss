@@ -1,0 +1,69 @@
+@import '../../../../sass/variables';
+
+.num-patients {
+  font-size: 3em;
+  color: $grey-300;
+  font-weight: 900;
+}
+
+.annot--patients {
+  font-size: 1.5em;
+  line-height: 3em;
+  margin-left: 10px;
+}
+
+.hla-summary-container {
+  margin-bottom: 25px;
+  flex-direction: column;
+}
+
+.circle-packing {
+  justify-content: space-between;
+}
+
+.patient-count-container {
+  background: $grey-50;
+  padding: 10px;
+  // border: 1px solid $grey-200;
+  margin-bottom: 15px;
+  display: flex;
+  padding: 5px 0 3px;
+  border-bottom: 5px solid $grey-200;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5px;
+}
+
+.circle-packing,
+.patient-count-container {
+  max-width: 1200px;
+}
+
+.left-container {
+  flex-direction: column;
+}
+
+.main-graph,
+.summary-item {
+  // margin-right: 35px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar {
+  // background: purple;
+  // width: 300px;
+}
+
+.item-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.bar-graph {
+  margin-right: 15px;
+}

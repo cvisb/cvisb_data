@@ -1,0 +1,67 @@
+@import '../../sass/variables.scss'; // vars
+@import '../../sass/material-theme.scss'; // Material variables
+
+.card-container {
+  margin-bottom: 25px;
+}
+
+h1 {
+  margin: 5px 13px;
+}
+
+summary {
+  margin: 0 13px;
+}
+
+.card {
+  flex-basis: 250px;
+  background: accent(100);
+  padding: 25px;
+  margin: 13px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px 0 $grey-200;
+
+  &:hover {
+    background: accent(200);
+  }
+}
+
+.card-title {
+  margin: 0 0 8px;
+  color: $grey-600;
+}
+
+a {
+  text-decoration: none;
+  color: $default-color;
+
+  &.link {
+    color: $cvisb-theme;
+    margin-left: 15px;
+  }
+}
+// Markdown changes
+/deep/ .markdown-bold {
+  font-weight: 400;
+}
+
+/deep/ a.markdown-link {
+  color: accent(900);
+}
+
+.card-warning {
+  border-top: 1px $grey-300 solid;
+  border-bottom: 1px $grey-300 solid;
+  color: $grey-400;
+  background: accent(200);
+  text-transform: uppercase;
+  padding: 3px 6px;
+  margin-bottom: 8px;
+  font-size: 0.85em;
+}
+
+.card-tbd {
+  color: accent-redder(600);
+  font-weight: 400;
+  padding-bottom: 8px;
+}

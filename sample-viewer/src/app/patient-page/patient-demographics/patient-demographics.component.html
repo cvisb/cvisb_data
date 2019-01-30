@@ -1,0 +1,23 @@
+<h4 class="patient" id="demographics">demographics</h4>
+
+<div >
+  sex: <span [ngClass]="patient.gender">{{ patient.gender }}</span>
+  <!-- <span class="sex" [ngClass]="patient.gender">
+  <span *ngIf="patient.gender === 'Female'"><i class="fas fa-venus"></i></span>
+  <span *ngIf="patient.gender === 'Male'"><i class="fas fa-mars"></i></span>
+  </span> -->
+</div>
+
+<div class="age">
+  age:
+  {{ patient.age }}
+</div>
+
+<div class="country" [ngClass]="patient.country['name']">
+  location:
+  <span *ngFor="let area of patient.homeLocation">
+    {{ area['name'] }} {{ area['administrativeType'] }},
+  </span>
+  {{ patient.country['name'] }}
+  <!-- <svg-icon [icon]="patient.country.identifier" class="country-icon" [ngClass]="patient.country.identifier"></svg-icon> -->
+</div>

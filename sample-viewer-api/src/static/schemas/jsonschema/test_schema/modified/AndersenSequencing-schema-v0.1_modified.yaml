@@ -1,0 +1,141 @@
+- '@id': cvisb:AndersenSequencing
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a HLA, viral, or metagenome sequencing Experiment
+    in the Center for Viral Systems Biology
+  rdfs:label: AndersenSequencing
+  rdfs:subClassOf:
+    '@id': cvisb:sequencingExperiment
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      alignmentReference:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: string
+      analysisVersion:
+        type: string
+      assemblyReference:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: string
+      libraryKit:
+        type: string
+      libraryVersion:
+        type: string
+      metagenomeDBVersion:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: string
+      metagenomeDatabase:
+        type: string
+      replicate:
+        type: integer
+      variantCallingType:
+        type: string
+    type: object
+- '@id': cvisb:analysisVersion
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Analysis pipeline version
+  rdfs:label: analysisVersion
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:metagenomeDatabase
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: metagenome database
+  rdfs:label: metagenomeDatabase
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:metagenomeDBVersion
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: metagenome database version
+  rdfs:label: metagenomeDBVersion
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:assemblyReference
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Reference for assembly
+  rdfs:label: assemblyReference
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:alignmentReference
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Reference for alignment
+  rdfs:label: alignmentReference
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:libraryKit
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: library kit
+  rdfs:label: libraryKit
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:libraryVersion
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: library version
+  rdfs:label: libraryVersion
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:variantCallingType
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Variant calling Type(Consensus/Reference)
+  rdfs:label: variantCallingType
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:replicate
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Replicate number
+  rdfs:label: replicate
+  schema:domainIncludes:
+  - '@id': cvisb:AndersenSequencing
+  schema:rangeIncludes:
+  - '@id': schema:Integer

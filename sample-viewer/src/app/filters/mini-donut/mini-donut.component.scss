@@ -1,0 +1,44 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+path {
+  // shape-rendering: crispedges;
+  cursor: pointer;
+}
+
+.Control,
+.control {
+  fill: $grey-300;
+  stroke: $grey-400;
+
+  &:hover {
+    fill: darken($grey-300, 15%);
+  }
+}
+
+.Ebola,
+.ebola {
+  fill: $ebola-md;
+  stroke: $ebola-color;
+
+  &:hover {
+    fill: darken($ebola-md, 10%);
+  }
+}
+
+.Lassa,
+.lassa {
+  fill: $lassa-md;
+  stroke: $lassa-color;
+
+  &:hover {
+    fill: darken($lassa-md, 15%);
+  }
+}
+
+.donut--annot text {
+  stroke: none;
+  dominant-baseline: middle;
+  font-family: $font-default;
+  font-weight: 400;
+}

@@ -1,0 +1,1 @@
+#search-box{width:0%;background-color:pink;float:right}#search-box:focus{animation-name:reducetime;animation-duration:0.5s}@keyframes reducetime{0%{width:0}100%{width:100%}}

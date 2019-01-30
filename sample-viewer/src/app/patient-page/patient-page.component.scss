@@ -1,0 +1,77 @@
+@import '../../sass/variables.scss';
+@import '../../sass/material-theme.scss';
+// --- structural elements ---
+.patient-header {
+  flex: 100%;
+  max-width: 1150px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.patient-container {
+  display: flex;
+  flex: 1;
+}
+
+.patient-content {
+  flex: 1;
+}
+
+.patient-nav{
+  flex: 0 0 12em;
+  order: -1;
+  margin: -18px 2em -18px -63px;
+  padding-top: 149px;
+   // 18+98+27+22-16;
+}
+
+// --- right side nav pane ---
+.patient-nav {
+  &.Ebola {
+    background: lighten($ebola-md, 28%);
+    border: none;
+  }
+
+  &.Lassa {
+    background: lighten($lassa-md, 33%);
+    border: none;
+  }
+
+  &.control {
+    background: $grey-50;
+  }
+}
+
+// --- Patient ID title ---
+.page-header {
+  margin-bottom: 0;
+
+  &.Ebola {
+    color: $ebola-md;
+    -webkit-text-stroke-color: $ebola-color;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  &.Lassa {
+    color: $lassa-md;
+    -webkit-text-stroke-color: $lassa-color;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  &.control {
+    color: $grey-300;
+    -webkit-text-stroke-color: $grey-400;
+    -webkit-text-stroke-width: 1px;
+  }
+}
+// --- fonts ---
+.cohort-group {
+  font-size: 1.35em;
+}
+
+.altIDs {
+  color: $grey-400;
+  font-size: 1.25em;
+  text-transform: uppercase;
+}

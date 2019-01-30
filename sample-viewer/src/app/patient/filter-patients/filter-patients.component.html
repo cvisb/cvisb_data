@@ -1,0 +1,40 @@
+<div class="filter-container" *ngIf='patients.length > 0'>
+  <div class="filter-header">
+    <div class="container">
+      <h2>{{patients.length}} of {{patients.length}} Patients Selected</h2>
+
+      <div class="pull-right">
+        <app-filter-search></app-filter-search>
+
+        <button mat-stroked-button>clear filters</button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="filter-item filter-patients">
+    <app-filter-patient-id [patients]="patientSummary.patientIDs"></app-filter-patient-id>
+  </div>
+
+  <div class="filter-item filter-patient-types">
+    <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes"></app-filter-patient-type>
+  </div>
+
+  <div class="filter-item filter-elisas">
+    <app-filter-elisas></app-filter-elisas>
+  </div>
+
+  <div class="filter-item filter-dates">
+    <app-filter-sample-year [data]="patientSummary.patientYears"></app-filter-sample-year>
+  </div>
+
+  <div class="filter-item filter-expts">
+    <app-filter-experiment [expts]="patientSummary.exptTypes"></app-filter-experiment>
+  </div>
+
+  <div class="filter-item filter-ctry">
+    <app-filter-location [countries]="patientSummary.patientCountries"></app-filter-location>
+  </div>
+</div>

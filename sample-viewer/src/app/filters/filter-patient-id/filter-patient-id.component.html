@@ -1,0 +1,17 @@
+<div class="patient-id-filter container">
+  <h4 class="filter-label">patient IDs</h4>
+
+  <div class="container">
+    <!-- <input class="patient-ids" /> -->
+    <ng-select class="patient-ids"
+            [items]="patients"
+            [multiple]="true"
+            [closeOnSelect]="true"
+            [hideSelected]="true"
+            bindLabel="name"
+            placeholder="Select patients"
+            [(ngModel)]="selectedPatients">
+    </ng-select>
+    <mat-checkbox class="include-contacts">include patient contacts</mat-checkbox>
+  </div>
+</div>

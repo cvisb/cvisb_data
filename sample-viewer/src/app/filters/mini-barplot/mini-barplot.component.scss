@@ -1,0 +1,91 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.barplot .axis--y line,
+.barplot .axis--y path {
+  display: none;
+}
+
+.minirect {
+  stroke-width: 1px;
+  shape-rendering: crispedges;
+  fill: $grey-300;
+  stroke: $grey-400;
+  cursor: pointer;
+}
+
+.minirect:hover {
+  fill: primary(300);
+  stroke: primary(600);
+}
+
+.bar--annot text {
+  text-anchor: end;
+  dominant-baseline: middle;
+  fill: $default-color;
+  font-family: $font-default;
+}
+
+.y-label text {
+  text-anchor: start;
+  dominant-baseline: middle;
+  fill: $default-color;
+  font-family: $font-default;
+  cursor: pointer;
+}
+// Buttons
+
+#raw-data,
+#summary-data,
+#unknown-type {
+  text {
+    font-weight: 400;
+  }
+
+  .minirect {
+    rx: 3;
+    ry: 3;
+    shape-rendering: auto;
+    -webkit-filter: drop-shadow(-5px -5px 5px #000);
+    filter: drop-shadow(-5px -5px 5px #000);
+  }
+}
+
+#unknown-type {
+  &.annotation,
+  text {
+    fill: $grey-400;
+  }
+
+  &.faux-button,
+  .faux-button {
+    fill: #f3f3f3;
+    stroke: $grey-400;
+  }
+}
+
+#summary-data {
+  &.annotation,
+  text {
+    fill: accent-redder(900);
+  }
+
+  &.faux-button,
+  .faux-button {
+    fill: accent-redder(200);
+    stroke: accent-redder(900);
+  }
+}
+
+#raw-data {
+  &.annotation,
+  text {
+    fill: $grey-400;
+  }
+
+  &.faux-button,
+  .faux-button {
+    fill: $grey-200;
+    stroke: $grey-400;
+  }
+}

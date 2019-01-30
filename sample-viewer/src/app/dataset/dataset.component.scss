@@ -1,0 +1,33 @@
+@import '../../sass/variables.scss';
+@import '../../sass/material-theme.scss';
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, [col-start] 1fr);
+  grid-gap: 20px;
+  // background-color: #2196F3;
+  padding: 10px;
+  margin-top: 25px;
+}
+
+.grid-item {
+  padding: 5px;
+}
+
+.dataset-list {
+  // background: red;
+  grid-column: col-start 1 / span 8;
+  grid-row: 1;
+}
+
+.metadata {
+  // background: tomato;
+  // grid-column: col-start 9 / span 4;
+  // grid-row: 1;
+}
+
+.page-header {
+  color: $lassa-md;
+  -webkit-text-stroke-color: $lassa-color;
+  -webkit-text-stroke-width: 1px;
+}

@@ -1,0 +1,15 @@
+@import '../sass/variables.scss'; // custom variables, usually colors
+
+.router-outlet {
+  margin: 8px;
+  padding: 10px $lr-padding;
+  flex-grow: 1;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+body    { margin: 0; }

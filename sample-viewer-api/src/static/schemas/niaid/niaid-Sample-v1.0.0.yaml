@@ -1,0 +1,148 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Cross-referencing where applicable:
+# Verified structure using:
+#
+
+---
+"@context":
+  dct:                       "http://purl.org/dc/terms/"
+  owl:                       "http://www.w3.org/2002/07/owl#"
+  rdf:                       "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfa:                      "http://www.w3.org/ns/rdfa#"
+  rdfs:                      "http://www.w3.org/2000/01/rdf-schema#"
+  schema:                    "http://schema.org/"
+  xsd:                       "http://www.w3.org/2001/XMLSchema#"
+
+  # bsc:                     "http://bioschemas.org/"
+  # bts:                     "http://schema.biothings.io/"
+  niaid:                     "http://schema.biothings.io/niaid"
+
+"@id":                       "http://schema.biothings.io/niaid/Sample/0.1"
+
+"@graph":
+
+- "@id":                     niaid:Sample
+  "@type":                   rdfs:Class
+  rdfs:comment:              A schema primary sample across NIAID experiments
+  rdfs:label:                Sample
+  rdfs:subClassOf:
+    "@id":                   schema:Thing
+  schema:isPartOf:
+    "@id":                  http://schema.biothings.io/niaid
+
+# name
+- "@id":                     niaid:SampleID
+  "@type":                   rdf:Property
+  rdfs:comment:              unique ID for the sample
+  rdfs:label:                SampleID
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 xsd:string
+    - "@id":                 schema:Text
+  owl:cardinality:               one
+  marginality:               required
+
+# name
+- "@id":                     niaid:name
+  "@type":                   rdf:Property
+  rdfs:comment:              Descriptive name of the sample
+  rdfs:label:                name
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 xsd:string
+    - "@id":                 schema:Text
+  schema:sameAs:
+    "@id":                   schema:name
+  owl:cardinality:               one
+  marginality:               optional
+
+# description
+- "@id":                     niaid:description
+  "@type":                   rdf:Property
+  rdfs:comment:              Short description of the sample
+  rdfs:label:                description
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 xsd:string
+    - "@id":                 schema:Text
+  schema:sameAs:
+    "@id":                   schema:description
+  owl:cardinality:               one
+  marginality:               optional
+
+# isolation date
+- "@id":                     niaid:isolationDate
+  "@type":                   rdf:Property
+  rdfs:comment:              date of creation / isolation / purification of sample
+  rdfs:label:                isolationDate
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:Date
+  owl:cardinality:               one
+  marginality:               required
+
+# isolation protocol
+- "@id":                     niaid:protocolURL
+  "@type":                   rdf:Property
+  rdfs:comment:              Link to protocol explaining creation / isolation / purification of sample
+  rdfs:label:                protocolURL
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:URL
+    - "@id":                 schema:string
+  owl:cardinality:               many
+  marginality:               optional
+
+- "@id":                     niaid:protocolVersion
+  "@type":                   rdf:Property
+  rdfs:comment:              Protocol version or file name explaining creation / isolation / purification of sample
+  rdfs:label:                protocolVersion
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:URL
+    - "@id":                 schema:string
+  owl:cardinality:               many
+  marginality:               optional
+
+# sample source
+- "@id":                     niaid:sampleSource
+  "@type":                   rdf:Property
+  rdfs:comment:              Primary source tissue/fluid/etc. for the sample
+  rdfs:label:                sampleSource
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:string
+    - "@id":                 niaid:Sample
+  owl:cardinality:               many
+  marginality:               optional
+
+# sample type
+- "@id":                     niaid:sampleType
+  "@type":                   rdf:Property
+  rdfs:comment:              Type of sample (e.g. plasma, DNA, RNA, ...)
+  rdfs:label:                sampleType
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:string
+  owl:cardinality:               one
+  marginality:               recommended
+
+# species
+- "@id":                     niaid:species
+  "@type":                   rdf:Property
+  rdfs:comment:              Species of origin for the sample
+  rdfs:label:                species
+  schema:domainIncludes:
+    - "@id":                 niaid:Sample
+  schema:rangeIncludes:
+    - "@id":                 schema:string
+  owl:cardinality:               one
+  marginality:               recommended

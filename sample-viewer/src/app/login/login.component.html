@@ -1,0 +1,24 @@
+<ng-container *ngIf="loggedIn; else gotologin">
+  <h2>Logout</h2>
+
+  <p>Currently logged in as {{ user.name }}</p>
+
+  <p>
+    <!-- <button (click)="login()"  *ngIf="!loggedIn">Login</button> -->
+    <button (click)="logout()">Logout</button>
+    <!-- <button (click)="logout()" *ngIf="loggedIn">Logout</button> -->
+  </p>
+</ng-container>
+
+<ng-template #gotologin>
+  <h2>Login to continue</h2>
+  <p>
+    Access to {{ page === "/" ? "parts of this site": page }} is restricted to CViSB users. Please login.
+  </p>
+
+  <p>Current status: {{ message ? message : (loggedIn ? 'logged in' : 'logged out') }}</p>
+
+  <p>
+    <button (click)="login()">Login</button>
+  </p>
+</ng-template>
