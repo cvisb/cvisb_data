@@ -1,0 +1,21 @@
+# Python directories
+__pycache__
+
+sample-viewer-api/src/config.py
+*.pyc
+.DS_Store
+*.sw*
+notes/2018-10-01_cvisb-input.md
+sample-viewer/package-lock.json
+sample-viewer/src/assets/wp_style.css
+sample-viewer-api/src/static/schemas/templates/sample_viewer_template.csv
+sample-viewer-api/src/static/schemas/templates/sample_viewer_template.xlsx
+sample-viewer-api/src/static/schemas/schemaorg-20181004.jsonld
+sample-viewer-api/src/static/geo/test_filters.svg
+notes/samples notes.md
+*.pem
+*.key
+*.crt
+sample-viewer-api/src/static/data/2018-04-12_systemsSerology.xlsx
+sample-viewer-api/src/static/data/2018-06_samplelist.xlsx
+sample-viewer-api/src/static/data/2018-12-18- master sample list Jun-Jul-18.xlsx
