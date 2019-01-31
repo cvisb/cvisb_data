@@ -4,7 +4,9 @@ __pycache__
 sample-viewer-api/src/config.py
 *.pyc
 .DS_Store
+*.sw*
 notes/2018-10-01_cvisb-input.md
+sample-viewer/package-lock.json
 sample-viewer/src/assets/wp_style.css
 sample-viewer-api/src/static/schemas/templates/sample_viewer_template.csv
 sample-viewer-api/src/static/schemas/templates/sample_viewer_template.xlsx
