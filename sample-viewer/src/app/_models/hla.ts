@@ -1,11 +1,12 @@
 import { D3Nested } from './d3-nested';
 
 export class HLA {
-  ID: string;
-  Status: string;
-  allele_short?: string; // optional b/c may be undefined
-  loci: string;
+  patientID: string;
+  cohort: string;
+  allele?: string; // optional b/c may be undefined
+  locus: string;
   novel?: boolean;
+  country?: string;
   outcome: string;
 }
 

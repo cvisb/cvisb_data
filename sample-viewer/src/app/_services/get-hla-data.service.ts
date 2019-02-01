@@ -7,6 +7,7 @@ import { HLA, D3Nested } from '../_models';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
+import HLA_DATA from '../../assets/data/hla_data.json';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class GetHlaDataService {
 
   summarizeHLA() {
     // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
-    let unique_IDs = _.uniqBy(HLA_DATA, d => d.ID)
+    let unique_IDs = _.uniqBy(HLA_DATA, d => d.patientID)
 
     this.patientCountSubject.next(unique_IDs.length);
 
@@ -58,7 +59,7 @@ export class GetHlaDataService {
 
     // _.countBy(unique_IDs, 'outcome');
     let patientTypes = nest()
-      .key((d: HLA) => d.Status)
+      .key((d: HLA) => d.cohort)
       .rollup((values: any) => values.length)
       .entries(unique_IDs);
 
@@ -74,8 +75,8 @@ export class GetHlaDataService {
 
   getAlleleCounts() {
     let alleleCount = nest()
-      .key((d: HLA) => d.loci)
-      .key((d: HLA) => d.allele_short)
+      .key((d: HLA) => d.locus)
+      .key((d: HLA) => d.allele)
       .rollup(function(values: any): any {
         return {
           total: values.length,
@@ -88,21 +89,21 @@ export class GetHlaDataService {
 
     this.alleleCountSubject.next(alleleCount);
 
-    console.log(alleleCount);
+    // console.log(alleleCount);
     return (alleleCount);
   }
 
   getUniqueCounts() {
     let novelAlleles = nest()
-      .key((d: HLA) => d.loci)
+      .key((d: HLA) => d.locus)
       .rollup(function(values: any): any {
         return {
           total: values.length,
           data: values,
-          alleles: values.map((patient: HLA) => patient.allele_short),
-          unique_alleles: d3.map(values, (patient: HLA) => patient.allele_short).keys(),
-          unique_summary: _.countBy(values, 'allele_short'),
-          unique_total: d3.map(values, (patient: HLA) => patient.allele_short).keys().length
+          alleles: values.map((patient: HLA) => patient.allele),
+          unique_alleles: d3.map(values, (patient: HLA) => patient.allele).keys(),
+          unique_summary: _.countBy(values, 'allele'),
+          unique_total: d3.map(values, (patient: HLA) => patient.allele).keys().length
         }
       })
       .entries(HLA_DATA.filter((d: HLA) => d.novel === true));
@@ -116,6 +117,3 @@ export class GetHlaDataService {
   }
 
 }
-
-const HLA_DATA =
-[{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele_short":"A*340201","novel":false}]

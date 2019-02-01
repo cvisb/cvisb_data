@@ -18,33 +18,33 @@ export class HlaComparisonComponent implements OnInit {
   rightControl = new FormControl();
 
   options: CohortSelectOptions[] = [
-    { id: "all", name: "all samples", status: ['Lassa', 'Ebola', 'Control'], outcome: ['dead', 'survivor', 'unknown', 'control'] },
+    { id: "all", name: "all samples", cohort: ['Lassa', 'Ebola', 'control'], outcome: ['dead', 'survivor', 'unknown', 'control'] },
 
-    { id: "EBV_survivor", name: "Ebola survivors", status: ['Ebola'], outcome: ['survivor'] },
+    { id: "EBV_survivor", name: "Ebola survivors", cohort: ['Ebola'], outcome: ['survivor'] },
     // FOR NOW: No dead patients w/ Ebola
-    // { id: "EBV_dead", name: "Ebola dead", status: ['Ebola'], outcome: ['dead'] },
-    // { id: "EBV_all", name: "Ebola survivors + dead", status: ['Ebola'], outcome: ['dead', 'survivor'] }
-    { id: "LSV_survivor", name: "Lassa survivors", status: ['Lassa'], outcome: ['survivor'] },
-    { id: "LSV_dead", name: "Lassa dead", status: ['Lassa'], outcome: ['dead'] },
-    { id: "LSV_survivor-dead", name: "Lassa survivors + dead", status: ['Lassa'], outcome: ['dead', 'survivor'] },
-    { id: "LSV_survivor-unknown", name: "Lassa survivors or unknown outcome", status: ['Lassa'], outcome: ['survivor', 'unknown'] },
-    { id: "LSV_dead-unknown", name: "Lassa dead or unknown outcome", status: ['Lassa'], outcome: ['dead', 'unknown'] },
-    { id: "LSV_all", name: "Lassa survivors + dead + unknown outcome", status: ['Lassa'], outcome: ['dead', 'survivor', 'unknown'] },
+    // { id: "EBV_dead", name: "Ebola dead", cohort: ['Ebola'], outcome: ['dead'] },
+    // { id: "EBV_all", name: "Ebola survivors + dead", cohort: ['Ebola'], outcome: ['dead', 'survivor'] }
+    { id: "LSV_survivor", name: "Lassa survivors", cohort: ['Lassa'], outcome: ['survivor'] },
+    { id: "LSV_dead", name: "Lassa dead", cohort: ['Lassa'], outcome: ['dead'] },
+    { id: "LSV_survivor-dead", name: "Lassa survivors + dead", cohort: ['Lassa'], outcome: ['dead', 'survivor'] },
+    { id: "LSV_survivor-unknown", name: "Lassa survivors or unknown outcome", cohort: ['Lassa'], outcome: ['survivor', 'unknown'] },
+    { id: "LSV_dead-unknown", name: "Lassa dead or unknown outcome", cohort: ['Lassa'], outcome: ['dead', 'unknown'] },
+    { id: "LSV_all", name: "Lassa survivors + dead + unknown outcome", cohort: ['Lassa'], outcome: ['dead', 'survivor', 'unknown'] },
 
-    { id: "control", name: "all control", status: ['Control'], outcome: ['control'] },
-    { id: "all_survivor", name: "all survivors", status: ['Lassa', 'Ebola'], outcome: ['survivor'] },
-    { id: "all_dead", name: "all dead", status: ['Lassa', 'Ebola'], outcome: ['dead'] },
-    { id: "all_survivor-dead", name: "all survivor + dead", status: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor'] },
-    { id: "control-survivor", name: "control + survivors", status: ['Lassa', 'Ebola', 'Control'], outcome: ['survivor', 'control'] },
+    { id: "control", name: "all control", cohort: ['control'], outcome: ['control'] },
+    { id: "all_survivor", name: "all survivors", cohort: ['Lassa', 'Ebola'], outcome: ['survivor'] },
+    { id: "all_dead", name: "all dead", cohort: ['Lassa', 'Ebola'], outcome: ['dead'] },
+    { id: "all_survivor-dead", name: "all survivor + dead", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor'] },
+    { id: "control-survivor", name: "control + survivors", cohort: ['Lassa', 'Ebola', 'control'], outcome: ['survivor', 'control'] },
     // comparisons that probably don't make a ton of sense, or are already specified above b/c of the data
-    // { id: "all_unknown", name: "all unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['unknown'] },
-    // { id: "control-unknown", name: "control + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['unknown', 'control'] },
-    // { id: "all_survivor-unknown", name: "survivor + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['survivor', 'unknown'] },
-    // { id: "all_dead-unknown", name: "dead + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['dead', 'unknown'] },
-    // { id: "all_survivor-unknown-control", name: "all control + survivor + unknown outcome", status: ['Lassa', 'Ebola'], outcome: [survivor', 'unknown', 'control'] },
-    // { id: "all_dead-unknown-control", name: "all control + dead + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['dead', 'unknown', 'control'] },
-    // { id: "all_survivor-dead-control", name: "all control + dead + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor', 'control'] },
-    // { id: "all_survivor-dead-unknown", name: "all survivor + dead + unknown outcome", status: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor', 'unknown'] },
+    // { id: "all_unknown", name: "all unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['unknown'] },
+    // { id: "control-unknown", name: "control + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['unknown', 'control'] },
+    // { id: "all_survivor-unknown", name: "survivor + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['survivor', 'unknown'] },
+    // { id: "all_dead-unknown", name: "dead + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'unknown'] },
+    // { id: "all_survivor-unknown-control", name: "all control + survivor + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: [survivor', 'unknown', 'control'] },
+    // { id: "all_dead-unknown-control", name: "all control + dead + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'unknown', 'control'] },
+    // { id: "all_survivor-dead-control", name: "all control + dead + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor', 'control'] },
+    // { id: "all_survivor-dead-unknown", name: "all survivor + dead + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor', 'unknown'] },
   ];
 
   init_left: CohortSelectOptions = this.options.filter(d => d.id === "LSV_survivor")[0];
