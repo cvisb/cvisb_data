@@ -11,7 +11,7 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 # 5) Kristian's previously compiled list of HLA
 # Brian's roster of patients
 # 6) Random RNA/DNA extraction list from Matthias
-output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-31_patients"
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-31_patients_PRIVATE"
 
 # [1] HLA data
 import getHLApatients as hla
@@ -100,6 +100,14 @@ def findG(x):
         nohyphen = re.search("G[0-9][0-9][0-9][0-9]", x)
         if nohyphen:
             return(nohyphen[0].replace("G", "G-"))
+
+        shorthyphenated = re.search("G\-[0-9][0-9][0-9]", x)
+        if shorthyphenated:
+            return(shorthyphenated[0])
+
+        shortnohyphen = re.search("G[0-9][0-9][0-9]", x)
+        if shortnohyphen:
+            return(shortnohyphen[0].replace("G", "G-"))
     return(pd.np.nan)
 
 
@@ -171,6 +179,7 @@ patients = patients[['ID', 'allIDs', 'country', 'cohort', 'outcome', 'source']]
 patients.sort_values('ID', inplace = True)
 # patients[patients.ID == "G-4007"]
 patients.sample(14)
+patients.shape
 
 
 # Export everything.
