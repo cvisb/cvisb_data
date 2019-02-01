@@ -3,10 +3,6 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-
-// Services
-import { MyHttpClient } from './_services/auth-helper.service';
-
 // Modules
 import { AppRoutingModule } from './/app-routing.module';
 import { MaterialModule } from './material.module';
@@ -15,6 +11,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { AdminModule, PipesModule, HlaModule } from '.';
+
+// Services
+import { MyHttpClient } from './_services/auth-helper.service';
 
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';

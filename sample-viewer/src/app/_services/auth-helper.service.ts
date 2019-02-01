@@ -1,7 +1,9 @@
+// Copied from https://github.com/angular/universal-starter/issues/373#issuecomment-366254611
+
 import { Injectable, Inject, PLATFORM_ID, Injector } from "@angular/core";
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse, HttpHandler } from "@angular/common/http";
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpHandler } from "@angular/common/http";
+import { Observable } from 'rxjs';
 
 
 interface IHttpOptions {
