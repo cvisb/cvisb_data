@@ -1,7 +1,7 @@
 export class CohortSelectOptions {
   id: string;
   name: string;
-  status: string[];
+  cohort: string[];
   outcome: string[];
   country?: string[];
 }
