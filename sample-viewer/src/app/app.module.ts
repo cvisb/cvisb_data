@@ -9,11 +9,8 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
-
-// Guards
-import { AuthGuard } from './_guards/auth.guard';
 
 // Services
 import { MyHttpClient } from './_services/auth-helper.service';
@@ -129,7 +126,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
     TransferHttpCacheModule,
     HttpModule,
-    HttpClientModule,
+    HttpClient,
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
@@ -143,7 +140,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [MyHttpClient, AuthGuard],
+  providers: [MyHttpClient],
   entryComponents: [
     SampleMetadataComponent
   ],
