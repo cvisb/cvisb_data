@@ -16,7 +16,8 @@ notes/samples notes.md
 *.pem
 *.key
 *.crt
-sample-viewer-api/src/static/data/2018-04-12_systemsSerology.xlsx
-sample-viewer-api/src/static/data/2018-06_samplelist.xlsx
-sample-viewer-api/src/static/data/2018-12-18- master sample list Jun-Jul-18.xlsx
-sample-viewer/package-lock.json
+sample-viewer-api/src/static/data/*.xlsx
+sample-viewer-api/src/static/data/*.xls
+sample-viewer-api/src/static/data/*.csv
+sample-viewer-api/src/static/data/*.json
+notes/*.md
