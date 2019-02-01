@@ -41,14 +41,13 @@ export class SmallMultipleComparisonComponent implements OnChanges {
     if (this.right_params) {
       this.right = this.filterData(this.HLA_DATA, this.right_params);
     }
-
   }
 
   nestData(data: HLA[]): HLAnested[] {
     // nest data
     let nested_hla = d3.nest()
-      .key((d: HLA) => d.loci)
-      .key((d: HLA) => d.allele_short)
+      .key((d: HLA) => d.locus)
+      .key((d: HLA) => d.allele)
       .rollup((values: any) => values.length)
       .entries(data);
 
@@ -70,7 +69,7 @@ export class SmallMultipleComparisonComponent implements OnChanges {
 
   filterData(data: HLA[], params: CohortSelectOptions): HLAnested[] {
     let filtered = data
-      .filter((d: HLA) => params['status'].includes(d.Status))
+      .filter((d: HLA) => params['cohort'].includes(d.cohort))
       .filter((d: HLA) => params['outcome'].includes(d.outcome));
 
       // console.log(filtered)
