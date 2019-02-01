@@ -1,15 +1,14 @@
 import pandas as pd
 import os as os
-os.getcwd()
-os.chdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/data")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data")
 import getHLApatients as hla
 
 from getHLApatients import hla_df
 
-output_file = "/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer/src/assets/data/patients.json"
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer/src/assets/data/patients.json"
 
 # Import sample list, June/July 2018  ----------------------------------------------------------------------------------------------------
-sample_file = "/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/data/2018-12-18- master sample list Jun-Jul-18.xlsx"
+sample_file = ""
 samples = pd.read_excel(sample_file, skiprows=0)
 
 samples.head()
@@ -66,9 +65,9 @@ def getSeroOutcome(x):
     if(x == "Ebola and Lassa Negative"):
         return("control")
     elif(x == "Ebola Survivor"):
-        return("Survivor")
+        return("survivor")
     elif(x == "Lassa Survivor, Ebola negative"):
-        return("Survivor")
+        return("survivor")
     elif(x == "Household Contact"):
         return("contact")
     else:
@@ -81,9 +80,6 @@ sero.cohort.value_counts()
 sero.outcome.value_counts()
 
 sero.head()
-# Collapse down to the patient level; add timepoints and serology data
-# TODO: add dates if I can
-#
 
 
 # Merge together all the patients, and export  ----------------------------------------------------------------------------------------------------
