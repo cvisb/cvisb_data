@@ -12,6 +12,9 @@ import { HttpModule } from '@angular/http'; // Though outdated, required as per 
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
 
+// Guards
+import { AuthGuard } from './_guards/auth.guard';
+
 // Services
 import { MyHttpClient } from './_services/auth-helper.service';
 
@@ -140,7 +143,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [MyHttpClient],
+  providers: [MyHttpClient, AuthGuard],
   entryComponents: [
     SampleMetadataComponent
   ],
