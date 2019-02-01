@@ -9,14 +9,30 @@
 
 import pandas as pd
 
-fileloc = "/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/data/"
-filename = fileloc + "2018-10-29_Genotype_calls.csv"
+fileloc = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
+filename = fileloc + "2019-01-09_Genotype_calls_PRIVATE.csv"
 
 
 # Read in the data
 hla_df = pd.read_csv(filename)
 
 hla_df.head()
+
+# import Refugio's data
+rrs_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/HLA Compiled TSRI_Broad n257 09_04_18 _Refugio_PRIVATE.xlsx"
+
+rrs = pd.read_excel(rrs_file)
+rrs.shape
+rrs.head()
+
+rrs['ID'] = rrs["ID"].apply(lambda x: str(x).replace("_", "-"))
+
+merged = pd.merge(rrs, hla_df, indicator=True, how="outer")
+
+merged['_merge'].value_counts()
+
+lonelies = merged[merged['_merge']!='both']
+# lonelies.to_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-31HLA_mismatches_PRIVATE.csv")
 
 # Rename.
 hla_df.rename(columns={'ID': 'patientID',
@@ -67,7 +83,7 @@ def getHLAdata(row):
 
 def getAltIDs(id):
     if(id == id):
-        return([id])
+        return(id)
     else:
         return(pd.np.nan)
 
@@ -87,3 +103,4 @@ hla_df.head()
 hla_df.reset_index(inplace=True)
 
 hla_df = hla_df[['patientID', 'alternateIdentifier', 'cohort', 'outcome', 'country', 'availableData']]
+hla_df.shape
