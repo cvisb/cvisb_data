@@ -13,7 +13,7 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-// import { HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { AdminModule, PipesModule, HlaModule } from '.';
 
 // Dialogue boxes
