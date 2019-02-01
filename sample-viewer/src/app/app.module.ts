@@ -140,12 +140,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [
-    {
-    provide: MyHttpClient,
-    useClass: MyHttpClient,
-    deps: [HttpClient]
-  }],
+  providers: [MyHttpClient],
   entryComponents: [
     SampleMetadataComponent
   ],
