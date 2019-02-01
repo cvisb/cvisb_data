@@ -13,7 +13,7 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { AdminModule, PipesModule, HlaModule } from '.';
 
 // Dialogue boxes
@@ -126,7 +126,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
     TransferHttpCacheModule,
-    // HttpModule,
+    HttpModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
