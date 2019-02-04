@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     // Necessary to check on every page to reset authentication state if redirected.
     // authSvc.checkLogin();
 
-    // authSvc.authState$.subscribe((loggedIn: boolean) => {
+    // authSvc.loginState$.subscribe((loggedIn: boolean) => {
     //   console.log('Page loaded with authentication state: ' + loggedIn);
     // })
 

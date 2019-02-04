@@ -10,6 +10,7 @@ import { AuthService } from '../_services';
 
 export class AuthGuard implements CanActivate {
   isLoggedIn: boolean;
+  isAuthorized: boolean;
 
   constructor(
     private authSvc: AuthService,
@@ -17,10 +18,16 @@ export class AuthGuard implements CanActivate {
   ) {
     authSvc.checkLogin();
 
-    authSvc.authState$.subscribe((loggedIn: boolean) => {
+    authSvc.loginState$.subscribe((loggedIn: boolean) => {
       console.log("New login state received by auth.guard: " + loggedIn);
 
       this.isLoggedIn = loggedIn;
+    })
+
+    authSvc.authState$.subscribe((authorized: boolean) => {
+      console.log("New authorization state received by auth.guard: " + authorized);
+
+      this.isAuthorized = authorized;
     })
 
   }
@@ -46,19 +53,21 @@ export class AuthGuard implements CanActivate {
 
   checkLogin(url: string): boolean {
     console.log('sending url --> service')
+    // Store the attempted URL for redirecting
     this.authSvc.redirectUrlSubject.next(url);
 
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn && this.isAuthorized) {
       return true;
     }
 
-    // this.authService.checkLogin();
+    // Not logged in; navigate to login page
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+      return false;
+    }
 
-    // Store the attempted URL for redirecting
-    // this.authService.redirectUrl = url;
-
-    // Navigate to the login page with extras
-    this.router.navigate(['/login']);
+    // Logged in but not authorized.
+    this.router.navigate(['/unauthorized']);
     return false;
   }
 }

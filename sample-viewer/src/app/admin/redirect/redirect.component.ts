@@ -28,7 +28,7 @@ export class RedirectComponent implements OnInit {
       this.page_url = params['next']
     })
 
-    authSvc.authState$.subscribe((loginState: boolean) => {
+    authSvc.loginState$.subscribe((loginState: boolean) => {
       console.log("Auth state announces to redirect a login state of " + loginState);
       this.loginStatus = loginState;
     })

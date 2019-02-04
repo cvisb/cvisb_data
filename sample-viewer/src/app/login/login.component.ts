@@ -30,7 +30,7 @@ export class LoginComponent {
       this.user = user;
     })
 
-    authSvc.authState$.subscribe((loggedIn: boolean) => {
+    authSvc.loginState$.subscribe((loggedIn: boolean) => {
       this.loggedIn = loggedIn;
     })
 
