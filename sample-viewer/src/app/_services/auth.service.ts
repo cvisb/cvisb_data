@@ -58,25 +58,28 @@ export class AuthService {
   // }
   login() {
     console.log('starting login within service')
+    console.log('setting up redirect page')
     console.log('redirecting to ' + this.redirectUrl)
+
 
     // if (!this.redirectUrl) {
     //   this.redirectUrl = '/';
     // }
 
-    // // temp: pause before redirecting.
-    // function sleep(miliseconds) {
-    //   var currentTime = new Date().getTime();
-    //
-    //   while (currentTime + miliseconds >= new Date().getTime()) {
-    //   }
-    // }
-    //
-    // sleep(2000)
+    // temp: pause before redirecting.
+    function sleep(miliseconds) {
+      var currentTime = new Date().getTime();
+
+      while (currentTime + miliseconds >= new Date().getTime()) {
+      }
+    }
+
+    sleep(2000)
 
     // Redirect to Google's servers to authenticate.
     // Then send to /redirect page to handle the redirect cascade.
-    this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=${this.redirectUrl}`;
+    this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=/sample`;
+    // this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=${this.redirectUrl}`;
     // this.document.location.href = `${environment.api_url}/oauth?next=${this.redirectUrl}`;
     // this.checkLogin();
     // console.log('finished logging in.')
