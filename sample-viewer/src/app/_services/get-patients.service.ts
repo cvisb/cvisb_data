@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient } from '../_models';
+import { Patient, AuthState } from '../_models';
 import { AuthService } from './auth.service';
 
 import PATIENTS from '../../assets/data/patients.json';
@@ -192,8 +192,8 @@ export class GetPatientsService {
 
     // this.putPatients(this.fakePatients);
     //
-    this.authSvc.loginState$.subscribe((authenticated: boolean) => {
-      if (authenticated) {
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
+      if (authState.authorized) {
         this.getPatients();
       }
     })
@@ -251,7 +251,7 @@ export class GetPatientsService {
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
 
       // Set status to be authorized
-      this.authSvc.setAuthorized();
+      // this.authSvc.setAuthorized();
 
       // send new patients to subscription services.
       // this.patientsSubject.next(patients);
@@ -263,7 +263,7 @@ export class GetPatientsService {
         console.log(err)
 
         // check if unauthorized; if so, redirect.
-        this.authSvc.redirectUnauthorized(err);
+        // this.authSvc.redirectUnauthorized(err);
       })
   }
 

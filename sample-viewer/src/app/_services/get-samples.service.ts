@@ -7,7 +7,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
-import { Sample, SampleWide } from '../_models/';
+import { Sample, SampleWide, AuthState } from '../_models/';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -74,8 +74,8 @@ export class GetSamplesService {
     // this.getSamples();
     // this.getSample('test_1');
     //
-    this.authSvc.loginState$.subscribe((authenticated: boolean) => {
-      if (authenticated) {
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
+      if (authState.authorized) {
         this.getSamples();
       }
     })
@@ -133,7 +133,7 @@ export class GetSamplesService {
         // });
 
         // Set status to be authorized
-        this.authSvc.setAuthorized();
+        // this.authSvc.setAuthorized();
 
 
         // Grab the sample locations and data and reshape to display in the table.
@@ -148,7 +148,7 @@ export class GetSamplesService {
       err => {
         console.log(err);
         // check if unauthorized; if so, redirect.
-        this.authSvc.redirectUnauthorized(err);
+        // this.authSvc.redirectUnauthorized(err);
       })
     // return (this.samples)
   }
