@@ -14,6 +14,7 @@ import { SchemaComponent } from './schema/schema.component';
 
 // --- Admin stuff ---
 import { LoginComponent } from './login/login.component';
+import { RedirectComponent } from './admin/redirect/redirect.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TermsComponent } from './admin/terms/terms.component';
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', data: { title: 'Dataset | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
+  { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
   { path: 'about', component: AboutComponent, pathMatch: 'full', data: { title: 'About | CViSB Data' } },
   { path: 'citation', component: CitationComponent, pathMatch: 'full', data: { title: 'Citing CViSB Data' } },
