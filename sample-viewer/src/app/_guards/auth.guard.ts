@@ -19,16 +19,7 @@ export class AuthGuard implements CanActivate {
   ) {
     authSvc.checkLogin();
 
-    // authSvc.loginState$.subscribe((loggedIn: boolean) => {
-    //   console.log("New login state received by auth.guard: " + loggedIn);
-    //
-    //   this.isLoggedIn = loggedIn;
-    // })
-
     authSvc.authState$.subscribe((authState: AuthState) => {
-      console.log("New authorization state received by auth.guard: ")
-      console.log(authState);
-
       this.isLoggedIn = authState.loggedIn;
       this.isAuthorized = authState.authorized;
     })
@@ -40,12 +31,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
     let url: string = state.url;
 
-    console.log('calling auth guard: state = ' + this.isLoggedIn);
-    console.log('url (auth guard) = ' + url)
-
-    // return (true);
     return this.checkLogin(url);
-    // return this.isLoggedIn;
   }
 
   canActivateChild(

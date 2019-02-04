@@ -30,9 +30,6 @@ export class DatasetComponent implements OnInit {
     this.datasets = fileSvc.getFiles();
     console.log(this.datasets);
 
-    // call authentication service to check if logged in
-    // authSvc.checkLogin();
-
   }
 
   ngOnInit() {
