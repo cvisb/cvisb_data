@@ -79,8 +79,9 @@ export class AppComponent {
 
 
   changeRoutes() {
-    console.log("ROUTE CHANGED; calling auth service")
-    this.authSvc.checkLogin();
+    console.log("route changed triggered")
+    // console.log("ROUTE CHANGED; calling auth service")
+    // this.authSvc.checkLogin();
     // this.checkLoginGH();
   }
 
