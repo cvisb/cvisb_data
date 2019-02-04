@@ -75,50 +75,57 @@ export class AuthService {
     // sleep(2000)
 
     // Redirect to Google's servers to authenticate.
-    this.document.location.href = `${environment.api_url}/oauth?next=${this.redirectUrl}`;
-    this.checkLogin();
+    // Then send to /redirect page to handle the redirect cascade.
+    this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=${this.redirectUrl}`;
+    // this.document.location.href = `${environment.api_url}/oauth?next=${this.redirectUrl}`;
+    // this.checkLogin();
     // console.log('finished logging in.')
   }
 
-  checkLogin() {
-    // console.log('auth.service called to check logged in state')
-    this.myhttp.get(environment.api_url + '/user', {
-    // this.http2.get(environment.api_url + '/user', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-    }).subscribe((r) => {
-      // console.log(r)
-      console.log('auth.service returns with user:')
-      console.log(r.body)
-      this.user = r.body;
-      this.userSubject.next(this.user);
+  checkLogin(): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
+      // console.log('auth.service called to check logged in state')
+      this.myhttp.get(environment.api_url + '/user', {
+        // this.http2.get(environment.api_url + '/user', {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json')
+      }).subscribe((r) => {
+        // console.log(r)
+        console.log('auth.service returns with user:')
+        console.log(r.body)
+        this.user = r.body;
+        this.userSubject.next(this.user);
 
-      Object.keys(this.user).length > 0 ? this.authSubject.next(true) : this.authSubject.next(false);
-      // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
-    },
-      err => {
-        console.log(err)
+        Object.keys(this.user).length > 0 ? this.authSubject.next(true) : this.authSubject.next(false);
+        resolve("Login has been checked!")
+        // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
+      },
+        err => {
+          console.log(err)
+          resolve("Login failed!")
+        })
       })
   }
 
-  redirectUnauthorized(err) {
-    if (err.status === 401 || err.status === 403) {
-      let url: string = this.router.url;
-      // this.redirectUrlSubject.next(url);
-      console.log('unauthorized!')
-      this.router.navigate(['/unauthorized'], { skipLocationChange: true});
-    }
-  }
 
-  logout(): void {
-    // this.isLoggedIn = false;
-    this.user = null;
-    this.authSubject.next(false);
-    this.redirectUrlSubject.next("/");
-    this.userSubject.next({});
-
-    this.document.location.href = `${environment.api_url}/logout?next=${this.logoutRedirect}`;
+redirectUnauthorized(err) {
+  if (err.status === 401 || err.status === 403) {
+    let url: string = this.router.url;
+    // this.redirectUrlSubject.next(url);
+    console.log('unauthorized!')
+    this.router.navigate(['/unauthorized'], { skipLocationChange: true });
   }
+}
+
+logout(): void {
+  // this.isLoggedIn = false;
+  this.user = null;
+  this.authSubject.next(false);
+  this.redirectUrlSubject.next("/");
+  this.userSubject.next({});
+
+  this.document.location.href = `${environment.api_url}/logout?next=${this.logoutRedirect}`;
+}
 
 }
