@@ -1,44 +1,45 @@
-<h4 class="patient-data" id="HLA">HLA</h4>
+<div class="hla-container patient-data-container">
+  <h4 class="patient-data" id="HLA">HLA</h4>
 
-<ng-container *ngIf="genotype; else nodata">
-  <div class="updated">
-    updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-  </div>
-
-  <div class="hla-files">
-    <h5 class="patient-data">files</h5>
-    <div *ngFor="let file of files">
-      <a>{{ file }}</a>
+  <ng-container *ngIf="genotype; else nodata">
+    <div class="updated">
+      updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
     </div>
-  </div>
 
-  <div class="hla-genotype">
-    <h5 class="patient-data">data</h5>
-
-    <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
-
-    <div class="container allele-container">
-
-      <div *ngFor="let locus of alleleCount" class="allele-group"
-      [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}"
-      (mouseout)="clearLocus()">
-        <div class="locus" (mouseover)="sendLocus(locus.key)">
-          {{ locus.key }}
-        </div>
-        <div *ngFor="let allele of genotype | filterLocus: locus.key"
-        class="allele" [ngClass]="{'highlight' : allele === selectedAllele}"
-        [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}"
-        (mouseover)="sendAllele(allele)" (mouseout)="clearAllele()">
-          {{ allele }}
-        </div>
-
-        <!-- <app-allele-hist [data]="locus.values"></app-allele-hist> -->
+    <div class="hla-files">
+      <h5 class="patient-data">files</h5>
+      <div *ngFor="let file of files">
+        <a>{{ file }}</a>
       </div>
     </div>
 
-  </div>
-</ng-container>
+    <div class="hla-genotype">
+      <h5 class="patient-data">data</h5>
 
-<ng-template #nodata>
-  <span class="nodata">not available</span>
-</ng-template>
+      <div class="hla-data">
+        <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
+
+        <div class="container-column">
+          <h3>Patient {{patient.patientID}} HLA Alleles</h3>
+          <div class="container allele-container">
+            <div *ngFor="let locus of alleleCount" class="allele-group" [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}" (mouseout)="clearLocus()">
+              <div class="locus" (mouseover)="sendLocus(locus.key)">
+                {{ locus.key }}
+              </div>
+              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}" (mouseover)="sendAllele(allele)" (mouseout)="clearAllele()">
+                {{ allele }}
+              </div>
+            </div>
+
+            <!-- <app-allele-hist [data]="locus.values"></app-allele-hist> -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <ng-template #nodata>
+    <span class="nodata">not available</span>
+  </ng-template>
+</div>
