@@ -78,8 +78,7 @@ export class AuthService {
 
     // Redirect to Google's servers to authenticate.
     // Then send to /redirect page to handle the redirect cascade.
-    this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=/sample`;
-    // this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=${this.redirectUrl}`;
+    this.document.location.href = `${environment.api_url}/oauth?next=/redirect?next=${this.redirectUrl}`;
     // this.document.location.href = `${environment.api_url}/oauth?next=${this.redirectUrl}`;
     // this.checkLogin();
     // console.log('finished logging in.')
