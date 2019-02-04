@@ -13,9 +13,26 @@
   flex-direction: row;
 }
 
+.hla-data {
+  display: flex;
+}
+
+.patients {
+  margin-right: 25px;
+}
+
 .allele-group {
   cursor: default;
   padding: 3px 10px;
   margin-right: 5px;
   border-radius: 3px;
+}
+
+.hla-data h3 {
+  font-weight: 300;
+  color: $grey-400;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid $grey-100;
 }

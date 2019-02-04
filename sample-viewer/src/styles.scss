@@ -18,6 +18,12 @@ body {
   flex-wrap: wrap;
 }
 
+.container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
 .centered {
   max-width: 1000px;
   margin: auto;
@@ -389,6 +395,7 @@ svg-icon.country-icon {
   color: $default-color;
 }
 // --- alternate IDs ---
+
 .altID {
   &::after {
     content: ", ";
@@ -425,12 +432,16 @@ h5.patient-data {
     content: " \2014";
   }
 }
+
+.patient-data-container {
+  margin-bottom: 2em;
+}
+
 // --- dataset page ---
 
 .dataset-page h3 {
   margin-bottom: 0.1em;
 }
-
 
 .updated {
   color: $ebola-color;
