@@ -20,6 +20,8 @@ export class RedirectComponent implements OnInit {
     private authSvc: AuthService
   ) {
 
+    console.log("REDIRECT PAGE CONSTRUCTED")
+
     route.queryParams.subscribe(params => {
       console.log(params);
       console.log("redirect sees next page = " + params['next']);
