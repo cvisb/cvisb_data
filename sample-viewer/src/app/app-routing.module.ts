@@ -13,10 +13,10 @@ import { DatasetPageComponent } from './dataset-page/dataset-page.component';
 import { SchemaComponent } from './schema/schema.component';
 
 // --- Admin stuff ---
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './admin/login/login.component';
 import { RedirectComponent } from './admin/redirect/redirect.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UnauthorizedComponent } from './admin/unauthorized/unauthorized.component';
+import { PageNotFoundComponent } from './admin/page-not-found/page-not-found.component';
 import { TermsComponent } from './admin/terms/terms.component';
 import { PrivacyComponent } from './admin/privacy/privacy.component';
 import { CitationComponent } from './admin/citation/citation.component';
