@@ -15,6 +15,8 @@ export class EmbedJsonldDirective implements OnDestroy {
 
     this._document.getElementsByTagName("script")
     this.script_element = this.renderer.createElement('script');
+    console.log('embedJsonld called')
+    console.log(jsonObj)
 
     if (isPlatformServer(this.platformId)) {
       // NOTE: insertion needs to occur on server-side ONLY-- or else you get two copies.
