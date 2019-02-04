@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { AuthService } from '../_services';
-import { AuthState } from '../_models';
+import { AuthService } from '../../_services';
+import { AuthState } from '../../_models';
 
 @Component({
   selector: 'app-login',

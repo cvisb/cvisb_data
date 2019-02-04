@@ -62,10 +62,7 @@ import {
   PatientHlaComponent, PatientNavComponent, PatientSamplesComponent, PatientSerologyComponent, PatientDemographicsComponent, PatientRelatedComponent
 } from './patient-page';
 
-import { LoginComponent } from './login/login.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { SchemaComponent } from './schema/schema.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -117,10 +114,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PatientSamplesComponent,
     PatientSerologyComponent,
     PatientDemographicsComponent,
-    LoginComponent,
-    UnauthorizedComponent,
     SchemaComponent,
-    PageNotFoundComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
