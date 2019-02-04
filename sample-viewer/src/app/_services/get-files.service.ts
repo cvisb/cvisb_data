@@ -212,7 +212,7 @@ export class GetFilesService {
 
   constructor(public http: HttpClient) {
     this.getFiles();
-    // this.putFiles(this.files.slice(0,1));
+    this.putFiles(this.files.slice(0,1));
   }
 
   getFiles() {
@@ -231,7 +231,7 @@ export class GetFilesService {
     },
       err => {
         console.log('Error in getting files')
-        console.log(err)
+        // console.log(err)
       })
     // return this.patients;
     return this.clearSelected(this.files);
