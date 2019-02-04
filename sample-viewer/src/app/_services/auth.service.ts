@@ -102,7 +102,7 @@ export class AuthService {
         this.userSubject.next(this.user);
 
         let loginStatus: boolean = Object.keys(this.user).length > 0;
-        let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) > 0;
+        let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) >= 0;
 
         console.log('loginStatus: ' + loginStatus)
         console.log('authStatus:' + authStatus)
