@@ -98,7 +98,7 @@ export class AppComponent {
   ngOnInit() {
     // if (isPlatformServer(this.platformId)) {
     //   console.log('client-side')
-    //   this.authSvc.checkLogin();
+      this.authSvc.checkLogin();
     // }
 
     // else {
