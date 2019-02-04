@@ -32,6 +32,9 @@ export class AuthService {
   public redirectUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>('/');
   public redirectUrlState$ = this.redirectUrlSubject.asObservable();
 
+  public loginSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loginState$ = this.loginSubject.asObservable();
+
   public authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public authState$ = this.authSubject.asObservable();
 
@@ -99,7 +102,7 @@ export class AuthService {
         this.user = r.body;
         this.userSubject.next(this.user);
 
-        Object.keys(this.user).length > 0 ? this.authSubject.next(true) : this.authSubject.next(false);
+        Object.keys(this.user).length > 0 ? this.loginSubject.next(true) : this.loginSubject.next(false);
         resolve("Login has been checked!")
         // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
       },
@@ -110,12 +113,16 @@ export class AuthService {
       })
   }
 
+setAuthorized() {
+  this.authSubject.next(true);
+}
 
 redirectUnauthorized(err) {
   if (err.status === 401 || err.status === 403) {
     let url: string = this.router.url;
     // this.redirectUrlSubject.next(url);
     console.log('unauthorized!')
+    this.authSubject.next(false);
     this.router.navigate(['/unauthorized'], { skipLocationChange: true });
   }
 }
@@ -123,7 +130,7 @@ redirectUnauthorized(err) {
 logout(): void {
   // this.isLoggedIn = false;
   this.user = null;
-  this.authSubject.next(false);
+  this.loginSubject.next(false);
   this.redirectUrlSubject.next("/");
   this.userSubject.next({});
 

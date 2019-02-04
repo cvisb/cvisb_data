@@ -74,7 +74,7 @@ export class GetSamplesService {
     // this.getSamples();
     // this.getSample('test_1');
     //
-    this.authSvc.authState$.subscribe((authenticated: boolean) => {
+    this.authSvc.loginState$.subscribe((authenticated: boolean) => {
       if (authenticated) {
         this.getSamples();
       }
@@ -131,6 +131,10 @@ export class GetSamplesService {
         // this.samples_wide.forEach((obj: any) => {
         //   obj['PBMC'] = this.nestSamples(obj.value.all_data);
         // });
+
+        // Set status to be authorized
+        this.authSvc.setAuthorized();
+
 
         // Grab the sample locations and data and reshape to display in the table.
         this.nestSamples();

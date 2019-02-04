@@ -192,7 +192,7 @@ export class GetPatientsService {
 
     // this.putPatients(this.fakePatients);
     //
-    this.authSvc.authState$.subscribe((authenticated: boolean) => {
+    this.authSvc.loginState$.subscribe((authenticated: boolean) => {
       if (authenticated) {
         this.getPatients();
       }
@@ -249,6 +249,9 @@ export class GetPatientsService {
 
       // Sort patients by available data length, then alpha.
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
+
+      // Set status to be authorized
+      this.authSvc.setAuthorized();
 
       // send new patients to subscription services.
       // this.patientsSubject.next(patients);
