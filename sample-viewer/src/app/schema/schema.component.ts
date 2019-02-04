@@ -41,7 +41,7 @@ export class SchemaComponent implements OnInit {
   }
 
   routeSchema(schema) {
-    this.document.location.href = `https://data.cvisb.org/schema/${schema}.json`
+    this.document.location.href = `https://data.cvisb.org/jsonschema/${schema}.json`
   }
 
 }
