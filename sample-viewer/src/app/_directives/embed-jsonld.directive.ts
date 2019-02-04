@@ -30,14 +30,6 @@ export class EmbedJsonldDirective implements OnDestroy {
       this.script_element.title = `schemaorg ${jsonType}`;
       this.script_element.id = `${jsonType}-${jsonObj['name']}`
       this.renderer.appendChild(this._document.head, this.script_element);
-    } else {
-      console.log('client-side')
-
-            this.script_element.type = `application/ld+json`;
-            this.script_element.text = JSON.stringify(jsonObj);
-            this.script_element.title = `schemaorg ${jsonType}`;
-            this.script_element.id = `${jsonType}-${jsonObj['name']}`
-            this.renderer.appendChild(this._document.head, this.script_element);
     }
   }
 
