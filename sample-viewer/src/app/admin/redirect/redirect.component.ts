@@ -12,7 +12,6 @@ import { AuthService } from '../../_services';
 
 export class RedirectComponent implements OnInit {
   page_url: string;
-  loginStatus: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,10 +27,6 @@ export class RedirectComponent implements OnInit {
       this.page_url = params['next']
     })
 
-    authSvc.loginState$.subscribe((loginState: boolean) => {
-      console.log("Auth state announces to redirect a login state of " + loginState);
-      this.loginStatus = loginState;
-    })
   }
 
   ngOnInit() {

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../_services';
 import { Title } from '@angular/platform-browser';
+
+import { AuthService } from '../_services';
+import { AuthState } from '../_models';
 
 @Component({
   selector: 'app-login',
@@ -30,8 +32,8 @@ export class LoginComponent {
       this.user = user;
     })
 
-    authSvc.loginState$.subscribe((loggedIn: boolean) => {
-      this.loggedIn = loggedIn;
+    authSvc.authState$.subscribe((authState: AuthState) => {
+      this.loggedIn = authState.loggedIn;
     })
 
     // set page title

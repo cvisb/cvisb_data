@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateChild } from '@angular/router';
 import { Observable } from 'rxjs';
 
+import { AuthState } from '../_models';
 import { AuthService } from '../_services';
 
 @Injectable({
@@ -18,16 +19,18 @@ export class AuthGuard implements CanActivate {
   ) {
     authSvc.checkLogin();
 
-    authSvc.loginState$.subscribe((loggedIn: boolean) => {
-      console.log("New login state received by auth.guard: " + loggedIn);
+    // authSvc.loginState$.subscribe((loggedIn: boolean) => {
+    //   console.log("New login state received by auth.guard: " + loggedIn);
+    //
+    //   this.isLoggedIn = loggedIn;
+    // })
 
-      this.isLoggedIn = loggedIn;
-    })
+    authSvc.authState$.subscribe((authState: AuthState) => {
+      console.log("New authorization state received by auth.guard: ")
+      console.log(authState);
 
-    authSvc.authState$.subscribe((authorized: boolean) => {
-      console.log("New authorization state received by auth.guard: " + authorized);
-
-      this.isAuthorized = authorized;
+      this.isLoggedIn = authState.loggedIn;
+      this.isAuthorized = authState.authorized;
     })
 
   }
@@ -56,6 +59,7 @@ export class AuthGuard implements CanActivate {
     // Store the attempted URL for redirecting
     this.authSvc.redirectUrlSubject.next(url);
 
+    // if (this.isLoggedIn) {
     if (this.isLoggedIn && this.isAuthorized) {
       return true;
     }

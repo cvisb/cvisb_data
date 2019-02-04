@@ -14,6 +14,7 @@ import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, 
 
 import { DOCUMENT } from '@angular/common';
 
+import { AuthState } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class AuthService {
   logoutRedirect: string = `/home`;
   // logoutRedirect: string = `${environment.host_url}/login`;
   user: Object;
+  authorizedUsers = ['laura.d.hughes@gmail.com', 'andrew.su@gmail.com'];
 
   public userSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   public userState$ = this.userSubject.asObservable();
@@ -32,10 +34,7 @@ export class AuthService {
   public redirectUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>('/');
   public redirectUrlState$ = this.redirectUrlSubject.asObservable();
 
-  public loginSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public loginState$ = this.loginSubject.asObservable();
-
-  public authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public authSubject: BehaviorSubject<AuthState> = new BehaviorSubject<AuthState>({loggedIn: false, authorized: false});
   public authState$ = this.authSubject.asObservable();
 
   constructor(
@@ -102,39 +101,32 @@ export class AuthService {
         this.user = r.body;
         this.userSubject.next(this.user);
 
-        Object.keys(this.user).length > 0 ? this.loginSubject.next(true) : this.loginSubject.next(false);
-        resolve("Login has been checked!")
+        let loginStatus: boolean = Object.keys(this.user).length > 0;
+        let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) > 0;
+
+        console.log('loginStatus: ' + loginStatus)
+        console.log('authStatus:' + authStatus)
+
+        this.authSubject.next({loggedIn: loginStatus, authorized: authStatus});
+
+        resolve("Login has been checked!");
         // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
       },
         err => {
           console.log(err)
-          resolve("Login failed!")
+          resolve("Login failed!");
         })
-      })
+    })
   }
 
-setAuthorized() {
-  this.authSubject.next(true);
-}
+  logout(): void {
+    // this.isLoggedIn = false;
+    this.user = null;
+    this.authSubject.next({loggedIn: false, authorized: false});
+    this.redirectUrlSubject.next("/");
+    this.userSubject.next({});
 
-redirectUnauthorized(err) {
-  if (err.status === 401 || err.status === 403) {
-    let url: string = this.router.url;
-    // this.redirectUrlSubject.next(url);
-    console.log('unauthorized!')
-    this.authSubject.next(false);
-    this.router.navigate(['/unauthorized'], { skipLocationChange: true });
+    this.document.location.href = `${environment.api_url}/logout?next=${this.logoutRedirect}`;
   }
-}
-
-logout(): void {
-  // this.isLoggedIn = false;
-  this.user = null;
-  this.loginSubject.next(false);
-  this.redirectUrlSubject.next("/");
-  this.userSubject.next({});
-
-  this.document.location.href = `${environment.api_url}/logout?next=${this.logoutRedirect}`;
-}
 
 }
