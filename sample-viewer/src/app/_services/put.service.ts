@@ -33,7 +33,7 @@ export class PutService {
         .set('q', `${uniqueID}:\"${ids}\"`)
     }).subscribe(data => {
       let files = data['body']['hits'];
-      console.log(files)
+      console.log(data)
 
       let id_dict = files.map((d: any) => {
         return ({
