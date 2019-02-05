@@ -20,15 +20,20 @@ export class PutService {
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(newData: any, endpoint: string, uniqueID: string = 'identifier') {
     this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
-      // TODO: check if index is unique
+
       id_dict.forEach((dict_row) => {
-      if(newData.filter((d) => d[uniqueID] === dict_row.uniqueID).length === 1){
-        let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
+        // check if index is unique, exists
+        let filtered = newData.filter((d) => d[uniqueID] === dict_row.uniqueID);
+        console.log(filtered)
+        if (filtered.length === 1) {
+
+          let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
+          console.log(idx)
 
           newData[idx]["_id"] = dict_row['_id'];
         } else {
           console.log("Oops! More than one record has that unique ID.  Check whatever the IDs are of what you're trying to insert and try again.")
-          return(null);
+          return (null);
         }
       })
       console.log('attempting to add new record with generic function')
