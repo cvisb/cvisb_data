@@ -71,22 +71,6 @@ export class getDatasetsService {
       }))
   }
 
-  putFiles(datasets: any[]) {
-    console.log('attempting to add new record')
-    // console.log(this.jsonify(datasets));
-    this.http.put<any[]>(environment.api_url + "/api/dataset",
-      this.jsonify(datasets),
-      {
-        // observe: 'response',
-        headers: new HttpHeaders()
-        // .set('data', )
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-  }
 
   getSchema(dsid: string) {
     // TODO: check if more than one dataset.
