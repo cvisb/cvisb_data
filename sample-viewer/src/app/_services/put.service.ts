@@ -20,8 +20,11 @@ export class PutService {
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(newData: any, endpoint: string, uniqueID: string = 'identifier') {
     this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
+      console.log(id_dict)
 
       for (let dict_row of id_dict) {
+        console.log(newData)
+        console.log(dict_row.uniqueID)
 
         // id_dict.forEach((dict_row) => {
         // check if index is unique, exists
