@@ -23,9 +23,7 @@ export class getDatasetsService {
     public putSvc: PutService
   ) {
     this.getDatasets();
-    // this.putFiles(FILES);
-    //
-    putSvc.put(FILES, 'dataset', 'identifier')
+    // putSvc.put(FILES, 'dataset', 'identifier')
   }
 
   getDatasets() {
