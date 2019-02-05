@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { GetFilesService, FileMetadataService } from '../_services';
+import { getDatasetsService, FileMetadataService } from '../_services';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class DatasetPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private meta: Meta,
     private titleSvc: Title,
-    private fileSvc: GetFilesService,
+    private fileSvc: getDatasetsService,
     private mdSvc: FileMetadataService,
   ) {
 
@@ -30,7 +30,7 @@ export class DatasetPageComponent implements OnInit {
     });
 
     // Hit API to get data
-    this.datasets = fileSvc.getFiles();
+    this.datasets = fileSvc.getDatasets();
     // TODO: check if more than one dataset.
     this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
 

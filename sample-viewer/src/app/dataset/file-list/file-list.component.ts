@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import { GetFilesService, FileMetadataService } from '../../_services';
+import { getDatasetsService, FileMetadataService } from '../../_services';
 
 @Component({
   selector: 'app-file-list',
@@ -24,7 +24,7 @@ export class FileListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
   dataSource: MatTableDataSource<any>;
 
-  constructor(private fileSvc: GetFilesService, private mdSvc: FileMetadataService) {
+  constructor(private fileSvc: getDatasetsService, private mdSvc: FileMetadataService) {
     mdSvc.fileClicked$.subscribe(status => {
       this.anything_selected = status;
     })

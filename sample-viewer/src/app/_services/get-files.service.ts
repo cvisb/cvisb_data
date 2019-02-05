@@ -13,7 +13,7 @@ import FILES from '../../assets/data/dataset_public.json';
 @Injectable({
   providedIn: 'root'
 })
-export class GetFilesService {
+export class getDatasetsService {
   schema_dataset: any;
 
 
@@ -21,13 +21,13 @@ export class GetFilesService {
     public http: HttpClient,
     public putSvc: PutService
   ) {
-    this.getFiles();
+    this.getDatasets();
     // this.putFiles(FILES);
     //
     putSvc.getIDs(FILES, 'dataset', 'identifier')
   }
 
-  getFiles() {
+  getDatasets() {
     this.http.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
       // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
