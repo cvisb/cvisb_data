@@ -23,7 +23,7 @@ export class GetFilesService {
       "keywords": ["immunology", "Ebola virus", "EBOV"],
       "measurementTechnique": "Systems Serology",
       "dateModified": "2018-10-31",
-      "temporalCoverage": "2014-2019",
+      "temporalCoverage": "2019",
       "spatialCoverage": [{
         "@type": "Country",
         "name": "Sierra Leone",
@@ -106,7 +106,7 @@ export class GetFilesService {
       "variableMeasured": "HLA genotype",
       "datePublished": "2017-08-11",
       "dateModified": "2018-09-12",
-      "temporalCoverage": "2014/..",
+      "temporalCoverage": "2019",
       "spatialCoverage": [{
         "@type": "Country",
         "name": "Sierra Leone",
