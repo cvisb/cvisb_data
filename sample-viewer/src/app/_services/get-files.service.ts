@@ -254,7 +254,7 @@ export class GetFilesService {
 
   constructor(public http: HttpClient) {
     this.getFiles();
-    this.putFiles(this.files);
+    // this.putFiles(this.files);
   }
 
   getFiles() {
@@ -264,8 +264,8 @@ export class GetFilesService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).subscribe(data => {
-      let patients = data['body']['hits'];
-      // console.log(data)
+      let files = data['body']['hits'];
+      console.log(files)
 
       // send new patients to subscription services.
       // this.patientsSubject.next(this.patients);
