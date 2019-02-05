@@ -30,7 +30,7 @@ export class PutService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
-        .set('q', `${uniqueID}:\"${ids}\"`)
+        .set('q', `${uniqueID}:${ids}`)
     }).subscribe(data => {
       let files = data['body']['hits'];
       console.log(data)
