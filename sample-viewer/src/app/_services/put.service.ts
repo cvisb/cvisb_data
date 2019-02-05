@@ -25,10 +25,10 @@ export class PutService {
       let ids = id_dict.map((d) => d.uniqueID);
       let unique_ids = new Set(ids);
 
-      // if(Array.from(unique_ids).length !== ids.length) {
-      //   console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
-      //   return(null);
-      // }
+      if (Array.from(unique_ids).length !== ids.length) {
+        console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
+        return (null);
+      }
 
       id_dict.forEach((dict_row) => {
         // check if index is unique, exists within newData
@@ -68,21 +68,23 @@ export class PutService {
         .set('q', `${uniqueID}:${ids}`)
     }).pipe(
       map(data => {
-        let files = data['body']['hits'];
+        if (data) {
+          let files = data['body']['hits'];
 
-        if (!files) {
-          return (null)
+          if (!files) {
+            return (null)
+          }
+          let id_dict = files.map((d: any) => {
+            return ({
+              '_id': d['_id'],
+              uniqueID: d[uniqueID]
+            })
+          }
+
+          );
+
+          return (id_dict);
         }
-        let id_dict = files.map((d: any) => {
-          return ({
-            '_id': d['_id'],
-            uniqueID: d[uniqueID]
-          })
-        }
-
-        );
-
-        return (id_dict);
       }))
   }
 
