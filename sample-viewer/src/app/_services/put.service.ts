@@ -19,27 +19,35 @@ export class PutService {
   // (3) To all, appends the dateModified to be the current date. [?-- should happen on backend?]
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(newData: any, endpoint: string, uniqueID: string = 'identifier') {
-    let id_dict = this.getIDs(newData, endpoint, uniqueID);
-    console.log(id_dict);
 
-    id_dict.forEach((dict_row) => {
-      let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
-      newData[idx]["_id"] = dict_row['_id'];
+
+    this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
+      console.log(id_dict);
+
+      id_dict.forEach((dict_row) => {
+        let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
+        console.log(dict_row.uniqueID)
+        console.log(dict_row['_id'])
+        console.log(idx)
+        console.log(newData[idx])
+        newData[idx]["_id"] = dict_row['_id'];
+      })
+      console.log('attempting to add new record with generic function')
+      console.log(newData);
+
+      this.http.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+        this.jsonify(newData),
+        {
+          headers: new HttpHeaders()
+        }).subscribe(resp => {
+          console.log(resp)
+        },
+          err => {
+            console.log(err)
+          })
     })
-    console.log('attempting to add new record with generic function')
-    console.log(newData);
+}
 
-    this.http.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-      this.jsonify(newData),
-      {
-        headers: new HttpHeaders()
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-  }
 
   getIDs(newData: any, endpoint: string, uniqueID: string) {
     let ids = newData.map((d) => d[uniqueID]).join(",");
