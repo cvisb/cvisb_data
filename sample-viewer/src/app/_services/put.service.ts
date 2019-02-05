@@ -20,25 +20,21 @@ export class PutService {
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(newData: any, endpoint: string, uniqueID: string = 'identifier') {
     this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
-      console.log(id_dict)
 
+      // Check if there are already duplicates within the index.
+      let ids = id_dict.map((d) => d.uniqueID);
+      let unique_ids = new Set(ids);
 
-        // Check if there are already duplicates within the index.
-        let ids = id_dict.map((d) => d.uniqueID);
-        let unique_ids = new Set(ids);
-        console.log(unique_ids)
+      // if(Array.from(unique_ids).length !== ids.length) {
+      //   console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
+      //   return(null);
+      // }
 
-        if(Array.from(unique_ids).length !== ids.length) {
-          console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
-          return(null);
-        }
-
-        id_dict.forEach((dict_row) => {
+      id_dict.forEach((dict_row) => {
         // check if index is unique, exists within newData
         if (newData.filter((d) => d[uniqueID] === dict_row.uniqueID).length === 1) {
 
           let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
-          console.log(idx)
 
           newData[idx]["_id"] = dict_row['_id'];
         } else {
@@ -46,8 +42,6 @@ export class PutService {
           return (null);
         }
       })
-      console.log('attempting to add new record with generic function')
-      console.log(newData);
 
       this.http.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
