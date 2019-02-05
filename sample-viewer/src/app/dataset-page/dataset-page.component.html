@@ -38,6 +38,6 @@
 
     </div>
   </div>
-  <span *embedJsonld="schema_dataset" *ngIf="schema_dataset"></span>
+  <span *ngIf="schema_dataset"><span *embedJsonld="schema_dataset"></span></span>
   <span *embedJsonld="'schema_dataset'"></span>
 </div>
