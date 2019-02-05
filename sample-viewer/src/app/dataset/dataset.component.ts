@@ -4,7 +4,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { GetFilesService, AuthService } from '../_services';
+import { getDatasetsService, AuthService } from '../_services';
 
 @Component({
   selector: 'app-dataset',
@@ -19,7 +19,7 @@ export class DatasetComponent implements OnInit {
 
 
   constructor(
-    private fileSvc: GetFilesService,
+    private fileSvc: getDatasetsService,
     private titleSvc: Title,
     private route: ActivatedRoute,
     private authSvc: AuthService
@@ -27,7 +27,7 @@ export class DatasetComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    this.datasets = fileSvc.getFiles();
+    this.datasets = fileSvc.getDatasets();
     console.log(this.datasets);
 
   }
