@@ -37,14 +37,17 @@ export class DatasetPageComponent implements OnInit {
       console.log('dataset from API:')
       console.log(dataset)
       this.dataset = dataset;
+
+      if (dataset) {
+        // Set page name
+        this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
+      }
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
     this.schema_dataset = fileSvc.getSchema(this.dsid);
     console.log(this.schema_dataset);
 
-    // Set page name
-    this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
   }
 
   ngOnInit() {
