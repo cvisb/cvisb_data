@@ -24,6 +24,7 @@ export class PutService {
 
         // Check if there are already duplicates within the index.
         let ids = id_dict.map((d) => d.uniqueID);
+        console.log(ids)
         if([... <any> new Set(ids)].length !== ids.length) {
           console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
           return(null);
