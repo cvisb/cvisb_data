@@ -22,11 +22,11 @@ export class PutService {
     this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
       console.log(id_dict)
 
+      const Set = require('es6-set/polyfill');
+
         // Check if there are already duplicates within the index.
         let ids = id_dict.map((d) => d.uniqueID);
-        let unique_ids = [... <any> new Set(ids)];
-        console.log(unique_ids)
-        if(unique_ids.length !== ids.length) {
+        if([... <any> new Set(ids)].length !== ids.length) {
           console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
           return(null);
         }
