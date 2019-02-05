@@ -30,9 +30,14 @@ export class DatasetPageComponent implements OnInit {
     });
 
     // Hit API to get data
-    this.datasets = fileSvc.getDatasets();
+    // this.datasets = fileSvc.getDatasets();
     // TODO: check if more than one dataset.
-    this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
+    // this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
+    fileSvc.getDataset(this.dsid).subscribe((dataset) => {
+      console.log('dataset from API:')
+      console.log(dataset)
+      this.dataset = dataset;
+    })
 
     // TEMP: shim to remove non-schema.org offensive fields
     this.schema_dataset = fileSvc.getSchema(this.dsid);
