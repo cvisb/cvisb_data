@@ -24,13 +24,5 @@ sample-viewer-api/src/static/data/*.xlsx
 sample-viewer-api/src/static/data/*.xls
 sample-viewer-api/src/static/data/*.csv
 sample-viewer-api/src/static/data/*.json
+sample-viewer-api/src/static/data/*.fasta
 notes/*.md
-
-
-
-
-
-
-
-
-
