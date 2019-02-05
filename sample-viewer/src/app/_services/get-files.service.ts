@@ -23,7 +23,7 @@ export class GetFilesService {
       "keywords": ["immunology", "Ebola virus", "EBOV"],
       "measurementTechnique": "Systems Serology",
       "dateModified": "2018-10-31",
-      "temporalCoverage": "2014/..",
+      "temporalCoverage": "2014-2019",
       "spatialCoverage": [{
         "@type": "Country",
         "name": "Sierra Leone",
@@ -178,15 +178,15 @@ export class GetFilesService {
           }
         },
         "contentUrl": "<url>",
-        "experimentParameters": [{
-          "@type": "Experiment",
-          "experimentID": "HLA-summary",
-          "experimentDate": "2014/..",
-          "patientIDs": [
-          ],
-          "sampleIDs": [
-          ]
-        }]
+        // "experimentParameters": [{
+        //   "@type": "Experiment",
+        //   "experimentID": "HLA-summary",
+        //   "experimentDate": "2014/..",
+        //   "patientIDs": [
+        //   ],
+        //   "sampleIDs": [
+        //   ]
+        // }]
       },
       {
         "@type": "DataDownload",
@@ -254,7 +254,7 @@ export class GetFilesService {
 
   constructor(public http: HttpClient) {
     this.getFiles();
-    this.putFiles(this.files.slice(0, 1));
+    this.putFiles(this.files);
   }
 
   getFiles() {
