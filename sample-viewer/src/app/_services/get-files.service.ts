@@ -25,7 +25,7 @@ export class getDatasetsService {
     this.getDatasets();
     // this.putFiles(FILES);
     //
-    putSvc.getIDs(FILES, 'dataset', 'identifier')
+    putSvc.put(FILES, 'dataset', 'identifier')
   }
 
   getDatasets() {
