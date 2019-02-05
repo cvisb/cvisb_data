@@ -70,12 +70,16 @@ export class PutService {
       map(data => {
         let files = data['body']['hits'];
 
+        if (!files) {
+          return (null)
+        }
         let id_dict = files.map((d: any) => {
           return ({
             '_id': d['_id'],
             uniqueID: d[uniqueID]
           })
         }
+
         );
 
         return (id_dict);
