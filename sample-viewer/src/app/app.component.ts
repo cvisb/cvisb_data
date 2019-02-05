@@ -31,6 +31,6 @@ export class AppComponent {
 
 
   ngOnInit() {
-      this.authSvc.checkLogin();
+      // this.authSvc.checkLogin();
   }
 }
