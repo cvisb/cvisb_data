@@ -34,11 +34,12 @@ from getSampleRosters import samples
 df3 = samples
 
 # [5] Previously compiled lists
-from getRandomPatientLists import kdf, mdf, bdf, wl
+from getRandomPatientLists import kdf, mdf, bdf, wl, lsv
 df4 = kdf
 df5 = mdf
 df6 = bdf
 df7 = wl
+df8 = lsv
 
 
 
@@ -46,7 +47,7 @@ df7 = wl
 # [LAST] Merge together all the patients, and export for John ----------------------------------------------------------------------------------------------------
 # df = pd.merge(df1, df2, how="outer", on=["patientID", "cohort", "outcome"], indicator=True)
 
-df = pd.concat([df1, df2, df3, df4, df5, df6, df7])
+df = pd.concat([df1, df2, df3, df4, df5, df6, df7, df8])
 # df.country = df.country.apply(lambda x: hla.cleanCountry(x))
 
 df.cohort.value_counts()
@@ -173,6 +174,8 @@ patients.country.dataDisagreement.value_counts()
 patients.cohort.dataDisagreement.value_counts()
 patients.outcome.dataDisagreement.value_counts()
 
+patients[patients.outcome.dataDisagreement == True].to_csv("2019-02-05_LSVseq_outcomeDisagreements_PRIVATE.csv")
+
 # Reset column names
 patients.columns = ['_'.join(tup).rstrip('_').replace('_extendIDs', '').replace('_combine', '') for tup in patients.columns.values]
 patients = patients[['ID', 'allIDs', 'country', 'cohort', 'outcome', 'source']]
@@ -182,6 +185,7 @@ patients.sample(14)
 patients.shape
 
 
+patients[patients.country != 'Nigeria'].drop('country', axis = 1).shape
 # Export everything.
 patients.to_json(output_file+".json", orient='records')
 # Ignore Nigerian samples for John

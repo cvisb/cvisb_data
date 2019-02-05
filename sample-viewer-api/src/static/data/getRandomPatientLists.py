@@ -94,6 +94,31 @@ wl.dropna(subset=["patientID"], inplace=True)
 
 wl['source'] = 'inventoryJan2019_matthias'
 
+# Karthik's list of previously sequenced Lassa patients
+lsv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/survival_dataset_lasv_01312019_Karthik_PRIVATE.csv"
+
+lsv = pd.read_csv(lsv_file)
+
+
+def cleanOutcome(outcome):
+    # Need to fix DEAD to Dead
+    if(outcome.lower().strip() == "discharged"):
+        return("survivor")
+    elif(outcome.lower().strip() == "died"):
+        return("dead")
+    else:
+        return(outcome.lower().strip())
+
+lsv.head()
+lsv.country.value_counts()
+
+# Clean outcome status
+lsv['outcome'] = lsv['outcome'].apply(lambda x: cleanOutcome(x))
+lsv['cohort'] = 'Lassa'
+lsv.rename(columns={'sample_id': 'patientID'}, inplace=True)
+lsv = lsv[['patientID', 'country', 'outcome', 'cohort']]
+lsv['source'] = 'LSV_prevSeq_karthik'
+
 # Brian's list of current samples
 # n = 118
 bfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Collection Date Summary_Brian_PRIVATE.xlsx"
