@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
+import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 
 
@@ -18,38 +18,61 @@ export class PutService {
   // merge/update the data on the backend, not append a new object.
   // (3) To all, appends the dateModified to be the current date. [?-- should happen on backend?]
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
-  put(newData: any, endpoint: string) {
+  put(newData: any, endpoint: string, uniqueID: string = 'identifier') {
+    let id_dict = this.getIDs(newData, endpoint, uniqueID);
+    console.log(id_dict);
 
+    id_dict.forEach((dict_row) => {
+      let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
+      newData[idx]["_id"] = dict_row['_id'];
+    })
+    console.log('attempting to add new record with generic function')
+    console.log(newData);
+
+    this.http.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+      this.jsonify(newData),
+      {
+        headers: new HttpHeaders()
+      }).subscribe(resp => {
+        console.log(resp)
+      },
+        err => {
+          console.log(err)
+        })
   }
 
-  getIDs(newData: any, endpoint: string, uniqueID: string = 'identifier') {
+  getIDs(newData: any, endpoint: string, uniqueID: string) {
     let ids = newData.map((d) => d[uniqueID]).join(",");
 
-    this.http.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+    return this.http.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
         .set('q', `${uniqueID}:${ids}`)
-    }).subscribe(data => {
-      let files = data['body']['hits'];
-      console.log(data)
+    }).pipe(
+      map(data => {
+        let files = data['body']['hits'];
 
-      let id_dict = files.map((d: any) => {
-        return ({
-          'id': d['_id'],
-          uniqueID: d[uniqueID]
-        })
-      }
-    );
+        let id_dict = files.map((d: any) => {
+          return ({
+            '_id': d['_id'],
+            uniqueID: d[uniqueID]
+          })
+        }
+        );
 
-    console.log(id_dict);
-    },
-      err => {
-        console.log('Error in getting files')
-        // console.log(err)
-      })
+        return (id_dict);
+      }))
+  }
 
+  // Function to convert to a json object to be inserted by ES
+  jsonify(arr: any[]): string {
+    let json_arr = [];
 
+    for (let record of arr) {
+      json_arr.push(JSON.stringify(record))
+    }
+    return (json_arr.join("\n"))
   }
 }
