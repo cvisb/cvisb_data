@@ -22,26 +22,26 @@ export class PutService {
     this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
       console.log(id_dict)
 
-      for (let dict_row of id_dict) {
-        console.log(newData)
-        console.log(dict_row.uniqueID)
+        // Check if there are already duplicates within the index.
+        let ids = id_dict.map((d) => d.uniqueID);
+        if([... <any> new Set(ids)].length !== ids.length) {
+          console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
+          return(null);
+        }
 
-        // id_dict.forEach((dict_row) => {
-        // check if index is unique, exists
-        let filtered = newData.filter((d) => d[uniqueID] === dict_row.uniqueID);
-        console.log(filtered)
-        if (filtered.length === 1) {
+        id_dict.forEach((dict_row) => {
+        // check if index is unique, exists within newData
+        if (newData.filter((d) => d[uniqueID] === dict_row.uniqueID).length === 1) {
 
           let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
           console.log(idx)
 
           newData[idx]["_id"] = dict_row['_id'];
         } else {
-          console.log("Oops! More than one record has that unique ID.  Check whatever the IDs are of what you're trying to insert and try again.")
+          console.log("Oops! More than one record in the new documents has the same unique ID.  Check whatever the IDs are of what you're trying to insert and try again.")
           return (null);
         }
-      }
-      // })
+      })
       console.log('attempting to add new record with generic function')
       console.log(newData);
 
