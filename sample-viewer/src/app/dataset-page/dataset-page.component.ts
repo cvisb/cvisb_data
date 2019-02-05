@@ -43,7 +43,7 @@ export class DatasetPageComponent implements OnInit {
         this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
       }
 
-      this.schema_dataset = dataset;
+      this.schema_dataset = 'dataset';
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
