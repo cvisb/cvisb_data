@@ -42,12 +42,14 @@ export class DatasetPageComponent implements OnInit {
         // Set page name
         this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
       }
+
+      this.schema_dataset = dataset;
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
     // this.schema_dataset = fileSvc.getSchema(this.dsid);
     // console.log(this.schema_dataset);
-    this.schema_dataset = "dataset"
+    // this.schema_dataset = dataset;
 
   }
 
