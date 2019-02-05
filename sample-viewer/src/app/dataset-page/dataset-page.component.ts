@@ -45,8 +45,9 @@ export class DatasetPageComponent implements OnInit {
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
-    this.schema_dataset = fileSvc.getSchema(this.dsid);
+    // this.schema_dataset = fileSvc.getSchema(this.dsid);
     // console.log(this.schema_dataset);
+    this.schema_dataset = "TEST TEST TEST"
 
   }
 
