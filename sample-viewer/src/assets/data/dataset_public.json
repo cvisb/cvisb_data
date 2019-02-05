@@ -83,49 +83,6 @@
     "version": "0.1"
   },
   {
-    "_id": "OwAIv2gBbNI6MIxgdyWD",
-    "identifier": "test5",
-    "name": "test5",
-    "description": "duplicate dataset",
-    "distribution": [],
-    "measurementTechnique": "other",
-    "dateModified": "2019-02-05",
-    "author": {
-      "@type": "Organization",
-      "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
-      "name": "Galit Alter laboratory",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "technical support",
-        "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
-        "email": "galter@partners.org"
-      }
-    },
-    "version": "0.1"
-  },
-  {
-    "_id": "OgAHv2gBbNI6MIxgMCUC",
-    "identifier": "test6",
-    "name": "test6",
-    "description": "duplicate dataset",
-    "distribution": [],
-    "measurementTechnique": "other",
-    "dateModified": "2019-02-05",
-    "author": {
-      "@type": "Organization",
-      "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
-      "name": "Galit Alter laboratory",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "technical support",
-        "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
-        "email": "galter@partners.org"
-      }
-    },
-    "version": "0.1"
-  },
-
-  {
     "@context": "http://schema.org/",
     "@type": "Dataset",
     "identifier": "systemsserology",
