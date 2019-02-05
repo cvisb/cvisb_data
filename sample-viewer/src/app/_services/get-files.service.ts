@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 import { PutService } from './put.service';
@@ -28,25 +29,43 @@ export class getDatasetsService {
   }
 
   getDatasets() {
-    this.http.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
+    return this.http.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
       // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
-    }).subscribe(data => {
-      let files = data['body']['hits'];
-      console.log(files)
+    }).pipe(
+      map(data => {
+        let files = data['body']['hits'];
+        console.log(files)
 
-      // send new patients to subscription services.
-      // this.patientsSubject.next(this.patients);
-      // this.patientsSubject.next(patients);
-    },
-      err => {
-        console.log('Error in getting files')
-        // console.log(err)
-      })
-    // return this.patients;
-    // return this.clearSelected(this.files);
+        return (files)
+
+        // send new patients to subscription services.
+        // this.patientsSubject.next(this.patients);
+        // this.patientsSubject.next(patients);
+      }))
+    // err => {
+    //   console.log('Error in getting files')
+    //   // console.log(err)
+    // })
+  }
+
+  getDataset(id: string, idVar: string = 'identifier') {
+    return this.http.get<any[]>(environment.api_url + "/api/dataset/query", {
+      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', `${idVar}:\"${id}\"`)
+    }).pipe(
+      map(data => {
+        let files = data['body']['hits'];
+        console.log(files)
+
+        return (files)
+      }))
   }
 
   putFiles(datasets: any[]) {
