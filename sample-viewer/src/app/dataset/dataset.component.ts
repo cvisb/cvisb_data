@@ -27,8 +27,11 @@ export class DatasetComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    this.datasets = fileSvc.getDatasets();
-    console.log(this.datasets);
+    fileSvc.getDatasets().subscribe((datasets) => {
+      this.datasets = datasets;
+      console.log(this.datasets);
+    });
+
 
   }
 
