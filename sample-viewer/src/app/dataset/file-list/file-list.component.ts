@@ -24,7 +24,7 @@ export class FileListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
   dataSource: MatTableDataSource<any>;
 
-  constructor(private fileSvc: getDatasetsService, private mdSvc: FileMetadataService) {
+  constructor(private datasetSvc: getDatasetsService, private mdSvc: FileMetadataService) {
     mdSvc.fileClicked$.subscribe(status => {
       this.anything_selected = status;
     })
@@ -48,7 +48,7 @@ export class FileListComponent implements OnInit {
     let file_name = selected['name'];
     //
     // Reset other files
-    // this.dataSource.data = this.fileSvc.clearSelected(this.dataSource.data);
+    // this.dataSource.data = this.datasetSvc.clearSelected(this.dataSource.data);
     //
     // Activate selected file
     // for (let i = 0; i < this.dataSource.data.length; i++) {

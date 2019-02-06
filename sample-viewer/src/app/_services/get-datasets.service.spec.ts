@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { getDatasetsService } from './get-files.service';
+import { getDatasetsService } from './get-datasets.service';
 
 describe('getDatasetsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

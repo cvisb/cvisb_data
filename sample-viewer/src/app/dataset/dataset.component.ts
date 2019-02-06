@@ -19,7 +19,7 @@ export class DatasetComponent implements OnInit {
 
 
   constructor(
-    private fileSvc: getDatasetsService,
+    private datasetSvc: getDatasetsService,
     private titleSvc: Title,
     private route: ActivatedRoute,
     private authSvc: AuthService
@@ -27,7 +27,7 @@ export class DatasetComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    fileSvc.getDatasets().subscribe((datasets) => {
+    datasetSvc.getDatasets().subscribe((datasets) => {
       this.datasets = datasets;
       // console.log(this.datasets);
     });

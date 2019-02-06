@@ -11,7 +11,7 @@ import { PutService } from './put.service';
 
 import * as _ from 'lodash';
 
-import FILES from '../../assets/data/dataset_public.json';
+import DATASETS from '../../assets/data/dataset_public.json';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class getDatasetsService {
     public putSvc: PutService
   ) {
     this.getDatasets();
-    // putSvc.put(FILES, 'dataset', 'identifier')
+    // putSvc.put(DATASETS, 'dataset', 'identifier')
   }
 
   getDatasets() {
@@ -36,17 +36,17 @@ export class getDatasetsService {
         .set('Accept', 'application/json')
     }).pipe(
       map(data => {
-        let files = data['body']['hits'];
+        let datasets = data['body']['hits'];
         // console.log(files)
 
-        return (files)
+        return (datasets)
 
         // send new patients to subscription services.
         // this.patientsSubject.next(this.patients);
         // this.patientsSubject.next(patients);
       }))
     // err => {
-    //   console.log('Error in getting files')
+    //   console.log('Error in getting datasets')
     //   // console.log(err)
     // })
   }
@@ -62,8 +62,8 @@ export class getDatasetsService {
       map(data => {
         if(data['body']['total'] === 1) {
           // One result found, as expected.
-          let files = data['body']['hits'];
-          return (files[0])
+          let datasets = data['body']['hits'];
+          return (datasets[0])
         } else {
           console.log("More than one dataset returned. Check if your ID is unique!")
         }
@@ -73,7 +73,7 @@ export class getDatasetsService {
 
   getSchema(dsid: string) {
     // TODO: check if more than one dataset.
-    let dataset = FILES.filter((d: any) => d.identifier === dsid)[0];
+    let dataset = DATASETS.filter((d: any) => d.identifier === dsid)[0];
     return (this.removeNonSchema(dataset));
   }
 
