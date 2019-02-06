@@ -62,7 +62,7 @@ export class MyHttpClient extends HttpClient {
     //   if (typeof first !== "string")
     //     first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
     //   options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
-    // }
+    }
 
     return null
 
