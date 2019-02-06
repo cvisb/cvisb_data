@@ -58,7 +58,7 @@ export class AuthService {
   checkLogin(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
       // Call my Http client rather than http2, so the SSR properly gets called upon initial load.  Required to read stored cookie properly
-      this.http2.get(environment.api_url + '/user', {
+      this.myhttp.get(environment.api_url + '/user', {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
