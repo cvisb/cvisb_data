@@ -1,4 +1,5 @@
-// Copied from https://github.com/angular/universal-starter/issues/373#issuecomment-366254611
+// Modified from https://github.com/angular/universal-starter/issues/373#issuecomment-366254611
+// Injector Request error (`ERROR Error: No provider for InjectionToken REQUEST!`) solved via https://github.com/angular/universal/issues/709#issuecomment-429083563
 
 import { Injectable, Inject, PLATFORM_ID, Injector, Optional } from "@angular/core";
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -53,22 +54,13 @@ export class MyHttpClient extends HttpClient {
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
-      // console.log(this.injector)
-      // const req: any = this.injector.get('REQUEST');
+      // const req: any = this.injector.get('REQUEST'); --> Injector error.
       const rawCookies = !!this.req.headers['cookie'] ? this.req.headers['cookie'] : '';
-
-      console.log(this.req.headers)
-      console.log(rawCookies)
-      // console.log(first)
-      // console.log(url)
-
 
       if (typeof first !== "string")
         first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
       options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
     }
-    console.log(options)
-    // return null
 
     return super.request(first as (any), url, options);
   }
