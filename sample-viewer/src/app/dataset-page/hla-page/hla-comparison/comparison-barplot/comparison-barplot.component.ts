@@ -18,6 +18,7 @@ export class ComparisonBarplotComponent implements OnInit {
   private params_left: CohortSelectOptions;
   private data_right: HLAsummary[];
   private params_right: CohortSelectOptions;
+  private combined: HLAsummary[];
 
 
   // plot sizes
@@ -167,24 +168,26 @@ export class ComparisonBarplotComponent implements OnInit {
       // Merge together data
       this.data_left.forEach(element =>
         element.side = "left");
+
       this.data_right.forEach(element =>
         element.side = "right");
-      let combined = this.data_left.concat(this.data_right);
-      // console.log(combined)
+
+      this.combined = this.data_left.concat(this.data_right);
+      this.locus == "A" ? console.log(this.combined) : null;
 
       let n_left = d3.sum(this.data_left, (d: any) => d.value) / 2; // divided by 2, since two alleles / patient
       let n_right = d3.sum(this.data_right, (d: any) => d.value) / 2; // divided by 2, since two alleles / patient
 
       // Find limits for x and y
-      let pct_max = <any>d3.max(combined, (d: any) => d.pct);
-      combined.sort((a: any, b: any) => {
+      let pct_max = <any>d3.max(this.combined, (d: any) => d.pct);
+      this.combined.sort((a: any, b: any) => {
         if (a.side > b.side) return -1;
         if (a.side < b.side) return 1;
         if (b.pct < a.pct) return -1;
         if (a.pct > b.pct) return 1;
       });
-      // combined.sort((a:any, b:any) => b.key > a.key ? 1 : -1);
-      let alleles = combined.map((d: any) => d.key);
+      // this.combined.sort((a:any, b:any) => b.key > a.key ? 1 : -1);
+      let alleles = this.combined.map((d: any) => d.key);
 
       // --- Update domains of x & y axes --
       this.x_left.domain([0, pct_max]);
@@ -219,7 +222,7 @@ export class ComparisonBarplotComponent implements OnInit {
 
 
 
-      let mouseover = function(hover, locus) {
+      let mouseover = function(hover, locus, combined) {
 
         return function(d) {
           ttips.transition()
@@ -227,8 +230,16 @@ export class ComparisonBarplotComponent implements OnInit {
             .style("display", "inline-block")
             .style("opacity", 1);
 
+          console.log(d)
+
+          console.log(combined)
+
+
           let left_value = combined.filter((a: any) => (a.key === d.key) && (a.side === 'left')).map((x: any) => x.pct)[0];
           let right_value = combined.filter((a: any) => (a.key === d.key) && (a.side === 'right')).map((x: any) => x.pct)[0];
+
+          console.log(left_value)
+          console.log(right_value)
 
           let html_payload = `<div class='title--allele'>${d.key}</div>
           <div class='label--freq'>
@@ -260,8 +271,6 @@ export class ComparisonBarplotComponent implements OnInit {
 
       leftBars.enter().append("rect")
         .attr("class", "comp-bars left-comp-bars")
-        .on("mouseover", mouseover(true, this.locus))
-        .on("mouseout", mouseout)
         .merge(leftBars)
         .transition(t)
         .attr("id", (d: any) => d.key)
@@ -269,6 +278,11 @@ export class ComparisonBarplotComponent implements OnInit {
         .attr("y", (d: any) => this.y(d.key))
         .attr("width", (d: any) => this.x_left(0) - this.x_left(d.pct))
         .attr("height", this.y.bandwidth());
+
+      // Necessary to add tooltips AFTER enter/append/merge, so that they properly update when data changes.
+      this.left.selectAll("rect")
+        .on("mouseover", mouseover(true, this.locus, this.combined))
+        .on("mouseout", mouseout);
 
       leftBars.exit()
         .transition(t)
@@ -281,8 +295,6 @@ export class ComparisonBarplotComponent implements OnInit {
 
       rightBars.enter().append("rect")
         .attr("class", "comp-bars right-comp-bars")
-        .on("mouseover", mouseover(true, this.locus))
-        .on("mouseout", mouseout)
         .merge(rightBars)
         .transition(t)
         .attr("id", (d: any) => d.key)
@@ -290,6 +302,11 @@ export class ComparisonBarplotComponent implements OnInit {
         .attr("y", (d: any) => this.y(d.key))
         .attr("width", (d: any) => this.x_right(d.pct))
         .attr("height", this.y.bandwidth());
+
+      // Necessary to add tooltips AFTER enter/append/merge, so that they properly update when data changes.
+      this.right.selectAll("rect")
+        .on("mouseover", mouseover(true, this.locus, this.combined))
+        .on("mouseout", mouseout);
 
       rightBars.exit()
         .transition(t)
