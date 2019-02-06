@@ -1,3 +1,6 @@
+// Function to embed cookies in http request.
+// Since Authentication calls to `/user` require the local cookie, need to embed the cookie in the server-side rendering of the initial call to each page.
+// Secondly-- for every initial server-side request to get data from the backend, the HttpClient also needs to have the authentication cookie passed back to the server to properly authenticate.
 // Modified from https://github.com/angular/universal-starter/issues/373#issuecomment-366254611
 // Injector Request error (`ERROR Error: No provider for InjectionToken REQUEST!`) solved via https://github.com/angular/universal/issues/709#issuecomment-429083563
 

@@ -30,8 +30,7 @@ export class getDatasetsService {
   }
 
   getDatasets() {
-    return this.http.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
-      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
+    return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
@@ -54,7 +53,6 @@ export class getDatasetsService {
 
   getDataset(id: string, idVar: string = 'identifier') {
     return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
-      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
