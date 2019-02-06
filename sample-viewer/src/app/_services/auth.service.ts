@@ -62,22 +62,23 @@ export class AuthService {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
-      }).subscribe((r) => {
-        this.user = r.body;
-        this.userSubject.next(this.user);
-
-        let loginStatus: boolean = Object.keys(this.user).length > 0;
-        let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) >= 0;
-
-        this.authSubject.next({ loggedIn: loginStatus, authorized: authStatus });
-
-        resolve("Login has been checked!");
-        // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
-      },
-        err => {
-          console.log(err)
-          resolve("Login failed!");
-        })
+      })
+      // .subscribe((r) => {
+      //   this.user = r.body;
+      //   this.userSubject.next(this.user);
+      //
+      //   let loginStatus: boolean = Object.keys(this.user).length > 0;
+      //   let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) >= 0;
+      //
+      //   this.authSubject.next({ loggedIn: loginStatus, authorized: authStatus });
+      //
+      //   resolve("Login has been checked!");
+      //   // Object.keys(this.user).length > 0 ? this.isLoggedIn = true : this.isLoggedIn = false;
+      // },
+      //   err => {
+      //     console.log(err)
+      //     resolve("Login failed!");
+      //   })
     })
   }
 
