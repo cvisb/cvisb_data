@@ -11,7 +11,7 @@ import { Patient, PatientArray } from '../_models';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
-  private patients: any;
+  patients: any;
 
   constructor(
     // private router: Router,
