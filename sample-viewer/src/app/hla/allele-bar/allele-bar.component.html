@@ -1,5 +1,10 @@
 <!-- <svg id="unique-allele-bar"></svg> -->
-<div>
+<div class="title">
   <span [outerHTML]="title | sloppyMarkdown"></span>
 </div>
+
+<div class="subtitle">
+  <span [outerHTML]="subtitle | sloppyMarkdown" *ngIf="subtitle"></span>
+</div>
+
 <div class="allele-barplot" #barplot></div>
