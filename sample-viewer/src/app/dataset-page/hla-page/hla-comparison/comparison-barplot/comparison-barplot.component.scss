@@ -63,7 +63,13 @@
   opacity: 0.2;
 }
 
+.title--allele {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
 .right {
   border-left: 2px solid $default-color;
-  padding-left: 5px;
+  padding-left: 10px;
+  margin-left: 5px;
 }
