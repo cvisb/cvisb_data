@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from "rxjs/operators";
 
+import { MyHttpClient } from './auth-helper.service';
+
 import { environment } from "../../environments/environment";
 import { PutService } from './put.service';
 
@@ -20,6 +22,7 @@ export class getDatasetsService {
 
   constructor(
     public http: HttpClient,
+    public myhttp: MyHttpClient,
     public putSvc: PutService
   ) {
     this.getDatasets();
@@ -50,13 +53,13 @@ export class getDatasetsService {
   }
 
   getDataset(id: string, idVar: string = 'identifier') {
-    return this.http.get<any[]>(environment.api_url + "/api/dataset/query", {
+    return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
       // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
-        .set('q', `${idVar}:\"${id}\"`)
+        .set('q', `${idVar}:${id}`)
     }).pipe(
       map(data => {
         if(data['body']['total'] === 1) {
