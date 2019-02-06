@@ -29,7 +29,7 @@ export class DatasetComponent implements OnInit {
 
     fileSvc.getDatasets().subscribe((datasets) => {
       this.datasets = datasets;
-      console.log(this.datasets);
+      // console.log(this.datasets);
     });
 
 
