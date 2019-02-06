@@ -117,6 +117,19 @@
   marginality:           optional
   authenticated:         false
 
+# household identifier
+- "@id":                 cvisb:householdIdentifier
+  "@type":               rdf:Property
+  rdfs:comment:          Household ID for patient and associated contacts
+  rdfs:label:            householdIdentifier
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 # date modified
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
