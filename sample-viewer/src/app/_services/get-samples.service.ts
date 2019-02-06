@@ -9,6 +9,7 @@ import * as d3 from 'd3';
 import { environment } from "../../environments/environment";
 import { Sample, SampleWide, AuthState } from '../_models/';
 import { AuthService } from './auth.service';
+import { MyHttpClient } from './auth-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,10 @@ export class GetSamplesService {
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
 
-  constructor(public http: HttpClient, private authSvc: AuthService) {
+  constructor(
+    public myhttp: MyHttpClient,
+    // public http: HttpClient,
+    private authSvc: AuthService) {
     // console.log(this.samples.slice(20, 25));
     // this.putSamples(this.samples);
     // this.putSample(this.samples[1]);
@@ -82,8 +86,8 @@ export class GetSamplesService {
   }
 
   getSample(id: string) {
-    this.http.get<any[]>(environment.api_url + "/api/sample/" + id, {
-      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
+    this.myhttp.get<any[]>(environment.api_url + "/api/sample/" + id, {
+      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
@@ -99,8 +103,8 @@ export class GetSamplesService {
   getSamples() {
     console.log('calling backend to get samples');
 
-    this.http.get<any[]>(environment.api_url + "/api/sample/query?q=__all__&size=1000", {
-      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
+    this.myhttp.get<any[]>(environment.api_url + "/api/sample/query?q=__all__&size=1000", {
+      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
@@ -155,7 +159,7 @@ export class GetSamplesService {
 
   putSample(sample: Sample) {
     let sample_id = sample['sample_id'];
-    this.http.put<any[]>(environment.api_url + "/api/sample/" + sample_id,
+    this.myhttp.put<any[]>(environment.api_url + "/api/sample/" + sample_id,
       JSON.stringify(sample),
       {
         headers: new HttpHeaders()
@@ -177,7 +181,7 @@ export class GetSamplesService {
     // let test = this.jsonify(this.samples.slice(0,2));
     console.log('attempting to add new record')
     // console.log(this.jsonify(samples))
-    this.http.put<any[]>(environment.api_url + "/api/sample/",
+    this.myhttp.put<any[]>(environment.api_url + "/api/sample/",
       this.jsonify(samples),
       {
         // observe: 'response',
