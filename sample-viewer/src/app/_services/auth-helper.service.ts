@@ -53,21 +53,21 @@ export class MyHttpClient extends HttpClient {
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
-    // console.log(this.injector)
-    // const req: any = this.injector.get('REQUEST');
-    const rawCookies = !!this.req.headers['cookie'] ? this.req.headers['cookie'] : '';
+      // console.log(this.injector)
+      // const req: any = this.injector.get('REQUEST');
+      const rawCookies = !!this.req.headers['cookie'] ? this.req.headers['cookie'] : '';
 
-    // console.log(this.req)
-    // console.log(rawCookies)
-    // console.log(first)
-    // console.log(url)
-    // console.log(options)
+      console.log(this.req.headers)
+      console.log(rawCookies)
+      // console.log(first)
+      // console.log(url)
+
 
       if (typeof first !== "string")
         first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
       options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
     }
-
+    console.log(options)
     // return null
 
     return super.request(first as (any), url, options);
