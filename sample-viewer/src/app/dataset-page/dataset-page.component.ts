@@ -20,7 +20,7 @@ export class DatasetPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private meta: Meta,
     private titleSvc: Title,
-    private fileSvc: getDatasetsService,
+    private datasetSvc: getDatasetsService,
     private mdSvc: FileMetadataService,
   ) {
 
@@ -30,10 +30,10 @@ export class DatasetPageComponent implements OnInit {
     });
 
     // Hit API to get data
-    // this.datasets = fileSvc.getDatasets();
+    // this.datasets = datasetSvc.getDatasets();
     // TODO: check if more than one dataset.
     // this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
-    fileSvc.getDataset(this.dsid).subscribe((dataset) => {
+    datasetSvc.getDataset(this.dsid).subscribe((dataset) => {
       console.log('dataset from API:')
       console.log(dataset)
       this.dataset = dataset;
@@ -47,7 +47,7 @@ export class DatasetPageComponent implements OnInit {
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
-    // this.schema_dataset = fileSvc.getSchema(this.dsid);
+    // this.schema_dataset = datasetSvc.getSchema(this.dsid);
     // console.log(this.schema_dataset);
     // this.schema_dataset = dataset;
 

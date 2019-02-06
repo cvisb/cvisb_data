@@ -57,7 +57,7 @@ export class MyHttpClient extends HttpClient {
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
-      // const req: any = this.injector.get('REQUEST'); --> Injector error.
+      // const req: any = this.injector.get('REQUEST'); --> StaticInjectorError.  Replaced by import of REQUEST
       const rawCookies = !!this.req.headers['cookie'] ? this.req.headers['cookie'] : '';
 
       if (typeof first !== "string")
