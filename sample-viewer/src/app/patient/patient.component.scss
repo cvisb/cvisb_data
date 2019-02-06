@@ -2,7 +2,20 @@
 @import '../../sass/material-theme';
 
 .page-header {
-  color: lighten($ebola-md, 5%);
-  -webkit-text-stroke-color: $ebola-color;
-  -webkit-text-stroke-width: 1px;
+  h1 {
+    color: lighten($ebola-md, 5%);
+    -webkit-text-stroke-color: $ebola-color;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  /deep/ .dwnld-btn {
+    background: lighten($ebola-lt, 10%);
+    border: 1px solid $ebola-color;
+    color: $ebola-color;
+  }
+}
+
+/deep/ .dwnld-btn.mat-button.mat-stroked-button .mat-button-focus-overlay,
+{
+  background-color: #c2185b25;
 }

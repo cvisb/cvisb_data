@@ -1,4 +1,7 @@
-<h1 class="page-header">Patients</h1>
+<div class="page-header">
+  <h1>Patients</h1>
+  <app-download-btn [data]="patients.downloadable" filetype="patients"></app-download-btn>
+</div>
 
 <app-filter-patients></app-filter-patients>
 
