@@ -1,11 +1,16 @@
 #unique-allele-bar {
   & .axis--y {
-    path, line {
+    line,
+    path {
       display: none;
     }
+
     text {
       font-size: 1.5em;
     }
   }
+}
 
+.subtitle {
+  font-size: 0.8em;
 }

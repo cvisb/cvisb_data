@@ -14,6 +14,7 @@ export class AlleleBarComponent implements OnInit {
   @ViewChild('barplot') private chartContainer: ElementRef;
   @Input() data: any;
   @Input() title: string;
+  @Input() subtitle: string;
 
   // plot sizes
   private element: any;
