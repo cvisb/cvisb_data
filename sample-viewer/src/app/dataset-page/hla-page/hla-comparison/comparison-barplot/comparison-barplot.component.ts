@@ -173,7 +173,6 @@ export class ComparisonBarplotComponent implements OnInit {
         element.side = "right");
 
       this.combined = this.data_left.concat(this.data_right);
-      this.locus == "A" ? console.log(this.combined) : null;
 
       let n_left = d3.sum(this.data_left, (d: any) => d.value) / 2; // divided by 2, since two alleles / patient
       let n_right = d3.sum(this.data_right, (d: any) => d.value) / 2; // divided by 2, since two alleles / patient
@@ -230,16 +229,9 @@ export class ComparisonBarplotComponent implements OnInit {
             .style("display", "inline-block")
             .style("opacity", 1);
 
-          console.log(d)
-
-          console.log(combined)
-
 
           let left_value = combined.filter((a: any) => (a.key === d.key) && (a.side === 'left')).map((x: any) => x.pct)[0];
           let right_value = combined.filter((a: any) => (a.key === d.key) && (a.side === 'right')).map((x: any) => x.pct)[0];
-
-          console.log(left_value)
-          console.log(right_value)
 
           let html_payload = `<div class='title--allele'>${d.key}</div>
           <div class='label--freq'>
