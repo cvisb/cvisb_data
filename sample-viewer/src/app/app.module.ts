@@ -14,6 +14,7 @@ import { AdminModule, PipesModule, HlaModule } from '.';
 
 // Services
 import { MyHttpClient } from './_services/auth-helper.service';
+import { DatePipe } from '@angular/common';
 
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';
@@ -63,6 +64,7 @@ import {
 } from './patient-page';
 
 import { SchemaComponent } from './schema/schema.component';
+import { DownloadBtnComponent } from './download-btn/download-btn.component';
 
 
 @NgModule({
@@ -115,6 +117,7 @@ import { SchemaComponent } from './schema/schema.component';
     PatientSerologyComponent,
     PatientDemographicsComponent,
     SchemaComponent,
+    DownloadBtnComponent,
 
   ],
   imports: [
@@ -135,7 +138,7 @@ import { SchemaComponent } from './schema/schema.component';
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [MyHttpClient],
+  providers: [MyHttpClient, DatePipe],
   entryComponents: [
     SampleMetadataComponent
   ],

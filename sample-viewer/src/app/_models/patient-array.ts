@@ -2,9 +2,11 @@ import { Patient } from './patient';
 import { D3Nested } from './d3-nested';
 
 import * as d3 from 'd3';
+import * as _ from 'lodash';
 
 export class PatientArray {
   patients: Patient[];
+  downloadable: any[];
   patientIDs: string[];
   relatedIDs: string[];
   patientTypes: D3Nested[];
@@ -14,8 +16,6 @@ export class PatientArray {
   exptTypes: D3Nested[];
 
   constructor(patients: Patient[]) {
-    this.patients = patients;
-
     this.patientIDs = patients.map((d: Patient) => d.patientID);
     // this.relatedIDs = patients.map((d:Patient) => d.relatedTo);
 
@@ -62,6 +62,27 @@ export class PatientArray {
     }
 
     this.exptTypes.sort((a: any, b: any) => b.value - a.value);
+
+
+    // Save patients, downloadable version
+    this.patients = patients;
+
+    // --- Downloadable version ---
+    // Create a copy, so I don't modify the orignal
+    this.downloadable = _.cloneDeep(patients);
+
+    // Un-nest objects
+    this.downloadable.forEach((d: Patient) => {
+      d.country = d.country ? d.country['name'] : "unknown";
+      d.availableData = d.availableData.map((data_type: any) => data_type.name);
+
+      d.homeLocation.forEach((adminUnit) => {
+        d[adminUnit['administrativeType']] = adminUnit['name'];
+      });
+      delete d.homeLocation;
+      delete d.elisa;
+    });
+
 
   }
 }
