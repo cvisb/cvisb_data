@@ -37,7 +37,7 @@ export class getDatasetsService {
     }).pipe(
       map(data => {
         let files = data['body']['hits'];
-        console.log(files)
+        // console.log(files)
 
         return (files)
 
