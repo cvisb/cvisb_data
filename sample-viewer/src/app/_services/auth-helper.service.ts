@@ -1,9 +1,11 @@
 // Copied from https://github.com/angular/universal-starter/issues/373#issuecomment-366254611
 
-import { Injectable, Inject, PLATFORM_ID, Injector } from "@angular/core";
+import { Injectable, Inject, PLATFORM_ID, Injector, Optional } from "@angular/core";
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpHandler } from "@angular/common/http";
 import { Observable } from 'rxjs';
+
+import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 
 interface IHttpOptions {
@@ -26,6 +28,7 @@ export class MyHttpClient extends HttpClient {
     handler: HttpHandler,
     private injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject(REQUEST) private req: any
   ) {
     super(handler);
   }
@@ -49,20 +52,21 @@ export class MyHttpClient extends HttpClient {
     options.withCredentials = true;
 
     // if we are server side, then import cookie header from express
-    if (isPlatformServer(this.platformId)) {
-      // const req: any = this.injector.get('REQUEST');
-      // const rawCookies = !!req.headers['cookie'] ? req.headers['cookie'] : '';
+    // if (isPlatformServer(this.platformId)) {
+    // console.log(this.injector)
+    // const req: any = this.injector.get('REQUEST');
+    // const rawCookies = !!req.headers['cookie'] ? req.headers['cookie'] : '';
 
-      // console.log(req)
-      // console.log(rawCookies)
-      console.log(first)
-      console.log(url)
-      console.log(options)
+    console.log(this.req)
+    // console.log(rawCookies)
+    console.log(first)
+    console.log(url)
+    console.log(options)
 
     //   if (typeof first !== "string")
     //     first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
     //   options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
-    }
+    // }
 
     return null
 
