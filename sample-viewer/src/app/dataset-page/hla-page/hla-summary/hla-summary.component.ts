@@ -17,28 +17,29 @@ export class HlaSummaryComponent implements OnInit {
   novelAlleles: D3Nested[];
 
   constructor(private hlaSvc: GetHlaDataService) {
-    hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
-      this.patientTypes = types;
-    })
-
-    hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
-      this.patientOutcomes = outcomes;
-    })
-
-    hlaSvc.patientCountState$.subscribe((num: number) => {
-      this.patientCount = num;
-    })
-
-    hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
-      this.alleleCount = cts;
-    })
-
-    hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
-      this.novelAlleles = novel;
-    })
   }
 
   ngOnInit() {
+    this.hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
+      this.patientTypes = types;
+    })
+
+    this.hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
+      this.patientOutcomes = outcomes;
+    })
+
+    this.hlaSvc.patientCountState$.subscribe((num: number) => {
+      this.patientCount = num;
+    })
+
+    this.hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
+      this.alleleCount = cts;
+    })
+
+    this.hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
+      this.novelAlleles = novel;
+    })
+
   }
 
 }
