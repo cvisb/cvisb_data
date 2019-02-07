@@ -29,11 +29,16 @@
 
       </ul>
 
-      <ng-container *ngIf="loggedIn" >
-        <a routerLink="login" class="user-photo" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}">
+      <div class="user" *ngIf="loggedIn">
+        <a routerLink="login" class="user-photo" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}">
           <img [src]="user.picture"/>
+          <img [src]="'https://lh3.googleusercontent.com/-7ZTU8A4YCGM/AAAAAAAAAAI/AAAAAAAACds/QjqnON-0ztM/photo.jpg'"/>
         </a>
-      </ng-container>
+        <a routerLink="login" class="user-name">
+          <span>{{user.given_name}}</span>
+          <i class="fas fa-angle-down"></i>
+          </a>
+      </div>
     </nav>
   </div>
 </header>

@@ -16,7 +16,7 @@
     Access to {{ page === "/" ? "parts of this site": page }} is restricted to CViSB users. Please login.
   </p>
 
-  <p>Current status: {{ message ? message : (loggedIn ? 'logged in' : 'logged out') }}</p>
+  <p>{{ message ? message : '' }}</p>
 
   <p>
     <button (click)="login()">Login</button>
