@@ -1,5 +1,7 @@
 <div class="page-header">
   <h1>Samples</h1>
+
+  <app-download-btn [data]="samples_wide" filetype="samples"></app-download-btn>
 </div>
 
 <form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
