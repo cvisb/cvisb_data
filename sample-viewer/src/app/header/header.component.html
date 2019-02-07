@@ -32,7 +32,6 @@
       <div class="user" *ngIf="loggedIn">
         <a routerLink="login" class="user-photo" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}">
           <img [src]="user.picture"/>
-          <img [src]="'https://lh3.googleusercontent.com/-7ZTU8A4YCGM/AAAAAAAAAAI/AAAAAAAACds/QjqnON-0ztM/photo.jpg'"/>
         </a>
         <a routerLink="login" class="user-name">
           <span>{{user.given_name}}</span>
