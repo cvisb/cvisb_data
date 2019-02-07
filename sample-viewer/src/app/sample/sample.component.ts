@@ -78,6 +78,11 @@ export class SampleComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     })
+
+    // For downloading, save in the long form
+    this.sampleSvc.samplesState$.subscribe((sList: Sample[]) => {
+      this.samples = sList;
+    })
   }
 
 
