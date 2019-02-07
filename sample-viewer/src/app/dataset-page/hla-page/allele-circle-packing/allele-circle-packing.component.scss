@@ -45,7 +45,10 @@ div.tooltip {
   border: 0;
   border-radius: 3px;
   pointer-events: none;
+  display: none;
 }
+
+
 
 .title--allele,
 .title--locus {

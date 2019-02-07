@@ -176,7 +176,18 @@ export class AlleleCirclePackingComponent implements OnInit {
     // div for tooltips
     let ttips = d3.select("body").append("div")
       .attr("class", "tooltip")
+      .style("display", "none")
       .style("opacity", 0);
+
+    function clearTtips() {
+      d3.selectAll(".tooltip").transition()
+        .duration(0)
+        .style("display", 'none')
+        .style("opacity", 0);
+    }
+
+    // If you move the mouse quickly from a circle to somewhere else in the body, hide the tooltip.
+    d3.select("body").on("mouseover", clearTtips);
 
 
     // define group for each node.
@@ -187,9 +198,7 @@ export class AlleleCirclePackingComponent implements OnInit {
       .attr("transform", function(d: any) { return "translate(" + d.x + "," + d.y + ")"; })
       .attr("class", function(d) { return "node" + (!d.children ? " node--leaf" : d.depth ? " node--locus" : " node--root"); })
       .attr("id", (d: any) => d.data.name)
-      .each((d: any) => d.node = this)
-      .on("mouseover", hovered(true, ttips, this.scale, this.hlaSvc))
-      .on("mouseout", hovered(false, ttips, this.scale, this.hlaSvc));
+      .each((d: any) => d.node = this);
 
 
 
@@ -202,6 +211,11 @@ export class AlleleCirclePackingComponent implements OnInit {
       .style("fill-opacity", (d: any) => alphaScale(d.depth))
       .classed("novel", (d: any) => d.data.novel)
       .classed("highlight", (d: any) => this.genotype.includes(d.data.name));
+
+
+    node.selectAll("circle")
+      .on("mouseover", hovered(true, ttips, this.scale, this.hlaSvc))
+      .on("mouseout", hovered(false, ttips, this.scale, this.hlaSvc));
 
 
     // Label locus; used only on unique alleles graph.
@@ -311,20 +325,24 @@ export class AlleleCirclePackingComponent implements OnInit {
 
     // --- Tooltip mouseover function ---
     function hovered(hover, div, scale, hlaSvc) {
-
       return function(d) {
+        // Prevent the body:mouseover from clearing the tooltip
+        d3.event.preventDefault();
+        d3.event.stopPropagation();
 
         if (d.data.name !== "loci") {
-          div.transition()
-            .duration(200)
-            .style("opacity", 0.9);
-
           hlaSvc.selectedLocusSubject.next(d.data.locus);
           if (d.parent.parent) {
             hlaSvc.selectedAlleleSubject.next(d.data.name);
           }
           // only show tooltips if the circle packing is full-sized
           if (scale === 1) {
+
+            div.transition()
+              .duration(0)
+              .style("display", "inline-block")
+              .style("opacity", 0.9);
+
             let html_payload = d.parent.parent ?
               // Allele frequency
               `<div class="title--allele">${d.data.name}</div>
@@ -341,13 +359,18 @@ export class AlleleCirclePackingComponent implements OnInit {
           }
         } else {
           div.transition()
-            .duration(200)
+            .duration(0)
+            .style("display", 'none')
             .style("opacity", 0);
           hlaSvc.selectedLocusSubject.next(null);
           hlaSvc.selectedAlleleSubject.next(null);
         }
       };
     }
+
+
+
+
 
     //   var circle = g.selectAll("circle")
     // .data(nodes)
