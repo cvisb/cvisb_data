@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { environment } from "../../environments/environment";
 
 import { Patient, AuthState } from '../_models';
 import { AuthService } from './auth.service';
+import { MyHttpClient } from './http-cookies.service';
 
 import PATIENTS from '../../assets/data/patients.json';
 
@@ -182,7 +183,7 @@ export class GetPatientsService {
 
   ];
 
-  constructor(public http: HttpClient, private router: Router, private authSvc: AuthService) {
+  constructor(public myhttp: MyHttpClient, private router: Router, private authSvc: AuthService) {
     // this.request_params = [new RequestParam("id", ["test", "test2"])];
     // console.log(this.request_params)
     console.log(PATIENTS)
@@ -216,7 +217,7 @@ export class GetPatientsService {
     // temp hard-coded shim.
     return (this.patients.filter((d: any) => d.patientID === id)[0]);
 
-    // this.http.get<any[]>(environment.api_url + "/api/patient/query", {
+    // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
     //   observe: 'response',
     //   headers: new HttpHeaders()
     //     .set('Accept', 'application/json'),
@@ -238,8 +239,8 @@ export class GetPatientsService {
 
 
 
-    this.http.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
-      // this.http.get<any[]>(environment.host_url + "/api/sample/test_2", {
+    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
+      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
@@ -270,7 +271,7 @@ export class GetPatientsService {
 
   putPatients(patients: Patient[]) {
     console.log('attempting to add new record')
-    this.http.put<any[]>(environment.api_url + "/api/patient",
+    this.myhttp.put<any[]>(environment.api_url + "/api/patient",
       this.jsonify(patients),
       {
         // observe: 'response',
@@ -296,7 +297,7 @@ export class GetPatientsService {
 
   // putPatient(patient: Patient) {
   //   let sample_id = sample['sample_id'];
-  //   this.http.put<any[]>(environment.api_url + "/api/patient/" + sample_id,
+  //   this.myhttp.put<any[]>(environment.api_url + "/api/patient/" + sample_id,
   //     JSON.stringify(sample),
   //     {
   //       headers: new HttpHeaders()

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MyHttpClient } from './auth-helper.service';
+import { MyHttpClient } from './http-cookies.service';
 
 describe('MyHttpClient', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

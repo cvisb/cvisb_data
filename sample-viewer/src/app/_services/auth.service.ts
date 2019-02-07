@@ -9,7 +9,7 @@ import { tap, delay } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 
-import { MyHttpClient } from './auth-helper.service';
+import { MyHttpClient } from './http-cookies.service';
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from "@angular/common/http";
 
 import { DOCUMENT } from '@angular/common';

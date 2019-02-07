@@ -7,5 +7,5 @@ export * from './anchor.service';
 export * from './get-hla-data.service';
 export * from './hla.service';
 export * from './auth.service';
-export * from './auth-helper.service';
+export * from './http-cookies.service';
 export * from './put.service';

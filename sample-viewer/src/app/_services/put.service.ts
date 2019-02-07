@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { MyHttpClient } from './http-cookies.service';
 import { map } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 
@@ -10,7 +11,7 @@ import { environment } from "../../environments/environment";
 })
 export class PutService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public myhttp: MyHttpClient) { }
 
   // Generic function to add data to a given endpoint on the API
   // (1) First checks if the data already exists in the backend, based on the unique identifier
@@ -43,7 +44,7 @@ export class PutService {
         }
       })
 
-      this.http.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
           headers: new HttpHeaders()
@@ -60,7 +61,7 @@ export class PutService {
   getIDs(newData: any, endpoint: string, uniqueID: string) {
     let ids = newData.map((d) => d[uniqueID]).join(",");
 
-    return this.http.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),

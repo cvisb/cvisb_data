@@ -9,7 +9,7 @@ import * as d3 from 'd3';
 import { environment } from "../../environments/environment";
 import { Sample, SampleWide, AuthState } from '../_models/';
 import { AuthService } from './auth.service';
-import { MyHttpClient } from './auth-helper.service';
+import { MyHttpClient } from './http-cookies.service';
 
 @Injectable({
   providedIn: 'root'
