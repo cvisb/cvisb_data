@@ -23,6 +23,7 @@ import { CitationComponent } from './admin/citation/citation.component';
 import { AboutComponent } from './admin/about/about.component';
 
 import { AuthGuard } from './_guards/auth.guard';
+import { DatasetResolver } from './_services';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { canActivate: [AuthGuard], path: 'sample/upload', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Add Samples | CViSB' } },
   { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', data: { title: 'Dataset | CViSB' } },
+  { path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver }, pathMatch: 'full', data: { title: 'Dataset | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },

@@ -15,6 +15,7 @@ import { AdminModule, PipesModule, HlaModule } from '.';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
+import { DatasetResolver } from './_services/get-datasets.resolver';
 
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';
@@ -138,7 +139,7 @@ import { DownloadBtnComponent } from './download-btn/download-btn.component';
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [MyHttpClient, DatePipe],
+  providers: [MyHttpClient, DatePipe, DatasetResolver],
   entryComponents: [
     SampleMetadataComponent
   ],

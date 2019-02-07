@@ -1,6 +1,7 @@
 export * from './get-samples.service';
 export * from './lab-locations.service';
 export * from './get-datasets.service';
+export * from './get-datasets.resolver';
 export * from './get-patients.service';
 export * from './file-metadata.service';
 export * from './anchor.service';

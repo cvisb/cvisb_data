@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { map } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -60,14 +60,20 @@ export class getDatasetsService {
         .set('q', `${idVar}:${id}`)
     }).pipe(
       map(data => {
-        if(data['body']['total'] === 1) {
+        if (data['body']['total'] === 1) {
           // One result found, as expected.
           let datasets = data['body']['hits'];
           return (datasets[0])
         } else {
           console.log("More than one dataset returned. Check if your ID is unique!")
         }
-      }))
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return(new Observable<any>())
+      })
+    )
   }
 
 
