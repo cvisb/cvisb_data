@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from "rxjs/operators";
 
-import { MyHttpClient } from './auth-helper.service';
+import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
 import { PutService } from './put.service';

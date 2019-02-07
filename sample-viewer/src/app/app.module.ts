@@ -13,7 +13,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
 
 // Services
-import { MyHttpClient } from './_services/auth-helper.service';
+import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 
 // Dialogue boxes
