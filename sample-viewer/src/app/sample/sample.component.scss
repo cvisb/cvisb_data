@@ -2,9 +2,21 @@
 @import '../../sass/material-theme';
 
 .page-header {
-  color: accent-redder(200);
-  -webkit-text-stroke-color: accent-redder(500);
-  -webkit-text-stroke-width: 1px;
+  h1 {
+    color: accent-redder(200);
+    -webkit-text-stroke-color: accent-redder(500);
+    -webkit-text-stroke-width: 1px;
+  }
+
+  /deep/ .dwnld-btn {
+    background: lighten(accent-redder(200), 14%);
+    border: 1px solid accent-redder(500);
+    color: accent-redder(A700);
+  }
+}
+
+/deep/ .dwnld-btn.mat-button.mat-stroked-button .mat-button-focus-overlay {
+  background-color: #fdb09b66;
 }
 
 .rotate-clockwise {
@@ -23,18 +35,19 @@ h4 {
   // color: #aaa;
   // font-size: 0.85em;
 }
-
 // td.mat-cell,
 // th.mat-header-cell {
 //   border: none;
 // }
-.sample-table > .mat-row:nth-child(even) {
-    // background: lighten(primary(50), 5);
-}
 
+.sample-table > .mat-row:nth-child(even) {
+  // background: lighten(primary(50), 5);
+}
 // --- Column widths ---
-.mat-cell, .mat-header-cell {
-  padding: 0px 10px;
+
+.mat-cell,
+.mat-header-cell {
+  padding: 0 10px;
 }
 
 .mat-column-patientid {
@@ -44,7 +57,6 @@ h4 {
 .mat-column-cohort {
   flex: 0 0 150px;
 }
-
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
@@ -95,7 +107,6 @@ h4 {
   border-color: accent(400);
   background: accent(50);
 }
-
 // --- Locations ---
 
 .sample-locations {
@@ -136,7 +147,7 @@ h4 {
 }
 
 input.edit-aliquots {
-  margin-top: 0px !important;
+  margin-top: 0 !important;
 }
 
 .location {
@@ -163,7 +174,7 @@ input.edit-aliquots {
 }
 
 mat-select.location {
-    width: fit-content !important;
+  width: fit-content !important;
 }
 
 .edit-btn-grp {
@@ -172,21 +183,14 @@ mat-select.location {
 }
 
 select.location {
-  background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%);
-    // linear-gradient(to right, $grey-200, $grey-200);
-  background-position:
-    calc(100% - 10px) calc(1em + 2px),
-    calc(100% - 5px) calc(1em + 2px);
-    // calc(100% - 1em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px;
-    // 1px 1.5em;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+  // linear-gradient(to right, $grey-200, $grey-200);
+  background-position: calc(100% - 10px) calc(1em + 2px), calc(100% - 5px) calc(1em + 2px);
+  // calc(100% - 1em) 0.5em;
+  background-size: 5px 5px, 5px 5px;
+  // 1px 1.5em;
   background-repeat: no-repeat;
 }
-
 // .location-aliquots {
 //   // width: 1.5em;
 //   background: aliceblue;
