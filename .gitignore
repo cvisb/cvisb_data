@@ -26,3 +26,4 @@ sample-viewer-api/src/static/data/*.csv
 sample-viewer-api/src/static/data/*.json
 sample-viewer-api/src/static/data/*.fasta
 notes/*.md
+notes/wordpress_css_link_underline.css
