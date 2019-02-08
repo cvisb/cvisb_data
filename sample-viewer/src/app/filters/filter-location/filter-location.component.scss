@@ -27,6 +27,9 @@
   align-items: center;
   background-color: lighten($grey-200, 10%);
   margin-right: 25px;
+  &:hover {
+    background-color: $grey-100;
+  }
 }
 
 .adm0-name {
