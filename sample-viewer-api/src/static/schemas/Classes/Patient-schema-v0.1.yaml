@@ -29,70 +29,12 @@
     "@id":               health:Patient
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-  validation:
-    required:
-      - patientID
-      - cohort
-      - outcome
-      - country
-    patientID:
-      type:              string
-      default:           true
-    alternateIdentifier:
-      type:              array
-      minItems:          0
-      default:           true
-    cohort:
-      type:              string
-      enum:
-        - Ebola
-        - Lassa
-        - control
-    outcome:
-      type:              string
-      enum:
-        - control
-        - survivor
-        - contact
-        - dead
-        - unknown
-    country:
-      type:              string
-      enum:
-        - SL
-        - NG
-        - unknown
-    homeLocation:
-      type:              string
-    admitDate:
-      type:              date
-    infectionDate:
-      type:              date
-    daysOnset:
-      type:              integer
-    deathDate:
-      type:              date
-    gender:
-      type:              string
-      enum:
-        - Male
-        - Female
-        - Unknown
-    relatedTo:
-      type:              array
-    age:
-      type:              integer
-      minimum:           1
-      maximum:           100
-    associatedSamples:
-      type:              array
-      minItems:          0
 
 
 # identifier
 - "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          Unique ID for patient (G-number, S-number, or C-number)
+  rdfs:comment:          Unique, public ID for patient
   rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -107,7 +49,7 @@
 # alternate identifier
 - "@id":                 cvisb:alternateIdentifier
   "@type":               rdf:Property
-  rdfs:comment:          Alternative ID used for patient
+  rdfs:comment:          Alternative ID(s) used for patient (including G-number, S-number, or C-numbers, available to consortia members only)
   rdfs:label:            alternateIdentifier
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -143,6 +85,20 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+
+  # versions
+- "@id":                 cvisb:_version
+  "@type":               rdf:Property
+  rdfs:comment:          Version number of patient, auto-assigned by CViSB database
+  rdfs:label:            _version
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended
 
 # Main cohort
 - "@id":                 cvisb:cohort

@@ -242,3 +242,31 @@
     - "@id":             cvisb:SampleLocation
   owl:cardinality:       many
   marginality:           recommended
+
+# when updated
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date of last update (YYYY-MM-DD)
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           required
+
+  # versions
+- "@id":                 cvisb:_version
+  "@type":               rdf:Property
+  rdfs:comment:          Version number of sample, auto-assigned by CViSB database
+  rdfs:label:            _version
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended

@@ -101,18 +101,18 @@
   marginality:           recommended
 
 # versions
-- "@id":                 cvisb:version
+- "@id":                 cvisb:_version
   "@type":               rdf:Property
-  rdfs:comment:          Version of data file
-  rdfs:label:            version
+  rdfs:comment:          Version of data file, auto-assigned by CViSB database
+  rdfs:label:            _version
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             schema:Number
   schema:sameAs:
     "@id":               schema:version
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
 
 # link to file
 - "@id":                 cvisb:contentUrl
@@ -165,7 +165,7 @@
     "@id":               schema:URL
   schema:sameAs:
     "@id":               schema:sameAs
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           optional
 
 # keywords
@@ -178,7 +178,7 @@
   schema:rangeIncludes:
     "@id":               schema:Text
     "@id":               xsd:string
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           required
   schema:Enumeration:
                         - raw data
@@ -196,7 +196,7 @@
     "@id":               xsd:string
   schema:sameAs:
     "@id":               schema:keywords
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
 # patient ID list
@@ -286,7 +286,7 @@
 
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
-  rdfs:comment:          Date on which the dataset was most recently modified
+  rdfs:comment:          Date on which the dataset was most recently modified (YYYY-DD-MM)
   rdfs:label:            dateModified
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -308,8 +308,8 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:author"
-  owl:cardinality:       multiple
-  marginality:           required
+  owl:cardinality:       many
+  marginality:           optional
 
 - "@id":                 cvisb:publisher
   "@type":               rdf:Property
@@ -321,7 +321,7 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:publisher"
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
 # Code location
