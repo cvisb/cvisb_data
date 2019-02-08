@@ -40,12 +40,12 @@ export class AlleleBarComponent implements OnInit {
           .classed("masked", (d: any) => d.data.locus !== locus)
           .classed("enabled", (d: any) => d.data.locus === locus);
 
-          // bars
-          d3.selectAll(".minirect--alleles")
-            .classed("disabled", (d: any) => d.key !== locus);
-          // y-axis text
-          d3.selectAll(".allelebar-axis g.tick text")
-            .classed("disabled", (d: any) => d !== locus);
+        // bars
+        d3.selectAll(".minirect--alleles")
+          .classed("disabled", (d: any) => d.key !== locus);
+        // y-axis text
+        d3.selectAll(".allelebar-axis g.tick text")
+          .classed("disabled", (d: any) => d !== locus);
       } else {
         // bars
         d3.selectAll(".minirect--alleles")
@@ -57,7 +57,7 @@ export class AlleleBarComponent implements OnInit {
       }
     })
 
-   }
+  }
 
   ngOnInit() {
     this.drawChart();
@@ -73,7 +73,7 @@ export class AlleleBarComponent implements OnInit {
       .attr("class", "barplot")
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom);
-      // .style('background', 'yellow');
+    // .style('background', 'yellow');
 
     this.chart = svg.append("g")
       .attr("id", "bars--unique-alleles")
@@ -96,6 +96,12 @@ export class AlleleBarComponent implements OnInit {
 
     // --- define tooltip ---
     let mouseover = function(d, hlaService) {
+
+      // Prevent the body:mouseover from clearing the tooltip
+      d3.event.preventDefault();
+      d3.event.stopPropagation();
+
+
       let selected = d.key;
 
       hlaService.selectedLocusSubject.next(selected);
