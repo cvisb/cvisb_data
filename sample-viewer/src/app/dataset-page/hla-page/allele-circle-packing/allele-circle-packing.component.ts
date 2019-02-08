@@ -179,15 +179,19 @@ export class AlleleCirclePackingComponent implements OnInit {
       .style("display", "none")
       .style("opacity", 0);
 
-    function clearTtips() {
+    function clearTtips(hlaSvc: any) {
       d3.selectAll(".tooltip").transition()
         .duration(0)
         .style("display", 'none')
         .style("opacity", 0);
+
+      hlaSvc.selectedLocusSubject.next(null);
+      hlaSvc.selectedAlleleSubject.next(null);
     }
 
     // If you move the mouse quickly from a circle to somewhere else in the body, hide the tooltip.
-    d3.select("body").on("mouseover", clearTtips);
+    d3.select("body")
+    .on("mouseover", clearTtips(this.hlaSvc));
 
 
     // define group for each node.
