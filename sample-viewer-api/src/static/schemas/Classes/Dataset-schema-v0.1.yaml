@@ -35,36 +35,7 @@
     "@id":               schema:Dataset
   schema:isPartOf:
     "@id":               http://schema.cvisb.org
-#   validation:
-#     required:
-#       - name
-#       - description
-#       - measurementTechnique
-#       - dateModified
-#       - author
-#       - version
-#       - distribution
-# name:
-#   type:                string
-# description:
-#   type:                string
-# measurementTechnique:
-#   type:                string
-#   enum:
-#     - HLA sequencing
-#     - viral sequencing
-#     - metagenome sequencing
-#     - BCR sequencing
-#     - TCR sequencing
-#     - Systems Serology
-#     - Metabolomics
-#     - other
-# variableMeasured:
-#   type:                string
-# url:
-#   type:                string !!! URL
-# includedInDataCatalog:
-#   type:                string !!!!! DataCatalog
+
 
 # name
 - "@id":                 cvisb:name
@@ -80,6 +51,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # description
 - "@id":                 cvisb:description
@@ -95,6 +67,7 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # measurement type
 - "@id":                 cvisb:measurementTechnique
@@ -119,6 +92,7 @@
                            - Systems Serology
                            - Metabolomics
                            - other
+  authenticated:         false
 
 - "@id":                 cvisb:variableMeasured
   "@type":               rdf:Property
@@ -133,6 +107,7 @@
     "@id":               schema:variableMeasured
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 # URL
 - "@id":                 cvisb:url
@@ -147,6 +122,7 @@
     "@id":               schema:url
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # External data catalogue
 - "@id":                 cvisb:includedInDataCatalog
@@ -161,11 +137,12 @@
     "@id":               schema:includedInDataCatalog
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # DOI
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
-  rdfs:comment:          A unique identifier for the dataset (e.g. a DOI)
+  rdfs:comment:          "A unique identifier for the DataDownload. Note: should be an internal, CViSB identifier; DOIs should go in @id"
   rdfs:label:            identifier
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
@@ -173,8 +150,23 @@
     "@id":               xsd:string
   schema:sameAs:
     "@id":               schema:identifier
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:@id
+  "@type":               rdf:Property
+  rdfs:comment:          A unique identifier for the dataset, preferably a DOI
+  rdfs:label:            "@id"
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    "@id":               schema:URL
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # duplicate source
 - "@id":                 cvisb:sameAs
@@ -189,6 +181,7 @@
     "@id":               schema:sameAs
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 # keywords
 - "@id":                 cvisb:keywords
@@ -203,6 +196,7 @@
     "@id":               schema:keywords
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # dates
 - "@id":                 cvisb:datePublished
@@ -217,6 +211,7 @@
     "@id":               "schema:datePublished"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
@@ -230,6 +225,7 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 - "@id":                 cvisb:temporalCoverage
   "@type":               rdf:Property
@@ -238,11 +234,12 @@
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    "@id":               schema:Date
+    "@id":               cvisb:DateRange
   schema:sameAs:
     "@id":               "schema:temporalCoverage"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
   # geo
 - "@id":                 cvisb:spatialCoverage
@@ -252,11 +249,12 @@
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    "@id":               cvisb:Place
+    "@id":               cvisb:Country
   schema:sameAs:
     "@id":               "schema:spatialCoverage"
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Author
 - "@id":                 cvisb:author
@@ -271,6 +269,7 @@
     "@id":               "schema:author"
   owl:cardinality:       many
   marginality:           required
+  authenticated:         false
 
 - "@id":                 cvisb:publisher
   "@type":               rdf:Property
@@ -284,6 +283,7 @@
     "@id":               "schema:publisher"
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
   # versions
 - "@id":                 cvisb:_version
@@ -298,6 +298,7 @@
     "@id":               schema:version
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:schemaVersion
   "@type":               rdf:Property
@@ -311,6 +312,7 @@
     "@id":               schema:schemaVersion
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # Data location
 - "@id":                 cvisb:distribution
@@ -323,6 +325,7 @@
     - "@id":             cvisb:DataDownload
   owl:cardinality:       many
   marginality:           required
+  authenticated:         false
 
 # Code location
 - "@id":                 cvisb:sourceCode
@@ -335,6 +338,7 @@
     - "@id":             cvisb:SoftwareSourceCode
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Publications
 - "@id":                 cvisb:publication
@@ -349,6 +353,7 @@
     "@id":               schema:publication
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
@@ -362,6 +367,7 @@
     "@id":               schema:citation
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Funder. For CViSB:     NIH award U19AI135995
 - "@id":                 cvisb:funder
@@ -376,6 +382,7 @@
     "@id":               schema:funder
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # License
 - "@id":                 cvisb:license
@@ -390,3 +397,4 @@
     "@id":               schema:license
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

@@ -57,7 +57,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 # household identifier
 - "@id":                 cvisb:householdIdentifier
@@ -85,6 +85,7 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
   # versions
 - "@id":                 cvisb:_version
@@ -99,6 +100,7 @@
     "@id":               schema:version
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # Main cohort
 - "@id":                 cvisb:cohort
@@ -176,6 +178,7 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Date
+    - "@id":             cvsib:DateRange
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -188,7 +191,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
   authenticated:         false
@@ -196,12 +199,13 @@
 # Approximate date of infection
 - "@id":                 cvisb:infectionDate
   "@type":               rdf:Property
-  rdfs:comment:          Approximate date of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
+  rdfs:comment:          Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
   rdfs:label:            infectionDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true

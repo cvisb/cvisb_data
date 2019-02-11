@@ -19,7 +19,7 @@
 #
 # "@id":                   "http://schema.cvisb.org/ELISA/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:ELISA
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments
@@ -43,6 +43,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+  authenticated:         false
 
 - "@id":                 cvisb:assayType
   "@type":               rdf:Property
@@ -58,6 +59,7 @@
                          - IgG
                          - IgM
                          - Ag
+  authenticated:         false
 
 - "@id":                 cvisb:ELISAresult
   "@type":               rdf:Property
@@ -73,6 +75,7 @@
                          - positive
                          - negative
                          - indeterminate
+  authenticated:         false
 
 - "@id":                 cvisb:ELISAvalue
   "@type":               rdf:Property
@@ -84,3 +87,4 @@
     - "@id":             schema:Number
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

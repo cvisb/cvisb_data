@@ -19,7 +19,7 @@
 #
 # "@id":                 "http://schema.cvisb.org/AdministrativeArea/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:AdministrativeArea
   "@type":               rdfs:Class
   rdfs:comment:          "A schema describing a geographic AdministrativeArea in the Center for Viral Systems Biology. Used typically to specify province, district, village, etc. for regions of a Country. Note that for Administrative Unit 0 `Country` should be used instead"
@@ -105,7 +105,7 @@
 
 - "@id":                 cvisb:administrativeUnit
   "@type":               rdf:Property
-  rdfs:comment:          level of administative area, e.g. 1: province, 2: district, 3: chiefdom, 4: village for Sierra Leone
+  rdfs:comment:          "level of administative area, e.g. 1: province, 2: district, 3: chiefdom, 4: village for Sierra Leone"
   rdfs:label:            administrativeUnit
   schema:domainIncludes:
     - "@id":             cvisb:AdministrativeArea
@@ -123,7 +123,7 @@
 
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
-  rdfs:comment:          identifier  / short name for administrative area. Note: where possible, align to governmental codes for the Administrative Area
+  rdfs:comment:          "identifier  / short name for administrative area. Note: where possible, align to governmental codes for the Administrative Area"
   rdfs:label:            identifier
   schema:domainIncludes:
     - "@id":             cvisb:AdministrativeArea

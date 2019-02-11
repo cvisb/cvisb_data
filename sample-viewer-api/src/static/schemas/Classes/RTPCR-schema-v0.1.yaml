@@ -44,6 +44,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+  authenticated:         false
 
 - "@id":                 cvisb:RTPCRresult
   "@type":               rdf:Property
@@ -59,6 +60,7 @@
                          - positive
                          - negative
                          - indeterminate
+  authenticated:         false
 
 - "@id":                 cvisb:RTPCRvalue
   "@type":               rdf:Property
@@ -70,3 +72,4 @@
     - "@id":             schema:Number
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
