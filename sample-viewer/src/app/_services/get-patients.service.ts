@@ -49,6 +49,11 @@ export class GetPatientsService {
       associatedSamples: [0, 1, 2, 3, 4],
       availableData: [
         {
+          name: "Viral Sequencing",
+          identifier: "viralseq",
+          url: "blah"
+        },
+        {
           name: "ELISA",
           identifier: "elisa",
           url: "blah"
