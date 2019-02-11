@@ -21,9 +21,7 @@ import { AuthState } from '../_models';
 })
 export class AuthService {
   logoutRedirect: string = `/home`;
-  // logoutRedirect: string = `${environment.host_url}/login`;
   user: Object;
-  authorizedUsers = ['laura.d.hughes@gmail.com', 'andrew.su@gmail.com'];
 
   public userSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   public userState$ = this.userSubject.asObservable();
@@ -67,7 +65,7 @@ export class AuthService {
         this.userSubject.next(this.user);
 
         let loginStatus: boolean = Object.keys(this.user).length > 0;
-        let authStatus: boolean = this.authorizedUsers.indexOf(this.user['email']) >= 0;
+        let authStatus: boolean = this.user['read'];
 
         this.authSubject.next({ loggedIn: loginStatus, authorized: authStatus });
 
