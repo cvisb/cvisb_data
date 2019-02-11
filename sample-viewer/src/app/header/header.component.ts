@@ -44,4 +44,8 @@ export class HeaderComponent implements OnInit {
     // this.authSvc.checkLogin();
   }
 
+  login() {
+    this.authSvc.login();
+  }
+
 }

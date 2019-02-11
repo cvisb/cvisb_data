@@ -75,9 +75,6 @@
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one
-  marginality:           recommended
-
-  owl:cardinality:       one
   marginality:           required
 
 - "@id":                 cvisb:updatedBy

@@ -22,7 +22,7 @@
         </li>
 
         <li class="menu-item page_item" *ngIf="!loggedIn">
-          <a routerLink="login" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="login" routerLinkActive #rla="routerLinkActive" routerLinkActive="current-menu-item" [routerLinkActiveOptions]="{exact: true}" (click)="login()">
               login
             </a>
         </li>
