@@ -49,11 +49,6 @@ export class GetPatientsService {
       associatedSamples: [0, 1, 2, 3, 4],
       availableData: [
         {
-          name: "Viral Sequencing",
-          identifier: "viralseq",
-          url: "blah"
-        },
-        {
           name: "ELISA",
           identifier: "elisa",
           url: "blah"
@@ -73,6 +68,11 @@ export class GetPatientsService {
           identifier: "hla",
           distribution: "blah",
           data: ["A*290201", "A*340201", "B*2703", "B*780101", "C*020202", "C*160101", "DPA1*020107", "DPA1*020202", "DPB1*010101", "DPB1*130101", "DQA1*010501", "DQA1*030301", "DQB1*020201", "DQB1*050101", "DRB1*100101", "DRB1*090102", "-", "-", "DRB4*010101", "DRB4*01@13", "-", "-"]
+        },
+        {
+          name: "Viral Sequencing",
+          identifier: "viralseq",
+          url: "blah"
         },
         {
           name: "Systems Serology",
