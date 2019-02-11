@@ -19,7 +19,7 @@
 #
 # "@id":                   "http://schema.cvisb.org/Place/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:Place
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing a geographic Place in the Center for Viral Systems Biology. Used typically to specify exact GPS coordinates

@@ -1,0 +1,12 @@
+# Wrapper around schema:Date, to make an expicit date range.
+
+- "@id":                 cvisb:DateRange
+  "@type":               rdfs:Class
+  rdfs:comment:          A derivation of the schema.org Date class, for explicit bounded or unbounded date ranges. Used in json validation.
+  rdfs:label:            DateRange
+  rdfs:subClassOf:
+    "@id":               schema:Date
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+  schema:sameAs:
+    "@id":               schema:Date

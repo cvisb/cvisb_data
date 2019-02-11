@@ -33,7 +33,7 @@
 # id
 - "@id":                 cvisb:sampleID
   "@type":               rdf:Property
-  rdfs:comment:          unique ID for the derived sample; ideally, the combination of sampleType and isolationDate
+  rdfs:comment:          unique ID for the derived sample; ideally, the combination of sampleType and isolationDate. Should not contain non-public IDs
   rdfs:label:            sampleID
   schema:domainIncludes:
     - "@id":             cvisb:Sample
@@ -42,6 +42,23 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
+
+# alternateIdentifier
+- "@id":                 cvisb:alternateIdentifier
+  "@type":               rdf:Property
+  rdfs:comment:          Alternate identifers for sample. Can contain private IDs.
+  rdfs:label:            alternateIdentifier
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:alternateIdentifier
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
 
 # name
 - "@id":                 cvisb:name
@@ -57,6 +74,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # description
 - "@id":                 cvisb:description
@@ -72,11 +90,12 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # patient ID
 - "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          "Unique patient id; G-number, S-number, or C-number"
+  rdfs:comment:          Unique public patient id
   rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:Sample
@@ -85,6 +104,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # visit code
 - "@id":                 cvisb:visitCode
@@ -98,6 +118,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # isolation date
 - "@id":                 cvisb:isolationDate
@@ -108,9 +129,10 @@
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
     - "@id":             schema:Date
+    - "@id":             cvsib:DateRange
   owl:cardinality:       one
   marginality:           recommended
-
+  authenticated:         true
 
 # sample type
 - "@id":                 cvisb:sampleType
@@ -142,6 +164,7 @@
                         - "viralRNA"
                         - "totalRNA"
                         - "DNA"
+  authenticated:         false
 
 # how far is the derived sample from the primary sample
 - "@id":                 cvisb:derivedIndex
@@ -154,6 +177,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # sample species
 - "@id":                 cvisb:species
@@ -170,6 +194,7 @@
   schema:Enumeration:
                         - "human"
                         - "rat"
+  authenticated:         false
 
 # protocol
 - "@id":                 cvisb:protocolVersion
@@ -183,6 +208,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 - "@id":                 cvisb:protocolURL
   "@type":               rdf:Property
@@ -195,6 +221,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 # Key sample isolation parameters
 - "@id":                 cvisb:freezingBuffer
@@ -208,6 +235,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 - "@id":                 cvisb:dilutionFactor
   "@type":               rdf:Property
@@ -220,6 +248,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 - "@id":                 cvisb:AVLinactivated
   "@type":               rdf:Property
@@ -231,6 +260,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 - "@id":                 cvisb:location
   "@type":               rdf:Property
@@ -242,6 +272,7 @@
     - "@id":             cvisb:SampleLocation
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         true
 
 # when updated
 - "@id":                 cvisb:dateModified
@@ -256,6 +287,7 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
   # versions
 - "@id":                 cvisb:_version
@@ -270,3 +302,4 @@
     "@id":               schema:version
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

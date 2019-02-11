@@ -45,6 +45,8 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
+
 
 # description
 - "@id":                 cvisb:description
@@ -60,11 +62,12 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # DOI
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
-  rdfs:comment:              "A unique identifier for the dataset. Note: should be an internal representation; DOIs should go in @id"
+  rdfs:comment:          "A unique identifier for the DataDownload. Note: should be an internal, CViSB identifier; DOIs should go in @id"
   rdfs:label:            identifier
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -74,6 +77,7 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property
@@ -83,8 +87,11 @@
     - "@id":             cvisb:DataDownload
   schema:rangeIncludes:
     "@id":               schema:URL
+  schema:sameAs:
+    "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 
 - "@id":                 cvisb:isBasedOn
@@ -99,6 +106,7 @@
     "@id":               schema:isBasedOn
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # versions
 - "@id":                 cvisb:_version
@@ -113,6 +121,7 @@
     "@id":               schema:version
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # link to file
 - "@id":                 cvisb:contentUrl
@@ -127,6 +136,7 @@
     "@id":               schema:contentUrl
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 - "@id":                 cvisb:contentUrlRepository
   "@type":               rdf:Property
@@ -141,6 +151,7 @@
   schema:Enumeration:
   - SRA
   - AWS
+  authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
   "@type":               rdf:Property
@@ -152,6 +163,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 
 # duplicate source
@@ -167,6 +179,7 @@
     "@id":               schema:sameAs
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 # keywords
 - "@id":                 cvisb:additionalType
@@ -184,11 +197,12 @@
                         - raw data
                         - analyzed data
                         - summary data
+  authenticated:         false
 
 # keywords
 - "@id":                 cvisb:keywords
   "@type":               rdf:Property
-  rdfs:comment:          Comma-seperated keywords to summarize the dataset
+  rdfs:comment:          Comma-seperated keywords to summarize the DataDownload
   rdfs:label:            keywords
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -198,6 +212,7 @@
     "@id":               schema:keywords
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # patient ID list
 - "@id":                 cvisb:patientIDs
@@ -211,6 +226,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
@@ -226,6 +242,7 @@
     "@id":               schema:measurementTechnique
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # file extension
 # https://blogs.msdn.microsoft.com/vsofficedeveloper/2008/05/08/office-2007-file-format-mime-types-for-http-content-streaming-2/
@@ -256,6 +273,7 @@
                          - application/xml
                          - application/zip
                          - application/gzip
+  authenticated:         false
 
 # dates
 - "@id":                 cvisb:dateCreated
@@ -270,6 +288,7 @@
     "@id":               "schema:dateCreated"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:datePublished
   "@type":               rdf:Property
@@ -283,10 +302,11 @@
     "@id":               "schema:datePublished"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
-  rdfs:comment:          Date on which the dataset was most recently modified (YYYY-DD-MM)
+  rdfs:comment:          Date on which the DataDownload was most recently modified (YYYY-DD-MM)
   rdfs:label:            dateModified
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -296,11 +316,12 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # Author
 - "@id":                 cvisb:author
   "@type":               rdf:Property
-  rdfs:comment:          Author of this dataset, can be a person or an organization
+  rdfs:comment:          Author of this DataDownload, can be a person or an organization. Usually specified in Dataset object.
   rdfs:label:            author
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -310,6 +331,7 @@
     "@id":               "schema:author"
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 - "@id":                 cvisb:publisher
   "@type":               rdf:Property
@@ -323,6 +345,7 @@
     "@id":               "schema:publisher"
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Code location
 - "@id":                 cvisb:sourceCode
@@ -335,16 +358,18 @@
     - "@id":             cvisb:SoftwareSourceCode
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Experimental metadata
-- "@id":                 cvisb:experimentParameters
+- "@id":                 cvisb:experimentIDs
   "@type":               rdf:Property
-  rdfs:comment:          Metadata describing how the data were generated, processed, and analysed.
-  rdfs:label:            experimentParameters
+  rdfs:comment:          Unique experimental ID that of the experiment that generated the data. Used as a handle into the metadata describing how the data were generated, processed, and analysed.
+  rdfs:label:            experimentIDs
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
   schema:rangeIncludes:
+    - "@id":             xsd:string
     - "@id":             schema:Text
-    # - "@id":           cvisb:Experiment
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false

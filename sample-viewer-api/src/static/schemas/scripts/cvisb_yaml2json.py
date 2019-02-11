@@ -10,8 +10,9 @@ import os
 import json
 import yaml
 import fnmatch
+import csv
 
-os.chdir('/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas')
+os.chdir('/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes')
 all_files = os.listdir()
 
 # How expected files should be combined:
@@ -36,12 +37,16 @@ def open_yaml(yaml_file):
 # os.chdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
 # context_file = "cvisb-context.yaml"
 
-file="/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/patient-schema-v0.1.yaml"
-file="/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/dataset-schema-v0.1.yaml"
+file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
 schema = open_yaml(file)
+
 output_file='test_valid.jsonld'
 for attr in schema:
     print(attr['rdfs:label'])
+
+with open("cvisb_fields.csv", 'w', newline='') as myfile:
+     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+     wr.writerow(schema)
 
 def get_validation(schema):
     counter = 0;
