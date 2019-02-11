@@ -37,9 +37,18 @@ class LogoutHandler(BaseHandler):
         self.redirect(self.get_argument("next", "/"))
 
 class UserInfoHandler(BaseHandler):
+    def initialize(self, web_settings):
+        self.web_settings = web_settings
+
     def get(self):
         current_user = self.get_current_user() or {}
-        logging.debug("user in UserInfoHandler: {}".format(current_user))
+        if current_user:
+            current_user['read'] = False
+            current_user['write'] = False
+            if current_user['email'] in self.web_settings.MASTER_READ_LIST:
+                current_user['read'] = True
+            if current_user['email'] in self.web_settings.MASTER_WRITE_LIST:
+                current_user['write'] = True
         self.return_json(current_user)
 
 class GoogleOAuth2LoginHandler(RequestHandler, GoogleOAuth2Mixin):
