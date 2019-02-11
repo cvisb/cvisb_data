@@ -159,7 +159,7 @@
     "@id":               cvisb:DataCatalog
   schema:sameAs:
     "@id":               schema:includedInDataCatalog
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
 # DOI
@@ -173,7 +173,7 @@
     "@id":               xsd:string
   schema:sameAs:
     "@id":               schema:identifier
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
 # duplicate source
@@ -187,7 +187,7 @@
     "@id":               schema:URL
   schema:sameAs:
     "@id":               schema:sameAs
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           optional
 
 # keywords
@@ -201,7 +201,7 @@
     "@id":               xsd:string
   schema:sameAs:
     "@id":               schema:keywords
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
 # dates
@@ -269,7 +269,7 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:author"
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           required
 
 - "@id":                 cvisb:publisher
@@ -282,22 +282,22 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:publisher"
-  owl:cardinality:       multiple
+  owl:cardinality:       many
   marginality:           recommended
 
   # versions
-- "@id":                 cvisb:version
+- "@id":                 cvisb:_version
   "@type":               rdf:Property
-  rdfs:comment:          Version of dataset
-  rdfs:label:            version
+  rdfs:comment:          Version of dataset, auto-assigned by CViSB database
+  rdfs:label:            _version
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             schema:Number
   schema:sameAs:
     "@id":               schema:version
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
 
 - "@id":                 cvisb:schemaVersion
   "@type":               rdf:Property
