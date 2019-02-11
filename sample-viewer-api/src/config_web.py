@@ -46,11 +46,11 @@ APP_LIST = [
     (r"/api/(.+)/?$", EntityHandler),
     (r"/jsonschema/(.+).json$", SchemaHandler),
     (r"/jsonschema$", SchemaHandler),
+    (r"/user", UserInfoHandler),
 ]
 
 # patterns that don't require access to settings
 UNINITIALIZED_APP_LIST = [
-    (r"/user", UserInfoHandler),
     (r"/logout", LogoutHandler),
 ]
 
