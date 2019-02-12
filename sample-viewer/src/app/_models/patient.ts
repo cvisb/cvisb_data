@@ -11,7 +11,7 @@ export class Patient {
   gender?: string;
   country?: Object;
   homeLocation?: Object[];
-  associatedSamples?: number[];
+  associatedSamples?: string[];
   availableData?: Object[];
   relatedTo?: string[];
   elisa?: Object[];
