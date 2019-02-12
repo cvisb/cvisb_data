@@ -16,8 +16,6 @@ export class PatientArray {
   exptTypes: D3Nested[];
 
   constructor(patients: Patient[]) {
-    console.log('summarising patients')
-    console.log(patients)
     this.patientIDs = patients.map((d: Patient) => d.patientID);
     // this.relatedIDs = patients.map((d:Patient) => d.relatedTo);
 
@@ -49,22 +47,24 @@ export class PatientArray {
     }
 
     // --- experiments ---
+
     this.exptTypes = [];
-    let expts: any = patients.filter((d: Patient) => d.availableData).map((d: Patient) => d.availableData);
-    expts = expts.flat();
+    if (Object.keys(patients).includes("availableData")) {
+      let expts: any = patients.filter((d: Patient) => d.availableData).map((d: Patient) => d.availableData);
+      expts = expts.flat();
 
-    for (let expt of expts) {
-      let id = expt['identifier'];
-      let idx = this.exptTypes.findIndex(d => d.key === id);
-      if (idx >= 0) {
-        this.exptTypes[idx]['value'] = <number>this.exptTypes[idx]['value'] + 1;
-      } else {
-        this.exptTypes.push({ key: expt['identifier'], value: 1, name: expt['name'] })
+      for (let expt of expts) {
+        let id = expt['identifier'];
+        let idx = this.exptTypes.findIndex(d => d.key === id);
+        if (idx >= 0) {
+          this.exptTypes[idx]['value'] = <number>this.exptTypes[idx]['value'] + 1;
+        } else {
+          this.exptTypes.push({ key: expt['identifier'], value: 1, name: expt['name'] })
+        }
       }
+
+      this.exptTypes.sort((a: any, b: any) => b.value - a.value);
     }
-
-    this.exptTypes.sort((a: any, b: any) => b.value - a.value);
-
 
     // Save patients, downloadable version
     this.patients = patients;
