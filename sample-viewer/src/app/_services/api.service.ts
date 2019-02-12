@@ -38,7 +38,7 @@ export class ApiService {
           console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
           console.log(err)
         }
-    )
+      )
   }
 
   // Generic function to add data to a given endpoint on the API
@@ -48,7 +48,6 @@ export class ApiService {
   // (3) To all, appends the dateModified to be the current date. [?-- should happen on backend?]
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(endpoint: string, newData: any) {
-    console.log('attempting to add new data...')
     // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
 
     // Check if there are already duplicates within the index.
@@ -72,20 +71,24 @@ export class ApiService {
     //     return (null);
     //   }
     // })
+    if (newData) {
+      console.log('attempting to add new data...')
+      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+        this.jsonify(newData),
+        {
+          headers: new HttpHeaders()
+        }).subscribe(resp => {
+          console.log(resp)
+        },
+          err => {
+            console.log(err)
+          })
+      // })
 
-    this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-      this.jsonify(newData),
-      {
-        headers: new HttpHeaders()
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-    // })
+    } else {
+      console.log('no data to add')
+    }
   }
-
 
   getIDs(newData: any, endpoint: string, uniqueID: string) {
     let ids = newData.map((d) => d[uniqueID]).join(",");

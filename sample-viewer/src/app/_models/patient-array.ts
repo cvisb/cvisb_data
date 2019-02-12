@@ -16,6 +16,8 @@ export class PatientArray {
   exptTypes: D3Nested[];
 
   constructor(patients: Patient[]) {
+    console.log(patients)
+
     this.patientIDs = patients.map((d: Patient) => d.patientID);
     // this.relatedIDs = patients.map((d:Patient) => d.relatedTo);
 
@@ -76,7 +78,7 @@ export class PatientArray {
     // Un-nest objects
     this.downloadable.forEach((d: Patient) => {
       d.country = d.country ? d.country['name'] : "unknown";
-      d.availableData = d.availableData.map((data_type: any) => data_type.name);
+      d.availableData = d.availableData ? d.availableData.map((data_type: any) => data_type.name) : [];
 
       d.homeLocation.forEach((adminUnit) => {
         d[adminUnit['administrativeType']] = adminUnit['name'];
