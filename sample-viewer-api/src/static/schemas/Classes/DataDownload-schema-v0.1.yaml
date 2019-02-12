@@ -240,8 +240,17 @@
     - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:measurementTechnique
-  owl:cardinality:       many
-  marginality:           recommended
+  owl:cardinality:       one
+  marginality:           required
+  schema:Enumeration:
+                           - HLA sequencing
+                           - viral sequencing
+                           - metagenome sequencing
+                           - BCR sequencing
+                           - TCR sequencing
+                           - Systems Serology
+                           - Metabolomics
+                           - other
   authenticated:         false
 
 # file extension
