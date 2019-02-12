@@ -6,7 +6,9 @@
     <div class="patient-content">
 
       <div class="patient-header">
-        <h1 class="page-header" [ngClass]="patient.cohort">Patient {{patientID}}</h1>
+        <div class="page-header" [ngClass]="patient.cohort">
+          <h1>Patient {{patientID}}</h1>
+        </div>
 
         <div class="cohort-group">
           <span class="cohort" [ngClass]="patient.cohort">{{ patient.cohort }}</span>
