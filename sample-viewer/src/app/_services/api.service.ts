@@ -16,16 +16,19 @@ export class ApiService {
 
   // Generic function to delete a single record.
   deleteObject(endpoint: string, id: string): Observable<{}> {
-  console.log("attempting to delete obj: " + id)
+    console.log("attempting to delete obj: " + id)
     // TODO: build-in dialoge box to confirm?
     return this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
       .pipe(
+        map(resp => {
+          console.log('successful delete')
+          console.log(resp)
+        }),
         catchError(e => {
           console.log(e)
           throwError(e);
           return (new Observable<any>())
-        }
-        )
+        })
       );
   }
 
