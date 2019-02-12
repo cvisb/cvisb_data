@@ -18,8 +18,8 @@ export class FilterPatientsComponent implements OnInit {
     // this.patients = patientSvc.getPatients();
     this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
       console.log(pList)
-      
-      if(pList.length > 1) {
+
+      if(pList && pList.length > 1) {
         this.patients = pList;
 
       this.patientSummary = new PatientArray(this.patients);
