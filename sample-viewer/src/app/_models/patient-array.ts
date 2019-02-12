@@ -16,6 +16,8 @@ export class PatientArray {
   exptTypes: D3Nested[];
 
   constructor(patients: Patient[]) {
+    console.log('summarising patients')
+    console.log(patients)
     this.patientIDs = patients.map((d: Patient) => d.patientID);
     // this.relatedIDs = patients.map((d:Patient) => d.relatedTo);
 

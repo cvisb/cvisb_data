@@ -202,8 +202,7 @@ export class GetPatientsService {
     // this.getPatients();
 
     // this.apiSvc.put('patient', this.fakePatients);
-    this.apiSvc.deleteObject('dataset', 'OQAHv2gBbNI6MIxgMCUC');
-    //
+
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
         this.getPatients();
