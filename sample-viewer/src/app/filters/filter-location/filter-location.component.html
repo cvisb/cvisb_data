@@ -1,7 +1,8 @@
 <div class="filter filter-adm0" *ngIf="countries">
   <h4 class="filter-label">location</h4>
 
-  <div class="location mat-shadow" *ngFor="let ctry of countries" [ngClass]="{'disabled': ctry.value === 0 }">
+  <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.key)" class="location mat-shadow" [ngClass]="{'disabled': ctry.value === 0}" [ngClass]="ctry.key">
+
     <svg-icon [icon]="ctry.key" [class]="ctry.key + '-icon'" *ngIf="ctry.name"></svg-icon>
     <mat-icon *ngIf="! ctry.name || ctry.name === 'unknown'" [ngClass]="ctry.key + '-icon'">help_outline</mat-icon>
 
