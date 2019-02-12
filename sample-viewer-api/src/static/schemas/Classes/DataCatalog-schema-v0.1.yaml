@@ -95,6 +95,21 @@
   authenticated:           false
 
 # DOI
+- "@id":                   cvisb:dataset
+  "@type":                 rdf:Property
+  rdfs:comment:            list of unique internal identifiers for the datasets associated with the DataCatalog
+  rdfs:label:              dataset
+  schema:domainIncludes:
+    - "@id":               cvisb:DataCatalog
+  schema:rangeIncludes:
+    "@id":                 xsd:string
+  schema:sameAs:
+    "@id":                 schema:dataset
+  owl:cardinality:         many
+  marginality:             required
+  authenticated:           false
+
+# DOI
 - "@id":                   cvisb:identifier
   "@type":                 rdf:Property
   rdfs:comment:            "A unique identifier for the DataCatalog. Note: should be an internal, CViSB identifier; DOIs should go in @id"
@@ -113,7 +128,7 @@
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property
-  rdfs:comment:          A unique identifier for the dataset, preferably a DOI
+  rdfs:comment:          A unique identifier for the DataCatalog, preferably a DOI
   rdfs:label:            "@id"
   schema:domainIncludes:
     - "@id":             cvisb:DataCatalog
