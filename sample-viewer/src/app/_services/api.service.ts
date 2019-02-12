@@ -47,14 +47,14 @@ export class ApiService {
     // TODO: build-in dialoge box to confirm?
     //
 
-    this.getESIDs(endpoint).pipe((map(ids => {
+    this.getESIDs(endpoint).subscribe(ids => {
       console.log("list of IDs to delete:")
       console.log(ids);
 
-      for(let id of ids){
+      for (let id of ids) {
         this.deleteObject(endpoint, id);
       }
-    })))
+    })
 
 
     // return this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
@@ -121,11 +121,12 @@ export class ApiService {
     }
   }
 
+
   getESIDs(endpoint: string) {
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000"`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000`, {
       observe: 'response',
       headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
+        .set('Accept', 'application/json')
     }).pipe(
       map(data => {
         let df = data['body']['hits'];
@@ -133,8 +134,8 @@ export class ApiService {
         console.log(ids)
 
         return (ids);
-      })
-    )
+
+      }))
   }
   // getIDs(newData: any, endpoint: string, uniqueID: string) {
   //   let ids = newData.map((d) => d[uniqueID]).join(",");
