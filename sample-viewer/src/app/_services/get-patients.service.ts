@@ -260,7 +260,8 @@ export class GetPatientsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
-        .set('q', param_string + "\&size=1000")
+        .set('q', param_string)
+        .set('size', "1000")
     }).subscribe(data => {
       let patients = data['body']['hits'];
       console.log(data)
