@@ -13,18 +13,16 @@ export class FilterPatientsComponent implements OnInit {
   public patientSummary: PatientArray;
 
 
-  constructor(private patientSvc: GetPatientsService,) {
+  constructor(private patientSvc: GetPatientsService, ) {
     // grab the data`
     // this.patients = patientSvc.getPatients();
     this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
-      console.log(pList)
-
-      if(pList && pList.length > 1) {
+      if (pList && pList.length > 1) {
         this.patients = pList;
 
-      this.patientSummary = new PatientArray(this.patients);
+        this.patientSummary = new PatientArray(this.patients);
         console.log(this.patientSummary);
-    }
+      }
 
     })
 
