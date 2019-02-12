@@ -29,12 +29,6 @@ export class PatientPageComponent implements OnInit {
       this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
         this.patient = patient;
       });
-
-
-      // this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
-      //   this.patient = pList.filter((d: any) => d.patientID === this.patientID)[0];
-      // })
-      console.log(this.patient)
     })
 
     this.route.fragment.subscribe(fragment => {
