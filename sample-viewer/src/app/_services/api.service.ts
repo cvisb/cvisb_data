@@ -121,6 +121,30 @@ export class ApiService {
     }
   }
 
+  getOne(endpoint: string, id: string, idVar: string = 'identifier') {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', `${idVar}:${id}`)
+    }).pipe(
+      map(data => {
+        if (data['body']['total'] === 1) {
+          // One result found, as expected.
+          return (data['body']['hits'][0])
+        } else {
+          console.log("More than one object returned. Check if your ID is unique!")
+        }
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
+  }
+
 
   getESIDs(endpoint: string) {
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000`, {

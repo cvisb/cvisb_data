@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { environment } from "../../environments/environment";
@@ -23,7 +23,7 @@ export class GetPatientsService {
   patients: Patient[];
   request_params: RequestParamArray;
 
-// Event listener for parameters to run on
+  // Event listener for parameters to run on
   public patientParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public patientParamsState$ = this.patientParamsSubject.asObservable();
 
@@ -214,6 +214,12 @@ export class GetPatientsService {
       }
     })
 
+    this.patientParamsState$.subscribe((params: RequestParamArray) => {
+      console.log('New params!!!!')
+      this.request_params = params;
+      this.getPatients();
+    })
+
     this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
     // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
   }
@@ -230,25 +236,52 @@ export class GetPatientsService {
 
   getPatient(id: string): any {
     // temp hard-coded shim.
-    return (this.patients.filter((d: any) => d.patientID === id)[0]);
-
-    // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-    //   observe: 'response',
-    //   headers: new HttpHeaders()
-    //     .set('Accept', 'application/json'),
-    //   params: new HttpParams()
-    //     .set('q', `patient_id:\"${id}\"`)
-    // }).subscribe(data => {
-    //   console.log(data)
-    //   return (data.body)
-    // },
-    //   err => {
-    //     console.log(err)
-    //   })
+    // return (this.patients.filter((d: any) => d.patientID === id)[0]);
+    return this.apiSvc.getOne('patient', id, 'patientID')
   }
 
-
   getPatients() {
+
+    let param_string: string;
+    if (this.request_params.length > 0) {
+      if (Array.isArray(this.request_params[0].value)) {
+        param_string = (`${this.request_params[0].field}:\(\"${this.request_params[0].value.join('" "')}\"\)`)
+      } else {
+        param_string = (`${this.request_params[0].field}:\"${this.request_params[0].value}\"`);
+      }
+    } else {
+      param_string = "__all__"
+    }
+
+    console.log(param_string)
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', param_string + "&size=1000")
+    }).subscribe(data => {
+      let patients = data['body']['hits'];
+      console.log(data)
+
+      // Sort patients by available data length, then alpha.
+      patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
+
+      // send new patients to subscription services.
+      this.patientsSubject.next(patients);
+
+    },
+      err => {
+        console.log('Error in getting patients')
+        console.log(err)
+
+        // check if unauthorized; if so, redirect.
+        // this.authSvc.redirectUnauthorized(err);
+      })
+  }
+
+  getAllPatients() {
     console.log('calling backend to get patients');
     console.log(this.patients);
 
