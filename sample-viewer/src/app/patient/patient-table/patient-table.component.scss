@@ -64,7 +64,8 @@ svg-icon {
 }
 
 .systemsserology {
-  background: lighten($lassa-lt, 20%);
+  // background: lighten($lassa-lt, 20%);
+  background: #e3ffe2;
 }
 
 .elisa {
@@ -79,6 +80,11 @@ svg-icon {
 .rdt {
   background: lighten($sierraleone-blue, 56%);
 }
+
+.viralseq {
+  background: #e4fffc;
+}
+
 // --- timepoints ---
 
 .timepoints {
