@@ -142,7 +142,7 @@
 # DOI
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
-  rdfs:comment:          "A unique identifier for the DataDownload. Note: should be an internal, CViSB identifier; DOIs should go in @id"
+  rdfs:comment:          "A unique identifier for the Dataset. Note: should be an internal, CViSB identifier; DOIs should go in @id"
   rdfs:label:            identifier
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
