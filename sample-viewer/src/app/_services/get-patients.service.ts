@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, AuthState } from '../_models';
+import { Patient, AuthState, RequestParamArray, RequestParam } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { MyHttpClient } from './http-cookies.service';
@@ -20,10 +20,13 @@ import PATIENTS from '../../assets/data/patients.json';
 
 export class GetPatientsService {
   patients: Patient[];
-  // request_params: RequestParam[];
+  request_params: RequestParamArray;
 
-  // public requestParamsSubject: BehaviorSubject<RequestParam[]> = new BehaviorSubject<RequestParam[]>([]);
-  // public patientParamsState$ = this.requestParamsSubject.asObservable();
+// Event listener for parameters to run on
+  public patientParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
+  public patientParamsState$ = this.patientParamsSubject.asObservable();
+
+  // Event listener for the patient array.
   public patientsSubject: BehaviorSubject<Patient[]> = new BehaviorSubject<Patient[]>([]);
   public patientsState$ = this.patientsSubject.asObservable();
 
@@ -47,7 +50,6 @@ export class GetPatientsService {
       gender: "Female",
       age: 17,
       relatedTo: ["C-fakePatient-0001-1", "C-fakePatient-0001-2"],
-      associatedSamples: ["0", "1", "2", "3", "4"],
       // availableData: [
       //   {
       //     name: "ELISA",
@@ -160,8 +162,8 @@ export class GetPatientsService {
       cohort: "Lassa",
       outcome: "contact",
       country: {
-        name: "Sierra Leone",
-        identifier: "SL"
+        name: "Nigeria",
+        identifier: "NG"
       },
       homeLocation: [
         { name: "Kenema", administrativeType: "district", administrativeUnit: 2 },
@@ -203,7 +205,7 @@ export class GetPatientsService {
     //
     // this.apiSvc.wipeEndpoint('patient');
 
-    // this.apiSvc.put('patient', this.fakePatients);
+    this.apiSvc.put('patient', this.fakePatients);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
