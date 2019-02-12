@@ -243,7 +243,7 @@ export class GetPatientsService {
   getPatients() {
 
     let param_string: string;
-    if (this.request_params.length > 0) {
+    if (this.request_params && this.request_params.length > 0) {
       if (Array.isArray(this.request_params[0].value)) {
         param_string = (`${this.request_params[0].field}:\(\"${this.request_params[0].value.join('" "')}\"\)`)
       } else {
