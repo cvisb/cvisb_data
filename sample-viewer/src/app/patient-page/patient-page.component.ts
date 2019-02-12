@@ -26,7 +26,9 @@ export class PatientPageComponent implements OnInit {
 
       titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
 
-      this.patient = this.patientSvc.getPatient(this.patientID);
+      this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
+        this.patient = patient;
+      });
 
 
       // this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
