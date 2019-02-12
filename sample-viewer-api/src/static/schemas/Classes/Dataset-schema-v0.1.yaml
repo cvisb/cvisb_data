@@ -324,6 +324,18 @@
   schema:rangeIncludes:
     - "@id":             cvisb:DataDownload
   owl:cardinality:       many
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:dataDownloadIDs
+  "@type":               rdf:Property
+  rdfs:comment:          References to the CViSB ID for the DataDownload, where elements of the dataset can be downloaded.
+  rdfs:label:            dataDownloadIDs
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
   marginality:           required
   authenticated:         false
 
