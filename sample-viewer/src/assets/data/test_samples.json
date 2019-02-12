@@ -1,0 +1,30 @@
+[
+  {
+    "@type": "Sample",
+    "sampleID": "G-fakePatient-0001_G1_PBMC20180627",
+    "patientID": "G-fakePatient-0001",
+    "visitCode": 1,
+    "sampleType": "PBMC"
+  },
+  {
+    "@type": "Sample",
+    "sampleID": "G-fakePatient-0001_G1_PBMC20180627",
+    "patientID": "G-fakePatient-0001",
+    "visitCode": 1,
+    "sampleType": "PBMC"
+  },
+  {
+    "@type": "Sample",
+    "sampleID": "C-fakePatient-0001-2_S1_PBMC20180627",
+    "patientID": "C-fakePatient-0001-2",
+    "visitCode": 1,
+    "sampleType": "PBMC"
+  },
+  {
+    "@type": "Sample",
+    "sampleID": "C-fakePatient-0001-1_S1_PBMC20180627",
+    "patientID": "C-fakePatient-0001-1",
+    "visitCode": 1,
+    "sampleType": "PBMC"
+  }
+]

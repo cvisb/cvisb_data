@@ -12,6 +12,7 @@ import { ApiService } from './api.service';
 import * as _ from 'lodash';
 
 import DATASETS from '../../assets/data/dataset_public.json';
+import DOWNLOADS from '../../assets/data/test_datadownloads.json';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,11 @@ export class getDatasetsService {
   constructor(
     public http: HttpClient,
     public myhttp: MyHttpClient,
-    public putSvc: ApiService
+    public apiSvc: ApiService
   ) {
     this.getDatasets();
-    // putSvc.put('dataset', DATASETS);
+    // apiSvc.put('dataset', DATASETS);
+    // apiSvc.put('datadownload', DOWNLOADS);
   }
 
   getDatasets() {

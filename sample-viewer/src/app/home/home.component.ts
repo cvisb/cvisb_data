@@ -5,6 +5,14 @@ import { ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../environments/environment';
 
+import { GetPatientsService, ApiService } from '../_services'
+// import { RequestParamArray, RequestParam} from '../_models'
+//
+import SAMPLES from '../../assets/data/test_samples.json';
+import EXPTS from '../../assets/data/test_experiments.json';
+import DATASETS from '../../assets/data/dataset_public.json';
+import DOWNLOADS from '../../assets/data/test_datadownloads.json';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,13 +29,31 @@ export class HomeComponent implements OnInit {
 
   ];
 
-  constructor(private titleSvc: Title, private route: ActivatedRoute) {
+
+  constructor(private titleSvc: Title, private route: ActivatedRoute, private patientSvc: GetPatientsService, public apiSvc: ApiService) {
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;
     this.titleSvc.setTitle(title);
+
+
+    // patientSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
+    //   console.log('getting most recent patient params!')
+    //   console.log(params)
+    //   this.params = params;
+    // })
   }
 
   ngOnInit() {
+    // this.params = new RequestParamArray([new RequestParam('country.identifier', '2')]);
+    // // this.params.push(new RequestParam('country.identifier', '2'));
+    // console.log(this.params)
+    // console.log(this.params.collapse())
+
+    console.log(DATASETS)
+    this.apiSvc.put('sample', SAMPLES);
+    this.apiSvc.put('experiment', EXPTS);
+    this.apiSvc.put('dataset', DATASETS);
+    this.apiSvc.put('datadownload', DOWNLOADS);
   }
 
 }
