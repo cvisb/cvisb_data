@@ -31,8 +31,6 @@ export class PatientTableComponent implements OnInit {
     // this.patients = patientSvc.getPatients();
     this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
       this.patients = pList;
-      console.log(pList)
-
       this.patientSource = new MatTableDataSource(this.patients);
     })
 
