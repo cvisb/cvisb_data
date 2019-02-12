@@ -127,7 +127,7 @@ export class ApiService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
-        .set('q', `${idVar}:${id}`)
+        .set('q', `${idVar}:\"${id}\"`)
     }).pipe(
       map(data => {
         if (data['body']['total'] === 1) {
