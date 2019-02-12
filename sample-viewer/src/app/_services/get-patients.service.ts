@@ -201,7 +201,7 @@ export class GetPatientsService {
 
     // this.getPatients();
     //
-    this.apiSvc.wipeEndpoint('patient');
+    // this.apiSvc.wipeEndpoint('patient');
 
     this.apiSvc.put('patient', this.fakePatients);
 
