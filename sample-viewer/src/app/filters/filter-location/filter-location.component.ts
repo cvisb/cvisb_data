@@ -33,6 +33,7 @@ export class FilterLocationComponent implements OnInit {
         console.log('sending patient endpoint country ' + ctry);
 
         this.params.push({field: 'country.identifier', value: ctry});
+        this.params = [{field: 'country.identifier', value: ctry}];
         console.log(this.params);
 
         this.patientSvc.patientParamsSubject.next(this.params);
