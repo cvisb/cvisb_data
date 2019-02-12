@@ -33,8 +33,8 @@ export class GetPatientsService {
       patientID: "G-fakePatient-0001",
       cohort: "Lassa",
       outcome: "dead",
-      infectionDate: "2018-06",
-      admitDate: "06/2018",
+      infectionDate: "2018-06-01",
+      admitDate: "2018-06-01",
       alternateIdentifier: ["fake1", 'faker2'],
       country: {
         name: "Sierra Leone",
@@ -47,67 +47,67 @@ export class GetPatientsService {
       gender: "Female",
       age: 17,
       relatedTo: ["C-fakePatient-0001-1", "C-fakePatient-0001-2"],
-      associatedSamples: [0, 1, 2, 3, 4],
-      availableData: [
-        {
-          name: "ELISA",
-          identifier: "elisa",
-          url: "blah"
-        },
-        {
-          name: "Rapid Diagnostics",
-          identifier: "rdt",
-          url: "blah"
-        },
-        {
-          name: "RT-PCR",
-          identifier: "rt_pcr",
-          url: "blah"
-        },
-        {
-          name: "HLA",
-          identifier: "hla",
-          distribution: "blah",
-          data: ["A*290201", "A*340201", "B*2703", "B*780101", "C*020202", "C*160101", "DPA1*020107", "DPA1*020202", "DPB1*010101", "DPB1*130101", "DQA1*010501", "DQA1*030301", "DQB1*020201", "DQB1*050101", "DRB1*100101", "DRB1*090102", "-", "-", "DRB4*010101", "DRB4*01@13", "-", "-"]
-        },
-        {
-          name: "Viral Sequencing",
-          identifier: "viralseq",
-          url: "blah"
-        },
-        {
-          name: "Systems Serology",
-          identifier: "systemsserology",
-          url: "blah",
-          data: [
-            { assay: "ADNP", value: 126.1511933 },
-            { assay: "ADCP 1:150", value: 70.77008 },
-            { assay: "ADCP 1:750", value: 33.15582 },
-            { assay: "ADCP 1:3750", value: 21.41597 },
-            { assay: "ADCP_AUC", value: 113049 },
-            { assay: "ADCD", value: 2442 },
-            { assay: "NKD: CD107a A", value: 13.5 },
-            { assay: "NKD: CD107a B", value: 16.1 },
-            { assay: "NKD: CD107a C", value: 8.75 },
-            { assay: "NKD: IFNg A", value: 6.24 },
-            { assay: "NKD: IFNg B", value: 5.46 },
-            { assay: "NKD: IFNg C", value: 2.23 },
-            { assay: "NKD: MIP-1b A", value: 24.9 },
-            { assay: "NKD: MIP-1b B", value: 21.8 },
-            { assay: "NKD: MIP-1b C", value: 17.8 }
-          ]
-        },
-        {
-          name: "BCR",
-          identifier: "bcr",
-          url: "blah"
-        },
-        {
-          name: "TCR",
-          identifier: "tcr",
-          url: "blah"
-        },
-      ],
+      associatedSamples: ["0", "1", "2", "3", "4"],
+      // availableData: [
+      //   {
+      //     name: "ELISA",
+      //     identifier: "elisa",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "Rapid Diagnostics",
+      //     identifier: "rdt",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "RT-PCR",
+      //     identifier: "rt_pcr",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "HLA",
+      //     identifier: "hla",
+      //     distribution: "blah",
+      //     data: ["A*290201", "A*340201", "B*2703", "B*780101", "C*020202", "C*160101", "DPA1*020107", "DPA1*020202", "DPB1*010101", "DPB1*130101", "DQA1*010501", "DQA1*030301", "DQB1*020201", "DQB1*050101", "DRB1*100101", "DRB1*090102", "-", "-", "DRB4*010101", "DRB4*01@13", "-", "-"]
+      //   },
+      //   {
+      //     name: "Viral Sequencing",
+      //     identifier: "viralseq",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "Systems Serology",
+      //     identifier: "systemsserology",
+      //     url: "blah",
+      //     data: [
+      //       { assay: "ADNP", value: 126.1511933 },
+      //       { assay: "ADCP 1:150", value: 70.77008 },
+      //       { assay: "ADCP 1:750", value: 33.15582 },
+      //       { assay: "ADCP 1:3750", value: 21.41597 },
+      //       { assay: "ADCP_AUC", value: 113049 },
+      //       { assay: "ADCD", value: 2442 },
+      //       { assay: "NKD: CD107a A", value: 13.5 },
+      //       { assay: "NKD: CD107a B", value: 16.1 },
+      //       { assay: "NKD: CD107a C", value: 8.75 },
+      //       { assay: "NKD: IFNg A", value: 6.24 },
+      //       { assay: "NKD: IFNg B", value: 5.46 },
+      //       { assay: "NKD: IFNg C", value: 2.23 },
+      //       { assay: "NKD: MIP-1b A", value: 24.9 },
+      //       { assay: "NKD: MIP-1b B", value: 21.8 },
+      //       { assay: "NKD: MIP-1b C", value: 17.8 }
+      //     ]
+      //   },
+      //   {
+      //     name: "BCR",
+      //     identifier: "bcr",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "TCR",
+      //     identifier: "tcr",
+      //     url: "blah"
+      //   },
+      // ],
 
       elisa: [
         {
@@ -121,7 +121,7 @@ export class GetPatientsService {
       patientID: "C-fakePatient-0001-1",
       cohort: "Lassa",
       outcome: "contact",
-      infectionDate: "2018-06",
+      infectionDate: "2018-06-01",
       country: {
         name: "Sierra Leone",
         identifier: "SL"
@@ -133,20 +133,20 @@ export class GetPatientsService {
       gender: "Male",
       age: 41,
       relatedTo: ["G-fakePatient-0001", "C-fakePatient-0001-2"],
-      // associatedSamples: ['0', '1'],
-      availableData: [
-        {
-          name: "ELISA",
-          identifier: "elisa",
-          url: "blah"
-        },
-        {
-          name: "HLA",
-          identifier: "hla",
-          url: "blah",
-          data: ["A*290201", "A*340201", "B*2703", "B*780101", "C*020202", "C*160101", "DPA1*020107", "DPA1*020202", "DPB1*010101", "DPB1*130101", "DQA1*010501", "DQA1*030301", "DQB1*020201", "DQB1*050101", "DRB1*100101", "DRB1*090102", "-", "-", "DRB4*010101", "DRB4*01@13", "-", "-"]
-        },
-      ],
+      associatedSamples: ['0', '1'],
+      // availableData: [
+      //   {
+      //     name: "ELISA",
+      //     identifier: "elisa",
+      //     url: "blah"
+      //   },
+      //   {
+      //     name: "HLA",
+      //     identifier: "hla",
+      //     url: "blah",
+      //     data: ["A*290201", "A*340201", "B*2703", "B*780101", "C*020202", "C*160101", "DPA1*020107", "DPA1*020202", "DPB1*010101", "DPB1*130101", "DQA1*010501", "DQA1*030301", "DQB1*020201", "DQB1*050101", "DRB1*100101", "DRB1*090102", "-", "-", "DRB4*010101", "DRB4*01@13", "-", "-"]
+      //   },
+      // ],
       elisa: [
         {
           virus: "Lassa",
@@ -170,14 +170,14 @@ export class GetPatientsService {
       gender: "Female",
       age: 38,
       relatedTo: ["G-fakePatient-0001", "C-fakePatient-0001-1"],
-      // associatedSamples: ['0', '1'],
-      availableData: [
-        {
-          name: "ELISA",
-          identifier: "elisa",
-          url: "blah"
-        },
-      ],
+      associatedSamples: ['0', '1'],
+      // availableData: [
+      //   {
+      //     name: "ELISA",
+      //     identifier: "elisa",
+      //     url: "blah"
+      //   },
+      // ],
       elisa: [
         {
           virus: "Lassa",
