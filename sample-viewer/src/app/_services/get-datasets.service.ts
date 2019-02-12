@@ -7,7 +7,7 @@ import { map, catchError } from "rxjs/operators";
 import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
-import { PutService } from './put.service';
+import { ApiService } from './api.service';
 
 import * as _ from 'lodash';
 
@@ -23,7 +23,7 @@ export class getDatasetsService {
   constructor(
     public http: HttpClient,
     public myhttp: MyHttpClient,
-    public putSvc: PutService
+    public putSvc: ApiService
   ) {
     this.getDatasets();
     // putSvc.put(DATASETS, 'dataset', 'identifier')
@@ -71,7 +71,7 @@ export class getDatasetsService {
       catchError(e => {
         console.log(e)
         throwError(e);
-        return(new Observable<any>())
+        return (new Observable<any>())
       })
     )
   }
