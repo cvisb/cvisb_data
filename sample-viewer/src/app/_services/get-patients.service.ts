@@ -9,6 +9,7 @@ import { environment } from "../../environments/environment";
 
 import { Patient, AuthState } from '../_models';
 import { AuthService } from './auth.service';
+import { ApiService } from './api.service';
 import { MyHttpClient } from './http-cookies.service';
 
 import PATIENTS from '../../assets/data/patients.json';
@@ -188,7 +189,11 @@ export class GetPatientsService {
 
   ];
 
-  constructor(public myhttp: MyHttpClient, private router: Router, private authSvc: AuthService) {
+  constructor(
+    public myhttp: MyHttpClient,
+    private router: Router,
+    private apiSvc: ApiService,
+    private authSvc: AuthService) {
     // this.request_params = [new RequestParam("id", ["test", "test2"])];
     // console.log(this.request_params)
     console.log(PATIENTS)
@@ -196,7 +201,8 @@ export class GetPatientsService {
 
     // this.getPatients();
 
-    // this.putPatients(this.fakePatients);
+    this.apiSvc.put('patients', this.fakePatients);
+    this.apiSvc.deleteObject('dataset', 'OQAHv2gBbNI6MIxgMCUC');
     //
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
@@ -279,9 +285,7 @@ export class GetPatientsService {
     this.myhttp.put<any[]>(environment.api_url + "/api/patient",
       this.jsonify(patients),
       {
-        // observe: 'response',
         headers: new HttpHeaders()
-        // .set('data', )
       }).subscribe(resp => {
         console.log(resp)
       },
