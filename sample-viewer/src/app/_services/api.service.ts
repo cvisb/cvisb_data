@@ -47,7 +47,7 @@ export class ApiService {
   // merge/update the data on the backend, not append a new object.
   // (3) To all, appends the dateModified to be the current date. [?-- should happen on backend?]
   // (4) Lastly, adds the data to the backend using the PUT endpoint.
-  put(endpoint: string, newData: any, uniqueID: string = 'identifier') {
+  put(endpoint: string, newData: any) {
     console.log('attempting to add new data...')
     // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
 
