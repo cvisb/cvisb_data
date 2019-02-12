@@ -32,7 +32,7 @@ export class GetPatientsService {
     {
       patientID: "G-fakePatient-0001",
       cohort: "Lassa",
-      outcome: "dead",
+      outcome: "survivor",
       infectionDate: "2018-06-01",
       admitDate: "2018-06-01",
       alternateIdentifier: ["fake1", 'faker2'],
@@ -200,8 +200,10 @@ export class GetPatientsService {
     this.patients = PATIENTS.concat(this.fakePatients);
 
     // this.getPatients();
+    //
+    this.apiSvc.wipeEndpoint('patient');
 
-    // this.apiSvc.put('patient', this.fakePatients);
+    this.apiSvc.put('patient', this.fakePatients);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {

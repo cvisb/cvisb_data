@@ -41,6 +41,37 @@ export class ApiService {
       )
   }
 
+  // Generic function to delete a single record.
+  wipeEndpoint(endpoint: string) {
+    console.log("attempting to delete all objects from endpoint")
+    // TODO: build-in dialoge box to confirm?
+    //
+
+    this.getESIDs(endpoint).pipe((map(ids => {
+      console.log("list of IDs to delete:")
+      console.log(ids);
+
+      for(let id of ids){
+        this.deleteObject(endpoint, id);
+      }
+    })))
+
+
+    // return this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
+    //   .pipe(
+    //     map(resp => {
+    //       console.log('successful delete')
+    //       console.log(resp)
+    //     }),
+    //     catchError(e => {
+    //       console.log(e)
+    //       throwError(e);
+    //       return (new Observable<any>())
+    //     })
+    //   );
+
+  }
+
   // Generic function to add data to a given endpoint on the API
   // (1) First checks if the data already exists in the backend, based on the unique identifier
   // (2) If found, merges in the _id ES unique ID into the newData object so the data will
@@ -90,36 +121,51 @@ export class ApiService {
     }
   }
 
-  getIDs(newData: any, endpoint: string, uniqueID: string) {
-    let ids = newData.map((d) => d[uniqueID]).join(",");
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+  getESIDs(endpoint: string) {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000"`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', `${uniqueID}:${ids}`)
     }).pipe(
       map(data => {
-        if (data) {
-          let files = data['body']['hits'];
+        let df = data['body']['hits'];
+        let ids = df.map(d => d["_id"]);
+        console.log(ids)
 
-          if (!files) {
-            return (null)
-          }
-          let id_dict = files.map((d: any) => {
-            return ({
-              '_id': d['_id'],
-              uniqueID: d[uniqueID]
-            })
-          }
-
-          );
-
-          return (id_dict);
-        }
-      }))
+        return (ids);
+      })
+    )
   }
+  // getIDs(newData: any, endpoint: string, uniqueID: string) {
+  //   let ids = newData.map((d) => d[uniqueID]).join(",");
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: new HttpParams()
+  //       .set('q', `${uniqueID}:${ids}`)
+  //   }).pipe(
+  //     map(data => {
+  //       if (data) {
+  //         let files = data['body']['hits'];
+  //
+  //         if (!files) {
+  //           return (null)
+  //         }
+  //         let id_dict = files.map((d: any) => {
+  //           return ({
+  //             '_id': d['_id'],
+  //             uniqueID: d[uniqueID]
+  //           })
+  //         }
+  //
+  //         );
+  //
+  //         return (id_dict);
+  //       }
+  //     }))
+  // }
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {
