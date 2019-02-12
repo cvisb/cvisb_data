@@ -32,4 +32,9 @@ export class FilterPatientsComponent implements OnInit {
   ngOnInit() {
   }
 
+  clearFilters() {
+    console.log('clearing filters')
+    this.patientSvc.patientParamsSubject.next([]);
+  }
+
 }
