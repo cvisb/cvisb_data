@@ -135,6 +135,7 @@ export class ApiService {
           return (data['body']['hits'][0])
         } else {
           console.log("More than one object returned. Check if your ID is unique!")
+          console.log(data)
         }
       }),
       catchError(e => {
