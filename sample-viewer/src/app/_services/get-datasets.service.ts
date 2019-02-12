@@ -26,8 +26,7 @@ export class getDatasetsService {
     public putSvc: ApiService
   ) {
     this.getDatasets();
-    console.log('trying to put datasets');
-    putSvc.put('dataset', DATASETS);
+    // putSvc.put('dataset', DATASETS);
   }
 
   getDatasets() {
