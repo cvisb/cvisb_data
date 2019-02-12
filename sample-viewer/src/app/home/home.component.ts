@@ -49,11 +49,11 @@ export class HomeComponent implements OnInit {
     // console.log(this.params)
     // console.log(this.params.collapse())
 
-    console.log(DATASETS)
+    // console.log(DATASETS)
     this.apiSvc.put('sample', SAMPLES);
-    this.apiSvc.put('experiment', EXPTS);
-    this.apiSvc.put('dataset', DATASETS);
-    this.apiSvc.put('datadownload', DOWNLOADS);
+    // this.apiSvc.put('experiment', EXPTS);
+    // this.apiSvc.put('dataset', DATASETS);
+    // this.apiSvc.put('datadownload', DOWNLOADS);
   }
 
 }
