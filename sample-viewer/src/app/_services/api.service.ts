@@ -32,11 +32,10 @@ export class ApiService {
     //   );
     this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
       .subscribe(resp => {
-        console.log('delete response')
         console.log(resp)
       },
         err => {
-          console.log('Error in deleting')
+          console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
           console.log(err)
         }
     )
