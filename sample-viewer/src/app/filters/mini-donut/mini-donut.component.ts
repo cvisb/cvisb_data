@@ -144,9 +144,15 @@ export class MiniDonutComponent implements OnInit {
         .attr("class", d => d.data.key)
         .each(function(d) { this._current = d; })
         .merge(donut_path)
+        .transition()
+        .duration(50)
+        .style("stroke-opacity", 0)
         .transition(t)
         .attr("d", arc)
         .attrTween("d", arcTween)
+        .transition()
+        .duration(50)
+        .style("stroke-opacity", 1);
 
       this.svg.selectAll("path")
         .on("click", filterCohort(this.endpoint, this.patientSvc));
