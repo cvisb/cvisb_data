@@ -64,7 +64,6 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
-    console.log(this.donut)
     if (this.data && this.donut) {
       console.log('updating data')
       console.log(this.data)
