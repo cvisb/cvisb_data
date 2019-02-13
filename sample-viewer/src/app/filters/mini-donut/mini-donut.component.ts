@@ -64,43 +64,65 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
-    // Axis labels
-    this.y = d3.scaleBand()
-      .rangeRound([0, this.height])
-      .paddingInner(0.2)
-      .paddingOuter(0)
-      .domain(this.data.map(d => d.key));
+    if (this.data) {
+      // transition
+      var t = d3.transition()
+        .duration(5000);
 
-    // Donut chart
-    var pie: any = d3.pie()
-      .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
-      .value((d: any) => d.value);
+      // Axis labels
+      this.y = d3.scaleBand()
+        .rangeRound([0, this.height])
+        .paddingInner(0.2)
+        .paddingOuter(0)
+        .domain(this.data.map(d => d.key));
 
-    let arc = d3.arc().innerRadius(this.height / 2 * this.hole_frac).outerRadius(this.height / 2 - 1);
+      // Donut chart
+      var pie: any = d3.pie()
+        .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
+        .value((d: any) => d.value);
 
-    const arcs = pie(this.data);
+      let arc = d3.arc().innerRadius(this.height / 2 * this.hole_frac).outerRadius(this.height / 2 - 1);
 
-    this.donut.selectAll("path")
-      .data(arcs)
-      .enter().append("path")
-      .attr("class", d => d.data.key)
-      .attr("d", arc)
+      const arcs = pie(this.data);
 
-    // --- Annotate donut ---
-    this.svg
-      .append("g")
-      .attr("class", 'donut--annot')
-      .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
-      .selectAll(".donut--annot")
-      .data(this.data)
-      .enter().append("text")
-      .attr("class", (d: any) => d.key)
-      .attr("x", 0)
-      .attr("dx", 15)
-      .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
-      .style("font-size", Math.min(this.y.bandwidth(), 14))
-      .text((d: any) => `${d.key}: ${d.value}`);
+      let donut_path = this.donut.selectAll("path")
+        .data(arcs);
+
+      donut_path.exit()
+        .transition(t)
+        .style("fill-opacity", 1e-6)
+        .remove();
+
+      donut_path.enter().append("path")
+        .attr("class", d => d.data.key)
+        .merge(donut_path)
+        .transition(t)
+        .attr("d", arc)
+
+      // --- Annotate donut ---
+      let labels = this.svg.append("g")
+        .attr("class", 'donut--annot')
+        .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
+        .selectAll(".donut--annot")
+        .data(this.data);
+
+      labels.exit()
+        .transition(t)
+        .style("fill-opacity", 1e-6)
+        .remove();
+
+      labels.enter().append("text")
+        .merge(labels)
+        .attr("class", (d: any) => d.key)
+        .attr("x", 0)
+        .attr("dx", 15)
+        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .style("fill-opacity", 0)
+        .transition(t)
+        .style("fill-opacity", 1)
+        .text((d: any) => `${d.key}: ${d.value}`);
+    }
   }
-
 
 }
