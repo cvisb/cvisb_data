@@ -109,7 +109,9 @@ export class MiniDonutComponent implements OnInit {
         .merge(donut_path)
         .transition(t)
         .attr("d", arc)
-        .on("click", filterSlice)
+
+      donut_path.selectAll("path")
+      .on("mouseover", filterSlice);
 
       // --- Annotate donut ---
       let labels = this.svg.append("g")
