@@ -28,6 +28,9 @@ export class MiniBarplotComponent implements OnInit {
 
   // --- Selectors ---
   private chart: any; // dotplot
+  private bars: any;
+  private bars_annotations: any;
+  private ylabels: any;
 
   // --- Scales/Axes ---
   private x: any;
@@ -59,6 +62,10 @@ export class MiniBarplotComponent implements OnInit {
     }
   }
 
+  ngOnChanges() {
+    this.updatePlot(1000);
+  }
+
   createPlot() {
     this.data = this.data.sort((a: any, b: any) => b.value - a.value);
 
@@ -76,90 +83,151 @@ export class MiniBarplotComponent implements OnInit {
 
     // --- x & y axes --
     this.x = d3.scaleLinear()
-      .rangeRound([this.width, 0])
-      .domain([0, <any>d3.max(this.data, (d: any) => d.value)]);
+      .rangeRound([this.width, 0]);
 
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .paddingInner(this.spacing)
-      .paddingOuter(0)
-      .domain(this.data.map(d => d[this.name_var]));
+      .paddingOuter(0);
 
-    this.yAxis = d3.axisRight(this.y);
+    // --- create g selectors ---
+    this.bars = this.chart.append("g")
+      .attr("class", 'bars');
 
-    // --- Create axes ---
-    // svg.append('g')
-    //   .attr('class', 'axis axis--y')
-    //   .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
-    //   .call(this.yAxis);
+    this.bars_annotations = this.chart.append("g")
+      .attr("class", 'bar--annot');
 
+      this.ylabels = this.chart
+        .append("g")
+        .attr("class", 'y-label');
 
-    // --- Create bars ---
-    this.chart.append("g")
-      .attr("class", 'bars')
-      .selectAll(".bars")
-      .data(this.data)
-      .enter().append("rect")
-      .attr("class", "minirect")
-      .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
-      .attr("x", (d: any) => this.x(d.value))
-      .attr("y", (d: any) => this.y(d[this.name_var]))
-      .attr("width", (d: any) => this.x(0) - this.x(d.value))
-      .attr("height", this.y.bandwidth());
+// --- call function to add data, with transition time = 0 ---
+    this.updatePlot(0);
+  }
 
-    // --- Annotate bars ---
-    this.chart
-      .append("g")
-      .attr("class", 'bar--annot')
-      .selectAll(".bar--annot")
-      .data(this.data)
-      .enter().append("text")
-      .attr("class", "annotation")
-      .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
-      .attr("x", (d: any) => this.x(d.value))
-      .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
-      .attr("dx", -4)
-      .style("font-size", Math.min(this.y.bandwidth(), 14))
-      .text((d: any) => (d.value));
+  updatePlot(tDuration: number) {
+    if (this.x && this.y) {
+      // transition
+      var t = d3.transition()
+        .duration(tDuration);
+
+      // --- Update domains ---
+      this.x.domain([0, <any>d3.max(this.data, (d: any) => d.value)]);
+      this.y.domain(this.data.map(d => d[this.name_var]));
+
+      this.yAxis = d3.axisRight(this.y);
+
+      // --- Create axes ---
+      // svg.append('g')
+      //   .attr('class', 'axis axis--y')
+      //   .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
+      //   .call(this.yAxis);
 
 
-    // Y-label annotations ---
-    // Container for the annotation
-    let ylabels = this.chart
-      .append("g")
-      .attr("class", 'y-label')
-      .selectAll(".y-label")
-      .data(this.data).enter().append("g")
-      .attr("id", (d: any) => this.strip.transform(d[this.name_var]));
+      // --- Create bars ---
+      let bars_data = this.bars
+        .selectAll("rect")
+        .data(this.data);
 
-    // Dummy rectangle, if need to turn into a button
-    ylabels.append("rect");
+      bars_data.exit()
+        // .transition()
+        // .duration(10)
+        // .style("fill-opacity", 1e-6)
+        .remove();
 
-    // Actual label for the annotation
-    ylabels.append("text")
-      .attr("class", "annotation")
-      .attr("x", (d: any) => this.x(0))
-      .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
-      .attr("dx", 6)
-      .style("font-size", Math.min(this.y.bandwidth(), 14))
-      .text((d: any) => (d[this.name_var]));
+      bars_data.enter().append("rect")
+        .attr("class", "minirect")
+        .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
+        .merge(bars_data)
+        // .attr("x", this.x(0))
+        .attr("y", (d: any) => this.y(d[this.name_var]))
+        .attr("height", this.y.bandwidth())
+        // .attr("width", 0)
+        .transition(t)
+        .attr("x", (d: any) => this.x(d.value))
+        .attr("width", (d: any) => this.x(0) - this.x(d.value));
 
-    function getTextBox(selection) {
-      selection.each(function(d) { d.bbox = this.getBBox(); })
-    };
 
-    if (this.name_var === 'type') {
-      ylabels.selectAll('text')
-        .attr("dx", 10)
-        .style("font-size", Math.min(this.y.bandwidth(), 14) * 0.8)
-        .call(getTextBox);
+      // --- Annotate bars ---
+      let bars_labels = this.bars_annotations.selectAll("text")
+        .data(this.data);
 
-      ylabels.insert("rect", "text")
-        .attr("class", "rect faux-button")
-        .attr("x", function(d) { return d.bbox.x - 4 })
-        .attr("y", function(d) { return d.bbox.y - 2 })
-        .attr("width", function(d) { return d.bbox.width + 8 })
-        .attr("height", function(d) { return d.bbox.height + 4 })
+        bars_labels.exit()
+          .transition(t)
+          .style("fill-opacity", 1e-6)
+          .remove();
+
+
+        bars_labels.enter().append("text")
+        .attr("class", "annotation")
+        .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
+        .merge(bars_labels)
+        .attr("x", this.x(0))
+        .attr("dx", -4)
+        .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .text((d: any) => (d.value))
+        .transition(t)
+        .attr("x", (d: any) => this.x(d.value));
+
+
+      // Y-label annotations ---
+      let labels = this.ylabels.selectAll("text")
+        .data(this.data);
+
+      labels.exit()
+        // .transition(t)
+        // .style("fill-opacity", 1e-6)
+        .remove()
+
+      labels.enter().append("text")
+        .attr("class", "annotation")
+        .attr("x", (d: any) => this.x(0))
+        .attr("dx", 6)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .merge(labels)
+        .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+        .transition(t)
+        // .style("fill-opacity", 1)
+
+        .text((d: any) => (d[this.name_var]));
+
+
+        // Container for the annotation
+        // this.ylabels
+        //   .selectAll(".y-label")
+        //   .data(this.data).enter().append("g")
+        //   .attr("id", (d: any) => this.strip.transform(d[this.name_var]));
+        //
+        // // Dummy rectangle, if need to turn into a button
+        // ylabels.append("rect");
+        //
+        // // Actual label for the annotation
+        // ylabels.append("text")
+        //   .attr("class", "annotation")
+        //   .attr("x", (d: any) => this.x(0))
+        //   .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+        //   .attr("dx", 6)
+        //   .style("font-size", Math.min(this.y.bandwidth(), 14))
+        //   .text((d: any) => (d[this.name_var]));
+        //
+        // let getTextBox = function(selection) {
+        //   selection.each(function(d) { d.bbox = this.getBBox(); })
+        // };
+        //
+        // if (this.name_var === 'type') {
+        //   ylabels.selectAll('text')
+        //     .attr("dx", 10)
+        //     .style("font-size", Math.min(this.y.bandwidth(), 14) * 0.8)
+        //     .call(getTextBox);
+        //
+        //   ylabels.insert("rect", "text")
+        //     .attr("class", "rect faux-button")
+        //     .attr("x", function(d) { return d.bbox.x - 4 })
+        //     .attr("y", function(d) { return d.bbox.y - 2 })
+        //     .attr("width", function(d) { return d.bbox.width + 8 })
+        //     .attr("height", function(d) { return d.bbox.height + 4 })
+        // }
     }
   }
 
