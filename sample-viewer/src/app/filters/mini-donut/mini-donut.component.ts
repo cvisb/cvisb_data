@@ -2,6 +2,9 @@ import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnC
 
 import * as d3 from 'd3';
 
+// Event listeners to update the search query
+import { GetPatientsService } from '../../_services';
+
 @Component({
   selector: 'app-mini-donut',
   templateUrl: './mini-donut.component.html',
@@ -12,6 +15,7 @@ export class MiniDonutComponent implements OnInit {
 
   @ViewChild('donut') private chartContainer: ElementRef;
   @Input() private data: any;
+  @Input() private endpoint: string;
   @Input() private height: number;
   @Input() private name_var: string;
 
@@ -27,12 +31,13 @@ export class MiniDonutComponent implements OnInit {
   // --- Selectors ---
   private donut: any; // dotplot
   private svg: any;
+  private annotation: any;
 
   // --- Scales/Axes ---
   private y: any;
   private colorScale: any;
 
-  constructor() { }
+  constructor(private patientSvc: GetPatientsService) { }
 
   ngOnInit() {
     this.createPlot();
@@ -59,25 +64,56 @@ export class MiniDonutComponent implements OnInit {
       .attr("id", "donut")
       .attr("transform", `translate(${this.margin.left + this.width / 2}, ${this.height / 2 + this.margin.top})`);
 
+    this.annotation = this.svg.append("g")
+      .attr("class", 'donut--annot')
+      .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`);
+
+
     // Initial call to update / populate with data
     this.updatePlot();
   }
 
   updatePlot() {
     if (this.data && this.donut) {
-      console.log('updating data')
-      console.log(this.data)
       // Handle in to filter the virus type
 
-      let filterSlice = function() {
+      let filterCohort = function(endpoint: string, patientSvc: any) {
         return function(d) {
-          console.log(d);
+          switch (endpoint) {
+            case 'patient': {
+              let params = [{ field: 'cohort', value: d.data.key }];
+
+              patientSvc.patientParamsSubject.next(params);
+              break;
+            }
+            case 'dataset': {
+              console.log('sending dataset endpoint cohort ' + d.data.key);
+              break;
+            }
+            default: {
+              console.log("ERROR! Unknown endpoint to be filtered.")
+              break;
+            }
+          }
+
         }
       }
 
       // transition
       var t = d3.transition()
-        .duration(5000);
+        .duration(500);
+
+      // from https://bl.ocks.org/mbostock/1346410
+      // https://bl.ocks.org/mbostock/5681842
+      let arcTween = function(a) {
+        console.log(this._current)
+        console.log(this.value)
+        var i = d3.interpolate(this._current, a);
+        this._current = i(0);
+        return function(t) {
+          return arc(i(t));
+        };
+      }
 
       // Axis labels
       this.y = d3.scaleBand()
@@ -88,10 +124,13 @@ export class MiniDonutComponent implements OnInit {
 
       // Donut chart
       var pie: any = d3.pie()
-        .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
+        // .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
+        .sort(null) // remove sorting so there's constancy b/w the slices
         .value((d: any) => d.value);
 
-      let arc = d3.arc().innerRadius(this.height / 2 * this.hole_frac).outerRadius(this.height / 2 - 1);
+      let arc = d3.arc()
+        .innerRadius(this.height / 2 * this.hole_frac)
+        .outerRadius(this.height / 2 - 1);
 
       const arcs = pie(this.data);
 
@@ -105,35 +144,35 @@ export class MiniDonutComponent implements OnInit {
 
       donut_path.enter().append("path")
         .attr("class", d => d.data.key)
+        .each(function(d) { this._current = d; })
         .merge(donut_path)
         .transition(t)
         .attr("d", arc)
+        .attrTween("d", arcTween)
 
-      donut_path.selectAll("path")
-      .on("mouseover", filterSlice);
+      this.svg.selectAll("path")
+        .on("click", filterCohort(this.endpoint, this.patientSvc));
 
       // --- Annotate donut ---
-      let labels = this.svg.append("g")
-        .attr("class", 'donut--annot')
-        .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
-        .selectAll(".donut--annot")
+      let labels = this.annotation.selectAll("text")
         .data(this.data);
 
       labels.exit()
         .transition(t)
         .style("fill-opacity", 1e-6)
-        .remove();
+        .remove()
 
       labels.enter().append("text")
-        .merge(labels)
         .attr("class", (d: any) => d.key)
+        .merge(labels)
         .attr("x", 0)
         .attr("dx", 15)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
         .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .style("fill-opacity", 0)
+        // .style("fill-opacity", 0)
         .transition(t)
-        .style("fill-opacity", 1)
+        // .style("fill-opacity", 1)
         .text((d: any) => `${d.key}: ${d.value}`);
     }
   }

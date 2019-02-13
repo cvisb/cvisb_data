@@ -31,6 +31,7 @@ export class PatientPageComponent implements OnInit {
       });
     })
 
+    // For anchor jumping
     this.route.fragment.subscribe(fragment => {
       this.fragment = fragment;
     })
