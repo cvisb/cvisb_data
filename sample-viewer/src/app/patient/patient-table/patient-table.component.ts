@@ -11,8 +11,8 @@ import { Patient, PatientArray } from '../../_models';
   styleUrls: ['./patient-table.component.scss']
 })
 export class PatientTableComponent implements OnInit {
-  private patients: Patient[];
-  private patientSummary: PatientArray;
+  // private patients: PatientArray;
+  // private patientSummary: PatientArray;
   patientSource: MatTableDataSource<Patient>;
   selectedPatient;
 
@@ -27,11 +27,9 @@ export class PatientTableComponent implements OnInit {
     private patientSvc: GetPatientsService,
   ) {
 
-    // grab the data`
-    // this.patients = patientSvc.getPatients();
-    this.patientSvc.patientsState$.subscribe((pList: Patient[]) => {
-      this.patients = pList;
-      this.patientSource = new MatTableDataSource(this.patients);
+    // grab the data
+    this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
+      this.patientSource = new MatTableDataSource(pList.patients);
     })
 
   }
