@@ -34,6 +34,22 @@ export class GetPatientsService {
 
   fakePatients: Patient[] = [
     {
+      patientID: "G-fakePatient-0002",
+      cohort: "Ebola",
+      outcome: "survivor",
+      infectionDate: "2018-06-01",
+      admitDate: "2018-06-01",
+      alternateIdentifier: [],
+      country: {
+        name: "Sierra Leone",
+        identifier: "SL"
+      },
+      gender: "Male",
+      age: 25,
+      relatedTo: [],
+
+    },
+    {
       patientID: "G-fakePatient-0001",
       cohort: "Lassa",
       outcome: "survivor",
@@ -206,7 +222,7 @@ export class GetPatientsService {
     //
     // this.apiSvc.wipeEndpoint('patient');
 
-    // this.apiSvc.put('patient', this.fakePatients);
+    this.apiSvc.put('patient', this.fakePatients[0]);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
