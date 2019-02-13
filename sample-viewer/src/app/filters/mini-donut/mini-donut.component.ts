@@ -101,7 +101,7 @@ export class MiniDonutComponent implements OnInit {
 
       // transition
       var t = d3.transition()
-        .duration(500);
+        .duration(1000);
 
       // from https://bl.ocks.org/mbostock/1346410
       // https://bl.ocks.org/mbostock/5681842
@@ -162,6 +162,9 @@ export class MiniDonutComponent implements OnInit {
         .data(this.data);
 
       labels.exit()
+        .transition()
+        .duration(50)
+        .style("stroke-opacity", 0)
         .transition(t)
         .style("fill-opacity", 1e-6)
         .remove()
