@@ -11,6 +11,7 @@ import { GetPatientsService } from '../../_services';
   styleUrls: ['./mini-donut.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class MiniDonutComponent implements OnInit {
 
   @ViewChild('donut') private chartContainer: ElementRef;
@@ -38,7 +39,6 @@ export class MiniDonutComponent implements OnInit {
 
   // --- Scales/Axes ---
   private y: any;
-  private colorScale: any;
 
   constructor(private patientSvc: GetPatientsService) { }
 
@@ -63,12 +63,12 @@ export class MiniDonutComponent implements OnInit {
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
 
-      // Axis labels
-      this.y = d3.scaleBand()
-        .rangeRound([0, this.height])
-        .paddingInner(0.2)
-        .paddingOuter(0)
-        .domain(this.cohorts);
+    // Axis labels
+    this.y = d3.scaleBand()
+      .rangeRound([0, this.height])
+      .paddingInner(0.2)
+      .paddingOuter(0)
+      .domain(this.cohorts);
 
     // selectors
     this.donut = this.svg.append("g")
@@ -80,13 +80,13 @@ export class MiniDonutComponent implements OnInit {
       .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`);
 
 
-
     // Initial call to update / populate with data
     this.updatePlot();
   }
 
   updatePlot() {
     if (this.data && this.donut) {
+      // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
       let keys = this.data.map(d => d.key);
@@ -96,6 +96,7 @@ export class MiniDonutComponent implements OnInit {
         this.data.push({ key: d, value: 0 });
       })
 
+      // --- Filter event listener ---
       // Handle into filtering by virus type
       let filterCohort = function(endpoint: string, patientSvc: any) {
         return function(d) {
@@ -115,11 +116,10 @@ export class MiniDonutComponent implements OnInit {
               break;
             }
           }
-
         }
       }
 
-      // transition
+      // --- transitions ----
       var t = d3.transition()
         .duration(1000);
 
@@ -133,6 +133,7 @@ export class MiniDonutComponent implements OnInit {
         };
       }
 
+      // --- Donut calculators ---
       // Donut chart
       var pie: any = d3.pie()
         // .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
@@ -145,6 +146,7 @@ export class MiniDonutComponent implements OnInit {
 
       const arcs = pie(this.data);
 
+      // --- Create donut paths ---
       let donut_path = this.donut.selectAll("path")
         .data(arcs);
 
