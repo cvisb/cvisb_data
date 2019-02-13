@@ -11,6 +11,7 @@ import { Patient, PatientArray } from '../../_models';
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
   public patientSummary: PatientArray;
+  total_patients: number;
 
 
   constructor(private patientSvc: GetPatientsService, ) {
@@ -26,14 +27,12 @@ export class FilterPatientsComponent implements OnInit {
 
     })
 
-
   }
 
   ngOnInit() {
   }
 
   clearFilters() {
-    console.log('clearing filters')
     this.patientSvc.patientParamsSubject.next([]);
   }
 
