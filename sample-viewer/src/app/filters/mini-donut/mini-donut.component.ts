@@ -68,6 +68,14 @@ export class MiniDonutComponent implements OnInit {
     if (this.data && this.donut) {
       console.log('updating data')
       console.log(this.data)
+      // Handle in to filter the virus type
+
+      let filterSlice = function() {
+        return function(d) {
+          console.log(d);
+        }
+      }
+
       // transition
       var t = d3.transition()
         .duration(5000);
@@ -101,6 +109,7 @@ export class MiniDonutComponent implements OnInit {
         .merge(donut_path)
         .transition(t)
         .attr("d", arc)
+        .on("click", filterSlice)
 
       // --- Annotate donut ---
       let labels = this.svg.append("g")
