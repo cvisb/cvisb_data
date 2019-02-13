@@ -104,6 +104,7 @@ export class ApiService {
     // })
     if (newData) {
       console.log('attempting to add new data...')
+      console.log(newData)
       console.log(this.jsonify(newData))
       this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
