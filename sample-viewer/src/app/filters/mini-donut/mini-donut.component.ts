@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges } from '@angular/core';
 
 import * as d3 from 'd3';
 
@@ -26,6 +26,7 @@ export class MiniDonutComponent implements OnInit {
 
   // --- Selectors ---
   private donut: any; // dotplot
+  private svg: any;
 
   // --- Scales/Axes ---
   private y: any;
@@ -35,6 +36,11 @@ export class MiniDonutComponent implements OnInit {
 
   ngOnInit() {
     this.createPlot();
+    this.updatePlot();
+  }
+
+  ngOnChanges() {
+    this.updatePlot();
   }
 
   createPlot() {
@@ -42,25 +48,28 @@ export class MiniDonutComponent implements OnInit {
     this.width = this.height;
 
     // Append SVG
-    const svg = d3.select(this.element)
+    this.svg = d3.select(this.element)
       .append('svg')
       .attr("class", "donut")
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
 
-// Axis labels
+
+
+    // selectors
+    this.donut = this.svg.append("g")
+      .attr("id", "donut")
+      .attr("transform", `translate(${this.margin.left + this.width / 2}, ${this.height / 2 + this.margin.top})`);
+  }
+
+  updatePlot() {
+    // Axis labels
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .paddingInner(0.2)
       .paddingOuter(0)
       .domain(this.data.map(d => d.key));
-
-    // selectors
-    this.donut = svg.append("g")
-      .attr("id", "donut")
-      .attr("transform", `translate(${this.margin.left + this.width / 2}, ${this.height / 2 + this.margin.top})`);
-
 
     // Donut chart
     var pie: any = d3.pie()
@@ -68,7 +77,6 @@ export class MiniDonutComponent implements OnInit {
       .value((d: any) => d.value);
 
     let arc = d3.arc().innerRadius(this.height / 2 * this.hole_frac).outerRadius(this.height / 2 - 1);
-
 
     const arcs = pie(this.data);
 
@@ -79,7 +87,7 @@ export class MiniDonutComponent implements OnInit {
       .attr("d", arc)
 
     // --- Annotate donut ---
-    svg
+    this.svg
       .append("g")
       .attr("class", 'donut--annot')
       .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
@@ -91,8 +99,7 @@ export class MiniDonutComponent implements OnInit {
       .attr("dx", 15)
       .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
       .style("font-size", Math.min(this.y.bandwidth(), 14))
-      .text((d: any) => `${d.key}: ${d.value}` );
-
+      .text((d: any) => `${d.key}: ${d.value}`);
   }
 
 
