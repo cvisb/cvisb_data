@@ -106,8 +106,6 @@ export class MiniDonutComponent implements OnInit {
       // from https://bl.ocks.org/mbostock/1346410
       // https://bl.ocks.org/mbostock/5681842
       let arcTween = function(a) {
-        console.log(this._current)
-        console.log(this.value)
         var i = d3.interpolate(this._current, a);
         this._current = i(0);
         return function(t) {

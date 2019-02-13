@@ -1,7 +1,7 @@
 <div class="filter-container" *ngIf='patients && patients.length > 0 && patientSummary'>
   <div class="filter-header">
     <div class="container">
-      <h2>{{patients.length}} of {{patients.length}} Patients Selected</h2>
+      <h2>{{patients.length}} of {{ total_patients }} Patients Selected</h2>
 
       <div class="pull-right">
         <app-filter-search></app-filter-search>
@@ -19,7 +19,7 @@
   </div>
 
   <div class="filter-item filter-patient-types">
-    <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes"></app-filter-patient-type>
+    <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" endpoint="patient"></app-filter-patient-type>
   </div>
 
   <div class="filter-item filter-elisas">
