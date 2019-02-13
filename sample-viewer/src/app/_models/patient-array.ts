@@ -80,11 +80,15 @@ export class PatientArray {
         d.country = d.country ? d.country['name'] : "unknown";
         d.availableData = d.availableData ? d.availableData.map((data_type: any) => data_type.name) : [];
 
-        d.homeLocation.forEach((adminUnit) => {
-          d[adminUnit['administrativeType']] = adminUnit['name'];
-        });
-        delete d.homeLocation;
-        delete d.elisa;
+        if (d.homeLocation) {
+          d.homeLocation.forEach((adminUnit) => {
+            d[adminUnit['administrativeType']] = adminUnit['name'];
+          });
+          delete d.homeLocation;
+        }
+        if (d.elisa) {
+          delete d.elisa;
+        }
       });
 
     }
