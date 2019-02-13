@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { MyHttpClient } from './http-cookies.service';
 
-import PATIENTS from '../../assets/data/patients.json';
+// import PATIENTS from '../../assets/data/patients.json';
 
 
 @Injectable({
@@ -199,8 +199,8 @@ export class GetPatientsService {
     private authSvc: AuthService) {
     // this.request_params = [new RequestParam("id", ["test", "test2"])];
     // console.log(this.request_params)
-    console.log(PATIENTS)
-    this.patients = PATIENTS.concat(this.fakePatients);
+    // console.log(PATIENTS)
+    // this.patients = PATIENTS.concat(this.fakePatients);
 
     // this.getPatients();
     //
@@ -215,12 +215,11 @@ export class GetPatientsService {
     })
 
     this.patientParamsState$.subscribe((params: RequestParamArray) => {
-      console.log('New params!!!!')
       this.request_params = params;
       this.getPatients();
     })
 
-    this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
+    // this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
     // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
   }
 
@@ -253,8 +252,6 @@ export class GetPatientsService {
       param_string = "__all__"
     }
 
-    console.log(param_string)
-
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -284,9 +281,7 @@ export class GetPatientsService {
 
   getAllPatients() {
     console.log('calling backend to get patients');
-    console.log(this.patients);
-
-
+    // console.log(this.patients);
 
     this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
       // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
@@ -307,49 +302,6 @@ export class GetPatientsService {
       err => {
         console.log('Error in getting patients')
         console.log(err)
-
-        // check if unauthorized; if so, redirect.
-        // this.authSvc.redirectUnauthorized(err);
       })
   }
-
-
-  putPatients(patients: Patient[]) {
-    console.log('attempting to add new record')
-    this.myhttp.put<any[]>(environment.api_url + "/api/patient",
-      this.jsonify(patients),
-      {
-        headers: new HttpHeaders()
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-  }
-
-  // Function to convert
-  jsonify(arr: any[]): string {
-    let json_arr = [];
-
-    for (let record of arr) {
-      json_arr.push(JSON.stringify(record))
-    }
-    return (json_arr.join("\n"))
-  }
-
-  // putPatient(patient: Patient) {
-  //   let sample_id = sample['sample_id'];
-  //   this.myhttp.put<any[]>(environment.api_url + "/api/patient/" + sample_id,
-  //     JSON.stringify(sample),
-  //     {
-  //       headers: new HttpHeaders()
-  //     }).subscribe(resp => {
-  //       console.log(resp)
-  //     },
-  //       err => {
-  //         console.log(err)
-  //       })
-  // }
-
 }
