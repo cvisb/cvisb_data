@@ -230,6 +230,7 @@ export class GetPatientsService {
     })
 
     this.patientParamsState$.subscribe((params: RequestParamArray) => {
+      console.log(params)
       this.request_params = params;
       this.getPatients();
     })
