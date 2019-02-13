@@ -16,8 +16,6 @@ export class FilterLocationComponent implements OnInit {
 
   constructor(private patientSvc: GetPatientsService) {
     patientSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-      console.log('getting most recent patient params!')
-      console.log(params)
       this.params = params;
     })
    }
@@ -26,15 +24,10 @@ export class FilterLocationComponent implements OnInit {
   }
 
   selectCountry(ctry: string) {
-    console.log("Trying to filter country " + ctry);
-
     switch (this.endpoint) {
       case 'patient': {
-        console.log('sending patient endpoint country ' + ctry);
-
         this.params.push({field: 'country.identifier', value: ctry});
         this.params = [{field: 'country.identifier', value: ctry}];
-        console.log(this.params);
 
         this.patientSvc.patientParamsSubject.next(this.params);
         break;
