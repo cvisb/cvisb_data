@@ -36,8 +36,8 @@ export class MiniDonutComponent implements OnInit {
 
   ngOnInit() {
     this.createPlot();
-    this.updatePlot();
   }
+
 
   ngOnChanges() {
     this.updatePlot();
@@ -54,13 +54,13 @@ export class MiniDonutComponent implements OnInit {
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
-
-
-
     // selectors
     this.donut = this.svg.append("g")
       .attr("id", "donut")
       .attr("transform", `translate(${this.margin.left + this.width / 2}, ${this.height / 2 + this.margin.top})`);
+
+    // Initial call to update / populate with data
+    this.updatePlot();
   }
 
   updatePlot() {
