@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, AuthState, RequestParamArray, RequestParam } from '../_models';
+import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { MyHttpClient } from './http-cookies.service';
@@ -20,7 +20,7 @@ import { MyHttpClient } from './http-cookies.service';
 })
 
 export class GetPatientsService {
-  patients: Patient[];
+  // patients: Patient[];
   request_params: RequestParamArray;
 
   // Event listener for parameters to run on
@@ -28,7 +28,7 @@ export class GetPatientsService {
   public patientParamsState$ = this.patientParamsSubject.asObservable();
 
   // Event listener for the patient array.
-  public patientsSubject: BehaviorSubject<Patient[]> = new BehaviorSubject<Patient[]>([]);
+  public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
   public patientsState$ = this.patientsSubject.asObservable();
 
 
@@ -283,7 +283,7 @@ export class GetPatientsService {
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
 
       // send new patients to subscription services.
-      this.patientsSubject.next(patients);
+      this.patientsSubject.next(new PatientArray(patients));
 
     },
       err => {
@@ -312,7 +312,7 @@ export class GetPatientsService {
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
 
       // send new patients to subscription services.
-      this.patientsSubject.next(patients);
+      this.patientsSubject.next(new PatientArray(patients));
 
     },
       err => {
