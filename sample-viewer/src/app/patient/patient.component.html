@@ -1,8 +1,10 @@
-<div class="page-header">
-  <h1>Patients</h1>
-  <app-download-btn [data]="patients.downloadable" filetype="patients"></app-download-btn>
-</div>
+<ng-container *ngIf="patients">
+  <div class="page-header">
+    <h1>Patients</h1>
+    <app-download-btn [data]="patients.downloadable" filetype="patients"></app-download-btn>
+  </div>
 
-<app-filter-patients></app-filter-patients>
+  <app-filter-patients></app-filter-patients>
 
-<app-patient-table></app-patient-table>
+  <app-patient-table></app-patient-table>
+</ng-container>

@@ -25,6 +25,7 @@ export class PatientComponent implements OnInit {
     });
 
     this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
+      console.log(pList)
       this.patients = pList;
     })
 
