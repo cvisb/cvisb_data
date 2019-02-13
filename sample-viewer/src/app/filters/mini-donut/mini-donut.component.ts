@@ -19,6 +19,9 @@ export class MiniDonutComponent implements OnInit {
   @Input() private height: number;
   @Input() private name_var: string;
 
+  // Expected values
+  private cohorts = ['Lassa', 'Ebola', 'Control', 'Unknown'];
+
   // plot sizes
   private element: any; // selector for SVG DIV
   private element_dims: any;
@@ -59,6 +62,14 @@ export class MiniDonutComponent implements OnInit {
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
+
+      // Axis labels
+      this.y = d3.scaleBand()
+        .rangeRound([0, this.height])
+        .paddingInner(0.2)
+        .paddingOuter(0)
+        .domain(this.cohorts);
+
     // selectors
     this.donut = this.svg.append("g")
       .attr("id", "donut")
@@ -69,14 +80,23 @@ export class MiniDonutComponent implements OnInit {
       .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`);
 
 
+
     // Initial call to update / populate with data
     this.updatePlot();
   }
 
   updatePlot() {
     if (this.data && this.donut) {
-      // Handle in to filter the virus type
+      // update the data to add in missing values.
+      // Essential for object constancy.
+      let keys = this.data.map(d => d.key);
 
+      let missing_data = this.cohorts.filter(d => !keys.includes(d));
+      missing_data.forEach(d => {
+        this.data.push({ key: d, value: 0 });
+      })
+
+      // Handle into filtering by virus type
       let filterCohort = function(endpoint: string, patientSvc: any) {
         return function(d) {
           switch (endpoint) {
@@ -113,13 +133,6 @@ export class MiniDonutComponent implements OnInit {
         };
       }
 
-      // Axis labels
-      this.y = d3.scaleBand()
-        .rangeRound([0, this.height])
-        .paddingInner(0.2)
-        .paddingOuter(0)
-        .domain(this.data.map(d => d.key));
-
       // Donut chart
       var pie: any = d3.pie()
         // .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
@@ -141,18 +154,23 @@ export class MiniDonutComponent implements OnInit {
         .remove();
 
       donut_path.enter().append("path")
-        .attr("class", d => d.data.key)
         .each(function(d) { this._current = d; })
         .merge(donut_path)
-        .transition()
-        .duration(50)
-        .style("stroke-opacity", 0)
+        .attr("class", d => d.data.key)
+        .style("stroke-opacity", 1)
         .transition(t)
         .attr("d", arc)
-        .attrTween("d", arcTween)
-        .transition()
-        .duration(50)
-        .style("stroke-opacity", 1);
+        .style("stroke-opacity", d => d.value > 0 ? 1 : 0)
+        .attrTween("d", arcTween);
+      // .transition()
+      // .duration(50)
+      // .style("stroke-opacity", 0)
+      // .transition(t)
+      // .attr("d", arc)
+      // .attrTween("d", arcTween)
+      // .transition()
+      // .duration(50)
+      // .style("stroke-opacity", 1);
 
       this.svg.selectAll("path")
         .on("click", filterCohort(this.endpoint, this.patientSvc));
@@ -162,16 +180,13 @@ export class MiniDonutComponent implements OnInit {
         .data(this.data);
 
       labels.exit()
-        .transition()
-        .duration(50)
-        .style("stroke-opacity", 0)
         .transition(t)
         .style("fill-opacity", 1e-6)
         .remove()
 
       labels.enter().append("text")
-        .attr("class", (d: any) => d.key)
         .merge(labels)
+        .attr("class", (d: any) => d.key)
         .attr("x", 0)
         .attr("dx", 15)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
