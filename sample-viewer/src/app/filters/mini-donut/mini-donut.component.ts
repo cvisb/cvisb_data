@@ -64,7 +64,10 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
-    if (this.data) {
+    console.log(this.donut)
+    if (this.data && this.donut) {
+      console.log('updating data')
+      console.log(this.data)
       // transition
       var t = d3.transition()
         .duration(5000);
