@@ -1,83 +1,108 @@
+// Series of generic wrappers around common functionalities across API endpoints.
+// For instance: a generic loop to wipe an entire endpoint.
+
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { MyHttpClient } from './http-cookies.service';
-import { environment } from "../../environments/environment";
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
+
+import { environment } from "../../environments/environment";
+
+// services
+import { MyHttpClient } from './http-cookies.service';
+
+// models
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
 
-  constructor(public myhttp: MyHttpClient) { }
+  constructor(
+    public myhttp: MyHttpClient,
+  ) {
+  }
 
-  // Generic function to delete a single record.
-  deleteObject(endpoint: string, id: string) {
-    console.log("attempting to delete obj: " + id)
-    // TODO: build-in dialoge box to confirm?
-    // return this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
-    //   .pipe(
-    //     map(resp => {
-    //       console.log('successful delete')
-    //       console.log(resp)
-    //     }),
-    //     catchError(e => {
-    //       console.log(e)
-    //       throwError(e);
-    //       return (new Observable<any>())
-    //     })
-    //   );
-    this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
-      .subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
-          console.log(err)
+  // --- GET ---
+  // Generic GET to access a single document with a particular ID.
+  getOne(endpoint: string, id: string, idVar: string = 'identifier') {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', `${idVar}:\"${id}\"`)
+    }).pipe(
+      map(data => {
+        if (data['body']['total'] === 1) {
+          // One result found, as expected.
+          return (data['body']['hits'][0])
+        } else {
+          console.log("More than one object returned. Check if your ID is unique!")
+          console.log(data)
         }
-      )
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
   }
 
-  // Generic function to delete a single record.
-  wipeEndpoint(endpoint: string) {
-    console.log("attempting to delete all objects from endpoint")
-    // TODO: build-in dialoge box to confirm?
-    //
+  // Generic function to pull out the ES `_ids` for all entries in an endpoint.
+  getESIDs(endpoint: string) {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json')
+    }).pipe(
+      map(data => {
+        let df = data['body']['hits'];
+        let ids = df.map(d => d["_id"]);
+        console.log(ids)
 
-    this.getESIDs(endpoint).subscribe(ids => {
-      console.log("list of IDs to delete:")
-      console.log(ids);
+        return (ids);
 
-      for (let id of ids) {
-        this.deleteObject(endpoint, id);
-      }
-    })
-
-
-    // return this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
-    //   .pipe(
-    //     map(resp => {
-    //       console.log('successful delete')
-    //       console.log(resp)
-    //     }),
-    //     catchError(e => {
-    //       console.log(e)
-    //       throwError(e);
-    //       return (new Observable<any>())
-    //     })
-    //   );
-
+      }))
   }
 
+  // getIDs(newData: any, endpoint: string, uniqueID: string) {
+  //   let ids = newData.map((d) => d[uniqueID]).join(",");
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: new HttpParams()
+  //       .set('q', `${uniqueID}:${ids}`)
+  //   }).pipe(
+  //     map(data => {
+  //       if (data) {
+  //         let files = data['body']['hits'];
+  //
+  //         if (!files) {
+  //           return (null)
+  //         }
+  //         let id_dict = files.map((d: any) => {
+  //           return ({
+  //             '_id': d['_id'],
+  //             uniqueID: d[uniqueID]
+  //           })
+  //         }
+  //
+  //         );
+  //
+  //         return (id_dict);
+  //       }
+  //     }))
+  // }
+
+  // --- PUT ---
   // Generic function to add data to a given endpoint on the API
-  // (1) First checks if the data already exists in the backend, based on the unique identifier
-  // (2) If found, merges in the _id ES unique ID into the newData object so the data will
-  // merge/update the data on the backend, not append a new object.
-  // (3) To all, appends the dateModified to be the current date. [?-- should happen on backend?]
-  // (4) Lastly, adds the data to the backend using the PUT endpoint.
   put(endpoint: string, newData: any) {
     // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
 
@@ -120,77 +145,6 @@ export class ApiService {
     }
   }
 
-  getOne(endpoint: string, id: string, idVar: string = 'identifier') {
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', `${idVar}:\"${id}\"`)
-    }).pipe(
-      map(data => {
-        if (data['body']['total'] === 1) {
-          // One result found, as expected.
-          return (data['body']['hits'][0])
-        } else {
-          console.log("More than one object returned. Check if your ID is unique!")
-          console.log(data)
-        }
-      }),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (new Observable<any>())
-      })
-    )
-  }
-
-
-  getESIDs(endpoint: string) {
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-    }).pipe(
-      map(data => {
-        let df = data['body']['hits'];
-        let ids = df.map(d => d["_id"]);
-        console.log(ids)
-
-        return (ids);
-
-      }))
-  }
-  // getIDs(newData: any, endpoint: string, uniqueID: string) {
-  //   let ids = newData.map((d) => d[uniqueID]).join(",");
-  //
-  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
-  //     observe: 'response',
-  //     headers: new HttpHeaders()
-  //       .set('Accept', 'application/json'),
-  //     params: new HttpParams()
-  //       .set('q', `${uniqueID}:${ids}`)
-  //   }).pipe(
-  //     map(data => {
-  //       if (data) {
-  //         let files = data['body']['hits'];
-  //
-  //         if (!files) {
-  //           return (null)
-  //         }
-  //         let id_dict = files.map((d: any) => {
-  //           return ({
-  //             '_id': d['_id'],
-  //             uniqueID: d[uniqueID]
-  //           })
-  //         }
-  //
-  //         );
-  //
-  //         return (id_dict);
-  //       }
-  //     }))
-  // }
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {
@@ -201,4 +155,37 @@ export class ApiService {
     }
     return (json_arr.join("\n"))
   }
+
+
+  // --- DELETE ---
+  // Generic function to delete a single record.
+  deleteObject(endpoint: string, id: string) {
+    console.log("attempting to delete obj: " + id)
+    // TODO: build-in dialoge box to confirm?
+    this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
+      .subscribe(resp => {
+        console.log(resp)
+      },
+        err => {
+          console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
+          console.log(err)
+        }
+      )
+  }
+
+  // Generic function to delete a single record.
+  wipeEndpoint(endpoint: string) {
+    console.log("attempting to delete all objects from endpoint")
+    // TODO: build-in dialoge box to confirm / controls so not anyone can access
+
+    this.getESIDs(endpoint).subscribe(ids => {
+      console.log("list of IDs to delete:")
+      console.log(ids);
+
+      for (let id of ids) {
+        this.deleteObject(endpoint, id);
+      }
+    })
+  }
+
 }
