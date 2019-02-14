@@ -10,6 +10,7 @@ import { environment } from "../../environments/environment";
 import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
+import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 
 // import PATIENTS from '../../assets/data/patients.json';
@@ -22,10 +23,6 @@ import { MyHttpClient } from './http-cookies.service';
 export class GetPatientsService {
   // patients: Patient[];
   request_params: RequestParamArray;
-
-  // Event listener for parameters to run on
-  public patientParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
-  public patientParamsState$ = this.patientParamsSubject.asObservable();
 
   // Event listener for the patient array.
   public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
@@ -212,6 +209,7 @@ export class GetPatientsService {
     public myhttp: MyHttpClient,
     private router: Router,
     private apiSvc: ApiService,
+    private requestSvc: RequestParametersService,
     private authSvc: AuthService) {
     // this.request_params = [new RequestParam("id", ["test", "test2"])];
     // console.log(this.request_params)
@@ -229,7 +227,7 @@ export class GetPatientsService {
       }
     })
 
-    this.patientParamsState$.subscribe((params: RequestParamArray) => {
+    this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
       console.log(params)
       this.request_params = params;
       this.getPatients();
@@ -257,16 +255,7 @@ export class GetPatientsService {
 
   getPatients() {
 
-    let param_string: string;
-    if (this.request_params && this.request_params.length > 0) {
-      if (Array.isArray(this.request_params[0].value)) {
-        param_string = (`${this.request_params[0].field}:\(\"${this.request_params[0].value.join('" "')}\"\)`)
-      } else {
-        param_string = (`${this.request_params[0].field}:\"${this.request_params[0].value}\"`);
-      }
-    } else {
-      param_string = "__all__"
-    }
+    let param_string: string = this.reduceParams();
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
@@ -293,6 +282,28 @@ export class GetPatientsService {
         // check if unauthorized; if so, redirect.
         // this.authSvc.redirectUnauthorized(err);
       })
+  }
+
+  reduceParams(): string {
+    let param_string: string;
+    let params: string[] = [];
+    if (this.request_params) {
+
+      for (let param of this.request_params) {
+        // Collapse each parameter down into a parameter string
+        if (Array.isArray(param.value)) {
+          params.push((`${param.field}:\(\"${param.value.join('" "')}\"\)`))
+        } else {
+          params.push((`${param.field}:\(\"${param.value}\"\)`))
+        }
+      }
+      param_string = params.join(" AND ")
+    } else {
+      param_string = "__all__"
+    }
+
+    console.log(param_string)
+    return (param_string)
   }
 
   getAllPatients() {

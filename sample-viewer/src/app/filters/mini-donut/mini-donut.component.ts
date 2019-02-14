@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnC
 import * as d3 from 'd3';
 
 // Event listeners to update the search query
-import { GetPatientsService } from '../../_services';
+import { RequestParametersService } from '../../_services';
 
 @Component({
   selector: 'app-mini-donut',
@@ -40,7 +40,7 @@ export class MiniDonutComponent implements OnInit {
   // --- Scales/Axes ---
   private y: any;
 
-  constructor(private patientSvc: GetPatientsService) { }
+  constructor(private requestSvc: RequestParametersService) { }
 
   ngOnInit() {
     this.createPlot();
@@ -98,24 +98,9 @@ export class MiniDonutComponent implements OnInit {
 
       // --- Filter event listener ---
       // Handle into filtering by virus type
-      let filterCohort = function(endpoint: string, patientSvc: any) {
+      let filterCohort = function(endpoint: string, requestSvc: any) {
         return function(d) {
-          switch (endpoint) {
-            case 'patient': {
-              let params = [{ field: 'cohort', value: d.data.key }];
-
-              patientSvc.patientParamsSubject.next(params);
-              break;
-            }
-            case 'dataset': {
-              console.log('sending dataset endpoint cohort ' + d.data.key);
-              break;
-            }
-            default: {
-              console.log("ERROR! Unknown endpoint to be filtered.")
-              break;
-            }
-          }
+          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.data.key })
         }
       }
 
@@ -175,7 +160,7 @@ export class MiniDonutComponent implements OnInit {
       // .style("stroke-opacity", 1);
 
       this.svg.selectAll("path")
-        .on("click", filterCohort(this.endpoint, this.patientSvc));
+        .on("click", filterCohort(this.endpoint, this.requestSvc));
 
       // --- Annotate donut ---
       let labels = this.annotation.selectAll("text")

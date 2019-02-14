@@ -10,3 +10,4 @@ export * from './hla.service';
 export * from './auth.service';
 export * from './http-cookies.service';
 export * from './api.service';
+export * from './request-parameters.service';
