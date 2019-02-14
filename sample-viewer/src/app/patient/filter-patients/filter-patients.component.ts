@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { GetPatientsService } from '../../_services/';
+import { GetPatientsService, RequestParametersService } from '../../_services/';
 import { Patient, PatientArray } from '../../_models';
 
 @Component({
@@ -14,7 +14,8 @@ export class FilterPatientsComponent implements OnInit {
   total_patients: number;
 
 
-  constructor(private patientSvc: GetPatientsService, ) {
+  constructor(private patientSvc: GetPatientsService,
+    private requestSvc: RequestParametersService) {
     // grab the data
     this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
       this.patients = pList.patients;
@@ -28,7 +29,7 @@ export class FilterPatientsComponent implements OnInit {
   }
 
   clearFilters() {
-    this.patientSvc.patientParamsSubject.next([]);
+    this.requestSvc.patientParamsSubject.next([]);
   }
 
 }

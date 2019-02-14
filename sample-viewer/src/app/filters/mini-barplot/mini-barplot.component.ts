@@ -6,7 +6,7 @@ import * as d3 from 'd3';
 import { StripWhitespacePipe } from '../../_pipes';
 
 // Event listeners to update the search query
-import { GetPatientsService } from '../../_services';
+import { RequestParametersService } from '../../_services';
 
 @Component({
   selector: 'app-mini-barplot',
@@ -55,7 +55,7 @@ export class MiniBarplotComponent implements OnInit {
 
   // constructor() { }
   constructor(private strip: StripWhitespacePipe,
-    private patientSvc: GetPatientsService,
+    private requestSvc: RequestParametersService,
     // Whether to be rendered server-side or client-side
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
@@ -117,27 +117,29 @@ export class MiniBarplotComponent implements OnInit {
         .duration(tDuration);
 
       // Handle into filtering by virus type
-      let filterOutcome = function(endpoint: string, patientSvc: any) {
+      let filterOutcome = function(endpoint: string, requestSvc: any) {
         return function(d) {
           console.log(d)
-          switch (endpoint) {
-            case 'patient': {
-              let params = [{ field: 'outcome', value: d.key }];
+          requestSvc.updateParams(endpoint, { field: 'outcome', value: d.key })
 
-              patientSvc.patientParamsSubject.next(params);
-              break;
-            }
-            case 'dataset': {
-              console.log('sending dataset endpoint cohort ' + d.key);
-              let params = [{ field: 'outcome', value: d.key }];
-              console.log(params)
-              break;
-            }
-            default: {
-              console.log("ERROR! Unknown endpoint to be filtered.")
-              break;
-            }
-          }
+          // switch (endpoint) {
+          //   case 'patient': {
+          //     let params = [{ field: 'outcome', value: d.key }];
+          //
+          //     patientSvc.patientParamsSubject.next(params);
+          //     break;
+          //   }
+          //   case 'dataset': {
+          //     console.log('sending dataset endpoint cohort ' + d.key);
+          //     let params = [{ field: 'outcome', value: d.key }];
+          //     console.log(params)
+          //     break;
+          //   }
+          //   default: {
+          //     console.log("ERROR! Unknown endpoint to be filtered.")
+          //     break;
+          //   }
+          // }
         }
       }
 
@@ -178,7 +180,7 @@ export class MiniBarplotComponent implements OnInit {
         .attr("width", (d: any) => this.x(0) - this.x(d.value));
 
       this.chart.selectAll("rect")
-        .on("click", filterOutcome(this.endpoint, this.patientSvc));
+        .on("click", filterOutcome(this.endpoint, this.requestSvc));
 
 
       // --- Annotate bars ---
