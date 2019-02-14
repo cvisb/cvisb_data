@@ -287,7 +287,7 @@ export class GetPatientsService {
   reduceParams(): string {
     let param_string: string;
     let params: string[] = [];
-    if (this.request_params) {
+    if (this.request_params && this.request_params.length > 0) {
 
       for (let param of this.request_params) {
         // Collapse each parameter down into a parameter string
