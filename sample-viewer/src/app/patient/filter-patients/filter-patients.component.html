@@ -4,7 +4,7 @@
       <h2>{{patients.length}} of {{ total_patients }} Patients Selected</h2>
 
       <div class="pull-right">
-        <app-filter-search></app-filter-search>
+        <app-filter-search endpoint="patient"></app-filter-search>
 
         <button mat-stroked-button (click)="clearFilters()">clear filters</button>
       </div>

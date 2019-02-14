@@ -291,13 +291,16 @@ export class GetPatientsService {
 
       for (let param of this.request_params) {
         // Collapse each parameter down into a parameter string
-        if (Array.isArray(param.value)) {
-          params.push((`${param.field}:\(\"${param.value.join('" "')}\"\)`))
+        if (!param.field) {
+          // generic search query
+          params.push(param.value);
+        } else if (Array.isArray(param.value)) {
+          params.push((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
         } else {
-          params.push((`${param.field}:\(\"${param.value}\"\)`))
+          params.push((`${param.field}:\(\"${param.value}\"\)`));
         }
       }
-      param_string = params.join(" AND ")
+      param_string = params.join(" AND ");
     } else {
       param_string = "__all__"
     }
