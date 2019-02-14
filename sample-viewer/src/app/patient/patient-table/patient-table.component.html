@@ -47,8 +47,10 @@
     <ng-container matColumnDef="country">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">country</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.country.name }}
-        <svg-icon [icon]="element.country.identifier" class="country-icon" [ngClass]="element.country.identifier"></svg-icon>
+        <div class="table-country">
+          {{ element.country.name }}
+          <svg-icon [icon]="element.country.identifier" class="country-icon" [ngClass]="element.country.identifier"></svg-icon>
+        </div>
       </td>
     </ng-container>
 
@@ -58,7 +60,7 @@
 
         <span class="sex-icon" [ngClass]="element.gender">
           <span *ngIf="element.gender === 'Female'"><i class="fas fa-venus"></i></span>
-          <span *ngIf="element.gender === 'Male'"><i class="fas fa-mars"></i></span>
+        <span *ngIf="element.gender === 'Male'"><i class="fas fa-mars"></i></span>
         </span>
 
       </td>

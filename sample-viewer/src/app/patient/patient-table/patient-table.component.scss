@@ -84,9 +84,7 @@ svg-icon {
 .viralseq {
   background: #e4fffc;
 }
-
 // --- timepoints ---
-
 .timepoints {
   display: inline-block;
 }
@@ -113,8 +111,15 @@ svg-icon {
   // content: "T";
 }
 // --- related patients ---
+
 .related {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.75em;
+}
+// --- country ---
+table-country {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
