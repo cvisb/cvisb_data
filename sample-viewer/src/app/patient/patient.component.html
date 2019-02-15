@@ -1,10 +1,10 @@
-<ng-container *ngIf="patients">
+<ng-container>
   <div class="page-header">
     <h1>Patients</h1>
-    <app-download-btn [data]="patients.downloadable" filetype="patients"></app-download-btn>
+    <app-download-btn [data]="patients.downloadable" filetype="patients" *ngIf="patients"></app-download-btn>
   </div>
 
   <app-filter-patients></app-filter-patients>
 
-  <app-patient-table></app-patient-table>
+  <app-patient-table *ngIf="patients"></app-patient-table>
 </ng-container>
