@@ -5,6 +5,7 @@
 
       <div class="pull-right">
         <app-filter-search endpoint="patient"></app-filter-search>
+        <!-- <app-filter-search endpoint="patient" [query]="searchQuery"></app-filter-search> -->
 
         <button mat-stroked-button (click)="clearFilters()">clear filters</button>
       </div>
@@ -15,7 +16,7 @@
 
 
   <div class="filter-item filter-patients">
-    <app-filter-patient-id [patients]="patientSummary.patientIDs"></app-filter-patient-id>
+    <app-filter-patient-id [patients]="patientSummary.patientIDs" endpoint="patient"></app-filter-patient-id>
   </div>
 
   <div class="filter-item filter-patient-types">
