@@ -12,28 +12,29 @@ export class FilterPatientIdComponent implements OnInit {
   @Input() patients: string[];
 
   selectedPatients: string[];
-  inclContacts: binary;
+  inclContacts: boolean;
 
   constructor(private requestSvc: RequestParametersService) { }
 
   ngOnInit() {
   }
 
-  filterPatientIDs(ids) {
-    console.log(ids);
+  filterPatientIDs(patientIDs) {
+    console.log(patientIDs);
 
 
     if (this.inclContacts) {
       this.requestSvc.updateParams(this.endpoint,
         {
-          field: 'patientID', value: this.selectedPatients, orSelector: {
-            field: 'relatedTo', value: this.selectedPatients
+          field: 'patientID', value: patientIDs, orSelector: {
+            field: 'relatedTo', value: patientIDs
           }
         });
     } else {
       this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids });
     }
   }
+
 
   filterContacts(includeContacts: boolean) {
     console.log(includeContacts)
@@ -48,7 +49,7 @@ export class FilterPatientIdComponent implements OnInit {
             }
           });
       } else {
-        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids });
+        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: this.selectedPatients });
       }
     }
   }
