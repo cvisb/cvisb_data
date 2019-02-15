@@ -20,7 +20,7 @@ export class FilterPatientIdComponent implements OnInit {
 
   filterPatientIDs(ids) {
     console.log(ids);
-    this.requestSvc.updateParams(endpoint, { field: 'patientID', value: ids })
+    this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids })
   }
 
 }
