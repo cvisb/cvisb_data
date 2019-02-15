@@ -10,6 +10,7 @@
             [hideSelected]="true"
             bindLabel="name"
             placeholder="Select patients"
+            (ngModelChange)="filterPatientIDs($event)"
             [(ngModel)]="selectedPatients">
     </ng-select>
     <mat-checkbox class="include-contacts">include patient contacts</mat-checkbox>
