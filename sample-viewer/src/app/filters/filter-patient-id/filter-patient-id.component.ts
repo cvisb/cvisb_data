@@ -12,6 +12,7 @@ export class FilterPatientIdComponent implements OnInit {
   @Input() patients: string[];
 
   selectedPatients: string[];
+  inclContacts: binary;
 
   constructor(private requestSvc: RequestParametersService) { }
 
@@ -20,7 +21,37 @@ export class FilterPatientIdComponent implements OnInit {
 
   filterPatientIDs(ids) {
     console.log(ids);
-    this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids })
+
+
+    if (this.inclContacts) {
+      this.requestSvc.updateParams(this.endpoint,
+        {
+          field: 'patientID', value: this.selectedPatients, orSelector: {
+            field: 'relatedTo', value: this.selectedPatients
+          }
+        });
+    } else {
+      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids });
+    }
   }
+
+  filterContacts(includeContacts: boolean) {
+    console.log(includeContacts)
+    console.log(this.patients)
+
+    if (this.selectedPatients.length > 0) {
+      if (this.inclContacts) {
+        this.requestSvc.updateParams(this.endpoint,
+          {
+            field: 'patientID', value: this.selectedPatients, orSelector: {
+              field: 'relatedTo', value: this.selectedPatients
+            }
+          });
+      } else {
+        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: ids });
+      }
+    }
+  }
+
 
 }

@@ -255,7 +255,7 @@ export class GetPatientsService {
 
   getPatients() {
 
-    let param_string: string = this.reduceParams();
+    let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
@@ -284,30 +284,7 @@ export class GetPatientsService {
       })
   }
 
-  reduceParams(): string {
-    let param_string: string;
-    let params: string[] = [];
-    if (this.request_params && this.request_params.length > 0) {
 
-      for (let param of this.request_params) {
-        // Collapse each parameter down into a parameter string
-        if (!param.field) {
-          // generic search query
-          params.push(param.value);
-        } else if (Array.isArray(param.value)) {
-          params.push((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
-        } else {
-          params.push((`${param.field}:\(\"${param.value}\"\)`));
-        }
-      }
-      param_string = params.join(" AND ");
-    } else {
-      param_string = "__all__"
-    }
-
-    console.log(param_string)
-    return (param_string)
-  }
 
   getAllPatients() {
     console.log('calling backend to get patients');
