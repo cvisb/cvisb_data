@@ -13,6 +13,6 @@
             (ngModelChange)="filterPatientIDs($event)"
             [(ngModel)]="selectedPatients">
     </ng-select>
-    <mat-checkbox class="include-contacts">include patient contacts</mat-checkbox>
+    <mat-checkbox class="include-contacts" [(ngModel)]="inclContacts" (ngModelChange)="filterContacts($event)">include patient contacts</mat-checkbox>
   </div>
 </div>

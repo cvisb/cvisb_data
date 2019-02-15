@@ -58,12 +58,55 @@ export class RequestParametersService {
 
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
-    if(idx > -1) {
+    if (idx > -1) {
       // replace the parameter with the new one
-      currentParams[idx].value = newParam.value;
+      // If null, delete the parameter.
+      newParam.value ? currentParams[idx].value = newParam.value : currentParams.splice(idx, 1);
     } else {
-      currentParams.push(newParam)
+      if (newParam.value) {
+        currentParams.push(newParam)
+      }
     }
-    return(currentParams)
+    return (currentParams)
+  }
+
+  reduceParams(request_params: RequestParamArray): string {
+    let param_string: string;
+    let params: string[] = [];
+    if (request_params && request_params.length > 0) {
+
+      // Collapse each parameter down into a parameter string
+      for (let param of request_params) {
+        if (!param.field) {
+          // generic search query; no
+          params.push(param.value);
+        } else {
+          // convert the parameter object into a string and add to array.
+          let new_param = this.params2String(param);
+
+          // Check if there's an OR parameter to relate to that property.
+          if(param.orSelector) {
+          let or_param = this.params2String(param.orSelector);
+          new_param = `${new_param} OR ${or_param}`
+        }
+          params.push(new_param);
+        }
+      }
+
+      param_string = params.join(" AND ");
+    } else {
+      param_string = "__all__"
+    }
+
+    console.log(param_string)
+    return (param_string)
+  }
+
+  params2String(param: RequestParam) {
+    if (Array.isArray(param.value)) {
+      return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
+    } else {
+      return ((`${param.field}:\(\"${param.value}\"\)`));
+    }
   }
 }

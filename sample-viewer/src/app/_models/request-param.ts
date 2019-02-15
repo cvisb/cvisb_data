@@ -1,11 +1,13 @@
 export class RequestParam {
   field: string;
   value: any;
+  orSelector?: RequestParam;
 
-  constructor(field, value) {
-    console.log('constructing: ' + field)
+  constructor(field, value, orSelector) {
+    // console.log('constructing: ' + field)
     this.field = field;
     this.value = value;
+    this.orSelector = orSelector;
   }
 
 
