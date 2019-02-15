@@ -51,6 +51,8 @@ export class FilterPatientIdComponent implements OnInit {
       } else {
         this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: this.selectedPatients });
       }
+    } else {
+        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null});
     }
   }
 
