@@ -35,6 +35,7 @@ export class RequestParametersService {
 
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
+    console.log(newParam)
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
     switch (endpoint) {
@@ -57,6 +58,7 @@ export class RequestParametersService {
   }
 
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
+    console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
     if (idx > -1) {
       // replace the parameter with the new one
@@ -84,11 +86,16 @@ export class RequestParametersService {
           // convert the parameter object into a string and add to array.
           let new_param = this.params2String(param);
 
+          console.log(new_param)
+
           // Check if there's an OR parameter to relate to that property.
-          if(param.orSelector) {
-          let or_param = this.params2String(param.orSelector);
-          new_param = `${new_param} OR ${or_param}`
-        }
+          if (param.orSelector) {
+            let or_param = this.params2String(param.orSelector);
+            new_param = `${new_param} OR ${or_param}`
+            console.log(or_param)
+            console.log(new_param)
+
+          }
           params.push(new_param);
         }
       }
