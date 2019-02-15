@@ -64,6 +64,9 @@ export class RequestParametersService {
       // replace the parameter with the new one
       // If null, delete the parameter.
       newParam.value ? currentParams[idx].value = newParam.value : currentParams.splice(idx, 1);
+      if (newParam.orSelector) {
+        currentParams[idx].orSelector = newParam.orSelector;
+      }
     } else {
       if (newParam.value) {
         currentParams.push(newParam)

@@ -40,7 +40,7 @@ export class FilterPatientIdComponent implements OnInit {
     console.log(includeContacts)
     console.log(this.patients)
 
-    if (this.selectedPatients.length > 0) {
+    if (this.selectedPatients && this.selectedPatients.length > 0) {
       if (this.inclContacts) {
         this.requestSvc.updateParams(this.endpoint,
           {
