@@ -50,7 +50,7 @@ export class PatientArray {
 
       // --- experiments ---
 
-      this.exptTypes = [];
+      this.exptTypes  = [];
       if (Object.keys(patients).includes("availableData")) {
         let expts: any = patients.filter((d: Patient) => d.availableData).map((d: Patient) => d.availableData);
         expts = expts.flat();
@@ -91,6 +91,16 @@ export class PatientArray {
         }
       });
 
+    } else {
+      this.patients = [];
+      this.downloadable = [];
+      this.patientIDs = [];
+      this.relatedIDs = [];
+      this.patientTypes = [];
+      this.patientOutcomes = [];
+      this.patientCountries = [];
+      this.patientYears = [];
+      this.exptTypes = [];
     }
   }
 }
