@@ -35,16 +35,13 @@ export class FilterPatientsComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         console.log(params)
-        if (params.hasOwnProperty("q")) {
+        if (params.hasOwnProperty("q") ) {
           // parse query string into an array.
-          let query_string = params.q;
+          let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.splitQuery(params.q);
 
-
-
-          let paramArray: RequestParamArray = this.splitQuery(params.q);
           console.log(paramArray)
           // announce new parameters
-          this.requestSvc.patientParamsSubject.next(paramArray);
+          // this.requestSvc.patientParamsSubject.next(paramArray);
         }
       })
 
