@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { GetPatientsService, RequestParametersService } from '../../_services/';
-import { Patient, PatientArray } from '../../_models';
+import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
+import { Patient, PatientArray, AuthState } from '../../_models';
 
 @Component({
   selector: 'app-filter-patients',
@@ -11,24 +11,35 @@ import { Patient, PatientArray } from '../../_models';
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
   public patientSummary: PatientArray;
+  public searchQuery: string = null;
   total_patients: number;
+  private authenticated: boolean;
 
 
   constructor(private patientSvc: GetPatientsService,
-    private requestSvc: RequestParametersService) {
+    private requestSvc: RequestParametersService,
+    private authSvc: AuthService
+  ) {
     // grab the data
     this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-      this.patients = pList.patients;
+      if (pList) {
+        this.patients = pList.patients;
+        this.patientSummary = pList;
+      }
+    });
 
-      this.patientSummary = pList;
+    this.authSvc.authState$.subscribe((status: AuthState) => {
+      this.authenticated = status.authorized;
     })
 
   }
 
   ngOnInit() {
+    console.log(this.patients)
   }
 
   clearFilters() {
+    this.searchQuery = null;
     this.requestSvc.patientParamsSubject.next([]);
   }
 
