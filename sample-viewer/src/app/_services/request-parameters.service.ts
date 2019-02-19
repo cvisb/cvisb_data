@@ -184,7 +184,7 @@ export class RequestParametersService {
     console.log(vals)
     // remove `""` and `()`
     // split values by space `%20` into array
-    let values = vals[1].replace(/%22/g, "").replace(/\(/g, "").replace(/\)/g, "").split("%20")
+    let values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
 
     console.log(values)
 
