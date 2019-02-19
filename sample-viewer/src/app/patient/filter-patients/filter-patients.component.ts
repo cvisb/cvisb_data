@@ -35,13 +35,15 @@ export class FilterPatientsComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         console.log(params)
-        if (params) {
-          // parse query string into an array.
-          let paramArray: RequestParamArray = this.splitQuery(params.q);
-          console.log(paramArray)
-          // announce new parameters
-          this.requestSvc.patientParamsSubject.next(paramArray);
-        }
+        // parse query string into an array.
+        let query_string = params.q;
+
+
+
+        let paramArray: RequestParamArray = this.splitQuery(params.q);
+        console.log(paramArray)
+        // announce new parameters
+        this.requestSvc.patientParamsSubject.next(paramArray);
       })
 
     // grab the data
@@ -82,8 +84,6 @@ export class FilterPatientsComponent implements OnInit {
     this.requestSvc.patientParamsSubject.next([]);
   }
 
-
-// Fish out the query parameters if they're fed into the URL
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
     let query_array = query_string.split("%20AND%20");
