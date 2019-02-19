@@ -37,7 +37,7 @@ export class FilterPatientsComponent implements OnInit {
         console.log(params)
         if (params.hasOwnProperty("q") ) {
           // parse query string into an array.
-          let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.splitQuery(params.q);
+          let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.requestSvc.splitQuery(params.q);
 
           console.log(paramArray)
           // announce new parameters
@@ -58,7 +58,7 @@ export class FilterPatientsComponent implements OnInit {
           this.total_cohorts = pList.patientTypes.map((d: any) => d.key);
           this.total_outcomes = pList.patientOutcomes.map((d: any) => d.key);
           this.total_years = pList.patientOutcomes.map((d: any) => {
-            if (Number.isInteger(d)) return (d.key);
+            if (Number.isInteger(d.key)) return (d.key);
           }
           );
           console.log(this.total_years)
@@ -83,46 +83,6 @@ export class FilterPatientsComponent implements OnInit {
     this.requestSvc.patientParamsSubject.next([]);
   }
 
-  splitQuery(query_string: string): RequestParamArray {
-    // split into individual params by ` AND `
-    let query_array = query_string.split("%20AND%20");
-
-    // for each couplet:
-    // 1. split into orStatements
-    // 2. split into field/values
-    // 3. remove `()`, `""`
-    // 4. split values into array.
-    let paramArray: RequestParamArray = [];
-    for (let query of query_array) {
-      paramArray.push(this.splitParamString(query))
-    }
-    return (paramArray);
-  }
-
-
-  splitParamString(param_string: string): RequestParam {
-    // split into OR statements.
-    let str_array = param_string.split("%20OR%20");
-
-    if (str_array.length === 1) {
-      return (this.splitPieces(str_array[0]));
-    } else {
-      let arr = this.splitPieces(str_array[0]);
-      let or_arr = this.splitPieces(str_array[1]);
-      arr['orStatement'] = or_arr
-      return (arr);
-    }
-  }
-
-  splitPieces(param_string: string): RequestParam {
-    // split into field / values
-    let vals = param_string.split(":");
-    // remove `""` and `()`
-    // split values by space `%20` into array
-    let values = vals[1].replace(/%22/g, "").replace(/\(/g, "").replace(/\)/g, "").split("%20")
-
-    return ({ field: vals[0], value: values });
-  }
 
 
 }

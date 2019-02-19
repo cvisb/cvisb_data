@@ -140,4 +140,55 @@ export class RequestParametersService {
       return ((`${param.field}:\(\"${param.value}\"\)`));
     }
   }
+
+// Opposite direction: convert query_string into an array.
+  splitQuery(query_string: string): RequestParamArray {
+    // split into individual params by ` AND `
+    let query_array = query_string.split("%20AND%20");
+    console.log(query_array)
+
+    // for each couplet:
+    // 1. split into orStatements
+    // 2. split into field/values
+    // 3. remove `()`, `""`
+    // 4. split values into array.
+    let paramArray: RequestParamArray = [];
+    for (let query of query_array) {
+      paramArray.push(this.splitParamString(query))
+    }
+    console.log(paramArray)
+    return (paramArray);
+  }
+
+
+  splitParamString(param_string: string): RequestParam {
+    // split into OR statements.
+    let str_array = param_string.split("%20OR%20");
+    console.log(str_array)
+
+    if (str_array.length === 1) {
+      console.log(this.splitPieces(str_array[0]))
+      return (this.splitPieces(str_array[0]));
+    } else {
+      let arr = this.splitPieces(str_array[0]);
+      let or_arr = this.splitPieces(str_array[1]);
+      arr['orStatement'] = or_arr
+      console.log(arr)
+      return (arr);
+    }
+  }
+
+  splitPieces(param_string: string): RequestParam {
+    // split into field / values
+    let vals = param_string.split(":");
+    console.log(vals)
+    // remove `""` and `()`
+    // split values by space `%20` into array
+    let values = vals[1].replace(/%22/g, "").replace(/\(/g, "").replace(/\)/g, "").split("%20")
+
+    console.log(values)
+
+    return ({ field: vals[0], value: values });
+  }
+
 }
