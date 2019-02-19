@@ -69,6 +69,9 @@ export class RequestParametersService {
         if (newParam.exclude) {
           let valueIdx = currentParams[idx].value.indexOf(newParam.value);
           if (valueIdx !== -1) currentParams[idx].value.splice(valueIdx, 1);
+        } else if (Array.isArray(newParam.value)) {
+          // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
+          currentParams[idx].value = newParam.value;
         } else {
           currentParams[idx].value.push(newParam.value);
         }
