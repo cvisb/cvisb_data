@@ -72,16 +72,17 @@ export class RequestParametersService {
         } else {
           currentParams[idx].value.push(newParam.value);
         }
+
+        // Update the OR selector.
+        if (newParam.orSelector) {
+          currentParams[idx].orSelector = newParam.orSelector;
+        } else {
+          currentParams[idx].orSelector = null;
+        }
       } else {
         currentParams.splice(idx, 1);
       }
 
-      // Update the OR selector.
-      if (newParam.orSelector) {
-        currentParams[idx].orSelector = newParam.orSelector;
-      } else {
-        currentParams[idx].orSelector = null;
-      }
       // --- CASE 2: Parameter doesn't exists.  APPEND ---
     } else {
       if (newParam.value) {
