@@ -64,8 +64,8 @@ export class RequestParametersService {
     if (idx > -1) {
       // replace the parameter with the new one.
       // If it's being turned off-- `excluded === True` --- remove the value from the array
-      // If null, delete the parameter.
-      if (newParam.value) {
+      // If null or empty array, delete the parameter.
+      if (newParam.value && newParam.value.length > 0) {
         if (newParam.exclude) {
           let valueIdx = currentParams[idx].value.indexOf(newParam.value);
           if (valueIdx !== -1) currentParams[idx].value.splice(valueIdx, 1);
