@@ -12,9 +12,12 @@ export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
   public patientSummary: PatientArray;
   public searchQuery: string = null;
+  private authenticated: boolean;
+
+// Parameters to set on the first call to the backend (e.g. max values, etc.)
   first_call: boolean = true;
   total_patients: number;
-  private authenticated: boolean;
+  total_cohorts: string[];
 
 
   constructor(private patientSvc: GetPatientsService,
@@ -32,6 +35,7 @@ export class FilterPatientsComponent implements OnInit {
           console.log("FIRST CALL!")
           this.first_call = false;
           this.total_patients = this.patients.length;
+          this.total_cohorts = ["Lassa", "Ebola", "Control", "Unknown"];
         }
       }
     });

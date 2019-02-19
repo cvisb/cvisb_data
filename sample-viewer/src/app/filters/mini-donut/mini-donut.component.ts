@@ -21,7 +21,7 @@ export class MiniDonutComponent implements OnInit {
   @Input() private name_var: string;
 
   // Expected values
-  private cohorts = ['Lassa', 'Ebola', 'Control', 'Unknown'];
+  @Input() private cohorts: string[];
 
   // plot sizes
   private element: any; // selector for SVG DIV
