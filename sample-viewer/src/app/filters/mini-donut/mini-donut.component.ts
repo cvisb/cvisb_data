@@ -104,6 +104,16 @@ export class MiniDonutComponent implements OnInit {
         }
       }
 
+      // Handle into filtering by virus type
+      let filterText = function(endpoint: string, requestSvc: any) {
+        // TODO: flip on/off.
+        return function(d) {
+          // If the parameter is already turned on, turn it off.
+          let isExcluded = d.value != 0;
+          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.key, exclude: isExcluded })
+        }
+      }
+
       // --- transitions ----
       var t = d3.transition()
         .duration(1000);
@@ -159,6 +169,7 @@ export class MiniDonutComponent implements OnInit {
       // .duration(50)
       // .style("stroke-opacity", 1);
 
+      // Add in tooltip/filtering behavior
       this.svg.selectAll("path")
         .on("click", filterCohort(this.endpoint, this.requestSvc));
 
@@ -179,10 +190,17 @@ export class MiniDonutComponent implements OnInit {
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .classed('disabled', (d: any) => d.value === 0)
         // .style("fill-opacity", 0)
         .transition(t)
         // .style("fill-opacity", 1)
         .text((d: any) => `${d.key}: ${d.value}`);
+
+
+      // Add in tooltip/filtering behavior
+      this.svg.selectAll("text")
+        .on("click", filterText(this.endpoint, this.requestSvc));
+
     }
   }
 
