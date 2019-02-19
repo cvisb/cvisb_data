@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
@@ -208,6 +208,7 @@ export class GetPatientsService {
   constructor(
     public myhttp: MyHttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private apiSvc: ApiService,
     private requestSvc: RequestParametersService,
     private authSvc: AuthService) {
@@ -256,6 +257,17 @@ export class GetPatientsService {
   getPatients() {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        q: param_string
+      },
+      queryParamsHandling: 'merge',
+      // preserve the existing query params in the route
+      skipLocationChange: true
+      // do not trigger navigation
+    });
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
