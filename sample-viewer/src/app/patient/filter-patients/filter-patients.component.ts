@@ -41,9 +41,7 @@ export class FilterPatientsComponent implements OnInit {
 
           console.log(paramArray)
           // announce new parameters
-if(this.first_call){
           this.requestSvc.patientParamsSubject.next(paramArray);
-        }
         }
       })
 
