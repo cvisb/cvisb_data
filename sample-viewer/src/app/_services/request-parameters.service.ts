@@ -144,7 +144,7 @@ export class RequestParametersService {
 // Opposite direction: convert query_string into an array.
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
-    let query_array = query_string.split("%20AND%20");
+    let query_array = query_string.replace(/%20/g, " ").split(" AND ");
     console.log(query_array)
 
     // for each couplet:
@@ -163,7 +163,7 @@ export class RequestParametersService {
 
   splitParamString(param_string: string): RequestParam {
     // split into OR statements.
-    let str_array = param_string.split("%20OR%20");
+    let str_array = param_string.replace(/%20/g, " ").split(" OR ");
     console.log(str_array)
 
     if (str_array.length === 1) {
