@@ -151,7 +151,7 @@ export class RequestParametersService {
     console.log(query_array)
 
     // for each couplet:
-    // 1. split into orStatements
+    // 1. split into orSelectors
     // 2. split into field/values
     // 3. remove `()`, `""`
     // 4. split values into array.
@@ -175,7 +175,7 @@ export class RequestParametersService {
     } else {
       let arr = this.splitPieces(str_array[0]);
       let or_arr = this.splitPieces(str_array[1]);
-      arr['orStatement'] = or_arr
+      arr['orSelector'] = or_arr
       console.log(arr)
       return (arr);
     }
