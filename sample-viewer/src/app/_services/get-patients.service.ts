@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
@@ -207,6 +207,7 @@ export class GetPatientsService {
 
   constructor(
     public myhttp: MyHttpClient,
+    private route: ActivatedRoute,
     private router: Router,
     private apiSvc: ApiService,
     private requestSvc: RequestParametersService,
@@ -256,6 +257,16 @@ export class GetPatientsService {
   getPatients() {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
+    console.log('about to redirect...')
+    console.log(param_string)
+
+    this.router.navigate(
+    [],
+    {
+      relativeTo: this.route,
+      queryParams: {q: param_string},
+      queryParamsHandling: "merge", // remove to replace all query params by provided
+    });
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
