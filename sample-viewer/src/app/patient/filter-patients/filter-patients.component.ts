@@ -35,7 +35,7 @@ export class FilterPatientsComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         console.log(params)
-        if (params) {
+        if (params.hasOwnProperty("q")) {
           // parse query string into an array.
           let query_string = params.q;
 
