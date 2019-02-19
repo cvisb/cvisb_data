@@ -12,6 +12,7 @@ export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
   public patientSummary: PatientArray;
   public searchQuery: string = null;
+  first_call: boolean = true;
   total_patients: number;
   private authenticated: boolean;
 
@@ -25,6 +26,13 @@ export class FilterPatientsComponent implements OnInit {
       if (pList) {
         this.patients = pList.patients;
         this.patientSummary = pList;
+
+// On the initial return object, set the maximum parameters
+        if(this.first_call) {
+          console.log("FIRST CALL!")
+          this.first_call = false;
+          this.total_patients = this.patients.length;
+        }
       }
     });
 
