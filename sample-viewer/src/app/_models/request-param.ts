@@ -2,12 +2,14 @@ export class RequestParam {
   field: string;
   value: any;
   orSelector?: RequestParam;
+  exclude?: RequestParam;
 
-  constructor(field, value, orSelector) {
+  constructor(field, value, orSelector, exclude) {
     // console.log('constructing: ' + field)
     this.field = field;
     this.value = value;
     this.orSelector = orSelector;
+    this.exclude = exclude;
   }
 
 

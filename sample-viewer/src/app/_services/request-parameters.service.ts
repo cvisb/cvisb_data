@@ -59,17 +59,36 @@ export class RequestParametersService {
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
     console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
+
+    // --- CASE 1: Parameter already exists.  UPDATE ---
     if (idx > -1) {
-      // replace the parameter with the new one
+      // replace the parameter with the new one.
+      // If it's being turned off-- `excluded === True` --- remove the value from the array
       // If null, delete the parameter.
-      newParam.value ? currentParams[idx].value = newParam.value : currentParams.splice(idx, 1);
+      if (newParam.value) {
+        if (newParam.exclude) {
+          let valueIdx = currentParams[idx].value.indexOf(newParam.value);
+          if (valueIdx !== -1) currentParams[idx].value.splice(valueIdx, 1);
+        } else {
+          currentParams[idx].value.push(newParam.value);
+        }
+      } else {
+        currentParams.splice(idx, 1);
+      }
+
+      // Update the OR selector.
       if (newParam.orSelector) {
         currentParams[idx].orSelector = newParam.orSelector;
       } else {
         currentParams[idx].orSelector = null;
       }
+      // --- CASE 2: Parameter doesn't exists.  APPEND ---
     } else {
       if (newParam.value) {
+        // if value isn't an array, turn it into one.
+        if (!Array.isArray(newParam.value)) {
+          newParam.value = [newParam.value];
+        }
         currentParams.push(newParam)
       }
     }
@@ -84,7 +103,7 @@ export class RequestParametersService {
       // Collapse each parameter down into a parameter string
       for (let param of request_params) {
         if (!param.field) {
-          // generic search query; no
+          // generic search query; no variable-level searching
           params.push(param.value);
         } else {
           // convert the parameter object into a string and add to array.

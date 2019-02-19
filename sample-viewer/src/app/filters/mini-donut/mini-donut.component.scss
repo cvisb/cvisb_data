@@ -8,11 +8,37 @@ path {
 
 .Control,
 .control {
-  fill: $grey-300;
-  stroke: $grey-400;
+  fill: $grey-350;
+  stroke: $grey-500;
 
   &:hover {
-    fill: darken($grey-300, 15%);
+    fill: darken($grey-400, 25%);
+  }
+}
+
+path.Control,
+path.control {
+  &:hover {
+    fill: darken($grey-350, 15%);
+  }
+}
+
+path.Unknown,
+path.unknown {
+  fill: $grey-50;
+  stroke: $grey-500;
+
+  &:hover {
+    fill: $grey-500;
+  }
+}
+
+text.Unknown,
+text.unknown {
+  fill: $grey-300;
+
+  &:hover {
+    fill: $grey-500;
   }
 }
 
@@ -22,7 +48,7 @@ path {
   stroke: $ebola-color;
 
   &:hover {
-    fill: darken($ebola-md, 10%);
+    fill: darken($ebola-md, 25%);
   }
 }
 
@@ -32,13 +58,20 @@ path {
   stroke: $lassa-color;
 
   &:hover {
-    fill: darken($lassa-md, 15%);
+    fill: darken($lassa-md, 25%);
   }
 }
 
-.donut--annot text {
-  stroke: none;
-  dominant-baseline: middle;
-  font-family: $font-default;
-  font-weight: 400;
+.donut--annot {
+  & text {
+    stroke: none;
+    dominant-baseline: middle;
+    font-family: $font-default;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .disabled {
+    cursor: pointer !important;
+  }
 }
