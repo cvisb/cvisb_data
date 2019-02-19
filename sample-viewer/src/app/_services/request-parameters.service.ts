@@ -23,7 +23,6 @@ export class RequestParametersService {
 
   constructor(
   ) {
-
     // subscribe to current parameters
     this.patientParamsSubject.subscribe((params: RequestParamArray) => {
       console.log("API params")
@@ -66,6 +65,8 @@ export class RequestParametersService {
       newParam.value ? currentParams[idx].value = newParam.value : currentParams.splice(idx, 1);
       if (newParam.orSelector) {
         currentParams[idx].orSelector = newParam.orSelector;
+      } else {
+        currentParams[idx].orSelector = null;
       }
     } else {
       if (newParam.value) {
