@@ -57,10 +57,9 @@ export class FilterPatientsComponent implements OnInit {
           this.total_patients = this.patients.length;
           this.total_cohorts = pList.patientTypes.map((d: any) => d.key);
           this.total_outcomes = pList.patientOutcomes.map((d: any) => d.key);
-          this.total_years = pList.patientOutcomes.map((d: any) => {
+          this.total_years = pList.patientYears.map((d: any) => {
             if (Number.isInteger(d.key)) return (d.key);
-          }
-          );
+          });
           console.log(this.total_years)
           console.log(this.total_cohorts)
           console.log(this.total_outcomes)
