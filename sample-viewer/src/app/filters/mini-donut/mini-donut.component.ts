@@ -26,7 +26,7 @@ export class MiniDonutComponent implements OnInit {
   // plot sizes
   private element: any; // selector for SVG DIV
   private element_dims: any;
-  private margin: any = { top: 2, bottom: 2, left: 2, right: 100 };
+  private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
   private width: number;
   private hole_frac: number = 0.5;
   private bar_height: number = 10;
@@ -114,6 +114,30 @@ export class MiniDonutComponent implements OnInit {
         }
       }
 
+      let mouseoverText = function() {
+        return function(d) {
+
+          d3.select(this)
+          .text((d: any) => {
+            if(d.value > 0){
+               return(`${d.key}: ${d.value}   \uf057`);
+             }
+             return(`${d.key}: ${d.value}   \uf0fe`);
+          })
+          .classed("far", d.value)
+          .classed("fas", !d.value)
+        }
+      }
+
+      let mouseoutText = function() {
+        return function(d) {
+          d3.select(this)
+          .text((d: any) => `${d.key}: ${d.value}`)
+          .classed("far", false)
+          .classed("fas", false)
+        }
+      }
+
       // --- transitions ----
       var t = d3.transition()
         .duration(1000);
@@ -180,7 +204,7 @@ export class MiniDonutComponent implements OnInit {
       labels.exit()
         .transition(t)
         .style("fill-opacity", 1e-6)
-        .remove()
+        .remove();
 
       labels.enter().append("text")
         .merge(labels)
@@ -199,7 +223,9 @@ export class MiniDonutComponent implements OnInit {
 
       // Add in tooltip/filtering behavior
       this.svg.selectAll("text")
-        .on("click", filterText(this.endpoint, this.requestSvc));
+        .on("click", filterText(this.endpoint, this.requestSvc))
+        .on("mouseover", mouseoverText())
+        .on("mouseout", mouseoutText());
 
     }
   }

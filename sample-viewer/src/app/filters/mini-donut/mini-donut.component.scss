@@ -69,6 +69,10 @@ text.unknown {
     font-family: $font-default;
     font-weight: 400;
     cursor: pointer;
+
+    &:hover {
+      opacity: 1 !important;
+    }
   }
 
   .disabled {
