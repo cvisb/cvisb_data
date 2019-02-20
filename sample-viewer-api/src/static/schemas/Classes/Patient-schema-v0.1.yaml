@@ -59,6 +59,22 @@
   marginality:           optional
   authenticated:         true
 
+# sameAs: handle into the public alternate identifier(s) that also represent the patient.
+# Used to connect S- and G-numbers together.
+- "@id":                 cvisb:sameAs
+  "@type":               rdf:Property
+  rdfs:comment:          Alternative public ID(s) used for patient. Used to relate acute patients (G-numbers) to their ID in survivor study
+  rdfs:label:            sameAs
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               "schema:sameAs"
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         false
+
 # household identifier
 - "@id":                 cvisb:householdIdentifier
   "@type":               rdf:Property
