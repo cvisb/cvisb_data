@@ -114,6 +114,17 @@ export class MiniBarplotComponent implements OnInit {
 
   updatePlot(tDuration: number) {
     if (this.x && this.y) {
+
+      // --- Merge in null values ---
+      // update the data to add in missing values.
+      // Essential for object constancy.
+      let keys = this.data.map(d => d.key);
+
+      let missing_data = this.options.filter(d => !keys.includes(d));
+      missing_data.forEach(d => {
+        this.data.push({ key: d, value: 0 });
+      })
+
       // transition
       var t = d3.transition()
         .duration(tDuration);
