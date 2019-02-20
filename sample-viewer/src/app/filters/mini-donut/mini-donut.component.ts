@@ -108,6 +108,7 @@ export class MiniDonutComponent implements OnInit {
       let filterText = function(endpoint: string, requestSvc: any) {
         // TODO: flip on/off.
         return function(d) {
+          console.log('filtering ' + d.key)
           // If the parameter is already turned on, turn it off.
           let isExcluded = d.value != 0;
           requestSvc.updateParams(endpoint, { field: 'cohort', value: d.key, exclude: isExcluded })
@@ -116,25 +117,26 @@ export class MiniDonutComponent implements OnInit {
 
       let mouseoverText = function() {
         return function(d) {
+          console.log(this)
 
-          d3.select(this)
-          .text((d: any) => {
-            if(d.value > 0){
-               return(`${d.key}: ${d.value}   \uf057`);
-             }
-             return(`${d.key}: ${d.value}   \uf0fe`);
-          })
-          .classed("far", d.value)
-          .classed("fas", !d.value)
+          // Turn off disabled class for text
+          d3.select(this).selectAll(".annotation--count")
+            .classed('disabled', false);
+
+          // Turn on X or + icon next to the text
+          d3.select(this).selectAll(".annotation--tooltip")
+            .style("display", "inline-block");
         }
       }
 
       let mouseoutText = function() {
         return function(d) {
-          d3.select(this)
-          .text((d: any) => `${d.key}: ${d.value}`)
-          .classed("far", false)
-          .classed("fas", false)
+          d3.select(this).selectAll(".annotation--count")
+            .classed('disabled', (d: any) => d.value === 0);
+
+          // turn off tooltip
+          d3.select(this).selectAll(".annotation--tooltip")
+            .style("display", "none");
         }
       }
 
@@ -198,7 +200,7 @@ export class MiniDonutComponent implements OnInit {
         .on("click", filterCohort(this.endpoint, this.requestSvc));
 
       // --- Annotate donut ---
-      let labels = this.annotation.selectAll("text")
+      let labels = this.annotation.selectAll("g")
         .data(this.data);
 
       labels.exit()
@@ -206,9 +208,21 @@ export class MiniDonutComponent implements OnInit {
         .style("fill-opacity", 1e-6)
         .remove();
 
-      labels.enter().append("text")
+      let labelsEnter = labels.enter()
+        .append("g")
+        .attr("class", "donut-text");
+
+      labelsEnter
+        .append("text")
+        .attr("class", "annotation--count");
+
+      labelsEnter
+        .append("text")
+        .attr("class", "annotation--tooltip");
+
+      labelsEnter.selectAll(".annotation--count")
         .merge(labels)
-        .attr("class", (d: any) => d.key)
+        .attr("class", (d: any) => `${d.key} annotation--count`)
         .attr("x", 0)
         .attr("dx", 15)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
@@ -220,10 +234,32 @@ export class MiniDonutComponent implements OnInit {
         // .style("fill-opacity", 1)
         .text((d: any) => `${d.key}: ${d.value}`);
 
+      labelsEnter.selectAll(".annotation--tooltip")
+        .merge(labels)
+        .attr("class", (d: any) => d.value > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
+        .attr("x", 0)
+        .attr("dx", 105)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .style("display", "none")
+        .transition(t)
+        .text((d: any) => {
+          if (d.value > 0) {
+            // Delete/filter
+            return (`\uf057`);
+          }
+          // Add
+          return (`\uf0fe`);
+        });
+
+
 
       // Add in tooltip/filtering behavior
-      this.svg.selectAll("text")
-        .on("click", filterText(this.endpoint, this.requestSvc))
+      this.svg.selectAll(".annotation--count")
+        .on("click", filterText(this.endpoint, this.requestSvc));
+
+      this.svg.selectAll(".donut-text")
         .on("mouseover", mouseoverText())
         .on("mouseout", mouseoutText());
 

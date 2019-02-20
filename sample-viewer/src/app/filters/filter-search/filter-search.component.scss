@@ -16,6 +16,7 @@
   font-family: $font-default;
   font-weight: 300;
   margin: 5px 20px 5px 5px;
+  font-family: "Open Sans", "FontAwesome", sans-serif;
 }
 
 .search input[type=text]:focus {
@@ -24,7 +25,6 @@
   outline: none;
   cursor: text;
 }
-
 // @media only screen and (max-width: 760px) {
 //   .search input[type="text"]:focus {
 //     width: 75vw;
