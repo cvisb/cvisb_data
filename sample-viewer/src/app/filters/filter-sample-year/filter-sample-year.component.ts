@@ -19,6 +19,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   // data
   @Input() public data: D3Nested[];
+  @Input() public yearDomain: number[];
   @Input() public endpoint: string;
 
 
@@ -208,7 +209,37 @@ export class FilterSampleYearComponent implements OnInit {
     this.x = d3.scaleBand()
       .rangeRound([0, this.width])
       .paddingInner(this.innerPadding)
-      .paddingOuter(this.outerPadding);
+      .paddingOuter(this.outerPadding)
+      .domain(this.yearDomain);
+
+      // Linear version of the scaleBand.
+      // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
+      // Range is funky to account for padding on edges.
+      this.xLinear = d3.scaleLinear()
+        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+        // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+        .domain(this.yearDomain)
+        .clamp(true);
+
+      let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
+
+      // rescale svg to proper width
+      this.svg
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
+
+      this.svg_slider
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
+
+      this.x2 = d3.scaleBand()
+        .rangeRound([0, width2])
+        .paddingInner(0)
+        .paddingOuter(0)
+        .domain(['unknown']);
+
+      this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
+      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
     // --- Create axes ---
     this.years.append('g')
@@ -231,40 +262,8 @@ export class FilterSampleYearComponent implements OnInit {
 
       this.prepData();
 
-      // --- x & y axes ---
-      this.x.domain(this.num_data.map((d: any) => d.key));
-
-      // Linear version of the scaleBand.
-      // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
-      // Range is funky to account for padding on edges.
-      this.xLinear = d3.scaleLinear()
-        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-        // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-        // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-        .domain(d3.extent(this.num_data, (d: any) => d.key))
-        .clamp(true);
-
-      let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
-
       this.y
         .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.value), d3.max(this.unknown_data, (d: any) => d.value))]).nice();
-
-      // rescale svg to proper width
-      this.svg
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
-
-      this.svg_slider
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
-
-      this.x2 = d3.scaleBand()
-        .rangeRound([0, width2])
-        .paddingInner(0)
-        .paddingOuter(0)
-        .domain(this.unknown_data.map((d: any) => d.key));
-
-      this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
-      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
       // --- Update axes ---
       d3.select(".axis--years")
