@@ -181,7 +181,17 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingInner(this.innerPadding)
       .paddingOuter(this.outerPadding);
 
+      // --- Create axes ---
+      this.years.append('g')
+        .attr('class', 'axis axis--x axis--years')
+        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
+
+      this.unknown.append('g')
+        .attr('class', 'axis axis--x axis--unknown')
+        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
+
     this.updateData();
+    this.createSlider();
   }
 
   updateData() {
@@ -226,15 +236,11 @@ export class FilterSampleYearComponent implements OnInit {
       this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
       this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
-      // --- Create axes ---
-      this.years.append('g')
-        .attr('class', 'axis axis--x')
-        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`)
+      // --- Update axes ---
+      d3.select(".axis--years")
         .call(this.xAxis);
 
-      this.unknown.append('g')
-        .attr('class', 'axis axis--x axis--unknown')
-        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`)
+      d3.select(".axis--unknown")
         .call(this.xAxis2);
 
 
@@ -290,8 +296,6 @@ export class FilterSampleYearComponent implements OnInit {
       // Event listener for click event on rects
       d3.selectAll(".year-rect")
         .on("click", selectYear(this.yearFilterSubject));
-
-      this.createSlider();
 
     }
   }
