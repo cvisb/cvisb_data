@@ -139,16 +139,20 @@ export class RequestParametersService {
   params2String(param: RequestParam) {
 
     if (Array.isArray(param.value)) {
+      if (param.value.length === 1 && /\[.+\]/.test(param.value[0])) {
+        // array containing a range query; don't encapuslate in quote marks.
+        return (`${param.field}:${param.value[0]}`);
+      }
       return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
-    } else if(/\[.+\]/.test(param.value)) {
+    } else if (/\[.+\]/.test(param.value)) {
       // range query; don't encapuslate in quote marks.
-      return(`${param.field}:${param.value}`);
+      return (`${param.field}:${param.value}`);
     } else {
       return ((`${param.field}:\(\"${param.value}\"\)`));
     }
   }
 
-// Opposite direction: convert query_string into an array.
+  // Opposite direction: convert query_string into an array.
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
     let query_array = query_string.replace(/%20/g, " ").split(" AND ");
