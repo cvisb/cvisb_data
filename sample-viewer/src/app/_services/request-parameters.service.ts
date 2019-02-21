@@ -32,6 +32,20 @@ export class RequestParametersService {
 
   }
 
+  // --- Communal function to add in missing data to the data ---
+  // Merge in null values: update the data to add in missing values.
+  // Assumes values are contained in a 'key' variable
+  // Essential for object constancy on transitions/updates.
+  addMissing(data, domain: any[]) {
+    let keys = data.map(d => d.key);
+
+    let missing_data = domain.filter(d => !keys.includes(d));
+
+    missing_data.forEach(d => {
+      data.push({ key: d, value: 0 });
+    })
+    return (data);
+  }
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
     console.log(newParam)
@@ -195,14 +209,14 @@ export class RequestParametersService {
     console.log(vals)
     let values;
 
-    if(/\[.+\]/.test(vals[1])) {
+    if (/\[.+\]/.test(vals[1])) {
       // range query; leave it alone.
       values = vals[1];
     } else {
-    // remove `""` and `()`
-    // split values by space `%20` into array
-    values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
-}
+      // remove `""` and `()`
+      // split values by space `%20` into array
+      values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
+    }
     console.log(values)
 
     return ({ field: vals[0], value: values });

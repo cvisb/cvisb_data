@@ -142,8 +142,17 @@ export class FilterSampleYearComponent implements OnInit {
     this.num_data = this.data.filter((d: any) => typeof (d.key) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.key) !== 'number');
 
+    // Add in any values if they're missing.
+    this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
+    this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
+
     console.log(this.num_data)
     console.log(this.unknown_data)
+
+  }
+
+  createPlot() {
+    this.element = this.chartContainer.nativeElement;
 
     this.sendParams = function(yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
       // Check that the limits haven't flipped
@@ -166,12 +175,6 @@ export class FilterSampleYearComponent implements OnInit {
         requestSvc.updateParams(endpoint,
           { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
     }
-
-
-  }
-
-  createPlot() {
-    this.element = this.chartContainer.nativeElement;
 
     this.prepData();
 
