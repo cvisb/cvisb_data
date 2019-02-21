@@ -137,8 +137,12 @@ export class RequestParametersService {
   }
 
   params2String(param: RequestParam) {
+
     if (Array.isArray(param.value)) {
       return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
+    } else if(/\[.+\]/.test(param.value)) {
+      // range query; don't encapuslate in quote marks.
+      return(`${param.field}:${param.value}`);
     } else {
       return ((`${param.field}:\(\"${param.value}\"\)`));
     }
