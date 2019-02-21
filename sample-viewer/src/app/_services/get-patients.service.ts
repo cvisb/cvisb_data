@@ -31,6 +31,39 @@ export class GetPatientsService {
 
   fakePatients: Patient[] = [
     {
+      patientID: "G-fakePatient-0003",
+      cohort: "Ebola",
+      outcome: "dead",
+      infectionYear: 2018,
+      admitDate: "2018-06-01",
+      alternateIdentifier: [],
+      country: {
+        name: "Sierra Leone",
+        identifier: "SL"
+      },
+      gender: "Male",
+      age: 55,
+      relatedTo: [],
+
+    },
+    {
+      patientID: "G-fakePatient-0004",
+      cohort: "Ebola",
+      outcome: "survivor",
+      infectionYear: 2015,
+      infectionDate: "2018-06-01",
+      admitDate: "2018-06-01",
+      alternateIdentifier: [],
+      country: {
+        name: "Nigeria",
+        identifier: "NG"
+      },
+      gender: "Male",
+      age: 93,
+      relatedTo: [],
+
+    },
+    {
       patientID: "G-fakePatient-0002",
       cohort: "Ebola",
       outcome: "survivor",
@@ -220,7 +253,8 @@ export class GetPatientsService {
     // this.getPatients();
     //
     // this.apiSvc.wipeEndpoint('patient');
-    // this.apiSvc.put('patient', [this.fakePatients[0]]);
+    this.apiSvc.put('patient', [this.fakePatients[0]]);
+    this.apiSvc.put('patient', [this.fakePatients[1]]);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
@@ -257,8 +291,6 @@ export class GetPatientsService {
   getPatients() {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
-    console.log('about to redirect...')
-    console.log(param_string)
 
     this.router.navigate(
     [],
@@ -302,7 +334,6 @@ export class GetPatientsService {
     // console.log(this.patients);
 
     this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
-      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')

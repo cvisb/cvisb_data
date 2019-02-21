@@ -1,6 +1,7 @@
 export class Patient {
   // TODO: resort location based on inverse specificity
   patientID: string;
+  infectionYear?: number;
   infectionDate?: string;
   admitDate?: string;
   dateModified?: string;

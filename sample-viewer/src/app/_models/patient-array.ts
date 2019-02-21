@@ -23,7 +23,7 @@ export class PatientArray {
 
       this.patientTypes = d3.nest().key((d: Patient) => d.cohort).rollup((values: any) => values.length).entries(patients);
       this.patientOutcomes = d3.nest().key((d: Patient) => d.outcome).rollup((values: any) => values.length).entries(patients);
-      this.patientYears = d3.nest().key((d: any) => String(new Date(d.infectionDate).getFullYear())).rollup((values: any) => values.length).entries(patients);
+      this.patientYears = d3.nest().key((d: any) => d.infectionYear).rollup((values: any) => values.length).entries(patients);
 
       // --- years ---
       // convert year key from string to number.
