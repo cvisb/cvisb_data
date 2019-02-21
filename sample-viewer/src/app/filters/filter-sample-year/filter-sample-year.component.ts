@@ -141,6 +141,9 @@ export class FilterSampleYearComponent implements OnInit {
     this.num_data = this.data.filter((d: any) => typeof (d.key) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.key) !== 'number');
 
+    console.log(this.num_data)
+    console.log(this.unknown_data)
+
     this.sendParams = function(yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
       // Check that the limits haven't flipped
       let lower_limit = Math.min(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
@@ -224,7 +227,8 @@ export class FilterSampleYearComponent implements OnInit {
     var t = d3.transition()
       .duration(1000);
 
-    if (this.num_data) {
+    if (this.data) {
+
       this.prepData();
 
       // --- x & y axes ---
