@@ -48,6 +48,7 @@ export class FilterSampleYearComponent implements OnInit {
   private handle_left: any;
   private handle_right: any;
 
+
   // --- Scales/Axes ---
   private x: any;
   private x2: any;
@@ -63,6 +64,7 @@ export class FilterSampleYearComponent implements OnInit {
   outerPadding: number = 0.2;
 
   // Event listener for filter limits
+  private sendParams: any;
   yearLimits: Object;
   public yearFilterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   public yearFilterState$ = this.yearFilterSubject.asObservable();
@@ -138,6 +140,30 @@ export class FilterSampleYearComponent implements OnInit {
     // Split data into numeric + non-numeric data
     this.num_data = this.data.filter((d: any) => typeof (d.key) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.key) !== 'number');
+
+    this.sendParams = function(yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
+      // Check that the limits haven't flipped
+      let lower_limit = Math.min(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
+      let upper_limit = Math.max(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
+
+      // call requestSvc to announce new search parameters.
+      // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
+      // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
+      // `-` negates that query
+      // Since `_exists` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
+      yearFilterSubject.value['unknown'] ?
+        // include unknown as an OR statement.
+        requestSvc.updateParams(endpoint,
+          {
+            field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
+            orSelector: { field: '-_exists_', value: 'infectionYear' }
+          }) :
+        // ignore unknown values.
+        requestSvc.updateParams(endpoint,
+          { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
+    }
+
+
   }
 
   createPlot() {
@@ -181,14 +207,14 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingInner(this.innerPadding)
       .paddingOuter(this.outerPadding);
 
-      // --- Create axes ---
-      this.years.append('g')
-        .attr('class', 'axis axis--x axis--years')
-        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
+    // --- Create axes ---
+    this.years.append('g')
+      .attr('class', 'axis axis--x axis--years')
+      .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
-      this.unknown.append('g')
-        .attr('class', 'axis axis--x axis--unknown')
-        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
+    this.unknown.append('g')
+      .attr('class', 'axis axis--x axis--unknown')
+      .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
 
     this.updateData();
     this.createSlider();
@@ -244,12 +270,16 @@ export class FilterSampleYearComponent implements OnInit {
         .call(this.xAxis2);
 
 
+      // --- EVENT LISTENERS ---
       // --- Single bar event listener ---
-      let selectYear = function(yearFilterSubject) {
+      let selectYear = function(yearFilterSubject, requestSvc, endpoint, sendParams) {
         return function(d) {
           d.key === "unknown" ?
             yearFilterSubject.next({ lower: 0, upper: 0, unknown: true }) :
             yearFilterSubject.next({ lower: d.key, upper: d.key, unknown: false });
+
+          // update parameters.
+          sendParams(yearFilterSubject, requestSvc, endpoint);
         }
       }
 
@@ -262,7 +292,7 @@ export class FilterSampleYearComponent implements OnInit {
       year_data.exit().remove();
 
       year_data.enter().append("rect")
-        .attr("class", "year-rect")
+        .attr("class", "count-rect year-rect")
         .merge(year_data)
         .attr("id", (d: any) => d.key)
         .attr("x", (d: any) => this.x(d.key))
@@ -281,7 +311,7 @@ export class FilterSampleYearComponent implements OnInit {
       unknown_data.exit().remove();
 
       unknown_data.enter().append("rect")
-        .attr("class", "unknown-rect")
+        .attr("class", "count-rect unknown-rect")
         .merge(unknown_data)
         .attr("id", (d: any) => d.key)
         .attr("x", (d: any) => this.x2(d.key) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
@@ -294,8 +324,8 @@ export class FilterSampleYearComponent implements OnInit {
 
 
       // Event listener for click event on rects
-      d3.selectAll(".year-rect")
-        .on("click", selectYear(this.yearFilterSubject));
+      d3.selectAll(".count-rect")
+        .on("click", selectYear(this.yearFilterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
   }
@@ -303,82 +333,16 @@ export class FilterSampleYearComponent implements OnInit {
   createSlider() {
     // Modified from https://bl.ocks.org/mbostock/6452972
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
-    this.slider = this.svg_slider.append("g")
-      .attr("id", "year_slider")
-      .attr("transform", `translate(${this.margin.left}, ${this.margin.top + 12})`);
-
-
-    this.slider.append("line")
-      .attr("class", "track")
-      .attr("x1", this.x.range()[0])
-      .attr("x2", this.x.range()[1])
-    // .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    // .attr("class", "track-inset")
-    // .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    // .attr("class", "track-overlay")
-    // .call(d3.drag()
-    //   .on("start.interrupt", () => this.slider.interrupt())
-    //   .on("start drag", () => hue(this.x, this.handle, d3.event)));
-
-    this.slider.append("line")
-      .attr("class", "track track-filled")
-      .attr("x1", this.x.range()[0])
-      .attr("x2", this.x.range()[1]);
-    // .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    // .attr("class", "track-inset")
-    // .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    // .attr("class", "track-overlay")
-    // .call(d3.drag()
-    //   .on("start.interrupt", () => this.slider.interrupt())
-    //   .on("start drag", () => hue(this.x, this.handle, d3.event)));
-    // .on("start drag", () => hue(this.x, this.handle, this.x.invert(d3.event.x))));
-
-    // this.slider.insert("g", ".track-overlay")
-    //   .attr("class", "ticks")
-    //   .attr("transform", "translate(0," + 18 + ")")
-    //   .selectAll("text")
-    //   .data(this.x.ticks(10))
-    //   .enter().append("text")
-    //   .attr("x", this.x)
-    //   .attr("text-anchor", "middle")
-    //   .text(function(d) { return d + "°"; });
-
-    this.handle_right = this.slider.append("path")
-      // this.handle = this.slider.insert("circle", ".track-overlay")
-      .attr("class", "handle-right")
-      .attr("transform", `translate(${this.x.range()[1]},-5)`)
-      .attr("d", this.handle_path)
-      .call(d3.drag()
-        .on("start.interrupt", () => this.slider.interrupt())
-        // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.xLinear, 'right', this.yearFilterSubject))
-        // Once you're done, announce the new parameters to the query service.
-        .on("end", () => endDrag(this.xLinear, 'right', this.yearFilterSubject, this.requestSvc, this.endpoint))
-      );
-
-    this.handle_left = this.slider.append("path")
-      .attr("class", "handle-left")
-      .attr("transform", `translate(0,-5)`)
-      .attr("d", this.handle_path)
-      .call(d3.drag()
-        .on("start.interrupt", () => this.slider.interrupt())
-        // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.xLinear, 'left', this.yearFilterSubject))
-        // Once you're done, announce the new parameters to the query service.
-        .on("end", () => endDrag(this.xLinear, 'left', this.yearFilterSubject, this.requestSvc, this.endpoint))
-      );
-
 
     // Drag event listeners
-    function endDrag(xLinear: any, side: string, yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
+    let endDrag = function(xLinear: any, side: string, yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
       updateHandles(xLinear, side, yearFilterSubject);
-      console.log("STOP!")
 
       sendParams(yearFilterSubject, requestSvc, endpoint);
     }
 
-    function updateHandles(xLinear: any, handleSide: string, yearFilterSubject: BehaviorSubject<Object>) {
+    let updateHandles = function(xLinear: any, handleSide: string, yearFilterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
       // convert the pixel position (range value) to data value (domain value)
@@ -396,31 +360,8 @@ export class FilterSampleYearComponent implements OnInit {
       }
     }
 
-    function sendParams(yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
-      // Check that the limits haven't flipped
-      let lower_limit = Math.min(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
-      let upper_limit = Math.max(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
-
-      // call requestSvc to announce new search parameters.
-      // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
-      // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
-      // `-` negates that query
-      // Since `_exists` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
-      yearFilterSubject.value['unknown'] ?
-        // include unknown as an OR statement.
-        requestSvc.updateParams(endpoint,
-          {
-            field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
-            orSelector: { field: '-_exists_', value: 'infectionYear' }
-          }) :
-        // ignore unknown values.
-        requestSvc.updateParams(endpoint,
-          { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
-    }
-
-
     // --- Checkbox for whether to include unknown values.
-    let checkUnknown = function(yearFilterSubject, requestSvc, endpoint) {
+    let checkUnknown = function(yearFilterSubject, requestSvc, endpoint, sendParams) {
       return function(d) {
         // update the status of checkbox
         yearFilterSubject.next({ ...yearFilterSubject.value, unknown: !yearFilterSubject.value.unknown });
@@ -428,6 +369,46 @@ export class FilterSampleYearComponent implements OnInit {
         sendParams(yearFilterSubject, requestSvc, endpoint);
       }
     }
+
+
+    this.slider = this.svg_slider.append("g")
+      .attr("id", "year_slider")
+      .attr("transform", `translate(${this.margin.left}, ${this.margin.top + 12})`);
+
+
+    this.slider.append("line")
+      .attr("class", "track")
+      .attr("x1", this.x.range()[0])
+      .attr("x2", this.x.range()[1]);
+
+    this.slider.append("line")
+      .attr("class", "track track-filled")
+      .attr("x1", this.x.range()[0])
+      .attr("x2", this.x.range()[1]);
+
+    this.handle_right = this.slider.append("path")
+      .attr("class", "handle-right")
+      .attr("transform", `translate(${this.x.range()[1]},-5)`)
+      .attr("d", this.handle_path)
+      .call(d3.drag()
+        .on("start.interrupt", () => this.slider.interrupt())
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.xLinear, 'right', this.yearFilterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.xLinear, 'right', this.yearFilterSubject, this.requestSvc, this.endpoint, this.sendParams))
+      );
+
+    this.handle_left = this.slider.append("path")
+      .attr("class", "handle-left")
+      .attr("transform", `translate(0,-5)`)
+      .attr("d", this.handle_path)
+      .call(d3.drag()
+        .on("start.interrupt", () => this.slider.interrupt())
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.xLinear, 'left', this.yearFilterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.xLinear, 'left', this.yearFilterSubject, this.requestSvc, this.endpoint, this.sendParams))
+      );
 
 
     let check = this.slider
@@ -438,7 +419,7 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("dy", 2)
       .text(d => this.yearFilterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
-    check.on("click", checkUnknown(this.yearFilterSubject, this.requestSvc, this.endpoint));
+    check.on("click", checkUnknown(this.yearFilterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
 
   }
