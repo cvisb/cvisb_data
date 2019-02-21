@@ -22,6 +22,7 @@ export class FilterPatientsComponent implements OnInit {
   total_cohorts: string[];
   total_outcomes: string[];
   total_years: number[];
+  total_countries: Object[];
 
 
   constructor(private patientSvc: GetPatientsService,
@@ -35,7 +36,7 @@ export class FilterPatientsComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         console.log(params)
-        if (params.hasOwnProperty("q") ) {
+        if (params.hasOwnProperty("q")) {
           // parse query string into an array.
           let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.requestSvc.splitQuery(params.q);
 
@@ -58,8 +59,12 @@ export class FilterPatientsComponent implements OnInit {
           this.total_cohorts = pList.patientTypes.map((d: any) => d.key);
           this.total_outcomes = pList.patientOutcomes.map((d: any) => d.key);
           this.total_years = pList.patientYears.map((d: any) => {
-            if (Number.isInteger(d.key)) return (d.key);
+            return (Number.isInteger(d.key) ? d.key : null);
           });
+
+          this.total_years.sort();
+
+          // this.total_countries = _.cloneDeep(pList.patientCountries);
           console.log(this.total_years)
           console.log(this.total_cohorts)
           console.log(this.total_outcomes)
