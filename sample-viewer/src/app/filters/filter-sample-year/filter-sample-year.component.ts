@@ -175,6 +175,7 @@ export class FilterSampleYearComponent implements OnInit {
 
     this.prepData();
 
+
     // Append SVG
     this.svg = d3.select(this.element)
       .append('svg')
@@ -210,7 +211,7 @@ export class FilterSampleYearComponent implements OnInit {
       .rangeRound([0, this.width])
       .paddingInner(this.innerPadding)
       .paddingOuter(this.outerPadding)
-      .domain(this.yearDomain);
+      .domain(this.yearDomain.map(String));
 
       // Linear version of the scaleBand.
       // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
