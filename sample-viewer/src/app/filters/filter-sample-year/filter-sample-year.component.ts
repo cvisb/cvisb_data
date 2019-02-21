@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
+import { RequestParametersService } from '../../_services';
 import { D3Nested } from '../../_models';
 
 @Component({
@@ -18,6 +19,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   // data
   @Input() public data: D3Nested[];
+  @Input() public endpoint: string;
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -64,7 +66,7 @@ export class FilterSampleYearComponent implements OnInit {
   public yearFilterState$ = this.yearFilterSubject.asObservable();
 
 
-  constructor() {
+  constructor(private requestSvc: RequestParametersService) {
     // Update the class of the bars on update.
     this.yearFilterState$.subscribe((limits: Object) => {
       this.yearLimits = limits;
@@ -323,8 +325,10 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
-        .on("start drag", () => startDrag(this.xLinear, 'right', this.yearFilterSubject))
-        // .on("end drag", () => endDrag())
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.xLinear, 'right', this.yearFilterSubject))
+          // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.xLinear, 'right', this.yearFilterSubject, this.requestSvc, this.endpoint))
       );
 
     this.handle_left = this.slider.append("path")
@@ -333,49 +337,70 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
-        .on("start drag", () => startDrag(this.xLinear, 'left', this.yearFilterSubject))
-        // .on("end drag", () => endDrag())
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.xLinear, 'left', this.yearFilterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.xLinear, 'left', this.yearFilterSubject, this.requestSvc, this.endpoint))
       );
 
 
     // Drag event listeners
-    function endDrag() {
-      if (d3.event.defaultPrevented) {
-        console.log("STOP!")
-      }
+    function endDrag(xLinear: any, side: string, yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
+      // Update the position of the handles, rectangle highlighting.
+      updateHandles(xLinear, side, yearFilterSubject);
+      console.log("STOP!")
+
+      sendParams(yearFilterSubject, requestSvc, endpoint);
     }
 
-    function startDrag(xScale, handleSide, yearFilterSubject) {
+    function updateHandles(xLinear: any, handleSide: string, yearFilterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
       // convert the pixel position (range value) to data value (domain value)
       // round to the nearest integer to snap to a year.
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
-      let xValue = (xScale.invert(d3.event.x));
+      let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
         yearFilterSubject.next({ ...yearFilterSubject.value, upper: xValue });
-        // yearFilterSubject.next({ lower: currentLimits['lower'], upper: xValue, unknown: currentLimits['unknown'] });
       } else {
         // // Left side updated; lower limit
         yearFilterSubject.next({ ...yearFilterSubject.value, lower: xValue });
-        // yearFilterSubject.next({ lower: xValue, upper: currentLimits['upper'], unknown: currentLimits['unknown'] });
       }
     }
 
+    function sendParams(yearFilterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
+      // Check that the limits haven't flipped
+      let lower_limit = Math.min(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
+      let upper_limit = Math.max(yearFilterSubject.value['lower'], yearFilterSubject.value['upper']);
 
-    // --- Checkbox for unknown values.
+      // call requestSvc to announce new search parameters.
+      // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
+      // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
+      // `-` negates that query
+      // Since `_exists` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
+      yearFilterSubject.value['unknown'] ?
+        // include unknown as an OR statement.
+        requestSvc.updateParams(endpoint,
+          {
+            field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
+            orSelector: { field: '-_exists_', value: 'infectionYear' }
+          }) :
+        // ignore unknown values.
+        requestSvc.updateParams(endpoint,
+          { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
+    }
 
-    let checkUnknown = function(yearFilterSubject) {
+
+    // --- Checkbox for whether to include unknown values.
+    let checkUnknown = function(yearFilterSubject, requestSvc, endpoint) {
       return function(d) {
-        // d3.select(this)
-        // .each(function(d) { this._current = true; })
-        //   .text(d => this._current ? "\uf0c8" : "\uf14a");
-
         // update the status of checkbox
         yearFilterSubject.next({ ...yearFilterSubject.value, unknown: !yearFilterSubject.value.unknown });
+
+        sendParams(yearFilterSubject, requestSvc, endpoint);
       }
     }
 
@@ -388,7 +413,7 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("dy", 2)
       .text(d => this.yearFilterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
-    check.on("click", checkUnknown(this.yearFilterSubject));
+    check.on("click", checkUnknown(this.yearFilterSubject, this.requestSvc, this.endpoint));
 
 
   }
@@ -396,7 +421,5 @@ export class FilterSampleYearComponent implements OnInit {
 }
 
 // TODO
-// 4. event listener to pass values --- check why not connecting b/w checkbox and yearLimits.
 // 5. create the filter event listener.
 // 6. check update procedure: enter/append/merge
-// 7. click single bar-- listen for limits.
