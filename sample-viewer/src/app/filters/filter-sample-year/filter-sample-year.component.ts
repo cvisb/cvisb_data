@@ -39,7 +39,9 @@ export class FilterSampleYearComponent implements OnInit {
 
   // --- Selectors ---
   private years: any; // normal histogram
-  private unknown: any; // unknown bar
+  private year_rects: any; // normal histogram bars
+  private unknown: any; // unknown graph
+  private unknown_rects: any; // unknown bar
   private svg: any;
   private svg_slider: any;
   private slider: any;
@@ -160,9 +162,15 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("id", "year_hist")
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
+    this.year_rects = this.years.append("g")
+      .attr("class", 'filter--year');
+
     this.unknown = this.svg.append("g")
       .attr("id", "unknown_hist")
       .attr("transform", `translate(${this.margin.left + this.width + this.margin.betweenGraphs}, ${this.margin.top})`);
+
+    this.unknown_rects = this.unknown.append("g")
+      .attr("class", 'filter--year unknown');
 
     // --- x & y axes ---
     this.y = d3.scaleLinear()
@@ -177,6 +185,9 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
   updateData() {
+    var t = d3.transition()
+      .duration(1000);
+
     if (this.num_data) {
       this.prepData();
 
@@ -237,32 +248,42 @@ export class FilterSampleYearComponent implements OnInit {
       }
 
 
-
       // --- Create bars ---
-      this.years.append("g")
-        .attr("class", 'filter--year')
-        .selectAll(".bars")
-        .data(this.num_data)
-        .enter().append("rect")
+      let year_data = this.year_rects
+        .selectAll(".year-rect")
+        .data(this.num_data);
+
+      year_data.exit().remove();
+
+      year_data.enter().append("rect")
         .attr("class", "year-rect")
+        .merge(year_data)
         .attr("id", (d: any) => d.key)
         .attr("x", (d: any) => this.x(d.key))
-        .attr("y", (d: any) => this.y(d.value))
+        .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
+        .attr("height", 0)
+        .transition(t)
+        .attr("y", (d: any) => this.y(d.value))
         .attr("height", (d: any) => this.y(0) - this.y(d.value));
 
+      // Unknown bar
+      let unknown_data = this.unknown_rects
+        .selectAll(".unknown-rect")
+        .data(this.unknown_data);
 
+      unknown_data.exit().remove();
 
-      this.unknown.append("g")
-        .attr("class", 'filter--year unknown')
-        .selectAll(".unknown")
-        .data(this.unknown_data)
-        .enter().append("rect")
-        .attr("class", "year-rect")
+      unknown_data.enter().append("rect")
+        .attr("class", "unknown-rect")
+        .merge(unknown_data)
         .attr("id", (d: any) => d.key)
         .attr("x", (d: any) => this.x2(d.key) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
-        .attr("y", (d: any) => this.y(d.value))
+        .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
+        .attr("height", 0)
+        .transition(t)
+        .attr("y", (d: any) => this.y(d.value))
         .attr("height", (d: any) => this.y(0) - this.y(d.value));
 
 
@@ -327,7 +348,7 @@ export class FilterSampleYearComponent implements OnInit {
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
         .on("start drag", () => updateHandles(this.xLinear, 'right', this.yearFilterSubject))
-          // Once you're done, announce the new parameters to the query service.
+        // Once you're done, announce the new parameters to the query service.
         .on("end", () => endDrag(this.xLinear, 'right', this.yearFilterSubject, this.requestSvc, this.endpoint))
       );
 
