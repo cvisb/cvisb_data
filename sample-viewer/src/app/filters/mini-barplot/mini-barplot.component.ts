@@ -182,8 +182,8 @@ export class MiniBarplotComponent implements OnInit {
 
       bars_data.enter().append("rect")
         .attr("class", "minirect")
-        .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
         .merge(bars_data)
+        .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
         // .attr("x", this.x(0))
         .attr("y", (d: any) => this.y(d[this.name_var]))
         .attr("height", this.y.bandwidth())
