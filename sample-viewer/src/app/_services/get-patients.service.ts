@@ -253,8 +253,8 @@ export class GetPatientsService {
     // this.getPatients();
     //
     // this.apiSvc.wipeEndpoint('patient');
-    this.apiSvc.put('patient', [this.fakePatients[0]]);
-    this.apiSvc.put('patient', [this.fakePatients[1]]);
+    // this.apiSvc.put('patient', [this.fakePatients[0]]);
+    // this.apiSvc.put('patient', [this.fakePatients[1]]);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
