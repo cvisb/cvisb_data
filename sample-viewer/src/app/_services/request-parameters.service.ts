@@ -193,10 +193,16 @@ export class RequestParametersService {
     // split into field / values
     let vals = param_string.split(":");
     console.log(vals)
+    let values;
+
+    if(/\[.+\]/.test(vals[1])) {
+      // range query; leave it alone.
+      values = vals[1];
+    } else {
     // remove `""` and `()`
     // split values by space `%20` into array
-    let values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
-
+    values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
+}
     console.log(values)
 
     return ({ field: vals[0], value: values });
