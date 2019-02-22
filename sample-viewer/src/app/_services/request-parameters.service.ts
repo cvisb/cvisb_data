@@ -24,7 +24,7 @@ export class RequestParametersService {
   constructor(
   ) {
     // subscribe to current parameters
-    this.patientParamsSubject.subscribe((params: RequestParamArray) => {
+    this.patientParamsState$.subscribe((params: RequestParamArray) => {
       // console.log("API params")
       // console.log(params)
       this.patientSearchParams = params;
@@ -71,10 +71,10 @@ export class RequestParametersService {
   }
 
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
-    // console.log(newParam)
+    console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
 
-    // console.log(currentParams)
+    console.log(currentParams)
     // console.log(idx)
 
     // --- CASE 1: Parameter already exists.  UPDATE ---
