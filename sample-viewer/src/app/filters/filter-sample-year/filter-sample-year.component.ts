@@ -135,6 +135,7 @@ export class FilterSampleYearComponent implements OnInit {
       let yearParam = params.filter(d => d.field === 'infectionYear');
 
       if (yearParam.length > 0) {
+        console.log(yearParam[0])
         console.log(yearParam[0].value)
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
 
