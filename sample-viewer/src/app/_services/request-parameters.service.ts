@@ -74,6 +74,9 @@ export class RequestParametersService {
     console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
 
+    console.log(currentParams)
+    console.log(idx)
+
     // --- CASE 1: Parameter already exists.  UPDATE ---
     if (idx > -1) {
       // replace the parameter with the new one.
