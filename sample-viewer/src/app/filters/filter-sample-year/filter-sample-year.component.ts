@@ -128,7 +128,7 @@ export class FilterSampleYearComponent implements OnInit {
     // Listen for changes to the limits. Required to reset the positions upon "clear filters"
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the yearFilterSubject to update.
-    this.requestSvc.patientParamsSubject.subscribe((params: RequestParamArray) => {
+    this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
       console.log('NEW SEARCH PARAMS FOUND')
       console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
@@ -137,7 +137,7 @@ export class FilterSampleYearComponent implements OnInit {
       if (yearParam.length > 0) {
         console.log(yearParam[0])
         console.log(yearParam[0].value)
-        let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
+        let limits = yearParam[0].value[0].match(/\[(\d+)\sTO\s(\d+)\]/);
 
         let lower_limit = limits[1]; // 0th object == full string.
         let upper_limit = limits[2];
@@ -149,6 +149,7 @@ export class FilterSampleYearComponent implements OnInit {
         this.yearFilterSubject.next({ lower: lower_limit, upper: upper_limit, unknown: unknown_val });
       } else {
         // reset
+        console.log('resetting')
         this.yearFilterSubject.next({ lower: 0, upper: 3000, unknown: true });
       }
     })
