@@ -63,9 +63,9 @@ export class FilterPatientsComponent implements OnInit {
           this.total_years.sort();
 
           // this.total_countries = _.cloneDeep(pList.patientCountries);
-          console.log(this.total_years)
-          console.log(this.total_cohorts)
-          console.log(this.total_outcomes)
+          // console.log(this.total_years)
+          // console.log(this.total_cohorts)
+          // console.log(this.total_outcomes)
         }
       }
     });
@@ -77,7 +77,7 @@ export class FilterPatientsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.patients)
+    // console.log(this.patients)
   }
 
   clearFilters() {

@@ -172,8 +172,8 @@ export class FilterSampleYearComponent implements OnInit {
     this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
 
-    console.log(this.num_data)
-    console.log(this.unknown_data)
+    // console.log(this.num_data)
+    // console.log(this.unknown_data)
 
   }
 
@@ -285,10 +285,11 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
   updateData() {
-    var t = d3.transition()
-      .duration(1000);
+    if (this.data.length > 0) {
+      var t = d3.transition()
+        .duration(1000);
 
-    if (this.data) {
+      console.log(this.data)
 
       this.prepData();
 
