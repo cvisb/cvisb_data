@@ -76,6 +76,7 @@ export class FilterSampleYearComponent implements OnInit {
     // Update the class of the bars on update.
     // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
     this.yearFilterState$.subscribe((limits: Object) => {
+    console.log("NEW LIMITS FOUND")
       this.yearLimits = limits;
 
       // Check to make sure the left and right handle haven't flipped sides.
@@ -131,7 +132,6 @@ export class FilterSampleYearComponent implements OnInit {
       console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
       let yearParam = params.filter(d => d.field === 'infectionYear');
-      console.log(yearParam)
 
       if (yearParam.length > 0) {
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
@@ -140,6 +140,8 @@ export class FilterSampleYearComponent implements OnInit {
         let upper_limit = limits[2];
 
         let unknown_val = yearParam[0].orSelector ? true : false;
+
+        console.log({ lower: lower_limit, upper: upper_limit, unknown: unknown_val })
 
         this.yearFilterSubject.next({ lower: lower_limit, upper: upper_limit, unknown: unknown_val });
       } else {
