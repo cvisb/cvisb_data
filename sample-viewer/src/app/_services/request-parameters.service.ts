@@ -90,7 +90,12 @@ export class RequestParametersService {
           // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
           currentParams[idx].value = newParam.value;
         } else {
-          currentParams[idx].value.push(newParam.value);
+          if (Array.isArray(currentParams[idx].value)) {
+            // If it's an array, push.  Otherwise replace.
+            currentParams[idx].value.push(newParam.value);
+          } else {
+            currentParams[idx].value = newParam.value;
+          }
         }
 
         // Update the OR selector.
@@ -222,7 +227,7 @@ export class RequestParametersService {
     if (/\[.+\]/.test(vals[1])) {
       // range query; leave it alone.
       values = vals[1];
-    } else if(variable.includes("\_exists\_")) {
+    } else if (variable.includes("\_exists\_")) {
       variable = variable.replace(/\(/g, "").replace(/\)/g, "");
       values = vals[1].replace(/\(/g, "").replace(/\)/g, "");
 
