@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
 import { RequestParametersService } from '../../_services';
-import { D3Nested } from '../../_models';
+import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
 
 @Component({
   selector: 'app-filter-sample-year',
@@ -66,6 +66,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   // Event listener for filter limits
   private sendParams: any;
+  private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
   yearLimits: Object;
   public yearFilterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   public yearFilterState$ = this.yearFilterSubject.asObservable();
@@ -73,6 +74,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   constructor(private requestSvc: RequestParametersService) {
     // Update the class of the bars on update.
+    // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
     this.yearFilterState$.subscribe((limits: Object) => {
       this.yearLimits = limits;
 
@@ -118,6 +120,27 @@ export class FilterSampleYearComponent implements OnInit {
 
         d3.select(".slider-checkbox")
           .text(d => limits['unknown'] ? "\uf14a" : "\uf0c8");
+      }
+    })
+
+    // Listen for changes to the limits. Required to reset the positions upon "clear filters"
+    // and also for refreshing pages.
+    // Pulls apart the compound limits to pass back to the yearFilterSubject to update.
+    this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
+    console.log('NEW LIMITS FOUND')
+      console.log(params);
+      // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
+      let yearParam = params.filter(d => d.field === this.yearField);
+
+      if (yearParam.length > 0) {
+        let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
+
+        let lower_limit = limits[1]; // 0th object == full string.
+        let upper_limit = limits[2];
+
+        let unknown_val = yearParam[0].orSelector ? true : false;
+
+        this.yearFilterSubject.next({ lower: lower_limit, upper: upper_limit, unknown: unknown_val });
       }
     })
   }
@@ -168,12 +191,12 @@ export class FilterSampleYearComponent implements OnInit {
         // include unknown as an OR statement.
         requestSvc.updateParams(endpoint,
           {
-            field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
-            orSelector: { field: '-_exists_', value: 'infectionYear' }
+            field: this.yearField, value: `[${lower_limit} TO ${upper_limit}]`,
+            orSelector: { field: '-_exists_', value: this.yearField }
           }) :
         // ignore unknown values.
         requestSvc.updateParams(endpoint,
-          { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
+          { field: this.yearField, value: `[${lower_limit} TO ${upper_limit}]` });
     }
 
     this.prepData();
@@ -216,34 +239,34 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.yearDomain.map(String));
 
-      // Linear version of the scaleBand.
-      // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
-      // Range is funky to account for padding on edges.
-      this.xLinear = d3.scaleLinear()
-        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-        // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-        // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-        .domain(this.yearDomain)
-        .clamp(true);
+    // Linear version of the scaleBand.
+    // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
+    // Range is funky to account for padding on edges.
+    this.xLinear = d3.scaleLinear()
+      .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+      this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+      // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+      // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+      .domain(this.yearDomain)
+      .clamp(true);
 
-      let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
+    let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
-      // rescale svg to proper width
-      this.svg
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
+    // rescale svg to proper width
+    this.svg
+      .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
 
-      this.svg_slider
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
+    this.svg_slider
+      .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
 
-      this.x2 = d3.scaleBand()
-        .rangeRound([0, width2])
-        .paddingInner(0)
-        .paddingOuter(0)
-        .domain(['unknown']);
+    this.x2 = d3.scaleBand()
+      .rangeRound([0, width2])
+      .paddingInner(0)
+      .paddingOuter(0)
+      .domain(['unknown']);
 
-      this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
-      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
+    this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
+    this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
     // --- Create axes ---
     this.years.append('g')
