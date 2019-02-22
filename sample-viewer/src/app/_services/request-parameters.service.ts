@@ -25,8 +25,8 @@ export class RequestParametersService {
   ) {
     // subscribe to current parameters
     this.patientParamsSubject.subscribe((params: RequestParamArray) => {
-      console.log("API params")
-      console.log(params)
+      // console.log("API params")
+      // console.log(params)
       this.patientSearchParams = params;
     })
 
@@ -154,7 +154,7 @@ export class RequestParametersService {
       param_string = "__all__"
     }
 
-    console.log(param_string)
+    // console.log(param_string)
     return (param_string)
   }
 
@@ -195,7 +195,7 @@ export class RequestParametersService {
     for (let query of query_array) {
       paramArray.push(this.splitParamString(query))
     }
-    console.log(paramArray)
+    // console.log(paramArray)
     return (paramArray);
   }
 

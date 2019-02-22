@@ -117,8 +117,6 @@ export class MiniDonutComponent implements OnInit {
 
       let mouseoverText = function() {
         return function(d) {
-          console.log(this)
-
           // Turn off disabled class for text
           d3.select(this).selectAll(".annotation--count")
             .classed('disabled', false);
