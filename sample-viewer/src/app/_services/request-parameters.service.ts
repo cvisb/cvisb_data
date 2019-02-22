@@ -48,13 +48,13 @@ export class RequestParametersService {
   }
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
-    console.log(newParam)
+    // console.log(newParam)
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
-        console.log(params)
+        // console.log(params)
 
         this.patientParamsSubject.next(params);
         break;
@@ -71,11 +71,11 @@ export class RequestParametersService {
   }
 
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
-    console.log(newParam)
+    // console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
 
-    console.log(currentParams)
-    console.log(idx)
+    // console.log(currentParams)
+    // console.log(idx)
 
     // --- CASE 1: Parameter already exists.  UPDATE ---
     if (idx > -1) {
@@ -135,14 +135,14 @@ export class RequestParametersService {
           // convert the parameter object into a string and add to array.
           let new_param = this.params2String(param);
 
-          console.log(new_param)
+          // console.log(new_param)
 
           // Check if there's an OR parameter to relate to that property.
           if (param.orSelector) {
             let or_param = this.params2String(param.orSelector);
             new_param = `${new_param} OR ${or_param}`
-            console.log(or_param)
-            console.log(new_param)
+            // console.log(or_param)
+            // console.log(new_param)
 
           }
           params.push(new_param);
@@ -184,7 +184,7 @@ export class RequestParametersService {
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
     let query_array = query_string.replace(/%20/g, " ").split(" AND ");
-    console.log(query_array)
+    // console.log(query_array)
 
     // for each couplet:
     // 1. split into orSelectors
@@ -203,16 +203,16 @@ export class RequestParametersService {
   splitParamString(param_string: string): RequestParam {
     // split into OR statements.
     let str_array = param_string.replace(/%20/g, " ").split(" OR ");
-    console.log(str_array)
+    // console.log(str_array)
 
     if (str_array.length === 1) {
-      console.log(this.splitPieces(str_array[0]))
+      // console.log(this.splitPieces(str_array[0]))
       return (this.splitPieces(str_array[0]));
     } else {
       let arr = this.splitPieces(str_array[0]);
       let or_arr = this.splitPieces(str_array[1]);
       arr['orSelector'] = or_arr
-      console.log(arr)
+      // console.log(arr)
       return (arr);
     }
   }
@@ -220,7 +220,7 @@ export class RequestParametersService {
   splitPieces(param_string: string): RequestParam {
     // split into field / values
     let vals = param_string.split(":");
-    console.log(vals)
+    // console.log(vals)
     let variable = vals[0];
     let values;
 
@@ -237,7 +237,7 @@ export class RequestParametersService {
       // split values by space `%20` into array
       values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
     }
-    console.log(values)
+    // console.log(values)
 
     return ({ field: variable, value: values });
   }
