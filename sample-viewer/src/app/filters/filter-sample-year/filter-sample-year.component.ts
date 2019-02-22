@@ -126,11 +126,12 @@ export class FilterSampleYearComponent implements OnInit {
     // Listen for changes to the limits. Required to reset the positions upon "clear filters"
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the yearFilterSubject to update.
-    this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-    console.log('NEW LIMITS FOUND')
+    this.requestSvc.patientParamsSubject.subscribe((params: RequestParamArray) => {
+      console.log('NEW LIMITS FOUND')
       console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
       let yearParam = params.filter(d => d.field === 'infectionYear');
+      console.log(yearParam)
 
       if (yearParam.length > 0) {
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
@@ -285,7 +286,7 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
   updateData() {
-    if (this.data.length > 0) {
+    if (this.data.length > 0 && this.num_data && this.unknown_data) {
       var t = d3.transition()
         .duration(1000);
 
