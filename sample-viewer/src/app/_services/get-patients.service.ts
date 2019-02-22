@@ -263,7 +263,7 @@ export class GetPatientsService {
     })
 
     this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-      console.log(params)
+      // console.log(params)
       this.request_params = params;
       this.getPatients();
     })
