@@ -77,6 +77,7 @@ export class FilterSampleYearComponent implements OnInit {
     // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
     this.yearFilterState$.subscribe((limits: Object) => {
     console.log("NEW LIMITS FOUND")
+    console.log(limits)
       this.yearLimits = limits;
 
       // Check to make sure the left and right handle haven't flipped sides.
@@ -128,12 +129,13 @@ export class FilterSampleYearComponent implements OnInit {
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the yearFilterSubject to update.
     this.requestSvc.patientParamsSubject.subscribe((params: RequestParamArray) => {
-      console.log('NEW LIMITS FOUND')
+      console.log('NEW SEARCH PARAMS FOUND')
       console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
       let yearParam = params.filter(d => d.field === 'infectionYear');
 
       if (yearParam.length > 0) {
+        console.log(yearParam[0].value)
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
 
         let lower_limit = limits[1]; // 0th object == full string.
