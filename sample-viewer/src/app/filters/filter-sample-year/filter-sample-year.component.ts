@@ -66,7 +66,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   // Event listener for filter limits
   private sendParams: any;
-  private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
+  // private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
   yearLimits: Object;
   public yearFilterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   public yearFilterState$ = this.yearFilterSubject.asObservable();
@@ -130,7 +130,7 @@ export class FilterSampleYearComponent implements OnInit {
     console.log('NEW LIMITS FOUND')
       console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
-      let yearParam = params.filter(d => d.field === this.yearField);
+      let yearParam = params.filter(d => d.field === 'infectionYear');
 
       if (yearParam.length > 0) {
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
@@ -141,6 +141,9 @@ export class FilterSampleYearComponent implements OnInit {
         let unknown_val = yearParam[0].orSelector ? true : false;
 
         this.yearFilterSubject.next({ lower: lower_limit, upper: upper_limit, unknown: unknown_val });
+      } else {
+        // reset
+        this.yearFilterSubject.next({ lower: 0, upper: 3000, unknown: true });
       }
     })
   }
@@ -191,12 +194,12 @@ export class FilterSampleYearComponent implements OnInit {
         // include unknown as an OR statement.
         requestSvc.updateParams(endpoint,
           {
-            field: this.yearField, value: `[${lower_limit} TO ${upper_limit}]`,
-            orSelector: { field: '-_exists_', value: this.yearField }
+            field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
+            orSelector: { field: '-_exists_', value: 'infectionYear' }
           }) :
         // ignore unknown values.
         requestSvc.updateParams(endpoint,
-          { field: this.yearField, value: `[${lower_limit} TO ${upper_limit}]` });
+          { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
     }
 
     this.prepData();
