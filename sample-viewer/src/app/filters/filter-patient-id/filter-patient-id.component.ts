@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+
+// import { SelectComponent } from '@ng-select/ng-select';
 
 
 import { RequestParametersService } from '../../_services';
@@ -11,8 +13,9 @@ import { RequestParametersService } from '../../_services';
 export class FilterPatientIdComponent implements OnInit {
   @Input() endpoint: string;
   @Input() patients: string[];
+  @ViewChild('selectpatients') public ngSelect: any;
 
-  selectedPatients: string[];
+  selectedPatients: string[] = [];
   inclContacts: boolean;
   states: any;
 
@@ -21,6 +24,8 @@ export class FilterPatientIdComponent implements OnInit {
   ngOnInit() {
     console.log(this.states)
   }
+
+
 
   filterPatientIDs(patientIDs) {
     console.log(patientIDs);
@@ -56,38 +61,24 @@ export class FilterPatientIdComponent implements OnInit {
         this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: this.selectedPatients });
       }
     } else {
-        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null});
+      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null });
     }
   }
 
-  onAdd(e){
-    console.log('add')
-    console.log(e)
-    console.log(this.states)
+
+  onSearch(input) {
+    console.log(this.ngSelect)
+    console.log(input)
+    let parsed = input.split("\,");
+
+    if (parsed.length > 1) {
+      // Update the selection to include the typed values.
+      this.selectedPatients = this.selectedPatients.concat(parsed);
+      // clear the input text
+      this.ngSelect.filterValue = "";
+    }
   }
-onFocus(e){
-    console.log('focus')
-    console.log(e)
-    console.log(this.states)
-  }
 
-onSearch(e){
-  console.log('search')
-  console.log(e)
-  console.log(this.states)
-}
-
-onBlur(e){
-  console.log('blur')
-  console.log(e)
-  console.log(this.states)
-}
-
-onChange(e){
-  console.log('change')
-  console.log(e)
-  console.log(this.states)
-}
 
 
 }
