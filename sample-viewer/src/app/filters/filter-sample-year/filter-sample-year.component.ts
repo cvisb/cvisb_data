@@ -68,7 +68,7 @@ export class FilterSampleYearComponent implements OnInit {
   private sendParams: any;
   // private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
   yearLimits: Object;
-  public yearFilterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
+  public yearFilterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
   public yearFilterState$ = this.yearFilterSubject.asObservable();
 
 
@@ -76,52 +76,55 @@ export class FilterSampleYearComponent implements OnInit {
     // Update the class of the bars on update.
     // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
     this.yearFilterState$.subscribe((limits: Object) => {
-    console.log("NEW LIMITS FOUND")
-    console.log(limits)
-      this.yearLimits = limits;
+      // ignore initial setting
+      if (limits) {
+        console.log("NEW LIMITS FOUND")
+        console.log(limits)
+        this.yearLimits = limits;
 
-      // Check to make sure the left and right handle haven't flipped sides.
-      let lower_limit = Math.min(limits['lower'], limits['upper']);
-      let upper_limit = Math.max(limits['lower'], limits['upper']);
-
-
-      // Update rectangles
-      d3.selectAll("rect")
-        .classed("selected", (d: any) =>
-          limits['unknown'] ?
-            (d.key >= lower_limit && d.key <= upper_limit) || d.key === 'unknown' :
-            d.key >= lower_limit && d.key <= upper_limit);
+        // Check to make sure the left and right handle haven't flipped sides.
+        let lower_limit = Math.min(limits['lower'], limits['upper']);
+        let upper_limit = Math.max(limits['lower'], limits['upper']);
 
 
-      // Update slider handles
-      if (this.handle_left && this.handle_right) {
-        this.handle_left
-          .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
-
-        if (lower_limit === 0 && upper_limit === 0) {
-          // If the limit is 0, set the left and right handles to overlap.
-          this.handle_right
-            .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
-
-          // Update position of the highlight bar
-          d3.selectAll(".track-filled")
-            .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-            .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+        // Update rectangles
+        d3.selectAll("rect")
+          .classed("selected", (d: any) =>
+            limits['unknown'] ?
+              (d.key >= lower_limit && d.key <= upper_limit) || d.key === 'unknown' :
+              d.key >= lower_limit && d.key <= upper_limit);
 
 
-        } else {
-          this.handle_right
-            .attr("transform", `translate(${this.xLinear(upper_limit) + this.x.bandwidth() * 0.5},-5)`);
+        // Update slider handles
+        if (this.handle_left && this.handle_right) {
+          this.handle_left
+            .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
 
-          // Update position of the highlight bar
-          d3.selectAll(".track-filled")
-            .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-            .attr("x2", this.xLinear(upper_limit) + this.x.bandwidth() * 0.5);
+          if (lower_limit === 0 && upper_limit === 0) {
+            // If the limit is 0, set the left and right handles to overlap.
+            this.handle_right
+              .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
 
+            // Update position of the highlight bar
+            d3.selectAll(".track-filled")
+              .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
+              .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+
+
+          } else {
+            this.handle_right
+              .attr("transform", `translate(${this.xLinear(upper_limit) + this.x.bandwidth() * 0.5},-5)`);
+
+            // Update position of the highlight bar
+            d3.selectAll(".track-filled")
+              .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
+              .attr("x2", this.xLinear(upper_limit) + this.x.bandwidth() * 0.5);
+
+          }
+
+          d3.select(".slider-checkbox")
+            .text(d => limits['unknown'] ? "\uf14a" : "\uf0c8");
         }
-
-        d3.select(".slider-checkbox")
-          .text(d => limits['unknown'] ? "\uf14a" : "\uf0c8");
       }
     })
 
