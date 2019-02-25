@@ -214,6 +214,7 @@ export class MiniBarplotComponent implements OnInit {
         .attr("dx", -4)
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .classed('disabled', (d: any) => d.value === 0)
         .text((d: any) => (d.value))
         .transition(t)
         .attr("x", (d: any) => this.x(d.value));
@@ -235,6 +236,7 @@ export class MiniBarplotComponent implements OnInit {
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .merge(labels)
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+        .classed('disabled', (d: any) => d.value === 0)
         .transition(t)
         // .style("fill-opacity", 1)
 
