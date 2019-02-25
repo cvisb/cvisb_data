@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { RequestParametersService } from '../../_services';
 import { RequestParam } from '../../_models';
@@ -9,7 +9,7 @@ import { RequestParam } from '../../_models';
   styleUrls: ['./filter-location.component.scss']
 })
 
-export class FilterLocationComponent implements OnInit {
+export class FilterLocationComponent implements OnChanges {
   @Input() countries;
   @Input() all_countries;
   @Input() endpoint: string;
@@ -17,7 +17,7 @@ export class FilterLocationComponent implements OnInit {
   constructor(private requestSvc: RequestParametersService) {
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.addMissing();
   }
 
@@ -26,13 +26,20 @@ export class FilterLocationComponent implements OnInit {
   }
 
   addMissing() {
+    console.log(this.all_countries)
+    console.log(this.countries)
+
     let keys = this.countries.map(d => d.key);
+    console.log(keys)
 
     let missing_data = this.all_countries.filter(d => !keys.includes(d.key));
+    console.log(missing_data)
+
 
     missing_data.forEach(d => {
       this.countries.push({ key: d.key, name: d.name, value: 0 });
     })
+    console.log(this.countries)
   }
 
 }
