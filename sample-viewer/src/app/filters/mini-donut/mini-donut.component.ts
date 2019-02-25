@@ -198,70 +198,208 @@ export class MiniDonutComponent implements OnInit {
         .on("click", filterCohort(this.endpoint, this.requestSvc));
 
       // --- Annotate donut ---
-      let labels = this.annotation.selectAll("g")
-        .data(this.data);
-
-      labels.exit()
-        .transition(t)
-        .style("fill-opacity", 1e-6)
-        .remove();
-
-      let labelsEnter = labels.enter()
-        .append("g")
-        .attr("class", "donut-text");
-
-      labelsEnter
-        .append("text")
-        .attr("class", "annotation--count");
-
-      labelsEnter
-        .append("text")
-        .attr("class", "annotation--tooltip");
-
-      labelsEnter.selectAll(".annotation--count")
-        .merge(labels)
-        .attr("class", (d: any) => `${d.key} annotation--count`)
-        .attr("x", 0)
-        .attr("dx", 15)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .classed('disabled', (d: any) => d.value === 0)
-        // .style("fill-opacity", 0)
-        .transition(t)
-        // .style("fill-opacity", 1)
-        .text((d: any) => `${d.key}: ${d.value}`);
-
-      labelsEnter.selectAll(".annotation--tooltip")
-        .merge(labels)
-        .attr("class", (d: any) => d.value > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
-        .attr("x", 0)
-        .attr("dx", 105)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .style("display", "none")
-        .transition(t)
-        .text((d: any) => {
-          if (d.value > 0) {
-            // Delete/filter
-            return (`\uf057`);
-          }
-          // Add
-          return (`\uf0fe`);
+      // Group update/merge: https://stackoverflow.com/questions/41625978/d3-v4-update-pattern-for-groups
+      var node = this.annotation.selectAll(".annotation--group")
+        .data(this.data, function(d) {
+          return d.key;
         });
 
+      node.exit().remove(); // exit, remove the text
 
+      let nodeEnter = node.enter() // enter the text
+        .append("text")
+        .attr("class", "annotation--group");
 
-      // Add in tooltip/filtering behavior
-      this.svg.selectAll(".annotation--count")
-        .on("click", filterText(this.endpoint, this.requestSvc));
+      nodeEnter.append("tspan") // enter the first tspan on the text element
+        .attr("x", 0)
+        .attr("dx", 15)
+        .attr('class', 'annotation--count');
 
-      this.svg.selectAll(".donut-text")
-        .on("mouseover", mouseoverText())
-        .on("mouseout", mouseoutText());
+      nodeEnter.append("tspan") // enter the text on the g
+        .attr("class", 'annotation--tooltip')
+        // .attr("x", 0)
+        .attr("dx", 15)
+        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        //   // .attr("dx", 10)
+          .text("-- !!!!");
+
+      node = nodeEnter.merge(node); // enter + update
+
+      // Update the position, class, and text for the count per thing.
+      node.select(".annotation--count")
+        .attr("class", (d: any) => `${d.key} annotation--count`)
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        .classed('disabled', (d: any) => d.value === 0)
+        .text((d: any) => `${d.key}: ${d.value}`);
+
+      // Update the position, class, and text for the count per thing.
+      node.select(".annotation--tooltip")
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        .text((d: any) => d.value < 0.5 ? "-" : "+");
+
+      // let node = this.annotation.selectAll(".annotation--group")
+      //   .data(this.data);
+      //
+      // node.exit()
+      //   // .transition(t)
+      //   // .style("fill-opacity", 1e-6)
+      //   .remove();
+      //
+      //   let nodeEnter = node.enter() // enter, append the g
+      //       .append("text")
+      //       .attr("class", "node");
+      //
+      //     nodeEnter.append("tspan") // enter, append the circle on the g
+      //       .attr('class', 'annotation--tooltip')
+      //
+      //
+      //     // nodeEnter.append("tspan") // enter, append the text on the g
+      //     // .attr("x", 0)
+      //     // .attr("dx", 15)
+      //     // .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+      //     // .attr("class", (d: any) => `${d.key} annotation--count`)
+      //     // .text((d: any) => `${d.key}: ${d.value}`);
+      //
+      //     let node2 = nodeEnter.merge(node); // enter + update on the g
+      //
+      //     // node.attr('transform', function(d){ // enter + update, position the g
+      //     //   return 'translate(' + d.x + ',' + d.y + ')';
+      //     // });
+      //
+      //     node2.select("tspan") // enter + update on subselection
+      //     .attr("x", 0)
+      //     .attr("dx", 15)
+      //     .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+      //     .attr("class", (d: any) => `${d.key} annotation--count`)
+      //     .text((d: any) => `${d.key}: ${d.value}`);
 
     }
+
+
+    // child selector: nested tspan.
+    // var textTooltip = labels.select('.annotation--tooltip');
+    //
+    // // append `a` element to each parent
+    // var labelsEnter = labels
+    //   .enter().append('text')
+    //   .attr('class', 'annotation--group')
+    //   ;
+    //
+    // // var textTooltipEnter = labelsEnter.append('tspan')
+    // //   .attr("class", (d: any) => `${d.key} annotation--count`);
+    //
+    // // Update the parent links
+    // let labelsUpdate = labels.merge(labelsEnter)
+    // .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+    // .classed('disabled', (d: any) => d.value === 0)
+    // .style("fill-opacity", 1e-6)
+    // .transition(t)
+    // .style("fill-opacity", 1);
+
+    // Update the children text values
+    // textTooltip.merge(textTooltipEnter)
+    //   .transition(t)
+    //   .text((d: any) => `${d.key}: ${d.value}`);
+    //
+    //
+
+
+    // let label2 = labelsUpdate.selectAll(".annotation--count")
+    // .data(d => [d]);
+    // let enter2 = label2.enter().append("tspan");
+    //
+    // label2.exit()
+    //   .transition(t)
+    //   .style("fill-opacity", 1e-6)
+    //   .remove();
+    //
+    // enter2.merge(label2).style("font-size", Math.min(this.y.bandwidth(), 14))
+    // .attr("x", 0)
+    // .attr("dx", 15)
+    // .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+    // .attr("class", (d: any) => `${d.key} annotation--count`)
+    // .text((d: any) => `${d.key}: ${d.value}`);
+    //
+    //
+    // let labels = this.annotation.selectAll(".annotation--tooltip")
+    //   .data(this.data);
+    //
+    // labels.exit()
+    //   .transition(t)
+    //   .style("fill-opacity", 1e-6)
+    //   .remove();
+
+    // labels2.exit()
+    //   .transition(t)
+    //   .style("fill-opacity", 1e-6)
+    //   .remove();
+
+    // let labelsEnter = labels.enter()
+    //   .append("g")
+    //   .attr("class", "donut-text");
+
+    // labelsEnter
+    //   .append("text")
+    //   .attr("class", "annotation--count");
+
+    // labelsEnter
+    //   .append("text")
+    //   .attr("class", "annotation--tooltip");
+
+    // labels.enter().append("text")
+    // // .selectAll(".annotation--count")
+    //   .merge(labels)
+    //   .attr("class", (d: any) => `${d.key} annotation--count`)
+    //   .attr("x", 0)
+    //   .attr("dx", 15)
+    //   .style("font-size", Math.min(this.y.bandwidth(), 14))
+    //   .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+    //   .style("font-size", Math.min(this.y.bandwidth(), 14))
+    //   .classed('disabled', (d: any) => d.value === 0)
+    //   // .style("fill-opacity", 0)
+    //   // .transition(t)
+    //   // .style("fill-opacity", 1)
+    //   .append('tspan')
+    //   .text((d: any) => `${d.key}: ${d.value}`)
+    //   .append('tspan')
+    //   .attr("class", "new")
+    //   .attr("dx", 10)
+    //   .text("-- !!!!");
+    //
+    // labels2
+    // .enter().append('text')
+    // // .selectAll(".annotation--tooltip")
+    //   .merge(labels2)
+    //   .attr("class", (d: any) => d.value > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
+    //   .attr("x", 0)
+    //   .attr("dx", 105)
+    //   .style("font-size", Math.min(this.y.bandwidth(), 14))
+    //   .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+    //   .style("font-size", Math.min(this.y.bandwidth(), 14))
+    //   .style("display", "none")
+    //   .transition(t)
+    //   .text((d: any) => {
+    //     if (d.value > 0) {
+    //       // Delete/filter
+    //       return (`\uf057`);
+    //     }
+    //     // Add
+    //     return (`\uf0fe`);
+    //   });
+
+
+
+    // Add in tooltip/filtering behavior
+    this.svg.selectAll(".annotation--count")
+      .on("click", filterText(this.endpoint, this.requestSvc));
+
+    this.svg.selectAll(".annotation--count")
+      .on("mouseover", mouseoverText())
+      .on("mouseout", mouseoutText());
+
   }
+}
 
 }
