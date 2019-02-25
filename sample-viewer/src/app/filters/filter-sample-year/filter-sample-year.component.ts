@@ -86,6 +86,7 @@ export class FilterSampleYearComponent implements OnInit {
         let lower_limit = Math.min(limits['lower'], limits['upper']);
         let upper_limit = Math.max(limits['lower'], limits['upper']);
 
+console.log(d3.selectAll("rect"))
 
         // Update rectangles
         d3.selectAll("rect")
