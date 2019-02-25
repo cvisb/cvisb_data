@@ -8,8 +8,14 @@
             [multiple]="true"
             [closeOnSelect]="true"
             [hideSelected]="true"
+            [typeahead]="states"
             bindLabel="name"
             placeholder="Select patients"
+             (add)="onAdd($event)"
+             (focus)="onFocus($event)"
+           (search)="onSearch($event)"
+           (blur)="onBlur($event)"
+            (change)="onChange($event)"
             (ngModelChange)="filterPatientIDs($event)"
             [(ngModel)]="selectedPatients">
     </ng-select>

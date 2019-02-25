@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+
 import { RequestParametersService } from '../../_services';
 
 @Component({
@@ -13,14 +14,17 @@ export class FilterPatientIdComponent implements OnInit {
 
   selectedPatients: string[];
   inclContacts: boolean;
+  states: any;
 
   constructor(private requestSvc: RequestParametersService) { }
 
   ngOnInit() {
+    console.log(this.states)
   }
 
   filterPatientIDs(patientIDs) {
     console.log(patientIDs);
+    console.log(this.states)
 
 
     if (this.inclContacts) {
@@ -55,6 +59,35 @@ export class FilterPatientIdComponent implements OnInit {
         this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null});
     }
   }
+
+  onAdd(e){
+    console.log('add')
+    console.log(e)
+    console.log(this.states)
+  }
+onFocus(e){
+    console.log('focus')
+    console.log(e)
+    console.log(this.states)
+  }
+
+onSearch(e){
+  console.log('search')
+  console.log(e)
+  console.log(this.states)
+}
+
+onBlur(e){
+  console.log('blur')
+  console.log(e)
+  console.log(this.states)
+}
+
+onChange(e){
+  console.log('change')
+  console.log(e)
+  console.log(this.states)
+}
 
 
 }
