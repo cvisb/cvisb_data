@@ -63,7 +63,7 @@ text.unknown {
 }
 
 .donut--annot {
-  & text {
+  & tspan {
     stroke: none;
     dominant-baseline: middle;
     font-family: $font-default;
