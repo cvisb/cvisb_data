@@ -79,6 +79,11 @@ export class MiniDonutComponent implements OnInit {
       .attr("class", 'donut--annot')
       .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`);
 
+    // div for tooltips
+    let ttips = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("display", "none");
+
 
     // Initial call to update / populate with data
     this.updatePlot();
@@ -115,6 +120,7 @@ export class MiniDonutComponent implements OnInit {
         }
       }
 
+      // Turn on +/- tooltip for the text annotation
       let mouseoverText = function() {
         return function(d) {
           // Turn off disabled class for text
@@ -134,6 +140,35 @@ export class MiniDonutComponent implements OnInit {
 
           // turn off tooltip
           d3.select(this).selectAll(".annotation--tooltip")
+            .style("display", "none");
+        }
+      }
+
+      // Turn on/off the path tooltip
+      let showTooltips = function() {
+        return function(selected) {
+          let html_payload = `select ${selected.data.key}`;
+
+          d3.selectAll("path")
+          .classed("not-highlight", true);
+
+          d3.select(this)
+          .classed("not-highlight", false);
+
+          d3.select(".tooltip").html(html_payload)
+            .style("left", (d3.event.pageX + 15) + "px")
+            .style("top", (d3.event.pageY + 15) + "px")
+            .attr("class", `tooltip ${selected.data.key}`)
+            .style("display", "inline-block");
+        }
+      }
+
+      let hideTooltips = function() {
+        return function(d) {
+          d3.selectAll("path")
+          .classed("not-highlight", false);
+
+          d3.select(".tooltip")
             .style("display", "none");
         }
       }
@@ -195,7 +230,9 @@ export class MiniDonutComponent implements OnInit {
 
       // Add in tooltip/filtering behavior
       this.svg.selectAll("path")
-        .on("click", filterCohort(this.endpoint, this.requestSvc));
+        .on("click", filterCohort(this.endpoint, this.requestSvc))
+        .on("mouseover", showTooltips())
+        .on("mouseout", hideTooltips());
 
       // --- Annotate donut ---
       // Group update/merge: https://stackoverflow.com/questions/41625978/d3-v4-update-pattern-for-groups

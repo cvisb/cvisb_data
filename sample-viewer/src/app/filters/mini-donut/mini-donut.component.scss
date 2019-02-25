@@ -19,7 +19,12 @@ path {
 path.Control,
 path.control {
   &:hover {
-    fill: darken($grey-350, 15%);
+    fill: $grey-350;
+    // fill: darken($grey-350, 15%);
+  }
+
+  &.not-highlight {
+    opacity: 0.4;
   }
 }
 
@@ -48,7 +53,18 @@ text.unknown {
   stroke: $ebola-color;
 
   &:hover {
-    fill: darken($ebola-md, 25%);
+    fill: darken($ebola-md, 35%);
+  }
+
+  &.not-highlight {
+    opacity: 0.4;
+  }
+}
+
+path.Ebola,
+path.ebola {
+  &:hover {
+      fill: $ebola-md;
   }
 }
 
@@ -58,7 +74,18 @@ text.unknown {
   stroke: $lassa-color;
 
   &:hover {
-    fill: darken($lassa-md, 25%);
+    fill: darken($lassa-md, 30%);
+  }
+
+  &.not-highlight {
+    opacity: 0.4;
+  }
+}
+
+path.Lassa,
+path.lassa {
+  &:hover {
+      fill: $lassa-md;
   }
 }
 
@@ -86,4 +113,34 @@ text.unknown {
 
 .filter-data {
   fill: accent-redder(A700);
+}
+// --- Tooltips ---
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 110px;
+  height: 1.35em;
+  font-weight: 400;
+  padding: 2px;
+  background: #ffffffc9;
+  border: 0;
+  border-radius: 3px;
+  pointer-events: none;
+  font-size: 0.75em;
+  text-transform: uppercase;
+
+  &.Lassa {
+    background: #a1eabbc4;
+    // color: $lassa-md;
+  }
+
+  &.Ebola {
+    background: #F8BBD0c4;
+    // color: $ebola-md;
+  }
+
+  &.Control {
+    background: #a2a8acc4;
+    // color: $grey-400;
+  }
 }
