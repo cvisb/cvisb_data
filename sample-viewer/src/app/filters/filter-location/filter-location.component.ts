@@ -11,16 +11,28 @@ import { RequestParam } from '../../_models';
 
 export class FilterLocationComponent implements OnInit {
   @Input() countries;
+  @Input() all_countries;
   @Input() endpoint: string;
 
   constructor(private requestSvc: RequestParametersService) {
-   }
+  }
 
   ngOnInit() {
+    this.addMissing();
   }
 
   selectCountry(ctry: string) {
     this.requestSvc.updateParams(this.endpoint, { field: 'country.identifier', value: ctry })
+  }
+
+  addMissing() {
+    let keys = this.countries.map(d => d.key);
+
+    let missing_data = this.all_countries.filter(d => !keys.includes(d.key));
+
+    missing_data.forEach(d => {
+      this.countries.push({ key: d.key, name: d.name, value: 0 });
+    })
   }
 
 }
