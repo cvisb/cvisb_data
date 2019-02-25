@@ -170,7 +170,7 @@ export class FilterSampleYearComponent implements OnInit {
 
   ngAfterViewInit() {
     // Wait till everything is loaded; then set the initial limits
-    this.yearFilterSubject.next({ lower: 0, upper: 3000, unknown: true });
+    // this.yearFilterSubject.next({ lower: 0, upper: 3000, unknown: true });
   }
 
   prepData() {
