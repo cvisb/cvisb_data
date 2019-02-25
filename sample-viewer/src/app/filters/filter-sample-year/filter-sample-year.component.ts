@@ -137,7 +137,7 @@ export class FilterSampleYearComponent implements OnInit {
       if (yearParam.length > 0) {
         console.log(yearParam[0])
         console.log(yearParam[0].value)
-        let limits = yearParam[0].value[0].match(/\[(\d+)\sTO\s(\d+)\]/);
+        let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
 
         let lower_limit = limits[1]; // 0th object == full string.
         let upper_limit = limits[2];
@@ -296,7 +296,7 @@ export class FilterSampleYearComponent implements OnInit {
       var t = d3.transition()
         .duration(1000);
 
-      console.log(this.data)
+      // console.log(this.data)
 
       this.prepData();
 
