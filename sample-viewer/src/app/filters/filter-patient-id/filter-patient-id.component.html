@@ -3,7 +3,7 @@
 
   <div class="container">
     <!-- <input class="patient-ids" /> -->
-    <ng-select class="patient-ids"
+    <ng-select #selectpatients class="patient-ids"
             [items]="patients"
             [multiple]="true"
             [closeOnSelect]="true"
@@ -11,11 +11,7 @@
             [typeahead]="states"
             bindLabel="name"
             placeholder="Select patients"
-             (add)="onAdd($event)"
-             (focus)="onFocus($event)"
-           (search)="onSearch($event)"
-           (blur)="onBlur($event)"
-            (change)="onChange($event)"
+            (search)="onSearch($event)"
             (ngModelChange)="filterPatientIDs($event)"
             [(ngModel)]="selectedPatients">
     </ng-select>
