@@ -4,6 +4,12 @@
   <app-download-btn [data]="samples" filetype="samples"></app-download-btn>
 </div>
 
+<div class="template-link">
+  <a href="https://www.dropbox.com/s/1qs8w0qqecgdvpw/sample-patient_template_forlaura.xlsx?dl=0" rel="noreferrer" target="_blank">
+    Download sample template spreadsheet
+  </a>
+</div>
+
 <form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
   <h1>
   <button mat-stroked-button color="accent" type="button" (click)="clearInput()">
