@@ -15,50 +15,50 @@ import { MyHttpClient } from './http-cookies.service';
   providedIn: 'root'
 })
 export class GetSamplesService {
-  samples: Sample[] =
-    [
-      {
-        "id": "testpatient-4",
-        "patient_id": "testpatient",
-        "visit_code": 4,
-        "patient_cohort": "Ebola",
-        "patient_type": "survivor",
-        "isolation_date": "2018-06-27",
-        "sample_type": "PBMC",
-        "num_aliquots": 1,
-        "sample_source": "blood_purple-EDTA",
-        "protocol_version": "viable_PBMC_protocol_v1.0.0.docx",
-        "freezing_buffer": "",
-        "dilution_factor": "NA",
-        "sample_id": "testpatient-4_PBMC20180627",
-        "location": "Tulane-Schieffelin",
-        "species": "human",
-        "updated": "2018-10-01",
-        "updated_by": "Laura Hughes"
-      }
-    ];
-
-  test_doc: Object = {
-    "id": "testpatient-2",
-    "patient_id": "testpatient",
-    "visit_code": 2,
-    "patient_cohort": "Ebola",
-    "patient_type": "survivor",
-    "isolation_date": "2018-06-27",
-    "sample_type": "DNA",
-    "num_aliquots": 1,
-    "sample_source": "PBMC",
-    "protocol_version": "genomicDNA_protocol_v1.1.0.docx",
-    "freezing_buffer": "",
-    "dilution_factor": "NA",
-    "sample_id": "testpatient-2_DNA20180627",
-    // "sample_id": "test_2",
-    "location": "KGH",
-    // "location": "TSRI-Andersen",
-    "species": "human",
-    "updated": "2018-10-01",
-    "updated_by": "Laura Hughes"
-  }
+  // samples: Sample[] =
+  //   [
+  //     {
+  //       "id": "testpatient-4",
+  //       "patient_id": "testpatient",
+  //       "visitCode": 4,
+  //       "patient_cohort": "Ebola",
+  //       "patient_type": "survivor",
+  //       "isolation_date": "2018-06-27",
+  //       "sample_type": "PBMC",
+  //       "num_aliquots": 1,
+  //       "sample_source": "blood_purple-EDTA",
+  //       "protocol_version": "viable_PBMC_protocol_v1.0.0.docx",
+  //       "freezing_buffer": "",
+  //       "dilution_factor": "NA",
+  //       "sample_id": "testpatient-4_PBMC20180627",
+  //       "location": "Tulane-Schieffelin",
+  //       "species": "human",
+  //       "updated": "2018-10-01",
+  //       "updated_by": "Laura Hughes"
+  //     }
+  //   ];
+  //
+  // test_doc: Object = {
+  //   "id": "testpatient-2",
+  //   "patient_id": "testpatient",
+  //   "visitCode": 2,
+  //   "patient_cohort": "Ebola",
+  //   "patient_type": "survivor",
+  //   "isolation_date": "2018-06-27",
+  //   "sample_type": "DNA",
+  //   "num_aliquots": 1,
+  //   "sample_source": "PBMC",
+  //   "protocol_version": "genomicDNA_protocol_v1.1.0.docx",
+  //   "freezing_buffer": "",
+  //   "dilution_factor": "NA",
+  //   "sample_id": "testpatient-2_DNA20180627",
+  //   // "sample_id": "test_2",
+  //   "location": "KGH",
+  //   // "location": "TSRI-Andersen",
+  //   "species": "human",
+  //   "updated": "2018-10-01",
+  //   "updated_by": "Laura Hughes"
+  // }
 
 
   private samples_wide: SampleWide[] = [];
@@ -114,14 +114,14 @@ export class GetSamplesService {
       this.samplesSubject.next(samples);
       // this.samplesSubject.next(this.samples.slice(0, 11));
       if (samples) {
-        // Splay out wide
+        // Splay out wide by patient ID.
         this.samples_wide = d3.nest()
-          .key((d: any) => d.id)
+          .key((d: any) => d.patientID)
           .rollup(function(v: any): any {
             return {
               count: v.length,
-              patient_id: v[0].patient_id,
-              visit_code: v[0].visit_code,
+              patientID: v[0].patientID,
+              visitCode: v[0].visitCode,
               patient_type: v[0].patient_type,
               patient_cohort: v[0].patient_cohort,
               all_data: v.map(d => d)
