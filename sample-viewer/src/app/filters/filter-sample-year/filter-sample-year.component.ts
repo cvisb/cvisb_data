@@ -78,8 +78,8 @@ export class FilterSampleYearComponent implements OnInit {
     this.yearFilterState$.subscribe((limits: Object) => {
       // ignore initial setting
       if (limits) {
-        console.log("NEW LIMITS FOUND")
-        console.log(limits)
+        // console.log("NEW LIMITS FOUND")
+        // console.log(limits)
         this.yearLimits = limits;
 
         this.updateLimits(limits);
@@ -90,14 +90,14 @@ export class FilterSampleYearComponent implements OnInit {
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the yearFilterSubject to update.
     this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-      console.log('NEW SEARCH PARAMS FOUND')
-      console.log(params);
+      // console.log('NEW SEARCH PARAMS FOUND')
+      // console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
       let yearParam = params.filter(d => d.field === 'infectionYear');
 
       if (yearParam.length > 0) {
-        console.log(yearParam[0])
-        console.log(yearParam[0].value)
+        // console.log(yearParam[0])
+        // console.log(yearParam[0].value)
         let limits = yearParam[0].value.match(/\[(\d+)\sTO\s(\d+)\]/);
 
         let lower_limit = limits[1]; // 0th object == full string.
@@ -105,12 +105,12 @@ export class FilterSampleYearComponent implements OnInit {
 
         let unknown_val = yearParam[0].orSelector ? true : false;
 
-        console.log({ lower: lower_limit, upper: upper_limit, unknown: unknown_val })
+        // console.log({ lower: lower_limit, upper: upper_limit, unknown: unknown_val })
 
         this.yearFilterSubject.next({ lower: lower_limit, upper: upper_limit, unknown: unknown_val });
       } else {
         // reset
-        console.log('resetting')
+        // console.log('resetting')
         this.yearFilterSubject.next({ lower: 0, upper: 3000, unknown: true });
       }
     })
@@ -475,7 +475,3 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
 }
-
-// TODO
-// 5. create the filter event listener.
-// 6. check update procedure: enter/append/merge
