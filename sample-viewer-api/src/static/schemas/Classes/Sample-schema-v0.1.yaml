@@ -157,6 +157,7 @@
                         - "tissue"
                         - "plasma"
                         - "serum"
+                        - "plasma_or_serum"
                         - "buffy coat"
                         - "PBMC"
                         - "frozenPBMC-DNA"
