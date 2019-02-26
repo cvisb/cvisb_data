@@ -13,6 +13,7 @@ import { RequestParametersService } from '../../_services';
 export class FilterPatientIdComponent implements OnInit {
   @Input() endpoint: string;
   @Input() patients: string[];
+  @Input() all_patients: string[];
   @ViewChild('selectpatients') public ngSelect: any;
 
   selectedPatients: string[] = [];
@@ -65,7 +66,10 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
 
+  // G-fakePatient-0003, G-fakePatient-0002
   onSearch(input) {
+    // console.log(this.ngSelect)
+    // console.log(input)
     let parsed = input.split("\,");
 
     if (parsed.length > 1) {

@@ -12,8 +12,8 @@ export class FilterPatientTypeComponent implements OnInit {
 
   @Input() viruses: D3Nested[];
   @Input() outcomes: D3Nested[];
-  @Input() total_cohorts: string[];
-  @Input() total_outcomes: string[];
+  @Input() all_cohorts: string[];
+  @Input() all_outcomes: string[];
   @Input() endpoint: string;
 
   constructor() { }

@@ -19,10 +19,11 @@ export class FilterPatientsComponent implements OnInit {
   // Parameters to set on the first call to the backend (e.g. max values, etc.)
   first_call: boolean = true;
   total_patients: number;
-  total_cohorts: string[];
-  total_outcomes: string[];
-  total_years: number[];
-  total_countries: Object[];
+  all_cohorts: string[];
+  all_patients: string[];
+  all_outcomes: string[];
+  all_years: number[];
+  all_countries: Object[];
 
 
   constructor(private patientSvc: GetPatientsService,
@@ -56,14 +57,15 @@ export class FilterPatientsComponent implements OnInit {
         if (this.first_call) {
           this.first_call = false;
           this.total_patients = this.patients.length;
-          this.total_cohorts = pList.patientTypes.map((d: any) => d.key);
-          this.total_outcomes = pList.patientOutcomes.map((d: any) => d.key);
-          this.total_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
-          this.total_years.sort();
-          this.total_countries = pList.patientCountries;
-          // console.log(this.total_countries)
-          // console.log(this.total_cohorts)
-          // console.log(this.total_outcomes)
+          this.all_patients = pList.patientIDs;
+          this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
+          this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
+          this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
+          this.all_years.sort();
+          this.all_countries = pList.patientCountries;
+          // console.log(this.all_countries)
+          // console.log(this.all_cohorts)
+          // console.log(this.all_outcomes)
         }
       }
     });
