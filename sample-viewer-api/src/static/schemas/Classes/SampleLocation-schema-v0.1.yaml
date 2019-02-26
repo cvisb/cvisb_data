@@ -63,6 +63,51 @@
   owl:cardinality:       one
   marginality:           required
 
+# sample physical location
+- "@id":                 cvisb:freezerID
+  "@type":               rdf:Property
+  rdfs:comment:          Freezer in which the sample is located within the lab.
+  rdfs:label:            freezerID
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+
+- "@id":                 cvisb:freezerRack
+  "@type":               rdf:Property
+  rdfs:comment:          Rack in the freezer in which the sample is located within the lab.
+  rdfs:label:            freezerRack
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+
+- "@id":                 cvisb:freezerBox
+  "@type":               rdf:Property
+  rdfs:comment:          Box in the rack/freezer in which the sample is located within the lab.
+  rdfs:label:            freezerBox
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+
+- "@id":                 cvisb:freezerBoxCell
+  "@type":               rdf:Property
+  rdfs:comment:          Cell within the freezer box in which the sample is located within the lab, for example "C12".
+  rdfs:label:            freezerBoxCell
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+
 # when updated
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
