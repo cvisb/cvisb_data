@@ -29,7 +29,6 @@ export class FilterPatientIdComponent implements OnInit {
 
   filterPatientIDs(patientIDs) {
     console.log(patientIDs);
-    console.log(this.states)
 
 
     if (this.inclContacts) {
@@ -65,7 +64,6 @@ export class FilterPatientIdComponent implements OnInit {
     }
   }
 
-
   onSearch(input) {
     console.log(this.ngSelect)
     console.log(input)
@@ -76,6 +74,8 @@ export class FilterPatientIdComponent implements OnInit {
       this.selectedPatients = this.selectedPatients.concat(parsed);
       // clear the input text
       this.ngSelect.filterValue = "";
+      //
+      this.filterPatientIDs(this.selectedPatients);
     }
   }
 
