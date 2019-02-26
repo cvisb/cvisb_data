@@ -14,13 +14,39 @@ import csv
 
 os.chdir('/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes')
 all_files = os.listdir()
-
+all_files
 # How expected files should be combined:
 schema_grps = {
 'sample': ['sample-schema', 'SampleLocation-schema', 'derivedSample-schema'],
-'experiment': ['andersenSequencing', 'elisaResult', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
-'patient': ['patient'],
-'dataset': ['dataset', 'datadownload', 'datacatalog']
+'experiment': ['andersenSequencing', 'ELISA', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
+'patient': ['Patient'],
+'dataset': ['Dataset', 'DataDownload', 'DataCatalog'],
+'cvisb': ['RepertoireSequencing',
+ 'Experiment',
+ 'ELISA',
+ 'AndersenSequencing',
+ 'Patient',
+ 'Sample',
+ 'DerivedSample',
+ 'Country',
+ 'SoftwareSourceCode',
+ 'cvisb_fields.csv',
+ 'AdministrativeArea',
+ 'DataCatalog',
+ 'SampleLocation',
+ 'Place',
+ 'SequencingExperiment',
+ 'PostalAddress',
+ 'RDT',
+ 'Organization',
+ 'DataDownload',
+ 'Dataset',
+ 'DateRange',
+ 'Person',
+ 'ContactPoint',
+ 'ScholarlyArticle',
+ 'SystemsSerology',
+ 'RTPCR']
 }
 
 
@@ -37,8 +63,8 @@ def open_yaml(yaml_file):
 # os.chdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
 # context_file = "cvisb-context.yaml"
 
-file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
-schema = open_yaml(file)
+# file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
+# schema = open_yaml(file)
 
 output_file='test_valid.jsonld'
 for attr in schema:
@@ -89,6 +115,7 @@ def convert(context_file, schema_grps = schema_grps, output_file = None):
         with open(output_file, 'w') as out_f:
             json.dump(schema_data, out_f, indent=2)
 
+convert("cvisb-context.yaml")
 
 if __name__ == '__main__':
     context_file = sys.argv[1]
