@@ -93,11 +93,11 @@
 
             <ng-template #show_sample let-sample="sample">
               <div class="flex-container sample-id">
-                <h4 (click)="showSampleMD(element[sample])">{{element[sample].sample_id}}</h4>
+                <h4 (click)="showSampleMD(element[sample])">{{element[sample].sampleID}}</h4>
               </div>
 
               <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
-                <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="location.num_aliquots">
+                <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="location.numAliquots">
 
                 <mat-select [(value)]="location.lab" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
                   <mat-option *ngFor="let lab of labs" [value]="lab.id">{{lab.id}}</mat-option>
