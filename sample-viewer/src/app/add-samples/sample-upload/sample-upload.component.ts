@@ -21,8 +21,6 @@ export class SampleUploadComponent implements OnInit {
   }
 
   fileChange(event) {
-    console.log(event)
-
     let fileList: FileList = event.target.files;
 
     if (fileList.length > 0) {
@@ -38,6 +36,9 @@ export class SampleUploadComponent implements OnInit {
         let data = JSON.parse(reader.result);
         console.log(data)
         this.apiSvc.put("sample", data)
+
+        // Clear input so can re-upload the same file.
+        document.getElementById("file_uploader")['value'] = "";
       }
     }
 
