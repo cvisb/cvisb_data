@@ -29,17 +29,17 @@ def getPrimary(x):
         return("unknown")
 
 def makePrimaryID(row):
-    return(str(row.patientID) + "_" + str(row.sourceSampleType))
+    return(str(row.privatePatientID) + "_" + str(row.sourceSampleType))
 
 def makeSampleID(row):
-    return("CV_" + str(row.sampleType) + "{:04d}".format(row.rowNum))
+    return("mp" + str(row.sampleType) + str(row.rowNum) + "_" + str(row.sampleType) + str(row.isolationDate))
 
 def cleanSamples(df, date, id_col, species="human", modified = dateModified, updated = updatedBy, lab = lab, numAliquots = numAliquots):
     # splay the columns long
     df = pd.melt(df, id_vars=id_col, value_name='timepointID')
 
     # separate out the patient ID from visit code.
-    df['patientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
+    df['privatePatientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
     df['isolationDate'] = date
     df['species'] = species
     df['derivedIndex'] = 1
