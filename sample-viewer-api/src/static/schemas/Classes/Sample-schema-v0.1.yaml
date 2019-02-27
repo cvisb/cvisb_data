@@ -95,7 +95,7 @@
 # patient ID
 - "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          Unique public patient id
+  rdfs:comment:          Unique public patient id. Will be added into the database via join
   rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:Sample
@@ -108,7 +108,7 @@
 
 - "@id":                 cvisb:privatePatientID
   "@type":               rdf:Property
-  rdfs:comment:          Unique public patient id
+  rdfs:comment:          Unique *private* patient id, e.g. G-number, S-number, C-number
   rdfs:label:            privatePatientID
   schema:domainIncludes:
     - "@id":             cvisb:Sample
