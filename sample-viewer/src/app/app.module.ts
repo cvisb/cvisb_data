@@ -67,6 +67,7 @@ import {
 
 import { SchemaComponent } from './schema/schema.component';
 import { DownloadBtnComponent } from './download-btn/download-btn.component';
+import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
 
 
 @NgModule({
@@ -121,6 +122,7 @@ import { DownloadBtnComponent } from './download-btn/download-btn.component';
     PatientDemographicsComponent,
     SchemaComponent,
     DownloadBtnComponent,
+    AddStepperComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
