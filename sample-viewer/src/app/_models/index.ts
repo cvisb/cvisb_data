@@ -9,3 +9,4 @@ export * from './dataset-array';
 export * from './d3-nested';
 export * from './auth-state';
 export * from './request-param';
+export * from './cvisb-user';

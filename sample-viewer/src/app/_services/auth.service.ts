@@ -14,16 +14,16 @@ import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, 
 
 import { DOCUMENT } from '@angular/common';
 
-import { AuthState } from '../_models';
+import { AuthState, CvisbUser } from '../_models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   logoutRedirect: string = `/home`;
-  user: Object;
+  user: CvisbUser;
 
-  public userSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
+  public userSubject: BehaviorSubject<CvisbUser> = new BehaviorSubject<CvisbUser>({});
   public userState$ = this.userSubject.asObservable();
 
 

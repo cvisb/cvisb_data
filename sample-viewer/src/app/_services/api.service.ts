@@ -103,7 +103,8 @@ export class ApiService {
 
   // --- PUT ---
   // Generic function to add data to a given endpoint on the API
-  put(endpoint: string, newData: any) {
+  put(endpoint: string, newData: any): Observable<any> {
+
     // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
 
     // Check if there are already duplicates within the index.
@@ -128,17 +129,24 @@ export class ApiService {
     //   }
     // })
     if (newData) {
-      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+    console.log('adding new data')
+      return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
           headers: new HttpHeaders()
-        }).subscribe(resp => {
-          console.log(resp)
-        },
-          err => {
-            console.log(err)
-          })
-      // })
+        });
+
+        // .pipe(
+        //   map(resp => {
+        //     console.log(resp)
+        //     // return (new Observable<any>(resp))
+        //   }),
+        //   catchError(e => {
+        //     console.log(e)
+        //     throwError(e);
+        //     return (new Observable<any>(e))
+        //   })
+      // )?
 
     } else {
       console.log('no data to add')
