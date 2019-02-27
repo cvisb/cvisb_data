@@ -26,6 +26,7 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { SampleComponent } from './sample/sample.component';
 import { AddSamplesComponent } from './add-samples/add-samples.component';
 import { AddSampleTypesComponent } from './add-samples/add-sample-types/add-sample-types.component';
+import { SampleUploadComponent } from './add-samples/sample-upload/sample-upload.component';
 import { HeaderComponent } from './header/header.component';
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FileListComponent } from './dataset/file-list/file-list.component';
@@ -74,6 +75,7 @@ import { DownloadBtnComponent } from './download-btn/download-btn.component';
     SampleComponent,
     AddSamplesComponent,
     AddSampleTypesComponent,
+    SampleUploadComponent,
     HeaderComponent,
     BulkEditComponent,
     FileListComponent,
@@ -119,7 +121,6 @@ import { DownloadBtnComponent } from './download-btn/download-btn.component';
     PatientDemographicsComponent,
     SchemaComponent,
     DownloadBtnComponent,
-
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
