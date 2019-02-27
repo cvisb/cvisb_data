@@ -8,13 +8,19 @@
 
   <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
 
-  <div class="error-message-group" *ngIf="errorObj">
-    <div class="error-message" *ngFor="let msg of errorObj">
-      <div>
-        Error: {{ msg. key }}
+  <div class="error-messages" *ngIf="errorObj">
+    <div class="error-message-group" *ngFor="let msg of errorObj">
+      <div class="error-message">
+        <span class="error-label">
+          Error:
+        </span>
+        {{ msg. key }}
       </div>
-      <div>
-        IDs: {{ msg.value.ids }}
+      <div class="error-ids">
+        <span class="error-label">
+          IDs:
+        </span>
+        {{ msg.value.ids }}
       </div>
     </div>
   </div>
