@@ -82,7 +82,7 @@ export class SampleUploadComponent implements OnInit {
     let errs = [];
 
     // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg, id: document.input_obj.sampleID, input: document.input_obj })))
+    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n")[0], id: document.input_obj.sampleID, input: document.input_obj })))
     console.log(errs)
 
     // Group by error type
