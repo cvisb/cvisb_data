@@ -1,0 +1,299 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "http://schema.cvisb.org/"
+  },
+  "version": 0.1,
+  "@id": "http://schema.cvisb.org/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:ELISA",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ELISA",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://schema.cvisb.org"
+      }
+    },
+    {
+      "@id": "cvisb:virus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Virus tested in ELISA (Ebola or Lassa)",
+      "rdfs:label": "virus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:assayType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of ELISA: IgG, IgM, or Ag",
+      "rdfs:label": "assayType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "IgG",
+        "IgM",
+        "Ag"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ELISAresult",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of ELISA, either positive/negative/indeterminate",
+      "rdfs:label": "ELISAresult",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "positive",
+        "negative",
+        "indeterminate"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ELISAvalue",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of ELISA, as a quantitative calibrated value",
+      "rdfs:label": "ELISAvalue",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:RDT",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a rapid diagnostic test result for a Patient in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "RDT",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://schema.cvisb.org"
+      }
+    },
+    {
+      "@id": "cvisb:virus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Virus tested in ELISA (Ebola or Lassa)",
+      "rdfs:label": "virus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RDT"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:RDTresult",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of RDT, either positive/negative",
+      "rdfs:label": "RDTresult",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RDT"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "positive",
+        "negative",
+        "indeterminate"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:RepertoireSequencing",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
+      "rdfs:label": "RepertoireSequencing",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:sequencingExperiment"
+      },
+      "schema:isPartOf": {
+        "@id": "https://schema.cvisb.org"
+      }
+    },
+    {
+      "@id": "cvisb:primerSet",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Primer set",
+      "rdfs:label": "primerSet",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RepertoireSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:analysisVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Analysis pipeline version",
+      "rdfs:label": "analysisVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RepertoireSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:abstarVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Abstar Version",
+      "rdfs:label": "abstarVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RepertoireSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:germlineDatabase",
+      "@type": "rdf:Property",
+      "rdfs:comment": "germline database name or URL",
+      "rdfs:label": "germlineDatabase",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RepertoireSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:germlineDBVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Germline database version",
+      "rdfs:label": "germlineDBVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RepertoireSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    }
+  ]
+}
