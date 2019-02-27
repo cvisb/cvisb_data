@@ -33,7 +33,7 @@
 # id
 - "@id":                 cvisb:sampleID
   "@type":               rdf:Property
-  rdfs:comment:          unique ID for the derived sample; ideally, the combination of sampleType and isolationDate. Should not contain non-public IDs
+  rdfs:comment:          unique ID for the derived sample; ideally, the combination of sampleType and isolationDate. Should *not* contain non-public IDs.
   rdfs:label:            sampleID
   schema:domainIncludes:
     - "@id":             cvisb:Sample
@@ -103,8 +103,21 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
+
+- "@id":                 cvisb:privatePatientID
+  "@type":               rdf:Property
+  rdfs:comment:          Unique public patient id
+  rdfs:label:            privatePatientID
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         true
 
 # visit code
 - "@id":                 cvisb:visitCode
@@ -195,6 +208,7 @@
   schema:Enumeration:
                         - "human"
                         - "rat"
+                        - "monkey"
   authenticated:         false
 
 # protocol
