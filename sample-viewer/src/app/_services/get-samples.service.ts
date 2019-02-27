@@ -14,6 +14,7 @@ import { MyHttpClient } from './http-cookies.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GetSamplesService {
   // samples: Sample[] =
   //   [
@@ -157,54 +158,50 @@ export class GetSamplesService {
     // return (this.samples)
   }
 
-  putSample(sample: Sample) {
-    let sampleID = sample['sampleID'];
-    this.myhttp.put<any[]>(environment.api_url + "/api/sample/" + sampleID,
-      JSON.stringify(sample),
-      {
-        headers: new HttpHeaders()
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-
-  }
-
-  prepSamples(samples: Sample[]) {
-    // (1) find if sample already exists within the backend -- add or update?
-    // (2) add in dateModified
-  }
-
-  putSamples(samples: Sample[]) {
-    // let test = this.jsonify(this.samples.slice(0,2));
-    console.log('attempting to add new record')
-    // console.log(this.jsonify(samples))
-    this.myhttp.put<any[]>(environment.api_url + "/api/sample/",
-      this.jsonify(samples),
-      {
-        // observe: 'response',
-        headers: new HttpHeaders()
-        // .set('data', )
-      }).subscribe(resp => {
-        console.log(resp)
-      },
-        err => {
-          console.log(err)
-        })
-
-  }
-
-  // Function to convert
-  jsonify(arr: any[]): string {
-    let json_arr = [];
-
-    for (let record of arr) {
-      json_arr.push(JSON.stringify(record))
-    }
-    return (json_arr.join("\n"))
-  }
+  // putSample(sample: Sample) {
+  //   let sampleID = sample['sampleID'];
+  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/" + sampleID,
+  //     JSON.stringify(sample),
+  //     {
+  //       headers: new HttpHeaders()
+  //     }).subscribe(resp => {
+  //       console.log(resp)
+  //     },
+  //       err => {
+  //         console.log(err)
+  //       })
+  //
+  // }
+  //
+  //
+  // putSamples(samples: Sample[]) {
+  //   // let test = this.jsonify(this.samples.slice(0,2));
+  //   console.log('attempting to add new record')
+  //   // console.log(this.jsonify(samples))
+  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/",
+  //     this.jsonify(samples),
+  //     {
+  //       // observe: 'response',
+  //       headers: new HttpHeaders()
+  //       // .set('data', )
+  //     }).subscribe(resp => {
+  //       console.log(resp)
+  //     },
+  //       err => {
+  //         console.log(err)
+  //       })
+  //
+  // }
+  //
+  // // Function to convert
+  // jsonify(arr: any[]): string {
+  //   let json_arr = [];
+  //
+  //   for (let record of arr) {
+  //     json_arr.push(JSON.stringify(record))
+  //   }
+  //   return (json_arr.join("\n"))
+  // }
 
 
   nestSamples() {
