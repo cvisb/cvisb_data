@@ -40,6 +40,8 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
 
     # separate out the patient ID from visit code.
     df['privatePatientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
+
+    df['visitCode'] = df.visitCode.fillna("unknown")
     df['isolationDate'] = date
     df['species'] = species
     df['derivedIndex'] = 1
