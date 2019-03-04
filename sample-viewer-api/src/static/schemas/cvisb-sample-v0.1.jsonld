@@ -25,10 +25,10 @@
       }
     },
     {
-      "@id": "cvisb:SampleID",
+      "@id": "cvisb:sampleID",
       "@type": "rdf:Property",
       "rdfs:comment": "unique ID for the derived sample; ideally, the combination of sampleType and isolationDate",
-      "rdfs:label": "SampleID",
+      "rdfs:label": "sampleID",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Sample"
