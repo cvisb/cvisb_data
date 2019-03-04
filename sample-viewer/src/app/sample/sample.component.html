@@ -4,11 +4,6 @@
   <app-download-btn [data]="samples" filetype="samples"></app-download-btn>
 </div>
 
-<div class="template-link">
-  <a href="https://www.dropbox.com/s/1qs8w0qqecgdvpw/sample-patient_template_forlaura.xlsx?dl=0" rel="noreferrer" target="_blank">
-    Download sample template spreadsheet
-  </a>
-</div>
 
 <form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
   <h1>
@@ -63,23 +58,36 @@
   </ng-container> -->
 
     <!-- Patient ID -->
-    <ng-container matColumnDef="patientid">
+    <ng-container matColumnDef="key">
       <mat-header-cell *matHeaderCellDef mat-sort-header>patient id</mat-header-cell>
       <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
     </ng-container>
 
-    <!-- Patient cohort -->
-    <ng-container matColumnDef="cohort">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>cohort</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="patient-cohort">
-        <span class="cohort" [ngClass]="element.value.patient_cohort" *ngIf="element.value.patient_cohort">
-        {{element.value.patient_cohort}}
-      </span>
+    <ng-container matColumnDef="privatePatientID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>private id</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
+    </ng-container>
 
-        <span class="outcome" [ngClass]="[element.value.patient_type, element.value.patient_cohort]" *ngIf="element.value.patient_type">
-        {{element.value.patient_type}}
-      </span>
-      </mat-cell>
+    <!-- Patient cohort -->
+
+    <ng-container matColumnDef="cohort">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="outcome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Timepoint -->
+    <ng-container matColumnDef="visitCode">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>visit code</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="timepoint"> {{element.visitCode}} </mat-cell>
     </ng-container>
 
     <!-- Splay out the sample types wide -->
