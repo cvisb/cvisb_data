@@ -93,6 +93,8 @@ df = pd.concat([l1, l2, ebv])
 df["rowNum"] = df.groupby("sampleType").cumcount()+1
 df["sampleID"] = df.apply(makeSampleID, axis = 1)
 
+df.columns
+df[df.duplicated(subset=["derivedIndex", "isolationDate", "location.dateModified", "location.lab", "location.numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
 # remove unneeded cols
 df.drop(["#", "Unnamed: 0", "variable", "rowNum"], axis=1, inplace=True)
 
