@@ -11,14 +11,14 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 # 5) Kristian's previously compiled list of HLA
 # Brian's roster of patients
 # 6) Random RNA/DNA extraction list from Matthias
-output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-31_patients_PRIVATE"
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-28_patients_PRIVATE"
 
 # [1] HLA data
 import getHLApatients as hla
 
 hla.hla_df['source'] = 'HLA_karthik'
 hla.hla_df
-hla.hla_df.drop('availableData', axis=1, inplace= True)
+# hla.hla_df.drop('availableData', axis=1, inplace= True)
 
 df1 = hla.hla_df
 
@@ -40,7 +40,6 @@ df5 = mdf
 df6 = bdf
 df7 = wl
 df8 = lsv
-
 
 
 
@@ -80,8 +79,7 @@ test._merge.value_counts()
 test[test._merge == 'right_only']
 
 # [AGGREGATE DOWN] -----------------------------------------------------------------------
-"G1000".replace("G", "G-")
-df.head()
+# "G1000".replace("G", "G-")
 
 def getG(df):
     patientG = findG(df.patientID)
