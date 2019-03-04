@@ -126,6 +126,7 @@ bdata = pd.read_excel(bfile)
 
 bdata.head()
 
-bdata.rename(columns={'Original Patient ID': 'patientID', 'Alternative Patient ID': 'alternateIdentifier'}, inplace=True)
+bdata['alternateIdentifier'] = bdata["Alternative Patient ID"].apply(lambda x: str(x).replace("This should be ", ""))
+bdata.rename(columns={'Original Patient ID': 'patientID'}, inplace=True)
 bdf = bdata[['patientID', 'alternateIdentifier']].copy()
 bdf['source'] = 'roster_brian'
