@@ -131,6 +131,8 @@ export class GetSamplesService {
           })
           .entries(samples);
 
+          console.log(this.samples_wide)
+
         // for(let i =0; i < this.samples.length)
 
         // this.nestSamples(this.samples_wide[0].value.samples)
