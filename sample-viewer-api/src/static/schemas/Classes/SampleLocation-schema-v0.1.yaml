@@ -50,6 +50,7 @@
                         - "TSRI-Briney"
                         - "TSRI-Sullivan"
                         - "Tulane-Schieffelin"
+                        - "Tulane-Garry"
 
 # source sample type
 - "@id":                 cvisb:numAliquots
