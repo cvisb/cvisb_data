@@ -118,7 +118,7 @@ export class GetSamplesService {
         // Splay out wide by patient ID.
         this.samples_wide = d3.nest()
           .key((d: any) => d.patientID)
-          .key((d: any) => d.visitCode)
+          // .key((d: any) => d.visitCode)
           .rollup(function(v: any): any {
             return {
               count: v.length,
