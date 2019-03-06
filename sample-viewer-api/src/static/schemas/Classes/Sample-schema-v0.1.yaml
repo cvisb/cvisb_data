@@ -44,6 +44,20 @@
   marginality:           required
   authenticated:         false
 
+# id
+- "@id":                 cvisb:sampleLabel
+  "@type":               rdf:Property
+  rdfs:comment:          Label for what the sample is called on sample tubes, etc.
+  rdfs:label:            sampleLabel
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         true
+
 # alternateIdentifier
 - "@id":                 cvisb:alternateIdentifier
   "@type":               rdf:Property
@@ -144,7 +158,7 @@
     - "@id":             schema:Date
     - "@id":             cvsib:DateRange
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
   authenticated:         true
 
 # sample type
