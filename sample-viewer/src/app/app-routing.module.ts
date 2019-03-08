@@ -8,9 +8,13 @@ import { AddSamplesComponent } from './add-samples/add-samples.component';
 import { SampleComponent } from './sample/sample.component';
 import { PatientComponent } from './patient/patient.component';
 import { PatientPageComponent } from './patient-page/patient-page.component';
+import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { DatasetComponent } from './dataset/dataset.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
 import { SchemaComponent } from './schema/schema.component';
+
+// --- Dataset pages ---
+// import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
 
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
@@ -28,12 +32,20 @@ import { DatasetResolver } from './_services';
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
   { canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' } },
+  { canActivate: [AuthGuard], path: 'patient/upload', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Add Patients | CViSB' } },
   { canActivate: [AuthGuard], path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
   { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' } },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { canActivate: [AuthGuard], path: 'sample/upload', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Add Samples | CViSB' } },
   { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  { path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver }, pathMatch: 'full', data: { title: 'Dataset | CViSB' } },
+  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', data: { title: 'Dataset | CViSB' } },
+  // {
+  //   path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver },
+  //   pathMatch: 'full', data: { title: 'Dataset | CViSB' },
+  //   children: [{
+  //     path: 'hla', component: PageNotFoundComponent, outlet: 'datasets'
+  //   }]
+  // },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
