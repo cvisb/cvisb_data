@@ -1,0 +1,11 @@
+@import '../../../sass/material-theme.scss';
+
+// --- Header ---
+.page-header {
+  h1 {
+    color: lighten($ebola-lt, 11%);
+    -webkit-text-stroke-color: $ebola-color;
+    -webkit-text-stroke-width: 1px;
+  }
+
+}
