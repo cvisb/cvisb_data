@@ -12,6 +12,8 @@ import { HttpModule } from '@angular/http'; // Though outdated, required as per 
 import { HttpClientModule } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
 
+// import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
@@ -53,11 +55,12 @@ import { PatientComponent } from './patient/patient.component';
 import { FilterPatientsComponent } from './patient/filter-patients/filter-patients.component';
 import { PatientTableComponent } from './patient/patient-table/patient-table.component';
 
-// File filter components
+// Filter components
 import {
   FilterElisasComponent, FilterExperimentComponent, FilterFileTypeComponent,
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
-  FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent
+  FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
+  // FilterLabComponent, FilterSampleTypeComponent, FilterOrganizationComponent, FilterSpeciesComponent, FilterSampleComponent
 } from './filters';
 
 // Patient page components
@@ -68,6 +71,13 @@ import {
 import { SchemaComponent } from './schema/schema.component';
 import { DownloadBtnComponent } from './download-btn/download-btn.component';
 import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
+// import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
+// import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
+// import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
+// import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
+// import { UploadDifferencesComponent } from './add-samples/upload-differences/upload-differences.component';
+import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
+import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 
 
 @NgModule({
@@ -123,6 +133,20 @@ import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.compo
     SchemaComponent,
     DownloadBtnComponent,
     AddStepperComponent,
+
+    // UploadStepperComponent,
+    // CheckIdsComponent,
+    // PreviewSamplesComponent,
+    // FrontendSampleValidationComponent,
+    // UploadDifferencesComponent,
+    // FilterLabComponent,
+    // FilterSampleComponent,
+    // FilterSampleTypeComponent,
+    // FilterSpeciesComponent,
+    // FilterOrganizationComponent,
+    //
+    AddPatientsComponent,
+    PatientUploadComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
@@ -142,7 +166,11 @@ import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.compo
   exports: [
     // EmbedJsonldDirective
   ],
-  providers: [MyHttpClient, DatePipe, DatasetResolver],
+  providers: [
+    // { provide: STEPPER_GLOBAL_OPTIONS,
+    //   useValue: { displayDefaultIndicatorType: false }
+    // },
+    MyHttpClient, DatePipe, DatasetResolver],
   entryComponents: [
     SampleMetadataComponent
   ],

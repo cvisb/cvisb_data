@@ -1,0 +1,48 @@
+<div class="upload-button">
+  <!-- <div class="upload-button" *ngIf="user.write"> -->
+  <!-- Dummy for styling -->
+  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
+  <!-- Actual workhorse to upload the data on the client side -->
+  <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+
+
+  <div class="client-responses">
+    <h1 *ngIf="uploadResponse">{{ uploadResponse }}</h1>
+
+    <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
+
+    <div class="error-messages" *ngIf="errorObj">
+      <div class="error-message-group" *ngFor="let msg of errorObj">
+        <div class="error-message">
+          <span class="error-label">
+        Error:
+      </span> {{ msg. key }}
+        </div>
+        <div class="error-ids">
+          <span class="error-label">
+        IDs:
+      </span>
+          <div *ngFor="let id of msg.value.ids; let index">
+            {{ id }}
+            <span *ngIf="index < msg.value.ids.length" class="id-separator">
+      </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div *ngIf="! user.write">
+  <p>
+    You're not allowed to upload patient data to the database.
+  </p>
+
+  <p>
+    Please contact Laura if you think this is an error.
+  </p>
+</div>
