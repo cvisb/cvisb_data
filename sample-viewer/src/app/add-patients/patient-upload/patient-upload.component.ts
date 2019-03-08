@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 
-import { ApiService, AuthService, GetPatientsService, CheckIdsService } from '../../_services/';
+// import { ApiService, AuthService, GetPatientsService, CheckIdsService } from '../../_services/';
+import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
 
 import { CvisbUser } from '../../_models';
 
@@ -29,7 +30,7 @@ export class PatientUploadComponent implements OnInit {
     private apiSvc: ApiService,
     private authSvc: AuthService,
     private patientSvc: GetPatientsService,
-    private idSvc: CheckIdsService,
+    // private idSvc: CheckIdsService,
   ) {
     authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
@@ -143,8 +144,8 @@ export class PatientUploadComponent implements OnInit {
 
         // Check if the IDs are correct
         if (d.privatePatientID) {
-          d['id_check'] = this.idSvc.checkPatientID(d.privatePatientID);
-          d['id_okay'] = d.id_check['id'] === d.privatePatientID;
+          // d['id_check'] = this.idSvc.checkPatientID(d.privatePatientID);
+          // d['id_okay'] = d.id_check['id'] === d.privatePatientID;
         }
       });
 
