@@ -11,3 +11,5 @@ export * from './auth.service';
 export * from './http-cookies.service';
 export * from './api.service';
 export * from './request-parameters.service';
+// export * from './sample-upload.service';
+// export * from './check-ids.service'
