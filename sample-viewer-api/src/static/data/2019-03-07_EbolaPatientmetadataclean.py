@@ -226,7 +226,7 @@ def nestSymptoms(row, timepoint = "survivor enrollment"):
     obj["symptoms"]["light_sensitivity"] = binarize(row['light sensitivity'])
     obj["symptoms"]["eye_pain"] = binarize(row['painful eyes'])
     obj["symptoms"]["eye_foreign_body_sensation"] = binarize(row['sensation of foreign body in eye'])
-    return(obj)
+    return([obj])
 df['symptoms'] = df.apply(nestSymptoms, axis = 1)
 
 # () ID/study/G-num all merge w/ previous data. --> Check data + add in hhID, altIDs, relatedTo
