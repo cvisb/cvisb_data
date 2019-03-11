@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { Patient, D3Nested } from '../../_models';
 
@@ -12,10 +12,9 @@ import { nest } from 'd3';
   styleUrls: ['./patient-elisas.component.scss']
 })
 
-export class PatientElisasComponent implements OnInit {
+export class PatientElisasComponent implements OnChanges {
   @Input() patient: Patient;
-  elisas;
-  elisa_table;
+  elisa_table: D3Nested[];
   test_types: string[] = ["IgG", "IgM", "Ag"];
 
   elisaSource: MatTableDataSource<any>;
@@ -24,12 +23,7 @@ export class PatientElisasComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.elisas = [
-      { "ELISAresult": "positive", "assayType": "IgG", "virus": "Ebola" },
-      { "ELISAresult": "unknown", "assayType": "IgM", "virus": "Ebola" },
-      { "ELISAresult": "negative", "assayType": "IgG", "virus": "Lassa" }];
-
+  ngOnChanges() {
 
     this.elisa_table = nest()
       .key((d: any) => d.virus) // sort by key
@@ -46,7 +40,7 @@ export class PatientElisasComponent implements OnInit {
           return prev;
         }, {});
       })
-      .entries(this.elisas) // tell it what data to process
+      .entries(this.patient.elisa) // tell it what data to process
       .map((d: any) => d.value);
 
 
