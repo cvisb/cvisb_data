@@ -12,11 +12,13 @@
 
 .symptom-false {
   & .fas {
-    color: accent(50);
+    // color: accent(50);
+    color: white;
   }
 
   & .far {
-    color: accent(200);
+    // color: accent(200);
+    color: $grey-200;
   }
 }
 
