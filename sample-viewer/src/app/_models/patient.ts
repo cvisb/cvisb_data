@@ -16,4 +16,5 @@ export class Patient {
   availableData?: Object[];
   relatedTo?: string[];
   elisa?: Object[];
+  symptoms?: Object[];
 }

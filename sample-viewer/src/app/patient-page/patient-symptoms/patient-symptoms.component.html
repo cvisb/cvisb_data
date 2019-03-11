@@ -1,3 +1,35 @@
-<p>
-  patient-symptoms works!
-</p>
+<div class="patient symptoms" *ngIf="patient.symptoms">
+  <!-- <div class="patient symptoms"  *ngIf="patient.symptoms"> -->
+
+
+  <h4 class="patient" id="symptoms">Observed symptoms</h4>
+
+  <div class="symptom-timepoint" *ngFor="let timepoint of patient.symptoms">
+    <div class="timepoint">
+      at {{ timepoint.timepoint }}:
+    </div>
+
+    <table class="symptom-list">
+      <tr *ngFor="let symptom of symptom_keys">
+        <th>
+          {{ symptom }}
+        </th>
+        <td>
+
+          <span class="fa-stack fa-1x symptom-false" *ngIf="timepoint.symptoms[symptom] === false">
+            <i class="fas fa-circle fa-stack-1x"></i>
+            <i class="far fa-circle fa-stack-1x" ></i>
+          </span>
+
+
+          <span class="fa-stack fa-1x symptom-true" *ngIf="timepoint.symptoms[symptom] === true">
+            <i class="fas fa-circle fa-stack-1x"></i>
+            <i class="far fa-check-circle fa-stack-1x"></i>
+          </span>
+
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
