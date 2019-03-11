@@ -1,3 +1,21 @@
+<div class="contact" *ngIf="patient.outcome === 'contact'">
+
+  <div class="how-related">
+    <span class="variable-field">relationship to survivor: </span>
+    <span class="variable-value">{{ patient.contactSurvivorRelationship }}</span>
+  </div>
+
+  <div class="how-exposed">
+    <span class="variable-field">exposure type: </span>
+    <span class="variable-value">{{ patient.exposureType }}</span>
+  </div>
+
+</div>
+
+
+<div>
+
+
 <h4 class="patient" id="related-patients">Related Patients</h4>
 
 <div class="related" *ngIf="patient.relatedTo; else nodata">
@@ -9,3 +27,4 @@
 <ng-template #nodata>
   <span class="nodata">no known relations</span>
 </ng-template>
+</div>
