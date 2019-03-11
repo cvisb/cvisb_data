@@ -1,7 +1,7 @@
 <h4 class="patient" id="demographics">demographics</h4>
 
-<div >
-  sex: <span [ngClass]="patient.gender">{{ patient.gender }}</span>
+<div>
+  sex: <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender }}</span>
   <!-- <span class="sex" [ngClass]="patient.gender">
   <span *ngIf="patient.gender === 'Female'"><i class="fas fa-venus"></i></span>
   <span *ngIf="patient.gender === 'Male'"><i class="fas fa-mars"></i></span>
@@ -10,14 +10,17 @@
 
 <div class="age">
   age:
-  {{ patient.age }}
+  <span class="variable-value">{{ patient.age }}</span>
 </div>
 
 <div class="country" [ngClass]="patient.country['name']">
   location:
+  <span class="variable-value">
   <span *ngFor="let area of patient.homeLocation">
     {{ area['name'] }} {{ area['administrativeType'] }},
+  </span> {{ patient.country['name'] }}
+
+  <svg-icon [icon]="patient.country.identifier" class="country-icon" [ngClass]="patient.country.identifier"></svg-icon>
   </span>
-  {{ patient.country['name'] }}
-  <!-- <svg-icon [icon]="patient.country.identifier" class="country-icon" [ngClass]="patient.country.identifier"></svg-icon> -->
+
 </div>

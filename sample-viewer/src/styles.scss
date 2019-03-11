@@ -79,6 +79,10 @@ a {
   }
 }
 
+.variable-value {
+  font-weight: 400;
+}
+
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
