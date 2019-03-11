@@ -1,0 +1,46 @@
+<div class="patient-elisas" *ngIf="patient.elisa">
+
+
+  <h4 class="patient" id="elisa">ELISA results</h4>
+
+
+  <div class="preview-sample">
+    <table mat-table [dataSource]="elisaSource">
+
+
+      <ng-container matColumnDef="virus">
+        <th mat-header-cell *matHeaderCellDef>virus</th>
+        <td mat-cell *matCellDef="let element" class="message" class="virus">
+          {{ element.virus }}
+        </td>
+      </ng-container>
+
+
+      <ng-container *ngFor="let key of test_types" [matColumnDef]="key">
+
+        <th mat-header-cell *matHeaderCellDef>{{ key }}</th>
+        <td mat-cell *matCellDef="let element" class="message">
+
+          <div *ngFor="let result of element[key]" class="elisa-results">
+            <div class="elisa-result" [ngSwitch]="result" [id]="result">
+              <div *ngSwitchCase="'positive'">
+                <mat-icon>control_point</mat-icon>
+              </div>
+              <div *ngSwitchCase="'negative'">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </div>
+              <div *ngSwitchCase="'unknown'">
+                <mat-icon>help_outline</mat-icon>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>

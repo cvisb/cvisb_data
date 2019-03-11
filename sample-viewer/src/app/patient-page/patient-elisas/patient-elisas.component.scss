@@ -1,0 +1,31 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+#positive {
+  color: accent-redder(A700);
+}
+
+#negative {
+  color: $sierraleone-blue;
+}
+
+#unknown {
+  color: $grey-400;
+}
+
+.virus {
+  font-weight: 400;
+}
+
+th.mat-header-cell, .mat-cell {
+    text-align: center;
+    min-width: 50px;
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0px !important;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+     padding-right: 0px !important;
+}
