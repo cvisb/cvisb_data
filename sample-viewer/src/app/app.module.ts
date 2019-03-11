@@ -60,7 +60,7 @@ import {
   FilterElisasComponent, FilterExperimentComponent, FilterFileTypeComponent,
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
-  // FilterLabComponent, FilterSampleTypeComponent, FilterOrganizationComponent, FilterSpeciesComponent, FilterSampleComponent
+  // FilterLabComponent, FilterSampleTypeComponent, FilterOrganizationComponent, FilterSpeciesComponent,
 } from './filters';
 
 // Patient page components
@@ -79,6 +79,7 @@ import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.compo
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
+import { PatientElisasComponent } from './patient-page/patient-elisas/patient-elisas.component';
 
 
 @NgModule({
@@ -149,6 +150,7 @@ import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patien
     AddPatientsComponent,
     PatientUploadComponent,
     PatientSymptomsComponent,
+    PatientElisasComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
