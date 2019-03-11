@@ -78,6 +78,7 @@ import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.compo
 // import { UploadDifferencesComponent } from './add-samples/upload-differences/upload-differences.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
+import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
 
 
 @NgModule({
@@ -147,6 +148,7 @@ import { PatientUploadComponent } from './add-patients/patient-upload/patient-up
     //
     AddPatientsComponent,
     PatientUploadComponent,
+    PatientSymptomsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
