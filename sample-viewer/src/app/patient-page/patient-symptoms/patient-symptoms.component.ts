@@ -15,10 +15,12 @@ export class PatientSymptomsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-if(this.patient && this.patient.symptoms){
-      this.patient.symptoms.forEach( d =>
+    console.log(this.patient);
+    if (this.patient && this.patient.symptoms) {
+      console.log(this.patient.symptoms)
+      this.patient.symptoms.forEach(d =>
         this.symptom_keys = this.symptom_keys.concat(this.symptom_keys, Object.keys(d['symptoms'])));
+    }
   }
-}
 
 }
