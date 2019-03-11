@@ -1,0 +1,13 @@
+<div class="survivor-relationship" *ngIf="patient.outcome === 'contact'">
+  <h4 class="patient" id="related-patients">Relationship to Survivor</h4>
+  <div class="how-related">
+    <span class="variable-field">relationship to survivor: </span>
+    <span class="variable-value">{{ patient.contactSurvivorRelationship }}</span>
+  </div>
+
+  <div class="how-exposed">
+    <span class="variable-field">exposure type: </span>
+    <span class="variable-value">{{ patient.exposureType }}</span>
+  </div>
+
+</div>

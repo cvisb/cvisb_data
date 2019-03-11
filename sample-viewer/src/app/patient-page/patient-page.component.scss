@@ -26,6 +26,14 @@
    // 18+98+27+22-16;
 }
 
+.patient-metadata {
+  justify-content: space-between;
+}
+
+.patient-demographics {
+  justify-content: space-between;
+}
+
 // --- right side nav pane ---
 .patient-nav {
   &.Ebola {
