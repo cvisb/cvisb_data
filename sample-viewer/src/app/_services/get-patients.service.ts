@@ -306,7 +306,7 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: new HttpParams()
         .set('q', param_string)
-        .set('size', "1000")
+        .set('size', "1050")
     }).subscribe(data => {
       let patients = data['body']['hits'];
       console.log(data)
@@ -333,7 +333,7 @@ export class GetPatientsService {
     console.log('calling backend to get patients');
     // console.log(this.patients);
 
-    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
+    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1050", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
