@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { Patient } from '../../_models';
 
@@ -8,16 +8,14 @@ import { Patient } from '../../_models';
   styleUrls: ['./patient-symptoms.component.scss']
 })
 
-export class PatientSymptomsComponent implements OnInit {
+export class PatientSymptomsComponent implements OnChanges {
   @Input() patient: Patient;
   symptom_keys: string[] = [];
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.patient);
+  ngOnChanges() {
     if (this.patient && this.patient.symptoms) {
-      console.log(this.patient.symptoms)
       this.patient.symptoms.forEach(d =>
         this.symptom_keys = this.symptom_keys.concat(this.symptom_keys, Object.keys(d['symptoms'])));
     }
