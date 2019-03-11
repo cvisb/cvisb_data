@@ -199,7 +199,7 @@ export class PatientUploadComponent implements OnInit {
   }
 
   removeEmpties(data, headers) {
-    headers.filter(d => d !== "sampleID");
+    headers.filter(d => d !== "patientID");
 
     let filtered = _.cloneDeep(data);
     // let filtered = (data);
@@ -216,7 +216,7 @@ export class PatientUploadComponent implements OnInit {
     let errs = [];
 
     // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n")[0], id: document.input_obj.sampleID, input: document.input_obj })))
+    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n").filter((d,i) => i === 0 || i === 2), id: document.input_obj.sampleID, input: document.input_obj })))
     console.log(errs)
 
     // Group by error type
@@ -225,7 +225,7 @@ export class PatientUploadComponent implements OnInit {
       .rollup(function(values: any): any {
         return {
           count: values.length,
-          ids: values.map(x => x.id),
+          ids: values.map(x => x.patientID),
           inputs: values.map(x => x.input)
         }
       }).entries(errs);
