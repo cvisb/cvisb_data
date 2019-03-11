@@ -25,6 +25,10 @@
             <i class="far fa-check-circle fa-stack-1x"></i>
           </span>
 
+          <span class="symptom-unavailable" *ngIf="!timepoint.symptoms[symptom] && timepoint.symptoms[symptom] !== false">
+          N/A
+        </span>
+
         </td>
       </tr>
     </table>

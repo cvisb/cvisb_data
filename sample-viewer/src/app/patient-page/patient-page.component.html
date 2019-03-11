@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="container patient-ids-samples">
+      <div class="container patient-ids">
         <div class="container-column">
           <div class="updated">
             updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
@@ -27,7 +27,6 @@
           </div>
         </div>
 
-        <app-patient-samples [patient]="patient"></app-patient-samples>
       </div>
 
       <div class="container patient-metadata">
@@ -37,6 +36,8 @@
           <app-patient-relationships [patient]="patient"></app-patient-relationships>
           <app-patient-related [patient]="patient"></app-patient-related>
         </div>
+
+        <app-patient-samples [patient]="patient"></app-patient-samples>
 
 
         <app-patient-elisas [patient]="patient"></app-patient-elisas>
