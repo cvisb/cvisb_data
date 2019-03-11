@@ -9,11 +9,16 @@ import { Patient } from '../../_models';
 })
 
 export class PatientSymptomsComponent implements OnInit {
-    @Input() patient: Patient;
+  @Input() patient: Patient;
+  symptom_keys: string[] = [];
 
   constructor() { }
 
   ngOnInit() {
+if(this.patient && this.patient.symptoms){
+      this.patient.symptoms.forEach( d =>
+        this.symptom_keys = this.symptom_keys.concat(this.symptom_keys, Object.keys(d['symptoms'])));
   }
+}
 
 }
