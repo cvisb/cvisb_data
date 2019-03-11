@@ -1,5 +1,5 @@
-<div class="contact" *ngIf="patient.outcome === 'contact'">
-
+<div class="survivor-relationship" *ngIf="patient.outcome === 'contact'">
+  <h4 class="patient" id="related-patients">Relationship to Survivor</h4>
   <div class="how-related">
     <span class="variable-field">relationship to survivor: </span>
     <span class="variable-value">{{ patient.contactSurvivorRelationship }}</span>
@@ -13,18 +13,16 @@
 </div>
 
 
-<div>
+<div class="related=patients">
+  <h4 class="patient" id="related-patients">Related Patients</h4>
 
-
-<h4 class="patient" id="related-patients">Related Patients</h4>
-
-<div class="related" *ngIf="patient.relatedTo; else nodata">
-  <div class="related-link" *ngFor="let contact of patient.relatedTo">
-    <a [routerLink]="['/patient', contact]">{{ contact }}</a>
+  <div class="related" *ngIf="patient.relatedTo; else nodata">
+    <div class="related-link" *ngFor="let contact of patient.relatedTo">
+      <a [routerLink]="['/patient', contact]">{{ contact }}</a>
+    </div>
   </div>
-</div>
 
-<ng-template #nodata>
-  <span class="nodata">no known relations</span>
-</ng-template>
+  <ng-template #nodata>
+    <span class="nodata">no known relations</span>
+  </ng-template>
 </div>

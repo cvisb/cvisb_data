@@ -13,8 +13,8 @@
   <span class="variable-value">{{ patient.age }}</span>
 </div>
 
-<div class="country" [ngClass]="patient.country['name']">
-  location:
+<div class="country container" [ngClass]="patient.country['name']">
+  <span class="variable-field">location:</span>
   <span class="variable-value">
   <span *ngFor="let area of patient.homeLocation">
     {{ area['name'] }} {{ area['administrativeType'] }},
