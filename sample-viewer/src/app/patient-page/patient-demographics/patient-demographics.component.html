@@ -20,7 +20,7 @@
     {{ area['name'] }} {{ area['administrativeType'] }},
   </span> {{ patient.country['name'] }}
 
-  <svg-icon [icon]="patient.country.identifier" class="country-icon" [ngClass]="patient.country.identifier"></svg-icon>
+  <svg-icon [icon]="patient.country['identifier']" class="country-icon" [ngClass]="patient.country['identifier']" *ngIf="patient.country['identifier']"></svg-icon>
   </span>
 
 </div>
