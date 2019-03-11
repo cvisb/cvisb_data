@@ -216,7 +216,12 @@ export class PatientUploadComponent implements OnInit {
     let errs = [];
 
     // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n").filter((d,i) => i === 0 || i === 2), id: document.input_obj.patientID, input: document.input_obj })))
+    error_array.forEach(document => document.error_messages.forEach(
+      msg => errs.push({
+        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
+        id: document.input_obj.patientID,
+        input: document.input_obj
+      })))
     console.log(errs)
 
     // Group by error type
