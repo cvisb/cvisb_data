@@ -80,6 +80,7 @@ import { AddPatientsComponent } from './add-patients/add-patients/add-patients.c
 import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
 import { PatientElisasComponent } from './patient-page/patient-elisas/patient-elisas.component';
+import { PatientRelationshipsComponent } from './patient-page/patient-relationships/patient-relationships.component';
 
 
 @NgModule({
@@ -151,6 +152,7 @@ import { PatientElisasComponent } from './patient-page/patient-elisas/patient-el
     PatientUploadComponent,
     PatientSymptomsComponent,
     PatientElisasComponent,
+    PatientRelationshipsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),

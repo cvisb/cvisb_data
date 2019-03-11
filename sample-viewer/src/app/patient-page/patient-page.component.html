@@ -16,31 +16,43 @@
         </div>
       </div>
 
-    <div class="updated">
-      updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+      <div class="container patient-ids-samples">
+        <div class="container-column">
+          <div class="updated">
+            updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+          </div>
+
+          <div class="altIDs" *ngIf="patient.alternateIdentifier">
+            alternate ID: <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier">{{ id }}</span>
+          </div>
+        </div>
+
+        <app-patient-samples [patient]="patient"></app-patient-samples>
+      </div>
+
+      <div class="container patient-metadata">
+
+        <div class="container-column patient-demographics">
+          <app-patient-demographics [patient]="patient"></app-patient-demographics>
+          <app-patient-relationships [patient]="patient"></app-patient-relationships>
+          <app-patient-related [patient]="patient"></app-patient-related>
+        </div>
+
+
+        <app-patient-elisas [patient]="patient"></app-patient-elisas>
+
+        <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
+
+      </div>
+
+
+      <div class="patient-data">
+        <h4 class="patient" id="data">Data</h4>
+        <app-patient-hla [patient]="patient"></app-patient-hla>
+
+        <app-patient-serology [patient]="patient"></app-patient-serology>
+      </div>
     </div>
-
-    <div class="altIDs" *ngIf="patient.alternateIdentifier">
-      alternate ID: <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier">{{ id }}</span>
-    </div>
-
-    <app-patient-samples [patient]="patient"></app-patient-samples>
-
-    <app-patient-demographics [patient]="patient"></app-patient-demographics>
-
-    <app-patient-elisas [patient]="patient"></app-patient-elisas>
-
-    <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
-
-    <app-patient-related [patient]="patient"></app-patient-related>
-
-    <div class="patient-data">
-      <h4 class="patient" id="data">Data</h4>
-      <app-patient-hla [patient]="patient"></app-patient-hla>
-
-      <app-patient-serology [patient]="patient"></app-patient-serology>
-    </div>
-  </div>
   </div>
 
 </div>
