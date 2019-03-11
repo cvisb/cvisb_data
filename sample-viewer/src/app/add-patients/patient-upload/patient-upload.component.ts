@@ -216,7 +216,7 @@ export class PatientUploadComponent implements OnInit {
     let errs = [];
 
     // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n").filter((d,i) => i === 0 || i === 2), id: document.input_obj.sampleID, input: document.input_obj })))
+    error_array.forEach(document => document.error_messages.forEach(msg => errs.push({ message: msg.split("\n").filter((d,i) => i === 0 || i === 2), id: document.input_obj.patientID, input: document.input_obj })))
     console.log(errs)
 
     // Group by error type
@@ -225,7 +225,7 @@ export class PatientUploadComponent implements OnInit {
       .rollup(function(values: any): any {
         return {
           count: values.length,
-          ids: values.map(x => x.patientID),
+          ids: values.map(x => x.id),
           inputs: values.map(x => x.input)
         }
       }).entries(errs);
