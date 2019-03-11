@@ -42,7 +42,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
 
 # id
 - "@id":                 cvisb:sampleLabel
