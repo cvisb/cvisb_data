@@ -44,6 +44,14 @@ export class PatientUploadComponent implements OnInit {
   ngOnChanges() {
   }
 
+  deletePatients() {
+    console.log("deleting all!  eep!")
+    this.apiSvc.wipeEndpoint('patient');
+
+    // Call patient service to update the samples.
+    this.patientSvc.getAllPatients();
+  }
+
   fileChange(event) {
     let fileList: FileList = event.target.files;
 
@@ -98,7 +106,7 @@ export class PatientUploadComponent implements OnInit {
         this.apiSvc.put("patient", data).subscribe(resp => {
           this.uploadResponse = `Success! ${resp}`;
           console.log(resp)
-          // Call sample service to update the samples.
+          // Call patient service to update the samples.
           this.patientSvc.getAllPatients();
         }, err => {
           this.uploadResponse = "Uh oh. Something went wrong."

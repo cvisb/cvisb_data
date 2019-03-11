@@ -330,7 +330,7 @@ export class GetPatientsService {
 
 
   getAllPatients() {
-    console.log('calling backend to get patients');
+    console.log('calling backend to get ALL patients');
     // console.log(this.patients);
 
     this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1050", {
