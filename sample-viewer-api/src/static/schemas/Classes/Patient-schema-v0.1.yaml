@@ -76,10 +76,10 @@
   authenticated:         false
 
 # household identifier
-- "@id":                 cvisb:householdIdentifier
+- "@id":                 cvisb:contactGroupIdentifier
   "@type":               rdf:Property
-  rdfs:comment:          Household ID for patient and associated contacts
-  rdfs:label:            householdIdentifier
+  rdfs:comment:          ID group for patient and associated contacts
+  rdfs:label:            contactGroupIdentifier
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
@@ -178,7 +178,6 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
-    - "@id":             cvisb:Place
   schema:sameAs:
     "@id":               schema:homeLocation
   owl:cardinality:       many
@@ -239,20 +238,6 @@
   marginality:           optional
   authenticated:         false
 
-# death
-- "@id":                 cvisb:deathDate
-  "@type":               rdf:Property
-  rdfs:comment:          Date of death
-  rdfs:label:            deathDate
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             schema:Date
-  schema:sameAs:
-    "@id":               schema:deathDate
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         true
 
 # gender
 - "@id":                 cvisb:gender
@@ -276,7 +261,7 @@
 # contacts:
 - "@id":                 cvisb:relatedTo
   "@type":               rdf:Property
-  rdfs:comment:          A list of related household contacts's patientIDs
+  rdfs:comment:          A list of related household contacts's public patientIDs
   rdfs:label:            relatedTo
   schema:domainIncludes:
     - "@id":             schema:Text
@@ -285,6 +270,30 @@
   owl:cardinality:       many
   marginality:           optional
   authenticated:         false
+
+- "@id":                 cvisb:exposureType
+  "@type":               rdf:Property
+  rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.
+  rdfs:label:            exposureType
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:contactSurvivorRelationship
+  "@type":               rdf:Property
+  rdfs:comment:          For contacts, how they are related to the infected person.
+  rdfs:label:            contactSurvivorRelationship
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
 
 # age
 - "@id":                 cvisb:age
@@ -364,6 +373,19 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:RTPCR
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+# Symptoms
+- "@id":                 cvisb:symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          List of symptoms for the patient
+  rdfs:label:            symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Symptoms
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
