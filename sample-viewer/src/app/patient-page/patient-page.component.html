@@ -21,7 +21,7 @@
     </div>
 
     <div class="altIDs" *ngIf="patient.alternateIdentifier">
-      alternate ID: <span class="altID" *ngFor="let id of patient.alternateIdentifier">{{ id }}</span>
+      alternate ID: <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier">{{ id }}</span>
     </div>
 
     <app-patient-samples [patient]="patient"></app-patient-samples>
