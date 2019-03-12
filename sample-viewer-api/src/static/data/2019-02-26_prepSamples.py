@@ -2,6 +2,7 @@
 #
 
 import pandas as pd
+import re
 
 input_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-26_DNA and RNA sample List_MP_PRIVATE.xlsx"
 output_file  = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-03-12_samples_PRIVATE.json"
@@ -32,8 +33,9 @@ def makePrimaryID(row):
     return(str(row.privatePatientID) + "_" + str(row.sourceSampleType))
 
 def makeSampleID(row):
-    return("mp" + str(row.sampleType) + str(row.rowNum) + "_" + str(row.sampleType) + str(row.isolationDate))
-import re
+    # return("mp" + str(row.sampleType) + str(row.rowNum) + "_" + str(row.sampleType) + str(row.isolationDate))
+    return(str(row.timepointID) + "_" + str(row.sampleType) + str(row.isolationDate))
+
 
 def splitGID(id):
     if(id == id):
@@ -49,6 +51,7 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
     df = pd.melt(df, id_vars=id_col, value_name='timepointID')
 
     # separate out the patient ID from visit code.
+    df['patientID'] = "unknown"
     df['privatePatientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
     df['privatePatientID'] = df.privatePatientID.apply(splitGID) # Add in hyphen
 
@@ -60,7 +63,7 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
     df['sampleType'] = df.variable.map(getType)
     df['sourceSampleType'] = df.variable.map(getPrimary)
     df['sourceSampleID'] = df.apply(makePrimaryID, axis=1)
-    df['location'] = lab
+    df['lab'] = lab
     df['numAliquots'] = numAliquots
     df['dateModified'] = modified
     df['updatedBy'] = updated
@@ -105,7 +108,7 @@ df["rowNum"] = df.groupby("sampleType").cumcount()+1
 df["sampleID"] = df.apply(makeSampleID, axis = 1)
 
 df.columns
-df[df.duplicated(subset=["derivedIndex", "isolationDate", "dateModified", "location", "numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
+df[df.duplicated(subset=["derivedIndex", "isolationDate", "dateModified", "lab", "numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
 # remove unneeded cols
 df.drop(["#", "Unnamed: 0", "variable", "rowNum"], axis=1, inplace=True)
 
