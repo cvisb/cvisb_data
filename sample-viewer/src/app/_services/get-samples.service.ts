@@ -257,34 +257,34 @@ export class GetSamplesService {
     //   })
     //   .entries(samples);
 
-    for (let i = 0; i < this.samples_wide.length; i++) {
-      let row = this.samples_wide[i];
-      let row_vals = row['value'].all_data;
-      let arr = [];
-
-      for (let j = 0; j < row_vals.length; j++) {
-        let stype = row_vals[j].sampleType;
-        // console.log(stype)
-        // let stype_idx = row.findIndex(d => stype === );
-        if (row.hasOwnProperty(stype)) {
-          this.samples_wide[i][stype]['location'].push({ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] });
-        } else {
-          let indiv_sample = {
-            'sampleID': row_vals[j]['sampleID'],
-            'dilutionFactor': row_vals[j]['dilutionFactor'],
-            'freezingBuffer': row_vals[j]['freezingBuffer'],
-            'isolationDate': row_vals[j]['isolationDate'],
-            'species': row_vals[j]['species'],
-            'protocol': row_vals[j]['protocol'],
-            'sourceSampleID': row_vals[j]['sourceSampleID'],
-            'sampleType': row_vals[j]['sampleType'],
-            'location': [{ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] }]
-          };
-
-          this.samples_wide[i][stype] = indiv_sample;
-        }
-      }
-    }
+    // for (let i = 0; i < this.samples_wide.length; i++) {
+    //   let row = this.samples_wide[i];
+    //   let row_vals = row['value'].all_data;
+    //   let arr = [];
+    //
+    //   for (let j = 0; j < row_vals.length; j++) {
+    //     let stype = row_vals[j].sampleType;
+    //     // console.log(stype)
+    //     // let stype_idx = row.findIndex(d => stype === );
+    //     if (row.hasOwnProperty(stype)) {
+    //       this.samples_wide[i][stype]['location'].push({ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] });
+    //     } else {
+    //       let indiv_sample = {
+    //         'sampleID': row_vals[j]['sampleID'],
+    //         'dilutionFactor': row_vals[j]['dilutionFactor'],
+    //         'freezingBuffer': row_vals[j]['freezingBuffer'],
+    //         'isolationDate': row_vals[j]['isolationDate'],
+    //         'species': row_vals[j]['species'],
+    //         'protocol': row_vals[j]['protocol'],
+    //         'sourceSampleID': row_vals[j]['sourceSampleID'],
+    //         'sampleType': row_vals[j]['sampleType'],
+    //         'location': [{ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] }]
+    //       };
+    //
+    //       this.samples_wide[i][stype] = indiv_sample;
+    //     }
+    //   }
+    // }
     // console.log(this.samples_wide)
     // let arr_idx = arr.findIndex(d => d.sampleID === sample_data[i]['sampleID']);
 
