@@ -148,7 +148,7 @@ export class PatientUploadComponent implements OnInit {
     if (data) {
       data.forEach(d => {
         // Append user name to the location change
-        d['location.updatedBy'] = this.user.name;
+        d['updatedBy'] = this.user.name;
 
         // Check if the IDs are correct
         if (d.privatePatientID) {

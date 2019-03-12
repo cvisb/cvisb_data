@@ -28,7 +28,8 @@ export class SampleComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   sample_types: string[] = ['plasma', 'PBMC', 'DNA', 'viralRNA'];
-  displayedColumns: string[] = ["key", "privatePatientID", "cohort", "outcome", "visitCode"].concat(this.sample_types);
+  displayedColumns: string[] = ["key", "privatePatientID", "visitCode"].concat(this.sample_types);
+  // displayedColumns: string[] = ["key", "privatePatientID", "cohort", "outcome", "visitCode"].concat(this.sample_types);
   selection = new SelectionModel<any>(true, []);
 
   locationForms = this.fb.group({
