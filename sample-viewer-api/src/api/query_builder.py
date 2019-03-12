@@ -1,4 +1,5 @@
 from biothings.web.api.es.query_builder import ESQueryBuilder
+from elasticsearch.helpers import scan
 import logging
 
 class ESQueryBuilder(ESQueryBuilder):
@@ -9,7 +10,8 @@ class ESQueryBuilder(ESQueryBuilder):
         return _kwargs
 
     def get_query_filters(self):
-        return self._get_query_filters + self.join_filter
+        if self.join
+        return self._get_query_filters() + self.join_filter
 
     def _query_GET_query(self, q):
         # override to add new things to biothings
@@ -42,7 +44,7 @@ class ESQueryBuilder(ESQueryBuilder):
                                     {"terms": {"patientID.keyword": self.options.patientID}}
                                 ]}
                             }, "_source": ["associatedSamples"]
-                    }, index=self.options.cvisb_endpoints["sample"], doc_type="sample")]))
+                    }, index=self.options.cvisb_endpoints["sample"]['index'], doc_type="sample")]))
                     logging.debug("_associatedSamples: {}".format(_associatedSamples))
                     self.join_filter = [{
                         "terms": {"sampleID.keyword": _associatedSamples}
