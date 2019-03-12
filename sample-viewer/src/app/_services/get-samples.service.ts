@@ -117,7 +117,7 @@ export class GetSamplesService {
       if (samples) {
         // Splay out wide by patient ID.
         this.samples_wide = d3.nest()
-          .key((d: any) => d.privatePatientID)
+          .key((d: any) => (d.privatePatientID + String(d.visitCode)))
           // .key((d: any) => d.visitCode)
           .rollup(function(v: any): any {
             return {
@@ -220,7 +220,7 @@ export class GetSamplesService {
         // console.log(stype)
         // let stype_idx = row.findIndex(d => stype === );
         if (row.hasOwnProperty(stype)) {
-          this.samples_wide[i][stype]['location'].push({ 'lab': row_vals[j]['location'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] });
+          this.samples_wide[i][stype]['location'].push({ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] });
         } else {
           let indiv_sample = {
             'sampleID': row_vals[j]['sampleID'],
@@ -231,7 +231,7 @@ export class GetSamplesService {
             'protocol': row_vals[j]['protocol'],
             'sourceSampleID': row_vals[j]['sourceSampleID'],
             'sampleType': row_vals[j]['sampleType'],
-            'location': [{ 'lab': row_vals[j]['location'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] }]
+            'location': [{ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] }]
           };
 
           this.samples_wide[i][stype] = indiv_sample;
