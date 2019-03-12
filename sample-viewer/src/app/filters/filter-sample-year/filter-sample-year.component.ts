@@ -211,7 +211,7 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.yearDomain.map(String));
 
-      console.log(this.x)
+      console.log(this.x.domain())
 
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
@@ -221,10 +221,10 @@ export class FilterSampleYearComponent implements OnInit {
       this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
       // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      .domain(this.yearDomain)
+      .domain(d3.extent(this.yearDomain))
       .clamp(true);
 
-      console.log(this.xLinear)
+      console.log(this.xLinear.domain())
 
     let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
@@ -382,22 +382,20 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("id", "year_slider")
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top + 12})`);
 
-let x_end = this.xLinear.invert(this.x.range()[1]);
-console.log(x_end)
 
     this.slider.append("line")
       .attr("class", "track")
       .attr("x1", this.x.range()[0])
-      .attr("x2", x_end);
+      .attr("x2", this.x.range()[1]);
 
     this.slider.append("line")
       .attr("class", "track track-filled")
       .attr("x1", this.x.range()[0])
-      .attr("x2", x_end);
+      .attr("x2", this.x.range()[1]);
 
     this.handle_right = this.slider.append("path")
       .attr("class", "handle-right")
-      .attr("transform", `translate(${x_end},-5)`)
+      .attr("transform", `translate(${this.x.range()[1]},-5)`)
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
@@ -449,13 +447,8 @@ console.log(x_end)
 
     // Update slider handles
     if (this.handle_left && this.handle_right) {
-    console.log(lower_limit)
-    console.log(upper_limit)
-    console.log(this.xLinear(lower_limit))
-    console.log(this.xLinear(upper_limit))
       this.handle_left
-        .attr("transform", `translate(${100 - this.x.bandwidth() * 0.5},-5)`);
-        // .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
+        .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
 
       if (lower_limit === 0 && upper_limit === 0) {
         // If the limit is 0, set the left and right handles to overlap.
@@ -463,9 +456,9 @@ console.log(x_end)
           .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
-        // d3.selectAll(".track-filled")
-        //   .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-        //   .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+        d3.selectAll(".track-filled")
+          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
+          .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
 
 
       } else {
