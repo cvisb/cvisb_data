@@ -192,9 +192,22 @@ export class GetSamplesService {
 
 
   nestSamples(samples) {
+
+    // Update function: either creates an array of unique values, or a single value.
     let updateSet = function(prev, curr, variable) {
-      return (prev[variable] ? prev[variable].add(curr[variable]) : new Set().add(curr[variable])
-      )
+      let return_val;
+      if (prev[variable]) {
+        return_val = prev[variable];
+        if (prev[variable] !== curr[variable] && !prev[variable].includes(curr[variable])) {
+
+          Array.isArray(return_val) ? null :
+            return_val = [return_val];
+          return_val.push(curr[variable]);
+        }
+      } else {
+        return_val = curr[variable];
+      }
+      return (return_val)
     }
 
     // Converts the long table into a wide one, with patientID, privatePatientID, and visitCode pulled out to the highest level
