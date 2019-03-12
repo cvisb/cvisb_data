@@ -1,3 +1,28 @@
+@import '../../sass/material-theme.scss';
+
+// --- Header ---
+.page-header {
+  h1 {
+    color: accent-redder(50);
+    -webkit-text-stroke-color: accent-redder(500);
+    -webkit-text-stroke-width: 1px;
+  }
+
+  /deep/ .dwnld-btn {
+    background: lighten(accent-redder(200), 14%);
+    border: 1px solid accent-redder(500);
+    color: accent-redder(A700);
+  }
+}
+
+.template-link {
+  text-transform: uppercase;
+  font-weight: 300;
+  background: lighten(accent-redder(200), 14%);
+  border: 1px solid accent-redder(500);
+  color: accent-redder(A700);
+}
+
 .button-row button {
   margin: 0 10px;
 }
