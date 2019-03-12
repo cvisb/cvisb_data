@@ -88,7 +88,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 # description
 - "@id":                 cvisb:description
@@ -104,7 +104,7 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 # patient ID
 - "@id":                 cvisb:patientID
@@ -396,7 +396,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  
+
   # versions
 - "@id":                 cvisb:_version
   "@type":               rdf:Property
