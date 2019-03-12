@@ -82,7 +82,17 @@ df.groupby("outcome")["ebola IgG"].value_counts(normalize=True)
 
 # --- Cleanup ----
 # --- Rename a bunch of fields. ---
-df['patientID'] = df['study specific number']
+def getPatientID(row):
+    if(row['study specific number'] == row['study specific number']):
+        if(row.outcome == "survivor"):
+            return("S-" + row['study specific number'])
+
+        elif(row.outcome == "contact"):
+            return("C-" + row['study specific number'])
+        else:
+            return(row['study specific number'])
+
+df['patientID'] = df.apply(getPatientID, axis = 1)
 df['age'] = df['age at diagnosis']
 
 # convert gender to M/F
