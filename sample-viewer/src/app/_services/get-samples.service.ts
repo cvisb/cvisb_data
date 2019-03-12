@@ -21,7 +21,7 @@ export class GetSamplesService {
 
 // Event listeners to pass data.
   private samples_wide: SampleWide[] = [];
-  public samplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
+  public samplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>(null);
   public samplesWideSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
