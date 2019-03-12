@@ -38,14 +38,17 @@ export class RequestParametersService {
   // Essential for object constancy on transitions/updates.
   addMissing(data, domain: any[]) {
     let keys = data.map(d => d.key);
+    console.log(keys)
 
     let missing_data = domain.filter(d => !keys.includes(d));
+    console.log(missing_data)
 
     missing_data.forEach(d => {
       data.push({ key: d, value: 0 });
     })
     return (data);
   }
+
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
     // console.log(newParam)
@@ -85,7 +88,11 @@ export class RequestParametersService {
       if (newParam.value && newParam.value.length > 0) {
         if (newParam.exclude) {
           let valueIdx = currentParams[idx].value.indexOf(newParam.value);
-          if (valueIdx !== -1) currentParams[idx].value.splice(valueIdx, 1);
+          if (valueIdx !== -1) {
+            currentParams[idx].value.splice(valueIdx, 1);
+          } else {
+// https://dev.cvisb.org/api/patient/query?q=(cohort:Lassa)%20OR%20(NOT%20cohort:Lassa)
+          };
         } else if (Array.isArray(newParam.value)) {
           // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
           currentParams[idx].value = newParam.value;
