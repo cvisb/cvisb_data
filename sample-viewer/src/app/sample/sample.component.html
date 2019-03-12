@@ -4,19 +4,22 @@
   <app-download-btn [data]="samples" filetype="samples"></app-download-btn>
 </div>
 
+<!-- <app-filter-sample></app-filter-sample> -->
 
-<form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
+
+<!-- <form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
   <h1>
   <button mat-stroked-button color="accent" type="button" (click)="clearInput()">
-  <!-- <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid"> -->
+  <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid">
     Undo changes
   </button>
   <button mat-raised-button color="accent" type="submit">
-  <!-- <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid"> -->
+  <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid">
     Save changes
   </button>
 </h1>
-  <app-bulk-edit></app-bulk-edit>
+  <app-bulk-edit></app-bulk-edit> -->
+
   <!--
 <div class="sample-locations">
     <input type="text" name="aliquots" class="edit-aliquots" value="2">
@@ -111,9 +114,9 @@
               </div>
 
               <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
-                <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="location.numAliquots">
+                <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots">
 
-                <mat-select [(value)]="location.lab" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
+                <mat-select [(value)]="location" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
                   <mat-option *ngFor="let lab of labs" [value]="lab.id">{{lab.id}}</mat-option>
                 </mat-select>
 
@@ -146,12 +149,12 @@
 
 
             <mat-form-field class="location-aliquots">
-              <input matInput [value]="location.num_aliquots" disabled="true">
+              <input matInput [value]="numAliquots" disabled="true">
             </mat-form-field>
 
             <mat-form-field class="location-lab">
-              <mat-select [(value)]="location.lab" disabled="false">
-                <mat-option [value]="location.lab">{{location.lab}}</mat-option>
+              <mat-select [(value)]="location" disabled="false">
+                <mat-option [value]="location">{{location}}</mat-option>
                 <mat-option value="option2">Option 2</mat-option>
                 <mat-option value="option3">Option 3</mat-option>
               </mat-select>
@@ -194,7 +197,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
 
   </mat-table>
-</form>
+<!-- </form> -->
 <!-- PAGINATION -->
-<mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+<mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 25, 50, 100]">
 </mat-paginator>
