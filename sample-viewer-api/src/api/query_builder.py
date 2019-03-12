@@ -10,7 +10,6 @@ class ESQueryBuilder(ESQueryBuilder):
         return _kwargs
 
     def get_query_filters(self):
-        if self.join
         return self._get_query_filters() + self.join_filter
 
     def _query_GET_query(self, q):
