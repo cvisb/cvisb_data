@@ -115,24 +115,7 @@ export class GetSamplesService {
       this.samplesSubject.next(samples);
       // this.samplesSubject.next(this.samples.slice(0, 11));
       if (samples) {
-        // Splay out wide by patient ID.
-        this.samples_wide = d3.nest()
-          .key((d: any) => (d.privatePatientID + String(d.visitCode)))
-          // .key((d: any) => d.visitCode)
-          .rollup(function(v: any): any {
-            return {
-              count: v.length,
-              patientID: v[0].patientID,
-              privatePatientID: v[0].privatePatientID,
-              visitCode: v[0].visitCode,
-              // patient_type: v[0].patient_type,
-              // patient_cohort: v[0].patient_cohort,
-              all_data: v.map(d => d)
-            };
-          })
-          .entries(samples);
-
-          console.log(this.samples_wide)
+        // console.log(this.samples_wide)
 
         // for(let i =0; i < this.samples.length)
 
@@ -146,7 +129,7 @@ export class GetSamplesService {
 
 
         // Grab the sample locations and data and reshape to display in the table.
-        this.nestSamples();
+        this.nestSamples(samples);
         this.samplesWideSubject.next(this.samples_wide);
       } else {
         console.log('Error in getting samples')
@@ -208,7 +191,71 @@ export class GetSamplesService {
   // }
 
 
-  nestSamples() {
+  nestSamples(samples) {
+    let updateSet = function(prev, curr, variable) {
+      return (prev[variable] ? prev[variable].add(curr[variable]) : new Set().add(curr[variable])
+      )
+    }
+
+    // Converts the long table into a wide one, with patientID, privatePatientID, and visitCode pulled out to the highest level
+    // Each sample type is an array containing the sample locations + associated metadata.
+    this.samples_wide = d3.nest()
+      .key((d: any) => d.privatePatientID + String(d.visitCode))
+      // 	.key(d => d.sampleType)
+      .rollup(function(d: any) { // do this to each grouping
+        // reduce takes a list and returns one value
+        // in this case, the list is all the grouped elements
+        // and the final value is an object with keys
+        return d.reduce(function(prev, curr) {
+          // If it already exists-- append
+          // If not-- create it as an array/set (for unique values)
+          prev["patientID"] = updateSet(prev, curr, "patientID");
+          prev["privatePatientID"] = updateSet(prev, curr, "privatePatientID");
+          prev["visitCode"] = updateSet(prev, curr, "visitCode");
+
+          prev[curr["sampleType"]] ? prev[curr["sampleType"]].push(curr) : prev[curr["sampleType"]] = [curr];
+          return prev;
+        }, {});
+      })
+      .entries(samples)
+      .map((d) => d.value);
+
+    console.log(this.samples_wide)
+
+    // For each sample type, nest the locations together. Key = sample ID; values = array of locations + metadata.
+    let sample_types = Array.from(new Set(samples.map(d => d.sampleType)));
+    this.samples_wide.forEach(patientGroup => {
+
+      sample_types.forEach((type: any) => {
+        if (patientGroup[type]) {
+          patientGroup[type] = d3.nest()
+            .key((d: any) => d.sampleID)
+            .entries(patientGroup[type])
+        }
+      })
+    })
+
+    console.log(this.samples_wide)
+
+    //
+    //
+
+    // // Splay out wide by patient ID.
+    // this.samples_wide = d3.nest()
+    //   .key((d: any) => (d.privatePatientID + String(d.visitCode)))
+    //   // .key((d: any) => d.visitCode)
+    //   .rollup(function(v: any): any {
+    //     return {
+    //       count: v.length,
+    //       patientID: v[0].patientID,
+    //       privatePatientID: v[0].privatePatientID,
+    //       visitCode: v[0].visitCode,
+    //       // patient_type: v[0].patient_type,
+    //       // patient_cohort: v[0].patient_cohort,
+    //       all_data: v.map(d => d)
+    //     };
+    //   })
+    //   .entries(samples);
 
     for (let i = 0; i < this.samples_wide.length; i++) {
       let row = this.samples_wide[i];
