@@ -1,7 +1,7 @@
 <div class="filter-container">
   <div class="filter-header">
     <div class="container">
-      <!-- <h2>{{ x }} of {{ y }} Samples Selected</h2> -->
+      <h2>{{ sample_count }} of {{ total_samples }} Samples Selected</h2>
 
       <div class="pull-right">
         <app-filter-search endpoint="sample" *ngIf="authenticated"></app-filter-search>
@@ -18,13 +18,13 @@
     <app-filter-lab></app-filter-lab>
   </div>
 
-  <!-- <div class="filter-item filter-sample-type">
+  <div class="filter-item filter-sample-type">
     <app-filter-sample-type></app-filter-sample-type>
   </div>
 
-  <div class="filter-item filter-patients">
-    <app-filter-patient-id [all_patients]="" [patients]="" endpoint="sample"></app-filter-patient-id>
-  </div> -->
+   <div class="filter-item filter-patients">
+    <app-filter-patient-id [all_patients]="all_patients" [patients]="patients" endpoint="sample"></app-filter-patient-id>
+  </div>
 
   <!-- <div class="filter-item filter-patient-types">
     <app-filter-patient-type [viruses]="" [outcomes]="" [all_cohorts]="" [all_outcomes]="" endpoint="sample"></app-filter-patient-type>

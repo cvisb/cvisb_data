@@ -9,6 +9,6 @@ export * from './mini-barplot/mini-barplot.component';
 export * from './mini-donut/mini-donut.component';
 export * from './filter-search/filter-search.component';
 export * from './filter-lab/filter-lab.component';
-// export * from './filter-sample-type/filter-sample-type.component';
-// export * from './filter-organization/filter-organization.component';
+export * from './filter-sample-type/filter-sample-type.component';
+export * from './filter-organization/filter-organization.component';
 export * from './filter-species/filter-species.component';

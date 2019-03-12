@@ -60,8 +60,7 @@ import {
   FilterElisasComponent, FilterExperimentComponent, FilterFileTypeComponent,
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
-  FilterLabComponent, FilterSpeciesComponent,
-  // FilterSampleTypeComponent, FilterOrganizationComponent,
+  FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
 } from './filters';
 
 // Patient page components
@@ -146,9 +145,9 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     // UploadDifferencesComponent,
     FilterLabComponent,
     FilterSampleComponent,
-    // FilterSampleTypeComponent,
+    FilterSampleTypeComponent,
     FilterSpeciesComponent,
-    // FilterOrganizationComponent,
+    FilterOrganizationComponent,
 
     AddPatientsComponent,
     PatientUploadComponent,
