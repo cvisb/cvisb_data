@@ -16,10 +16,14 @@ import { RequestParamArray, RequestParam } from '../_models';
 
 export class RequestParametersService {
   patientSearchParams: RequestParamArray;
+  sampleSearchParams: RequestParamArray;
 
   // Event listener for parameters to run on
   public patientParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public patientParamsState$ = this.patientParamsSubject.asObservable();
+
+  public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
+  public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
   constructor(
   ) {
@@ -28,6 +32,13 @@ export class RequestParametersService {
       // console.log("API params")
       // console.log(params)
       this.patientSearchParams = params;
+    })
+
+
+    this.sampleParamsState$.subscribe((params: RequestParamArray) => {
+      // console.log("API params")
+      // console.log(params)
+      this.sampleSearchParams = params;
     })
 
   }
@@ -58,6 +69,13 @@ export class RequestParametersService {
         // console.log(params)
 
         this.patientParamsSubject.next(params);
+        break;
+      }
+      case 'sample': {
+        let params = this.checkExists(this.sampleSearchParams, newParam);
+        console.log(params)
+
+        this.sampleParamsSubject.next(params);
         break;
       }
       case 'dataset': {

@@ -60,7 +60,8 @@ import {
   FilterElisasComponent, FilterExperimentComponent, FilterFileTypeComponent,
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
-  // FilterLabComponent, FilterSampleTypeComponent, FilterOrganizationComponent, FilterSpeciesComponent,
+  FilterLabComponent, FilterSpeciesComponent,
+  // FilterSampleTypeComponent, FilterOrganizationComponent,
 } from './filters';
 
 // Patient page components
@@ -81,6 +82,7 @@ import { PatientUploadComponent } from './add-patients/patient-upload/patient-up
 import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
 import { PatientElisasComponent } from './patient-page/patient-elisas/patient-elisas.component';
 import { PatientRelationshipsComponent } from './patient-page/patient-relationships/patient-relationships.component';
+import { FilterSampleComponent } from './sample/filter-sample/filter-sample.component';
 
 
 @NgModule({
@@ -142,12 +144,12 @@ import { PatientRelationshipsComponent } from './patient-page/patient-relationsh
     // PreviewSamplesComponent,
     // FrontendSampleValidationComponent,
     // UploadDifferencesComponent,
-    // FilterLabComponent,
-    // FilterSampleComponent,
+    FilterLabComponent,
+    FilterSampleComponent,
     // FilterSampleTypeComponent,
-    // FilterSpeciesComponent,
+    FilterSpeciesComponent,
     // FilterOrganizationComponent,
-    //
+
     AddPatientsComponent,
     PatientUploadComponent,
     PatientSymptomsComponent,

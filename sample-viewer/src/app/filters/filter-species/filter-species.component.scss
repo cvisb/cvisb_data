@@ -1,0 +1,57 @@
+.species:before {
+  padding-right: 10px;
+  font-size: 1.5em;
+}
+
+.monkey:before {
+  // content: "\01F648"; // see no evil
+  // content: "\01F412"; // full body
+  content: "\01F435"
+}
+
+.human:before {
+  // content: "\01F464"; // head outline
+  content: "\01F9D1"; // gender neutral person
+  // content: "\01F637"; // face w/ mask
+  // content: "\01F912"; // face w/ thermometer
+}
+
+.rat:before {
+  content: "\01F400";
+}
+
+// .species:after {
+//   padding-left: 10px;
+// }
+//
+// .monkey:after {
+//   // content: "\01F648"; // see no evil
+//   // content: "\01F412"; // full body
+//   content: "\01F435"
+// }
+//
+// .human:after {
+//   // content: "\01F464"; // head outline
+//   content: "\01F9D1"; // gender neutral person
+//   // content: "\01F637"; // face w/ mask
+//   // content: "\01F912"; // face w/ thermometer
+// }
+//
+// .rat:after {
+//   content: "\01F400";
+// }
+
+.species-list {
+  flex-direction: column;
+}
+
+.filter-species {
+  justify-content: center;
+}
+
+button {
+  // background: #eee;
+  // background: #fef3e2;
+  // background: white;
+  // margin-bottom: 7px;
+}
