@@ -211,7 +211,7 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.yearDomain.map(String));
 
-      console.log(this.x.domain())
+      console.log(this.x)
 
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
@@ -224,7 +224,7 @@ export class FilterSampleYearComponent implements OnInit {
       .domain(this.yearDomain)
       .clamp(true);
 
-      console.log(this.xLinear.domain())
+      console.log(this.xLinear)
 
     let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
@@ -451,6 +451,7 @@ console.log(x_end)
     if (this.handle_left && this.handle_right) {
     console.log(lower_limit)
     console.log(upper_limit)
+    console.log(this.xLinear(lower_limit))
     console.log(this.xLinear(upper_limit))
       this.handle_left
         .attr("transform", `translate(${100 - this.x.bandwidth() * 0.5},-5)`);
@@ -462,9 +463,9 @@ console.log(x_end)
           .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
-        d3.selectAll(".track-filled")
-          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-          .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+        // d3.selectAll(".track-filled")
+        //   .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
+        //   .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
 
 
       } else {

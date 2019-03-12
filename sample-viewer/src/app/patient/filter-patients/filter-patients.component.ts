@@ -65,7 +65,6 @@ export class FilterPatientsComponent implements OnInit {
           if(this.all_years.length === 0) {
             this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
           }
-          console.log(this.all_years)
           this.all_countries = pList.patientCountries;
           // console.log(this.all_countries)
           // console.log(this.all_cohorts)
