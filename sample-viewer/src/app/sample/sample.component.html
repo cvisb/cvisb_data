@@ -62,7 +62,7 @@
 
   <!-- Patient ID -->
   <ng-container matColumnDef="key">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>patient id</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>key</mat-header-cell>
     <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
   </ng-container>
 
@@ -114,18 +114,25 @@
         <ng-container [ngTemplateOutlet]="element[sample] ? show_sample : add_sample" [ngTemplateOutletContext]="{sample:sample}">
 
           <ng-template #show_sample let-sample="sample">
-            <div class="flex-container sample-id">
-              <h4 (click)="showSampleMD(element[sample])">{{element[sample].sampleID}}</h4>
-            </div>
 
-            <!-- <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
-                <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots">
+            <!-- Loop over the sample groups. Should be only one sample ID per sample type in most cases -->
+            <div class="sample-group" *ngFor="let sample of element[sample]">
 
-                <mat-select [(value)]="location" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
-                  <mat-option *ngFor="let lab of labs" [value]="lab.id">{{lab.id}}</mat-option>
+
+              <div class="flex-container sample-id">
+                <h4>{{ sample.key }}</h4>
+              </div>
+
+            <!-- Loop over the sample locations -->
+              <div *ngFor="let location of sample.values; let i=index" class="sample-locations" (click)="showSampleMD(location)">
+                <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
+
+                <mat-select [(value)]="location" class="location"
+                [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
+                  <mat-option *ngFor="let lab of labs" [value]="lab.id">{{ location.lab }}</mat-option>
                 </mat-select>
 
-                <div class="edit-btn-grp">
+                <!-- <div class="edit-btn-grp">
                   <button class="small-icon edit-location edit" (click)="switchEditable()" type="button">
               <mat-icon aria-label="Edit">edit</mat-icon>
               </button>
@@ -137,8 +144,10 @@
                   <button class="small-icon edit-location delete" type="button">
               <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
               </button>
-                </div>
-              </div> -->
+                </div> -->
+              </div> <!-- END OF LOCATION LOOP -->
+
+            </div>
           </ng-template>
 
 
