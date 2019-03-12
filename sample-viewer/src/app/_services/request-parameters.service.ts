@@ -38,10 +38,8 @@ export class RequestParametersService {
   // Essential for object constancy on transitions/updates.
   addMissing(data, domain: any[]) {
     let keys = data.map(d => d.key);
-    console.log(keys)
 
     let missing_data = domain.filter(d => !keys.includes(d));
-    console.log(missing_data)
 
     missing_data.forEach(d => {
       data.push({ key: d, value: 0 });

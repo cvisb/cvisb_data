@@ -62,9 +62,10 @@ export class FilterPatientsComponent implements OnInit {
           this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
           this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
           this.all_years.sort();
-          if(! this.all_years) {
+          if(! this.all_years.length === 0) {
             this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
           }
+          console.log(this.all_years)
           this.all_countries = pList.patientCountries;
           // console.log(this.all_countries)
           // console.log(this.all_cohorts)
