@@ -50,7 +50,7 @@ export class FilterSampleComponent implements OnInit {
       if (sList) {
         this.sample_count = sList.length;
         this.patients = sList.map((d:any) => d.privatePatientID);
-        // this.patientSummary = pList;
+        console.log(this.patients)
 
         // On the initial return object, set the maximum parameters
         if (this.first_call) {
