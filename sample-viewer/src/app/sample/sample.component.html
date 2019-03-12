@@ -113,7 +113,7 @@
                 <h4 (click)="showSampleMD(element[sample])">{{element[sample].sampleID}}</h4>
               </div>
 
-              <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
+              <!-- <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
                 <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots">
 
                 <mat-select [(value)]="location" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
@@ -133,7 +133,7 @@
               <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
               </button>
                 </div>
-              </div>
+              </div> -->
             </ng-template>
 
 
