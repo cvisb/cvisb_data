@@ -14,7 +14,7 @@ import { AuthState, RequestParam, RequestParamArray } from '../../_models';
 
 export class FilterSampleComponent implements OnInit {
   public searchQuery: string = null;
-  private authenticated: boolean;
+  authenticated: boolean;
 
   constructor(
     private sampleSvc: GetSamplesService,
