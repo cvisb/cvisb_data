@@ -4,7 +4,7 @@
 import pandas as pd
 
 input_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-26_DNA and RNA sample List_MP_PRIVATE.xlsx"
-output_file  = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-26_samples_PRIVATE.json"
+output_file  = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-03-12_samples_PRIVATE.json"
 
 lab = "TSRI-Andersen"
 numAliquots = 1
@@ -33,6 +33,16 @@ def makePrimaryID(row):
 
 def makeSampleID(row):
     return("mp" + str(row.sampleType) + str(row.rowNum) + "_" + str(row.sampleType) + str(row.isolationDate))
+import re
+
+def splitGID(id):
+    if(id == id):
+        threedigit = re.search("^([A-Z])([0-9][0-9][0-9])$", id)
+        fourdigit = re.search("^([A-Z])([0-9][0-9][0-9][0-9])$", id)
+        if(threedigit):
+            return(threedigit[1] + "-" + threedigit[2])
+        elif(fourdigit):
+            return(fourdigit[1] + "-" + fourdigit[2])
 
 def cleanSamples(df, date, id_col, species="human", modified = dateModified, updated = updatedBy, lab = lab, numAliquots = numAliquots):
     # splay the columns long
@@ -40,6 +50,7 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
 
     # separate out the patient ID from visit code.
     df['privatePatientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
+    df['privatePatientID'] = df.privatePatientID.apply(splitGID) # Add in hyphen
 
     df['visitCode'] = df.visitCode.fillna("unknown")
     df['isolationDate'] = date
@@ -49,10 +60,10 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
     df['sampleType'] = df.variable.map(getType)
     df['sourceSampleType'] = df.variable.map(getPrimary)
     df['sourceSampleID'] = df.apply(makePrimaryID, axis=1)
-    df['location.lab'] = lab
-    df['location.numAliquots'] = numAliquots
-    df['location.dateModified'] = modified
-    df['location.updatedBy'] = updated
+    df['location'] = lab
+    df['numAliquots'] = numAliquots
+    df['dateModified'] = modified
+    df['updatedBy'] = updated
 
     # drop blank rows
     df.dropna(subset=["timepointID"], inplace=True)
@@ -94,7 +105,7 @@ df["rowNum"] = df.groupby("sampleType").cumcount()+1
 df["sampleID"] = df.apply(makeSampleID, axis = 1)
 
 df.columns
-df[df.duplicated(subset=["derivedIndex", "isolationDate", "location.dateModified", "location.lab", "location.numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
+df[df.duplicated(subset=["derivedIndex", "isolationDate", "dateModified", "location", "numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
 # remove unneeded cols
 df.drop(["#", "Unnamed: 0", "variable", "rowNum"], axis=1, inplace=True)
 
