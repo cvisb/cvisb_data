@@ -46,6 +46,7 @@ export class FilterSampleComponent implements OnInit {
 
     // // grab the data
     this.sampleSvc.samplesState$.subscribe((sList) => {
+    console.log(sList)
       if (sList) {
         this.sample_count = sList.length;
         this.patients = sList.map((d:any) => d.privatePatientID);

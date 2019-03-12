@@ -16,16 +16,24 @@
     </mat-checkbox> -->
 
     <!-- Buttons -->
-    <button mat-button>
+    <button mat-button (click)="filterSpecies('human')" [ngClass]="{'disabled': humanOff}">
       <div class="species human">human</div>
     </button>
 
-    <button mat-button>
+
+    <button mat-button (click)="filterSpecies('monkey')" [ngClass]="{'disabled': monkeyOff}">
     <div class="species monkey">monkey</div>
     </button>
 
-    <button mat-button>
+    <button mat-button (click)="filterSpecies('rodent')" [ngClass]="{'disabled': ratOff}">
       <div class="species rat">rodent</div>
     </button>
+
+    <button mat-button (click)="filterSpecies('unknown')" [ngClass]="{'disabled': unknownOff}">
+      <mat-icon class="unknown">help_outline</mat-icon> <span class="species unknown">
+        unknown
+      </span>
+    </button>
+
   </div>
 </div>

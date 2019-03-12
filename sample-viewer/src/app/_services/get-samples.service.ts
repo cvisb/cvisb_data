@@ -45,7 +45,7 @@ export class GetSamplesService {
     })
 
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      console.log(params)
+      // console.log(params)
       this.request_params = params;
       this.getSamples();
     })
@@ -69,7 +69,7 @@ export class GetSamplesService {
 
   getSamples() {
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
-    console.log(param_string);
+    // console.log(param_string);
 
     this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
@@ -203,7 +203,7 @@ export class GetSamplesService {
       .entries(samples)
       .map((d) => d.value);
 
-    console.log(this.samples_wide)
+    // console.log(this.samples_wide)
 
     // For each sample type, nest the locations together. Key = sample ID; values = array of locations + metadata.
     let sample_types = Array.from(new Set(samples.map(d => d.sampleType)));
@@ -218,7 +218,7 @@ export class GetSamplesService {
       })
     })
 
-    console.log(this.samples_wide)
+    // console.log(this.samples_wide)
 
     //
     //
