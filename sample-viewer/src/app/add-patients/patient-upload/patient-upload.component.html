@@ -37,8 +37,9 @@
 </div>
 
 <!-- TEMPORARY: JUST FOR ME WHILE TESTING -->
-<button type="button" mat-raised-button color="warn" (click)="deletePatients()">Clear patient list</button>
-
+  <div style="margin-top: 25px;">
+<button type="button" mat-raised-button color="warn" (click)="deletePatients()">DON'T PRESS THIS BUTTON -- clears patient list</button>
+</div>
 
 <div *ngIf="! user.write">
   <p>
