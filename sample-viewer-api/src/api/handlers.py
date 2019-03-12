@@ -9,7 +9,7 @@ from elasticsearch.helpers import bulk
 from collections import OrderedDict
 import json
 import csv
-import logging
+#import logging
 import yaml
 
 class UserAuth(object):
@@ -41,6 +41,14 @@ class UserAuth(object):
             return False
 
         return True
+
+def sanitize_source_param(inst, kwargs):
+    if inst._should_sanitize('_source', kwargs):
+        if (len(kwargs['_source']) == 0) or (len(kwargs['_source']) == 1 and kwargs['_source'][0].lower() == 'all'):
+            kwargs['_source'] = {"includes": ["*"], "excludes": []}
+        else:
+            kwargs['_source'] = {"includes": kwargs['_source'], "excludes": []}
+    return kwargs
 
 def form_actions(_source, index, doc_type, _id=None):
     for _doc in _source:
@@ -95,6 +103,9 @@ class EntityHandler(UserAuth, BiothingHandler):
 
     def _get_es_doc_type(self, options):
         return self.entity
+
+    def _sanitize_source_param(self, kwargs):
+        return sanitize_source_param(self, kwargs)
 
     def get(self, entity=None, bid=None):
         if not entity_check(self, entity):
@@ -197,15 +208,24 @@ class QueryHandler(UserAuth, QueryHandler):
 
     def _get_es_doc_type(self, options):
         return self.entity
+    
+    def _sanitize_source_param(self, kwargs):
+        return sanitize_source_param(self, kwargs)
+
+    def _pre_query_builder_GET_hook(self, options):
+        _user = self.get_current_user() or {}
+        options['esqb_kwargs']['entity'] = self.entity
+        options['esqb_kwargs']['cvisb_user_list'] = self.web_settings.CVISB_USER_LIST
+        options['esqb_kwargs']['cvisb_user'] = _user
+        options['esqb_kwargs']['client'] = self.web_settings.es_client
+        options['esqb_kwargs']['cvisb_endpoints'] = self.web_settings.CVISB_ENDPOINTS   
+        return options
 
     def get(self, entity=None):
         if not entity_check(self, entity):
             return
 
         self.entity = entity
-
-        if not self._authenticate_request(r=True):
-            return
 
         super(QueryHandler, self).get()
 
