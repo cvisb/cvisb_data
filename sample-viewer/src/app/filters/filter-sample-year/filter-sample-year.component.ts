@@ -383,6 +383,7 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top + 12})`);
 
 let x_end = this.xLinear.invert(this.x.range()[1]);
+console.log(x_end)
 
     this.slider.append("line")
       .attr("class", "track")
@@ -448,8 +449,12 @@ let x_end = this.xLinear.invert(this.x.range()[1]);
 
     // Update slider handles
     if (this.handle_left && this.handle_right) {
+    console.log(lower_limit)
+    console.log(upper_limit)
+    console.log(this.xLinear(upper_limit))
       this.handle_left
-        .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
+        .attr("transform", `translate(${100 - this.x.bandwidth() * 0.5},-5)`);
+        // .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
 
       if (lower_limit === 0 && upper_limit === 0) {
         // If the limit is 0, set the left and right handles to overlap.
