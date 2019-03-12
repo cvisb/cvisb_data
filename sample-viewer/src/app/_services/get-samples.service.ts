@@ -117,15 +117,16 @@ export class GetSamplesService {
       if (samples) {
         // Splay out wide by patient ID.
         this.samples_wide = d3.nest()
-          .key((d: any) => d.patientID)
+          .key((d: any) => d.privatePatientID)
           // .key((d: any) => d.visitCode)
           .rollup(function(v: any): any {
             return {
               count: v.length,
               patientID: v[0].patientID,
+              privatePatientID: v[0].privatePatientID,
               visitCode: v[0].visitCode,
-              patient_type: v[0].patient_type,
-              patient_cohort: v[0].patient_cohort,
+              // patient_type: v[0].patient_type,
+              // patient_cohort: v[0].patient_cohort,
               all_data: v.map(d => d)
             };
           })
