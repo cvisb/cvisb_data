@@ -66,6 +66,11 @@
     <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="patientID">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.patientID}} </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="privatePatientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>private id</mat-header-cell>
     <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
