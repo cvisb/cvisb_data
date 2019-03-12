@@ -15,6 +15,12 @@ import { AuthState, RequestParam, RequestParamArray } from '../../_models';
 export class FilterSampleComponent implements OnInit {
   public searchQuery: string = null;
   authenticated: boolean;
+  patients: string[];
+  all_patients: string[];
+  sample_count: number;
+  total_samples: number;
+
+  first_call: boolean = true;
 
   constructor(
     private sampleSvc: GetSamplesService,
@@ -39,27 +45,28 @@ export class FilterSampleComponent implements OnInit {
       })
 
     // // grab the data
-    // this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-    //   if (pList) {
-    //     this.patients = pList.patients;
-    //     this.patientSummary = pList;
-    //
-    //     // On the initial return object, set the maximum parameters
-    //     if (this.first_call) {
-    //       this.first_call = false;
-    //       this.total_patients = this.patients.length;
-    //       this.all_patients = pList.patientIDs;
-    //       this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
-    //       this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
-    //       this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
-    //       this.all_years.sort();
-    //       this.all_countries = pList.patientCountries;
-    //       // console.log(this.all_countries)
-    //       // console.log(this.all_cohorts)
-    //       // console.log(this.all_outcomes)
-    //     }
-    //   }
-    // });
+    this.sampleSvc.samplesState$.subscribe((sList) => {
+      if (sList) {
+        this.sample_count = sList.length;
+        this.patients = sList.map((d:any) => d.privatePatientID);
+        // this.patientSummary = pList;
+
+        // On the initial return object, set the maximum parameters
+        if (this.first_call) {
+          this.first_call = false;
+          this.total_samples = sList.length;
+          this.all_patients = sList.map((d:any) => d.privatePatientID);
+          // this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
+          // this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
+          // this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
+          // this.all_years.sort();
+          // this.all_countries = pList.patientCountries;
+          // console.log(this.all_countries)
+          // console.log(this.all_cohorts)
+          // console.log(this.all_outcomes)
+        }
+      }
+    });
 
     this.authSvc.authState$.subscribe((status: AuthState) => {
       this.authenticated = status.authorized;

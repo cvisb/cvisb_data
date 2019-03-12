@@ -1,0 +1,20 @@
+<div class="filter-sample-type container">
+  <h4 class="filter-label">sample type</h4>
+
+  <div class="container">
+
+    <form [formGroup]="myForm">
+      <div *ngFor="let type of sample_types">
+        <input type="checkbox" (change)="onChange(type, $event.target.checked)"> {{ type }}
+      </div>
+    </form>
+
+
+    <!-- <div>
+      <mat-checkbox class="lab-name" color="primary">
+        include used up samples
+      </mat-checkbox>
+    </div> -->
+
+  </div>
+</div>
