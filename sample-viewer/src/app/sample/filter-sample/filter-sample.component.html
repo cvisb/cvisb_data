@@ -1,0 +1,53 @@
+<div class="filter-container">
+  <div class="filter-header">
+    <div class="container">
+      <!-- <h2>{{ x }} of {{ y }} Samples Selected</h2> -->
+
+      <div class="pull-right">
+        <app-filter-search endpoint="sample" *ngIf="authenticated"></app-filter-search>
+
+        <button mat-stroked-button (click)="clearFilters()">clear filters</button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="filter-item filter-lab">
+    <app-filter-lab></app-filter-lab>
+  </div>
+
+  <!-- <div class="filter-item filter-sample-type">
+    <app-filter-sample-type></app-filter-sample-type>
+  </div>
+
+  <div class="filter-item filter-patients">
+    <app-filter-patient-id [all_patients]="" [patients]="" endpoint="sample"></app-filter-patient-id>
+  </div> -->
+
+  <!-- <div class="filter-item filter-patient-types">
+    <app-filter-patient-type [viruses]="" [outcomes]="" [all_cohorts]="" [all_outcomes]="" endpoint="sample"></app-filter-patient-type>
+  </div> -->
+
+  <!-- <div class="filter-item filter-elisas">
+    <app-filter-elisas></app-filter-elisas>
+  </div> -->
+
+  <!-- <div class="filter-item filter-dates">
+    <app-filter-sample-year [data]="" [yearDomain]="" endpoint="sample"></app-filter-sample-year>
+  </div>
+
+  <div class="filter-item filter-expts">
+    <app-filter-experiment [expts]=""></app-filter-experiment>
+  </div>
+
+  <div class="filter-item filter-ctry">
+    <app-filter-location [countries]="" endpoint="sample" [all_countries]=""></app-filter-location>
+  </div> -->
+
+  <div class="filter-item filter-species">
+    <app-filter-species></app-filter-species>
+  </div>
+
+</div>

@@ -1,0 +1,22 @@
+<div class="filter-lab container">
+  <h4 class="filter-label">sample location</h4>
+
+  <div class="container">
+
+    <form [formGroup]="myForm">
+      <div *ngFor="let lab of labs">
+
+        <!-- <mat-checkbox (change)="onChange(lab.id, $event.target.checked)"> {{lab.id}}
+        </mat-checkbox> -->
+        <input type="checkbox" (change)="onChange(lab.id, $event.target.checked)"> {{lab.id}}
+      </div>
+    </form>
+<!--
+    <form (ngSubmit)="onSaveStore()" [formGroup]="storeForm">
+      <div [formGroup]="storeForm.controls.availableDays">
+        <mat-checkbox *ngFor="let availableDay of days;" formControlName="{{availableDay}}">{{availableDay}}</mat-checkbox>
+      </div>
+    </form> -->
+
+  </div>
+</div>

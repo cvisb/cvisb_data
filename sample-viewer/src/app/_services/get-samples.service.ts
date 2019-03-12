@@ -7,61 +7,19 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
-import { Sample, SampleWide, AuthState } from '../_models/';
+import { Sample, SampleWide, AuthState, RequestParamArray } from '../_models/';
 import { AuthService } from './auth.service';
 import { MyHttpClient } from './http-cookies.service';
+import { RequestParametersService } from './request-parameters.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class GetSamplesService {
-  // samples: Sample[] =
-  //   [
-  //     {
-  //       "id": "testpatient-4",
-  //       "patient_id": "testpatient",
-  //       "visitCode": 4,
-  //       "patient_cohort": "Ebola",
-  //       "patient_type": "survivor",
-  //       "isolationDate": "2018-06-27",
-  //       "sampleType": "PBMC",
-  //       "numAliquots": 1,
-  //       "sourceSampleID": "blood_purple-EDTA",
-  //       "protocol_version": "viable_PBMC_protocol_v1.0.0.docx",
-  //       "freezingBuffer": "",
-  //       "dilutionFactor": "NA",
-  //       "sampleID": "testpatient-4_PBMC20180627",
-  //       "location": "Tulane-Schieffelin",
-  //       "species": "human",
-  //       "updated": "2018-10-01",
-  //       "updatedBy": "Laura Hughes"
-  //     }
-  //   ];
-  //
-  // test_doc: Object = {
-  //   "id": "testpatient-2",
-  //   "patient_id": "testpatient",
-  //   "visitCode": 2,
-  //   "patient_cohort": "Ebola",
-  //   "patient_type": "survivor",
-  //   "isolationDate": "2018-06-27",
-  //   "sampleType": "DNA",
-  //   "numAliquots": 1,
-  //   "sourceSampleID": "PBMC",
-  //   "protocol_version": "genomicDNA_protocol_v1.1.0.docx",
-  //   "freezingBuffer": "",
-  //   "dilutionFactor": "NA",
-  //   "sampleID": "testpatient-2_DNA20180627",
-  //   // "sampleID": "test_2",
-  //   "location": "KGH",
-  //   // "location": "TSRI-Andersen",
-  //   "species": "human",
-  //   "updated": "2018-10-01",
-  //   "updatedBy": "Laura Hughes"
-  // }
+  request_params: RequestParamArray;
 
-
+// Event listeners to pass data.
   private samples_wide: SampleWide[] = [];
   public samplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
   public samplesWideSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
@@ -72,6 +30,7 @@ export class GetSamplesService {
   constructor(
     public myhttp: MyHttpClient,
     // public http: HttpClient,
+    private requestSvc: RequestParametersService,
     private authSvc: AuthService) {
     // console.log(this.samples.slice(20, 25));
     // this.putSamples(this.samples);
@@ -84,6 +43,13 @@ export class GetSamplesService {
         this.getSamples();
       }
     })
+
+    this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
+      console.log(params)
+      this.request_params = params;
+      this.getSamples();
+    })
+
   }
 
   getSample(id: string) {
@@ -102,13 +68,17 @@ export class GetSamplesService {
   }
 
   getSamples() {
-    console.log('calling backend to get samples');
+    let param_string: string = this.requestSvc.reduceParams(this.request_params);
+    console.log(param_string);
 
-    this.myhttp.get<any[]>(environment.api_url + "/api/sample/query?q=__all__&size=1000", {
+    this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
-        .set('Accept', 'application/json')
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', param_string)
+        .set('size', "1000")
     }).subscribe(data => {
       let samples = data['body']['hits'];
       console.log(data)
