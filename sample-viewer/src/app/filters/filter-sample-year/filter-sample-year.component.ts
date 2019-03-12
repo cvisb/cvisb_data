@@ -211,6 +211,8 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.yearDomain.map(String));
 
+      console.log(this.x.domain())
+
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
     // Range is funky to account for padding on edges.
@@ -221,6 +223,8 @@ export class FilterSampleYearComponent implements OnInit {
       // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       .domain(this.yearDomain)
       .clamp(true);
+
+      console.log(this.xLinear.domain())
 
     let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
@@ -378,20 +382,21 @@ export class FilterSampleYearComponent implements OnInit {
       .attr("id", "year_slider")
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top + 12})`);
 
+let x_end = this.xLinear.invert(this.x.range()[1]);
 
     this.slider.append("line")
       .attr("class", "track")
       .attr("x1", this.x.range()[0])
-      .attr("x2", this.x.range()[1]);
+      .attr("x2", x_end);
 
     this.slider.append("line")
       .attr("class", "track track-filled")
       .attr("x1", this.x.range()[0])
-      .attr("x2", this.x.range()[1]);
+      .attr("x2", x_end);
 
     this.handle_right = this.slider.append("path")
       .attr("class", "handle-right")
-      .attr("transform", `translate(${this.x.range()[1]},-5)`)
+      .attr("transform", `translate(${x_end},-5)`)
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
