@@ -73,7 +73,7 @@ export class RequestParametersService {
       }
       case 'sample': {
         let params = this.checkExists(this.sampleSearchParams, newParam);
-        console.log(params)
+        // console.log(params)
 
         this.sampleParamsSubject.next(params);
         break;
@@ -90,10 +90,10 @@ export class RequestParametersService {
   }
 
   checkExists(currentParams: RequestParamArray, newParam: RequestParam): RequestParamArray {
-    console.log(newParam)
+    // console.log(newParam)
     let idx = currentParams.map(d => d.field).indexOf(newParam.field);
 
-    console.log(currentParams)
+    // console.log(currentParams)
     // console.log(idx)
 
     // --- CASE 1: Parameter already exists.  UPDATE ---
