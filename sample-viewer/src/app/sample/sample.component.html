@@ -125,12 +125,13 @@
 
             <!-- Loop over the sample locations -->
               <div *ngFor="let location of sample.values; let i=index" class="sample-locations" (click)="showSampleMD(location)">
+                {{location.lab }}: {{location.numAliquots}}
                 <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
 
-                <mat-select [(value)]="location" class="location"
+                <!-- <mat-select [(value)]="location" class="location"
                 [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
                   <mat-option *ngFor="let lab of labs" [value]="lab.id">{{ location.lab }}</mat-option>
-                </mat-select>
+                </mat-select> -->
 
                 <!-- <div class="edit-btn-grp">
                   <button class="small-icon edit-location edit" (click)="switchEditable()" type="button">
