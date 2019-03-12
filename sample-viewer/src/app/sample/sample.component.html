@@ -20,7 +20,7 @@
 </h1>
   <app-bulk-edit></app-bulk-edit> -->
 
-  <!--
+<!--
 <div class="sample-locations">
     <input type="text" name="aliquots" class="edit-aliquots" value="2">
 
@@ -46,10 +46,10 @@
 </div> -->
 
 
-  <!-- TABLE -->
-  <mat-table [dataSource]="dataSource" matSort class="sample-table">
-    <!-- Checkbox Column -->
-    <!-- <ng-container matColumnDef="select">
+<!-- TABLE -->
+<mat-table [dataSource]="dataSource" matSort class="sample-table">
+  <!-- Checkbox Column -->
+  <!-- <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
       <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
       </mat-checkbox>
@@ -60,60 +60,60 @@
     </td>
   </ng-container> -->
 
-    <!-- Patient ID -->
-    <ng-container matColumnDef="key">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>patient id</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
-    </ng-container>
+  <!-- Patient ID -->
+  <ng-container matColumnDef="key">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>patient id</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="privatePatientID">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>private id</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="privatePatientID">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>private id</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
+  </ng-container>
 
-    <!-- Patient cohort -->
+  <!-- Patient cohort -->
 
-    <ng-container matColumnDef="cohort">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
-      <td mat-cell *matCellDef="let element">
-        <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="cohort">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="outcome">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
-      <td mat-cell *matCellDef="let element">
-        <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="outcome">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
+    </td>
+  </ng-container>
 
-    <!-- Timepoint -->
-    <ng-container matColumnDef="visitCode">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>visit code</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="timepoint"> {{element.visitCode}} </mat-cell>
-    </ng-container>
+  <!-- Timepoint -->
+  <ng-container matColumnDef="visitCode">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>visit code</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="timepoint"> {{element.visitCode}} </mat-cell>
+  </ng-container>
 
-    <!-- Splay out the sample types wide -->
-    <ng-container *ngFor="let sample of sample_types; let i=index">
-      <ng-container matColumnDef="{{ sample }}">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <!-- <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+  <!-- Splay out the sample types wide -->
+  <ng-container *ngFor="let sample of sample_types; let i=index">
+    <ng-container matColumnDef="{{ sample }}">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <!-- <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
          -->
-          {{ sample }}
-          <!-- <button mat-icon-button color="primary" class="">
+        {{ sample }}
+        <!-- <button mat-icon-button color="primary" class="">
                   <mat-icon aria-label="Edit button">edit</mat-icon>
                 </button> -->
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element" class="sample-locations">
-          <ng-container [ngTemplateOutlet]="element[sample] ? show_sample : add_sample" [ngTemplateOutletContext]="{sample:sample}">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="sample-locations">
+        <ng-container [ngTemplateOutlet]="element[sample] ? show_sample : add_sample" [ngTemplateOutletContext]="{sample:sample}">
 
-            <ng-template #show_sample let-sample="sample">
-              <div class="flex-container sample-id">
-                <h4 (click)="showSampleMD(element[sample])">{{element[sample].sampleID}}</h4>
-              </div>
+          <ng-template #show_sample let-sample="sample">
+            <div class="flex-container sample-id">
+              <h4 (click)="showSampleMD(element[sample])">{{element[sample].sampleID}}</h4>
+            </div>
 
-              <!-- <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
+            <!-- <div *ngFor="let location of element[sample].location; let i=index" class="sample-locations">
                 <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots">
 
                 <mat-select [(value)]="location" class="location" [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
@@ -134,17 +134,16 @@
               </button>
                 </div>
               </div> -->
-            </ng-template>
+          </ng-template>
 
 
-            <ng-template #add_sample let-sample="sample">
-              <button mat-icon-button class="add" type="button">
-              <!-- color="primary"> -->
-            <mat-icon aria-label="Add a sample" [matTooltip]="'add ' + sample + ' sample'" matTooltipPosition="right">add</mat-icon>
-          </button>
-            </ng-template>
-          </ng-container>
-          <!-- <form class="flex-container">
+          <ng-template #add_sample let-sample="sample">
+            <!-- <button mat-icon-button class="add" type="button">
+            <mat-icon aria-label="Add a sample" [matTooltip]="'add ' + sample + ' sample'" matTooltipPosition="right">add</mat-icon> -->
+            </button>
+          </ng-template>
+        </ng-container>
+        <!-- <form class="flex-container">
           <div *ngFor="let location of element[sample].location; let i=index" class="location-form">
 
 
@@ -160,7 +159,7 @@
               </mat-select>
             </mat-form-field> -->
 
-          <!-- <div class="small-icon edit-location">
+        <!-- <div class="small-icon edit-location">
               <button mat-icon-button color="primary" class="col">
                   <mat-icon aria-label="Example icon-button with a heart icon">share</mat-icon>
                 </button>
@@ -171,7 +170,7 @@
             </div> -->
 
 
-          <!-- <div class="button-row">
+        <!-- <div class="button-row">
               <button mat-icon-button>
                 <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
               </button>
@@ -185,18 +184,18 @@
                 <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
               </button>
 </div> -->
-          <!-- </div>
+        <!-- </div>
         </form> -->
 
-        </mat-cell>
-      </ng-container>
+      </mat-cell>
     </ng-container>
+  </ng-container>
 
-    <!-- GENERATE TABLE -->
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+  <!-- GENERATE TABLE -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
 
-  </mat-table>
+</mat-table>
 <!-- </form> -->
 <!-- PAGINATION -->
 <mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 25, 50, 100]">
