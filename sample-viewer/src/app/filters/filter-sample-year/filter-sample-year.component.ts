@@ -241,7 +241,8 @@ export class FilterSampleYearComponent implements OnInit {
 
     this.xAxis = d3.axisBottom(this.x)
     .tickSizeOuter(0)
-    .tickValues(this.x.domain().filter((d,i) => !(i%3)));
+    .tickValues(this.x.domain().filter((d,i) => !(i%2)));
+
     this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
     // --- Create axes ---
