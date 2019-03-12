@@ -17,26 +17,47 @@ ES_HOST = 'localhost:9200'
 CVISB_ENDPOINTS = {
     "sample": {
         "cache_key": "Sample",
-        "index": 'sample_metadata_current'
+        "index": 'sample_metadata_current',
+        "public_permitted_search_fields": ['sampleID'],
+        "public_excluded_return_fields": ['sampleID']
     },
     "datadownload": {
         "cache_key": "DataDownload",
-        "index": 'datadownload_metadata_current'
+        "index": 'datadownload_metadata_current',
+        "public_permitted_search_fields": [],
+        "public_excluded_return_fields": []
     },
     "dataset": {
         "cache_key": "Dataset",
-        "index": 'dataset_metadata_current'
+        "index": 'dataset_metadata_current',
+        "public_permitted_search_fields": [],
+        "public_excluded_return_fields": []
     },
     "experiment": {
         "cache_key": "Experiment",
-        "index": 'experiment_metadata_current'
+        "index": 'experiment_metadata_current',
+        "public_permitted_search_fields": [],
+        "public_excluded_return_fields": []
     },
     "patient": {
         "cache_key": "Patient",
-        "index": 'patient_metadata_current'
+        "index": 'patient_metadata_current',
+        "public_permitted_search_fields": [],
+        "public_excluded_return_fields": []
     }
 }
 
+# join stuff
+CVISB_JOIN_MAP = {
+    "sample": {
+        "patientID":{
+            "target_index": CVISB_ENDPOINTS["patient"]["index"],
+            "target_field": "associatedSamples",
+            "source_field": "_id"
+        }
+    }
+}
+                
 # *****************************************************************************
 # App URL Patterns
 # *****************************************************************************
@@ -55,6 +76,12 @@ UNINITIALIZED_APP_LIST = [
 ]
 
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
+
+QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
+QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+ANNOTATION_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 
 
 ###############################################################################
