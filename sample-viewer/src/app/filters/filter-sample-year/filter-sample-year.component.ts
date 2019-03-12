@@ -211,7 +211,6 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.yearDomain.map(String));
 
-      console.log(this.x.domain())
 
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
@@ -224,7 +223,6 @@ export class FilterSampleYearComponent implements OnInit {
       .domain(d3.extent(this.yearDomain))
       .clamp(true);
 
-      console.log(this.xLinear.domain())
 
     let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
@@ -241,7 +239,7 @@ export class FilterSampleYearComponent implements OnInit {
       .paddingOuter(0)
       .domain(['unknown']);
 
-    this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0);
+    this.xAxis = d3.axisBottom(this.x).tickSizeOuter(0).ticks(4);
     this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
     // --- Create axes ---
