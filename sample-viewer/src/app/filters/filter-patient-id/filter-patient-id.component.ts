@@ -69,8 +69,8 @@ export class FilterPatientIdComponent implements OnInit {
   // G-fakePatient-0003, G-fakePatient-0002
   onSearch(input) {
     // console.log(this.ngSelect)
-    console.log(input)
-    let parsed = input.split("\,");
+    // console.log(input)
+    let parsed = input.term.split("\,");
 
     if (parsed.length > 1) {
       parsed = parsed.filter(d => d.length > 0)
