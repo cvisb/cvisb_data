@@ -88,3 +88,27 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+
+- "@id":                 cvisb:sampleID
+  "@type":               rdf:Property
+  rdfs:comment:          sampleID associated with the ELISA measurement
+  rdfs:label:            sampleID
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          description of the time at which the ELISA was taken, e.g. at patient presentation, survivor enrollment etc.
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
