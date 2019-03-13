@@ -385,7 +385,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:Symptoms
+    - "@id":             cvisb:SymptomList
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
