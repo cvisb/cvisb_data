@@ -300,9 +300,6 @@ export class GetPatientsService {
       .set('from', (pageSize * pageNum).toString())
       .set("sort", sortString);
 
-    console.log(params)
-
-
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -310,7 +307,6 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map(res => {
-        console.log("BACKEND CALL COMPLETED")
         console.log(res);
         return (res["body"]["hits"])
       }

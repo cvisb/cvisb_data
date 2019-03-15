@@ -59,8 +59,7 @@ export class PatientTableComponent implements OnInit {
     //
     // this.patientSource.sort = this.sort;
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    this.patientSource.loadPatients("__all__", 0, 20, "", null);
-    console.log(this.patientSource)
+    this.patientSource.loadPatients("__all__", 0, 10, "", null);
   }
 
   // ngAfterViewInit() {
@@ -88,19 +87,19 @@ export class PatientTableComponent implements OnInit {
   // }
   //
   ngAfterViewInit() {
-  // reset the paginator after sorting
+    // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
-        .pipe(
-            tap(() => this.loadPatientPage())
-        )
-        .subscribe();
+      .pipe(
+        tap(() => this.loadPatientPage())
+      )
+      .subscribe();
   }
 
   loadPatientPage() {
     this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize,
-    this.sort.active, this.sort.direction);
+      this.sort.active, this.sort.direction);
   }
 
   selectRow($event, row) {
