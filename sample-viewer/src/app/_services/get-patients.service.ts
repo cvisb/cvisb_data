@@ -264,14 +264,17 @@ export class GetPatientsService {
     // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
   }
 
-  sortFunc(a: any, b: any) {
-    // Sort by available data length first
-    if (a.availableData && b.availableData) {
-      return ((b.availableData.length - a.availableData.length) || (a.patientID < b.patientID ? -1 : 1));
-
-    } else {
-      return ((a.patientID < b.patientID ? -1 : 1));
+  sortFunc(sortVar): string {
+    // Sorting func for ES. Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
+    let keywordVars = ["patientID", "outcome", "cohort", "gender"];
+    if (keywordVars.includes(sortVar)) {
+      return (`${sortVar}.keyword`);
     }
+
+    if (sortVar === "country") {
+      return ("country.name.keyword");
+    }
+    return (sortVar);
   }
 
   getPatient(id: string): any {
@@ -289,7 +292,7 @@ export class GetPatientsService {
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
-    let sortString: string = sortDirection === "desc" ? `-${sortVar}` : sortVar;
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
     let params = new HttpParams()
       .set('q', param_string)
@@ -297,7 +300,7 @@ export class GetPatientsService {
       .set('from', (pageSize * pageNum).toString())
       .set("sort", sortString);
 
-      console.log(params)
+    console.log(params)
 
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
@@ -309,7 +312,8 @@ export class GetPatientsService {
       map(res => {
         console.log("BACKEND CALL COMPLETED")
         console.log(res);
-        return(res["body"]["hits"]) }
+        return (res["body"]["hits"])
+      }
       )
     );
   }
