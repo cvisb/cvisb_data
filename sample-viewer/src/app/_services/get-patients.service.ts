@@ -304,7 +304,10 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      map(res => res["body"]["hits"])
+      map(res => {
+        console.log(res);
+        return(res["body"]["hits"]) }
+      )
     );
   }
 
