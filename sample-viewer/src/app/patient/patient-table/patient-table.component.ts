@@ -59,7 +59,7 @@ export class PatientTableComponent implements OnInit {
     //
     // this.patientSource.sort = this.sort;
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    this.patientSource.loadPatients("__all__", 0, 20, null, null);
+    this.patientSource.loadPatients("__all__", 0, 20, "", null);
     console.log(this.patientSource)
   }
 
