@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import { GetPatientsService } from '../../_services/';
+import { GetPatientsService, PatientsDataSource} from '../../_services/';
 import { Patient, PatientArray } from '../../_models';
 
 @Component({
@@ -15,6 +15,7 @@ export class PatientTableComponent implements OnInit {
   // private patientSummary: PatientArray;
   patientSource: MatTableDataSource<Patient>;
   selectedPatient;
+  tester: PatientsDataSource;
 
   displayedColumns: string[] = ['patientID', 'alternateIdentifier', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -49,6 +50,10 @@ export class PatientTableComponent implements OnInit {
     };
 
     this.patientSource.sort = this.sort;
+    this.tester = new PatientsDataSource(this.patientSvc);
+    console.log(this.tester);
+    this.tester.loadPatients("__all__", 0, 50, ["age"]);
+    console.log(this.tester)
   }
 
   selectRow($event, row) {

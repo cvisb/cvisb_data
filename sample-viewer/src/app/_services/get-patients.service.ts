@@ -245,15 +245,7 @@ export class GetPatientsService {
     private apiSvc: ApiService,
     private requestSvc: RequestParametersService,
     private authSvc: AuthService) {
-    // this.request_params = [new RequestParam("id", ["test", "test2"])];
-    // console.log(this.request_params)
-    // console.log(PATIENTS)
-    // this.patients = PATIENTS.concat(this.fakePatients);
 
-    // this.getPatients();
-    //
-    // this.apiSvc.wipeEndpoint('patient');
-    // this.apiSvc.put('patient', [this.fakePatients[0]]);
     // this.apiSvc.put('patient', [this.fakePatients[1]]);
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
@@ -288,17 +280,44 @@ export class GetPatientsService {
     return this.apiSvc.getOne('patient', id, 'patientID')
   }
 
-  getPatients() {
+  // based on https://blog.angular-university.io/angular-material-data-table/
+  // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
+  getPatientsPaginated(qParams, pageNum: number = 0,
+    pageSize: number = 25, sortVars?: string[]): Observable<Patient[]> {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
+    let params = new HttpParams()
+      .set('q', param_string)
+      .set('size', pageSize.toString())
+      .set('from', (pageSize * pageNum).toString());
+
+    console.log(params)
+    let testSort = ['cohort.key', 'age', 'patientID.key'];
+    testSort.forEach(d => params.append('sort', d));
+    console.log(params)
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => res["body"]["hits"])
+    );
+  }
+
+
+  getPatients() {
+    let param_string: string = this.requestSvc.reduceParams(this.request_params);
+
     this.router.navigate(
-    [],
-    {
-      relativeTo: this.route,
-      queryParams: {q: param_string},
-      queryParamsHandling: "merge", // remove to replace all query params by provided
-    });
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { q: param_string },
+        queryParamsHandling: "merge", // remove to replace all query params by provided
+      });
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',

@@ -1,4 +1,8 @@
 <div class="patient-lists">
+  <div class="spinner-container" *ngIf="dataSource.loadingState$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
   <table mat-table [dataSource]="patientSource" matSort id="patients">
 
     <!-- ID Column -->
