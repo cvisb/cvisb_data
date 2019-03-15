@@ -290,7 +290,8 @@ export class GetPatientsService {
     let params = new HttpParams()
       .set('q', param_string)
       .set('size', pageSize.toString())
-      .set('from', (pageSize * pageNum).toString());
+      .set('from', (pageSize * pageNum).toString())
+      .set("sort", "age");
 
     console.log(params)
     let testSort = ['cohort.key', 'age', 'patientID.key'];
