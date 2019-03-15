@@ -20,7 +20,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   }
 
   loadPatients(qParams, pageNum: number, pageSize: number, sortVar, sortDirection) {
-    console.log('calling patients.dataSource:loadPatients')
+    // console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
@@ -33,7 +33,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Patient[]> {
-    console.log("Connecting data source");
+    // console.log("Connecting data source");
     return this.patientsSubject.asObservable();
   }
 
