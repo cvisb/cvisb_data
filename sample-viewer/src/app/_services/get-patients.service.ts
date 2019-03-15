@@ -297,6 +297,8 @@ export class GetPatientsService {
       .set('from', (pageSize * pageNum).toString())
       .set("sort", sortString);
 
+      console.log(params)
+
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
@@ -305,6 +307,7 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map(res => {
+        console.log("BACKEND CALL COMPLETED")
         console.log(res);
         return(res["body"]["hits"]) }
       )
@@ -332,7 +335,7 @@ export class GetPatientsService {
         .set('size', "1050")
     }).subscribe(data => {
       let patients = data['body']['hits'];
-      console.log(data)
+      // console.log(data)
 
       // Sort patients by available data length, then alpha.
       patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
