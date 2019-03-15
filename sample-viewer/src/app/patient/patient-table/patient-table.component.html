@@ -103,6 +103,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
   </table>
 
-  <mat-paginator [length]="'100'" [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="'1300'" [pageSizeOptions]="[10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
   <!-- <mat-paginator [length]="patientList?.patientCount" [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator> -->
 </div>
