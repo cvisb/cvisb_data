@@ -13,9 +13,10 @@ import { Patient, PatientArray } from '../../_models';
 export class PatientTableComponent implements OnInit {
   // private patients: PatientArray;
   // private patientSummary: PatientArray;
-  patientSource: MatTableDataSource<Patient>;
+  // patientSource: MatTableDataSource<Patient>;
+  patientSource: PatientsDataSource;
   selectedPatient;
-  tester: PatientsDataSource;
+  // tester: PatientsDataSource;
 
   displayedColumns: string[] = ['patientID', 'alternateIdentifier', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -28,32 +29,31 @@ export class PatientTableComponent implements OnInit {
     private patientSvc: GetPatientsService,
   ) {
 
-    // grab the data
-    this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-      this.patientSource = new MatTableDataSource(pList.patients);
-    })
+    // // grab the data
+    // this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
+    //   this.patientSource = new MatTableDataSource(pList.patients);
+    // })
 
   }
 
   ngOnInit() {
-    this.patientSource.paginator = this.paginator;
-
-    // custom sorters for nested objects
-    // Note: it seems to be working without this on a small sample size, but good to be explicit.
-    this.patientSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'associatedSamples': return item.associatedSamples ? item.associatedSamples.length : 0;
-        case 'country': return item.country['name'];
-        case 'availableData': return item.availableData ? item.availableData.length : 0;
-        default: return item[property];
-      }
-    };
-
-    this.patientSource.sort = this.sort;
-    this.tester = new PatientsDataSource(this.patientSvc);
-    console.log(this.tester);
-    this.tester.loadPatients("__all__", 0, 50, ["age"]);
-    console.log(this.tester)
+    // this.patientSource.paginator = this.paginator;
+    //
+    // // custom sorters for nested objects
+    // // Note: it seems to be working without this on a small sample size, but good to be explicit.
+    // this.patientSource.sortingDataAccessor = (item, property) => {
+    //   switch (property) {
+    //     case 'associatedSamples': return item.associatedSamples ? item.associatedSamples.length : 0;
+    //     case 'country': return item.country['name'];
+    //     case 'availableData': return item.availableData ? item.availableData.length : 0;
+    //     default: return item[property];
+    //   }
+    // };
+    //
+    // this.patientSource.sort = this.sort;
+    this.patientSource = new PatientsDataSource(this.patientSvc);
+    this.patientSource.loadPatients("__all__", 0, 50, ["age"]);
+    console.log(this.patientSource)
   }
 
   selectRow($event, row) {
