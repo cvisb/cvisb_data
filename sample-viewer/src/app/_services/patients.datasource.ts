@@ -19,12 +19,12 @@ export class PatientsDataSource implements DataSource<Patient> {
 
   }
 
-  loadPatients(qParams, pageNum: number, pageSize: number, sortVars) {
+  loadPatients(qParams, pageNum: number, pageSize: number, sortVar, sortDirection) {
     console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
-    this.patientSvc.getPatientsPaginated(qParams, pageNum, pageSize, sortVars).pipe(
+    this.patientSvc.getPatientsPaginated(qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

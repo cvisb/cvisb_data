@@ -283,17 +283,19 @@ export class GetPatientsService {
   // based on https://blog.angular-university.io/angular-material-data-table/
   // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
   getPatientsPaginated(qParams, pageNum: number = 0,
-    pageSize: number = 25, sortVar?: string): Observable<Patient[]> {
+    pageSize: number = 25, sortVar?: string, sortDirection?: string): Observable<Patient[]> {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
-// ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
-// BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${sortVar}` : sortVar;
+
     let params = new HttpParams()
       .set('q', param_string)
       .set('size', pageSize.toString())
       .set('from', (pageSize * pageNum).toString())
-      .set("sort", sortVar);
+      .set("sort", sortString);
 
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
