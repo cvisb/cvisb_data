@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { tap } from 'rxjs/operators';
+// import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
-import { GetPatientsService, PatientsDataSource} from '../../_services/';
+import { GetPatientsService, PatientsDataSource } from '../../_services/';
 import { Patient, PatientArray } from '../../_models';
 
 @Component({
@@ -16,7 +18,7 @@ export class PatientTableComponent implements OnInit {
   // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
   selectedPatient;
-  // tester: PatientsDataSource;
+  patientList: any;
 
   displayedColumns: string[] = ['patientID', 'alternateIdentifier', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -26,6 +28,7 @@ export class PatientTableComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private patientSvc: GetPatientsService,
   ) {
 
@@ -37,6 +40,8 @@ export class PatientTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.patientList = this.route.snapshot.data['patients'];
+    console.log(this.patientList)
     // this.patientSource.paginator = this.paginator;
     //
     // // custom sorters for nested objects
@@ -52,8 +57,44 @@ export class PatientTableComponent implements OnInit {
     //
     // this.patientSource.sort = this.sort;
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    this.patientSource.loadPatients("__all__", 0, 50, ["age"]);
+    this.patientSource.loadPatients("__all__", 0, 20, ["age"]);
     console.log(this.patientSource)
+  }
+
+  // ngAfterViewInit() {
+  //
+  //     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+  //
+  //     fromEvent(this.input.nativeElement,'keyup')
+  //         .pipe(
+  //             debounceTime(150),
+  //             distinctUntilChanged(),
+  //             tap(() => {
+  //                 this.paginator.pageIndex = 0;
+  //
+  //                 this.loadPatientPage();
+  //             })
+  //         )
+  //         .subscribe();
+  //
+  //     merge(this.sort.sortChange, this.paginator.page)
+  //     .pipe(
+  //         tap(() => this.loadPatientPage())
+  //     )
+  //     .subscribe();
+  //
+  // }
+  //
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadPatientPage())
+      )
+      .subscribe();
+  }
+
+  loadPatientPage() {
+    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, ["age"]);
   }
 
   selectRow($event, row) {
