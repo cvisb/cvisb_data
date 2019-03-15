@@ -43,7 +43,7 @@ export class PatientTableComponent implements OnInit {
 
   ngOnInit() {
     this.patientList = this.route.snapshot.data['patients'];
-    console.log(this.patientList)
+    // console.log(this.patientList)
     // this.patientSource.paginator = this.paginator;
     //
     // // custom sorters for nested objects
@@ -99,7 +99,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, 
+    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize,
     this.sort.active, this.sort.direction);
   }
 
