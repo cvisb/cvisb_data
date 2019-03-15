@@ -59,7 +59,7 @@ export class PatientTableComponent implements OnInit {
     //
     // this.patientSource.sort = this.sort;
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    this.patientSource.loadPatients("__all__", 0, 20, ["age"]);
+    this.patientSource.loadPatients("__all__", 0, 20, null, null);
     console.log(this.patientSource)
   }
 
@@ -99,8 +99,8 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    console.log(this.sort)
-    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, "age");
+    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, 
+    this.sort.active, this.sort.direction);
   }
 
   selectRow($event, row) {
