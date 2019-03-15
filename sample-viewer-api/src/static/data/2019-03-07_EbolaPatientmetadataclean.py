@@ -332,8 +332,8 @@ subset = merged[merged["ID number"] == merged["ID number"]]
 subset = subset[(subset["age"] == subset["age"]) & (subset["elisa"] == subset["elisa"])]
 subset = subset.sort_values(by=["contactGroupIdentifier"])
 subset = subset.reset_index()
-subset[subset.patientID=="C-8939543"]
-subset = subset.iloc[900:1000]
+# subset[subset.patientID=="C-8939543"]
+# subset = subset.iloc[900:1000]
 subset.shape
 # subset = subset.iloc[0:1300]
 subset[cols].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/uploads/2019-03-08_Ebolapatients_PRIVATE.json", orient="records")
