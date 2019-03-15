@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { tap } from 'rxjs/operators';
+import { merge } from "rxjs/";
+// import { pipe } from 'rxjs';
 // import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
 import { GetPatientsService, PatientsDataSource } from '../../_services/';
@@ -86,15 +88,19 @@ export class PatientTableComponent implements OnInit {
   // }
   //
   ngAfterViewInit() {
-    this.paginator.page
-      .pipe(
-        tap(() => this.loadPatientPage())
-      )
-      .subscribe();
+  // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+            tap(() => this.loadPatientPage())
+        )
+        .subscribe();
   }
 
   loadPatientPage() {
-    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, ["age"]);
+    console.log(this.sort)
+    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize, "age");
   }
 
   selectRow($event, row) {
