@@ -43,7 +43,7 @@ export class GetPatientsService {
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
-        this.getPatients();
+        // this.getPatients();
       }
     })
 
@@ -146,13 +146,13 @@ getAllPatientsSummary(): Observable<any> {
   getPatients() {
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: { q: param_string },
-        queryParamsHandling: "merge", // remove to replace all query params by provided
-      });
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: param_string },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
@@ -160,7 +160,7 @@ getAllPatientsSummary(): Observable<any> {
         .set('Accept', 'application/json'),
       params: new HttpParams()
         .set('q', param_string)
-        .set('size', "1050")
+        .set('size', "1000")
     }).subscribe(data => {
       let patients = data['body']['hits'];
       // console.log(data)
@@ -187,7 +187,7 @@ getAllPatientsSummary(): Observable<any> {
     console.log('calling backend to get ALL patients');
     // console.log(this.patients);
 
-    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1050", {
+    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
