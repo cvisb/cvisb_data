@@ -48,35 +48,41 @@ export class FilterPatientsComponent implements OnInit {
       })
 
     // grab the summary data
-    this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-      if (pList) {
-        this.patients = pList.patients;
-        this.patientSummary = pList;
-
-        // On the initial return object, set the maximum parameters
-        if (this.first_call) {
-          this.first_call = false;
-          // this.total_patients = this.patients.length;
-          this.all_patients = pList.patientIDs;
-          this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
-          this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
-          this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
-          this.all_years.sort();
-          if(this.all_years.length === 0) {
-            this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
-          }
-          this.all_countries = pList.patientCountries;
-          // console.log(this.all_countries)
-          // console.log(this.all_cohorts)
-          // console.log(this.all_outcomes)
-        }
-      }
-    });
+    // this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
+    //   if (pList) {
+    //     this.patients = pList.patients;
+    //     this.patientSummary = pList;
+    //
+    //     // On the initial return object, set the maximum parameters
+    //     if (this.first_call) {
+    //       this.first_call = false;
+    //       // this.total_patients = this.patients.length;
+    //       this.all_patients = pList.patientIDs;
+    //       this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
+    //       this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
+    //       this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);
+    //       this.all_years.sort();
+    //       if(this.all_years.length === 0) {
+    //         this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
+    //       }
+    //       this.all_countries = pList.patientCountries;
+    //       // console.log(this.all_countries)
+    //       // console.log(this.all_cohorts)
+    //       // console.log(this.all_outcomes)
+    //     }
+    //   }
+    // });
 
     route.data.subscribe(params => {
       console.log('Filter getting new summarized data!')
       console.log(params)
-      this.total_patients = params.patients.total;
+      let pList = params.patients;
+      this.total_patients = pList.total;
+      this.all_patients = pList.patientIDs;
+      this.all_cohorts = pList.patientTypes;
+      this.all_outcomes = pList.patientOutcomes
+
+      this.patientSummary = pList;
 
     });
 

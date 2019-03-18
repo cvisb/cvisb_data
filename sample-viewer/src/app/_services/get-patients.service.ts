@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam } from '../_models';
+import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, PatientSummary } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -411,7 +411,9 @@ console.log(x)
     }).pipe(
       map(res => {
         console.log(res);
-        return (res.body)
+        let summary = new PatientSummary(res.body)
+        console.log(summary)
+        return (summary);
       }
       )
     );
