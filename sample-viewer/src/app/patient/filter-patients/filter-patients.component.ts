@@ -47,7 +47,7 @@ export class FilterPatientsComponent implements OnInit {
         }
       })
 
-    // grab the data
+    // grab the summary data
     this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
       if (pList) {
         this.patients = pList.patients;
@@ -56,7 +56,7 @@ export class FilterPatientsComponent implements OnInit {
         // On the initial return object, set the maximum parameters
         if (this.first_call) {
           this.first_call = false;
-          this.total_patients = this.patients.length;
+          // this.total_patients = this.patients.length;
           this.all_patients = pList.patientIDs;
           this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
           this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
@@ -71,6 +71,13 @@ export class FilterPatientsComponent implements OnInit {
           // console.log(this.all_outcomes)
         }
       }
+    });
+
+    route.data.subscribe(params => {
+      console.log('Filter getting new summarized data!')
+      console.log(params)
+      this.total_patients = params.patients.total;
+
     });
 
     this.authSvc.authState$.subscribe((status: AuthState) => {
