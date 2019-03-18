@@ -7,7 +7,7 @@
       <mat-icon *ngIf=" ctry.term === 'unknown'" [ngClass]="ctry.term + '-icon'">help_outline</mat-icon>
 
       <div class="filter-pair">
-        <div class="adm0-name" *ngSwitch="ctry.term">
+        <div class="adm0-name" [ngSwitch]="ctry.term">
           <ng-container *ngSwitchCase="'SL'">Sierra Leone</ng-container>
           <ng-container *ngSwitchCase="'NG'">Nigeria</ng-container>
           <ng-container *ngSwitchDefault>unknown</ng-container>
