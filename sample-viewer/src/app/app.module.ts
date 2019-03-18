@@ -17,7 +17,7 @@ import { AdminModule, PipesModule, HlaModule } from '.';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver, PatientsResolver } from './_services/';
+import { DatasetResolver, PatientsResolver, AllPatientsResolver } from './_services/';
 
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';
@@ -180,7 +180,8 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     MyHttpClient,
     DatePipe,
     DatasetResolver,
-    PatientsResolver
+    PatientsResolver,
+    AllPatientsResolver
   ],
   entryComponents: [
     SampleMetadataComponent
