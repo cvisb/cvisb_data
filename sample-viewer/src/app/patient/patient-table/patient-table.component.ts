@@ -6,8 +6,8 @@ import { merge } from "rxjs/";
 // import { pipe } from 'rxjs';
 // import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
-import { GetPatientsService, PatientsDataSource } from '../../_services/';
-import { Patient, PatientArray } from '../../_models';
+import { GetPatientsService, PatientsDataSource, RequestParametersService } from '../../_services/';
+import { Patient, PatientArray, RequestParamArray } from '../../_models';
 
 @Component({
   selector: 'app-patient-table',
@@ -19,8 +19,8 @@ export class PatientTableComponent implements OnInit {
   // private patientSummary: PatientArray;
   // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
-  selectedPatient;
   selectedLength: number;
+  qString: string;
 
   displayedColumns: string[] = ['alternateIdentifier', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -31,27 +31,31 @@ export class PatientTableComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
   ) {
 
-    // // grab the data
-    // this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-    //   this.patientSource = new MatTableDataSource(pList.patients);
-    // })
-    //
+
     route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
       console.log("selected length: " + this.selectedLength)
     });
 
+    // listen for changes in the request parameters, update data source
+    this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+      console.log("qParams heard in patient-table")
+      console.log(qParams)
+
+      this.qString = this.requestSvc.reduceParams(qParams);
+      console.log(this.qString);
+      this.loadPatientPage();
+    })
+
+
 
   }
 
   ngOnInit() {
-    // this.patientList = this.route.snapshot.data['patients'];
-    // console.log(this.route.snapshot.data)
-    // this.patientSource.paginator = this.paginator;
-    //
     // // custom sorters for nested objects
     // // Note: it seems to be working without this on a small sample size, but good to be explicit.
     // this.patientSource.sortingDataAccessor = (item, property) => {
@@ -62,8 +66,6 @@ export class PatientTableComponent implements OnInit {
     //     default: return item[property];
     //   }
     // };
-    //
-    // this.patientSource.sort = this.sort;
     this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients("__all__", 0, 10, "", null);
   }
@@ -81,15 +83,20 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    this.patientSource.loadPatients("__all__", this.paginator.pageIndex, this.paginator.pageSize,
+    console.log("loadPatientPage Q:" + this.qString)
+    this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
+
+    console.log(this.patientSource);
+
+    // this.selectedLength = this.patientSource
+    // data.length;
   }
 
   selectRow($event, row) {
     // $event.preventDefault();
     // $event.stopPropagation();  // <- that will stop propagation on lower layers
 
-    // this.selectedPatient = row;
     this.router.navigate(['/patient', row.patientID]);
   }
 
