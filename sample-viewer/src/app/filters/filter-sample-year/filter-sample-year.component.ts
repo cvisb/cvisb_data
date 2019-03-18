@@ -136,14 +136,13 @@ export class FilterSampleYearComponent implements OnInit {
     // Split data into numeric + non-numeric data
     this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
-    console.log(this.num_data)
-    console.log(this.unknown_data)
 
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
 
-
+    console.log(this.num_data)
+    console.log(this.unknown_data)
 
   }
 
@@ -309,7 +308,10 @@ export class FilterSampleYearComponent implements OnInit {
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
         .transition(t)
-        .attr("y", (d: any) => this.y(d.count))
+        .attr("y", (d: any) =>{
+          console.log(d)
+         return(this.y(d.count));
+       })
         .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
       // Unknown bar
