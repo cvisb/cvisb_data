@@ -24,6 +24,7 @@ export class PatientSummary {
     this.patientTypes = facet_obj["cohort.keyword"].terms;
     this.patientOutcomes = facet_obj["outcome.keyword"].terms;
     this.patientYears = facet_obj["infectionYear"].terms;
+    this.patientCountries = facet_obj["country.name.keyword"].terms;
 
     // Check for null values.
     if (facet_obj["infectionYear"].total < this.total) {
