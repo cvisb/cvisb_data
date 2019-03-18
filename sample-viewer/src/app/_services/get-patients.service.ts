@@ -29,7 +29,7 @@ export class GetPatientsService {
   public patientsState$ = this.patientsSubject.asObservable();
 
   // Array of variables to calculate the summary stats for.
-  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "infectionYear", "country.name.keyword"];
+  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "infectionYear", "country.identifier.keyword"];
 
 
   fakePatients: Patient[] = [
