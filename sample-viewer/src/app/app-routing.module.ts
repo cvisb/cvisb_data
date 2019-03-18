@@ -33,8 +33,7 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
-  {
-    path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
+  { canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
       patients: PatientsResolver,
       all: AllPatientsResolver
