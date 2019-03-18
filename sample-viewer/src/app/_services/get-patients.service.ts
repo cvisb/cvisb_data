@@ -411,7 +411,7 @@ console.log(x)
     }).pipe(
       map(res => {
         console.log(res);
-        return (res)
+        return (res.body)
       }
       )
     );

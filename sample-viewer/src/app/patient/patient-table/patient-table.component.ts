@@ -20,7 +20,7 @@ export class PatientTableComponent implements OnInit {
   // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
   selectedPatient;
-  patientList: any;
+  patientLength: number;
 
   displayedColumns: string[] = ['patientID', 'alternateIdentifier', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -38,14 +38,18 @@ export class PatientTableComponent implements OnInit {
     // this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
     //   this.patientSource = new MatTableDataSource(pList.patients);
     // })
+    //
+    route.data.subscribe(params => {
+      this.patientLength = params.patients.total;
+      console.log("patient length: " + this.patientLength)
+    });
+
 
   }
 
   ngOnInit() {
-    this.patientList = this.route.snapshot.data['patients'];
-    console.log("this.route.snapshot.data")
-    console.log(this.route.snapshot.data)
-    console.log(this.patientList)
+    // this.patientList = this.route.snapshot.data['patients'];
+    // console.log(this.route.snapshot.data)
     // this.patientSource.paginator = this.paginator;
     //
     // // custom sorters for nested objects
@@ -64,30 +68,7 @@ export class PatientTableComponent implements OnInit {
     this.patientSource.loadPatients("__all__", 0, 10, "", null);
   }
 
-  // ngAfterViewInit() {
-  //
-  //     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-  //
-  //     fromEvent(this.input.nativeElement,'keyup')
-  //         .pipe(
-  //             debounceTime(150),
-  //             distinctUntilChanged(),
-  //             tap(() => {
-  //                 this.paginator.pageIndex = 0;
-  //
-  //                 this.loadPatientPage();
-  //             })
-  //         )
-  //         .subscribe();
-  //
-  //     merge(this.sort.sortChange, this.paginator.page)
-  //     .pipe(
-  //         tap(() => this.loadPatientPage())
-  //     )
-  //     .subscribe();
-  //
-  // }
-  //
+
   ngAfterViewInit() {
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
