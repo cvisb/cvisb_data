@@ -1,14 +1,18 @@
 <div class="filter filter-adm0" *ngIf="countries">
   <h4 class="filter-label">location</h4>
 
-  <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.key)" class="location mat-shadow" [ngClass]="ctry.key">
-    <div [ngClass]="{'disabled': ctry.value === 0}">
-      <svg-icon [icon]="ctry.key" [class]="ctry.key + '-icon'" *ngIf="ctry.name"></svg-icon>
-      <mat-icon *ngIf="! ctry.name || ctry.name === 'unknown'" [ngClass]="ctry.key + '-icon'">help_outline</mat-icon>
+  <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.term)" class="location mat-shadow" [ngClass]="ctry.term">
+    <div [ngClass]="{'disabled': ctry.count === 0}">
+      <svg-icon [icon]="ctry.term" [class]="ctry.term + '-icon'" *ngIf="ctry.name"></svg-icon>
+      <mat-icon *ngIf=" ctry.term === 'unknown'" [ngClass]="ctry.term + '-icon'">help_outline</mat-icon>
 
       <div class="filter-pair">
-        <div class="adm0-name">{{ ctry.name || 'unknown'}}</div>
-        <div class="adm0-count">{{ ctry.value || 0 }}</div>
+        <div class="adm0-name" *ngSwitch="ctry.term"></div>
+        <ng-container *ngSwitchCase="'SL'">Sierra Leone</ng-container>
+        <ng-container *ngSwitchCase="'NG'">Nigeria</ng-container>
+        <ng-container *ngSwitchDefault>unknown</ng-container>
+
+        <div class="adm0-count">{{ ctry.count || 0 }}</div>
       </div>
     </div>
 
