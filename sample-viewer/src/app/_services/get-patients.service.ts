@@ -48,7 +48,7 @@ export class GetPatientsService {
     })
 
     this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log(params)
+      console.log(params)
       this.request_params = params;
       this.getPatients();
     })
@@ -79,15 +79,14 @@ export class GetPatientsService {
     return this.apiSvc.getOne('patient', id, 'patientID')
   }
 
-  getPatientSummary(qParams): Observable<any> {
-
-    let param_string: string = this.requestSvc.reduceParams(this.request_params);
+  getPatientSummary(param_string: string): Observable<any> {
+    // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
     let params = new HttpParams()
       .set('q', param_string)
       .set('facets', facet_string)
-      .set('facet_size', "5000")
+      .set('facet_size', "10000")
       .set('size', "0");
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
@@ -146,13 +145,13 @@ getAllPatientsSummary(): Observable<any> {
   getPatients() {
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: { q: param_string },
-    //     queryParamsHandling: "merge", // remove to replace all query params by provided
-    //   });
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { q: param_string },
+        queryParamsHandling: "merge", // remove to replace all query params by provided
+      });
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
