@@ -48,12 +48,12 @@ export class RequestParametersService {
   // Assumes values are contained in a 'key' variable
   // Essential for object constancy on transitions/updates.
   addMissing(data, domain: any[]) {
-    let keys = data.map(d => d.key);
+    let keys = data.map(d => d.term);
 
     let missing_data = domain.filter(d => !keys.includes(d));
 
     missing_data.forEach(d => {
-      data.push({ key: d, value: 0 });
+      data.push({ term: d, value: 0 });
     })
     return (data);
   }
