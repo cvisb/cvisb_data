@@ -83,6 +83,7 @@ export class FilterPatientsComponent implements OnInit {
       this.all_outcomes = pList.patientOutcomes
 
       this.patientSummary = pList;
+      console.log(this.patientSummary)
 
     });
 
