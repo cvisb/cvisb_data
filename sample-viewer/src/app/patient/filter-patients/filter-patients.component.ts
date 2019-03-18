@@ -79,8 +79,8 @@ export class FilterPatientsComponent implements OnInit {
       let pList = params.patients;
       this.total_patients = pList.total;
       this.all_patients = pList.patientIDs;
-      this.all_cohorts = pList.patientTypes;
-      this.all_outcomes = pList.patientOutcomes
+      this.all_cohorts = pList.patientTypes.map(d => d.term);
+      this.all_outcomes = pList.patientOutcomes.map(d => d.term);
 
       this.patientSummary = pList;
       console.log(this.patientSummary)
