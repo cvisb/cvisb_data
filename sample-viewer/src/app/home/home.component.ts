@@ -36,24 +36,9 @@ export class HomeComponent implements OnInit {
     this.titleSvc.setTitle(title);
 
 
-    // patientSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-    //   console.log('getting most recent patient params!')
-    //   console.log(params)
-    //   this.params = params;
-    // })
   }
 
   ngOnInit() {
-    // this.params = new RequestParamArray([new RequestParam('country.identifier', '2')]);
-    // // this.params.push(new RequestParam('country.identifier', '2'));
-    // console.log(this.params)
-    // console.log(this.params.collapse())
-
-    // console.log(DATASETS)
-    // this.apiSvc.put('sample', SAMPLES);
-    // this.apiSvc.put('experiment', EXPTS);
-    // this.apiSvc.put('dataset', DATASETS);
-    // this.apiSvc.put('datadownload', DOWNLOADS);
   }
 
 }
