@@ -134,15 +134,16 @@ export class FilterSampleYearComponent implements OnInit {
 
   prepData() {
     // Split data into numeric + non-numeric data
-    this.num_data = this.data.filter((d: any) => typeof (d.key) === 'number');
-    this.unknown_data = this.data.filter((d: any) => typeof (d.key) !== 'number');
+    this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
+    this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
+    console.log(this.num_data)
+    console.log(this.unknown_data)
 
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
 
-    console.log(this.num_data)
-    console.log(this.unknown_data)
+
 
   }
 
@@ -268,7 +269,7 @@ export class FilterSampleYearComponent implements OnInit {
       this.prepData();
 
       this.y
-        .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.value), d3.max(this.unknown_data, (d: any) => d.value))]).nice();
+        .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
 
       // --- Update axes ---
       d3.select(".axis--years")
@@ -282,9 +283,9 @@ export class FilterSampleYearComponent implements OnInit {
       // --- Single bar event listener ---
       let selectYear = function(yearFilterSubject, requestSvc, endpoint, sendParams) {
         return function(d) {
-          d.key === "unknown" ?
+          d.term === "unknown" ?
             yearFilterSubject.next({ lower: 0, upper: 0, unknown: true }) :
-            yearFilterSubject.next({ lower: d.key, upper: d.key, unknown: false });
+            yearFilterSubject.next({ lower: d.term, upper: d.term, unknown: false });
 
           // update parameters.
           sendParams(yearFilterSubject, requestSvc, endpoint);
@@ -302,14 +303,14 @@ export class FilterSampleYearComponent implements OnInit {
       year_data.enter().append("rect")
         .attr("class", "count-rect year-rect")
         .merge(year_data)
-        .attr("id", (d: any) => d.key)
-        .attr("x", (d: any) => this.x(d.key))
+        .attr("id", (d: any) => d.term)
+        .attr("x", (d: any) => this.x(d.term))
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
         .transition(t)
-        .attr("y", (d: any) => this.y(d.value))
-        .attr("height", (d: any) => this.y(0) - this.y(d.value));
+        .attr("y", (d: any) => this.y(d.count))
+        .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
       // Unknown bar
       let unknown_data = this.unknown_rects
@@ -321,14 +322,14 @@ export class FilterSampleYearComponent implements OnInit {
       unknown_data.enter().append("rect")
         .attr("class", "count-rect unknown-rect")
         .merge(unknown_data)
-        .attr("id", (d: any) => d.key)
-        .attr("x", (d: any) => this.x2(d.key) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
+        .attr("id", (d: any) => d.term)
+        .attr("x", (d: any) => this.x2(d.term) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
         .transition(t)
-        .attr("y", (d: any) => this.y(d.value))
-        .attr("height", (d: any) => this.y(0) - this.y(d.value));
+        .attr("y", (d: any) => this.y(d.count))
+        .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
 
       // Event listener for click event on rects
@@ -442,8 +443,8 @@ export class FilterSampleYearComponent implements OnInit {
     d3.selectAll("rect")
       .classed("selected", (d: any) =>
         limits['unknown'] ?
-          (d.key >= lower_limit && d.key <= upper_limit) || d.key === 'unknown' :
-          d.key >= lower_limit && d.key <= upper_limit);
+          (d.term >= lower_limit && d.term <= upper_limit) || d.term === 'unknown' :
+          d.term >= lower_limit && d.term <= upper_limit);
 
 
     // Update slider handles
