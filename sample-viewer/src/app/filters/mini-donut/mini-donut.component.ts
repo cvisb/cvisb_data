@@ -216,7 +216,7 @@ export class MiniDonutComponent implements OnInit {
         .style("stroke-opacity", 1)
         .transition(t)
         .attr("d", arc)
-        .style("stroke-opacity", d => d.count > 0 ? 1 : 0)
+        .style("stroke-opacity", d => d.value > 0 ? 1 : 0)
         .attrTween("d", arcTween);
       // .transition()
       // .duration(50)
