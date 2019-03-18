@@ -1,9 +1,14 @@
+export class ESResponse {
+  body: ESResult;
+  status: number;
+  url: string;
+}
+
 export class ESResult {
   max_score: number;
   total: number;
   facets?: Object;
-  hits?: any[];
-
+  hits: any[];
 }
 
 export class ESFacet {

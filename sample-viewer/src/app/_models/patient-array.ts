@@ -1,8 +1,48 @@
 import { Patient } from './patient';
 import { D3Nested } from './d3-nested';
 
+import { ESResult, ESFacet, ESFacetTerms } from './es-result';
+
 import * as d3 from 'd3';
 import * as _ from 'lodash';
+
+export class PatientSummary {
+  total: number;
+  patientIDs: string[];
+  relatedIDs: string[];
+  patientTypes: ESFacetTerms[];
+  patientOutcomes: ESFacetTerms[];
+  patientCountries: ESFacetTerms[];
+  patientYears: ESFacetTerms[];
+  exptTypes: ESFacetTerms[];
+
+  constructor(patients: ESResult) {
+    let facet_obj = patients.facets;
+    this.total = patients.total;
+
+    this.patientIDs = facet_obj["patientID.keyword"].terms;
+    this.patientTypes = facet_obj["cohort.keyword"].terms;
+    this.patientOutcomes = facet_obj["outcome.keyword"].terms;
+    this.patientYears = facet_obj["infectionYear"].terms;
+
+    // Check for null values.
+    if (facet_obj["infectionYear"].total < this.total) {
+      this.patientYears.push(new UnknownCount(this.total - facet_obj["infectionYear"].total));
+    }
+
+
+  }
+}
+
+export class UnknownCount {
+  term: string;
+  count: number;
+
+  constructor(count: number) {
+    this.term = "unknown";
+    this.count = count;
+  }
+}
 
 export class PatientArray {
   patients: Patient[];
@@ -50,7 +90,7 @@ export class PatientArray {
 
       // --- experiments ---
 
-      this.exptTypes  = [];
+      this.exptTypes = [];
       if (Object.keys(patients).includes("availableData")) {
         let expts: any = patients.filter((d: Patient) => d.availableData).map((d: Patient) => d.availableData);
         expts = expts.flat();
