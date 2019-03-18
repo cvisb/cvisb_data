@@ -28,6 +28,9 @@ export class GetPatientsService {
   public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
   public patientsState$ = this.patientsSubject.asObservable();
 
+  // Array of variables to calculate the summary stats for.
+  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "infectionYear", "country.name.keyword"];
+
 
   fakePatients: Patient[] = [
     {
@@ -260,6 +263,111 @@ export class GetPatientsService {
       this.getPatients();
     })
 
+    let x ={
+  "facets": {
+    "cohort.keyword": {
+      "_type": "terms",
+      "other": 0,
+      "missing": 0,
+      "terms": [
+        {
+          "term": "Ebola",
+          "count": 1235
+        }
+      ],
+      "total": 1235
+    },
+    "outcome.keyword": {
+      "_type": "terms",
+      "other": 0,
+      "missing": 0,
+      "terms": [
+        {
+          "term": "contact",
+          "count": 839
+        },
+        {
+          "term": "survivor",
+          "count": 396
+        }
+      ],
+      "total": 1235
+    },
+    "infectionYear": {
+      "_type": "terms",
+      "other": 0,
+      "missing": 0,
+      "terms": [],
+      "total": 0
+    },
+    "patientID.keyword": {
+      "_type": "terms",
+      "other": 1215,
+      "missing": 10,
+      "terms": [
+        {
+          "term": "C-8847721",
+          "count": 2
+        },
+        {
+          "term": "C-8908791",
+          "count": 2
+        },
+        {
+          "term": "C-8908793",
+          "count": 2
+        },
+        {
+          "term": "C-8923111",
+          "count": 2
+        },
+        {
+          "term": "C-8923112",
+          "count": 2
+        },
+        {
+          "term": "C-8939542",
+          "count": 2
+        },
+        {
+          "term": "C-8946691",
+          "count": 2
+        },
+        {
+          "term": "C-9001701",
+          "count": 2
+        },
+        {
+          "term": "C-9214621",
+          "count": 2
+        },
+        {
+          "term": "C-9232671",
+          "count": 2
+        }
+      ],
+      "total": 20
+    },
+    "country.name.keyword": {
+      "_type": "terms",
+      "other": 0,
+      "missing": 0,
+      "terms": [
+        {
+          "term": "Sierra Leone",
+          "count": 1235
+        }
+      ],
+      "total": 1235
+    }
+  },
+  "max_score": 0.0,
+  "took": 22,
+  "total": 1235,
+  "hits": []
+};
+console.log(x)
+
     // this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
     // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
   }
@@ -277,11 +385,42 @@ export class GetPatientsService {
     return (sortVar);
   }
 
+
   getPatient(id: string): any {
     // temp hard-coded shim.
     // return (this.patients.filter((d: any) => d.patientID === id)[0]);
     return this.apiSvc.getOne('patient', id, 'patientID')
   }
+
+  getPatientSummary(qParams): Observable<any> {
+
+    let param_string: string = this.requestSvc.reduceParams(this.request_params);
+    let facet_string = this.summaryVar.join(",");
+
+    let params = new HttpParams()
+      .set('q', param_string)
+      .set('facets', facet_string)
+      .set('facet_size', "5000")
+      .set('size', "0");
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res)
+      }
+      )
+    );
+  }
+
+getAllPatientsSummary(): Observable<any> {
+  return(this.getPatientSummary("__all__"));
+}
+
 
   // based on https://blog.angular-university.io/angular-material-data-table/
   // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
