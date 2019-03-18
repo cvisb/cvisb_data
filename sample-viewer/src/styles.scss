@@ -48,6 +48,13 @@ body {
   cursor: default !important;
 }
 
+.data-separator:after {
+  content: "\2022";
+  color: #959faa;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
 a {
   color: $cvisb-theme;
   cursor: pointer;
