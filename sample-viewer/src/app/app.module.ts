@@ -17,7 +17,7 @@ import { AdminModule, PipesModule, HlaModule } from '.';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver } from './_services/get-datasets.resolver';
+import { DatasetResolver, PatientsResolver } from './_services/';
 
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';
@@ -177,7 +177,11 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     // { provide: STEPPER_GLOBAL_OPTIONS,
     //   useValue: { displayDefaultIndicatorType: false }
     // },
-    MyHttpClient, DatePipe, DatasetResolver],
+    MyHttpClient,
+    DatePipe,
+    DatasetResolver,
+    PatientsResolver
+  ],
   entryComponents: [
     SampleMetadataComponent
   ],

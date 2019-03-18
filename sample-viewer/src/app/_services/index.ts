@@ -4,6 +4,7 @@ export * from './get-datasets.service';
 export * from './get-datasets.resolver';
 export * from './get-patients.service';
 export * from './patients.datasource';
+export * from './patients.resolver';
 export * from './file-metadata.service';
 export * from './anchor.service';
 export * from './get-hla-data.service';
