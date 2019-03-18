@@ -7,7 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, PatientSummary } from '../_models';
+import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, ESResult } from '../_models';
+import { PatientSummary } from '../_models/patient-array';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -409,7 +410,7 @@ console.log(x)
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      map(res => {
+      map((res: ESResult) => {
         console.log(res);
         let summary = new PatientSummary(res.body)
         console.log(summary)
