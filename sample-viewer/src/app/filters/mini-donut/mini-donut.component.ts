@@ -94,18 +94,18 @@ export class MiniDonutComponent implements OnInit {
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
-      let keys = this.data.map(d => d.key);
+      let keys = this.data.map(d => d.term);
 
       let missing_data = this.cohorts.filter(d => !keys.includes(d));
       missing_data.forEach(d => {
-        this.data.push({ key: d, value: 0 });
+        this.data.push({ term: d, count: 0 });
       })
 
       // --- Filter event listener ---
       // Handle into filtering by virus type
       let filterCohort = function(endpoint: string, requestSvc: any) {
         return function(d) {
-          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.data.key })
+          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.data.term })
         }
       }
 
@@ -113,10 +113,10 @@ export class MiniDonutComponent implements OnInit {
       let filterText = function(endpoint: string, requestSvc: any) {
         // TODO: flip on/off.
         return function(d) {
-          console.log('filtering ' + d.key)
+          console.log('filtering ' + d.term)
           // If the parameter is already turned on, turn it off.
-          let isExcluded = d.value != 0;
-          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.key, exclude: isExcluded })
+          let isExcluded = d.count != 0;
+          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.term, exclude: isExcluded })
         }
       }
 
@@ -136,7 +136,7 @@ export class MiniDonutComponent implements OnInit {
       let mouseoutText = function() {
         return function(d) {
           d3.select(this).selectAll(".annotation--count")
-            .classed('disabled', (d: any) => d.value === 0);
+            .classed('disabled', (d: any) => d.count === 0);
 
           // turn off tooltip
           d3.select(this).selectAll(".annotation--tooltip")
@@ -147,7 +147,7 @@ export class MiniDonutComponent implements OnInit {
       // Turn on/off the path tooltip
       let showTooltips = function() {
         return function(selected) {
-          let html_payload = `select ${selected.data.key}`;
+          let html_payload = `select ${selected.data.term}`;
 
           d3.selectAll("path")
           .classed("not-highlight", true);
@@ -158,7 +158,7 @@ export class MiniDonutComponent implements OnInit {
           d3.select(".tooltip").html(html_payload)
             .style("left", (d3.event.pageX + 15) + "px")
             .style("top", (d3.event.pageY + 15) + "px")
-            .attr("class", `tooltip ${selected.data.key}`)
+            .attr("class", `tooltip ${selected.data.term}`)
             .style("display", "inline-block");
         }
       }
@@ -192,7 +192,7 @@ export class MiniDonutComponent implements OnInit {
       var pie: any = d3.pie()
         // .sort((a: any, b: any) => a.value > b.value ? -1 : 1)
         .sort(null) // remove sorting so there's constancy b/w the slices
-        .value((d: any) => d.value);
+        .value((d: any) => d.count);
 
       let arc = d3.arc()
         .innerRadius(this.height / 2 * this.hole_frac)
@@ -212,11 +212,11 @@ export class MiniDonutComponent implements OnInit {
       donut_path.enter().append("path")
         .each(function(d) { this._current = d; })
         .merge(donut_path)
-        .attr("class", d => d.data.key)
+        .attr("class", d => d.data.term)
         .style("stroke-opacity", 1)
         .transition(t)
         .attr("d", arc)
-        .style("stroke-opacity", d => d.value > 0 ? 1 : 0)
+        .style("stroke-opacity", d => d.count > 0 ? 1 : 0)
         .attrTween("d", arcTween);
       // .transition()
       // .duration(50)
@@ -238,7 +238,7 @@ export class MiniDonutComponent implements OnInit {
       // Group update/merge: https://stackoverflow.com/questions/41625978/d3-v4-update-pattern-for-groups
       var node = this.annotation.selectAll(".annotation--group")
         .data(this.data, function(d) {
-          return d.key;
+          return d.term;
         });
 
       node.exit().remove(); // exit, remove the text
@@ -261,19 +261,19 @@ export class MiniDonutComponent implements OnInit {
 
       // Update the position, class, and text for the count per thing.
       node.select(".annotation--count")
-        .attr("class", (d: any) => `${d.key} annotation--count`)
+        .attr("class", (d: any) => `${d.term} annotation--count`)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
-        .classed('disabled', (d: any) => d.value === 0)
-        .text((d: any) => `${d.key}: ${d.value}`);
+        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
+        .classed('disabled', (d: any) => d.count === 0)
+        .text((d: any) => `${d.term}: ${d.count}`);
 
       // Update the position, class, and text for the count per thing.
       node.select(".annotation--tooltip")
         .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .attr("class", (d: any) => d.value > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
-        .attr("y", (d: any) => this.y(d.key) + this.y.bandwidth() / 2)
+        .attr("class", (d: any) => d.count > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
+        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .text((d: any) => {
-          if (d.value > 0) {
+          if (d.count > 0) {
             // Delete/filter
             return (`\uf057`);
           }
