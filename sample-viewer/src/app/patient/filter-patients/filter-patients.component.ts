@@ -51,28 +51,29 @@ export class FilterPatientsComponent implements OnInit {
       })
 
       // listen for changes in the request parameters.
-      // this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      //   console.log("qParams heard in filter-patients")
-      //   console.log(qParams)
-      //
-      //   let param_string: string = this.requestSvc.reduceParams(qParams);
-      //   console.log(param_string)
-      //   this.patientSvc.getPatientSummary(param_string);
-      // })
-
-      this.requestSvc.patientParamsState$.pipe(
-      tap((qParams: RequestParamArray) => {
+      this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
         console.log("qParams heard in filter-patients")
         console.log(qParams)
 
-        this.qString = this.requestSvc.reduceParams(qParams);
-        console.log(this.qString);
-      }),
-      flatMap(
-        this.patientSvc.getPatientSummary(this.qString))).subscribe(res => {
-          console.log("result from patient summary in filter-patients");
-          console.log(res);
-        })
+        let param_string: string = this.requestSvc.reduceParams(qParams);
+        console.log(param_string)
+        this.patientSvc.getPatientSummary(param_string).subscribe(x =>
+        this.patientSummary = x);
+      })
+
+      // this.requestSvc.patientParamsState$.pipe(
+      // tap((qParams: RequestParamArray) => {
+      //   console.log("qParams heard in filter-patients")
+      //   console.log(qParams)
+      //
+      //   this.qString = this.requestSvc.reduceParams(qParams);
+      //   console.log(this.qString);
+      // }),
+      // flatMap(
+      //   this.patientSvc.getPatientSummary(this.qString))).subscribe(res => {
+      //     console.log("result from patient summary in filter-patients");
+      //     console.log(res);
+      //   })
 
 
       // this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
