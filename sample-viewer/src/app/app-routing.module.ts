@@ -17,7 +17,7 @@ import { SchemaComponent } from './schema/schema.component';
 // import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
 
 // --- Resolvers ---
-import { PatientsResolver, DatasetResolver } from './_services';
+import { AllPatientsResolver, PatientsResolver, DatasetResolver } from './_services';
 
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
@@ -36,7 +36,8 @@ const appRoutes: Routes = [
   {
     path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
-      patients: PatientsResolver
+      patients: PatientsResolver,
+      all: AllPatientsResolver
     }
   },
   { canActivate: [AuthGuard], path: 'patient/upload', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Add Patients | CViSB' } },

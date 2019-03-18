@@ -76,14 +76,15 @@ export class FilterPatientsComponent implements OnInit {
     route.data.subscribe(params => {
       console.log('Filter getting new summarized data!')
       console.log(params)
-      let pList = params.patients;
+      let pList = params.all;
       this.total_patients = pList.total;
       this.all_patients = pList.patientIDs;
       this.all_cohorts = pList.patientTypes.map(d => d.term);
       this.all_outcomes = pList.patientOutcomes.map(d => d.term);
 
-      this.patientSummary = pList;
+      this.patientSummary = params.patients;
       console.log(this.patientSummary)
+      console.log(pList)
 
     });
 
