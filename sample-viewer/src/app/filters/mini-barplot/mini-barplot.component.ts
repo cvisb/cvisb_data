@@ -73,7 +73,7 @@ export class MiniBarplotComponent implements OnInit {
   }
 
   createPlot() {
-    this.data = this.data.sort((a: any, b: any) => b.value - a.value);
+    this.data = this.data.sort((a: any, b: any) => b.count - a.count);
 
     // Append SVG
     const svg = d3.select(this.element)
@@ -118,11 +118,11 @@ export class MiniBarplotComponent implements OnInit {
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
-      let keys = this.data.map(d => d.key);
+      let keys = this.data.map(d => d.term);
 
       let missing_data = this.options.filter(d => !keys.includes(d));
       missing_data.forEach(d => {
-        this.data.push({ key: d, value: 0 });
+        this.data.push({ term: d, count: 0 });
       })
 
       // transition
@@ -133,18 +133,18 @@ export class MiniBarplotComponent implements OnInit {
       let filterOutcome = function(endpoint: string, requestSvc: any) {
         return function(d) {
           console.log(d)
-          requestSvc.updateParams(endpoint, { field: 'outcome', value: d.key })
+          requestSvc.updateParams(endpoint, { field: 'outcome', value: d.term })
 
           // switch (endpoint) {
           //   case 'patient': {
-          //     let params = [{ field: 'outcome', value: d.key }];
+          //     let params = [{ field: 'outcome', value: d.term }];
           //
           //     patientSvc.patientParamsSubject.next(params);
           //     break;
           //   }
           //   case 'dataset': {
-          //     console.log('sending dataset endpoint cohort ' + d.key);
-          //     let params = [{ field: 'outcome', value: d.key }];
+          //     console.log('sending dataset endpoint cohort ' + d.term);
+          //     let params = [{ field: 'outcome', value: d.term }];
           //     console.log(params)
           //     break;
           //   }
@@ -157,7 +157,7 @@ export class MiniBarplotComponent implements OnInit {
       }
 
       // --- Update domains ---
-      this.x.domain([0, <any>d3.max(this.data, (d: any) => d.value)]);
+      this.x.domain([0, <any>d3.max(this.data, (d: any) => d.count)]);
       // this.y.domain(this.data.map(d => d[this.name_var]));
 
       this.yAxis = d3.axisRight(this.y);
@@ -189,8 +189,8 @@ export class MiniBarplotComponent implements OnInit {
         .attr("height", this.y.bandwidth())
         // .attr("width", 0)
         .transition(t)
-        .attr("x", (d: any) => this.x(d.value))
-        .attr("width", (d: any) => this.x(0) - this.x(d.value));
+        .attr("x", (d: any) => this.x(d.count))
+        .attr("width", (d: any) => this.x(0) - this.x(d.count));
 
       this.chart.selectAll("rect")
         .on("click", filterOutcome(this.endpoint, this.requestSvc));
@@ -214,10 +214,10 @@ export class MiniBarplotComponent implements OnInit {
         .attr("dx", -4)
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .classed('disabled', (d: any) => d.value === 0)
-        .text((d: any) => (d.value))
+        .classed('disabled', (d: any) => d.count === 0)
+        .text((d: any) => (d.count))
         .transition(t)
-        .attr("x", (d: any) => this.x(d.value));
+        .attr("x", (d: any) => this.x(d.count));
 
 
       // Y-label annotations ---
@@ -236,7 +236,7 @@ export class MiniBarplotComponent implements OnInit {
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .merge(labels)
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
-        .classed('disabled', (d: any) => d.value === 0)
+        .classed('disabled', (d: any) => d.count === 0)
         .transition(t)
         // .style("fill-opacity", 1)
 
