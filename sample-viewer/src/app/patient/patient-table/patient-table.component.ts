@@ -20,7 +20,7 @@ export class PatientTableComponent implements OnInit {
   // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
   selectedPatient;
-  patientLength: number;
+  selectedLength: number;
 
   displayedColumns: string[] = ['patientID', 'alternateIdentifier', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -40,8 +40,8 @@ export class PatientTableComponent implements OnInit {
     // })
     //
     route.data.subscribe(params => {
-      this.patientLength = params.patients.total;
-      console.log("patient length: " + this.patientLength)
+      this.selectedLength = params.patients.total;
+      console.log("selected length: " + this.selectedLength)
     });
 
 

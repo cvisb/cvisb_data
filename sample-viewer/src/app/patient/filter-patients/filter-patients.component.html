@@ -1,7 +1,7 @@
 <div class="filter-container" *ngIf='patientSummary'>
   <div class="filter-header">
     <div class="container">
-      <h2>{{"patients.length"}} of {{ total_patients }} Patients Selected</h2>
+      <h2>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h2>
 
       <div class="pull-right">
         <app-filter-search endpoint="patient" *ngIf="authenticated"></app-filter-search>
