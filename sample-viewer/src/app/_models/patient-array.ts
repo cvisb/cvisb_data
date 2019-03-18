@@ -27,8 +27,20 @@ export class PatientSummary {
     this.patientCountries = facet_obj["country.identifier.keyword"].terms;
 
     // Check for null values.
+    if (facet_obj["cohort.keyword"].total < this.total) {
+      this.patientTypes.push(new UnknownCount(this.total - facet_obj["cohort.keyword"].total));
+    }
+
+    if (facet_obj["outcome.keyword"].total < this.total) {
+      this.patientOutcomes.push(new UnknownCount(this.total - facet_obj["outcome.keyword"].total));
+    }
+
     if (facet_obj["infectionYear"].total < this.total) {
       this.patientYears.push(new UnknownCount(this.total - facet_obj["infectionYear"].total));
+    }
+
+    if (facet_obj["country.identifier.keyword"].total < this.total) {
+      this.patientCountries.push(new UnknownCount(this.total - facet_obj["country.identifier.keyword"].total));
     }
 
 
