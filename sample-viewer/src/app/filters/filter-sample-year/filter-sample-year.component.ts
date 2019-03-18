@@ -141,9 +141,8 @@ export class FilterSampleYearComponent implements OnInit {
     this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
 
-    console.log(this.num_data)
-    console.log(this.unknown_data)
-
+    // console.log(this.num_data)
+    // console.log(this.unknown_data)
   }
 
   createPlot() {
@@ -240,8 +239,8 @@ export class FilterSampleYearComponent implements OnInit {
       .domain(['unknown']);
 
     this.xAxis = d3.axisBottom(this.x)
-    .tickSizeOuter(0)
-    .tickValues(this.x.domain().filter((d,i) => !(i%2)));
+      .tickSizeOuter(0)
+      .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
 
     this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
@@ -308,10 +307,9 @@ export class FilterSampleYearComponent implements OnInit {
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
         .transition(t)
-        .attr("y", (d: any) =>{
-          console.log(d)
-         return(this.y(d.count));
-       })
+        .attr("y", (d: any) => {
+          return (this.y(d.count));
+        })
         .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
       // Unknown bar
