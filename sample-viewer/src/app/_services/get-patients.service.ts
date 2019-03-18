@@ -425,7 +425,7 @@ getAllPatientsSummary(): Observable<any> {
   // based on https://blog.angular-university.io/angular-material-data-table/
   // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
   getPatientsPaginated(qParams, pageNum: number = 0,
-    pageSize: number = 25, sortVar?: string, sortDirection?: string): Observable<Patient[]> {
+    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
 
     let param_string: string = this.requestSvc.reduceParams(this.request_params);
 
