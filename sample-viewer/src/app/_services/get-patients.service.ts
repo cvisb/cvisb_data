@@ -123,13 +123,13 @@ export class GetPatientsService {
     // let param_string: string = this.requestSvc.reduceParams(qParams);
     // console.log(qParams)
 
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: { q: qParams.toString() },
-        queryParamsHandling: "merge", // remove to replace all query params by provided
-      });
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
 
       console.log(qParams.toString());
 
