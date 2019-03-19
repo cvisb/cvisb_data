@@ -15,6 +15,10 @@ export class PatientsDataSource implements DataSource<Patient> {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loadingState$ = this.loadingSubject.asObservable();
 
+  // Patient count
+  private resultCountSubject = new BehaviorSubject<number>(0);
+  public resultCountState$ = this.resultCountSubject.asObservable();
+
   constructor(private patientSvc: GetPatientsService) {
 
   }
@@ -28,7 +32,10 @@ export class PatientsDataSource implements DataSource<Patient> {
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(patientList => this.patientsSubject.next(patientList));
+      .subscribe(patientList => {
+        this.resultCountSubject.next(patientList['total'])
+        this.patientsSubject.next(patientList['hits'])
+      });
 
   }
 
