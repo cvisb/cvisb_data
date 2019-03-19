@@ -154,43 +154,43 @@ export class GetPatientsService {
   }
 
 
-  getPatients() {
-    let param_string: string = this.requestSvc.reduceParams(this.request_params);
-
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: { q: param_string },
-        queryParamsHandling: "merge", // remove to replace all query params by provided
-      });
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', param_string)
-        .set('size', "1000")
-    }).subscribe(data => {
-      let patients = data['body']['hits'];
-      // console.log(data)
-
-      // Sort patients by available data length, then alpha.
-      patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
-
-      // send new patients to subscription services.
-      this.patientsSubject.next(new PatientArray(patients));
-
-    },
-      err => {
-        console.log('Error in getting patients')
-        console.log(err)
-
-        // check if unauthorized; if so, redirect.
-        // this.authSvc.redirectUnauthorized(err);
-      })
-  }
+  // getPatients() {
+  //   let param_string: string = this.requestSvc.reduceParams(this.request_params);
+  //
+  //   this.router.navigate(
+  //     [],
+  //     {
+  //       relativeTo: this.route,
+  //       queryParams: { q: param_string },
+  //       queryParamsHandling: "merge", // remove to replace all query params by provided
+  //     });
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: new HttpParams()
+  //       .set('q', param_string)
+  //       .set('size', "1000")
+  //   }).subscribe(data => {
+  //     let patients = data['body']['hits'];
+  //     // console.log(data)
+  //
+  //     // Sort patients by available data length, then alpha.
+  //     patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
+  //
+  //     // send new patients to subscription services.
+  //     this.patientsSubject.next(new PatientArray(patients));
+  //
+  //   },
+  //     err => {
+  //       console.log('Error in getting patients')
+  //       console.log(err)
+  //
+  //       // check if unauthorized; if so, redirect.
+  //       // this.authSvc.redirectUnauthorized(err);
+  //     })
+  // }
 
 
   // Using MyGene fetch_all to grab all the data, unscored:
