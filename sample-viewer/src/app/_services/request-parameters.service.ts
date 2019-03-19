@@ -195,13 +195,13 @@ export class RequestParametersService {
       param_string = "__all__"
     }
 
-    console.log(param_string + patient_string)
+    // console.log(param_string + patient_string)
     return (param_string + patient_string);
   }
 
   // Function to reduce the patientID query.
   patientParams2String(param: RequestParam) {
-    return (` & patientID=\"${param.value.join('","')}\"`);
+    return (` AND patientID=\"${param.value.join('","')}\"`);
   }
 
   params2String(param: RequestParam) {
@@ -264,9 +264,11 @@ export class RequestParametersService {
   }
 
   splitPieces(param_string: string): RequestParam {
+    // for patientID=id1,id2 -- replace = by : to convert into format of others
+    param_string = param_string.replace("=", ":")
     // split into field / values
     let vals = param_string.split(":");
-    // console.log(vals)
+    console.log(vals)
     let variable = vals[0];
     let values;
 
