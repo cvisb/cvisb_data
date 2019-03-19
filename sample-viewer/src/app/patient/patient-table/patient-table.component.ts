@@ -75,11 +75,11 @@ export class PatientTableComponent implements OnInit {
 
     // listen for changes in the request parameters, update data source
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      console.log("qParams heard in patient-table")
-      console.log(qParams)
+      // console.log("qParams heard in patient-table")
+      // console.log(qParams)
 
       this.qString = this.requestSvc.reduceParams(qParams);
-      console.log(this.qString);
+      // console.log(this.qString);
       this.loadPatientPage();
     })
 
@@ -89,11 +89,11 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    console.log("loadPatientPage Q:" + this.qString)
+    // console.log("loadPatientPage Q:" + this.qString)
     this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
 
-    console.log(this.patientSource);
+    // console.log(this.patientSource);
 
 
     this.patientSvc.getPatientSummary(this.qString).subscribe(results => {

@@ -12,15 +12,15 @@ import { GetPatientsService } from './get-patients.service';
 @Injectable()
 export class PatientsResolver implements Resolve<Patient[]> {
 
-    constructor(private patientSvc: GetPatientsService) {
+  constructor(private patientSvc: GetPatientsService) {
 
-    }
+  }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<any[]> {
-      let qparams = route.queryParams;
-      let qstring: string = qparams.q ? qparams.q : "__all__";
-      console.log("resolving with qparams = " + qstring);
-        return this.patientSvc.getPatientSummary(qstring);
-    }
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
+    let qparams = route.queryParams;
+    let qstring: string = qparams.q ? qparams.q : "__all__";
+    // console.log("resolving with qparams = " + qstring);
+    return this.patientSvc.getPatientSummary(qstring);
+  }
 
 }

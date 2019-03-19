@@ -39,57 +39,57 @@ export class FilterPatientsComponent implements OnInit {
     // "q=cohort:(%22Lassa%22%20%22Ebola%22)%20AND%20country.identifier:(%22SL%22)%20AND%20patientID:(%22C-fakePatient-0001-1%22%20%22G-fakePatient-0002%22)%20OR%20relatedTo:(%22C-fakePatient-0001-1%22%20%22G-fakePatient-0002%22)"
     this.route.queryParams
       .subscribe(params => {
-        console.log(params)
+        // console.log(params)
         if (params.hasOwnProperty("q")) {
           // parse query string into an array.
           let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.requestSvc.splitQuery(params.q);
 
-          console.log(paramArray)
+          // console.log(paramArray)
           // announce new parameters
           this.requestSvc.patientParamsSubject.next(paramArray);
         }
       })
 
-      // listen for changes in the request parameters.
-      this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-        console.log("qParams heard in filter-patients")
-        console.log(qParams)
+    // listen for changes in the request parameters.
+    this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+      // console.log("qParams heard in filter-patients")
+      // console.log(qParams)
 
-        let param_string: string = this.requestSvc.reduceParams(qParams);
-        console.log(param_string)
-        this.patientSvc.getPatientSummary(param_string).subscribe(x => {
-console.log(x)
+      let param_string: string = this.requestSvc.reduceParams(qParams);
+      // console.log(param_string)
+      this.patientSvc.getPatientSummary(param_string).subscribe(x => {
+        // console.log(x)
         this.patientSummary = x;
       })
-      })
+    })
 
-      // this.requestSvc.patientParamsState$.pipe(
-      // tap((qParams: RequestParamArray) => {
-      //   console.log("qParams heard in filter-patients")
-      //   console.log(qParams)
-      //
-      //   this.qString = this.requestSvc.reduceParams(qParams);
-      //   console.log(this.qString);
-      // }),
-      // flatMap(
-      //   this.patientSvc.getPatientSummary(this.qString))).subscribe(res => {
-      //     console.log("result from patient summary in filter-patients");
-      //     console.log(res);
-      //   })
+    // this.requestSvc.patientParamsState$.pipe(
+    // tap((qParams: RequestParamArray) => {
+    //   console.log("qParams heard in filter-patients")
+    //   console.log(qParams)
+    //
+    //   this.qString = this.requestSvc.reduceParams(qParams);
+    //   console.log(this.qString);
+    // }),
+    // flatMap(
+    //   this.patientSvc.getPatientSummary(this.qString))).subscribe(res => {
+    //     console.log("result from patient summary in filter-patients");
+    //     console.log(res);
+    //   })
 
 
-      // this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      //   console.log("qParams heard in filter-patients")
-      //   console.log(qParams)
-      //
-      //   let param_string: string = this.requestSvc.reduceParams(qParams);
-      //   console.log(param_string)
-      //   this.patientSvc.getPatientSummary(param_string);
-      // })
+    // this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+    //   console.log("qParams heard in filter-patients")
+    //   console.log(qParams)
+    //
+    //   let param_string: string = this.requestSvc.reduceParams(qParams);
+    //   console.log(param_string)
+    //   this.patientSvc.getPatientSummary(param_string);
+    // })
 
     route.data.subscribe(params => {
-      console.log('Filter getting new summarized data!')
-      console.log(params)
+      // console.log('Filter getting new summarized data!')
+      // console.log(params)
       let pList = params.all;
       this.total_patients = pList.total;
       this.all_patients = pList.patientIDs;
@@ -106,7 +106,7 @@ console.log(x)
 
       this.patientSummary = params.patients;
       console.log(this.patientSummary)
-      console.log(pList)
+      // console.log(pList)
 
     });
 

@@ -98,7 +98,7 @@ export class GetPatientsService {
       map((res: ESResponse) => {
         console.log(res);
         let summary = new PatientSummary(res.body)
-        console.log(summary)
+        // console.log(summary)
         return (summary);
       }
       )
@@ -190,7 +190,7 @@ getAllPatientsSummary(): Observable<any> {
 
 
   getAllPatients() {
-    console.log('calling backend to get ALL patients');
+    // console.log('calling backend to get ALL patients');
     // console.log(this.patients);
 
     this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
