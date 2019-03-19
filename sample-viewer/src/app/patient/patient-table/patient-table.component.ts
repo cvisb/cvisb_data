@@ -8,6 +8,7 @@ import { merge } from "rxjs/";
 
 import { GetPatientsService, PatientsDataSource, RequestParametersService } from '../../_services/';
 import { Patient, PatientArray, RequestParamArray } from '../../_models';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-patient-table',
@@ -20,7 +21,7 @@ export class PatientTableComponent implements OnInit {
   // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
   selectedLength: number;
-  qString: string;
+  qString: HttpParams;
 
   displayedColumns: string[] = ['alternateIdentifier', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 

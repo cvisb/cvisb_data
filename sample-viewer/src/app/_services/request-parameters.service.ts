@@ -2,6 +2,9 @@
 
 import { Injectable } from '@angular/core';
 
+import { HttpParams } from '@angular/common/http';
+
+
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
 // services
@@ -148,7 +151,7 @@ export class RequestParametersService {
   // Example for searching both patientID and altID:
   // https://dev.cvisb.org/api/patient/query?q=__all__&size=10&patientID="G-0001","C-8743183"
   // Requires a q string to execute-- patientID acts as a filter on top of the original query.
-  reduceParams(request_params: RequestParamArray): string {
+  reduceParams(request_params: RequestParamArray): HttpParams {
     let param_string: string;
     let params: string[] = [];
 
@@ -196,7 +199,11 @@ export class RequestParametersService {
     }
 
     // console.log(param_string + patient_string)
-    return (param_string + patient_string);
+    let http_params = new HttpParams()
+      .set('q', param_string)
+      .set('patientID', patient_string);
+
+    return (http_params);
   }
 
   // Function to reduce the patientID query.
