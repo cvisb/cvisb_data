@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, mergeMap } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse} from '../_models';
+import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -23,6 +23,8 @@ import { MyHttpClient } from './http-cookies.service';
 export class GetPatientsService {
   // patients: Patient[];
   request_params: RequestParamArray;
+
+  all_data;
 
   // Event listener for the patient array.
   public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
@@ -79,15 +81,17 @@ export class GetPatientsService {
     return this.apiSvc.getOne('patient', id, 'patientID')
   }
 
-  getPatientSummary(param_string: string): Observable<any> {
+  getPatientSummary(params: HttpParams): Observable<any> {
+  // getPatientSummary(param_string: string): Observable<any> {
     // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
-    let params = new HttpParams()
-      .set('q', param_string)
+    params = params
       .set('facets', facet_string)
       .set('facet_size', "10000")
       .set('size', "0");
+
+      console.log(params)
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
@@ -105,9 +109,9 @@ export class GetPatientsService {
     );
   }
 
-getAllPatientsSummary(): Observable<any> {
-  return(this.getPatientSummary("__all__"));
-}
+  getAllPatientsSummary(): Observable<any> {
+    return (this.getPatientSummary(new HttpParams().set("q", "__all__")));
+  }
 
 
   // based on https://blog.angular-university.io/angular-material-data-table/
@@ -189,29 +193,76 @@ getAllPatientsSummary(): Observable<any> {
   }
 
 
-
+  // Using MyGene fetch_all to grab all the data, unscored:
+  // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
+  // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
+  // If no more results to be found, "success": false
   getAllPatients() {
-    // console.log('calling backend to get ALL patients');
-    // console.log(this.patients);
+    this.all_data = [];
+    this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+     observe: 'response',
+     headers: new HttpHeaders()
+       .set('Accept', 'application/json'),
+     params: new HttpParams()
+       .set('q', '__all__')
+       .set('fetch_all', 'true')
+   });
 
-    this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&size=1000", {
+   // this.myhttp.get('./customer.json').map((res: Response) => res.json())
+   //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
+   //            .map((res: Response) => res.json())
+   //            .subscribe(res => this.contract = res);
+
+
+    // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&fetch_all=true", {
+    //   observe: 'response',
+    //   headers: new HttpHeaders()
+    //     .set('Accept', 'application/json')
+    // }).subscribe(data => {
+    //   console.log(data);
+    //   if (data['body']['success'] !== false) {
+    //     let patients = data['body']['hits'];
+    //     let scroll_id = data['body']['_scroll_id'];
+    //   }
+    // },
+    //   err => {
+    //     console.log('Error in getting patients')
+    //     console.log(err)
+    //   })
+  }
+
+  fetchAll() {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-    }).subscribe(data => {
-      let patients = data['body']['hits'];
-      console.log(data)
-
-      // Sort patients by available data length, then alpha.
-      patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
-
-      // send new patients to subscription services.
-      this.patientsSubject.next(new PatientArray(patients));
-
-    },
-      err => {
-        console.log('Error in getting patients')
-        console.log(err)
-      })
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', '__all__')
+        .set('fetch_all', 'true')
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    )
   }
+
+  fetchNext(scroll_id: string) {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('_scroll_id', scroll_id)
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    )
+  }
+
+
 }

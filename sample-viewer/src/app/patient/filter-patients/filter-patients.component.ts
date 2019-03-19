@@ -55,9 +55,10 @@ export class FilterPatientsComponent implements OnInit {
       // console.log("qParams heard in filter-patients")
       // console.log(qParams)
 
-      let param_string: string = this.requestSvc.reduceParams(qParams);
+      let http_params = this.requestSvc.reduceParams(qParams);
+      // let param_string: string = this.requestSvc.reduceParams(qParams);
       // console.log(param_string)
-      this.patientSvc.getPatientSummary(param_string).subscribe(x => {
+      this.patientSvc.getPatientSummary(http_params).subscribe(x => {
         // console.log(x)
         this.patientSummary = x;
       })
