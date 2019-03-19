@@ -192,7 +192,7 @@ export class RequestParametersService {
       param_string = "__all__"
     }
 
-    console.log(param_string)
+    console.log(param_string + patient_string)
     return (param_string + patient_string);
   }
 

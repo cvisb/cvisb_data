@@ -115,6 +115,7 @@ getAllPatientsSummary(): Observable<any> {
   getPatientsPaginated(qParams, pageNum: number = 0,
     pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
     // let param_string: string = this.requestSvc.reduceParams(qParams);
+    console.log(qParams)
 
     this.router.navigate(
       [],
