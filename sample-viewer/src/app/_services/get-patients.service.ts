@@ -116,13 +116,13 @@ getAllPatientsSummary(): Observable<any> {
     pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
     let param_string: string = this.requestSvc.reduceParams(qParams);
 
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: { q: param_string },
-        queryParamsHandling: "merge", // remove to replace all query params by provided
-      });
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: param_string },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
