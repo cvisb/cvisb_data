@@ -209,7 +209,7 @@ export class RequestParametersService {
   // Function to reduce the patientID query.
   patientParams2String(param: RequestParam) {
   // Must be ampersand, not AND, to append to q string
-    return (` & patientID=\"${param.value.join('","')}\"`);
+    return (`\"${param.value.join('","')}\"`);
   }
 
   params2String(param: RequestParam) {
