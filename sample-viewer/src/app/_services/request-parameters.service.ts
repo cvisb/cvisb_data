@@ -6,6 +6,7 @@ import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
 // services
 // import { GetPatientsService } from './get-patients.service';
+import { cloneDeep } from 'lodash';
 
 // models
 import { RequestParamArray, RequestParam } from '../_models';
@@ -151,21 +152,23 @@ export class RequestParametersService {
     let param_string: string;
     let params: string[] = [];
 
+    let request_copy = cloneDeep(request_params);
+
     // Separate out the patientID portion of the params... if they exist.
-    let patientIdx = request_params.findIndex(d => d.field === "patientID");
+    let patientIdx = request_copy.findIndex(d => d.field === "patientID");
     let patient_string: string;
     if (patientIdx > -1) {
-      let patient_params = request_params.splice(patientIdx, 1);
+      let patient_params = request_copy.splice(patientIdx, 1);
       patient_string = this.patientParams2String(patient_params[0]);
     } else {
       patient_string = "";
     }
 
 
-    if (request_params && request_params.length > 0) {
+    if (request_copy && request_copy.length > 0) {
 
       // Collapse each parameter down into a parameter string
-      for (let param of request_params) {
+      for (let param of request_copy) {
         if (!param.field) {
           // generic search query; no variable-level searching
           params.push(param.value);
@@ -246,7 +249,7 @@ export class RequestParametersService {
   splitParamString(param_string: string): RequestParam {
     // split into OR statements.
     let str_array = param_string.replace(/%20/g, " ").split(" OR ");
-    // console.log(str_array)
+    console.log(str_array)
 
     if (str_array.length === 1) {
       // console.log(this.splitPieces(str_array[0]))
