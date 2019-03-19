@@ -38,7 +38,7 @@ export class PatientTableComponent implements OnInit {
 
     route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
-      console.log("selected length: " + this.selectedLength)
+      // console.log("selected length: " + this.selectedLength)
     });
 
 

@@ -247,6 +247,7 @@ export class RequestParametersService {
 
 
   splitParamString(param_string: string): RequestParam {
+    console.log(param_string)
     // split into OR statements.
     let str_array = param_string.replace(/%20/g, " ").split(" OR ");
     console.log(str_array)
