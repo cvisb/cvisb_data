@@ -142,7 +142,7 @@ getAllPatientsSummary(): Observable<any> {
     }).pipe(
       map(res => {
         console.log(res);
-        return (res["body"]["hits"])
+        return (res["body"])
       }
       )
     );

@@ -82,6 +82,10 @@ export class PatientTableComponent implements OnInit {
       console.log(this.qString);
       this.loadPatientPage();
     })
+
+    this.patientSource.resultCountState$.subscribe(ct => {
+      this.selectedLength = ct;
+    });
   }
 
   loadPatientPage() {
@@ -91,10 +95,12 @@ export class PatientTableComponent implements OnInit {
 
     console.log(this.patientSource);
 
-    this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
-      this.selectedLength = results.total;
-    })
-    // data.length;
+    // this.selectedLength = this.patientSource.total;
+
+    // this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
+    //   this.selectedLength = results.total;
+    // })
+
   }
 
   selectRow($event, row) {
