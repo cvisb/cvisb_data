@@ -29,7 +29,7 @@ export class FilterPatientIdComponent implements OnInit {
 
 
   filterPatientIDs(patientIDs) {
-    console.log(patientIDs);
+    // console.log(patientIDs);
 
 
     if (this.inclContacts) {
@@ -46,8 +46,8 @@ export class FilterPatientIdComponent implements OnInit {
 
 
   filterContacts(includeContacts: boolean) {
-    console.log(includeContacts)
-    console.log(this.patients)
+    // console.log(includeContacts)
+    // console.log(this.patients)
 
     if (this.selectedPatients && this.selectedPatients.length > 0) {
       if (this.inclContacts) {
