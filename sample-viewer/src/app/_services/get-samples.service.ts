@@ -68,17 +68,17 @@ export class GetSamplesService {
   }
 
   getSamples() {
-    let param_string: string = this.requestSvc.reduceParams(this.request_params);
+    let param_string = this.requestSvc.reduceParams(this.request_params);
     // console.log(param_string);
+    //
+    param_string = param_string.set('size', "1000")
 
     this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', param_string)
-        .set('size', "1000")
+      params: param_string
     }).subscribe(data => {
       let samples = data['body']['hits'];
       console.log(data)
