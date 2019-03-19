@@ -120,7 +120,7 @@ getAllPatientsSummary(): Observable<any> {
       [],
       {
         relativeTo: this.route,
-        queryParams: { q: param_string },
+        queryParams: { q: qParams },
         queryParamsHandling: "merge", // remove to replace all query params by provided
       });
 
