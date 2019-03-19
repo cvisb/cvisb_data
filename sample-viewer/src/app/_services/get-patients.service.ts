@@ -86,7 +86,9 @@ export class GetPatientsService {
     // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
-    params = params
+    console.log(params)
+
+    params = new HttpParams(params)
       .set('facets', facet_string)
       .set('facet_size', "10000")
       .set('size', "0");
