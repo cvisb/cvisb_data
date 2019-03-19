@@ -238,7 +238,7 @@ export class RequestParametersService {
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
     // switching & into AND to split
-    let query_array = query_string.replace(/q%3D/g, "").replace(/%20/g, " ").replace(/&/g, "AND").replace(/%26/g, "AND").split(" AND ");
+    let query_array = query_string.replace(/q=/g, "").replace(/q%3D/g, "").replace(/%20/g, " ").replace(/&/g, "AND").replace(/%26/g, "AND").split(" AND ");
     console.log(query_array)
 
     // for each couplet:
