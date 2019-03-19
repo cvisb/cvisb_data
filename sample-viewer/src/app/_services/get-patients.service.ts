@@ -136,7 +136,7 @@ export class GetPatientsService {
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
 
-    params = qParams
+    let params = qParams
       .append('size', pageSize.toString())
       .append('from', (pageSize * pageNum).toString())
       .append("sort", sortString);
