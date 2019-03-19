@@ -114,7 +114,7 @@ getAllPatientsSummary(): Observable<any> {
   // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
   getPatientsPaginated(qParams, pageNum: number = 0,
     pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
-    let param_string: string = this.requestSvc.reduceParams(qParams);
+    // let param_string: string = this.requestSvc.reduceParams(qParams);
 
     // this.router.navigate(
     //   [],
@@ -129,7 +129,7 @@ getAllPatientsSummary(): Observable<any> {
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
     let params = new HttpParams()
-      .set('q', param_string)
+      .set('q', qParams)
       .set('size', pageSize.toString())
       .set('from', (pageSize * pageNum).toString())
       .set("sort", sortString);
