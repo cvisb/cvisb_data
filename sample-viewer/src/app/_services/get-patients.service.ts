@@ -123,13 +123,15 @@ export class GetPatientsService {
     // let param_string: string = this.requestSvc.reduceParams(qParams);
     // console.log(qParams)
 
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: { q: qParams },
-    //     queryParamsHandling: "merge", // remove to replace all query params by provided
-    //   });
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { q: qParams.toString() },
+        queryParamsHandling: "merge", // remove to replace all query params by provided
+      });
+
+      console.log(qParams.toString());
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
