@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
   { canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
-      patients: PatientsResolver,
+      // patients: PatientsResolver,
       all: AllPatientsResolver
     }
   },
