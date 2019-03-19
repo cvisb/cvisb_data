@@ -135,11 +135,11 @@ export class GetPatientsService {
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
-    let params = new HttpParams()
-      .set('q', qParams)
-      .set('size', pageSize.toString())
-      .set('from', (pageSize * pageNum).toString())
-      .set("sort", sortString);
+
+    params = params
+      .append('size', pageSize.toString())
+      .append('from', (pageSize * pageNum).toString())
+      .append("sort", sortString);
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
