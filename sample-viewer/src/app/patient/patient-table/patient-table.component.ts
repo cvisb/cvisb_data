@@ -41,15 +41,7 @@ export class PatientTableComponent implements OnInit {
       console.log("selected length: " + this.selectedLength)
     });
 
-    // listen for changes in the request parameters, update data source
-    this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      console.log("qParams heard in patient-table")
-      console.log(qParams)
 
-      this.qString = this.requestSvc.reduceParams(qParams);
-      console.log(this.qString);
-      this.loadPatientPage();
-    })
 
 
 
@@ -80,6 +72,16 @@ export class PatientTableComponent implements OnInit {
         tap(() => this.loadPatientPage())
       )
       .subscribe();
+
+    // listen for changes in the request parameters, update data source
+    this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+      console.log("qParams heard in patient-table")
+      console.log(qParams)
+
+      this.qString = this.requestSvc.reduceParams(qParams);
+      console.log(this.qString);
+      this.loadPatientPage();
+    })
   }
 
   loadPatientPage() {
