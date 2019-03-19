@@ -88,10 +88,10 @@ export class GetPatientsService {
 
     console.log(params)
 
-    params = new HttpParams(params)
-      .set('facets', facet_string)
-      .set('facet_size', "10000")
-      .set('size', "0");
+    params = params
+      .append('facets', facet_string)
+      .append('facet_size', "10000")
+      .append('size', "0");
 
       console.log(params)
 
