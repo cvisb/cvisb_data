@@ -107,7 +107,7 @@ export class RequestParametersService {
           if (valueIdx !== -1) {
             currentParams[idx].value.splice(valueIdx, 1);
           } else {
-// https://dev.cvisb.org/api/patient/query?q=(cohort:Lassa)%20OR%20(NOT%20cohort:Lassa)
+            // https://dev.cvisb.org/api/patient/query?q=(cohort:Lassa)%20OR%20(NOT%20cohort:Lassa)
           };
         } else if (Array.isArray(newParam.value)) {
           // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
@@ -144,9 +144,24 @@ export class RequestParametersService {
     return (currentParams)
   }
 
+  // Example for searching both patientID and altID:
+  // https://dev.cvisb.org/api/patient/query?q=__all__&size=10&patientID="G-0001","C-8743183"
+  // Requires a q string to execute-- patientID acts as a filter on top of the original query.
   reduceParams(request_params: RequestParamArray): string {
     let param_string: string;
     let params: string[] = [];
+
+    // Separate out the patientID portion of the params... if they exist.
+    let patientIdx = request_params.findIndex(d => d.field === "patientID");
+    let patient_string: string;
+    if (patientIdx > -1) {
+      let patient_params = request_params.splice(patientIdx, 1);
+      patient_string = this.patientParams2String(patient_params[0]);
+    } else {
+      patient_string = "";
+    }
+
+
     if (request_params && request_params.length > 0) {
 
       // Collapse each parameter down into a parameter string
@@ -177,8 +192,13 @@ export class RequestParametersService {
       param_string = "__all__"
     }
 
-    // console.log(param_string)
-    return (param_string)
+    console.log(param_string)
+    return (param_string + patient_string);
+  }
+
+  // Function to reduce the patientID query.
+  patientParams2String(param: RequestParam) {
+    return (` & patientID=\"${param.value.join('","')}\"`);
   }
 
   params2String(param: RequestParam) {
