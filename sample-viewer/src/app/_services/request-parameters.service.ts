@@ -201,7 +201,8 @@ export class RequestParametersService {
 
   // Function to reduce the patientID query.
   patientParams2String(param: RequestParam) {
-    return (` AND patientID=\"${param.value.join('","')}\"`);
+  // Must be ampersand, not AND, to append to q string
+    return (` & patientID=\"${param.value.join('","')}\"`);
   }
 
   params2String(param: RequestParam) {
@@ -229,7 +230,8 @@ export class RequestParametersService {
   // Opposite direction: convert query_string into an array.
   splitQuery(query_string: string): RequestParamArray {
     // split into individual params by ` AND `
-    let query_array = query_string.replace(/%20/g, " ").split(" AND ");
+    // switching & into AND to split
+    let query_array = query_string.replace(/%20/g, " ").replace(/&/g, "AND").replace(/%26/g, "AND").split(" AND ");
     console.log(query_array)
 
     // for each couplet:
@@ -239,6 +241,7 @@ export class RequestParametersService {
     // 4. split values into array.
     let paramArray: RequestParamArray = [];
     for (let query of query_array) {
+      console.log(query)
       paramArray.push(this.splitParamString(query))
     }
     // console.log(paramArray)
