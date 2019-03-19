@@ -17,7 +17,6 @@ export class AllPatientsResolver implements Resolve<Patient[]> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<any[]> {
-      console.log("attempting to resolve")
         return this.patientSvc.getAllPatientsSummary();
     }
 
