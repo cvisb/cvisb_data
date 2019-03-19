@@ -91,7 +91,9 @@ export class PatientTableComponent implements OnInit {
 
     console.log(this.patientSource);
 
-    // this.selectedLength = this.patientSource
+    this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
+      this.selectedLength = results.total;
+    })
     // data.length;
   }
 
