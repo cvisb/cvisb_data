@@ -59,7 +59,7 @@ export class PatientTableComponent implements OnInit {
     //   }
     // };
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    // this.patientSource.loadPatients("__all__", 0, 10, "", null);
+    this.patientSource.loadPatients("__all__", 0, 10, "", null);
   }
 
 
