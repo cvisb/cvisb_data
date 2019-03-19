@@ -3,6 +3,8 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/r
 import { Injectable } from "@angular/core";
 import { map } from 'rxjs/operators';
 
+import { HttpParams } from '@angular/common/http';
+
 import { Observable } from "rxjs";
 
 import { Patient } from '../_models';
@@ -18,7 +20,7 @@ export class PatientsResolver implements Resolve<Patient[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
     let qparams = route.queryParams;
-    let qstring: string = qparams.q ? qparams.q : "__all__";
+    let qstring = qparams.q ? qparams.q : new HttpParams().set("q", "__all__");
     // console.log("resolving with qparams = " + qstring);
     return this.patientSvc.getPatientSummary(qstring);
   }
