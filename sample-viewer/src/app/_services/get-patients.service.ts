@@ -197,19 +197,25 @@ export class GetPatientsService {
   // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
-  getPatientRoster(): Observable<Patient[]> {
+  getPatientRoster(qParams): Observable<Patient[]> {
     this.all_data = [];
+
+    let params = qParams
+      .append('fetch_all', "true");
+
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', '__all__')
-        .set('fetch_all', 'true')
+      params: params
     }).pipe(
       map((res: Patient[]) => {
         console.log(res);
-        let patientArray = new Array<PatientDownload>(res["body"]['hits']);
+        
+        let patientArray = res["body"]['hits'].map(patient => {
+          return (new PatientDownload(patient));
+        });
+
         console.log(patientArray);
         return (patientArray)
       }

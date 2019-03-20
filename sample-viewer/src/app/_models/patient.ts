@@ -26,7 +26,7 @@ export class Patient {
 export class PatientDownload {
   _version?: number;
   age?: number;
-  alternateIdentifier?: string[];
+  alternateIdentifier?: string;
   cohort?: string;
   contactGroupIdentifier?: string;
   contactSurvivorRelationship?: string;
@@ -46,6 +46,8 @@ export class PatientDownload {
     console.log(patient)
     this.patientID = patient.patientID;
     this._version = patient._version;
+    this.age = patient.age;
+    this.alternateIdentifier = patient.alternateIdentifier.join(", ");
 
     // TODO: ELISAs
 
