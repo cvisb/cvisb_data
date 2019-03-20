@@ -82,7 +82,7 @@ export class GetPatientsService {
   }
 
   getPatientSummary(params: HttpParams): Observable<any> {
-  // getPatientSummary(param_string: string): Observable<any> {
+    // getPatientSummary(param_string: string): Observable<any> {
     // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
@@ -93,12 +93,16 @@ export class GetPatientsService {
       .append('facet_size', "10000")
       .append('size', "0");
 
-      console.log(params)
+    console.log(params)
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
+        .set('Accept', 'application/json')
+        .set('Cache-Control', 'no-cache')
+        .set('Pragma', 'no-cache')
+        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        .set('If-Modified-Since', '0'),
       params: params
     }).pipe(
       map((res: ESResponse) => {
@@ -131,7 +135,7 @@ export class GetPatientsService {
     //     queryParamsHandling: "merge", // remove to replace all query params by provided
     //   });
 
-      console.log(qParams.toString());
+    console.log(qParams.toString());
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
@@ -204,18 +208,18 @@ export class GetPatientsService {
   getAllPatients() {
     this.all_data = [];
     this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-     observe: 'response',
-     headers: new HttpHeaders()
-       .set('Accept', 'application/json'),
-     params: new HttpParams()
-       .set('q', '__all__')
-       .set('fetch_all', 'true')
-   });
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: new HttpParams()
+        .set('q', '__all__')
+        .set('fetch_all', 'true')
+    });
 
-   // this.myhttp.get('./customer.json').map((res: Response) => res.json())
-   //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
-   //            .map((res: Response) => res.json())
-   //            .subscribe(res => this.contract = res);
+    // this.myhttp.get('./customer.json').map((res: Response) => res.json())
+    //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
+    //            .map((res: Response) => res.json())
+    //            .subscribe(res => this.contract = res);
 
 
     // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&fetch_all=true", {
