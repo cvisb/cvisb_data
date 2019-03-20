@@ -70,13 +70,14 @@ export class DownloadBtnComponent implements OnInit {
 
   getData() {
     switch (this.filetype) {
-      case ("patients"){
+      case ("patients"):
         this.patientSvc.getPatientRoster().subscribe(patients => {
           this.data = patients;
         });
         console.log(this.data);
         break;
-      }
+      default:
+        break;
     }
   }
 
