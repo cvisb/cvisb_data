@@ -96,10 +96,15 @@ export class MiniDonutComponent implements OnInit {
       // Essential for object constancy.
       let keys = this.data.map(d => d.term);
 
-      let missing_data = this.cohorts.filter(d => !keys.includes(d));
-      missing_data.forEach(d => {
-        this.data.push({ term: d, count: 0 });
-      })
+      // If there are no bulk values, set to the keys.
+      if (this.cohorts.length === 0) {
+        this.cohorts = keys;
+      } else {
+        let missing_data = this.cohorts.filter(d => !keys.includes(d));
+        missing_data.forEach(d => {
+          this.data.push({ term: d, count: 0 });
+        })
+      }
 
       // --- Filter event listener ---
       // Handle into filtering by virus type
@@ -150,10 +155,10 @@ export class MiniDonutComponent implements OnInit {
           let html_payload = `select ${selected.data.term}`;
 
           d3.selectAll("path")
-          .classed("not-highlight", true);
+            .classed("not-highlight", true);
 
           d3.select(this)
-          .classed("not-highlight", false);
+            .classed("not-highlight", false);
 
           d3.select(".tooltip").html(html_payload)
             .style("left", (d3.event.pageX + 15) + "px")
@@ -166,7 +171,7 @@ export class MiniDonutComponent implements OnInit {
       let hideTooltips = function() {
         return function(d) {
           d3.selectAll("path")
-          .classed("not-highlight", false);
+            .classed("not-highlight", false);
 
           d3.select(".tooltip")
             .style("display", "none");
