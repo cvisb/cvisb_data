@@ -34,8 +34,10 @@ export class DownloadBtnComponent implements OnInit {
   }
 
   download() {
-    this.getData();
+    this.downloadData();
+  }
 
+  parseData() {
     const columnDelimiter = '\t'; // technically, tab-separated, since some chemical cmpds have commas in names.
     const lineDelimiter = '\n';
 
@@ -57,7 +59,7 @@ export class DownloadBtnComponent implements OnInit {
       dwnld_data += lineDelimiter;
     });
 
-    this.saveData(dwnld_data)
+    this.saveData(dwnld_data);
   }
 
   saveData(dwnld_data) {
@@ -68,15 +70,17 @@ export class DownloadBtnComponent implements OnInit {
     hiddenElement.click();
   }
 
-  getData() {
+  downloadData() {
     switch (this.filetype) {
       case ("patients"):
         this.patientSvc.getPatientRoster().subscribe(patients => {
           this.data = patients;
+          console.log(this.data);
+          this.parseData();
         });
-        console.log(this.data);
         break;
       default:
+        this.parseData();
         break;
     }
   }
