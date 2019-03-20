@@ -86,23 +86,15 @@ export class GetPatientsService {
     // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
-    console.log(params)
-
     params = params
       .append('facets', facet_string)
       .append('facet_size', "10000")
       .append('size', "0");
 
-    console.log(params)
-
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-        .set('Cache-Control', 'no-cache')
-        .set('Pragma', 'no-cache')
-        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        .set('If-Modified-Since', '0'),
+        .set('Accept', 'application/json'),
       params: params
     }).pipe(
       map((res: ESResponse) => {
