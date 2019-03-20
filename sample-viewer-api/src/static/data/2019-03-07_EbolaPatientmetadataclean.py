@@ -2,8 +2,10 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import re
+import os
 
-filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/ebola data for dissemination_PRIVATE.xlsx"
+filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/ebola data for dissemination_13March2019.xlsx"
+# filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/ebola data for dissemination_PRIVATE.xlsx"
 
 # Import file
 df = pd.read_excel(filename, converters={'study specific number': str})
@@ -13,10 +15,9 @@ df.head()
 # (1) ID number is unique. Good.
 sum(df.duplicated(subset="ID number"))
 
-# (2) study number is unique. Sort of -- missing 2 C-id conversions.
+# (2) study number is unique. Sort of -- missing 2 C-id conversions in initial version.
 df[df.duplicated(subset="study specific number")]
 
-df.columns
 # (3) age within reasonable distribution
 df['age at diagnosis'].value_counts(dropna=False)
 
@@ -52,7 +53,7 @@ check_hhGroups = df.groupby("hhID_private")[['contactGroupIdentifier']].agg(lamb
 check_hhGroups.contactGroupIdentifier.value_counts()
 weird_hhIDs = check_hhGroups[check_hhGroups.contactGroupIdentifier == False].reset_index()
 weird_hhIDs
-df[df.hhID_private.isin(["209"])].sort_values(by=["hhID_private"]).rename(columns={"ID number": "metadataID"})
+# df[df.hhID_private.isin(["332"])].sort_values(by=["hhID_private"]).rename(columns={"ID number": "metadataID"})
 # .to_csv("2019-03-08_metadata-household-discrepancies.csv")
 
 # Cleanup: to send back to John ------------------------------------------------
@@ -105,7 +106,7 @@ def convertGender(gender):
     else:
         return("Unknown")
 df.gender = df.gender.apply(convertGender)
-
+df.gender.value_counts()
 # --- add in country; all patients from Sierra Leone ---
 def getCountry(countryID):
     return({
@@ -154,7 +155,7 @@ set(df.Adm2) - set(SLE_adm2)
 df[df.Adm2 == "Western Area"].Adm4.value_counts()
 
 
-set(df.Adm4) - set(SLE_adm4)
+# set(df.Adm4) - set(SLE_adm4)
 
 
 # UN-OCHA populated places: https://data.humdata.org/dataset/sierra-leone-settlements
@@ -175,7 +176,16 @@ len(set(df.Adm4))
 
 # --- rename the contact exposure / connection ---
 df.columns
-df.rename(columns = {"level/type of exposure": "exposureType", "rel between survivor anc contacts": "contactSurvivorRelationship"}, inplace = True)
+df.rename(columns = {"level/type of exposure": "exposureType"}, inplace = True)
+
+def getRel(relationship):
+    if (relationship == relationship):
+        return(relationship)
+    else:
+        return("unknown")
+
+df["contactSurvivorRelationship"] =  df["rel between survivor anc contacts"].apply(getRel)
+
 
 # --- nest the IgG measurements ---
 def nestELISAs(row):
@@ -217,7 +227,11 @@ def binarize(val):
             return(False)
         elif(val == 0):
             return(False)
+        elif(val == "0"):
+            return(False)
         elif(val == 1):
+            return(True)
+        elif(val == "1"):
             return(True)
 
 def nestSymptoms(row, timepoint = "survivor enrollment"):
@@ -240,7 +254,6 @@ def nestSymptoms(row, timepoint = "survivor enrollment"):
 df['symptoms'] = df.apply(nestSymptoms, axis = 1)
 
 # () ID/study/G-num all merge w/ previous data. --> Check data + add in hhID, altIDs, relatedTo
-import os
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 
 from merge_public_ids_20190227 import ids
@@ -262,7 +275,7 @@ merged = pd.merge(df, ids, how="outer", indicator=True, left_on=["study specific
 merged._merge.value_counts()
 
 weird_ids = merged[merged._merge == "left_only"]['study specific number']
-weird_ids.shape
+weird_ids
 
 
 # 14 IDs look wonky.
@@ -308,7 +321,6 @@ merged._merge.value_counts()
 groups = merged.groupby("contactGroupIdentifier").patientID.apply(list)
 groups = pd.DataFrame(groups).reset_index()
 groups.rename(columns={'patientID': 'relatedTo'}, inplace=True)
-groups
 merged.drop(["_merge"], axis=1, inplace=True)
 merged = pd.merge(merged, groups, how="outer", on="contactGroupIdentifier", indicator= True)
 merged.shape
@@ -321,19 +333,22 @@ def removeSelfID(row):
         return(ids)
 
 merged['relatedTo'] = merged.apply(removeSelfID, axis = 1)
+merged['dateModified'] = "2019-03-20"
 
 # Removing homeLocation TEMP b/c validator is confused having 2 possible types
-cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'gender', 'relatedTo', 'contactSurvivorRelationship', 'exposureType', 'age', 'elisa', 'symptoms']
+cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'gender', 'relatedTo', 'contactSurvivorRelationship', 'exposureType', 'age', 'elisa', 'symptoms', 'dateModified']
 # cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'homeLocation', 'gender', 'relatedTo', 'age', 'elisa']
 
 # Make sure there's an ID number-- removes the patients in the roster but not Ebola peoples.
 subset = merged[merged["ID number"] == merged["ID number"]]
+
 # TEMP shim: age, elisa, etc. can't be null in json validation on backend.  filtering out here so things can be uploaded.
-subset = subset[(subset["age"] == subset["age"]) & (subset["elisa"] == subset["elisa"])]
+subset = subset[(subset["age"] == subset["age"]) & (subset["muscle pain"] == subset["muscle pain"]) & (subset["blurry vision"] != " ") & (subset["elisa"] == subset["elisa"]) & (subset["contactSurvivorRelationship"] == subset["contactSurvivorRelationship"]) & (subset["exposureType"] == subset["exposureType"])]
+
 subset = subset.sort_values(by=["contactGroupIdentifier"])
 subset = subset.reset_index()
 # subset[subset.patientID=="C-8939543"]
-# subset = subset.iloc[900:1000]
+# subset = subset.iloc[0:10]
 subset.shape
 # subset = subset.iloc[0:1300]
-subset[cols].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/uploads/2019-03-08_Ebolapatients_PRIVATE.json", orient="records")
+subset[cols].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/uploads/2019-03-20_Ebolapatients_PRIVATE.json", orient="records")
