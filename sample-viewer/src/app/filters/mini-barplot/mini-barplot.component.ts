@@ -94,8 +94,7 @@ export class MiniBarplotComponent implements OnInit {
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .paddingInner(this.spacing)
-      .paddingOuter(0)
-      .domain(this.options);
+      .paddingOuter(0);
 
     // --- create g selectors ---
     this.bars = this.chart.append("g")
@@ -145,7 +144,9 @@ export class MiniBarplotComponent implements OnInit {
 
       // --- Update domains ---
       this.x.domain([0, <any>d3.max(this.data, (d: any) => d.count)]);
-      // this.y.domain(this.data.map(d => d[this.name_var]));
+
+      this.y
+        .domain(this.options);
 
       this.yAxis = d3.axisRight(this.y);
 

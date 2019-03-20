@@ -67,8 +67,7 @@ export class MiniDonutComponent implements OnInit {
     this.y = d3.scaleBand()
       .rangeRound([0, this.height])
       .paddingInner(0.2)
-      .paddingOuter(0)
-      .domain(this.cohorts);
+      .paddingOuter(0);
 
     // selectors
     this.donut = this.svg.append("g")
@@ -105,6 +104,10 @@ export class MiniDonutComponent implements OnInit {
           this.data.push({ term: d, count: 0 });
         })
       }
+
+      // --- Update axes ---
+      this.y
+        .domain(this.cohorts);
 
       // --- Filter event listener ---
       // Handle into filtering by virus type
