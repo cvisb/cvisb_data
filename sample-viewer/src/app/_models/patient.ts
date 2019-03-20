@@ -22,7 +22,7 @@ export class Patient {
 
 
 
-
+// Constructor to de-nest nested objects for download.
 export class PatientDownload {
   _version?: number;
   age?: number;
@@ -32,11 +32,22 @@ export class PatientDownload {
   contactSurvivorRelationship?: string;
   country?: string;
   dateModified?: string;
+  elisa?: any;
+  exposureType?: string;
+  gender?: string;
+  outcome?: string;
   patientID: string;
+  relatedTo?: string[];
+  symptoms?: Object;
+  updatedBy?: string;
+
 
   constructor(patient: Patient) {
+    console.log(patient)
     this.patientID = patient.patientID;
     this._version = patient._version;
+
+    // TODO: ELISAs
 
   }
 }

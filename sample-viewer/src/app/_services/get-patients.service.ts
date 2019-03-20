@@ -209,7 +209,9 @@ export class GetPatientsService {
     }).pipe(
       map((res: Patient[]) => {
         console.log(res);
-        return (new Array<PatientDownload>(res["body"]['hits']))
+        let patientArray = new Array<PatientDownload>(res["body"]['hits']);
+        console.log(patientArray);
+        return (patientArray)
       }
       )
     );
