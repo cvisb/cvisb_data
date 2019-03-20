@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 
 import { GetHlaDataService } from '../../../_services';
@@ -17,30 +17,34 @@ export class HlaSummaryComponent implements OnInit {
   novelAlleles: D3Nested[];
 
   constructor(private hlaSvc: GetHlaDataService) {
-    hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
+
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
       console.log(types)
       this.patientTypes = types;
     })
 
-    hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
+    this.hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
       console.log(outcomes)
       this.patientOutcomes = outcomes;
     })
 
-    hlaSvc.patientCountState$.subscribe((num: number) => {
+    this.hlaSvc.patientCountState$.subscribe((num: number) => {
       this.patientCount = num;
     })
 
-    hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
+    this.hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
       this.alleleCount = cts;
     })
 
-    hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
+    this.hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
       this.novelAlleles = novel;
     })
-  }
-
-  ngOnInit() {
   }
 
 }
