@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse } from '../_models';
+import { Patient, PatientArray, PatientDownload, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -246,9 +246,9 @@ export class GetPatientsService {
         .set('q', '__all__')
         .set('fetch_all', 'true')
     }).pipe(
-      map(res => {
+      map((res: Patient[]) => {
         console.log(res);
-        return (res["body"])
+        return (new Array<PatientDownload>(res["body"]))
       }
       )
     )
