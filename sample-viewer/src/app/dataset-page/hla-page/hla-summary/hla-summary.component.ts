@@ -18,10 +18,12 @@ export class HlaSummaryComponent implements OnInit {
 
   constructor(private hlaSvc: GetHlaDataService) {
     hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
+      console.log(types)
       this.patientTypes = types;
     })
 
     hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
+      console.log(outcomes)
       this.patientOutcomes = outcomes;
     })
 
