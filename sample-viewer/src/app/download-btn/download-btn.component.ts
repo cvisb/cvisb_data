@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { AuthService } from '../_services';
+import { AuthService, GetPatientsService } from '../_services';
 import { AuthState } from '../_models';
 
 
@@ -17,8 +17,11 @@ export class DownloadBtnComponent implements OnInit {
   auth_stub: string;
   today: string;
 
-  constructor(private authSvc: AuthService,
-    private datePipe: DatePipe) {
+  constructor(
+    private authSvc: AuthService,
+    private patientSvc: GetPatientsService,
+    private datePipe: DatePipe
+  ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
     authSvc.authState$.subscribe((authState: AuthState) => {
@@ -30,7 +33,9 @@ export class DownloadBtnComponent implements OnInit {
     this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
   }
 
-  download(data) {
+  download() {
+    this.getData();
+
     const columnDelimiter = '\t'; // technically, tab-separated, since some chemical cmpds have commas in names.
     const lineDelimiter = '\n';
 
@@ -52,15 +57,27 @@ export class DownloadBtnComponent implements OnInit {
       dwnld_data += lineDelimiter;
     });
 
-    this.save_data(dwnld_data)
+    this.saveData(dwnld_data)
   }
 
-  save_data(dwnld_data) {
+  saveData(dwnld_data) {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
     hiddenElement.target = '_blank';
     hiddenElement.download = this.filename;
     hiddenElement.click();
+  }
+
+  getData() {
+    switch (this.filetype) {
+      case ("patients"){
+        this.patientSvc.getPatientRoster().subscribe(patients => {
+          this.data = patients;
+        });
+        console.log(this.data);
+        break;
+      }
+    }
   }
 
 
