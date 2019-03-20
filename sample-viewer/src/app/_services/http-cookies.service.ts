@@ -39,16 +39,29 @@ export class MyHttpClient extends HttpClient {
 
   // `first` is either method or httprequest
   // overwrites `request()` from `HttpClient`
+  // Http caching intercepted according to https://stackoverflow.com/questions/37755782/prevent-ie11-caching-get-call-in-angular-2
+  // Without this, backend/front-end are out of sync if the backend changes during client session.
   request(first: string | HttpRequest<any>, url?: string, options: IHttpOptions = {}): Observable<any> {
     // ensures headers properties are not null
     if (!options)
       options = {};
-    if (!options.headers)
+    if (!options.headers) {
       options.headers = new HttpHeaders()
         .set('Cache-Control', 'no-cache')
         .set('Pragma', 'no-cache')
         .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
         .set('If-Modified-Since', '0');
+    }
+    else {
+      options.headers = <HttpHeaders>options.headers;
+
+      options.headers.append('Cache-Control', 'no-cache')
+        .append('Pragma', 'no-cache')
+        .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        .append('If-Modified-Since', '0')
+    }
+    console.log("options.headers")
+    console.log(options.headers)
     if (typeof first !== "string" && !first.headers)
       first = (first as HttpRequest<any>).clone({ headers: new HttpHeaders() });
 
