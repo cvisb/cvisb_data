@@ -82,7 +82,6 @@ export class DownloadBtnComponent implements OnInit {
       case ("patients"):
         this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
           this.data = patients;
-          console.log(this.data);
           this.parseData();
         });
         break;
