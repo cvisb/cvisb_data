@@ -54,14 +54,12 @@ export class GetHlaDataService {
       .rollup((values: any) => values.length)
       .entries(unique_IDs);
 
-    console.log(patientOutcomes)
+    // Align w/ ES syntax
     patientOutcomes.forEach(d => {
       d['term'] = d.key;
       d['count'] = d.value;
 
     })
-    console.log(patientOutcomes)
-
 
     this.patientOutcomeSubject.next(patientOutcomes);
 
@@ -71,6 +69,13 @@ export class GetHlaDataService {
       .key((d: HLA) => d.cohort)
       .rollup((values: any) => values.length)
       .entries(unique_IDs);
+
+    // Align w/ ES syntax
+    patientTypes.forEach(d => {
+      d['term'] = d.key;
+      d['count'] = d.value;
+
+    })
 
     this.patientTypeSubject.next(patientTypes);
 
