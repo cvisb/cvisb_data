@@ -44,7 +44,11 @@ export class MyHttpClient extends HttpClient {
     if (!options)
       options = {};
     if (!options.headers)
-      options.headers = new HttpHeaders();
+      options.headers = new HttpHeaders()
+        .set('Cache-Control', 'no-cache')
+        .set('Pragma', 'no-cache')
+        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        .set('If-Modified-Since', '0');
     if (typeof first !== "string" && !first.headers)
       first = (first as HttpRequest<any>).clone({ headers: new HttpHeaders() });
 
