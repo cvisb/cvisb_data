@@ -103,8 +103,6 @@ export class PatientUploadComponent implements OnInit {
         this.apiSvc.put("patient", data).subscribe(resp => {
           this.uploadResponse = `Success! ${resp}`;
           console.log(resp)
-          // Call patient service to update the samples.
-          this.patientSvc.getAllPatients();
         }, err => {
           this.uploadResponse = "Uh oh. Something went wrong."
           this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
