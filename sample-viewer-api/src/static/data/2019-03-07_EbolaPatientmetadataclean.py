@@ -336,8 +336,7 @@ merged['relatedTo'] = merged.apply(removeSelfID, axis = 1)
 merged['dateModified'] = "2019-03-20"
 
 # Removing homeLocation TEMP b/c validator is confused having 2 possible types
-cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'gender', 'relatedTo', 'contactSurvivorRelationship', 'exposureType', 'age', 'elisa', 'symptoms', 'dateModified']
-# cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'homeLocation', 'gender', 'relatedTo', 'age', 'elisa']
+cols = ['patientID', 'alternateIdentifier', 'contactGroupIdentifier', 'cohort', 'outcome', 'country', 'gender', 'relatedTo', 'contactSurvivorRelationship', 'exposureType', 'age', 'elisa', 'symptoms', 'dateModified', 'homeLocation']
 
 # Make sure there's an ID number-- removes the patients in the roster but not Ebola peoples.
 subset = merged[merged["ID number"] == merged["ID number"]]

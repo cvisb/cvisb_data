@@ -197,16 +197,22 @@ export class GetPatientsService {
   // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
-  getAllPatients() {
+  getPatientRoster(): Observable<Patient[]> {
     this.all_data = [];
-    this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
         .set('q', '__all__')
         .set('fetch_all', 'true')
-    });
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"]["hits"])
+      }
+      )
+    );
 
     // this.myhttp.get('./customer.json').map((res: Response) => res.json())
     //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
