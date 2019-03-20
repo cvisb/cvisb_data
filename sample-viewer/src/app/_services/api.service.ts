@@ -55,14 +55,19 @@ export class ApiService {
 
   // Generic function to pull out the ES `_ids` for all entries in an endpoint.
   getESIDs(endpoint: string) {
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query?q=__all__&size=1000`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
+      params: new HttpParams()
+        .set("q", "__all__")
+        .set("facets", "_id")
+        .set("facet_size", "10000")
+        .set("size", "0"),
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
       map(data => {
-        let df = data['body']['hits'];
-        let ids = df.map(d => d["_id"]);
+        let df = data['body']['facets']['_id']['terms'];
+        let ids = df.map(d => d.term);
         console.log(ids)
 
         return (ids);
@@ -129,23 +134,23 @@ export class ApiService {
     //   }
     // })
     if (newData) {
-    console.log('adding new data')
+      console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
           headers: new HttpHeaders()
         });
 
-        // .pipe(
-        //   map(resp => {
-        //     console.log(resp)
-        //     // return (new Observable<any>(resp))
-        //   }),
-        //   catchError(e => {
-        //     console.log(e)
-        //     throwError(e);
-        //     return (new Observable<any>(e))
-        //   })
+      // .pipe(
+      //   map(resp => {
+      //     console.log(resp)
+      //     // return (new Observable<any>(resp))
+      //   }),
+      //   catchError(e => {
+      //     console.log(e)
+      //     throwError(e);
+      //     return (new Observable<any>(e))
+      //   })
       // )?
 
     } else {
