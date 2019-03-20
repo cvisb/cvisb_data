@@ -54,18 +54,12 @@ export class MyHttpClient extends HttpClient {
     }
     else {
       options.headers = <HttpHeaders>options.headers;
-      console.log("options.headers-- input")
-      console.log(options.headers)
-
-      console.log('appending')
-
       options.headers = options.headers.append('Cache-Control', 'no-cache')
         .append('Pragma', 'no-cache')
         .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
         .append('If-Modified-Since', '0')
     }
-    console.log("options.headers")
-    console.log(options.headers)
+
     if (typeof first !== "string" && !first.headers)
       first = (first as HttpRequest<any>).clone({ headers: new HttpHeaders() });
 
