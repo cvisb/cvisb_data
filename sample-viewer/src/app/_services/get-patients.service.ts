@@ -207,9 +207,9 @@ export class GetPatientsService {
         .set('q', '__all__')
         .set('fetch_all', 'true')
     }).pipe(
-      map(res => {
+      map((res: Patient[]) => {
         console.log(res);
-        return (res["body"]["hits"])
+        return (new Array<PatientDownload>(res["body"]['hits']))
       }
       )
     );
@@ -248,7 +248,7 @@ export class GetPatientsService {
     }).pipe(
       map((res: Patient[]) => {
         console.log(res);
-        return (new Array<PatientDownload>(res["body"]))
+        return (new Array<PatientDownload>(res["body"]));
       }
       )
     )
