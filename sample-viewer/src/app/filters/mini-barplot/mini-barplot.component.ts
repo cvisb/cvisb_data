@@ -120,10 +120,15 @@ export class MiniBarplotComponent implements OnInit {
       // Essential for object constancy.
       let keys = this.data.map(d => d.term);
 
-      let missing_data = this.options.filter(d => !keys.includes(d));
-      missing_data.forEach(d => {
-        this.data.push({ term: d, count: 0 });
-      })
+      // If there are no bulk values, set to the keys.
+      if (this.options.length === 0) {
+        this.options = keys;
+      } else {
+        let missing_data = this.options.filter(d => !keys.includes(d));
+        missing_data.forEach(d => {
+          this.data.push({ term: d, count: 0 });
+        })
+      }
 
       // transition
       var t = d3.transition()
@@ -135,24 +140,6 @@ export class MiniBarplotComponent implements OnInit {
           console.log(d)
           requestSvc.updateParams(endpoint, { field: 'outcome', value: d.term })
 
-          // switch (endpoint) {
-          //   case 'patient': {
-          //     let params = [{ field: 'outcome', value: d.term }];
-          //
-          //     patientSvc.patientParamsSubject.next(params);
-          //     break;
-          //   }
-          //   case 'dataset': {
-          //     console.log('sending dataset endpoint cohort ' + d.term);
-          //     let params = [{ field: 'outcome', value: d.term }];
-          //     console.log(params)
-          //     break;
-          //   }
-          //   default: {
-          //     console.log("ERROR! Unknown endpoint to be filtered.")
-          //     break;
-          //   }
-          // }
         }
       }
 
