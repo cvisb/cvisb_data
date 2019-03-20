@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { isPlatformBrowser } from '@angular/common';
 
@@ -17,34 +17,29 @@ export class HlaSummaryComponent implements OnInit {
   alleleCount: D3Nested[];
   novelAlleles: D3Nested[];
 
-  constructor(private hlaSvc: GetHlaDataService,
-  @Inject(PLATFORM_ID) private platformId: Object
-) {
+  constructor(private hlaSvc: GetHlaDataService) {
+    hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
+      this.patientTypes = types;
+    })
 
+    hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
+      this.patientOutcomes = outcomes;
+    })
+
+    hlaSvc.patientCountState$.subscribe((num: number) => {
+      this.patientCount = num;
+    })
+
+    hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
+      this.alleleCount = cts;
+    })
+
+    hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
+      this.novelAlleles = novel;
+    })
   }
 
   ngOnInit() {
-    if(isPlatformBrowser(this.platformId)) {
-      this.hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
-        this.patientTypes = types;
-      })
-
-      this.hlaSvc.patientOutcomeState$.subscribe((outcomes: D3Nested[]) => {
-        this.patientOutcomes = outcomes;
-      })
-
-      this.hlaSvc.patientCountState$.subscribe((num: number) => {
-        this.patientCount = num;
-      })
-
-      this.hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
-        this.alleleCount = cts;
-      })
-
-      this.hlaSvc.novelAllelesState$.subscribe((novel: D3Nested[]) => {
-        this.novelAlleles = novel;
-      })
-    }
   }
 
 }

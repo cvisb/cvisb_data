@@ -10,6 +10,7 @@ export * from './file-metadata.service';
 export * from './anchor.service';
 export * from './get-hla-data.service';
 export * from './hla.service';
+export * from './hla.resolver';
 export * from './auth.service';
 export * from './http-cookies.service';
 export * from './api.service';
