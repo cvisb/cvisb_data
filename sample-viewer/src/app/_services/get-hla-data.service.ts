@@ -45,9 +45,7 @@ export class GetHlaDataService {
 
   summarizeHLA() {
     // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
-    console.log("SUMMARIZING DATA")
     let unique_IDs = _.uniqBy(HLA_DATA, d => d.patientID)
-    console.log(unique_IDs)
 
     this.patientCountSubject.next(unique_IDs.length);
 
@@ -56,12 +54,14 @@ export class GetHlaDataService {
       .rollup((values: any) => values.length)
       .entries(unique_IDs);
 
-      console.log(patientOutcomes)
+    console.log(patientOutcomes)
+    patientOutcomes.forEach(d => {
+      d['term'] = d.key;
+      d['count'] = d.value;
 
-      console.log(nest()
-        .key((d: HLA) => d.outcome)
-        .rollup((values: any) => values.length)
-        .entries(HLA_DATA))
+    })
+    console.log(patientOutcomes)
+
 
     this.patientOutcomeSubject.next(patientOutcomes);
 
