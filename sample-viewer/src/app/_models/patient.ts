@@ -8,6 +8,8 @@ export class Patient {
   cohort: string;
   outcome?: string;
   alternateIdentifier?: string[];
+  contactGroupIdentifier?: string;
+  contactSurvivorRelationship?: string;
   age?: number;
   gender?: string;
   country?: Object;
@@ -17,9 +19,10 @@ export class Patient {
   relatedTo?: string[];
   elisa?: Object[];
   symptoms?: Object[];
+  exposureType?: string;
   _version?: number;
+  updatedBy?: string;
 }
-
 
 
 // Constructor to de-nest nested objects for download.
@@ -37,19 +40,53 @@ export class PatientDownload {
   gender?: string;
   outcome?: string;
   patientID: string;
-  relatedTo?: string[];
-  symptoms?: Object;
+  relatedTo?: string;
   updatedBy?: string;
+  blurry_vision?: boolean;
+  burning_eyes?: boolean;
+  dry_eyes?: boolean;
+  eye_foreign_body_sensation?: boolean;
+  eye_pain?: boolean;
+  hearing_loss?: boolean;
+  joint_pain?: boolean;
+  light_sensitivity?: boolean;
+  muscle_pain?: boolean;
+  ringing_in_ears?: boolean;
+  vision_loss?: boolean;
 
 
   constructor(patient: Patient) {
-    console.log(patient)
     this.patientID = patient.patientID;
-    this._version = patient._version;
-    this.age = patient.age;
     this.alternateIdentifier = patient.alternateIdentifier.join(", ");
+    this.cohort = patient.cohort;
+    this.outcome = patient.outcome;
+    this.country = patient.country['name'];
+    this.gender = patient.gender;
+    this.age = patient.age;
+    this.contactGroupIdentifier = patient.contactGroupIdentifier;
+        this.relatedTo = patient.relatedTo.join(", ");
+    this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
+    this.exposureType = patient.exposureType;
+
 
     // TODO: ELISAs
+    //
+    this.blurry_vision = patient.symptoms['symptoms']['symptoms']['blurry_vision'];
+    this.burning_eyes = patient.symptoms['symptoms']['symptoms']['burning_eyes'];
+    this.dry_eyes = patient.symptoms['symptoms']['symptoms']['dry_eyes'];
+    this.eye_foreign_body_sensation = patient.symptoms['symptoms']['symptoms']['eye_foreign_body_sensation'];
+    this.eye_pain = patient.symptoms['symptoms']['symptoms']['eye_pain'];
+    this.hearing_loss = patient.symptoms['symptoms']['symptoms']['hearing_loss'];
+    this.joint_pain = patient.symptoms['symptoms']['symptoms']['joint_pain'];
+    this.light_sensitivity = patient.symptoms['symptoms']['symptoms']['light_sensitivity'];
+    this.muscle_pain = patient.symptoms['symptoms']['symptoms']['muscle_pain'];
+    this.ringing_in_ears = patient.symptoms['symptoms']['symptoms']['ringing_in_ears'];
+    this.vision_loss = patient.symptoms['symptoms']['symptoms']['vision_loss']
+
+
+    this._version = patient._version;
+    this.dateModified = patient.dateModified;
+    this.updatedBy = patient.updatedBy;
 
   }
 }
