@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { AuthService, GetPatientsService } from '../_services';
+import { AuthService, GetPatientsService, RequestParametersService } from '../_services';
 import { AuthState } from '../_models';
 
 
@@ -10,15 +10,18 @@ import { AuthState } from '../_models';
   templateUrl: './download-btn.component.html',
   styleUrls: ['./download-btn.component.scss']
 })
+
 export class DownloadBtnComponent implements OnInit {
   @Input() data: any;
   @Input() filetype: string;
   filename: string;
   auth_stub: string;
   today: string;
+  qParams;
 
   constructor(
     private authSvc: AuthService,
+    private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
     private datePipe: DatePipe
   ) {
@@ -26,6 +29,10 @@ export class DownloadBtnComponent implements OnInit {
 
     authSvc.authState$.subscribe((authState: AuthState) => {
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
+    })
+
+    requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+      this.qParams = this.requestSvc.reduceParams(qParams);
     })
   }
 
@@ -73,7 +80,7 @@ export class DownloadBtnComponent implements OnInit {
   downloadData() {
     switch (this.filetype) {
       case ("patients"):
-        this.patientSvc.getPatientRoster().subscribe(patients => {
+        this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
           this.data = patients;
           console.log(this.data);
           this.parseData();
