@@ -63,8 +63,8 @@ export class PatientDownload {
     this.country = patient.country['name'];
     this.gender = patient.gender;
     this.age = patient.age;
-    this.contactGroupIdentifier = patient.contactGroupIdentifier;
-        this.relatedTo = patient.relatedTo.join(", ");
+    this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
+    this.relatedTo = patient.relatedTo.join(", ");
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
 
