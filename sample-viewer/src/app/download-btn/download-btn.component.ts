@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { AuthService, GetPatientsService, RequestParametersService } from '../_services';
-import { AuthState } from '../_models';
+import { AuthState, RequestParamArray } from '../_models';
 
 
 @Component({
