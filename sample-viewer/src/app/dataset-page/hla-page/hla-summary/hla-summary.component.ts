@@ -52,6 +52,7 @@ export class HlaSummaryComponent implements OnInit {
 
   ngOnInit() {
       this.clientSide = isPlatformBrowser(this.platformId);
+      console.log(this.clientSide)
   }
 
 }
