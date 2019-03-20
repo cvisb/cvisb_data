@@ -211,12 +211,11 @@ export class GetPatientsService {
     }).pipe(
       map((res: Patient[]) => {
         console.log(res);
-        
+
         let patientArray = res["body"]['hits'].map(patient => {
           return (new PatientDownload(patient));
         });
 
-        console.log(patientArray);
         return (patientArray)
       }
       )
