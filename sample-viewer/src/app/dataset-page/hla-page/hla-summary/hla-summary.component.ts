@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
+
 import { isPlatformBrowser } from '@angular/common';
 
 import { GetHlaDataService } from '../../../_services';
@@ -17,7 +19,14 @@ export class HlaSummaryComponent implements OnInit {
   alleleCount: D3Nested[];
   novelAlleles: D3Nested[];
 
-  constructor(private hlaSvc: GetHlaDataService) {
+  constructor(private hlaSvc: GetHlaDataService,
+    private route: ActivatedRoute,) {
+
+      route.data.subscribe(params => {
+        console.log("route data")
+        console.log(params)
+      });
+
     hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
       this.patientTypes = types;
     })
