@@ -47,9 +47,6 @@ export class PatientUploadComponent implements OnInit {
   deletePatients() {
     console.log("deleting all!  eep!")
     this.apiSvc.wipeEndpoint('patient');
-
-    // Call patient service to update the samples.
-    this.patientSvc.getAllPatients();
   }
 
   fileChange(event) {
