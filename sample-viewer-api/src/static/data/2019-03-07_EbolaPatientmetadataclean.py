@@ -218,6 +218,43 @@ def nestELISAs(row):
 
 df['elisa'] = df.apply(nestELISAs, axis = 1)
 
+
+# --- Create split G numbers ---
+def getGID(id):
+    if(id == id):
+        if(re.search("^[0-9][0-9][0-9]", id)):
+            return("G-" + str(id))
+        else:
+            # For EM110
+            return(str(id))
+    else:
+        # Ignore NaNs
+        return(pd.np.nan)
+
+
+def splitGID(id):
+    if(id == id):
+        return(str(id).split("/"))
+    else:
+        # Ignore NaNs
+        return(pd.np.nan)
+
+
+df['gID'], df['gID2'] = df['G number'].apply(splitGID).str
+df['gID'] = df.gID.apply(getGID)
+df['gID2'] = df.gID2.apply(getGID)
+
+df[df['G number'] == df['G number']][['ID number', 'patientID', 'G number', 'gID', 'gID2', 'sID']].sample(24)
+
+id_df = pd.melt(df[['patientID', 'gID', 'gID2', 'sID']], value_vars=["gID", "gID2", "sID"], id_vars=["patientID"], var_name="type_discard", value_name='ID')
+
+# Remove any long rows which have no gID, gID2, etc.
+id_df = id_df.dropna(subset=["ID"]).drop(["type_discard"], axis=1)
+
+id_df.sample(10)
+# id_dict =
+id_dict = id_df.set_index("ID").to_dict("index")
+
 # --- nest the symptoms and convert to binaries ---
 def binarize(val):
     if(val == val):
