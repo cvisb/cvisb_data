@@ -2,6 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from './_services/auth.service';
 
+import { environment } from '../environments/environment';
+
+// Google Analytics autotrack for tracking sites on single page application.
+// https://github.com/googleanalytics/autotrack#installation-and-usage
+// `npm install autotrack`
+// `npm install --save-dev @types/google.analytics` --> `ga` works as a function.
+import 'autotrack/lib/plugins/event-tracker';
+import 'autotrack/lib/plugins/outbound-link-tracker';
+import 'autotrack/lib/plugins/url-change-tracker';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,6 +36,20 @@ export class AppComponent {
   constructor(
     private authSvc: AuthService,
   ) {
+
+    if (environment.production) {
+      ga('create', 'UA-136260805-1', 'auto');
+
+    } else {
+      ga('create', 'UA-136260805-2', 'auto');
+    }
+
+    // Add in autotrack modules I want.
+    ga('require', 'eventTracker');
+    ga('require', 'outboundLinkTracker');
+    ga('require', 'urlChangeTracker');
+
+    ga('send', 'pageview');
   }
 
   changeRoutes() {
@@ -32,6 +57,6 @@ export class AppComponent {
 
 
   ngOnInit() {
-      this.authSvc.checkLogin();
+    this.authSvc.checkLogin();
   }
 }
