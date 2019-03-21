@@ -1,9 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
-
-import { isPlatformBrowser } from '@angular/common';
-
 import { GetHlaDataService } from '../../../_services';
 import { HLA, D3Nested } from '../../../_models';
 
@@ -18,16 +14,8 @@ export class HlaSummaryComponent implements OnInit {
   patientCount: number;
   alleleCount: D3Nested[];
   novelAlleles: D3Nested[];
-  clientSide: boolean;
 
-  constructor(private hlaSvc: GetHlaDataService,
-    private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object) {
-
-    route.data.subscribe(params => {
-      console.log("route data")
-      console.log(params)
-    });
+  constructor(private hlaSvc: GetHlaDataService) {
 
     hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
       this.patientTypes = types;
@@ -51,8 +39,6 @@ export class HlaSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.clientSide = isPlatformBrowser(this.platformId);
-      console.log(this.clientSide)
   }
 
 }
