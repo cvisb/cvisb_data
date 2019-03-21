@@ -69,7 +69,9 @@ export class MiniBarplotComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.updatePlot(1000);
+    if (isPlatformBrowser(this.platformId)) {
+      this.updatePlot(1000);
+    }
   }
 
   createPlot() {
