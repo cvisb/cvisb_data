@@ -17,7 +17,8 @@ export class HlaSummaryComponent implements OnInit {
   novelAlleles: D3Nested[];
   clientSide: boolean;
 
-  constructor(private hlaSvc: GetHlaDataService) {
+  constructor(private hlaSvc: GetHlaDataService,
+   @Inject(PLATFORM_ID) private platformId: Object) {
 
     hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
       this.patientTypes = types;
