@@ -83,10 +83,34 @@ def interpretID(id):
     return(pd.np.nan)
 
 df_long['privateID'] = df_long.ID.apply(interpretID)
-2684/22
-df_long.privateID.value_counts(dropna = False)
-df_long[df_long.privateID != df_long.privateID].ID.value_counts()
+# df_long.privateID.value_counts(dropna = False)
+# df_long[df_long.privateID != df_long.privateID].ID.value_counts()
 
+
+# get the lookup values
+import os
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
+from EbolaPatientmetadataclean20190307 import id_dict
+
+# Randomize order.
+df_long.sort_values(by=["allele"], inplace = True)
+
+counter = 0
+
+def getPublicID(id):
+    global counter
+    try:
+        return(id_dict[id]['patientID'])
+    except:
+        counter += 1
+        return("id" + str(counter))
+df_long['patientID'] = df_long.privateID.apply(getPublicID)
+
+df_long[['ID', 'alternateIdentifier', 'privateID', 'patientID']]
+df_long[(df_long.cohort == "Ebola") & (df_long.outcome == 'survivor')][['ID', 'alternateIdentifier', 'privateID', 'patientID']]
+
+df_long.drop(['ID', 'alternateIdentifier', 'privateID'], axis=1, inplace=True)
+df_long.columns
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 df_long.to_json(export_path, orient='records')
