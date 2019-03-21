@@ -23,10 +23,10 @@
           <h3>Patient {{patient.patientID}} HLA Alleles</h3>
           <div class="container allele-container">
             <div *ngFor="let locus of alleleCount" class="allele-group" [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}" (mouseout)="clearLocus()">
-              <div class="locus" (mouseover)="sendLocus(locus.key)">
+              <div class="locus" (mouseover)="sendLocus($event, locus.key)">
                 {{ locus.key }}
               </div>
-              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}" (mouseover)="sendAllele(allele)" (mouseout)="clearAllele()">
+              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}" (mouseover)="sendAllele($event, allele)" (mouseout)="clearAllele()">
                 {{ allele }}
               </div>
             </div>
