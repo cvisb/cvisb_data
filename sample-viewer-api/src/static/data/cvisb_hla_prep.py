@@ -32,26 +32,6 @@ df['outcome'] = df['Outcome'].apply(lambda x: cleanOutcome(x))
 df['cohort'] = df['Status '].apply(lambda x: cleanCohort(x))
 df['country'] = df['Location']
 df.drop(['Location', 'Outcome', 'Status '], axis=1, inplace=True)
-# lengthen dataset
-df_long = pd.melt(df, id_vars=['ID', 'alternateIdentifier', 'outcome', 'cohort', 'country'], var_name="locus", value_name="allele")
-df_long.sample(14)
-
-
-# Clean up loci, undefined calls, and novel status
-def findNovel(allele):
-    loc = str(allele).find("@")
-    return(loc > 0)
-
-def cleanLoci(locus):
-    return(locus.replace(".1", ""))
-
-
-df_long['novel'] = df_long.allele.apply(findNovel)
-df_long['locus'] = df_long.locus.apply(cleanLoci)
-
-df_long.allele.replace(r'\-', pd.np.nan, regex=True, inplace= True)
-# From 2019-01-09 calls: 1095 '-' + 213 NaNs.
-df_long.allele.value_counts(dropna=False)
 
 
 # Merge and remove private IDs
@@ -82,18 +62,17 @@ def interpretID(id):
 
     return(pd.np.nan)
 
-df_long['privateID'] = df_long.ID.apply(interpretID)
+df['privateID'] = df.ID.apply(interpretID)
 # df_long.privateID.value_counts(dropna = False)
 # df_long[df_long.privateID != df_long.privateID].ID.value_counts()
 
 
 # get the lookup values
-import os
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 from EbolaPatientmetadataclean20190307 import id_dict
-
+df.columns
 # Randomize order.
-df_long.sort_values(by=["allele"], inplace = True)
+df.sort_values(by=["A"], inplace = True)
 
 counter = 0
 
@@ -104,13 +83,37 @@ def getPublicID(id):
     except:
         counter += 1
         return("id" + str(counter))
-df_long['patientID'] = df_long.privateID.apply(getPublicID)
+df['patientID'] = df.privateID.apply(getPublicID)
 
-df_long[['ID', 'alternateIdentifier', 'privateID', 'patientID']]
-df_long[(df_long.cohort == "Ebola") & (df_long.outcome == 'survivor')][['ID', 'alternateIdentifier', 'privateID', 'patientID']]
+df[['ID', 'alternateIdentifier', 'privateID', 'patientID']]
+df[(df.cohort == "Ebola") & (df.outcome == 'survivor')][['ID', 'alternateIdentifier', 'privateID', 'patientID']]
 
-df_long.drop(['ID', 'alternateIdentifier', 'privateID'], axis=1, inplace=True)
-df_long.columns
+df.drop(['ID', 'alternateIdentifier', 'privateID'], axis=1, inplace=True)
+
+
+# lengthen dataset
+df_long = pd.melt(df, id_vars=['patientID', 'outcome', 'cohort', 'country'], var_name="locus", value_name="allele")
+df_long.sample(14)
+
+
+# Clean up loci, undefined calls, and novel status
+def findNovel(allele):
+    loc = str(allele).find("@")
+    return(loc > 0)
+
+def cleanLoci(locus):
+    return(locus.replace(".1", ""))
+
+
+df_long['novel'] = df_long.allele.apply(findNovel)
+df_long['locus'] = df_long.locus.apply(cleanLoci)
+
+df_long.allele.replace(r'\-', pd.np.nan, regex=True, inplace= True)
+# From 2019-01-09 calls: 1095 '-' + 213 NaNs.
+df_long.allele.value_counts(dropna=False)
+
+
+
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 df_long.to_json(export_path, orient='records')
