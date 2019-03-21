@@ -1,4 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { GetHlaDataService } from '../../../_services';
 import { HLA, D3Nested } from '../../../_models';
@@ -14,6 +15,7 @@ export class HlaSummaryComponent implements OnInit {
   patientCount: number;
   alleleCount: D3Nested[];
   novelAlleles: D3Nested[];
+  clientSide: boolean;
 
   constructor(private hlaSvc: GetHlaDataService) {
 
@@ -39,6 +41,7 @@ export class HlaSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.clientSide = isPlatformBrowser(this.platformId);
   }
 
 }
