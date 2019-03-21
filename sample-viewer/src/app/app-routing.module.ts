@@ -45,15 +45,14 @@ const appRoutes: Routes = [
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { canActivate: [AuthGuard], path: 'sample/upload', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Add Samples | CViSB' } },
   { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  // {
-  //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
-  //   resolve: {
-  //     datasetData: DatasetResolver,
-  //     hlaSummary: HlaResolver
-  //   }, data: { title: 'Dataset | CViSB' }
-  // },
-  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: { datasetData: DatasetResolver,
-       hlaSummary: HlaResolver }, data: { title: 'Dataset | CViSB' } },
+  {
+    path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
+    resolve: {
+      datasetData: DatasetResolver,
+      hlaSummary: HlaResolver
+    }, data: { title: 'Dataset | CViSB' }
+  },
+  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: { datasetData: DatasetResolver }, data: { title: 'Dataset | CViSB' } },
   // {
   //   path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver },
   //   pathMatch: 'full', data: { title: 'Dataset | CViSB' },
