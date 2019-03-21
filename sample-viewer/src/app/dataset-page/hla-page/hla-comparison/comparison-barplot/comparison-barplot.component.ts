@@ -1,4 +1,6 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+
+import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 import { HLAsummary, CohortSelectOptions } from '../../../../_models';
@@ -47,16 +49,17 @@ export class ComparisonBarplotComponent implements OnInit {
   private yLeftAxis: any;
   private yRightAxis: any;
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   ngOnInit() {
-    this.creationPromise = this.createPlot();
+    if (isPlatformBrowser(this.platformId)) {
+      this.creationPromise = this.createPlot();
 
-    this.creationPromise.then(value => {
-      this.updatePlot();
-    })
-
+      this.creationPromise.then(value => {
+        this.updatePlot();
+      })
+    }
 
   }
 
