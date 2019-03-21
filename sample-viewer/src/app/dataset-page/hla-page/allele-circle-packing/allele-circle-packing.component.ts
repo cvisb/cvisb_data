@@ -83,6 +83,7 @@ export class AlleleCirclePackingComponent implements OnInit {
       this.genotype = [];
     }
     if (isPlatformBrowser(this.platformId)) {
+      console.log(this.genotype);
       this.getSVGDims();
       this.createPlot();
     }

@@ -45,6 +45,10 @@ export class GetHlaDataService {
     return this.HLA_DATA;
   }
 
+  getpatientHLA(patientID){
+    return(this.HLA_DATA.filter(d => d.patientID === patientID));
+  }
+
   summarizeHLA() {
     // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
     let unique_IDs = _.uniqBy(this.HLA_DATA, d => d.patientID)
