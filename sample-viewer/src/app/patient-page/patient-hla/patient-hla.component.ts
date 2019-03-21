@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { GetHlaDataService, HlaService } from '../../_services';
 import { Patient, HLA, D3Nested } from '../../_models';
@@ -12,7 +12,7 @@ import * as d3 from 'd3';
   // encapsulation: ViewEncapsulation.None
 })
 
-export class PatientHlaComponent implements OnInit {
+export class PatientHlaComponent implements OnChanges {
   @Input() patient: Patient;
   genotype: string[];
   alleleCount: any;
@@ -43,7 +43,7 @@ export class PatientHlaComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     let hla: any;
 
     let hla_data = this.hlaSvc.getpatientHLA(this.patient.patientID);
@@ -51,8 +51,6 @@ export class PatientHlaComponent implements OnInit {
 
     if (hla_data.length > 0) {
       this.genotype = hla_data.map(d => d.allele);
-      console.log(this.genotype)
-
 
       // if (this.patient.availableData) {
       //   hla = this.patient.availableData.filter((d: any) => d.identifier === 'hla');
@@ -63,6 +61,7 @@ export class PatientHlaComponent implements OnInit {
   }
 
   sendLocus(locus: string) {
+    console.log(locus)
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
 
@@ -72,6 +71,8 @@ export class PatientHlaComponent implements OnInit {
 
   sendAllele(allele: string) {
     let locus = allele.split('\*')[0];
+    console.log(allele)
+    console.log(locus)
     this.hlaColorSvc.selectedAlleleSubject.next(allele);
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
