@@ -8,11 +8,11 @@ import { environment } from '../environments/environment';
 // https://github.com/googleanalytics/autotrack#installation-and-usage
 // `npm install autotrack` --> not necessary on servers, since package.json updated. Did have to run an `npm install`
 // `npm install --save-dev @types/google.analytics` --> `ga` works as a function.
-import 'autotrack/lib/plugins/event-tracker';
-import 'autotrack/lib/plugins/outbound-link-tracker';
-import 'autotrack/lib/plugins/url-change-tracker';
+// import 'autotrack/lib/plugins/event-tracker';
+// import 'autotrack/lib/plugins/outbound-link-tracker';
+// import 'autotrack/lib/plugins/url-change-tracker';
 
-declare let ga: Function;
+// declare let ga: Function;
 
 
 @Component({
@@ -39,19 +39,19 @@ export class AppComponent {
     private authSvc: AuthService,
   ) {
 
-    if (environment.production) {
-      ga('create', 'UA-136260805-1', 'auto');
-
-    } else {
-      ga('create', 'UA-136260805-2', 'auto');
-    }
-
-    // Add in autotrack modules I want.
-    ga('require', 'eventTracker');
-    ga('require', 'outboundLinkTracker');
-    ga('require', 'urlChangeTracker');
-
-    ga('send', 'pageview');
+    // if (environment.production) {
+    //   ga('create', 'UA-136260805-1', 'auto');
+    //
+    // } else {
+    //   ga('create', 'UA-136260805-2', 'auto');
+    // }
+    //
+    // // Add in autotrack modules I want.
+    // ga('require', 'eventTracker');
+    // ga('require', 'outboundLinkTracker');
+    // ga('require', 'urlChangeTracker');
+    //
+    // ga('send', 'pageview');
   }
 
   changeRoutes() {
