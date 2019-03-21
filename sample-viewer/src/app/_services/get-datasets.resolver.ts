@@ -14,6 +14,7 @@ export class DatasetResolver implements Resolve<any> {
   constructor(private datasetSvc: getDatasetsService) {}
 
   resolve(route: ActivatedRouteSnapshot) {
+    console.log(route)
     // return this.datasetSvc.getDataset(route.paramMap.get('dsid'));
     return this.datasetSvc.getDataset(route.url[1].path);
   }
