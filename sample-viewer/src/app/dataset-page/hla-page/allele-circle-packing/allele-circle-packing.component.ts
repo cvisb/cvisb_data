@@ -43,6 +43,8 @@ export class AlleleCirclePackingComponent implements OnInit {
     // Cross-plot mouseover behaviors: highlight locus and/or allele
     // Listen for the selection of a locus
     hlaSvc.selectedLocusState$.subscribe((locus: string) => {
+    console.log('locus heard!')
+    console.log(locus)
       if (locus) {
         d3.selectAll(".node--leaf")
           .classed("masked", (d: any) => d.data.locus !== locus)
@@ -64,6 +66,9 @@ export class AlleleCirclePackingComponent implements OnInit {
 
     // Listen for the selection of a specific allele
     hlaSvc.selectedAlleleState$.subscribe((allele: string) => {
+    console.log('allele heard!')
+    console.log(allele)
+
       if (allele) {
         d3.selectAll(".node--leaf")
           .classed("allele-masked", (d: any) => d.data.name !== allele)
@@ -83,7 +88,6 @@ export class AlleleCirclePackingComponent implements OnInit {
       this.genotype = [];
     }
     if (isPlatformBrowser(this.platformId)) {
-      console.log(this.genotype);
       this.getSVGDims();
       this.createPlot();
     }
