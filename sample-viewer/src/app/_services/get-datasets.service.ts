@@ -39,7 +39,7 @@ export class getDatasetsService {
     }).pipe(
       map(data => {
         let datasets = data['body']['hits'];
-        // console.log(files)
+        // console.log(datasets)
 
         return (datasets)
 
@@ -68,6 +68,7 @@ export class getDatasetsService {
           return (datasets[0])
         } else {
           console.log("More than one dataset returned. Check if your ID is unique!")
+          console.log(data);
         }
       }),
       catchError(e => {
