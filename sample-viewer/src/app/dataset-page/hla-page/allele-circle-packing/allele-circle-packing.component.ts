@@ -175,13 +175,13 @@ export class AlleleCirclePackingComponent implements OnInit {
 
     // div for tooltips
     let ttips = d3.select("body").append("div")
-      .attr("class", "tooltip")
+      .attr("class", "circlepacking-tooltip")
       .style("display", "none")
       .style("opacity", 0);
 
     function clearTtips(hlaSvc) {
       return function(d) {
-        d3.selectAll(".tooltip").transition()
+        d3.selectAll(".circlepacking-tooltip").transition()
           .duration(0)
           .style("display", 'none')
           .style("opacity", 0);
