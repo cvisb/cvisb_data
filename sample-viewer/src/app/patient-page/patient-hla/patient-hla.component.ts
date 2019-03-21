@@ -45,9 +45,18 @@ export class PatientHlaComponent implements OnInit {
 
   ngOnInit() {
     let hla: any;
-    if (this.patient.availableData) {
-      hla = this.patient.availableData.filter((d: any) => d.identifier === 'hla');
-      this.genotype = hla.length === 1 ? hla[0]['data'] : null;
+
+    let hla_data = this.hlaSvc.getpatientHLA(this.patient.patientID);
+    console.log(hla_data);
+
+    if (hla_data.length > 0) {
+      this.genotype = hla_data.map(d => d.allele);
+      console.log(this.genotype)
+
+
+      // if (this.patient.availableData) {
+      //   hla = this.patient.availableData.filter((d: any) => d.identifier === 'hla');
+      //   this.genotype = hla.length === 1 ? hla[0]['data'] : null;
     } else {
       this.genotype = null;
     }
@@ -57,7 +66,7 @@ export class PatientHlaComponent implements OnInit {
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
 
-  clearLocus(){
+  clearLocus() {
     this.hlaColorSvc.selectedLocusSubject.next(null);
   }
 
