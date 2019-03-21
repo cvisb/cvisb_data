@@ -66,6 +66,7 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   clearLocus() {
+    console.log('mouseout')
     this.hlaColorSvc.selectedLocusSubject.next(null);
   }
 
@@ -78,6 +79,7 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   clearAllele() {
+    console.log('mouseout')
     this.hlaColorSvc.selectedAlleleSubject.next(null);
   }
 
