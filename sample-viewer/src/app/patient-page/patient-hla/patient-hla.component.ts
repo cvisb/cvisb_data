@@ -61,6 +61,7 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   sendLocus(locus: string) {
+    console.log(locus)
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
 
@@ -70,6 +71,8 @@ export class PatientHlaComponent implements OnChanges {
 
   sendAllele(allele: string) {
     let locus = allele.split('\*')[0];
+    console.log(allele)
+    console.log(locus)
     this.hlaColorSvc.selectedAlleleSubject.next(allele);
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
