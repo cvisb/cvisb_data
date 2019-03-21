@@ -60,26 +60,26 @@ export class PatientHlaComponent implements OnChanges {
     }
   }
 
-  sendLocus(locus: string) {
-    console.log(locus)
+  sendLocus(event, locus: string) {
+    event.preventDefault();
+    event.stopPropagation();
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
 
   clearLocus() {
-    console.log('mouseout')
     this.hlaColorSvc.selectedLocusSubject.next(null);
   }
 
-  sendAllele(allele: string) {
+  sendAllele(event, allele: string) {
+    event.preventDefault();
+    event.stopPropagation();
+
     let locus = allele.split('\*')[0];
-    console.log(allele)
-    console.log(locus)
     this.hlaColorSvc.selectedAlleleSubject.next(allele);
     this.hlaColorSvc.selectedLocusSubject.next(locus);
   }
 
   clearAllele() {
-    console.log('mouseout')
     this.hlaColorSvc.selectedAlleleSubject.next(null);
   }
 
