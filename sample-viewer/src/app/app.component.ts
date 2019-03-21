@@ -53,19 +53,19 @@ export class AppComponent {
   ngAfterViewInit() {
     // Only send GA if in client-side operations
     if (isPlatformBrowser(this.platformId)) {
-      if (environment.production) {
-        ga('create', 'UA-136260805-1', 'auto');
-
-      } else {
-        ga('create', 'UA-136260805-2', 'auto');
-      }
-
-      // Add in autotrack modules I want.
-      ga('require', 'eventTracker');
-      ga('require', 'outboundLinkTracker');
-      ga('require', 'urlChangeTracker');
-
-      ga('send', 'pageview');
+      // if (environment.production) {
+      //   ga('create', 'UA-136260805-1', 'auto');
+      //
+      // } else {
+      //   ga('create', 'UA-136260805-2', 'auto');
+      // }
+      //
+      // // Add in autotrack modules I want.
+      // ga('require', 'eventTracker');
+      // ga('require', 'outboundLinkTracker');
+      // ga('require', 'urlChangeTracker');
+      //
+      // ga('send', 'pageview');
     }
   }
 }
