@@ -6,11 +6,13 @@ import { environment } from '../environments/environment';
 
 // Google Analytics autotrack for tracking sites on single page application.
 // https://github.com/googleanalytics/autotrack#installation-and-usage
-// `npm install autotrack`
+// `npm install autotrack` --> not necessary on servers, since package.json updated. Did have to run an `npm install`
 // `npm install --save-dev @types/google.analytics` --> `ga` works as a function.
 import 'autotrack/lib/plugins/event-tracker';
 import 'autotrack/lib/plugins/outbound-link-tracker';
 import 'autotrack/lib/plugins/url-change-tracker';
+
+declare let ga: Function;
 
 
 @Component({
