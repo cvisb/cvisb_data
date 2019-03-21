@@ -218,6 +218,46 @@ def nestELISAs(row):
 
 df['elisa'] = df.apply(nestELISAs, axis = 1)
 
+
+# --- Create split G numbers, dict of public/private IDs ---
+# Since there are some lower-case IDs in metadata file, convert to all upper case.
+df['sID'] = df['ID number'].apply(lambda x: x.upper())
+
+def getGID(id):
+    if(id == id):
+        if(re.search("^[0-9][0-9][0-9]", id)):
+            return("G-" + str(id))
+        else:
+            # For EM110
+            return(str(id))
+    else:
+        # Ignore NaNs
+        return(pd.np.nan)
+
+
+def splitGID(id):
+    if(id == id):
+        return(str(id).split("/"))
+    else:
+        # Ignore NaNs
+        return(pd.np.nan)
+
+
+df['gID_ebola'], df['gID2_ebola'] = df['G number'].apply(splitGID).str
+df['gID_ebola'] = df.gID_ebola.apply(getGID)
+df['gID2_ebola'] = df.gID2_ebola.apply(getGID)
+
+df[df['G number'] == df['G number']][['ID number', 'patientID', 'G number', 'gID_ebola', 'gID2_ebola', 'sID']].sample(24)
+
+id_df = pd.melt(df[['patientID', 'gID_ebola', 'gID2_ebola', 'sID']], value_vars=["gID_ebola", "gID2_ebola", "sID"], id_vars=["patientID"], var_name="type_discard", value_name='ID')
+
+# Remove any long rows which have no gID, gID2, etc.
+id_df = id_df.dropna(subset=["ID"]).drop(["type_discard"], axis=1)
+
+id_df.sample(10)
+# id_dict =
+id_dict = id_df.set_index("ID").to_dict("index")
+
 # --- nest the symptoms and convert to binaries ---
 def binarize(val):
     if(val == val):
@@ -253,6 +293,7 @@ def nestSymptoms(row, timepoint = "survivor enrollment"):
     return([obj])
 df['symptoms'] = df.apply(nestSymptoms, axis = 1)
 
+
 # () ID/study/G-num all merge w/ previous data. --> Check data + add in hhID, altIDs, relatedTo
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 
@@ -263,13 +304,9 @@ from merge_public_ids_20190227 import ids
 # first-- simple merge based just on the study IDs.
 simple_merge = pd.merge(df, ids, how="outer", indicator=True, left_on=["study specific number"], right_on=["Study Specific #"])
 simple_merge._merge.value_counts()
-
 # Looks more or less as expected. ~ 495 LSV survivors/contacts, 3 non-matches: 2 from the C-ids missing a study specific number, 1 from a duplicate row that was meant to be contact #3.
 simple_merge[simple_merge._merge == "left_only"]
-
 # merge in previous roster info based on all fields
-# Since there are some lower-case IDs in metadata file, convert to all upper case.
-df['sID'] = df['ID number'].apply(lambda x: x.upper())
 
 merged = pd.merge(df, ids, how="outer", indicator=True, left_on=["study specific number", "G number", "sID"], right_on=["Study Specific #", "G-Number", "sID"])
 merged._merge.value_counts()
@@ -281,8 +318,8 @@ weird_ids
 # 14 IDs look wonky.
 merged[(merged["study specific number"].isin(weird_ids)) | merged["Study Specific #"].isin(weird_ids)][["G-Number", "Study Specific #", "sID", "G number", "study specific number", "G number", "ID number"]]
 df[df['study specific number'].isin(weird_ids)]
-simple_merge[simple_merge['Study Specific #'].isin(weird_ids)][["study specific number", "sID", "ID number", "G-Number",  "G number"]].rename(columns = {'sID': 'scrambledID', 'ID number': 'metadataID', 'G-Number': 'scrambledGID', "G number": "metadataGID"}).to_csv("2019-03-07_metadata-scrambled-roster-discrepancies.csv")
-simple_merge[simple_merge['contactGroupIdentifier']=="188755"][["study specific number", "sID", "ID number", "G-Number",  "G number"]].rename(columns = {'sID': 'scrambledID', 'ID number': 'metadataID', 'G-Number': 'scrambledGID', "G number": "metadataGID"})
+simple_merge[simple_merge['Study Specific #'].isin(weird_ids)][["study specific number", "sID_y", "ID number", "G-Number",  "G number"]].rename(columns = {'sID_y': 'scrambledID', 'ID number': 'metadataID', 'G-Number': 'scrambledGID', "G number": "metadataGID"}).to_csv("2019-03-07_metadata-scrambled-roster-discrepancies.csv")
+simple_merge[simple_merge['contactGroupIdentifier']=="188755"][["study specific number", "sID_y", "ID number", "G-Number",  "G number"]].rename(columns = {'sID_y': 'scrambledID', 'ID number': 'metadataID', 'G-Number': 'scrambledGID', "G number": "metadataGID"})
 
 
 # Check geo location within households
