@@ -27,6 +27,7 @@
     type: object
 - '@id': cvisb:virus
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Virus tested in ELISA (Ebola or Lassa)
@@ -40,6 +41,7 @@
   - '@id': schema:Text
 - '@id': cvisb:RDTresult
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Result of RDT, either positive/negative

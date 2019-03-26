@@ -19,7 +19,7 @@
 #
 # "@id":                   "http://schema.cvisb.org/SoftwareSourceCode/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:SoftwareSourceCode
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing SoftwareSourceCode in the Center for Viral Systems Biology
@@ -45,6 +45,21 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           optional
+
+
+- "@id":                 cvisb:@id
+  "@type":               rdf:Property
+  rdfs:comment:          A unique identifier for the software code, preferably a DOI
+  rdfs:label:            "@id"
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    "@id":               schema:URL
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # name
 - "@id":                 cvisb:name

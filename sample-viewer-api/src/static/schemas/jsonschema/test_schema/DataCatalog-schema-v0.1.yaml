@@ -46,6 +46,7 @@
     "@id":                 schema:name
   owl:cardinality:         one
   marginality:             required
+  authenticated:           false
 
 - "@id":                   cvisb:alternateName
   "@type":                 rdf:Property
@@ -60,6 +61,7 @@
     "@id":                 schema:alternateName
   owl:cardinality:         many
   marginality:             optional
+  authenticated:           false
 
 # description
 - "@id":                   cvisb:description
@@ -75,6 +77,7 @@
     "@id":                 schema:description
   owl:cardinality:         one
   marginality:             required
+  authenticated:           false
 
 # URL
 - "@id":                   cvisb:url
@@ -89,11 +92,27 @@
     "@id":                 schema:url
   owl:cardinality:         one
   marginality:             optional
+  authenticated:           false
+
+# DOI
+- "@id":                   cvisb:dataset
+  "@type":                 rdf:Property
+  rdfs:comment:            list of unique internal identifiers for the datasets associated with the DataCatalog
+  rdfs:label:              dataset
+  schema:domainIncludes:
+    - "@id":               cvisb:DataCatalog
+  schema:rangeIncludes:
+    "@id":                 xsd:string
+  schema:sameAs:
+    "@id":                 schema:dataset
+  owl:cardinality:         many
+  marginality:             required
+  authenticated:           false
 
 # DOI
 - "@id":                   cvisb:identifier
   "@type":                 rdf:Property
-  rdfs:comment:            A unique identifier for the DataCatalog (e.g. a DOI)
+  rdfs:comment:            "A unique identifier for the DataCatalog. Note: should be an internal, CViSB identifier; DOIs should go in @id"
   rdfs:label:              identifier
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
@@ -101,8 +120,25 @@
     "@id":                 xsd:string
   schema:sameAs:
     "@id":                 schema:identifier
-  owl:cardinality:         multiple
+  owl:cardinality:         one
   marginality:             recommended
+  authenticated:           false
+
+
+
+- "@id":                 cvisb:@id
+  "@type":               rdf:Property
+  rdfs:comment:          A unique identifier for the DataCatalog, preferably a DOI
+  rdfs:label:            "@id"
+  schema:domainIncludes:
+    - "@id":             cvisb:DataCatalog
+  schema:rangeIncludes:
+    "@id":               schema:URL
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # duplicate location
 - "@id":                   cvisb:sameAs
@@ -115,8 +151,9 @@
     "@id":                 schema:URL
   schema:sameAs:
     "@id":                 schema:sameAs
-  owl:cardinality:         multiple
+  owl:cardinality:         many
   marginality:             optional
+  authenticated:           false
 
 # keywords
 - "@id":                   cvisb:keywords
@@ -129,8 +166,9 @@
     "@id":                 xsd:string
   schema:sameAs:
     "@id":                 schema:keywords
-  owl:cardinality:         multiple
+  owl:cardinality:         many
   marginality:             recommended
+  authenticated:           false
 
 # dates
 - "@id":                   cvisb:datePublished
@@ -145,6 +183,8 @@
     "@id":                 "schema:datePublished"
   owl:cardinality:         one
   marginality:             recommended
+  authenticated:           false
+
 
 - "@id":                   cvisb:dateModified
   "@type":                 rdf:Property
@@ -158,6 +198,8 @@
     "@id":                 "schema:dateModified"
   owl:cardinality:         one
   marginality:             required
+  authenticated:           false
+
 
 - "@id":                   cvisb:temporalCoverage
   "@type":                 rdf:Property
@@ -166,11 +208,12 @@
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
   schema:rangeIncludes:
-    "@id":                 schema:Date
+    "@id":                 cvisb:DateRange
   schema:sameAs:
     "@id":                 "schema:temporalCoverage"
   owl:cardinality:         one
   marginality:             recommended
+  authenticated:           false
 
   # geo
 - "@id":                   cvisb:spatialCoverage
@@ -180,11 +223,12 @@
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
   schema:rangeIncludes:
-    "@id":                 cvisb:Place
+    "@id":                 cvisb:Country
   schema:sameAs:
     "@id":                 "schema:spatialCoverage"
   owl:cardinality:         many
   marginality:             recommended
+  authenticated:           false
 
 
 - "@id":                   cvisb:publisher
@@ -197,22 +241,24 @@
     - "@id":               "cvisb:Organization"
   schema:sameAs:
     "@id":                 "schema:publisher"
-  owl:cardinality:         multiple
+  owl:cardinality:         many
   marginality:             recommended
+  authenticated:           false
 
   # versions
-- "@id":                   cvisb:version
+- "@id":                   cvisb:_version
   "@type":                 rdf:Property
-  rdfs:comment:            Version of DataCatalog
-  rdfs:label:              version
+  rdfs:comment:            "Version of DataCatalog, auto-assigned by CViSB database"
+  rdfs:label:              _version
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
   schema:rangeIncludes:
-    - "@id":               schema:Text
+    - "@id":               schema:Number
   schema:sameAs:
     "@id":                 schema:version
   owl:cardinality:         one
-  marginality:             required
+  marginality:             recommended
+  authenticated:           false
 
 - "@id":                   cvisb:schemaVersion
   "@type":                 rdf:Property
@@ -226,18 +272,20 @@
     "@id":                 schema:schemaVersion
   owl:cardinality:         one
   marginality:             recommended
+  authenticated:           false
 
 
   # Funder. For CViSB:     NIH award U19AI135995
-- "@id":                   cvisb:funder
-  "@type":                 rdf:Property
-  rdfs:comment:            A person or organization that supports (sponsors) the collection of this dataset through some kind of financial contribution
-  rdfs:label:              funder
+- "@id":                 cvisb:funder
+  "@type":               rdf:Property
+  rdfs:comment:          A person or organization that supports (sponsors) the collection of this dataset through some kind of financial contribution
+  rdfs:label:            funder
   schema:domainIncludes:
-    - "@id":               cvisb:DataCatalog
+    - "@id":             cvisb:DataCatalog
   schema:rangeIncludes:
-    - "@id":               cvisb:Organization
+    - "@id":             cvisb:Organization
   schema:sameAs:
-    "@id":                 schema:funder
-  owl:cardinality:         many
-  marginality:             recommended
+    "@id":               schema:funder
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false

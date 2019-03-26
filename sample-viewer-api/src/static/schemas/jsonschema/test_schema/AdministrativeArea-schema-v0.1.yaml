@@ -19,7 +19,7 @@
 #
 # "@id":                 "http://schema.cvisb.org/AdministrativeArea/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:AdministrativeArea
   "@type":               rdfs:Class
   rdfs:comment:          "A schema describing a geographic AdministrativeArea in the Center for Viral Systems Biology. Used typically to specify province, district, village, etc. for regions of a Country. Note that for Administrative Unit 0 `Country` should be used instead"

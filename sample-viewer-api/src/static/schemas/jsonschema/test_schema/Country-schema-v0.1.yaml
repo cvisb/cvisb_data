@@ -19,7 +19,7 @@
 #
 # "@id":                 "http://schema.cvisb.org/Country/0.1"
 
-"@graph":
+# "@graph":
 - "@id":                 cvisb:Country
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing a Country in the Center for Viral Systems Biology experiments
