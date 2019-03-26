@@ -12,6 +12,11 @@ class ESQueryBuilder(ESQueryBuilder):
     def get_query_filters(self):
         return self._get_query_filters() + self.join_filter
 
+    def add_extra_filters(self, q):
+        if 'query' not in q:
+            return {'query': q}
+        return q
+
     def _query_GET_query(self, q):
         # override to add new things to biothings
         if ((not self.options.cvisb_user) or 
@@ -43,9 +48,24 @@ class ESQueryBuilder(ESQueryBuilder):
                                     {"terms": {"patientID.keyword": self.options.patientID}}
                                 ]}
                             }, "_source": ["associatedSamples"]
-                    }, index=self.options.cvisb_endpoints["sample"]['index'], doc_type="sample")]))
+                    }, index=self.options.cvisb_endpoints["sample"]['index'], doc_type="sample") if '_source' in x and 'associatedSamples' in x['_source']]))
                     logging.debug("_associatedSamples: {}".format(_associatedSamples))
                     self.join_filter = [{
                         "terms": {"sampleID.keyword": _associatedSamples}
+                    }]
+                elif self.options.entity == 'patient':
+                    _patients = list(set(
+                        [x['_source']['patientID'] for x in scan(client=self.options.client, query = {
+                        "query":
+                            {"bool":
+                                {"should": [
+                                    {"terms": {"alternateIdentifier.keyword": self.options.patientID}},
+                                    {"terms": {"patientID.keyword": self.options.patientID}}
+                                ]}
+                            }, "_source": ["patientID"]
+                        }, index=self.options.cvisb_endpoints["patient"]["index"], doc_type="patient") if '_source' in x and 'patientID' in x['_source']]))
+                    logging.debug("_patients: {}".format(_patients))
+                    self.join_filter = [{
+                        "terms": {"patientID.keyword": _patients}
                     }]
         return super(ESQueryBuilder, self)._query_GET_query(q)
