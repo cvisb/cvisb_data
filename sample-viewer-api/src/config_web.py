@@ -78,6 +78,7 @@ UNINITIALIZED_APP_LIST = [
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
 
 QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['facet_size']['max'] = 10000
 QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
