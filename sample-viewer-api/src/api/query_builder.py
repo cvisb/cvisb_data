@@ -1,6 +1,21 @@
 from biothings.web.api.es.query_builder import ESQueryBuilder
 from elasticsearch.helpers import scan
+from copy import copy
 import logging
+
+
+def get_all_hits(_index, _query, _client, _field, _doc_type):
+    #this_query = copy(_query)
+    _query['_source'] = [_field]
+    _ret = []
+    for x in scan(client=_client, query=_query, index=_index, doc_type=_doc_type):
+        if '_source' in x and _field in x['_source']:
+            if isinstance(x['_source'][_field], list) or isinstance(x['_source'][_field], tuple):
+                for _x in x['_source'][_field]:
+                    _ret.append(_x)
+            else:
+                _ret.append(x['_source'][_field])
+    return list(set(_ret))
 
 class ESQueryBuilder(ESQueryBuilder):
     # Implement app specific queries here
@@ -16,6 +31,36 @@ class ESQueryBuilder(ESQueryBuilder):
         if 'query' not in q:
             return {'query': q}
         return q
+
+    def do_cvisb_patient_joins(self, stage_one_query):
+        ''' takes a stange_one_query that filters patient objects, and does the join between patient and patient, patient and sample, and patient and dataset '''
+        if self.options.entity == 'sample':
+            # get all patients, either by patientID or alternativeID
+            _associatedSamples = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient', _client=self.options.client, _field='associatedSamples',
+                _query=stage_one_query)
+            logging.debug("_associatedSamples: {}".format(_associatedSamples))
+            self.join_filter = [{
+                "terms": {"sampleID.keyword": _associatedSamples}
+            }]
+        elif self.options.entity == 'patient':
+            _patients = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient', _client=self.options.client, _field='patientID',
+                _query=stage_one_query)
+            logging.debug("_patients: {}".format(_patients))
+            self.join_filter = [{
+                "terms": {"patientID.keyword": _patients}
+            }]
+        elif self.options.entity == 'dataset':
+            _patients = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient', _client=self.options.client, _field='patientID',
+                _query=stage_one_query)
+            logging.debug("_patients: {}".format(_patients))
+            _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], doc_type='datadownload', _client=self.options.client, _field='identifier',
+                _query={"query": {
+                        "terms": {"patientIDs.keyword": _patients}
+                        }})
+            logging.debug("_datadownloads: {}".format(_datadownloads))
+            self.join_filter = [{
+                "terms": {"dataDownloadIDs.keyword": _datadownloads}
+            }]
 
     def _query_GET_query(self, q):
         # override to add new things to biothings
@@ -37,35 +82,96 @@ class ESQueryBuilder(ESQueryBuilder):
         if self.options.cvisb_user and self.options.cvisb_user['email'] in self.options.cvisb_user_list:
             # check joined queries
             if self.options.patientID:
+                self.do_cvisb_patient_joins({
+                    "query": {
+                        "bool": {
+                            "should": [
+                                {"terms": {"alternateIdentifier.keyword": self.options.patientID}},
+                                {"terms": {"patientID.keyword": self.options.patientID}}
+                            ]
+                        }
+                    }
+                })
+            elif self.options.cohort:
+                self.do_cvisb_patient_joins({
+                    "query": {
+                        "terms": {"cohort.keyword": self.options.cohort}
+                    }
+                })
+            elif self.options.outcome:
+                self.do_cvisb_patient_joins({
+                    "query": {
+                        "terms": {"outcome.keyword": self.options.outcome}
+                    }
+                })
+            elif self.options.country:
+                self.do_cvisb_patient_joins({
+                    "query": {
+                        "terms": {"country.name.keyword": self.options.country}
+                    }
+                })
+            elif self.options.relatedTo:
+                stage_one_query = {
+                    "query": {
+                        "bool": {
+                            "should": [
+                                {"terms": {"alternateIdentifier.keyword": self.options.relatedTo}},
+                                {"terms": {"patientID.keyword": self.options.relatedTo}}
+                            ]
+                        }
+                    }
+                }
                 if self.options.entity == 'sample':
-                    # get all patients, either by patientID or alternativeID
-                    _associatedSamples = list(set(
-                        [x['_source']['associatedSamples'] for x in scan(client=self.options.client, query={
-                        "query": 
-                            {"bool":
-                                {"should": [
-                                    {"terms": {"alternateIdentifier.keyword": self.options.patientID}}, 
-                                    {"terms": {"patientID.keyword": self.options.patientID}}
-                                ]}
-                            }, "_source": ["associatedSamples"]
-                    }, index=self.options.cvisb_endpoints["sample"]['index'], doc_type="sample") if '_source' in x and 'associatedSamples' in x['_source']]))
-                    logging.debug("_associatedSamples: {}".format(_associatedSamples))
-                    self.join_filter = [{
-                        "terms": {"sampleID.keyword": _associatedSamples}
-                    }]
-                elif self.options.entity == 'patient':
-                    _patients = list(set(
-                        [x['_source']['patientID'] for x in scan(client=self.options.client, query = {
-                        "query":
-                            {"bool":
-                                {"should": [
-                                    {"terms": {"alternateIdentifier.keyword": self.options.patientID}},
-                                    {"terms": {"patientID.keyword": self.options.patientID}}
-                                ]}
-                            }, "_source": ["patientID"]
-                        }, index=self.options.cvisb_endpoints["patient"]["index"], doc_type="patient") if '_source' in x and 'patientID' in x['_source']]))
+                    _patients = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient', _client=self.options.client, _field='relatedTo',
+                        _query=stage_one_query)
                     logging.debug("_patients: {}".format(_patients))
                     self.join_filter = [{
                         "terms": {"patientID.keyword": _patients}
+                    }]
+                elif self.options.entity == 'patient':
+                    _patients = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient', _client=self.options.client, _field='relatedTo',
+                        _query=stage_one_query)
+                    logging.debug("_patients: {}".format(_patients))
+                    self.join_filter = [{
+                        "terms": {"patientID.keyword": _patients}
+                    }]
+                elif self.options.entity == 'dataset':
+                    _patients = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], doc_type='patient', _client=self.options.client, 
+                        _field='relatedTo', _query=stage_one_query)
+                    logging.debug("_patients: {}".format(_patients))
+                    _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], doc_type='datadownload', _client=self.options.client, _field='identifier',
+                        _query={"query": {
+                            "terms": {"patientIDs.keyword": _patients}
+                        }})
+                    logging.debug("_datadownloads: {}".format(_datadownloads))
+                    self.join_filter = [{
+                        "terms": {"dataDownloadIDs.keyword": _datadownloads}
+                    }]
+            elif self.options.availableData:
+                stage_one_query = {
+                    "query": {
+                        "terms": {"measurementTechnique.keyword": self.options.availableData}
+                    }
+                }
+                if self.options.entity == 'sample':
+                    _patients = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], _doc_type='datadownload', _client=self.options.client, _field='patientIDs',
+                        _query=stage_one_query)
+                    logging.debug("_patients: {}".format(_patients))
+                    self.join_filter = [{
+                        "terms": {"patientID.keyword": _patients}
+                    }]
+                elif self.options.entity == 'patient':
+                    _patients = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], _doc_type='datadownload', _client=self.options.client, _field='patientIDs',
+                        _query=stage_one_query)
+                    logging.debug("_patients: {}".format(_patients))
+                    self.join_filter = [{
+                        "terms": {"patientID.keyword": _patients}
+                    }]
+                elif self.options.entity == 'dataset':
+                    _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], doc_type='datadownload', _client=self.options.client, 
+                        _field='identifier', _query=stage_one_query)
+                    logging.debug("_datadownloads: {}".format(_datadownloads))
+                    self.join_filter = [{
+                        "terms": {"dataDownloadIDs.keyword": _datadownloads}
                     }]
         return super(ESQueryBuilder, self)._query_GET_query(q)
