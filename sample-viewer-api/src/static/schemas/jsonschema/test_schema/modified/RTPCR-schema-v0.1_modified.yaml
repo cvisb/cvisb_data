@@ -29,6 +29,7 @@
     type: object
 - '@id': cvisb:virus
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Virus tested in RT-PCR (Ebola or Lassa)
@@ -42,6 +43,7 @@
   - '@id': schema:Text
 - '@id': cvisb:RTPCRresult
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Result of RT-PCR, either positive/negative/indeterminate
@@ -56,6 +58,7 @@
   - '@id': schema:Text
 - '@id': cvisb:RTPCRvalue
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Result of RT-PCR, Ct value

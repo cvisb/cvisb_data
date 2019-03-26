@@ -50,6 +50,7 @@
                         - NKD-CD107a
                         - NKD-IFNg
                         - NKD-MIP-1b
+  authenticated:         false
 
 - "@id":                 cvisb:assayReadout
   "@type":               rdf:Property
@@ -65,6 +66,7 @@
   schema:Enumeration:
                         - phagocytic score
                         - C3 deposition MFI
+  authenticated:         false
 
 - "@id":                 cvisb:sampleDilution
   "@type":               rdf:Property
@@ -77,6 +79,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:assayResult
   "@type":               rdf:Property
@@ -89,3 +92,4 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
