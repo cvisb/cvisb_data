@@ -42,6 +42,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # batch id
 - "@id":                 cvisb:batchID
@@ -55,6 +56,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # name
 - "@id":                 cvisb:name
@@ -70,6 +72,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # description
 - "@id":                 cvisb:description
@@ -85,6 +88,7 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # date
 - "@id":                 cvisb:experimentDate
@@ -94,9 +98,11 @@
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             schema:DateTime
+    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
@@ -112,6 +118,37 @@
     "@id":               schema:measurementTechnique
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
+
+# when updated
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date of last update (YYYY-MM-DD)
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+  # versions
+- "@id":                 cvisb:_version
+  "@type":               rdf:Property
+  rdfs:comment:          Version number of experiment, auto-assigned by CViSB database
+  rdfs:label:            _version
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # Code location
 - "@id":                 cvisb:analysisCode
@@ -124,11 +161,12 @@
     - "@id":             cvisb:SoftwareSourceCode
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # sample IDs
 - "@id":                 cvisb:sampleIDs
   "@type":               rdf:Property
-  rdfs:comment:          List of Samples used in the experiment
+  rdfs:comment:          List of public Samples used in the experiment
   rdfs:label:            sampleIDs
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
@@ -137,6 +175,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           required
+  authenticated:         false
 
 # patient ID list
 - "@id":                 cvisb:patientIDs
@@ -150,3 +189,4 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false

@@ -23,6 +23,7 @@
     type: object
 - '@id': cvisb:sequencingTechnology
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Sequencing Technology (e.g. Illumina)
@@ -34,6 +35,7 @@
   - '@id': schema:Text
 - '@id': cvisb:sequencingPlatform
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Sequencing Platform (e.g. MiSeq)
@@ -45,6 +47,7 @@
   - '@id': schema:Text
 - '@id': cvisb:instrumentID
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Sequencing instrument ID
@@ -56,6 +59,7 @@
   - '@id': schema:Text
 - '@id': cvisb:sequencingCenter
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Sequencing Center (e.g. TSRI, Broad)
@@ -67,6 +71,7 @@
   - '@id': schema:Text
 - '@id': cvisb:readLength
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: read length

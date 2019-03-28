@@ -1,4 +1,3 @@
-'@graph':
 - '@id': cvisb:ELISA
   '@type': rdfs:Class
   rdfs:comment: A schema describing an ELISA result for a Patient in the Center for
@@ -25,6 +24,10 @@
         - IgM
         - Ag
         type: string
+      sampleID:
+        type: string
+      timepoint:
+        type: string
       virus:
         enum:
         - Ebola
@@ -37,6 +40,7 @@
     type: object
 - '@id': cvisb:virus
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Virus tested in ELISA (Ebola or Lassa)
@@ -50,6 +54,7 @@
   - '@id': schema:Text
 - '@id': cvisb:assayType
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: 'Type of ELISA: IgG, IgM, or Ag'
@@ -64,6 +69,7 @@
   - '@id': schema:Text
 - '@id': cvisb:ELISAresult
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: one
   rdfs:comment: Result of ELISA, either positive/negative/indeterminate
@@ -78,6 +84,7 @@
   - '@id': schema:Text
 - '@id': cvisb:ELISAvalue
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Result of ELISA, as a quantitative calibrated value
@@ -86,3 +93,26 @@
   - '@id': cvisb:ELISA
   schema:rangeIncludes:
   - '@id': schema:Number
+- '@id': cvisb:sampleID
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: sampleID associated with the ELISA measurement
+  rdfs:label: sampleID
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:timepoint
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: description of the time at which the ELISA was taken, e.g. at patient
+    presentation, survivor enrollment etc.
+  rdfs:label: timepoint
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text

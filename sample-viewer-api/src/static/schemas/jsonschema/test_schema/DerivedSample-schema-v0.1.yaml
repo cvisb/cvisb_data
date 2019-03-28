@@ -67,7 +67,8 @@
                             - "tissue"
                             - "plasma"
                             - "serum"
-                            - "buffy coat"
+                            - "plasma_or_serum"
+                            - "buffy_coat"
                             - "PBMC"
                             - "frozenPBMC-DNA"
                             - "frozenPBMC-RNA"
@@ -84,5 +85,6 @@
     - "@id":                 cvisb:DerivedSample
   schema:rangeIncludes:
     - "@id":                 schema:Date
+    - "@id":                 cvisb:DateRange
   owl:cardinality:           one
   marginality:               recommended

@@ -2,7 +2,7 @@
   '@type': rdfs:Class
   rdfs:comment: A schema describing a repertoire sequencing Experiment in the Center
     for Viral Systems Biology
-  rdfs:label: sequencingExperiment
+  rdfs:label: RepertoireSequencing
   rdfs:subClassOf:
     '@id': cvisb:sequencingExperiment
   schema:isPartOf:
@@ -23,6 +23,7 @@
     type: object
 - '@id': cvisb:primerSet
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Primer set
@@ -34,6 +35,7 @@
   - '@id': schema:Text
 - '@id': cvisb:analysisVersion
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Analysis pipeline version
@@ -45,6 +47,7 @@
   - '@id': schema:Text
 - '@id': cvisb:abstarVersion
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Abstar Version
@@ -56,6 +59,7 @@
   - '@id': schema:Text
 - '@id': cvisb:germlineDatabase
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: germline database name or URL
@@ -67,6 +71,7 @@
   - '@id': schema:Text
 - '@id': cvisb:germlineDBVersion
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Germline database version

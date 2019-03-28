@@ -49,6 +49,7 @@
     type: object
 - '@id': cvisb:assayType
   '@type': rdf:Property
+  authenticated: false
   marginality: required
   owl:cardinality: many
   rdfs:comment: 'Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, NKD-CD107a,
@@ -68,6 +69,7 @@
   - '@id': schema:Text
 - '@id': cvisb:assayReadout
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: many
   rdfs:comment: Type of assay readout, such as phagocytic score, C3 deposition MFI
@@ -82,6 +84,7 @@
   - '@id': schema:Text
 - '@id': cvisb:sampleDilution
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: many
   rdfs:comment: Dilution of sample
@@ -93,6 +96,7 @@
   - '@id': schema:Text
 - '@id': cvisb:assayResult
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: many
   rdfs:comment: Assay result

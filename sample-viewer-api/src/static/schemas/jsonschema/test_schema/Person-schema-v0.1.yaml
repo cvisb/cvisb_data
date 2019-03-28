@@ -19,7 +19,7 @@
 #
 # "@id":                   "http://schema.cvisb.org/Person/0.1"
 
-"@graph":
+# "@graph":
 # PERSON Class-- just the essentials
 - "@id":                 cvisb:Person
   "@type":               rdfs:Class

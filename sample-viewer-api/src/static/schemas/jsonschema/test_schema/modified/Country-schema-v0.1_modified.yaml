@@ -1,4 +1,3 @@
-'@graph':
 - '@id': cvisb:Country
   '@type': rdfs:Class
   rdfs:comment: A schema describing a Country in the Center for Viral Systems Biology
