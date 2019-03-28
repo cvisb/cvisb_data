@@ -254,7 +254,7 @@ export class AlleleCirclePackingComponent implements OnInit {
       .attr("x", this.width)
       .attr("y", 40)
       .attr("dy", "1.2em")
-      .text("number of unique allele per locus");
+      .text("number of unique alleles per locus");
 
 
     svg.select("g")
@@ -271,7 +271,7 @@ export class AlleleCirclePackingComponent implements OnInit {
       .append("tspan")
       .attr("x", this.width)
       .attr("y", 40)
-      .text("number of unique allele per locus");
+      .text("number of unique alleles per locus");
 
     svg.select("g")
       .append("text")
