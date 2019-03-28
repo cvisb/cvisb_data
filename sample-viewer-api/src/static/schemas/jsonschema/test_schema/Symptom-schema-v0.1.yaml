@@ -1,0 +1,162 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                   "http://purl.org/dc/terms/"
+#   owl:                   "http://www.w3.org/2002/07/owl#"
+#   rdf:                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                  "http://www.w3.org/ns/rdfa#"
+#   rdfs:                  "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:                "http://schema.org/"
+#   health:                "https://health-lifesci.schema.org/"
+#   xsd:                   "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:                 "http://bioschemas.org/"
+#   # bts:                 "http://schema.biothings.io/"
+#   cvisb:                 "http://schema.cvisb.org/"
+#
+# "@id":                   "http://schema.cvisb.org/Symptom/0.1"
+
+# "@graph":
+- "@id":                 cvisb:Symptom
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing an Symptom for a Patient in the Center for Viral Systems Biology experiments
+  rdfs:label:            Symptom
+  rdfs:subClassOf:
+    "@id":               schema:Thing
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+- "@id":                 cvisb:joint_pain
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced joint pain.
+  rdfs:label:            joint_pain
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:muscle_pain
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced muscle pain.
+  rdfs:label:            muscle_pain
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:hearing_loss
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced hearing loss
+  rdfs:label:            hearing_loss
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:ringing_in_ears
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced ringing in ears
+  rdfs:label:            ringing_in_ears
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:dry_eyes
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced dry eyes
+  rdfs:label:            dry_eyes
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:burning_eyes
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced burning in eyes
+  rdfs:label:            burning_eyes
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:vision_loss
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced vision loss
+  rdfs:label:            vision_loss
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:blurry_vision
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced blurry vision
+  rdfs:label:            blurry_vision
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:light_sensitivity
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced light sensitivity
+  rdfs:label:            light_sensitivity
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:eye_pain
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced eye pain
+  rdfs:label:            eye_pain
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:eye_foreign_body_sensation
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient experienced sensation of a foreign body in his/her eye(s)
+  rdfs:label:            eye_foreign_body_sensation
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false

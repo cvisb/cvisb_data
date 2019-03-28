@@ -29,70 +29,12 @@
     "@id":               health:Patient
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-  validation:
-    required:
-      - patientID
-      - cohort
-      - outcome
-      - country
-    patientID:
-      type:              string
-      default:           true
-    alternateIdentifier:
-      type:              array
-      minItems:          0
-      default:           true
-    cohort:
-      type:              string
-      enum:
-        - Ebola
-        - Lassa
-        - control
-    outcome:
-      type:              string
-      enum:
-        - control
-        - survivor
-        - contact
-        - dead
-        - unknown
-    country:
-      type:              string
-      enum:
-        - SL
-        - NG
-        - unknown
-    homeLocation:
-      type:              string
-    admitDate:
-      type:              date
-    infectionDate:
-      type:              date
-    daysOnset:
-      type:              integer
-    deathDate:
-      type:              date
-    gender:
-      type:              string
-      enum:
-        - Male
-        - Female
-        - Unknown
-    relatedTo:
-      type:              array
-    age:
-      type:              integer
-      minimum:           1
-      maximum:           100
-    associatedSamples:
-      type:              array
-      minItems:          0
 
 
 # identifier
 - "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          Unique ID for patient (G-number, S-number, or C-number)
+  rdfs:comment:          Unique, public ID for patient
   rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -102,11 +44,12 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # alternate identifier
 - "@id":                 cvisb:alternateIdentifier
   "@type":               rdf:Property
-  rdfs:comment:          Alternative ID used for patient
+  rdfs:comment:          Alternative ID(s) used for patient (including G-number, S-number, or C-numbers, available to consortia members only)
   rdfs:label:            alternateIdentifier
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -114,6 +57,66 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         true
+
+# sameAs: handle into the public alternate identifier(s) that also represent the patient.
+# Used to connect S- and G-numbers together.
+- "@id":                 cvisb:sameAs
+  "@type":               rdf:Property
+  rdfs:comment:          Alternative public ID(s) used for patient. Used to relate acute patients (G-numbers) to their ID in survivor study
+  rdfs:label:            sameAs
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               "schema:sameAs"
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         false
+
+# household identifier
+- "@id":                 cvisb:contactGroupIdentifier
+  "@type":               rdf:Property
+  rdfs:comment:          ID group for patient and associated contacts
+  rdfs:label:            contactGroupIdentifier
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+# date modified
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date on which the Patient metadata was most recently modified
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    "@id":               schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+  # versions
+- "@id":                 cvisb:_version
+  "@type":               rdf:Property
+  rdfs:comment:          Version number of patient, auto-assigned by CViSB database
+  rdfs:label:            _version
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # Main cohort
 - "@id":                 cvisb:cohort
@@ -130,6 +133,7 @@
                          - Ebola
                          - Lassa
                          - control
+  authenticated:         false
 
 # Outcome cohort
 - "@id":                 cvisb:outcome
@@ -148,6 +152,7 @@
                          - contact
                          - dead
                          - unknown
+  authenticated:         false
 
 # geographic location (country)
 - "@id":                 cvisb:country
@@ -162,6 +167,7 @@
     "@id":               schema:geographicArea
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # household location
 - "@id":                 cvisb:homeLocation
@@ -172,11 +178,11 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
-    - "@id":             cvisb:Place
   schema:sameAs:
     "@id":               schema:homeLocation
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         true
 
 # date of admission
 - "@id":                 cvisb:admitDate
@@ -187,20 +193,37 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Date
+    - "@id":             cvsib:DateRange
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         true
+
+# Approximate year of infection
+- "@id":                 cvisb:infectionYear
+  "@type":               rdf:Property
+  rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
+  rdfs:label:            infectionDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:DateRange
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
 
 # Approximate date of infection
 - "@id":                 cvisb:infectionDate
   "@type":               rdf:Property
-  rdfs:comment:          Approximate date (year) of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
+  rdfs:comment:          Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
   rdfs:label:            infectionDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         true
 
 # time from onset of symptoms
 - "@id":                 cvisb:daysOnset
@@ -213,20 +236,8 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
-# death
-- "@id":                 cvisb:deathDate
-  "@type":               rdf:Property
-  rdfs:comment:          Date of death
-  rdfs:label:            deathDate
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             schema:Date
-  schema:sameAs:
-    "@id":               schema:deathDate
-  owl:cardinality:       one
-  marginality:           optional
 
 # gender
 - "@id":                 cvisb:gender
@@ -245,11 +256,12 @@
                          - Male
                          - Female
                          - Unknown
+  authenticated:         false
 
 # contacts:
 - "@id":                 cvisb:relatedTo
   "@type":               rdf:Property
-  rdfs:comment:          A list of related household contacts's patientIDs
+  rdfs:comment:          A list of related household contacts's public patientIDs
   rdfs:label:            relatedTo
   schema:domainIncludes:
     - "@id":             schema:Text
@@ -257,6 +269,31 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:exposureType
+  "@type":               rdf:Property
+  rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.
+  rdfs:label:            exposureType
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:contactSurvivorRelationship
+  "@type":               rdf:Property
+  rdfs:comment:          For contacts, how they are related to the infected person.
+  rdfs:label:            contactSurvivorRelationship
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
 
 # age
 - "@id":                 cvisb:age
@@ -271,6 +308,7 @@
   marginality:           recommended
   minimum:               1
   maximum:               100
+  authenticated:         false
 
 
 # sample IDs
@@ -285,8 +323,9 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
-  # Merged data: availableData
+  # Merged data:         availableData
 - "@id":                 cvisb:availableData
   "@type":               rdf:Property
   rdfs:comment:          List of available data and results (where known) for the patient
@@ -297,6 +336,7 @@
     - "@id":             cvisb:ExperimentData
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # ELISAs
 - "@id":                 cvisb:elisa
@@ -309,6 +349,7 @@
     - "@id":             cvisb:ELISA
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # RDT:                   rapid diagnostic tests
 - "@id":                 cvisb:rapidDiagostics
@@ -321,6 +362,7 @@
     - "@id":             cvisb:RDT
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # RT-PCR
 - "@id":                 cvisb:rtpcr
@@ -333,3 +375,17 @@
     - "@id":             cvisb:RTPCR
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
+
+# Symptoms
+- "@id":                 cvisb:symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          List of symptoms for the patient
+  rdfs:label:            symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:SymptomList
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false

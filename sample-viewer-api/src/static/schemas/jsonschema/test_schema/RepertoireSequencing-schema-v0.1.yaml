@@ -24,7 +24,7 @@
 - "@id":                 cvisb:RepertoireSequencing
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology
-  rdfs:label:            sequencingExperiment
+  rdfs:label:            RepertoireSequencing
   rdfs:subClassOf:
     "@id":               cvisb:sequencingExperiment
   schema:isPartOf:
@@ -41,6 +41,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:analysisVersion
   "@type":               rdf:Property
@@ -54,6 +55,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:abstarVersion
   "@type":               rdf:Property
@@ -67,6 +69,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:germlineDatabase
   "@type":               rdf:Property
@@ -80,6 +83,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:germlineDBVersion
   "@type":               rdf:Property
@@ -92,3 +96,4 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

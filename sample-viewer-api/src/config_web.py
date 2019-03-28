@@ -47,17 +47,6 @@ CVISB_ENDPOINTS = {
     }
 }
 
-# join stuff
-CVISB_JOIN_MAP = {
-    "sample": {
-        "patientID":{
-            "target_index": CVISB_ENDPOINTS["patient"]["index"],
-            "target_field": "associatedSamples",
-            "source_field": "_id"
-        }
-    }
-}
-                
 # *****************************************************************************
 # App URL Patterns
 # *****************************************************************************
@@ -78,6 +67,12 @@ UNINITIALIZED_APP_LIST = [
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
 
 QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['relatedTo'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['outcome'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['cohort'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['availableData'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['country'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['facet_size']['max'] = 10000
 QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}

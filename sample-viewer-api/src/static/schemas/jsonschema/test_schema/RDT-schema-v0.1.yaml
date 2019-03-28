@@ -44,7 +44,7 @@
   schema:Enumeration:
                           - Ebola
                           - Lassa
-
+  authenticated:         false
 
 - "@id":                 cvisb:RDTresult
   "@type":               rdf:Property
@@ -60,3 +60,4 @@
                          - positive
                          - negative
                          - indeterminate
+  authenticated:         false
