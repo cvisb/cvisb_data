@@ -249,22 +249,21 @@ def findID(row, includeAssumptions=False):
 
 def interpretID(id):
     id = str(id)
-    print(id)
     # Interpret ID based on regex patterns
-    # Assuming C1-496-2 == C[visit number]-[id number]-[household number]
+    # Assuming C1-xxx-2 == C[visit number]-[id number]-[household number]
     # Therefore deleting the visit code
     weirdC = re.match("^(C)([0-9])(\-[0-9][0-9][0-9]\-[0-9])$", id)
     if weirdC:
         return(weirdC[1] + weirdC[3])
-    # S-timepoint: assuming S-108-3 == S-108 at visit 3.
+    # S-timepoint: assuming S-xxx-3 == S-xxx at visit 3.
     sTimepoint = re.match("^(S)(\-[0-9][0-9][0-9])\-([0-9])$", id)
     if sTimepoint:
         return(sTimepoint[1] + sTimepoint[2])
-    # 4-digit SID: S-0021-3 --> S-021 at visit 3
+    # 3-digit SID: S-xxx-3 --> S-xxx at visit 3
     sTimepoint2 = re.match("^(S\-)0([0-9][0-9][0-9])\-([0-9])$", id)
     if sTimepoint2:
         return(sTimepoint2[1] + sTimepoint2[2])
-    # S-timepoint in diff format: assuming S2-183 == S-183 at visit 2
+    # S-timepoint in diff format: assuming S2-xxx == S-xxx at visit 2
     weirdS = re.match("^(S)([0-9])(\-[0-9][0-9][0-9])$", id)
     if weirdS:
         return(weirdS[1] + weirdS[3])
