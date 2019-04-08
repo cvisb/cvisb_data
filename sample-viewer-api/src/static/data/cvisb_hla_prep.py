@@ -14,7 +14,7 @@ export_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer/src/assets/dat
 # Import HLA dataset
 df = pd.read_csv(import_path)
 
-df.head()
+# df.head()
 
 
 # rename columns
@@ -50,6 +50,10 @@ def interpretID(id):
     gID = re.match("^(G)([0-9][0-9][0-9][0-9])$", id)
     if gID:
         return(gID[1] + "-" + gID[2])
+    # Verified with Karthik that 1951 is G-1951 (1 April 2019)
+    g1951 = re.match("^1951$", id)
+    if g1951:
+        return("G-" + gID[1])
     goodS = re.match("^(S)\-([0-9][0-9][0-9])$", id)
     if goodS:
         return(goodS[1] + "-" + goodS[2])
@@ -88,6 +92,15 @@ df['patientID'] = df.privateID.apply(getPublicID)
 df[['ID', 'alternateIdentifier', 'privateID', 'patientID']]
 df[(df.cohort == "Ebola") & (df.outcome == 'survivor')][['ID', 'alternateIdentifier', 'privateID', 'patientID']]
 
+df.patientID.value_counts()
+
+# Two IDs have exactly the same HLA call...
+df[df.duplicated(keep=False,subset=["A", "A.1", "B", "B.1", "C", "C.1", "DPA1","DRB4","DRB4.1", "DRB5", "DRB5.1", "DPA1.1", "DPB1", "DPB1.1", "DQA1", "DQA1.1", "DQB1", "DQB1.1", "DRB1", "DRB1.1", "DRB3", "DRB3.1"])]
+
+
+
+columns
+
 df.drop(['ID', 'alternateIdentifier', 'privateID'], axis=1, inplace=True)
 
 
@@ -112,8 +125,7 @@ df_long.allele.replace(r'\-', pd.np.nan, regex=True, inplace= True)
 # From 2019-01-09 calls: 1095 '-' + 213 NaNs.
 df_long.allele.value_counts(dropna=False)
 
-
-
+df[~df.patientID.str.contains("^id")].patientID.to_csv("hla_publicids.csv", index=False)
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 df_long.to_json(export_path, orient='records')

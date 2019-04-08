@@ -123,17 +123,17 @@ def cleanDistrict(district):
     if (district == district):
         # Clean up Western Area; assuming the Urban part of the district, since everyone is within Freetown.
         if (district.lower() == "western area"):
-            return({
+            return([{
             'administrativeType': 'district',
             'administrativeUnit': 2,
             'name': "Western Area Urban"
-            }
+            }]
             )
-        return({
+        return([{
         'administrativeType': 'district',
         'administrativeUnit': 2,
         'name': district.title()
-        })
+        }])
 
 def cleanName(district):
     if (district == district):
