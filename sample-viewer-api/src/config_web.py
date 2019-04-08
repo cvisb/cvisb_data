@@ -64,6 +64,8 @@ UNINITIALIZED_APP_LIST = [
     (r"/logout", LogoutHandler),
 ]
 
+ALLOW_NESTED_AGGS = True
+
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
 
 QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
