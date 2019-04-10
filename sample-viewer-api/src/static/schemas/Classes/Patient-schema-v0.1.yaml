@@ -59,6 +59,30 @@
   marginality:           optional
   authenticated:         true
 
+- "@id":                 cvisb:gID
+  "@type":               rdf:Property
+  rdfs:comment:          "Internal G-number used to refer to the patients when they're in the acute treatment phase at KGH. For most samples, should be a single gID; however, some patients have two."
+  rdfs:label:            gID
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:sID
+  "@type":               rdf:Property
+  rdfs:comment:          "Internal survivor ID used to refer to the patients during follow-up visits. Can include either survivors (S-numbers) or contacts (C-numbers)"
+  rdfs:label:            sID
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 # sameAs: handle into the public alternate identifier(s) that also represent the patient.
 # Used to connect S- and G-numbers together.
 - "@id":                 cvisb:sameAs
