@@ -89,7 +89,6 @@ a {
 .variable-value {
   font-weight: 400;
 }
-
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
@@ -250,6 +249,14 @@ svg-icon.country-icon {
 
   &.NG {
     fill: $nigeria-green;
+  }
+
+  &.GN {
+    fill: $guinea-yellow;
+  }
+
+  &.LR {
+    fill: $liberia-red;
   }
 }
 
@@ -455,7 +462,6 @@ h5.patient-data {
 .patient-data-container {
   margin-bottom: 2em;
 }
-
 // --- dataset page ---
 
 .dataset-page h3 {
@@ -465,4 +471,18 @@ h5.patient-data {
 .updated {
   color: $ebola-color;
   font-size: 0.8em;
+}
+// --- upload ---
+button.stepper-button {
+  background: accent(50) !important;
+  margin-right: 25px;
+}
+
+.stepper-title {
+  text-transform: uppercase;
+  font-weight: 400;
+  color: accent-redder(500);
+  // border-bottom: 1px #fe643b solid;
+  // background: #f9eae991;
+  // padding: 3px 10px;
 }

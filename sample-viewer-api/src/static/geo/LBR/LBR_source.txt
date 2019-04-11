@@ -1,0 +1,10 @@
+Liberia boundardies downloaded 11 April 2019 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/liberia-admin-level-2-boundaries
+from UN-OCHA
+Updated August 2018
+
+Mapshaper simplification
+xl: none
+lg: 8.5%
+md: 2.5%
+sm: 0.9%

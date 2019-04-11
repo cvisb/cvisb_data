@@ -16,16 +16,27 @@
               <rect id="SVGID_3_" width="40" height="40"/>
             </defs>
             <clipPath id="SVGID_4_">
-              <use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
+              <use xlink:href="#SVGID_3_" style="overflow:visible;"/>
             </clipPath>
             <g class="st3">
               <g>
-                <path class="st4" fill="none" stroke="#7e57c2" stroke-width="0.75" stroke-miterlimit="10"
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#7e57c2"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
                   d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
                   c1.1-0.9,2.2-1.4,3.2-1.7c1.3-0.3,2.6-0.6,3.9-0.9c1.2-0.3,2.5-0.6,3.7-1.5c0.3-0.2,0.6-0.4,0.8-0.7c0.6-0.6,0.9-1.4,1.2-2.2
                   c0.1-0.2,0.1-0.4,0.2-0.6c0-0.1,0-0.3,0-0.4c-0.1-1.7-0.3-3.2-0.7-4.7c-0.4-1.6-1.1-3-1-5c0-0.7,0.2-1.4,0.5-2.2
                   c0.9-1.8,2.9-2.7,4.1-3c1.7-0.5,3.3-0.7,4.9-1.1c0.6-0.2,1.3-0.3,2-0.7s1.5-1.2,2-2c0.3-0.5,0.8-1.5,0.6-2"/>
-                <path class="st4" fill="none" stroke="#7e57c2" stroke-width="0.75" stroke-miterlimit="10" d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#7e57c2"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
                   c0.3-1.4,0.3-2.6,0-3.6c-0.3-1.3-0.6-2.6-0.9-3.9c-0.3-1.2-0.6-2.5-0.4-4c0-0.3,0.1-0.7,0.3-1.1c0.3-0.8,0.8-1.5,1.4-2.1
                   c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.1,0.4-0.2c1.5-0.7,3-1.2,4.5-1.5c1.6-0.4,3.1-0.4,4.9-1.4c0.6-0.3,1.2-0.8,1.7-1.5
                   c1.2-1.6,1-3.8,0.8-5c-0.3-1.7-0.9-3.2-1.3-4.8c-0.4-0.6-0.5-1.3-0.5-2c0-0.8,0.3-1.9,0.9-2.7c0.4-0.5,1-1.4,1.5-1.4"/>
@@ -49,48 +60,34 @@
         </g>
       </g>
 
-<!-- VERSION 2: FATTER -->
-<g id="white_background" fill="white" stroke="none" stroke-miterlimit="10" >
-	<path class="st3" d="M14.9,19.4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V36c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V19.4z"/>
-	<path class="st3" d="M25.1,12.7c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V12.7z"/>
-</g>
-<g id="chromosome-bands" stroke="none">
-	<rect x="14.9" y="4.1" class="st4" width="10" height="0.8"/>
-	<rect x="14.9" y="8.4" class="st4" width="10" height="0.3"/>
-	<rect x="14.9" y="5.4" class="st4" width="10" height="1.7"/>
-	<rect x="14.9" y="10.8" class="st4" width="10" height="2.1"/>
-	<rect x="14.9" y="18.4" class="st4" width="10" height="3.1"/>
-	<rect x="14.9" y="25.9" class="st4" width="10" height="3.1"/>
-	<rect x="14.9" y="29.9" class="st4" width="10" height="3.1"/>
-</g>
-<g id="chromosome-light" class="chromosome_light" stroke="none" opacity="0.5">
-	<path class="st5" d="M19.9,15.7c2.3,0,4.1-0.9,4.9-2h-9.6C15.6,14.8,17.6,15.7,19.9,15.7z"/>
-	<path class="st5" d="M24.9,18.4L24.9,18.4c-0.6-1.3-2.6-2.1-4.9-2.1s-4.3,0.9-4.9,2.1"/>
-</g>
-<g id="outer_outline" fill="none" stroke-miterlimit="10" class="chromosome_stroke">
-	<path class="st6" d="M14.9,19.4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V36c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V19.4z"/>
-	<path class="st6" d="M25.1,12.7c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V12.7z"/>
-</g>
-<!-- VERSION 1 -->
-      <!-- <path fill="white" stroke="none" stroke-miterlimit="10" class="chromosome_fill" d="M16.5,19.4c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8v15.5c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V19.4z"/>
-      <path fill="white" stroke="none" stroke-miterlimit="10" class="chromosome_fill" d="M23.6,13.2c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V5.1c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8V13.2z"/>
-
-      <g stroke="none">
-        <rect x="16.5" y="5.2" class="st3" width="7" height="0.7"/>
-        <rect x="16.5" y="9.2" class="st3" width="7" height="0.3"/>
-        <rect x="16.5" y="6.4" class="st3" width="7" height="1.6"/>
-        <rect x="16.5" y="11.4" class="st3" width="7" height="2"/>
-        <rect x="16.5" y="18.5" class="st3" width="7" height="2.9"/>
-        <rect x="16.5" y="25.5" class="st3" width="7" height="2.9"/>
-        <rect x="16.5" y="29.2" class="st3" width="7" height="2.9"/>
+      <!-- VERSION 2: FATTER -->
+      <g id="white_background" fill="white" stroke="none" stroke-miterlimit="10">
+        <path class="st3" d="M14.9,19.4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V36c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V19.4z"/>
+        <path class="st3" d="M25.1,12.7c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V12.7z"/>
       </g>
-
-      <g class="chromosome_light" stroke="none" opacity="0.5">
-        <path class="st1" d="M20,16c1.6,0,2.9-0.8,3.4-1.9h-6.7C17,15.2,18.4,16,20,16z"/>
-        <path class="st1" d="M23.5,18.5L23.5,18.5c-0.4-1.2-1.8-2-3.4-2c-1.6,0-3,0.8-3.4,2H23.5z"/>
+      <g id="chromosome-bands" stroke="none">
+        <rect x="14.9" y="4.1" class="st4" width="10" height="0.8"/>
+        <rect x="14.9" y="8.4" class="st4" width="10" height="0.3"/>
+        <rect x="14.9" y="5.4" class="st4" width="10" height="1.7"/>
+        <rect x="14.9" y="10.8" class="st4" width="10" height="2.1"/>
+        <rect x="14.9" y="18.4" class="st4" width="10" height="3.1"/>
+        <rect x="14.9" y="25.9" class="st4" width="10" height="3.1"/>
+        <rect x="14.9" y="29.9" class="st4" width="10" height="3.1"/>
       </g>
-
-      <path fill="none" stroke-miterlimit="10" class="chromosome_stroke" d="M16.5,19.4c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8v15.5c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V19.4z"/>
+      <g id="chromosome-light" class="chromosome_light" stroke="none" opacity="0.5">
+        <path class="st5" d="M19.9,15.7c2.3,0,4.1-0.9,4.9-2h-9.6C15.6,14.8,17.6,15.7,19.9,15.7z"/>
+        <path class="st5" d="M24.9,18.4L24.9,18.4c-0.6-1.3-2.6-2.1-4.9-2.1s-4.3,0.9-4.9,2.1"/>
+      </g>
+      <g id="outer_outline" fill="none" stroke-miterlimit="10" class="chromosome_stroke">
+        <path class="st6" d="M14.9,19.4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V36c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V19.4z"/>
+        <path class="st6" d="M25.1,12.7c0,1.6-2.3,3-5.1,3s-5.1-1.3-5.1-3V4c0-1.6,2.3-3,5.1-3s5.1,1.3,5.1,3V12.7z"/>
+      </g>
+      <!-- VERSION 1 -->
+      <!-- <path fill="white" stroke="none" stroke-miterlimit="10" class="chromosome_fill" d="M16.5,19.4c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8v15.5c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V19.4z"/> <path fill="white" stroke="none" stroke-miterlimit="10"
+      class="chromosome_fill" d="M23.6,13.2c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V5.1c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8V13.2z"/> <g stroke="none"> <rect x="16.5" y="5.2" class="st3" width="7" height="0.7"/> <rect x="16.5" y="9.2" class="st3" width="7"
+      height="0.3"/> <rect x="16.5" y="6.4" class="st3" width="7" height="1.6"/> <rect x="16.5" y="11.4" class="st3" width="7" height="2"/> <rect x="16.5" y="18.5" class="st3" width="7" height="2.9"/> <rect x="16.5" y="25.5" class="st3" width="7"
+      height="2.9"/> <rect x="16.5" y="29.2" class="st3" width="7" height="2.9"/> </g> <g class="chromosome_light" stroke="none" opacity="0.5"> <path class="st1" d="M20,16c1.6,0,2.9-0.8,3.4-1.9h-6.7C17,15.2,18.4,16,20,16z"/> <path class="st1"
+      d="M23.5,18.5L23.5,18.5c-0.4-1.2-1.8-2-3.4-2c-1.6,0-3,0.8-3.4,2H23.5z"/> </g> <path fill="none" stroke-miterlimit="10" class="chromosome_stroke" d="M16.5,19.4c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8v15.5c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V19.4z"/>
       <path fill="none" stroke-miterlimit="10" class="chromosome_stroke" d="M23.6,13.2c0,1.5-1.6,2.8-3.6,2.8s-3.6-1.2-3.6-2.8V5.1c0-1.5,1.6-2.8,3.6-2.8s3.6,1.2,3.6,2.8V13.2z"/> -->
     </symbol>
 
@@ -114,15 +111,19 @@
       <title>Viral Sequencing</title>
 
       <g id="ebola">
-      	<g>
-      		<g>
-      			<defs>
-      				<rect id="ebola_rect" x="0" y="0" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="ebola_rect_mask">
-      				<use xlink:href="#ebola_rect"  style="overflow:visible;"/>
-      			</clipPath>
-      			<path class="st0" clip-path="url(#ebola_rect_mask)" fill="#F06292" d="M10.1,34.3c-0.3-2.1,0.4-4.2,1.9-6.3c1.7-2.4,4.6-5.7,8.1-7.6c1.1-0.5,2.2-1,3.2-1.4c1.2-0.5,2.4-1,3.4-1.6
+        <g>
+          <g>
+            <defs>
+              <rect id="ebola_rect" x="0" y="0" width="40" height="40"/>
+            </defs>
+            <clipPath id="ebola_rect_mask">
+              <use xlink:href="#ebola_rect" style="overflow:visible;"/>
+            </clipPath>
+            <path
+              class="st0"
+              clip-path="url(#ebola_rect_mask)"
+              fill="#F06292"
+              d="M10.1,34.3c-0.3-2.1,0.4-4.2,1.9-6.3c1.7-2.4,4.6-5.7,8.1-7.6c1.1-0.5,2.2-1,3.2-1.4c1.2-0.5,2.4-1,3.4-1.6
       				c-0.7-0.9-1-1.9-1.1-2.9l0,0c-0.2-0.2-0.4-0.4-0.6-0.6c-1.1-1.1-2.5-2.5-2.9-4.5c-0.4-1.6,0-3.4,1-4.7c0.7-1,1.8-1.6,3-1.7
       				c1.3-0.1,2.7,0.5,3.7,1.5c1.3,1.4,2.2,3.8,1.4,6c0.7-1,1.5-2,2.5-2.9c-0.4-0.8-0.8-1.7-0.9-2.7c-0.2-1.9,0.8-3.7,2.3-4.5
       				c1.8-1.1,4.2-0.6,5.4,1c1,1.4,1,3.5,0,5.2c-0.5,0.7-1,1.3-1.7,1.9c0.9,2.1,1,4.4,0.4,6.4c-0.9,2.8-3.1,4.9-5.8,5.4
@@ -135,15 +136,19 @@
       				c0.1,0,0.1-0.1,0.1-0.1c0.2-0.2,0.4-0.5,0.5-0.7c0.2-0.5,0-1.5-0.5-2C26.7,7.1,26.5,7,26.4,7L26.4,7z M37.1,3.8
       				c-0.2,0.1-0.3,0.4-0.3,0.7c0,0.1,0.1,0.2,0.1,0.3C37,4.7,37,4.6,37.1,4.5c0.2-0.4,0.2-0.7,0.2-0.7h-0.1
       				C37.2,3.8,37.1,3.8,37.1,3.8z"/>
-      		</g>
-      		<g>
-      			<defs>
-      				<rect id="SVGID_3_" x="0" y="0" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="SVGID_4_">
-      				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
-      			</clipPath>
-      			<path class="st1" clip-path="url(#SVGID_4_)" fill="#F8BBD0" d="M10.7,34.6c-0.4-2.3,0.7-4.4,1.7-5.7c1.8-2.4,4.5-5.6,7.9-7.4c1-0.6,2.1-1,3.1-1.4c1.6-0.7,3-1.3,4.2-2.2
+          </g>
+          <g>
+            <defs>
+              <rect id="SVGID_3_" x="0" y="0" width="40" height="40"/>
+            </defs>
+            <clipPath id="SVGID_4_">
+              <use xlink:href="#SVGID_3_" style="overflow:visible;"/>
+            </clipPath>
+            <path
+              class="st1"
+              clip-path="url(#SVGID_4_)"
+              fill="#F8BBD0"
+              d="M10.7,34.6c-0.4-2.3,0.7-4.4,1.7-5.7c1.8-2.4,4.5-5.6,7.9-7.4c1-0.6,2.1-1,3.1-1.4c1.6-0.7,3-1.3,4.2-2.2
       				c-0.1-0.2-0.3-0.4-0.4-0.6c-0.7-0.9-1-1.9-1-2.9c-0.1-0.1-0.1-0.1-0.2-0.2c-0.2-0.2-0.4-0.4-0.6-0.6c-1.1-1.2-2.3-2.4-2.7-4.2
       				c-0.3-1.4,0.1-3,0.9-4.1c0.7-0.8,1.5-1.3,2.5-1.4c1.1-0.1,2.3,0.4,3.1,1.3c1.1,1.2,2,3.5,1.2,5.4c-0.2,0.5-0.5,1-0.8,1.4
       				c-0.1,0.1-0.2,0.3-0.3,0.4c-1,1.5-0.3,2.8,0,3.3l0,0c0.4-0.6,0.7-1.3,1-1.9c0.3-0.7,0.7-1.4,1.1-2.1c0.8-1.4,1.9-2.7,3.3-4
@@ -157,84 +162,108 @@
       				c0.2,0.9,1,1.8,1.8,2.6c0.1-0.1,0.1-0.2,0.2-0.3c0.2-0.2,0.3-0.3,0.4-0.5c0.3-0.3,0.5-0.6,0.6-0.9c0.3-0.8,0-2.1-0.7-2.8
       				C27.2,6.5,26.8,6.3,26.4,6.3L26.4,6.3z M36.7,3.1C36.3,3.4,36,4,36.1,4.6c0.1,0.5,0.3,1,0.6,1.5c0.4-0.4,0.8-0.8,1.1-1.2
       				c0.3-0.6,0.4-1.3,0.1-1.6C37.7,3.1,37.5,3,37.2,3C37,3,36.9,3.1,36.7,3.1z"/>
-      		</g>
-      	</g>
+          </g>
+        </g>
       </g>
       <g id="LSV">
-      	<g>
-      		<g>
-      			<defs>
-      				<rect id="lassa_rect" x="0" y="0" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="lassa_rect_mask">
-      				<use xlink:href="#lassa_rect"  style="overflow:visible;"/>
-      			</clipPath>
-      			<g class="st2" clip-path="url(#lassa_rect_mask)">
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="18.5" y1="5.8" x2="17" y2="7.2"/>
-      				<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 1.8288 15.0417)" class="st4" fill="#41875E" cx="19.1" cy="5.3" rx="1" ry="1.8"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="8.1" y1="1.1" x2="8.5" y2="3.1"/>
-      				<ellipse transform="matrix(0.9747 -0.2234 0.2234 0.9747 0.1021 1.7885)" class="st4" fill="#41875E" cx="8" cy="0.4" rx="1.8" ry="1"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="-0.3" y1="14.2" x2="1.7" y2="14"/>
+        <g>
+          <g>
+            <defs>
+              <rect id="lassa_rect" x="0" y="0" width="40" height="40"/>
+            </defs>
+            <clipPath id="lassa_rect_mask">
+              <use xlink:href="#lassa_rect" style="overflow:visible;"/>
+            </clipPath>
+            <g class="st2" clip-path="url(#lassa_rect_mask)">
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="18.5" y1="5.8" x2="17" y2="7.2"/>
+              <ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 1.8288 15.0417)" class="st4" fill="#41875E" cx="19.1" cy="5.3" rx="1" ry="1.8"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="8.1" y1="1.1" x2="8.5" y2="3.1"/>
+              <ellipse transform="matrix(0.9747 -0.2234 0.2234 0.9747 0.1021 1.7885)" class="st4" fill="#41875E" cx="8" cy="0.4" rx="1.8" ry="1"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="-0.3" y1="14.2" x2="1.7" y2="14"/>
 
-      					<ellipse transform="matrix(0.9925 -0.1221 0.1221 0.9925 -1.7464 -2.982475e-02)" class="st4" fill="#41875E" cx="-1.1" cy="14.2" rx="1" ry="1.8"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="23.5" y1="16.7" x2="21.4" y2="16.6"/>
-      				<ellipse transform="matrix(2.003177e-03 -1 1 2.003177e-03 7.4515 40.8665)" class="st4" fill="#41875E" cx="24.2" cy="16.7" rx="1.8" ry="1"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="1.7" y1="21.9" x2="3.5" y2="21"/>
-      				<ellipse transform="matrix(0.8676 -0.4973 0.4973 0.8676 -10.9498 3.4408)" class="st4" fill="#41875E" cx="1" cy="22.3" rx="1" ry="1.8"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="11.3" y1="28.3" x2="11.3" y2="26.3"/>
+              <ellipse transform="matrix(0.9925 -0.1221 0.1221 0.9925 -1.7464 -2.982475e-02)" class="st4" fill="#41875E" cx="-1.1" cy="14.2" rx="1" ry="1.8"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="23.5" y1="16.7" x2="21.4" y2="16.6"/>
+              <ellipse transform="matrix(2.003177e-03 -1 1 2.003177e-03 7.4515 40.8665)" class="st4" fill="#41875E" cx="24.2" cy="16.7" rx="1.8" ry="1"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="1.7" y1="21.9" x2="3.5" y2="21"/>
+              <ellipse transform="matrix(0.8676 -0.4973 0.4973 0.8676 -10.9498 3.4408)" class="st4" fill="#41875E" cx="1" cy="22.3" rx="1" ry="1.8"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="11.3" y1="28.3" x2="11.3" y2="26.3"/>
 
-      					<ellipse transform="matrix(0.9996 -2.933113e-02 2.933113e-02 0.9996 -0.8459 0.3462)" class="st4" fill="#41875E" cx="11.4" cy="29" rx="1.8" ry="1"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="19.4" y1="25.3" x2="18.1" y2="23.7"/>
-      				<ellipse transform="matrix(0.7633 -0.646 0.646 0.7633 -12.0307 18.9035)" class="st4" fill="#41875E" cx="19.8" cy="25.9" rx="1.8" ry="1"/>
-      				<line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="0.9" y1="8.1" x2="2.7" y2="9"/>
-      				<ellipse transform="matrix(0.3956 -0.9184 0.9184 0.3956 -7.0458 4.897)" class="st4" fill="#41875E" cx="0.2" cy="7.8" rx="1.8" ry="1"/>
-      				<path class="st5" fill="none" stroke="#41875E" stroke-width="0.5" stroke-miterlimit="10" d="M18,7.9c1.6,1.6,2.4,3.2,3,5.4c0.2,0.9,0.5,1.9,0.4,2.9c-0.1,1.9-1,4.6-2.2,6.1c-0.7,0.9-1.6,1.7-2.6,2.4
+              <ellipse transform="matrix(0.9996 -2.933113e-02 2.933113e-02 0.9996 -0.8459 0.3462)" class="st4" fill="#41875E" cx="11.4" cy="29" rx="1.8" ry="1"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="19.4" y1="25.3" x2="18.1" y2="23.7"/>
+              <ellipse transform="matrix(0.7633 -0.646 0.646 0.7633 -12.0307 18.9035)" class="st4" fill="#41875E" cx="19.8" cy="25.9" rx="1.8" ry="1"/>
+              <line class="st3" fill="none" stroke="#41875E" stroke-miterlimit="10" x1="0.9" y1="8.1" x2="2.7" y2="9"/>
+              <ellipse transform="matrix(0.3956 -0.9184 0.9184 0.3956 -7.0458 4.897)" class="st4" fill="#41875E" cx="0.2" cy="7.8" rx="1.8" ry="1"/>
+              <path
+                class="st5"
+                fill="none"
+                stroke="#41875E"
+                stroke-width="0.5"
+                stroke-miterlimit="10"
+                d="M18,7.9c1.6,1.6,2.4,3.2,3,5.4c0.2,0.9,0.5,1.9,0.4,2.9c-0.1,1.9-1,4.6-2.2,6.1c-0.7,0.9-1.6,1.7-2.6,2.4
       					c-1.9,1.4-4.3,1.8-6.6,1.3c-2-0.4-4.7-2-5.9-3.7c-1-1.4-1.3-3.4-1.8-5.1c-0.5-1.8-0.7-3.8-0.3-5.7c0.5-2.2,1.7-4.2,2.8-6.2
       					c1-1.7,4.7-2.9,6.6-2.4c1.3,0.3,2.2,1.4,3.2,2.3c0.3,0.3,0.5,0.5,0.8,0.7C16.3,6.6,17.2,7.2,18,7.9z"/>
-      				<path class="st6" fill="#B4EEC9" stroke="#70B78B" stroke-width="1.25" stroke-miterlimit="10" d="M17.1,9.1c1.4,1.2,2,2.6,2.5,4.4c0.2,0.8,0.4,1.6,0.3,2.4c-0.2,1.6-0.9,3.7-1.9,5c-0.6,0.8-1.4,1.4-2.2,2
+              <path
+                class="st6"
+                fill="#B4EEC9"
+                stroke="#70B78B"
+                stroke-width="1.25"
+                stroke-miterlimit="10"
+                d="M17.1,9.1c1.4,1.2,2,2.6,2.5,4.4c0.2,0.8,0.4,1.6,0.3,2.4c-0.2,1.6-0.9,3.7-1.9,5c-0.6,0.8-1.4,1.4-2.2,2
       					c-1.6,1.2-3.6,1.5-5.5,1.1c-1.7-0.4-3.9-1.8-4.9-3.1c-0.9-1.2-1.1-2.8-1.5-4.2c-0.5-1.5-0.7-3.1-0.3-4.7C4,10.2,5,8.5,5.9,6.9
       					c0.9-1.5,3.9-2.4,5.5-2c1.1,0.2,1.9,1.1,2.7,1.9c0.2,0.2,0.4,0.4,0.6,0.6C15.4,8,16.2,8.5,17.1,9.1z"/>
-      			</g>
-      		</g>
-      	</g>
+            </g>
+          </g>
+        </g>
       </g>
       <g id="dna_1_">
-      	<g>
-      		<g>
-      			<defs>
-      				<rect id="dna_rect" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="dna_rect_mask">
-      				<use xlink:href="#dna_rect"  style="overflow:visible;"/>
-      			</clipPath>
-      			<g class="st7" clip-path="url(#dna_rect_mask)">
-      				<g>
-      					<path class="st8" fill="none" stroke="#484D51" stroke-width="0.75" stroke-miterlimit="10" d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
+        <g>
+          <g>
+            <defs>
+              <rect id="dna_rect" width="40" height="40"/>
+            </defs>
+            <clipPath id="dna_rect_mask">
+              <use xlink:href="#dna_rect" style="overflow:visible;"/>
+            </clipPath>
+            <g class="st7" clip-path="url(#dna_rect_mask)">
+              <g>
+                <path
+                  class="st8"
+                  fill="none"
+                  stroke="#484D51"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
       						c1.1-0.9,2.2-1.4,3.2-1.7c1.3-0.3,2.6-0.6,3.9-0.9c1.2-0.3,2.5-0.6,3.7-1.5c0.3-0.2,0.6-0.4,0.8-0.7c0.6-0.6,0.9-1.4,1.2-2.2
       						c0.1-0.2,0.1-0.4,0.2-0.6c0-0.1,0-0.3,0-0.4c-0.1-1.7-0.3-3.2-0.7-4.7c-0.4-1.6-1.1-3-1-5c0-0.7,0.2-1.4,0.5-2.2
       						c0.9-1.8,2.9-2.7,4.1-3c1.7-0.5,3.3-0.7,4.9-1.1c0.6-0.2,1.3-0.3,2-0.7s1.5-1.2,2-2c0.3-0.5,0.8-1.5,0.6-2"/>
-      					<path class="st8" fill="none" stroke="#484D51" stroke-width="0.75" stroke-miterlimit="10" d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
+                <path
+                  class="st8"
+                  fill="none"
+                  stroke="#484D51"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
       						c0.3-1.4,0.3-2.6,0-3.6c-0.3-1.3-0.6-2.6-0.9-3.9c-0.3-1.2-0.6-2.5-0.4-4c0-0.3,0.1-0.7,0.3-1.1c0.3-0.8,0.8-1.5,1.4-2.1
       						c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.1,0.4-0.2c1.5-0.7,3-1.2,4.5-1.5c1.6-0.4,3.1-0.4,4.9-1.4c0.6-0.3,1.2-0.8,1.7-1.5
       						c1.2-1.6,1-3.8,0.8-5c-0.3-1.7-0.9-3.2-1.3-4.8c-0.4-0.6-0.5-1.3-0.5-2c0-0.8,0.3-1.9,0.9-2.7c0.4-0.5,1-1.4,1.5-1.4"/>
-      				</g>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
-      				<line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
-      			</g>
-      		</g>
-      	</g>
+              </g>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
+              <line class="st9" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
+            </g>
+          </g>
+        </g>
       </g>
     </symbol>
 
@@ -242,29 +271,29 @@
     <symbol id="elisa" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>ELISA</title>
       <g>
-      	<line class="st0" fill="none" stroke="#008753" stroke-width="0.5096" stroke-miterlimit="10" x1="25.3" y1="5.1" x2="29.1" y2="7.7"/>
-      	<circle class="st1 antigen" fill="#FE643B" cx="20.3" cy="21.3" r="1.9"/>
-      	<g>
-      		<g>
-      			<polyline class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.3844" stroke-miterlimit="10" points="2.6,22.4 7.5,27.4 7.5,37.9 			"/>
-      			<line class="st3" fill="none" stroke="#A6A8A9" stroke-width="0.8049" stroke-miterlimit="10"  x1="0.3" y1="25.1" x2="5" y2="29.8"/>
-      		</g>
-      		<g>
-      			<polyline class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.3844" stroke-miterlimit="10"  points="11.4,37.9 11.4,27.4 16.4,22.4 			"/>
-      			<line class="st3" fill="none" stroke="#A6A8A9" stroke-width="0.8049" stroke-miterlimit="10" x1="13.9" y1="29.8" x2="18.6" y2="25.1"/>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<polyline class="st4" fill="none" stroke="#008753" stroke-width="1.3844" stroke-miterlimit="10" points="37.4,20.5 32.5,15.5 32.5,5.1 			"/>
-      			<line class="st5" fill="none" stroke="#008753" stroke-width="0.8049" stroke-miterlimit="10" x1="39.7" y1="17.8" x2="35" y2="13.1"/>
-      		</g>
-      		<g>
-      			<polyline class="st4" fill="none" stroke="#008753" stroke-width="1.3844" stroke-miterlimit="10" points="28.6,5.1 28.6,15.5 23.6,20.5 			"/>
-      			<line class="st5" fill="none" stroke="#008753" stroke-width="0.8049" stroke-miterlimit="10" x1="26.1" y1="13.1" x2="21.4" y2="17.8"/>
-      		</g>
-      	</g>
-      	<polygon class="st6" fill="#A1EABB" stroke="#008753" stroke-width="0.5096" stroke-miterlimit="10" points="24,1 25.2,3.4 27.7,3.7 25.9,5.6 26.3,8.1 24,6.9 21.7,8.1 22.1,5.6 20.3,3.7 22.9,3.4 	"/>
+        <line class="st0" fill="none" stroke="#008753" stroke-width="0.5096" stroke-miterlimit="10" x1="25.3" y1="5.1" x2="29.1" y2="7.7"/>
+        <circle class="st1 antigen" fill="#FE643B" cx="20.3" cy="21.3" r="1.9"/>
+        <g>
+          <g>
+            <polyline class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.3844" stroke-miterlimit="10" points="2.6,22.4 7.5,27.4 7.5,37.9 			"/>
+            <line class="st3" fill="none" stroke="#A6A8A9" stroke-width="0.8049" stroke-miterlimit="10" x1="0.3" y1="25.1" x2="5" y2="29.8"/>
+          </g>
+          <g>
+            <polyline class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.3844" stroke-miterlimit="10" points="11.4,37.9 11.4,27.4 16.4,22.4 			"/>
+            <line class="st3" fill="none" stroke="#A6A8A9" stroke-width="0.8049" stroke-miterlimit="10" x1="13.9" y1="29.8" x2="18.6" y2="25.1"/>
+          </g>
+        </g>
+        <g>
+          <g>
+            <polyline class="st4" fill="none" stroke="#008753" stroke-width="1.3844" stroke-miterlimit="10" points="37.4,20.5 32.5,15.5 32.5,5.1 			"/>
+            <line class="st5" fill="none" stroke="#008753" stroke-width="0.8049" stroke-miterlimit="10" x1="39.7" y1="17.8" x2="35" y2="13.1"/>
+          </g>
+          <g>
+            <polyline class="st4" fill="none" stroke="#008753" stroke-width="1.3844" stroke-miterlimit="10" points="28.6,5.1 28.6,15.5 23.6,20.5 			"/>
+            <line class="st5" fill="none" stroke="#008753" stroke-width="0.8049" stroke-miterlimit="10" x1="26.1" y1="13.1" x2="21.4" y2="17.8"/>
+          </g>
+        </g>
+        <polygon class="st6" fill="#A1EABB" stroke="#008753" stroke-width="0.5096" stroke-miterlimit="10" points="24,1 25.2,3.4 27.7,3.7 25.9,5.6 26.3,8.1 24,6.9 21.7,8.1 22.1,5.6 20.3,3.7 22.9,3.4 	"/>
       </g>
       <line class="st7" fill="none" stroke="#58595B" stroke-width="1.5" stroke-miterlimit="10" x1="2.4" y1="38.3" x2="37.6" y2="38.3"/>
     </symbol>
@@ -273,11 +302,11 @@
     <symbol id="rdt" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Rapid Diagnostics</title>
       <g>
-      	<rect fill="#F9F9DE" stroke="#212529" stroke-width="0.2186" stroke-miterlimit="10" id="tlc_plate" x="19.1" y="2.1" class="st0" width="15.6" height="35.8"/>
-      	<rect fill="none" x="5.3" y="24.6" class="st1" width="7" height="9.3"/>
-      	<text fill="#2E2C2C" font-size="12px" font-weight="800" font-family="Open Sans; sans-serif" id="positive" transform="matrix(1 0 0 1 5.3322 33.7338)" class="st2 st3 st4">+</text>
-      	<line fill="none" stroke="#C2185B" stroke-width="2.75" stroke-miterlimit="10" id="ctrl_line" class="st5" x1="20.2" y1="10" x2="33.6" y2="10"/>
-      	<line fill="none" stroke="#E91E63" stroke-width="1.5" stroke-miterlimit="10" id="positive_line" class="st6" x1="20.2" y1="29.2" x2="33.6" y2="29.2"/>
+        <rect fill="#F9F9DE" stroke="#212529" stroke-width="0.2186" stroke-miterlimit="10" id="tlc_plate" x="19.1" y="2.1" class="st0" width="15.6" height="35.8"/>
+        <rect fill="none" x="5.3" y="24.6" class="st1" width="7" height="9.3"/>
+        <text fill="#2E2C2C" font-size="12px" font-weight="800" font-family="Open Sans; sans-serif" id="positive" transform="matrix(1 0 0 1 5.3322 33.7338)" class="st2 st3 st4">+</text>
+        <line fill="none" stroke="#C2185B" stroke-width="2.75" stroke-miterlimit="10" id="ctrl_line" class="st5" x1="20.2" y1="10" x2="33.6" y2="10"/>
+        <line fill="none" stroke="#E91E63" stroke-width="1.5" stroke-miterlimit="10" id="positive_line" class="st6" x1="20.2" y1="29.2" x2="33.6" y2="29.2"/>
       </g>
     </symbol>
 
@@ -285,81 +314,86 @@
     <symbol id="rt_pcr" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>RT PCR</title>
       <g id="copied_dna">
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="10" x2="24.1" y2="10"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="4.2" x2="39.6" y2="4.2"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="12.6" x2="39.6" y2="12.6"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="15.8" x2="39.6" y2="15.8"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="24.2" x2="39.6" y2="24.2"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="27.4" x2="39.6" y2="27.4"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="35.8" x2="39.6" y2="35.8"/>
-      	<line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="30" x2="24.1" y2="30"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="10" x2="24.1" y2="10"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="4.2" x2="39.6" y2="4.2"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="12.6" x2="39.6" y2="12.6"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="15.8" x2="39.6" y2="15.8"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="24.2" x2="39.6" y2="24.2"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="27.4" x2="39.6" y2="27.4"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="35.8" x2="39.6" y2="35.8"/>
+        <line class="st0" fill="none" stroke="#FFB2DD" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="30" x2="24.1" y2="30"/>
       </g>
       <g id="primary_dna">
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="0.6" y1="18.4" x2="8.7" y2="18.4"/>
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="0.6" y1="21.6" x2="8.7" y2="21.6"/>
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="6.8" x2="24.1" y2="6.8"/>
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="1" x2="39.6" y2="1"/>
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="39" x2="39.6" y2="39"/>
-      	<line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="33.2" x2="24.1" y2="33.2"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="0.6" y1="18.4" x2="8.7" y2="18.4"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="0.6" y1="21.6" x2="8.7" y2="21.6"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="6.8" x2="24.1" y2="6.8"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="1" x2="39.6" y2="1"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="31.5" y1="39" x2="39.6" y2="39"/>
+        <line class="st1" fill="none" stroke="#E91E63" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="33.2" x2="24.1" y2="33.2"/>
       </g>
       <g id="arrows">
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="10.2" y1="17.4" x2="13.9" y2="12.2"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M13.9,16.1c-0.1,0-0.2-0.1-0.2-0.2l0.2-3.5l-3.3,1.3c-0.1,0-0.3,0-0.3-0.1c0-0.1,0-0.3,0.1-0.3l3.6-1.5
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="10.2" y1="17.4" x2="13.9" y2="12.2"/>
+            <g>
+              <path class="st3" fill="#A6A8A9" d="M13.9,16.1c-0.1,0-0.2-0.1-0.2-0.2l0.2-3.5l-3.3,1.3c-0.1,0-0.3,0-0.3-0.1c0-0.1,0-0.3,0.1-0.3l3.6-1.5
       					c0.1,0,0.2,0,0.2,0s0.1,0.1,0.1,0.2l-0.2,3.9c0,0,0,0.1,0,0.1C14.1,16,14,16.1,13.9,16.1z"/>
-      			</g>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="10.2" y1="21.4" x2="13.9" y2="26.6"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M10.3,25.3c0-0.1,0.2-0.2,0.3-0.1l3.3,1.3L13.7,23c0-0.1,0.1-0.2,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2l0.2,3.9
+            </g>
+          </g>
+        </g>
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="10.2" y1="21.4" x2="13.9" y2="26.6"/>
+            <g>
+              <path class="st3" fill="#A6A8A9" d="M10.3,25.3c0-0.1,0.2-0.2,0.3-0.1l3.3,1.3L13.7,23c0-0.1,0.1-0.2,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2l0.2,3.9
       					c0,0.1,0,0.2-0.1,0.2s-0.1,0.1-0.2,0l-3.6-1.5c0,0-0.1,0-0.1-0.1C10.3,25.5,10.3,25.4,10.3,25.3z"/>
-      			</g>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="10.4" x2="29.6" y2="13.2"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M25.7,13.2c0-0.1,0.1-0.2,0.2-0.2l3.5,0.1l-1.4-3.2c-0.1-0.1,0-0.3,0.1-0.3c0.1,0,0.3,0,0.3,0.1l1.5,3.6
+            </g>
+          </g>
+        </g>
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="10.4" x2="29.6" y2="13.2"/>
+            <g>
+              <path class="st3" fill="#A6A8A9" d="M25.7,13.2c0-0.1,0.1-0.2,0.2-0.2l3.5,0.1l-1.4-3.2c-0.1-0.1,0-0.3,0.1-0.3c0.1,0,0.3,0,0.3,0.1l1.5,3.6
       					c0,0.1,0,0.2,0,0.2c0,0.1-0.1,0.1-0.2,0.1L26,13.5c0,0-0.1,0-0.1,0C25.8,13.4,25.7,13.3,25.7,13.2z"/>
-      			</g>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="7" x2="29.6" y2="4.2"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M28.2,7.8c-0.1,0-0.2-0.2-0.1-0.3l1.4-3.2L26,4.4c-0.1,0-0.2-0.1-0.2-0.2c0-0.1,0.1-0.2,0.2-0.2l3.9-0.1
+            </g>
+          </g>
+        </g>
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="7" x2="29.6" y2="4.2"/>
+            <g>
+              <path class="st3" fill="#A6A8A9" d="M28.2,7.8c-0.1,0-0.2-0.2-0.1-0.3l1.4-3.2L26,4.4c-0.1,0-0.2-0.1-0.2-0.2c0-0.1,0.1-0.2,0.2-0.2l3.9-0.1
       					c0.1,0,0.2,0,0.2,0.1s0.1,0.1,0,0.2l-1.5,3.6c0,0,0,0.1-0.1,0.1C28.4,7.8,28.3,7.8,28.2,7.8z"/>
-      			</g>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="33.5" x2="29.6" y2="36.2"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M25.7,36.3c0-0.1,0.1-0.2,0.2-0.2l3.5,0.1l-1.4-3.2c-0.1-0.1,0-0.3,0.1-0.3c0.1,0,0.3,0,0.3,0.1l1.5,3.6
+            </g>
+          </g>
+        </g>
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="33.5" x2="29.6" y2="36.2"/>
+            <g>
+              <path class="st3" fill="#A6A8A9" d="M25.7,36.3c0-0.1,0.1-0.2,0.2-0.2l3.5,0.1l-1.4-3.2c-0.1-0.1,0-0.3,0.1-0.3c0.1,0,0.3,0,0.3,0.1l1.5,3.6
       					c0,0.1,0,0.2,0,0.2c0,0.1-0.1,0.1-0.2,0.1L26,36.5c0,0-0.1,0-0.1,0C25.8,36.5,25.7,36.4,25.7,36.3z"/>
-      			</g>
-      		</g>
-      	</g>
-      	<g>
-      		<g>
-      			<line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="30.1" x2="29.6" y2="27.3"/>
-      			<g>
-      				<path class="st3" fill="#A6A8A9" d="M28.2,30.9c-0.1,0-0.2-0.2-0.1-0.3l1.4-3.2L26,27.4c-0.1,0-0.2-0.1-0.2-0.2c0-0.1,0.1-0.2,0.2-0.2l3.9-0.1
+            </g>
+          </g>
+        </g>
+        <g>
+          <g>
+            <line class="st2" fill="none" stroke="#A6A8A9" stroke-width="1.0256" stroke-miterlimit="10" x1="25.5" y1="30.1" x2="29.6" y2="27.3"/>
+            <g>
+              <path
+                class="st3"
+                fill="#A6A8A9"
+                d="M28.2,30.9c-0.1,0-0.2-0.2-0.1-0.3l1.4-3.2L26,27.4c-0.1,0-0.2-0.1-0.2-0.2c0-0.1,0.1-0.2,0.2-0.2l3.9-0.1
       					c0.1,0,0.2,0,0.2,0.1c0,0.1,0.1,0.1,0,0.2l-1.5,3.6c0,0,0,0.1-0.1,0.1C28.4,30.9,28.3,30.9,28.2,30.9z"/>
-      			</g>
-      		</g>
-      	</g>
+            </g>
+          </g>
+        </g>
       </g>
     </symbol>
 
+    <!-- Countries -->
+    <!-- Unless otherwise noted, shapefiles are from UN-OCHA via Humanitarian Data Exchange. Simplified in MapShaper and exported as svg -->
 
     <!-- SLE -->
     <symbol id="SL" viewBox="0 0 800 817" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
@@ -379,139 +413,188 @@
       </g>
     </symbol>
 
+    <!-- GIN -->
+    <symbol id="GN" viewBox="0 0 800 597" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+      <title>Guinea</title>
+      <g id="gin_admbnda_adm0_ocha_itos">
+        <path
+          d="M 160.745 2.0246 205.7305 7.2357 283.8486 41.4122 380.6794 26.7132 472.585 78.4501 506.6936 51.1137 573.477 72.4677 632.4185 21.8131 672.6002 83.4169 666.0917 115.7914 716.2048 142.7433 744.6396 295.0254 743.3332 345.4331 767.8165 379.9126 799 471.9188 758.5148 502.9734 736.1377 564.3439 682.2613 566.4778 648.2927 596.1186 605.7033 576.7993 612.4582 540.7987 591.7108 471.2704 498.3044 459.2713 467.3169 369.8354 408.3904 294.1241 274.1964 307.1383 234.4976 371.1313 176.2429 384.0363 143.5592 324.4353 29.0933 237.8913 1 178.7734 28.8452 130.7351 73.2825 111.6118 133.7912 106.842 134.3559 1 160.745 2.0246 Z"/>
+      </g>
+    </symbol>
+
+    <!-- LBR -->
+    <symbol id="LR" viewBox="0 0 800 825" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+      <title>Liberia</title>
+      <g id="lbr_admbnda_admint_ocha">
+        <path
+          d="M 336.0447 1 384.8954 47.8284 404.9416 102.4321 399.8774 134.0788 425.2753 220.6039 471.2358 263.5554 512.1872 236.0098 540.7108 203.7876 547.2507 166.9074 566.212 166.9778 577.6766 200.6242 599.812 212.7719 607.3197 255.644 622.0944 268.2285 616.8902 340.7871 568.5626 401.7334 600.9523 412.8824 645.1317 444.5578 678.5728 437.8031 710.4592 458.6002 721.6377 504.6826 762.9626 521.1217 789.7809 546.267 799 588.7024 780.6021 672.9949 759.4892 715.3467 769.6849 807.0718 754.974 823.8899 722.6817 816.6091 689.8373 793.5798 629.649 780.7467 578.228 749.1693 539.0855 734.9251 424.6152 667.5582 283.1429 536.2779 274.1242 518.1749 209.2678 472.0874 150.3822 454.7837 117.7324 410.5172 22.9003 352.348 1 326.8498 21.6068 277.1372 70.6027 227.5231 121.3576 196.4169 168.0981 152.1461 168.1191 100.0303 188.9295 79.4262 228.986 64.5888 233.8449 20.882 255.916 4.388 328.0458 8.4725 336.0447 1 Z"/>
+      </g>
+
+    </symbol>
+
     <!-- TCR -->
-    <symbol id="tcr"  viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="tcr" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
       <title>TCR</title>
       <g id="Layer_2_1_">
-      	<defs>
-      		<rect id="SVGID_1_" width="40" height="40"/>
-      	</defs>
-      	<clipPath id="SVGID_2_">
-      		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-      	</clipPath>
-      	<g class="st0">
-      		<path class="st1" fill="#FEE0B5" d="M40.2,28.9c-0.3-0.2-0.7-0.4-1-0.6c-2.6-1.5-5.1-2.9-7.9-3.6c-2.8-0.6-5.6-0.7-8.5-0.8
+        <defs>
+          <rect id="SVGID_1_" width="40" height="40"/>
+        </defs>
+        <clipPath id="SVGID_2_">
+          <use xlink:href="#SVGID_1_" style="overflow:visible;"/>
+        </clipPath>
+        <g class="st0">
+          <path
+            class="st1"
+            fill="#FEE0B5"
+            d="M40.2,28.9c-0.3-0.2-0.7-0.4-1-0.6c-2.6-1.5-5.1-2.9-7.9-3.6c-2.8-0.6-5.6-0.7-8.5-0.8
       			c-5.9,0-12,0.3-17.6,2.6c-1.9,0.8-3.6,1.9-5.4,3V36c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8
       			c2.9,0.6,5.4,2.1,7.9,3.6c0.3,0.2,0.7,0.4,1,0.6V28.9z"/>
-      		<path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,29.6c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
+          <path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,29.6c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
       			c0.3,0.2,0.7,0.4,1,0.6"/>
-      		<path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,36.1c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
+          <path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,36.1c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
       			c0.3,0.2,0.7,0.4,1,0.6"/>
-      	</g>
+        </g>
       </g>
       <g id="dna">
-      	<g>
-      		<g>
-      			<defs>
-      				<rect id="SVGID_3_" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="SVGID_4_">
-      				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
-      			</clipPath>
-      			<g class="st3">
-      				<g>
-      					<path class="st4" fill="none" stroke="#FF7266" stroke-width="0.75" stroke-miterlimit="10" d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
+        <g>
+          <g>
+            <defs>
+              <rect id="SVGID_3_" width="40" height="40"/>
+            </defs>
+            <clipPath id="SVGID_4_">
+              <use xlink:href="#SVGID_3_" style="overflow:visible;"/>
+            </clipPath>
+            <g class="st3">
+              <g>
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#FF7266"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
       						c1.1-0.9,2.2-1.4,3.2-1.7c1.3-0.3,2.6-0.6,3.9-0.9c1.2-0.3,2.5-0.6,3.7-1.5c0.3-0.2,0.6-0.4,0.8-0.7c0.6-0.6,0.9-1.4,1.2-2.2
       						c0.1-0.2,0.1-0.4,0.2-0.6c0-0.1,0-0.3,0-0.4c-0.1-1.7-0.3-3.2-0.7-4.7c-0.4-1.6-1.1-3-1-5c0-0.7,0.2-1.4,0.5-2.2
       						c0.9-1.8,2.9-2.7,4.1-3c1.7-0.5,3.3-0.7,4.9-1.1c0.6-0.2,1.3-0.3,2-0.7s1.5-1.2,2-2c0.3-0.5,0.8-1.5,0.6-2"/>
-      					<path class="st4" fill="none" stroke="#FF7266" stroke-width="0.75" stroke-miterlimit="10" d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#FF7266"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
       						c0.3-1.4,0.3-2.6,0-3.6c-0.3-1.3-0.6-2.6-0.9-3.9c-0.3-1.2-0.6-2.5-0.4-4c0-0.3,0.1-0.7,0.3-1.1c0.3-0.8,0.8-1.5,1.4-2.1
       						c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.1,0.4-0.2c1.5-0.7,3-1.2,4.5-1.5c1.6-0.4,3.1-0.4,4.9-1.4c0.6-0.3,1.2-0.8,1.7-1.5
       						c1.2-1.6,1-3.8,0.8-5c-0.3-1.7-0.9-3.2-1.3-4.8c-0.4-0.6-0.5-1.3-0.5-2c0-0.8,0.3-1.9,0.9-2.7c0.4-0.5,1-1.4,1.5-1.4"/>
-      				</g>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
-      				<line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
-      			</g>
-      		</g>
-      	</g>
+              </g>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
+              <line class="st5" fill="none" stroke="#FF7266" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
+            </g>
+          </g>
+        </g>
       </g>
       <g id="Layer_1_1_">
-      	<g>
-      		<line class="st6" fill="none" stroke="#FF1744" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" x1="15.5" y1="6.5" x2="15.5" y2="34.4"/>
-      		<line class="st6" fill="none" stroke="#FF1744" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" x1="24.5" y1="6.5" x2="24.5" y2="34.4"/>
-      	</g>
+        <g>
+          <line class="st6" fill="none" stroke="#FF1744" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" x1="15.5" y1="6.5" x2="15.5" y2="34.4"/>
+          <line class="st6" fill="none" stroke="#FF1744" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" x1="24.5" y1="6.5" x2="24.5" y2="34.4"/>
+        </g>
       </g>
     </symbol>
 
     <!-- BCR -->
-    <symbol id="bcr"  viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="bcr" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
       <title>BCR</title>
       <g id="Layer_2_1_">
-      	<defs>
-      		<rect id="SVGID_1_" width="40" height="40"/>
-      	</defs>
-      	<clipPath id="SVGID_2_">
-      		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-      	</clipPath>
-      	<g class="st0">
-      		<path class="st1" fill="#FEE0B5" d="M40.2,28.9c-0.3-0.2-0.7-0.4-1-0.6c-2.6-1.5-5.1-2.9-7.9-3.6c-2.8-0.6-5.6-0.7-8.5-0.8
+        <defs>
+          <rect id="SVGID_1_" width="40" height="40"/>
+        </defs>
+        <clipPath id="SVGID_2_">
+          <use xlink:href="#SVGID_1_" style="overflow:visible;"/>
+        </clipPath>
+        <g class="st0">
+          <path
+            class="st1"
+            fill="#FEE0B5"
+            d="M40.2,28.9c-0.3-0.2-0.7-0.4-1-0.6c-2.6-1.5-5.1-2.9-7.9-3.6c-2.8-0.6-5.6-0.7-8.5-0.8
       			c-5.9,0-12,0.3-17.6,2.6c-1.9,0.8-3.6,1.9-5.4,3V36c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8
       			c2.9,0.6,5.4,2.1,7.9,3.6c0.3,0.2,0.7,0.4,1,0.6V28.9z"/>
-      		<path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,29.6c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
+          <path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,29.6c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
       			c0.3,0.2,0.7,0.4,1,0.6"/>
-      		<path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,36.1c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
+          <path class="st2" fill="none" stroke="#FFB751" stroke-miterlimit="10" d="M-0.2,36.1c1.8-1.1,3.4-2.2,5.4-3c5.6-2.2,11.7-2.6,17.6-2.6c2.8,0,5.7,0.1,8.5,0.8c2.9,0.6,5.4,2.1,7.9,3.6
       			c0.3,0.2,0.7,0.4,1,0.6"/>
-      	</g>
+        </g>
       </g>
       <g id="dna">
-      	<g>
-      		<g>
-      			<defs>
-      				<rect id="SVGID_3_" width="40" height="40"/>
-      			</defs>
-      			<clipPath id="SVGID_4_">
-      				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
-      			</clipPath>
-      			<g class="st3">
-      				<g>
-      					<path class="st4" fill="none" stroke="#00ABE5" stroke-width="0.75" stroke-miterlimit="10" d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
+        <g>
+          <g>
+            <defs>
+              <rect id="SVGID_3_" width="40" height="40"/>
+            </defs>
+            <clipPath id="SVGID_4_">
+              <use xlink:href="#SVGID_3_" style="overflow:visible;"/>
+            </clipPath>
+            <g class="st3">
+              <g>
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#00ABE5"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
       						c1.1-0.9,2.2-1.4,3.2-1.7c1.3-0.3,2.6-0.6,3.9-0.9c1.2-0.3,2.5-0.6,3.7-1.5c0.3-0.2,0.6-0.4,0.8-0.7c0.6-0.6,0.9-1.4,1.2-2.2
       						c0.1-0.2,0.1-0.4,0.2-0.6c0-0.1,0-0.3,0-0.4c-0.1-1.7-0.3-3.2-0.7-4.7c-0.4-1.6-1.1-3-1-5c0-0.7,0.2-1.4,0.5-2.2
       						c0.9-1.8,2.9-2.7,4.1-3c1.7-0.5,3.3-0.7,4.9-1.1c0.6-0.2,1.3-0.3,2-0.7s1.5-1.2,2-2c0.3-0.5,0.8-1.5,0.6-2"/>
-      					<path class="st4" fill="none" stroke="#00ABE5" stroke-width="0.75" stroke-miterlimit="10" d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
+                <path
+                  class="st4"
+                  fill="none"
+                  stroke="#00ABE5"
+                  stroke-width="0.75"
+                  stroke-miterlimit="10"
+                  d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
       						c0.3-1.4,0.3-2.6,0-3.6c-0.3-1.3-0.6-2.6-0.9-3.9c-0.3-1.2-0.6-2.5-0.4-4c0-0.3,0.1-0.7,0.3-1.1c0.3-0.8,0.8-1.5,1.4-2.1
       						c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.1,0.4-0.2c1.5-0.7,3-1.2,4.5-1.5c1.6-0.4,3.1-0.4,4.9-1.4c0.6-0.3,1.2-0.8,1.7-1.5
       						c1.2-1.6,1-3.8,0.8-5c-0.3-1.7-0.9-3.2-1.3-4.8c-0.4-0.6-0.5-1.3-0.5-2c0-0.8,0.3-1.9,0.9-2.7c0.4-0.5,1-1.4,1.5-1.4"/>
-      				</g>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
-      				<line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
-      			</g>
-      		</g>
-      	</g>
+              </g>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
+              <line class="st5" fill="none" stroke="#00ABE5" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
+            </g>
+          </g>
+        </g>
       </g>
       <g id="Layer_1_1_">
-      	<g>
-      		<polyline class="st6" fill="none" stroke="#0072C6" stroke-width="3" stroke-miterlimit="10" points="9.7,4.5 17,11.8 17,34.4 		"/>
-      		<polyline class="st6" fill="none" stroke="#0072C6" stroke-width="3" stroke-miterlimit="10" points="30.3,4.5 23,11.8 23,34.4 		"/>
-      	</g>
-      	<g>
-      		<line class="st7" fill="none" stroke="#0072C6" stroke-width="2" stroke-miterlimit="10" x1="33.8" y1="10" x2="27.4" y2="16.5"/>
-      		<line class="st7" fill="none" stroke="#0072C6" stroke-width="2" stroke-miterlimit="10" x1="6.2" y1="10" x2="12.7" y2="16.5"/>
-      	</g>
+        <g>
+          <polyline class="st6" fill="none" stroke="#0072C6" stroke-width="3" stroke-miterlimit="10" points="9.7,4.5 17,11.8 17,34.4 		"/>
+          <polyline class="st6" fill="none" stroke="#0072C6" stroke-width="3" stroke-miterlimit="10" points="30.3,4.5 23,11.8 23,34.4 		"/>
+        </g>
+        <g>
+          <line class="st7" fill="none" stroke="#0072C6" stroke-width="2" stroke-miterlimit="10" x1="33.8" y1="10" x2="27.4" y2="16.5"/>
+          <line class="st7" fill="none" stroke="#0072C6" stroke-width="2" stroke-miterlimit="10" x1="6.2" y1="10" x2="12.7" y2="16.5"/>
+        </g>
       </g>
     </symbol>
 

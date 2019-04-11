@@ -3,6 +3,8 @@
 
 .NG-icon,
 .SL-icon,
+.GN-icon,
+.LR-icon,
 .unknown-icon {
   width: 30px;
   height: 30px;
@@ -17,6 +19,14 @@
 
 .NG-icon {
   fill: $nigeria-green;
+}
+
+.GN-icon {
+  fill: $guinea-yellow;
+}
+
+.LR-icon {
+  fill: $liberia-red;
 }
 
 .unknown-icon {
