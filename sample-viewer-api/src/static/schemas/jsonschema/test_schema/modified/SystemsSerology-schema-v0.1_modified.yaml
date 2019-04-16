@@ -1,0 +1,106 @@
+- '@id': cvisb:SystemsSerology
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a Systems Serology Experiment in the Center for
+    Viral Systems Biology
+  rdfs:label: SystemsSerology
+  rdfs:subClassOf:
+    '@id': schema:Thing
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      assayReadout:
+        enum:
+        - phagocytic score
+        - C3 deposition MFI
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      assayResult:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      assayType:
+        enum:
+        - ADNP
+        - ADCD
+        - ADCP
+        - NKD-CD107a
+        - NKD-IFNg
+        - NKD-MIP-1b
+        items:
+        - type: string
+        type: array
+      sampleDilution:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+    required:
+    - assayType
+    type: object
+- '@id': cvisb:assayType
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: 'Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, NKD-CD107a,
+    NKD-IFNg, NKD-MIP-1b'
+  rdfs:label: assayType
+  schema:Enumeration:
+  - ADNP
+  - ADCD
+  - ADCP
+  - NKD-CD107a
+  - NKD-IFNg
+  - NKD-MIP-1b
+  schema:domainIncludes:
+  - '@id': cvisb:SystemsSerology
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:assayReadout
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Type of assay readout, such as phagocytic score, C3 deposition MFI
+  rdfs:label: assayReadout
+  schema:Enumeration:
+  - phagocytic score
+  - C3 deposition MFI
+  schema:domainIncludes:
+  - '@id': cvisb:SystemsSerology
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:sampleDilution
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Dilution of sample
+  rdfs:label: sampleDilution
+  schema:domainIncludes:
+  - '@id': cvisb:SystemsSerology
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:assayResult
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Assay result
+  rdfs:label: assayResult
+  schema:domainIncludes:
+  - '@id': cvisb:SystemsSerology
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text

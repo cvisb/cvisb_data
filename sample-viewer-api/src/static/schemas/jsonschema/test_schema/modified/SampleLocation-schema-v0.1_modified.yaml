@@ -1,0 +1,147 @@
+- '@id': cvisb:SampleLocation
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a the location of a sample in the Center for Viral
+    Systems Biology
+  rdfs:label: SampleLocation
+  rdfs:subClassOf:
+    '@id': schema:Place
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      dateModified:
+        format: cvisb-date
+        type: string
+      freezerBox:
+        oneOf:
+        - type: string
+        - type: 'null'
+      freezerBoxCell:
+        oneOf:
+        - type: string
+        - type: 'null'
+      freezerID:
+        oneOf:
+        - type: string
+        - type: 'null'
+      freezerRack:
+        oneOf:
+        - type: string
+        - type: 'null'
+      lab:
+        enum:
+        - KGH
+        - TSRI-Andersen
+        - MGH-Alter
+        - TSRI-Briney
+        - TSRI-Sullivan
+        - Tulane-Schieffelin
+        - Tulane-Garry
+        type: string
+      numAliquots:
+        type: integer
+      updatedBy:
+        oneOf:
+        - type: string
+        - type: 'null'
+    required:
+    - lab
+    - numAliquots
+    - dateModified
+    type: object
+- '@id': cvisb:lab
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Current location of sample
+  rdfs:label: lab
+  schema:Enumeration:
+  - KGH
+  - TSRI-Andersen
+  - MGH-Alter
+  - TSRI-Briney
+  - TSRI-Sullivan
+  - Tulane-Schieffelin
+  - Tulane-Garry
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:numAliquots
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Number of aliquots for a particular sampleID at a particular lab location.
+    If sample has been used up, numAliquots = 0
+  rdfs:label: numAliquots
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Integer
+- '@id': cvisb:freezerID
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Freezer in which the sample is located within the lab.
+  rdfs:label: freezerID
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:freezerRack
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Rack in the freezer in which the sample is located within the lab.
+  rdfs:label: freezerRack
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:freezerBox
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Box in the rack/freezer in which the sample is located within the
+    lab.
+  rdfs:label: freezerBox
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:freezerBoxCell
+  '@type': rdf:Property
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Cell within the freezer box in which the sample is located within
+    the lab, for example "C12".
+  rdfs:label: freezerBoxCell
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date of last update (YYYY-MM-DD)
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:updatedBy
+  '@type': rdf:Property
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Person who updated the sample location
+  rdfs:label: updatedBy
+  schema:domainIncludes:
+  - '@id': cvisb:SampleLocation
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text

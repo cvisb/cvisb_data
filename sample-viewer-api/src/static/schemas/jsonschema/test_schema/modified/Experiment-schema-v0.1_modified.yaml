@@ -1,0 +1,213 @@
+- '@id': cvisb:Experiment
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing an Experiment in the Center for Viral Systems
+    Biology
+  rdfs:label: Experiment
+  rdfs:subClassOf:
+    '@id': schema:Thing
+  root_entity: true
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      _version:
+        oneOf:
+        - type: number
+        - type: 'null'
+      analysisCode:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/SoftwareSourceCode.json
+          type: array
+      batchID:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      dateModified:
+        format: cvisb-date
+        type: string
+      description:
+        oneOf:
+        - type: string
+        - type: 'null'
+      experimentDate:
+        oneOf:
+        - format: cvisb-date
+          type: string
+        - format: cvisb-daterange
+          type: string
+      experimentID:
+        type: string
+      measurementTechnique:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      name:
+        oneOf:
+        - type: string
+        - type: 'null'
+      patientIDs:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      sampleIDs:
+        items:
+        - type: string
+        type: array
+    required:
+    - experimentID
+    - experimentDate
+    - dateModified
+    - sampleIDs
+    type: object
+- '@id': cvisb:experimentID
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: unique experiment ID created by the lab doing the experiment. One
+    experiment can contain multiple batches
+  rdfs:label: experimentID
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:batchID
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: unique batch ID created by the lab doing the experiment
+  rdfs:label: batchID
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:name
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Descriptive name of the experiment
+  rdfs:label: name
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:name
+- '@id': cvisb:description
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Short description of the experiment
+  rdfs:label: description
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:description
+- '@id': cvisb:experimentDate
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date or Date range of the Experiment
+  rdfs:label: experimentDate
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  - '@id': cvisb:DateRange
+- '@id': cvisb:measurementTechnique
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A technique or technology used in an Experiment (or Dataset or DataDownload,
+    DataCatalog), corresponding to the method used for measuring the corresponding
+    variable(s) (described using variableMeasured).
+  rdfs:label: measurementTechnique
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:measurementTechnique
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date of last update (YYYY-MM-DD)
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:_version
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version number of experiment, auto-assigned by CViSB database
+  rdfs:label: _version
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': schema:Number
+  schema:sameAs:
+    '@id': schema:version
+- '@id': cvisb:analysisCode
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: 'Computer programming source code. Example: Full (compile ready) solutions,
+    code snippet samples, scripts, templates.'
+  rdfs:label: analysisCode
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': cvisb:SoftwareSourceCode
+- '@id': cvisb:sampleIDs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: List of public Samples used in the experiment
+  rdfs:label: sampleIDs
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:patientIDs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of patient IDs used within the experiment
+  rdfs:label: patientIDs
+  schema:domainIncludes:
+  - '@id': cvisb:Experiment
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text

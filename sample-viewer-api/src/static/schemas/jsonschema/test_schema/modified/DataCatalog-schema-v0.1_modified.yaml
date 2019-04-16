@@ -1,0 +1,333 @@
+- '@id': cvisb:DataCatalog
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing the DataCatalog for the Center for Viral Systems
+    Biology experiments
+  rdfs:label: RTPCRResult
+  rdfs:subClassOf:
+    '@id': schema:DataCatalog
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  schema:sameAs:
+    '@id': schema:DataCatalog
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      '@id':
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: 'null'
+      _version:
+        oneOf:
+        - type: number
+        - type: 'null'
+      alternateName:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      dataset:
+        items:
+        - type: string
+        type: array
+      dateModified:
+        format: cvisb-date
+        type: string
+      datePublished:
+        oneOf:
+        - format: cvisb-date
+          type: string
+        - type: 'null'
+      description:
+        type: string
+      funder:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      identifier:
+        oneOf:
+        - type: string
+        - type: 'null'
+      keywords:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      name:
+        type: string
+      publisher:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      sameAs:
+        oneOf:
+        - type: 'null'
+        - items:
+          - format: cvisb-url
+            type: string
+          type: array
+      schemaVersion:
+        oneOf:
+        - type: string
+        - type: 'null'
+      spatialCoverage:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Country.json
+          type: array
+      temporalCoverage:
+        oneOf:
+        - format: cvisb-daterange
+          type: string
+        - type: 'null'
+      url:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: 'null'
+    required:
+    - name
+    - description
+    - dataset
+    - dateModified
+    type: object
+- '@id': cvisb:name
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Descriptive name of the DataCatalog
+  rdfs:label: name
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:name
+- '@id': cvisb:alternateName
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: Alternate name of the DataCatalog
+  rdfs:label: alternateName
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:alternateName
+- '@id': cvisb:description
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Short summary describing a DataCatalog
+  rdfs:label: description
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:description
+- '@id': cvisb:url
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Location of a page describing the DataCatalog
+  rdfs:label: url
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:url
+- '@id': cvisb:dataset
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: list of unique internal identifiers for the datasets associated with
+    the DataCatalog
+  rdfs:label: dataset
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:dataset
+- '@id': cvisb:identifier
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: 'A unique identifier for the DataCatalog. Note: should be an internal,
+    CViSB identifier; DOIs should go in @id'
+  rdfs:label: identifier
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:@id
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: A unique identifier for the DataCatalog, preferably a DOI
+  rdfs:label: '@id'
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:sameAs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: URL to cross-reference other copies of the DataCatalog
+  rdfs:label: sameAs
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:sameAs
+- '@id': cvisb:keywords
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Comma-seperated keywords to summarize the DataCatalog
+  rdfs:label: keywords
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:keywords
+- '@id': cvisb:datePublished
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Date of first broadcast/publication
+  rdfs:label: datePublished
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:datePublished
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date on which the DataCatalog was most recently modified
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:temporalCoverage
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: The temporalCoverage of a DataCatalog indicates the period that the
+    content applies to, i.e. that it describes, either as a DateTime or as a textual
+    string indicating a time period in ISO 8601 time interval format.
+  rdfs:label: temporalCoverage
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': cvisb:DateRange
+  schema:sameAs:
+    '@id': schema:temporalCoverage
+- '@id': cvisb:spatialCoverage
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: 'The spatialCoverage of a CreativeWork indicates the place(s) which
+    are the focus of the content. It is a subproperty of contentLocation intended
+    primarily for more technical and detailed materials. For example with a DataCatalog,
+    it indicates areas that the DataCatalog describes: a DataCatalog of New York weather
+    would have spatialCoverage which was the place: the state of New York.'
+  rdfs:label: spatialCoverage
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': cvisb:Country
+  schema:sameAs:
+    '@id': schema:spatialCoverage
+- '@id': cvisb:publisher
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Publisher of this DataCatalog, usually the host organization
+  rdfs:label: publisher
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:publisher
+- '@id': cvisb:_version
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version of DataCatalog, auto-assigned by CViSB database
+  rdfs:label: _version
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:Number
+  schema:sameAs:
+    '@id': schema:version
+- '@id': cvisb:schemaVersion
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version of DataCatalog schema
+  rdfs:label: schemaVersion
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:schemaVersion
+- '@id': cvisb:funder
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A person or organization that supports (sponsors) the collection of
+    this dataset through some kind of financial contribution
+  rdfs:label: funder
+  schema:domainIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:funder

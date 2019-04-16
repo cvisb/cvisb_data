@@ -1,0 +1,504 @@
+- '@id': cvisb:Patient
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing a Patient/Person in the Center for Viral Systems
+    Biology experiments
+  rdfs:label: Patient
+  rdfs:subClassOf:
+    '@id': health:Patient
+  root_entity: true
+  schema:isPartOf:
+    '@id': https://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      _version:
+        oneOf:
+        - type: number
+        - type: 'null'
+      admitDate:
+        oneOf:
+        - format: cvisb-date
+          type: string
+        - format: cvisb-daterange
+          type: string
+        - type: 'null'
+      age:
+        oneOf:
+        - type: integer
+        - type: 'null'
+      alternateIdentifier:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      associatedSamples:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      availableData:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/ExperimentData.json
+          type: array
+      cohort:
+        enum:
+        - Ebola
+        - Lassa
+        - control
+        type: string
+      contactGroupIdentifier:
+        oneOf:
+        - type: string
+        - type: 'null'
+      contactSurvivorRelationship:
+        oneOf:
+        - type: string
+        - type: 'null'
+      country:
+        $ref: http://data.cvisb.org/jsonschema/Country.json
+      dateModified:
+        format: cvisb-date
+        type: string
+      daysOnset:
+        oneOf:
+        - type: integer
+        - type: 'null'
+      elisa:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/ELISA.json
+          type: array
+      exposureType:
+        oneOf:
+        - type: string
+        - type: 'null'
+      gID:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      gender:
+        enum:
+        - Male
+        - Female
+        - Unknown
+        oneOf:
+        - format: cvisb-gendertype
+          type: string
+        - type: 'null'
+      homeLocation:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/AdministrativeArea.json
+          type: array
+      infectionDate:
+        oneOf:
+        - format: cvisb-date
+          type: string
+        - format: cvisb-daterange
+          type: string
+        - type: 'null'
+      infectionYear:
+        oneOf:
+        - format: cvisb-daterange
+          type: string
+        - type: 'null'
+      outcome:
+        enum:
+        - control
+        - survivor
+        - contact
+        - dead
+        - unknown
+        type: string
+      patientID:
+        type: string
+      rapidDiagostics:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/RDT.json
+          type: array
+      relatedTo:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      rtpcr:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/RTPCR.json
+          type: array
+      sID:
+        oneOf:
+        - type: string
+        - type: 'null'
+      sameAs:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      symptoms:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/SymptomList.json
+          type: array
+    required:
+    - patientID
+    - dateModified
+    - cohort
+    - outcome
+    - country
+    type: object
+- '@id': cvisb:patientID
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Unique, public ID for patient
+  rdfs:label: patientID
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:alternateIdentifier
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: Alternative ID(s) used for patient (including G-number, S-number,
+    or C-numbers, available to consortia members only)
+  rdfs:label: alternateIdentifier
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:gID
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: Internal G-number used to refer to the patients when they're in the
+    acute treatment phase at KGH. For most samples, should be a single gID; however,
+    some patients have two.
+  rdfs:label: gID
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:sID
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Internal survivor ID used to refer to the patients during follow-up
+    visits. Can include either survivors (S-numbers) or contacts (C-numbers)
+  rdfs:label: sID
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:sameAs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: Alternative public ID(s) used for patient. Used to relate acute patients
+    (G-numbers) to their ID in survivor study
+  rdfs:label: sameAs
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:sameAs
+- '@id': cvisb:contactGroupIdentifier
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: ID group for patient and associated contacts
+  rdfs:label: contactGroupIdentifier
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date on which the Patient metadata was most recently modified
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:_version
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version number of patient, auto-assigned by CViSB database
+  rdfs:label: _version
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Number
+  schema:sameAs:
+    '@id': schema:version
+- '@id': cvisb:cohort
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 'Cohort for virus exposure: Ebola, Lassa, or Control'
+  rdfs:label: cohort
+  schema:Enumeration:
+  - Ebola
+  - Lassa
+  - control
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:outcome
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 'Outcome for patient: control, survivor, contact, dead'
+  rdfs:label: outcome
+  schema:Enumeration:
+  - control
+  - survivor
+  - contact
+  - dead
+  - unknown
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:country
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Country where Patient lives / was treated
+  rdfs:label: Country
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:Country
+  schema:sameAs:
+    '@id': schema:geographicArea
+- '@id': cvisb:homeLocation
+  '@type': rdf:Property
+  authenticated: true
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A contact location for a person's residence. Should include country
+    (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative
+    Unit 3), Village + displaced GPS coordinates (optional)
+  rdfs:label: homeLocation
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:AdministrativeArea
+  schema:sameAs:
+    '@id': schema:homeLocation
+- '@id': cvisb:admitDate
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Date of admission
+  rdfs:label: admitDate
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  - '@id': cvisb:DateRange
+- '@id': cvisb:infectionYear
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Approximate year of infection or contact with the virus. Based on
+    self-reporting, so take it with a grain of salt.
+  rdfs:label: infectionDate
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:DateRange
+- '@id': cvisb:infectionDate
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Approximate date / date range of infection or contact with the virus.
+    Based on self-reporting, so take it with a grain of salt.
+  rdfs:label: infectionDate
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  - '@id': cvisb:DateRange
+- '@id': cvisb:daysOnset
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Number of days between onset of symptoms and hospital admission
+  rdfs:label: daysOnset
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Integer
+- '@id': cvisb:gender
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Gender
+  rdfs:label: gender
+  schema:Enumeration:
+  - Male
+  - Female
+  - Unknown
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:GenderType
+  schema:sameAs:
+    '@id': schema:gender
+- '@id': cvisb:relatedTo
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: A list of related household contacts's public patientIDs
+  rdfs:label: relatedTo
+  schema:domainIncludes:
+  - '@id': schema:Text
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:exposureType
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: For contacts, the type or level of exposure they had to the infected
+    person.
+  rdfs:label: exposureType
+  schema:domainIncludes:
+  - '@id': schema:Text
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:contactSurvivorRelationship
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: For contacts, how they are related to the infected person.
+  rdfs:label: contactSurvivorRelationship
+  schema:domainIncludes:
+  - '@id': schema:Text
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:age
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  maximum: 100
+  minimum: 1
+  owl:cardinality: one
+  rdfs:comment: Age at time of first presentation
+  rdfs:label: age
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': schema:Integer
+- '@id': cvisb:associatedSamples
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of Sample IDs associated with the patient
+  rdfs:label: associatedSamples
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+- '@id': cvisb:availableData
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of available data and results (where known) for the patient
+  rdfs:label: availableData
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:ExperimentData
+- '@id': cvisb:elisa
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the
+    patient
+  rdfs:label: elisa
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:ELISA
+- '@id': cvisb:rapidDiagostics
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of rapid Ebola/Lassa dipstick diagnostic results for the patient
+  rdfs:label: rapidDiagostics
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:RDT
+- '@id': cvisb:rtpcr
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of RT-PCR results for the patient
+  rdfs:label: rtpcr
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:RTPCR
+- '@id': cvisb:symptoms
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: List of symptoms for the patient
+  rdfs:label: symptoms
+  schema:domainIncludes:
+  - '@id': cvisb:Patient
+  schema:rangeIncludes:
+  - '@id': cvisb:SymptomList
