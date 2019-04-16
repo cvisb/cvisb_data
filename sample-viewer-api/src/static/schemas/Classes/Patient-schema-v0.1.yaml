@@ -225,7 +225,7 @@
 # Approximate year of infection
 - "@id":                 cvisb:infectionYear
   "@type":               rdf:Property
-  rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
+  rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.
   rdfs:label:            infectionDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
