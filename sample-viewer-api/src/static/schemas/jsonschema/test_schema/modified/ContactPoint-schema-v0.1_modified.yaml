@@ -18,7 +18,9 @@
         - customer support
         type: string
       email:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       url:
         type: string
     required:

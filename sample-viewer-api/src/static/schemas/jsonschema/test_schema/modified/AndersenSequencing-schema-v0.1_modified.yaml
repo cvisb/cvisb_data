@@ -15,28 +15,43 @@
         - format: cvisb-url
           type: string
         - type: string
+        - type: 'null'
       analysisVersion:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       assemblyReference:
         oneOf:
         - format: cvisb-url
           type: string
         - type: string
+        - type: 'null'
       libraryKit:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       libraryVersion:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       metagenomeDBVersion:
         oneOf:
         - format: cvisb-url
           type: string
         - type: string
+        - type: 'null'
       metagenomeDatabase:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       replicate:
-        type: integer
+        oneOf:
+        - type: integer
+        - type: 'null'
       variantCallingType:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
     type: object
 - '@id': cvisb:analysisVersion
   '@type': rdf:Property

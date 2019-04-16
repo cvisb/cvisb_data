@@ -14,7 +14,7 @@
     properties:
       alternateName:
         oneOf:
-        - type: string
+        - type: 'null'
         - items:
           - type: string
           type: array
@@ -22,17 +22,27 @@
         enum:
         - SL
         - NG
+        - LR
+        - GN
         type: string
       name:
         enum:
         - Sierra Leone
         - Nigeria
-        type: string
+        - Liberia
+        - Guinea
+        oneOf:
+        - type: string
+        - type: 'null'
       url:
         enum:
         - https://www.iso.org/obp/ui/#iso:code:3166:SL
         - https://www.iso.org/obp/ui/#iso:code:3166:NG
-        type: string
+        - https://www.iso.org/obp/ui/#iso:code:3166:LR
+        - https://www.iso.org/obp/ui/#iso:code:3166:GN
+        oneOf:
+        - type: string
+        - type: 'null'
     required:
     - identifier
     type: object
@@ -45,6 +55,8 @@
   schema:Enumeration:
   - SL
   - NG
+  - LR
+  - GN
   schema:domainIncludes:
   - '@id': cvisb:Country
   schema:rangeIncludes:
@@ -61,6 +73,8 @@
   schema:Enumeration:
   - https://www.iso.org/obp/ui/#iso:code:3166:SL
   - https://www.iso.org/obp/ui/#iso:code:3166:NG
+  - https://www.iso.org/obp/ui/#iso:code:3166:LR
+  - https://www.iso.org/obp/ui/#iso:code:3166:GN
   schema:domainIncludes:
   - '@id': cvisb:Country
   schema:rangeIncludes:
@@ -77,6 +91,8 @@
   schema:Enumeration:
   - Sierra Leone
   - Nigeria
+  - Liberia
+  - Guinea
   schema:domainIncludes:
   - '@id': cvisb:Country
   schema:rangeIncludes:

@@ -215,7 +215,7 @@ class QueryHandler(UserAuth, QueryHandler):
     def _pre_query_builder_GET_hook(self, options):
         _user = self.get_current_user() or {}
         options['esqb_kwargs']['entity'] = self.entity
-        options['esqb_kwargs']['cvisb_user_list'] = self.web_settings.CVISB_USER_LIST
+        options['esqb_kwargs']['cvisb_user_list'] = self.web_settings.MASTER_READ_LIST
         options['esqb_kwargs']['cvisb_user'] = _user
         options['esqb_kwargs']['client'] = self.web_settings.es_client
         options['esqb_kwargs']['cvisb_endpoints'] = self.web_settings.CVISB_ENDPOINTS   

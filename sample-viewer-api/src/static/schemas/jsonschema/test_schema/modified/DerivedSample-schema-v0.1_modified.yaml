@@ -12,15 +12,14 @@
     properties:
       primarySampleDate:
         oneOf:
+        - $ref: http://dev.cvisb.org/jsonschema/DateRange.json
         - format: cvisb-date
           type: string
-        - $ref: http://dev.cvisb.org/jsonschema/DateRange.json
+        - type: 'null'
       sourceSampleID:
-        oneOf:
+        items:
         - type: string
-        - items:
-          - type: string
-          type: array
+        type: array
       sourceSampleType:
         enum:
         - blood_purple-EDTA
@@ -41,11 +40,9 @@
         - viralRNA
         - totalRNA
         - DNA
-        oneOf:
+        items:
         - type: string
-        - items:
-          - type: string
-          type: array
+        type: array
     required:
     - sourceSampleID
     - sourceSampleType
