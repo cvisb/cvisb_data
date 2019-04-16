@@ -47,6 +47,8 @@
   schema:Enumeration:
                           - SL
                           - NG
+                          - LR
+                          - GN
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -81,6 +83,8 @@
   schema:Enumeration:
                           - Sierra Leone
                           - Nigeria
+                          - Liberia
+                          - Guinea
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
