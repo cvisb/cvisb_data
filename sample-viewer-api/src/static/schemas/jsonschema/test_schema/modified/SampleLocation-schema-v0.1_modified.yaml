@@ -14,13 +14,21 @@
         format: cvisb-date
         type: string
       freezerBox:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       freezerBoxCell:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       freezerID:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       freezerRack:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       lab:
         enum:
         - KGH
@@ -34,7 +42,9 @@
       numAliquots:
         type: integer
       updatedBy:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
     required:
     - lab
     - numAliquots

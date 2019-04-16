@@ -29,7 +29,7 @@
     "@id":               cvisb:Thing
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-
+  root_entity:           true
 # id
 - "@id":                 cvisb:sampleID
   "@type":               rdf:Property
@@ -156,7 +156,7 @@
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
     - "@id":             schema:Date
-    - "@id":             cvsib:DateRange
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           required
   authenticated:         true

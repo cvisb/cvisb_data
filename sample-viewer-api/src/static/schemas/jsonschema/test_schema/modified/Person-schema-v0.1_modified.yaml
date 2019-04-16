@@ -13,13 +13,21 @@
     $schema: http://json-schema.org/draft-04/schema#
     properties:
       additionalName:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       familyName:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       givenName:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       name:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
     type: object
 - '@id': cvisb:givenName
   '@type': rdf:Property

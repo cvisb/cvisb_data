@@ -3,7 +3,6 @@ from elasticsearch.helpers import scan
 from copy import copy
 import logging
 
-
 def get_all_hits(_index, _query, _client, _field, _doc_type):
     #this_query = copy(_query)
     _query['_source'] = [_field]

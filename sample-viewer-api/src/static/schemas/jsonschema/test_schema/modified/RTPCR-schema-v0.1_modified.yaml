@@ -17,7 +17,9 @@
         - indeterminate
         type: string
       RTPCRvalue:
-        type: number
+        oneOf:
+        - type: number
+        - type: 'null'
       virus:
         enum:
         - Ebola

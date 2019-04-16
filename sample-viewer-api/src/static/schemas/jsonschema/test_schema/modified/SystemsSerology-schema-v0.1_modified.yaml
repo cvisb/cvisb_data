@@ -15,13 +15,13 @@
         - phagocytic score
         - C3 deposition MFI
         oneOf:
-        - type: string
+        - type: 'null'
         - items:
           - type: string
           type: array
       assayResult:
         oneOf:
-        - type: string
+        - type: 'null'
         - items:
           - type: string
           type: array
@@ -33,14 +33,12 @@
         - NKD-CD107a
         - NKD-IFNg
         - NKD-MIP-1b
-        oneOf:
+        items:
         - type: string
-        - items:
-          - type: string
-          type: array
+        type: array
       sampleDilution:
         oneOf:
-        - type: string
+        - type: 'null'
         - items:
           - type: string
           type: array

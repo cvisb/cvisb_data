@@ -11,15 +11,25 @@
     $schema: http://json-schema.org/draft-04/schema#
     properties:
       abstarVersion:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       analysisVersion:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       germlineDBVersion:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       germlineDatabase:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       primerSet:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
     type: object
 - '@id': cvisb:primerSet
   '@type': rdf:Property

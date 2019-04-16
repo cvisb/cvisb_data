@@ -11,15 +11,25 @@
     $schema: http://json-schema.org/draft-04/schema#
     properties:
       instrumentID:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       readLength:
-        type: integer
+        oneOf:
+        - type: integer
+        - type: 'null'
       sequencingCenter:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       sequencingPlatform:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       sequencingTechnology:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
     type: object
 - '@id': cvisb:sequencingTechnology
   '@type': rdf:Property

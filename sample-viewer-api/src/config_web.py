@@ -18,8 +18,8 @@ CVISB_ENDPOINTS = {
     "sample": {
         "cache_key": "Sample",
         "index": 'sample_metadata_current',
-        "public_permitted_search_fields": ['sampleID'],
-        "public_excluded_return_fields": ['sampleID']
+        "public_permitted_search_fields": ['species', 'protocolURL', 'freezerRack', 'freezerBox', 'derivedIndex', 'AVLinactivated', 'freezingBuffer', 'dateModified', 'visitCode', 'protocolVersion', 'updatedBy', 'sampleType', 'freezerID', 'freezerBoxCell', 'dilutionFactor', 'numAliquots', 'patientID'],
+        "public_excluded_return_fields": ['isolationDate', 'description', 'alternateIdentifier', 'location.*', 'privatePatientID', 'sampleID', 'name', 'sampleLabel']
     },
     "datadownload": {
         "cache_key": "DataDownload",
@@ -42,8 +42,8 @@ CVISB_ENDPOINTS = {
     "patient": {
         "cache_key": "Patient",
         "index": 'patient_metadata_current',
-        "public_permitted_search_fields": [],
-        "public_excluded_return_fields": []
+        "public_permitted_search_fields": ['availableData.*', 'cohort', 'sameAs', 'relatedTo', 'infectionYear', 'elisa.*', 'dateModified', 'outcome', 'contactGroupIdentifier', 'gender', 'associatedSamples', 'rtpcr.*', 'country.*', 'symptoms.*', 'rapidDiagostics.*', 'patientID', 'age', 'daysOnset'],
+        "public_excluded_return_fields": ['exposureType', 'alternateIdentifier', 'admitDate', 'infectionDate', 'homeLocation.*', 'contactSurvivorRelationship', 'gID', 'sID']
     }
 }
 

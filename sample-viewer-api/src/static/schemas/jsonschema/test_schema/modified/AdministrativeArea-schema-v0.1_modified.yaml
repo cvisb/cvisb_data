@@ -32,15 +32,19 @@
         - 2
         - 3
         - 4
-        type: integer
+        oneOf:
+        - type: integer
+        - type: 'null'
       alternateName:
         oneOf:
-        - type: string
+        - type: 'null'
         - items:
           - type: string
           type: array
       identifier:
-        type: string
+        oneOf:
+        - type: string
+        - type: 'null'
       name:
         enum:
         - Southern
