@@ -1,0 +1,502 @@
+- '@id': cvisb:Dataset
+  '@type': rdfs:Class
+  rdfs:comment: A schema describing Dataset in the Center for Viral Systems Biology
+  rdfs:label: Dataset
+  rdfs:subClassOf:
+    '@id': schema:Dataset
+  root_entity: true
+  schema:isPartOf:
+    '@id': http://schema.cvisb.org
+  validation:
+    $schema: http://json-schema.org/draft-04/schema#
+    properties:
+      '@id':
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: 'null'
+      _version:
+        oneOf:
+        - type: number
+        - type: 'null'
+      author:
+        items:
+        - $ref: http://data.cvisb.org/jsonschema/Organization.json
+        type: array
+      citation:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      dataDownloadIDs:
+        items:
+        - type: string
+        type: array
+      dateModified:
+        format: cvisb-date
+        type: string
+      datePublished:
+        oneOf:
+        - format: cvisb-date
+          type: string
+        - type: 'null'
+      description:
+        type: string
+      distribution:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/DataDownload.json
+          type: array
+      funder:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      identifier:
+        oneOf:
+        - type: string
+        - type: 'null'
+      includedInDataCatalog:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/DataCatalog.json
+          type: array
+      keywords:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+      license:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: 'null'
+      measurementTechnique:
+        enum:
+        - HLA sequencing
+        - viral sequencing
+        - metagenome sequencing
+        - BCR sequencing
+        - TCR sequencing
+        - Systems Serology
+        - Metabolomics
+        - other
+        items:
+        - type: string
+        type: array
+      name:
+        type: string
+      publication:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/ScholarlyArticle.json
+          type: array
+      publisher:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Organization.json
+          type: array
+      sameAs:
+        oneOf:
+        - type: 'null'
+        - items:
+          - format: cvisb-url
+            type: string
+          type: array
+      schemaVersion:
+        oneOf:
+        - type: string
+        - type: 'null'
+      sourceCode:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/SoftwareSourceCode.json
+          type: array
+      spatialCoverage:
+        oneOf:
+        - type: 'null'
+        - items:
+          - $ref: http://data.cvisb.org/jsonschema/Country.json
+          type: array
+      temporalCoverage:
+        oneOf:
+        - format: cvisb-daterange
+          type: string
+        - type: 'null'
+      url:
+        oneOf:
+        - format: cvisb-url
+          type: string
+        - type: 'null'
+      variableMeasured:
+        oneOf:
+        - type: 'null'
+        - items:
+          - type: string
+          type: array
+    required:
+    - name
+    - description
+    - measurementTechnique
+    - dateModified
+    - author
+    - dataDownloadIDs
+    type: object
+- '@id': cvisb:name
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Descriptive name of the dataset
+  rdfs:label: name
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:name
+- '@id': cvisb:description
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Short summary describing a dataset
+  rdfs:label: description
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:description
+- '@id': cvisb:measurementTechnique
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: A technique or technology used in a Dataset (or DataDownload, DataCatalog),
+    corresponding to the method used for measuring the corresponding variable(s) (described
+    using variableMeasured).
+  rdfs:label: measurementTechnique
+  schema:Enumeration:
+  - HLA sequencing
+  - viral sequencing
+  - metagenome sequencing
+  - BCR sequencing
+  - TCR sequencing
+  - Systems Serology
+  - Metabolomics
+  - other
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:measurementTechnique
+- '@id': cvisb:variableMeasured
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: A technique or technology used in a Dataset (or DataDownload, DataCatalog),
+    corresponding to the method used for measuring the corresponding variable(s) (described
+    using variableMeasured).
+  rdfs:label: variableMeasured
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:variableMeasured
+- '@id': cvisb:url
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: Location of a page describing the dataset
+  rdfs:label: url
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:url
+- '@id': cvisb:includedInDataCatalog
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A data catalog which contains this dataset
+  rdfs:label: includedInDataCatalog
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:DataCatalog
+  schema:sameAs:
+    '@id': schema:includedInDataCatalog
+- '@id': cvisb:identifier
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: 'A unique identifier for the Dataset. Note: should be an internal,
+    CViSB identifier; DOIs should go in @id'
+  rdfs:label: identifier
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:@id
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: A unique identifier for the dataset, preferably a DOI
+  rdfs:label: '@id'
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:identifier
+- '@id': cvisb:sameAs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: URL to cross-reference other copies of the dataset
+  rdfs:label: sameAs
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:sameAs
+- '@id': cvisb:keywords
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Comma-seperated keywords to summarize the dataset
+  rdfs:label: keywords
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': xsd:string
+  schema:sameAs:
+    '@id': schema:keywords
+- '@id': cvisb:datePublished
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Date of first broadcast/publication
+  rdfs:label: datePublished
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:datePublished
+- '@id': cvisb:dateModified
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Date on which the dataset was most recently modified
+  rdfs:label: dateModified
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Date
+  schema:sameAs:
+    '@id': schema:dateModified
+- '@id': cvisb:temporalCoverage
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: The temporalCoverage of a dataset indicates the period that the content
+    applies to, i.e. that it describes, either as a DateTime or as a textual string
+    indicating a time period in ISO 8601 time interval format.
+  rdfs:label: temporalCoverage
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:DateRange
+  schema:sameAs:
+    '@id': schema:temporalCoverage
+- '@id': cvisb:spatialCoverage
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: 'The spatialCoverage of a CreativeWork indicates the place(s) which
+    are the focus of the content. It is a subproperty of contentLocation intended
+    primarily for more technical and detailed materials. For example with a Dataset,
+    it indicates areas that the dataset describes: a dataset of New York weather would
+    have spatialCoverage which was the place: the state of New York.'
+  rdfs:label: spatialCoverage
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:Country
+  schema:sameAs:
+    '@id': schema:spatialCoverage
+- '@id': cvisb:author
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: Author of this dataset, can be a person or an organization
+  rdfs:label: author
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:author
+- '@id': cvisb:publisher
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Publisher of this dataset, usually the host organization
+  rdfs:label: publisher
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:publisher
+- '@id': cvisb:_version
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version of dataset, auto-assigned by CViSB database
+  rdfs:label: _version
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Number
+  schema:sameAs:
+    '@id': schema:version
+- '@id': cvisb:schemaVersion
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: Version of Dataset schema
+  rdfs:label: schemaVersion
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:schemaVersion
+- '@id': cvisb:distribution
+  '@type': rdf:Property
+  authenticated: false
+  marginality: optional
+  owl:cardinality: many
+  rdfs:comment: A downloadable form of this dataset, at a specific location, in a
+    specific format.
+  rdfs:label: distribution
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:DataDownload
+- '@id': cvisb:dataDownloadIDs
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: many
+  rdfs:comment: References to the CViSB ID for the DataDownload, where elements of
+    the dataset can be downloaded.
+  rdfs:label: dataDownloadIDs
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:sourceCode
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: 'Computer programming source code. Example: Full (compile ready) solutions,
+    code snippet samples, scripts, templates.'
+  rdfs:label: sourceCode
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:SoftwareSourceCode
+- '@id': cvisb:publication
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Journal article or other publication associated with the dataset (stored
+    as an object, not a string)
+  rdfs:label: publication
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:ScholarlyArticle
+  schema:sameAs:
+    '@id': schema:publication
+- '@id': cvisb:citation
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: Citation string (not an object) for the journal article or other publication
+    associated with the dataset
+  rdfs:label: citation
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:Text
+  schema:sameAs:
+    '@id': schema:citation
+- '@id': cvisb:funder
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: many
+  rdfs:comment: A person or organization that supports (sponsors) the collection of
+    this dataset through some kind of financial contribution
+  rdfs:label: funder
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': cvisb:Organization
+  schema:sameAs:
+    '@id': schema:funder
+- '@id': cvisb:license
+  '@type': rdf:Property
+  authenticated: false
+  marginality: recommended
+  owl:cardinality: one
+  rdfs:comment: A license document that applies to this content, typically indicated
+    by URL.
+  rdfs:label: license
+  schema:domainIncludes:
+  - '@id': cvisb:Dataset
+  schema:rangeIncludes:
+  - '@id': schema:URL
+  schema:sameAs:
+    '@id': schema:license
