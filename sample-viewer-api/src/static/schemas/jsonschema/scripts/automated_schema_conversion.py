@@ -24,7 +24,8 @@ SCHEMA_ROOT_TYPE_MAP = {
     'schema:DateTime': {'type': 'string', 'format': 'date-time'},
     'schema:Boolean': {'type': 'boolean'},
     'schema:Integer': {'type': 'integer'},
-    'schema:Number': {'type': 'number'}
+    'schema:Number': {'type': 'number'},
+    'cvisb:DateRange': {'type': 'string', 'format': 'cvisb-daterange'}
 }
 
 def setup_yaml():
@@ -56,8 +57,8 @@ def main():
             except yaml.YAMLError as exc:
                 error_file.write("File {f} failed loading with error {e}....  Skipping conversion...\n\n".format(f=_file, e=exc))
                 error_file.write("*"*80 + '\n\n')
-                continue 
- 
+                continue
+
             if not ((isinstance(yaml_json, list)) or ('@graph' in yaml_json and isinstance(yaml_json['@graph'], list))):
                 error_file.write("Unrecognized yaml structure for {f}.  File must be a list of items at the document root or under @graph key with the root item first to use conversion utility.  Skipping file conversion\n\n".format(f=_file))
                 error_file.write("*"*80 + '\n\n')
@@ -92,7 +93,7 @@ def main():
                 if 'schema:rangeIncludes' not in _obj:
                     error_file.write("Missing rangeIncludes in field {f}, skipping...\n".format(f=_id))
                     continue
-                
+
                 _sub_schema = {'oneOf': []}
 
                 if isinstance(_obj['schema:rangeIncludes'], dict):
@@ -108,13 +109,17 @@ def main():
 
                 _sub_schema['oneOf'] = [json.loads(x) for x in list(set([json.dumps(y, sort_keys=True) for y in _sub_schema['oneOf']]))]
 
-                if _many:
-                    tmp = _sub_schema['oneOf']
-                    if tmp:
-                        tmp.append({'type': 'array', 'items': copy.deepcopy(tmp)})
-                        _sub_schema['oneOf'] = tmp
+                if _many and _sub_schema['oneOf']:
+                    _sub_schema = {'type': 'array', 'items': _sub_schema['oneOf']}
 
-                if len(_sub_schema['oneOf']) == 1:
+                if _required:
+                    _ret['required'].append(_id)
+                elif 'oneOf' in _sub_schema:
+                    _sub_schema['oneOf'].append({"type": "null"})
+                else:
+                    _sub_schema = {'oneOf': [{"type": "null"}, _sub_schema]}
+
+                if ('oneOf' in _sub_schema) and len(_sub_schema['oneOf']) == 1:
                     _sub_schema = _sub_schema['oneOf'][0]
 
                 if 'schema:Enumeration' in _obj:
@@ -122,8 +127,6 @@ def main():
 
                 _ret['properties'][_id] = _sub_schema
 
-                if _required:
-                    _ret['required'].append(_id)
 
             if len(_ret['required']) == 0:
                 _ret.pop('required')
