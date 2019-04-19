@@ -3,11 +3,11 @@
 # And convert to a long dataset from wide
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/cvisb_patient_roster")
 from getHLApatients import cleanCohort, cleanOutcome, cleanCountry, getAltIDs
 import re
 
-import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-09_Genotype_calls_PRIVATE.csv"
+import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/HLA/HLA_genotypeCalls_v1_2019-01-09_PRIVATE.csv"
 # import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-29_Genotype_calls.csv"
 export_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer/src/assets/data/hla_data.json"
 
@@ -51,9 +51,9 @@ def interpretID(id):
     if gID:
         return(gID[1] + "-" + gID[2])
     # Verified with Karthik that 1951 is G-1951 (1 April 2019)
-    g1951 = re.match("^1951$", id)
+    g1951 = re.match("^(1951)$", id)
     if g1951:
-        return("G-" + gID[1])
+        return("G-" + g1951[1])
     goodS = re.match("^(S)\-([0-9][0-9][0-9])$", id)
     if goodS:
         return(goodS[1] + "-" + goodS[2])

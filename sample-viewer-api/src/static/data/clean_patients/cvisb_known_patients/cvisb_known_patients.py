@@ -1,40 +1,60 @@
-import pandas as pd
-import os as os
-import re
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data")
-
+# <<< cvisb_known_patients.py >>>
+# @name:        cvisb_known_patients
+# @summary:     Compiles together lists of patients known within CViSB, as of February 2019
+# @description: Merges together various inventories of samples, data, and patients that have been analyzed or used
+#               somehow within the CViSB universe, as of ~ February 2019.
+#               Note: SHOULD NOT BE CONSIDERED DEFINITIVE; used merely as a cross-check with what Tulane has provided, to get a sense
+#               of what patient data is missing.  Outcome/cohort are not verified, and assumptions are made when sample IDs (and not patient IDs) are listed.
+#               Note: references to file imports are hardcoded, and cleanup functions haven't been refactored to use the same modules.
+#               Code is therefore somewhat brittle and potentially not sync'd with other patient pipeline, but this is used mainly as
+#               a crosscheck to get a sense of what is missing and isn't used in the CViSB website.
+# @inputs:
+# @outputs:
+# @examples:
+# @author:      Laura Hughes, lhughes@scripps.edu
+# @dateModified: 3 April 2019
+#
 # As of 2019-01-31, creating list of paitents from all sources of patient info:
 # 1) HLA data (from Karthik)
 # 2) Systems Serology data (from Bonnie)
-# 3) July 2018 SL trip (samples) (from Matthias)
-# 4) January 2019 SL trip (samples) (from Matthias)
-# 5) Kristian's previously compiled list of HLA
-# Brian's roster of patients
-# 6) Random RNA/DNA extraction list from Matthias
-output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-28_patients_PRIVATE"
+# 3a) July 2018 SL trip (samples) (from Matthias)
+# 3b/c) January 2019 SL trip (samples) (from Matthias)
+# 4) Kristian's previously compiled list of HLA
+# 5) Random RNA/DNA extraction list from Matthias
+# 6) Brian's roster of patients
+# 7) Matthias's wishlist before Jan 2019 trip-- things he knows about that he wants more info about
+# 8) Karthik's list of preveiously virally sequenced lassa patients (from Broad)
+
+import pandas as pd
+import os as os
+import re
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
+
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_PRIVATE"
 
 # [1] HLA data
-import getHLApatients as hla
+import cvisb_known_patients.getHLApatients as hla
 
 hla.hla_df['source'] = 'HLA_karthik'
 hla.hla_df
-# hla.hla_df.drop('availableData', axis=1, inplace= True)
+hla.hla_df.drop('availableData', axis=1, inplace= True)
 
 df1 = hla.hla_df
 
 # [2] Systems Serology data
-import getSerologyPatients as ss
+import cvisb_known_patients.getSerologyPatients as ss
 ss.sero['source'] = 'serology'
 
 df2 = ss.sero[['patientID', 'alternateIdentifier', 'cohort', 'outcome', 'source']]
 
 # [3/4] Sample rosters
-from getSampleRosters import samples
+from cvisb_known_patients.getSampleRosters import samples
 
 df3 = samples
 
+df3.sample(4)
 # [5] Previously compiled lists
-from getRandomPatientLists import kdf, mdf, bdf, wl, lsv
+from cvisb_known_patients.getRandomPatientLists import kdf, mdf, bdf, wl, lsv
 df4 = kdf
 df5 = mdf
 df6 = bdf
@@ -65,7 +85,7 @@ df.source.value_counts(dropna= False)
 # df[df['country'] != 'Nigeria'].drop('_merge', axis=1).to_csv(output_file+".csv")
 
 # Last check: What patients Matthias requested in September 2018
-crosscheck_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/samples_needing_metadata_Sept2018_LDH-MP-BG_PRIVATE.xlsx"
+crosscheck_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/samples_needing_metadata_Sept2018_LDH-MP-BG_PRIVATE.xlsx"
 cross = pd.read_excel(crosscheck_file)
 
 cross = cross[cross.requester == 'Matthias']
@@ -79,8 +99,6 @@ test._merge.value_counts()
 test[test._merge == 'right_only']
 
 # [AGGREGATE DOWN] -----------------------------------------------------------------------
-# "G1000".replace("G", "G-")
-
 def getG(df):
     patientG = findG(df.patientID)
     if(patientG == patientG): # test if exists
@@ -126,17 +144,21 @@ def combineIDs(row):
 
     return(ids)
 
+# Interpret the IDs...
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
+
+from helpers import interpretID
+
 def getID(row):
     if row.Gnum == row.Gnum:
         return(row.Gnum)
-    return(row.patientID)
+    return(interpretID(row.patientID))
 
 # Find the G-numbers, standardize them.
 df['Gnum'] = df.apply(getG, axis = 1)
 df['allIDs'] = df.apply(combineIDs, axis = 1)
 df['ID'] = df.apply(getID, axis = 1)
 
-df[df.patientID=='S2-084']
 df.sample(15)
 
 def removeNaN(var):
@@ -167,24 +189,23 @@ def extendIDs(ids):
 df.ID.value_counts()
 # Combine and aggregate!
 patients = df.groupby(['ID']).agg({'allIDs': extendIDs, 'country': [combine, dataDisagreement], 'cohort': [combine, dataDisagreement], 'outcome': [combine, dataDisagreement], 'source': combine}).reset_index()
-
+patients.shape
 patients.country.dataDisagreement.value_counts()
 patients.cohort.dataDisagreement.value_counts()
 patients.outcome.dataDisagreement.value_counts()
 
 patients[patients.outcome.dataDisagreement == True].to_csv("2019-02-05_LSVseq_outcomeDisagreements_PRIVATE.csv")
 
+
 # Reset column names
 patients.columns = ['_'.join(tup).rstrip('_').replace('_extendIDs', '').replace('_combine', '') for tup in patients.columns.values]
 patients = patients[['ID', 'allIDs', 'country', 'cohort', 'outcome', 'source']]
 patients.sort_values('ID', inplace = True)
-# patients[patients.ID == "G-4007"]
 patients.sample(14)
-patients.shape
 
 
 patients[patients.country != 'Nigeria'].drop('country', axis = 1).shape
 # Export everything.
-patients.to_json(output_file+".json", orient='records')
+patients.to_json(output_file + ".json", orient='records')
 # Ignore Nigerian samples for John
 patients[patients.country != 'Nigeria'].drop('country', axis = 1).to_csv(output_file+".csv", index = False)
