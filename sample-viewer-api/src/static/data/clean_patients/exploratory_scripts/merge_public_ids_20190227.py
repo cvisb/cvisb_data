@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 roster_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-31_patients_PRIVATE.csv"
-new_id_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Survivor Scrambled ID Master_27FEB19_PRIVATE.xlsx"
+new_id_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/survivor_IDdict_v1_2012-02-27_PRIVATE.xlsx"
 
 # import new IDs from John
 # read in new IDs as string to ensure preserve leading 0s
@@ -132,6 +132,8 @@ ids.dropna(subset=["G-Number"]
 # --- Group by household IDs to generate relatedTo, hhCount ---
 ids["hhCount"] = ids.groupby("hhID").publicPatientID.transform("count")
 # ids["relatedTo"] = ids.groupby("hhID")['publicPatientID'].apply(listicle, axis = 1)
+
+ids['gID'] = ids.gID.apply(lambda x: ["G-" + str(x) for id in x])
 
 
 # convert wide to long, to create a many:many ID --> publicID dictionary.
