@@ -44,7 +44,7 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
-  { path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
 
   { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' } },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
