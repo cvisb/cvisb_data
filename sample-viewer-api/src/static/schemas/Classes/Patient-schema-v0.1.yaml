@@ -145,7 +145,7 @@
 # Main cohort
 - "@id":                 cvisb:cohort
   "@type":               rdf:Property
-  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or Control"
+  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for."
   rdfs:label:            cohort
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -162,7 +162,7 @@
 # Outcome cohort
 - "@id":                 cvisb:outcome
   "@type":               rdf:Property
-  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead"
+  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead, or unknown."
   rdfs:label:            outcome
   schema:domainIncludes:
     - "@id":             cvisb:Patient
