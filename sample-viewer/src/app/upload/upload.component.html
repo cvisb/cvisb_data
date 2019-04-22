@@ -1,0 +1,11 @@
+<div class="upload-group">
+  <div class="page-header">
+    <h1>Upload data</h1>
+  </div>
+
+  <a *ngFor="let link of links" [routerLink]="link.path" [class]="link.label">
+    <button mat-raised-button>
+    upload {{link.label}}
+  </button>
+</a>
+</div>
