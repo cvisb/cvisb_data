@@ -12,6 +12,7 @@ import { AddPatientsComponent } from './add-patients/add-patients/add-patients.c
 import { DatasetComponent } from './dataset/dataset.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
 import { SchemaComponent } from './schema/schema.component';
+import { UploadComponent } from './upload/upload.component';
 
 // --- Dataset pages ---
 // import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
@@ -28,6 +29,7 @@ import { TermsComponent } from './admin/terms/terms.component';
 import { PrivacyComponent } from './admin/privacy/privacy.component';
 import { CitationComponent } from './admin/citation/citation.component';
 import { AboutComponent } from './admin/about/about.component';
+import { AboutDataComponent } from './admin/about-data/about-data.component';
 
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -39,11 +41,13 @@ const appRoutes: Routes = [
       all: AllPatientsResolver
     }
   },
-  { canActivate: [AuthGuard], path: 'patient/upload', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Add Patients | CViSB' } },
   { canActivate: [AuthGuard], path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
+  { path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+
   { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' } },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  { canActivate: [AuthGuard], path: 'sample/upload', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Add Samples | CViSB' } },
   {  canActivate: [AuthGuard], path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // {
   //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
@@ -61,6 +65,7 @@ const appRoutes: Routes = [
   //     path: 'hla', component: PageNotFoundComponent, outlet: 'datasets'
   //   }]
   // },
+  { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
