@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material.module';
+
 import { AboutComponent } from './about/about.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
@@ -15,7 +17,9 @@ import { AboutDataComponent } from './about-data/about-data.component';
 
 @NgModule({
   imports: [
-    CommonModule, RouterModule
+    CommonModule,
+    RouterModule,
+    MaterialModule,
   ],
   declarations: [
     AboutComponent,
