@@ -1,0 +1,59 @@
+<div class="container patient-dates" *ngIf="patient">
+  <div class="container-column container-left date-summary">
+    <div class="header-label" *ngIf="patient.outcome !== 'contact'">
+      Initial Symptoms
+    </div>
+
+    <div class="header-label" *ngIf="patient.outcome === 'contact'">
+      Initial Evaluation
+    </div>
+
+    <div class="infection-year" [ngClass]="patient.cohort">
+      {{ patient.infectionYear ? patient.infectionYear : "date unknown"}}
+    </div>
+  </div>
+
+  <div class="container container-right date-group">
+    <div class="container-column container-left hospital-dates" *ngIf = "loggedIn">
+
+      <div id="infection-date">
+        <span class="variable-label">onset of symptoms:
+        </span>
+        <span class="variable-value">{{ patient.infectionDate ? (patient.infectionDate | date: "d MMMM y") : "unknown"}}</span>
+      </div>
+
+      <div id="evaluation-date">
+        <span class="variable-label">hospital evaluation:</span>
+        <span class="variable-value">{{ patient.evalDate ? (patient.evalDate | date: "d MMMM y") : "unknown"}}</span>
+      </div>
+
+      <div id="discharge-date">
+        <span class="variable-label">hospital discharge:</span>
+        <span class="variable-value">{{ patient.dischargeDate ? (patient.dischargeDate | date: "d MMMM y") : "unknown"}}</span>
+      </div>
+
+    </div>
+
+
+    <div class="container-column container-right hospital-spans">
+
+      <div id="days-onset">
+        <span class="variable-label">onset of symptoms:
+        </span>
+        <span class="variable-value">{{ patient.daysOnset ? patient.daysOnset : "unknown"}}</span>
+      </div>
+
+      <div id="evaluation-date">
+        <span class="variable-label">days in hospital:</span>
+        <span class="variable-value">{{ patient.daysInHospital ? patient.daysInHospital : "unknown"}}</span>
+      </div>
+
+      <div id="discharge-date">
+        <span class="variable-label">outcome:</span>
+        <span class="variable-value">{{ patient.outcome ? patient.outcome : "unknown"}}</span>
+      </div>
+
+    </div>
+</div>
+
+</div>
