@@ -23,7 +23,7 @@ export class PatientTableComponent implements OnInit {
   selectedLength: number;
   qString: HttpParams;
 
-  displayedColumns: string[] = ['alternateIdentifier', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
+  displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
