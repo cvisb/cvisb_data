@@ -71,17 +71,22 @@ import {
 import { SchemaComponent } from './schema/schema.component';
 import { DownloadBtnComponent } from './download-btn/download-btn.component';
 import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
-// import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
-// import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
-// import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
-// import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
-// import { UploadDifferencesComponent } from './add-samples/upload-differences/upload-differences.component';
+import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
+import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
+import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
+import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
+import { PreviewDifferencesComponent } from './add-samples/preview-differences/preview-differences.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
 import { PatientElisasComponent } from './patient-page/patient-elisas/patient-elisas.component';
 import { PatientRelationshipsComponent } from './patient-page/patient-relationships/patient-relationships.component';
 import { FilterSampleComponent } from './sample/filter-sample/filter-sample.component';
+import { SubmitSamplesComponent } from './add-samples/submit-samples/submit-samples.component';
+import { UploadComponent } from './upload/upload.component';
+import { PatientDatesComponent } from './patient-page/patient-dates/patient-dates.component';
+import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
+import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
 
 
 @NgModule({
@@ -138,11 +143,11 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     DownloadBtnComponent,
     AddStepperComponent,
 
-    // UploadStepperComponent,
-    // CheckIdsComponent,
-    // PreviewSamplesComponent,
-    // FrontendSampleValidationComponent,
-    // UploadDifferencesComponent,
+    UploadStepperComponent,
+    CheckIdsComponent,
+    PreviewSamplesComponent,
+    FrontendSampleValidationComponent,
+    PreviewDifferencesComponent,
     FilterLabComponent,
     FilterSampleComponent,
     FilterSampleTypeComponent,
@@ -154,6 +159,11 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     PatientSymptomsComponent,
     PatientElisasComponent,
     PatientRelationshipsComponent,
+    SubmitSamplesComponent,
+    UploadComponent,
+    PatientDatesComponent,
+    CheckDupesComponent,
+    PreviewAdditionsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
