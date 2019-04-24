@@ -1,0 +1,11 @@
+@import "../../../sass/material-theme.scss";
+
+.mat-column-missing {
+    color: accent-redder(500);
+    font-weight: 400;
+}
+
+td.mat-cell, th.mat-header-cell {
+    padding: 2px 10px;
+    text-align: center;
+}
