@@ -1,0 +1,103 @@
+<div class="stepper-header">
+  <h2><span class="stepper-title">Review changes to data in database</span></h2>
+
+  <div class="helper-text" *ngIf="newData">
+    <p>
+      Double check any data that you are about to change.
+    </p>
+
+    <p>
+      Note that changing any metadata for a unique sampleID (combination of creatorInitials + sampleLabel + sampleType + isolationDate) will change the metadata for <b>all</b> samples with that ID, regardless of location.
+    </p>
+
+    <p>
+      ... and changing the location of a sample will add a new entry at that location-- it won't replace a previous location. To remove a sample, set the numAliquots=0 for that location.
+    </p>
+
+  </div>
+
+</div>
+
+<div class="preview-sample" *ngIf="newData; else no_data">
+  <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
+
+
+    <ng-container *ngFor="let key of displayedColumns" [matColumnDef]="key">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key }}</th>
+
+
+      <td mat-cell *matCellDef="let element" class="message">
+        <div class="container new-old-container" [ngTemplateOutlet]="key === 'location' ? locations : flatData" [ngTemplateOutletContext]="{ element: element, key: key }">
+        </div>
+
+        <!-- NORMAL DATA -->
+        <ng-template #flatData let-key="key" let-element="element">
+          <!-- <div [ngClass]="{'new-data': !element[key]['agree']}" *ngIf="element[key]['new']">
+            {{ element[key]['new'] }}
+          </div> -->
+
+          <div [ngTemplateOutlet]="element[key+'_x'] === element[key+'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: element, key: key }">
+          </div>
+
+          <!-- <div [ngClass]="{'old-data': !element[key]['agree']}" *ngIf="!element[key]['agree'] && element[key]['old']">
+            {{ element[key]['old'] }}
+          </div> -->
+
+        </ng-template>
+
+        <!-- DATA UNCHANGED TEMPLATE -->
+        <ng-template #data_unchanged let-element="element" let-key="key" let-type="type">
+          <div *ngIf="element[key+'_x'] !== undefined">
+            <span [ngClass]="{'lab': key === 'lab'}">
+              {{type === "location" ? key + ": " : ""}} {{ element[key+'_x'] }}
+              </span>
+          </div>
+        </ng-template>
+
+        <!-- DATA CHANGED TEMPLATE -->
+        <ng-template #data_changed let-element="element" let-key="key" let-type="type">
+          <div class="changed-group">
+
+            <div [ngClass]="{'new-data': true}" *ngIf="element[key+'_y'] !== undefined">
+              <span [ngClass]="{'lab': key === 'lab'}">
+              {{type === "location" ? key + ": " : ""}} {{ element[key+'_y'] }}
+            </span>
+            </div>
+
+            <div [ngClass]="{'old-data': ((element[key+'_x'] !== element[key+'_y']) && (type !== 'location')) || ((element[key+'_y'] !== undefined) && (type === 'location') && (element[key+'_x'] !== element[key+'_y']))}" *ngIf="element[key+'_x'] !== undefined">
+              <span [ngClass]="{'lab': key === 'lab'}">
+              {{type === "location" ? key + ": " : ""}} {{ element[key+'_x'] }}
+            </span>
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- LOCATION DATA -->
+        <ng-template #locations let-key="key" let-element="element">
+          <div *ngFor="let location of element[key]; let idx = index" class="location-group" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
+            <div *ngFor="let key of locationColumns">
+              <div [ngTemplateOutlet]="location[key + '_x'] === location[key+'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key, type: 'location'}">
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
+
+
+      </td>
+
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
+</div>
+
+<ng-template #no_data>
+  <p>
+    Nothing will be replaced in the database. Moving on...
+  </p>
+</ng-template>

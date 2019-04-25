@@ -1,0 +1,57 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+$new-color: darken($sierraleone-green, 10%);
+$old-color: accent-redder(600);
+
+.new-old-container {
+  flex-direction: column;
+}
+
+.mat-cell {
+  vertical-align: top;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.mat-column-sampleID {
+    min-width: 200px;
+}
+
+.mat-column-location {
+    min-width: 170px;
+}
+
+
+.changed-group {
+  margin: 10px 0px;
+}
+
+.lab {
+  font-weight: 400;
+}
+
+.new-data {
+  color: $new-color;
+  border-left: 5px #cfe9d4 solid;
+  padding: 3px 5px;
+  margin-bottom: 1px;
+}
+
+.old-data {
+  color: $old-color;
+  border-left: 5px lighten($old-color, 25%) solid;
+  padding: 3px 5px;
+  margin-top: 1px;
+  text-decoration: line-through;
+}
+
+
+.location-group {
+  padding: 5px 10px;
+  margin: 10px;
+  background: #eee;
+
+  &.right_only {
+    background:  lighten(#cfe9d4, 10%)
+  }
+}

@@ -1,9 +1,12 @@
 import pandas as pd
+sample_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/"
+
+
 
 # Kristian list of previously sequenced EBOV/LASV people -----------
 # from ~ July 2018
 
-kfile = '/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Previously Sequenced EBOV and LASV_Kristian_PRIVATE.xlsx'
+kfile = sample_dir + 'Previously Sequenced EBOV and LASV_Kristian_PRIVATE.xlsx'
 
 kdata = pd.read_excel(kfile)
 
@@ -21,7 +24,7 @@ kdf.shape
 
 # Matthias list of DNA/RNA samples
 # Should be 14 EBOV, 100 LASV
-mfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/DNA and RNA sample List_Matthias_PRIVATE.xlsx"
+mfile = sample_dir + "DNA and RNA sample List_Matthias_PRIVATE.xlsx"
 mdata1 = pd.read_excel(mfile, sheetname=0, skiprows=1)
 
 
@@ -53,7 +56,7 @@ mdf['source'] = 'dna-rna_matthias'
 
 
 # Matthias's inventory of all samples and what they want.
-wishlist_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019 Jan Trip - Samples Needed_Matthias_PRIVATE.xlsx"
+wishlist_file = sample_dir + "2019 Jan Trip - Samples Needed_Matthias_PRIVATE.xlsx"
 
 wishlist = pd.read_excel(wishlist_file, sheetname=1)
 
@@ -95,7 +98,7 @@ wl.dropna(subset=["patientID"], inplace=True)
 wl['source'] = 'inventoryJan2019_matthias'
 
 # Karthik's list of previously sequenced Lassa patients
-lsv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/survival_dataset_lasv_01312019_Karthik_PRIVATE.csv"
+lsv_file = sample_dir + "survival_dataset_lasv_01312019_Karthik_PRIVATE.csv"
 
 lsv = pd.read_csv(lsv_file)
 
@@ -121,7 +124,7 @@ lsv['source'] = 'LSV_prevSeq_karthik'
 
 # Brian's list of current samples
 # n = 118
-bfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Collection Date Summary_Brian_PRIVATE.xlsx"
+bfile = sample_dir + "Collection Date Summary_Brian_PRIVATE.xlsx"
 bdata = pd.read_excel(bfile)
 
 bdata.head()

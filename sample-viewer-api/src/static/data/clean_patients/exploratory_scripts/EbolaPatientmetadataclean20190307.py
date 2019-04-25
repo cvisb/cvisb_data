@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import re
 import os
 
-filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/ebola data for dissemination_13March2019.xlsx"
+filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx"
 # filename = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/ebola data for dissemination_PRIVATE.xlsx"
 
 # Import file
