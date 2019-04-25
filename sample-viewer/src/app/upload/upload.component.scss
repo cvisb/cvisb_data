@@ -1,0 +1,29 @@
+@import "../../sass/variables";
+@import '../../sass/material-theme.scss';
+
+.page-header {
+  color: $grey-100;
+  -webkit-text-stroke-color: $grey-400;
+  -webkit-text-stroke-width: 1px;
+  margin-bottom: 25px;
+}
+
+button {
+  margin-right: 25px;
+}
+
+.patients button {
+  background: lighten($ebola-lt, 11%);
+
+  &:hover {
+    background: lighten($ebola-lt, 5%);
+  }
+}
+
+.samples button {
+  background: accent-redder(50);
+
+  &:hover {
+    background: accent-redder(100);
+  }
+}

@@ -1,7 +1,7 @@
 import pandas as pd
 
 # TODO: clean up if sample or patient ID
-serology_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Gunn_Alter_data for Laura_PRIVATE.xlsx"
+serology_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/systems_serology/systemsserology_v1_2018-04-12_PRIVATE.xlsx"
 
 sero = pd.read_excel(serology_file)
 sero.head()
@@ -54,7 +54,7 @@ sero.shape
 sero.head()
 
 # File two : From Sept 2018, asked for patients for which Bonnie needed metadata.
-crosscheck_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/samples_needing_metadata_Sept2018_LDH-MP-BG_PRIVATE.xlsx"
+crosscheck_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/samples_needing_metadata_Sept2018_LDH-MP-BG_PRIVATE.xlsx"
 cross = pd.read_excel(crosscheck_file)
 cross.head()
 

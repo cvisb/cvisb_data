@@ -1,10 +1,12 @@
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/cvisb_patient_roster")
 import getHLApatients as hla
 
+sample_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/"
+
 # Import sample list, June/July 2018  ----------------------------------------------------------------------------------------------------
-sample_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/Final - master sample list Jun-Jul-18x_Matthias_PRIVATE.xlsx"
+sample_file = sample_dir + "Final - master sample list Jun-Jul-18x_Matthias_PRIVATE.xlsx"
 samples1 = pd.read_excel(sample_file, skiprows=0)
 
 samples1.head()
@@ -28,7 +30,7 @@ samples1['source'] = 'samples_July2018'
 
 # Import sample list, January 2019  ----------------------------------------------------------------------------------------------------
 # Long version, in a format that I specified.
-sample2_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/January2019samples_forlaura_rk1_mp_Matthias_PRIVATE.xlsx"
+sample2_file = sample_dir + "January2019samples_forlaura_rk1_mp_Matthias_PRIVATE.xlsx"
 samples2 = pd.read_excel(sample2_file, skiprows=0)
 
 samples2.head()
@@ -42,7 +44,7 @@ samples2
 samples2['source'] = 'samples_January2019'
 
 # Wide version, requiring cleanup.
-sample3_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/PBMC collection list Jan 2019_Matthias_PRIVATE.xlsx"
+sample3_file = sample_dir + "PBMC collection list Jan 2019_Matthias_PRIVATE.xlsx"
 samples3 = pd.read_excel(sample3_file, skiprows=2)
 samples3['source'] = 'samples_January2019'
 samples3

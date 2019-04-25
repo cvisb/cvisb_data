@@ -1,0 +1,135 @@
+<div class="stepper-header">
+  <h2><span class="stepper-title">Process data</span></h2>
+
+  <ng-container *ngIf="ready2validate">
+    <div class="import-count">
+      <b>{{ dataLength }} {{dataLength > 1 ? "rows" : "row"}}</b> {{dataLength > 1 ? "have" : "has"}} been imported.
+    </div>
+
+    <div class="error-count" [ngClass]="{'has-error': numErrors > 0}">
+      <b>{{ numErrors }} {{ numErrors > 1 && numErrors !== 0 ? "errors" : "error"}}</b> {{ numErrors > 1 ? "require" : "requires"}} resolution.
+    </div>
+  </ng-container>
+</div>
+
+<mat-vertical-stepper #stepper *ngIf="ready2validate">
+
+  <mat-step *ngFor='let step of validation_steps; let idx = index' [completed]="step.complete" [ngClass]="{'validation-error': step.complete, 'myClass': true}">
+
+    <!-- Template for step label -->
+    <ng-template matStepLabel>
+      <span [ngClass]="{'validation-error': step.numErrors > 0, 'verified': step.verified }">
+        {{ step.label }}
+        </span>
+    </ng-template>
+
+    <!-- Content: no error template -->
+    <div *ngIf="step.numErrors === 0">
+      Looks good! Nothing needs to be changed.
+    </div>
+
+
+    <!-- Content: if error -->
+    <div [ngSwitch]="step.id">
+
+
+      <!-- Remove extra rows -->
+      <div *ngSwitchCase="'delete_extra'">
+        <div class="some-deleted" *ngIf="step.numErrors > 0">
+          <div class="import-count">
+            {{ dataLength }} non-blank {{dataLength > 1 ? "rows" : "row"}} {{dataLength > 1 ? "have" : "has"}} been imported.
+          </div>
+
+          <div class="num-deleted">
+            {{ step.numErrors }} blank {{step.numErrors > 1 ? "rows have" : "row has"}} been removed.
+          </div>
+
+          <mat-checkbox [(ngModel)]="approve_deletions" (ngModelChange)="verifyStep($event, 'delete_extra')">Yep, let's get rid of those rows.</mat-checkbox>
+        </div>
+      </div>
+
+
+      <!-- Translate IDs -->
+      <div *ngSwitchCase="'check_ids'">
+        <app-check-ids [data]="badIDs" *ngIf="badIDs"></app-check-ids>
+
+        <mat-radio-group aria-label="Select an option" *ngIf="badIDs" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">
+          <mat-radio-button [value]="true">Yep, let's convert those IDs.</mat-radio-button>
+          <mat-radio-button [value]="false">Nope! They shouldn't be changed</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- <mat-checkbox *ngIf="badIDs" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">Yep, let's convert those IDs.</mat-checkbox> -->
+      </div>
+
+      <div *ngSwitchCase="'create_sampleID'">
+        <div class="num-weird" *ngIf="step.numErrors > 0">
+          {{ step.numErrors }} {{step.numErrors > 1 ? "samples are" : "sample is"}} missing a required field to generate its sample ID. Add the missing required fields.
+        </div>
+      </div>
+
+      <!-- Missing required fields -->
+      <div *ngSwitchCase="'check_req'">
+        <h3 class="helper-msg" *ngIf="step.numErrors > 0">
+          The following {{ step.numErrors }} {{ step.numErrors > 1 ? "samples are" : "sample is" }} missing some required fields:
+        </h3>
+        <p>
+          Add the required fields and re-upload the file.
+        </p>
+        <app-preview-samples [data]="missingReq" *ngIf="missingReq && missingReq.length > 0"></app-preview-samples>
+      </div>
+
+
+      <!-- Duplicate rows -->
+      <div *ngSwitchCase="'combine_dupes'">
+        <ng-container *ngIf="step.numErrors > 0">
+          <h3 class="helper-msg">
+          The following {{ step.numErrors }} {{ step.numErrors > 1 ? "rows have" : "row has" }}
+          duplicate sample IDs and location.</h3>
+
+          <app-check-dupes [data]="dupeCheck"></app-check-dupes>
+
+          <app-preview-samples [data]="dupeCheck" *ngIf="dupeCheck && dupeCheck.length > 0"></app-preview-samples>
+          <mat-checkbox *ngIf="dupeCheck" [(ngModel)]="approve_dupes" (ngModelChange)="verifyStep($event, 'combine_dupes')">Yep, let's combine those duplicates.</mat-checkbox>
+        </ng-container>
+      </div>
+
+      <!-- Standardize dates -->
+      <div *ngSwitchCase="'parse_dates'">
+        <ng-container *ngIf="step.numErrors > 0">
+          <h3 class="helper-msg">
+          The following {{ step.numErrors }} {{ step.numErrors > 1 ? "dates have" : "date has" }}
+          been converted to a different format and/or they're outside of the acceptable range.</h3>
+
+          <p>
+            Verify the dates are correct.
+          </p>
+          <p>
+            If they're not, please input the date in the format <b>YYYY-MM-DD</b>.
+          </p>
+          <p>
+            If the dates are out of range, double check that the year is > 2000.
+          </p>
+
+          <app-preview-samples [data]="dateCheck" *ngIf="dateCheck && dateCheck.length > 0"></app-preview-samples>
+          <mat-checkbox *ngIf="dateCheck" [(ngModel)]="approve_dates" (ngModelChange)="verifyStep($event, 'parse_dates')">Yep, let's convert those dates.</mat-checkbox>
+        </ng-container>
+      </div>
+
+
+    </div>
+
+    <!-- Next buttons -->
+    <div class="next-buttons">
+      <button mat-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+      <button mat-button matStepperNext *ngIf="idx < validation_steps.length - 1" class="stepper-button">Next</button>
+    </div>
+  </mat-step>
+
+  <!-- Change icons -->
+  <ng-template matStepperIcon="edit">
+    <mat-icon class="done-icon">done</mat-icon>
+  </ng-template>
+
+
+
+</mat-vertical-stepper>

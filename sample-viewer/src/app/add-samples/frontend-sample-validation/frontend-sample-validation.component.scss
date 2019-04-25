@@ -1,0 +1,39 @@
+@import '../../../sass/variables.scss';
+@import "../../../sass/material-theme.scss";
+
+.validation-error {
+  background: accent-redder(A700);
+  color: white;
+  padding: 5px;
+}
+
+.verified {
+  background: none;
+  color: darken($sierraleone-green, 10%);
+}
+
+.done-icon {
+    font-size: 20px !important;
+    height: 20px !important;
+    width: 20px !important;
+    position: absolute;
+    font-weight: 700;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.mat-header-cell, .mat-cell {
+  min-width: 100px;
+}
+
+.has-error {
+  font-size: 1.5em;
+  color: accent-redder(A700);
+  // color: white;
+  // padding: 5px;
+}
+
+.next-buttons {
+  margin-top: 25px;
+}

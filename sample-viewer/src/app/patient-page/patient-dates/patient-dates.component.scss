@@ -1,0 +1,63 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.patient-dates {
+  margin-left: 100px;
+}
+
+.date-summary {
+  margin-right: 15px;
+}
+
+.header-label {
+  color: $grey-400;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 3px;
+}
+
+.infection-summary {}
+
+.infection-year {
+  padding: 3px 15px;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 5px;
+  background: $grey-50;
+  color: $grey-400;
+
+  &.Ebola {
+    background: lighten($ebola-md, 28%);
+    color: $ebola-md;
+  }
+
+  &.Lassa {
+    background: lighten($lassa-md, 33%);
+    color: $lassa-md;
+  }
+}
+
+.date-group {
+  font-size: 0.9em;
+  justify-content: space-between;
+}
+
+.hospital-dates,
+.hospital-spans {
+  justify-content: space-between;
+}
+
+.hospital-dates {
+  margin-right: 15px;
+}
+
+.variable-label {
+  margin-right: 2px;
+}
+
+.variable-value {
+  font-weight: 400;
+}

@@ -145,7 +145,7 @@
 # Main cohort
 - "@id":                 cvisb:cohort
   "@type":               rdf:Property
-  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or Control"
+  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for."
   rdfs:label:            cohort
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -162,7 +162,7 @@
 # Outcome cohort
 - "@id":                 cvisb:outcome
   "@type":               rdf:Property
-  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead"
+  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead, or unknown."
   rdfs:label:            outcome
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -249,11 +249,50 @@
   marginality:           optional
   authenticated:         true
 
+# Date of first evaluation
+- "@id":                 cvisb:evalDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of first evaluation within the hospital
+  rdfs:label:            evalDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+# Date of discharge from the hospital
+- "@id":                 cvisb:dischargeDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of discharge from the hospital
+  rdfs:label:            dischargeDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 # time from onset of symptoms
 - "@id":                 cvisb:daysOnset
   "@type":               rdf:Property
-  rdfs:comment:          Number of days between onset of symptoms and hospital admission
+  rdfs:comment:          Number of days between onset of symptoms and hospital admission, as self-reported
   rdfs:label:            daysOnset
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+# time in the hospital
+- "@id":                 cvisb:daysInHospital
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between first evaluation and discharge or death
+  rdfs:label:            daysInHospital
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
