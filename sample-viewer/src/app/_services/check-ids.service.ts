@@ -16,8 +16,8 @@ export class CheckIdsService {
     /^(G\-)(\d\d\d)$/,
     // "S-123".match(/^(S\-)(\d\d\d)$/)
     /^(S\-)(\d\d\d)$/,
-    // "C-123-4".match(/^(C\-)(\d\d\d)\-(\d)$/)
-    /^(C\-)(\d\d\d)\-(\d)$/
+    // "C-123-4".match(/^(C\-)(\d\d\d)\-([1-4])$/)
+    /^(C\-)(\d\d\d)\-([1-4])$/
   ];
 
   // Things that are commonly seen and convertable to an acceptable pattern.
