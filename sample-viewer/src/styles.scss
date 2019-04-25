@@ -491,3 +491,15 @@ button.stepper-button {
   overflow-x: auto;
   width: 100%;
 }
+
+
+.done-icon {
+    font-size: 20px !important;
+    height: 20px !important;
+    width: 20px !important;
+    position: absolute;
+    font-weight: 700;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
