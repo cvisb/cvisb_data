@@ -80,7 +80,6 @@ QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 ANNOTATION_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 
-
 ###############################################################################
 #    app-specific query builder, query, and result transformer classes
 ###############################################################################
