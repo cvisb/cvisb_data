@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
@@ -8,7 +8,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
   styleUrls: ['./check-dupes.component.scss']
 })
 
-export class CheckDupesComponent implements OnInit {
+export class CheckDupesComponent implements OnChanges {
 
   @Input() data: Object[];
   dataSource: MatTableDataSource<any>;
@@ -16,7 +16,7 @@ export class CheckDupesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ["sampleID", "location", "totalAliquots", "samples"];
+  displayedColumns: string[] = ["sampleID", "lab", "totalAliquots", "samples"];
   flatColumns: string[];
   sampleColumns: string[] = [
     "numAliquots", "sampleLabel", "privatePatientID", "visitCode", "sampleType", "isolationDate", "alternateIdentifier",
@@ -26,7 +26,7 @@ export class CheckDupesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnChanges() {
     // Filter out the non-sample columns; these are all flat objects which can be displayed within a loop in the table
     this.flatColumns = this.displayedColumns.filter(d => d !== "samples");
 
