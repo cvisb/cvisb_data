@@ -1,7 +1,7 @@
 <div class="stepper-header">
   <h2><span class="stepper-title">Review changes to data in database</span></h2>
 
-  <div class="helper-text" *ngIf="newData">
+  <div class="helper-text" *ngIf="dataSource">
     <p>
       Double check any data that you are about to change.
     </p>
@@ -18,7 +18,7 @@
 
 </div>
 
-<div class="preview-sample" *ngIf="newData; else no_data">
+<div class="preview-sample" *ngIf="dataSource; else no_data">
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
@@ -58,13 +58,13 @@
         <ng-template #data_changed let-element="element" let-key="key" let-type="type">
           <div class="changed-group">
 
-            <div [ngClass]="{'new-data': true}" *ngIf="element[key+'_y'] !== undefined">
+            <div [ngClass]="{'new-data': true}" *ngIf="(element[key+'_y'] !== undefined) && (element[key+'_y'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
               {{type === "location" ? key + ": " : ""}} {{ element[key+'_y'] }}
             </span>
             </div>
 
-            <div [ngClass]="{'old-data': ((element[key+'_x'] !== element[key+'_y']) && (type !== 'location')) || ((element[key+'_y'] !== undefined) && (type === 'location') && (element[key+'_x'] !== element[key+'_y']))}" *ngIf="element[key+'_x'] !== undefined">
+            <div [ngClass]="{'old-data': ((element[key+'_x'] !== element[key+'_y']) && (type !== 'location')) || ((element[key+'_y'] !== undefined) && (type === 'location') && (element[key+'_x'] !== element[key+'_y']))}" *ngIf="(element[key+'_x'] !== undefined) && (element[key+'_x'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
               {{type === "location" ? key + ": " : ""}} {{ element[key+'_x'] }}
             </span>
