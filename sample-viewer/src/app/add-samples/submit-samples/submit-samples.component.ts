@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { ApiService } from '../../_services';
 import { nest } from 'd3';
@@ -14,11 +14,10 @@ export class SubmitSamplesComponent implements OnInit {
   errorObj: Object[];
   @Input() data: Object[];
 
-  constructor(private apiSvc: ApiService,) {
+  constructor(private apiSvc: ApiService, ) {
   }
 
   ngOnInit() {
-    console.log('on init')
   }
 
   ngOnChanges() {
@@ -28,25 +27,27 @@ export class SubmitSamplesComponent implements OnInit {
   }
 
   submitData() {
-    this.uploadResponse = "Attempting to submit data to database.";
+    if (this.data.length > 0) {
+      this.uploadResponse = "Attempting to submit data to database.";
 
-    this.apiSvc.put("sample", this.data).subscribe(resp => {
-      this.uploadResponse = `Success! ${resp}`;
-      console.log(resp)
-      // Call sample service to update the samples.
-      // this.sampleSvc.getSamples();
-    }, err => {
-      this.uploadResponse = "Uh oh. Something went wrong."
-      this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+      this.apiSvc.put("sample", this.data).subscribe(resp => {
+        this.uploadResponse = `Success! ${resp}`;
+        console.log(resp)
+      }, err => {
+        this.uploadResponse = "Uh oh. Something went wrong."
+        this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
 
-      this.errorObj = err.error.error_list;
+        this.errorObj = err.error.error_list;
 
-      if (this.errorObj) {
-        this.errorObj = this.tidyBackendErrors(this.errorObj)
-        console.log(this.errorObj)
-      }
-      console.log(err)
-    });
+        if (this.errorObj) {
+          this.errorObj = this.tidyBackendErrors(this.errorObj)
+          console.log(this.errorObj)
+        }
+        console.log(err)
+      });
+    } else {
+      console.log("no data to submit!")
+    }
   }
 
   tidyBackendErrors(error_array) {

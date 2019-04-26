@@ -1,11 +1,11 @@
 <div class="stepper-header">
   <h2><span class="stepper-title">Save data to database</span></h2>
 
-    <div class="import-count">
-      <b>{{ this.data.length }} {{ (this.data.length > 1) || (this.data.length === 0) ? "samples" : "sample"}}</b> will be uploaded.
-    </div>
+  <div class="import-count">
+    <b>{{ this.data.length }} {{ (this.data.length > 1) || (this.data.length === 0) ? "samples" : "sample"}}</b> will be uploaded.
+  </div>
 
-    <button mat-raised-button color="warn" class="submit-btn" type="submit">Submit to database</button>
+  <button mat-raised-button color="warn" class="submit-btn" type="submit" (click)="submitData()">Submit to database</button>
 
 </div>
 
@@ -18,17 +18,18 @@
     <div class="error-message-group" *ngFor="let msg of errorObj">
       <div class="error-message">
         <span class="error-label">
-    Error:
-  </span> {{ msg. key }}
+          Error:
+        </span>
+        {{ msg. key }}
       </div>
       <div class="error-ids">
         <span class="error-label">
-    IDs:
-  </span>
+          IDs:
+        </span>
         <div *ngFor="let id of msg.value.ids; let index">
           {{ id }}
           <span *ngIf="index < msg.value.ids.length" class="id-separator">
-  </span>
+          </span>
         </div>
 
       </div>
