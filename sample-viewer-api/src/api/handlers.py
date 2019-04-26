@@ -5,12 +5,33 @@ from jsonschema import validate, ValidationError
 from jsonschema.exceptions import relevance
 from api.schema import FormatChecker, iter_validate
 from web.handlers import encode_user, decode_user
+from biothings.utils.common import dotdict
 from elasticsearch.helpers import bulk
 from collections import OrderedDict
 import json
 import csv
 #import logging
 import yaml
+import copy
+
+def get_cleaned_options(inst, kwargs):
+        options = dotdict()
+
+        for kwarg_category in ["control_kwargs", "es_kwargs", "esqb_kwargs", "transform_kwargs"]:
+            options.setdefault(kwarg_category, dotdict())
+            for option, settings in getattr(inst, kwarg_category, {}).items():
+                if option in kwargs or settings.get('default', None) is not None:
+                    _default = kwargs.get(option, settings['default'])
+                    if isinstance(_default, dict):
+                        _default = copy.copy(_default)
+                    options.get(kwarg_category).setdefault(option, _default)
+        # do userquery kwargs
+        if options.esqb_kwargs.userquery:
+            for k in kwargs.keys():
+                if re.match(self.web_settings.USERQUERY_KWARG_REGEX, k):
+                    options['esqb_kwargs'].setdefault('userquery_kwargs', dotdict())
+                    options['esqb_kwargs']['userquery_kwargs'][inst.web_settings.USERQUERY_KWARG_TRANSFORM(k)] = kwargs.get(k)
+        return options
 
 class UserAuth(object):
     def get_current_user(self):
@@ -103,9 +124,6 @@ class EntityHandler(UserAuth, BiothingHandler):
 
     def _get_es_doc_type(self, options):
         return self.entity
-
-    def _sanitize_source_param(self, kwargs):
-        return sanitize_source_param(self, kwargs)
 
     def get(self, entity=None, bid=None):
         if not entity_check(self, entity):
@@ -211,6 +229,9 @@ class QueryHandler(UserAuth, QueryHandler):
     
     def _sanitize_source_param(self, kwargs):
         return sanitize_source_param(self, kwargs)
+
+    def get_cleaned_options(self, kwargs):
+        return get_cleaned_options(self, kwargs)
 
     def _pre_query_builder_GET_hook(self, options):
         _user = self.get_current_user() or {}
