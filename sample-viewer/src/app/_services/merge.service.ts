@@ -22,14 +22,10 @@ export class MergeService {
 
     let cols = this.getAllCols(intersected_data['left'], intersected_data['right']);
 
-
     let merged = [];
-    let merged2share = [];
-
 
     for (let id of ids) {
       let row = {};
-      let row_final = {};
 
       // TODO: check length.
       let right_data = intersected_data['right'] ? intersected_data['right'].filter(d => d[right_on] === id) : [];
@@ -49,27 +45,13 @@ export class MergeService {
       left_data = left_data[0];
 
       for (let col of cols) {
-        // row[col] = {};
         row[col + "_x"] = left_data ? left_data[col] : undefined;
         row[col + "_y"] = right_data ? right_data[col] : undefined;
-
-        // row[col]['agree'] = left_data[col] === right_data[col];
-        // row[col]['old'] = right_data[col];
-        // row[col]['new'] = left_data[col];
-        // row[col]['agree'] = left_data[col] === right_data[col];
-        // row_final[col] = left_data[col];
       }
 
-      // let locs = this.updateLocations(right_data['location'], left_data['location']);
-
-      // Replace location with a merged set of the properties
-      // row['location'] = locs;
       merged.push(row);
-      merged2share.push(row_final);
     }
-    console.log("merged")
-    console.log(merged);
-    // console.log(merged2share)
+
     return (merged)
   }
 
