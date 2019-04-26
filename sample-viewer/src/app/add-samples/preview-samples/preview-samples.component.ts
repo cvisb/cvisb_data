@@ -10,25 +10,22 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 export class PreviewSamplesComponent implements OnChanges {
   @Input() data: Object[];
-  @Input() showPagination: boolean = true;
-  @Input() displayedColumns: string[];
+  @Input() hidePagination: boolean = false;
+  @Input() displayedColumns: string[] = null;
 
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
   columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "location", "numAliquots"];
 
 
   constructor() { }
 
   ngOnChanges() {
-    let cols = [];
-    this.data.forEach(d => cols = cols.concat(Object.keys(d)));
-
-    if (!this.displayedColumns) {
-      this.displayedColumns = Array.from(new Set(cols));
+    if (!this.displayedColumns || this.displayedColumns.length === 0) {
+      this.displayedColumns = Array.from(new Set(this.data.map(d => Object.keys(d)).flat()));
       // sort the columns in a sensible order
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
