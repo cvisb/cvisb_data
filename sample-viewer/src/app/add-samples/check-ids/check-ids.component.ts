@@ -20,10 +20,8 @@ export class CheckIdsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges() {
-// Sort so the most missing-est data is returned first.
-console.log("ids")
-console.log(this.data)
-    this.data.sort((a:any, b:any) => a.id_check.status > b.id_check.status ? -1 : 1);
+    // Sort so the most missing-est data is returned first.
+    this.data.sort((a: any, b: any) => a.id_check.status > b.id_check.status ? -1 : 1);
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.paginator = this.paginator;
 
