@@ -1,37 +1,54 @@
 <div *ngIf="data.length > 0">
 
-<h2>{{ data.length }} IDs require review:</h2>
+<div class="helper-text">
+  IDs are expected to be in the following formats:
+  <ul>
+    <li>
+      G-xxx or G-xxxx
+    </li>
+    <li>
+      S-xxx
+    </li>
+    <li>
+      C-xxx-x, where the last digit is the contact number 1-4 (*not* the visit code)
+    </li>
+  </ul>
 
-<div class="id-lists">
-  <table mat-table [dataSource]="dataSource" matSort id="bad_ids">
-
-    <!-- ID Column -->
-    <ng-container matColumnDef="originalID">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">original ID</th>
-      <td mat-cell *matCellDef="let element" class="patient-id old-id">
-        {{ element.originalID }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="id_check.id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">modified ID</th>
-      <td mat-cell *matCellDef="let element" class="patient-id new-id">
-        {{ element.id_check.id }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="id_check.message">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">Modification</th>
-      <td mat-cell *matCellDef="let element" class="message">
-        {{ element.id_check.message }}
-      </td>
-    </ng-container>
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
 </div>
+
+  <h2>{{ data.length }} IDs require review:</h2>
+
+  <div class="id-lists">
+    <table mat-table [dataSource]="dataSource" matSort id="bad_ids">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="originalID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">original ID</th>
+        <td mat-cell *matCellDef="let element" class="patient-id old-id">
+          {{ element.originalID }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id_check.id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">modified ID</th>
+        <td mat-cell *matCellDef="let element" class="patient-id new-id">
+          {{ element.id_check.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id_check.message">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">Modification</th>
+        <td mat-cell *matCellDef="let element" class="message">
+          {{ element.id_check.message }}
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
+    </table>
+
+  </div>
 </div>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons class="id-paginator"></mat-paginator>
