@@ -29,16 +29,16 @@ export class UploadStepperComponent implements OnInit {
 
     uploadSvc.progressState$.subscribe((progress) => {
       this.steps = progress;
-      console.log(progress)
+      // console.log(progress)
     })
 
     uploadSvc.progressState2$.subscribe((progress) => {
-      console.log("PROGRESS!")
-      console.log(progress);
+      // console.log("PROGRESS!")
+      // console.log(progress);
       if (this.firstFormGroup) {
         this.firstFormGroup.patchValue({ upload: true });
       }
-      console.log(this.firstFormGroup)
+      // console.log(this.firstFormGroup)
 
     })
   }
@@ -57,9 +57,9 @@ export class UploadStepperComponent implements OnInit {
 
     // Make sure stepper exists before trying to set the page number
     this.uploadSvc.uploadStepState$.subscribe((stepNum) => {
-      console.log("step num: " + stepNum)
+      // console.log("step num: " + stepNum)
       this.stepper.selectedIndex = stepNum + 1;
-      console.log(this.stepper)
+      // console.log(this.stepper)
     })
   }
 
