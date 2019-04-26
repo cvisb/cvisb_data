@@ -12,18 +12,8 @@
   color: darken($sierraleone-green, 10%);
 }
 
-.done-icon {
-    font-size: 20px !important;
-    height: 20px !important;
-    width: 20px !important;
-    position: absolute;
-    font-weight: 700;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-
-.mat-header-cell, .mat-cell {
+.mat-cell,
+.mat-header-cell {
   min-width: 100px;
 }
 
@@ -36,4 +26,8 @@
 
 .next-buttons {
   margin-top: 25px;
+
+  & button {
+    background: $grey-100 !important;
+  }
 }
