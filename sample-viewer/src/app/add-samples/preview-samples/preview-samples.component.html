@@ -1,4 +1,4 @@
-<div class="preview-sample">
+<div class="preview-sample" *ngIf="dataSource">
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
@@ -14,5 +14,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx = index" [ngClass]="'mat-row-' + idx"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons *ngIf="showPagination"></mat-paginator>
 </div>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons [hidden]="hidePagination"></mat-paginator>
