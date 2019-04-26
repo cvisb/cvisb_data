@@ -30,7 +30,7 @@
         <app-frontend-sample-validation></app-frontend-sample-validation>
 
         <div class="next-buttons">
-          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button"></button>
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
           <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button"
           [disabled]="!step.complete" (click)="uploadSvc.getCleanedData()">Next</button>
         </div>
@@ -72,9 +72,9 @@
 
 
   <!-- Change icons -->
-  <!-- <ng-template matStepperIcon="edit">
+  <ng-template matStepperIcon="edit">
       <mat-icon class="done-icon">done</mat-icon>
-    </ng-template> -->
+    </ng-template>
 
 </mat-horizontal-stepper>
 
