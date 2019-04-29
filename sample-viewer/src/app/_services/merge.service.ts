@@ -32,12 +32,13 @@ export class MergeService {
       let left_data = intersected_data['left'] ? intersected_data['left'].filter(d => d[left_on] === id) : [];
 
       if (indicator) {
-        if ((right_data.length == 1) && (left_data.length == 1)) {
+        if ((right_data.length === 1) && (left_data.length === 1)) {
           row["_merge"] = "both"
-        } else if (right_data.length == 1) {
+        } else if (right_data.length === 1) {
           row["_merge"] = "right_only"
-        } else if (left_data.length == 1) {
+        } else if (left_data.length === 1) {
           row["_merge"] = "left_only"
+        } else {
         }
       }
 
@@ -59,11 +60,12 @@ export class MergeService {
   getAllCols(left_data, right_data, special_cols = ['_id']) {
     // Grab whatever columns exist in the data
     let cols = [];
-    // let cols = ['sampleID'];
-    if (left_data) {
+
+    // Double check that the data is an array of objects...
+    if (left_data && (left_data.map(d => typeof(d) === "object").every(d => d))) {
       left_data.forEach(d => cols = cols.concat(Object.keys(d)));
     }
-    if (right_data) {
+    if (right_data && (right_data.map(d => typeof(d) === "object").every(d => d))) {
       right_data.forEach(d => cols = cols.concat(Object.keys(d)));
     }
 

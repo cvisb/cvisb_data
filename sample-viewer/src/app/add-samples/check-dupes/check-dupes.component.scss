@@ -1,31 +1,8 @@
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
-$new-color: darken($sierraleone-green, 10%);
-$old-color: accent-redder(600);
 
-/deep/ .sample .mat-row td.mat-cell:first-of-type, .row-delete {
-    border-left: 5px lighten($old-color, 25%) solid;
-}
-
-/deep/ .sample .mat-row-0 td.mat-cell:first-of-type, .row-keep {
-    border-left: 5px #cfe9d4 solid;
-}
-
-
-.row-keep {
-  color: $new-color;
-  padding: 3px 5px;
-  margin-bottom: 1px;
-}
-
-.row-delete {
-  color: $old-color;
-  padding: 3px 5px;
-  margin-top: 1px;
-}
-
-.mat-column-totalAliquots {
-  text-align: center;
+.emphasis {
+  font-weight: 400;
 }
 
 td.mat-cell, th.mat-header-cell {
