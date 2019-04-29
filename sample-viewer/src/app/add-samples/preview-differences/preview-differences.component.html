@@ -1,7 +1,7 @@
 <div class="stepper-header">
   <h2><span class="stepper-title">Review changes to data in database</span></h2>
 
-  <div class="helper-text" *ngIf="dataSource">
+  <div class="helper-text" *ngIf="dataSource && dataSource.data.length > 0">
     <p>
       Double check any data that you are about to change.
     </p>
@@ -18,7 +18,7 @@
 
 </div>
 
-<div class="preview-sample" *ngIf="dataSource; else no_data">
+<div class="preview-sample" *ngIf="dataSource && dataSource.data.length > 0; else no_data">
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
@@ -75,8 +75,8 @@
         <!-- LOCATION DATA -->
         <ng-template #locations let-key="key" let-element="element">
           <div *ngFor="let location of element[key]; let idx = index" class="location-group" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
-            <div *ngFor="let key of locationColumns">
-              <div [ngTemplateOutlet]="location[key + '_x'] === location[key+'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key, type: 'location'}">
+            <div *ngFor="let key2 of locationColumns">
+              <div [ngTemplateOutlet]="location[key2 + '_x'] === location[key2 +'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key2, type: 'location'}">
               </div>
             </div>
           </div>

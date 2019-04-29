@@ -25,12 +25,11 @@ export class PreviewDifferencesComponent implements OnInit {
       this.displayedColumns = mergedObj.displayedColumns;
       this.locationColumns = mergedObj.locationColumns;
 
-
-      this.dataSource = new MatTableDataSource(merged);
-      // this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
-      this.dataSource.paginator = this.paginator;
-
-      this.dataSource.sort = this.sort;
+      if (merged && merged.length > 0) {
+        this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     })
 
   }

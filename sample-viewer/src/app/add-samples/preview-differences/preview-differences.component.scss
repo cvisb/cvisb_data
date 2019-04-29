@@ -49,7 +49,7 @@ $old-color: accent-redder(600);
 .location-group {
   padding: 5px 10px;
   margin: 10px;
-  background: #eee;
+  background: $grey-50;
 
   &.right_only {
     background:  lighten(#cfe9d4, 10%)
