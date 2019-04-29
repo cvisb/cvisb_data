@@ -2,6 +2,8 @@ import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-preview-samples',
   templateUrl: './preview-samples.component.html',
@@ -10,6 +12,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 export class PreviewSamplesComponent implements OnChanges {
   @Input() data: Object[];
+  @Input() highlightCols: string[] = [];
   @Input() hidePagination: boolean = false;
   @Input() displayedColumns: string[] = null;
 
@@ -18,21 +21,20 @@ export class PreviewSamplesComponent implements OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "location", "numAliquots"];
-
+  columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 
   constructor() { }
 
   ngOnChanges() {
+
     if (!this.displayedColumns || this.displayedColumns.length === 0) {
-      this.displayedColumns = Array.from(new Set(this.data.map(d => Object.keys(d)).flat()));
+      this.displayedColumns = _.uniq(_.flatMap(this.data, Object.keys));
       // sort the columns in a sensible order
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
 
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.paginator = this.paginator;
-
     this.dataSource.sort = this.sort;
   }
 
@@ -43,6 +45,14 @@ export class PreviewSamplesComponent implements OnChanges {
       return (1000);
     }
     return (idx);
+  }
+
+  isObject(data) {
+    return (typeof(data) === "object" && !Array.isArray(data));
+  }
+
+  isArray(data) {
+    return (Array.isArray(data));
   }
 
 }
