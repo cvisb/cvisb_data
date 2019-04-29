@@ -16,11 +16,13 @@ export class FrontendSampleValidationComponent implements OnInit {
   upload_steps: Object[];
   ready2validate: boolean;
   numErrors: number;
+  numVerification: number;
   dataLength: number;
   badIDs: Object[];
   missingReq: Object[];
   dateCheck: Object[];
   dupeCheck: Object[];
+  dupeCombo: Object[];
 
   // States of approval
   approve_deletions: boolean;
@@ -33,13 +35,15 @@ export class FrontendSampleValidationComponent implements OnInit {
     uploadSvc.FEvalidationState$.subscribe(state => {
       // console.log(state);
       // Count number of errors
-      this.numErrors = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified).reduce((a: any, b: any) => <any>(a + b)));
+      this.numErrors = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && d.fatal).reduce((a: any, b: any) => <any>(a + b)));
+      this.numVerification = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && !d.fatal).reduce((a: any, b: any) => <any>(a + b)));
 
       this.data = this.getData(state, "delete_extra");
       this.dataLength = this.data ? this.data['length'] : 0;
       this.badIDs = this.getData(state, "check_ids");
       this.dateCheck = this.getData(state, "parse_dates");
-      this.dupeCheck = this.getData(state, "combine_dupes");
+      this.dupeCheck = this.getData(state, "check_dupes");
+      this.dupeCombo = this.getData(state, "combine_dupes");
       this.missingReq = this.getData(state, "check_req");
 
       this.validation_steps = state;

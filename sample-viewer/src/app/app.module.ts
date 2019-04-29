@@ -87,6 +87,7 @@ import { UploadComponent } from './upload/upload.component';
 import { PatientDatesComponent } from './patient-page/patient-dates/patient-dates.component';
 import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
 import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
+import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
 
 
 @NgModule({
@@ -164,6 +165,7 @@ import { PreviewAdditionsComponent } from './add-samples/preview-additions/previ
     PatientDatesComponent,
     CheckDupesComponent,
     PreviewAdditionsComponent,
+    CombineDupesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),

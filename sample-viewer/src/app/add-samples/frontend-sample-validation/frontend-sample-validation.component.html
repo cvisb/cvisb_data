@@ -7,7 +7,11 @@
     </div>
 
     <div class="error-count" [ngClass]="{'has-error': numErrors > 0}">
-      <b>{{ numErrors }} {{ numErrors > 1 && numErrors !== 0 ? "errors" : "error"}}</b> {{ numErrors > 1 ? "require" : "requires"}} resolution.
+      <b>{{ numErrors }} {{ numErrors > 1 || numErrors === 0 ? "errors" : "error"}}</b> {{ numErrors > 1 ? "require" : "requires"}} fixing and re-uploading.
+    </div>
+
+    <div class="error-count" [ngClass]="{'needs-verification': numVerification > 0}">
+      <b>{{ numVerification }} {{ numVerification > 1 || numVerification === 0 ? "errors" : "error"}}</b> {{ numVerification > 1 ? "require" : "requires"}} verification (and maybe re-uploading).
     </div>
   </ng-container>
 </div>
@@ -18,7 +22,7 @@
 
     <!-- Template for step label -->
     <ng-template matStepLabel>
-      <span [ngClass]="{'validation-error': step.numErrors > 0, 'verified': step.verified }">
+      <span [ngClass]="{'validation-error': step.numErrors > 0, 'verified': step.verified, 'fatal': step.fatal }">
         {{ step.label }}
         </span>
     </ng-template>
@@ -53,12 +57,11 @@
       <div *ngSwitchCase="'check_ids'">
         <app-check-ids [data]="badIDs" *ngIf="badIDs"></app-check-ids>
 
-        <mat-radio-group aria-label="Select an option" *ngIf="badIDs" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">
+        <mat-radio-group aria-label="Select an option" *ngIf="step.numErrors > 0" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">
           <mat-radio-button [value]="true">Yep, let's convert those IDs.</mat-radio-button>
           <mat-radio-button [value]="false">Nope! They shouldn't be changed</mat-radio-button>
         </mat-radio-group>
 
-        <!-- <mat-checkbox *ngIf="badIDs" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">Yep, let's convert those IDs.</mat-checkbox> -->
       </div>
 
       <div *ngSwitchCase="'create_sampleID'">
@@ -75,21 +78,33 @@
         <p>
           Add the required fields and re-upload the file.
         </p>
-        <app-preview-samples [data]="missingReq" *ngIf="missingReq && missingReq.length > 0"></app-preview-samples>
+        <app-preview-samples [data]="missingReq"></app-preview-samples>
       </div>
 
 
-      <!-- Duplicate rows -->
+      <!-- Duplicate rows with weird metadata -->
+      <div *ngSwitchCase="'check_dupes'">
+        <ng-container *ngIf="step.numErrors > 0">
+          <h3 class="helper-msg">
+          The following {{ step.numErrors }} {{ step.numErrors > 1 ? "rows have" : "row has" }}
+          duplicate sample IDs with different metadata values.</h3>
+
+          <app-check-dupes [data]="dupeCheck"></app-check-dupes>
+
+        </ng-container>
+      </div>
+
+
+      <!-- Duplicate rows with same -->
       <div *ngSwitchCase="'combine_dupes'">
         <ng-container *ngIf="step.numErrors > 0">
           <h3 class="helper-msg">
           The following {{ step.numErrors }} {{ step.numErrors > 1 ? "rows have" : "row has" }}
           duplicate sample IDs and location.</h3>
 
-          <app-check-dupes [data]="dupeCheck"></app-check-dupes>
+          <app-combine-dupes [data]="dupeCombo"></app-combine-dupes>
 
-          <app-preview-samples [data]="dupeCheck" *ngIf="dupeCheck && dupeCheck.length > 0"></app-preview-samples>
-          <mat-checkbox *ngIf="dupeCheck" [(ngModel)]="approve_dupes" (ngModelChange)="verifyStep($event, 'combine_dupes')">Yep, let's combine those duplicates.</mat-checkbox>
+          <mat-checkbox *ngIf="dupeCombo" [(ngModel)]="approve_dupes" (ngModelChange)="verifyStep($event, 'combine_dupes')">Yep, let's combine those duplicates.</mat-checkbox>
         </ng-container>
       </div>
 
@@ -110,7 +125,7 @@
             If the dates are out of range, double check that the year is > 2000.
           </p>
 
-          <app-preview-samples [data]="dateCheck" *ngIf="dateCheck && dateCheck.length > 0"></app-preview-samples>
+          <app-preview-samples [data]="dateCheck"></app-preview-samples>
           <mat-checkbox *ngIf="dateCheck" [(ngModel)]="approve_dates" (ngModelChange)="verifyStep($event, 'parse_dates')">Yep, let's convert those dates.</mat-checkbox>
         </ng-container>
       </div>
@@ -120,8 +135,8 @@
 
     <!-- Next buttons -->
     <div class="next-buttons">
-      <button mat-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
-      <button mat-button matStepperNext *ngIf="idx < validation_steps.length - 1" class="stepper-button">Next</button>
+      <button mat-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Previous Issue</button>
+      <button mat-button matStepperNext *ngIf="idx < validation_steps.length - 1" class="stepper-button">Next Issue</button>
     </div>
   </mat-step>
 
