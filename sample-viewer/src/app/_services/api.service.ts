@@ -53,6 +53,34 @@ export class ApiService {
     )
   }
 
+  // Generic getAll, which calls fetchAll
+  getAll(endpoint: string, qString): Observable<any[]> {
+    let all_data = [];
+
+    let params = new HttpParams()
+      .set('q', qString)
+      .append('fetch_all', "true");
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map((res: any[]) => {
+        console.log('result of get all');
+        console.log(res);
+
+        // let patientArray = res["body"]['hits'].map(patient => {
+        //   return ((patient));
+        // });
+
+        return (res['body'['hits']])
+      }
+      )
+    );
+  }
+
   // Generic function to pull out the ES `_ids` for all entries in an endpoint.
   getESIDs(endpoint: string) {
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
@@ -157,6 +185,13 @@ export class ApiService {
       console.log('no data to add')
     }
   }
+
+// Generic PUT function, done in `size` pieces.
+// Executed in a cascade, where the previous API completes before
+    putPiecewise(endpoint: string, newData: any, size: number = 50): Observable<any> {
+      let numChunks = Math.ceil(newData.length / size);
+      return(null)
+    }
 
 
   // Function to convert to a json object to be inserted by ES
