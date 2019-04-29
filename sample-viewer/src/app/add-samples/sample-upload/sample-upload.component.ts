@@ -141,6 +141,7 @@ export class SampleUploadComponent implements OnInit {
 
       this.dataLength = data.length;
 
+
       // FRONT-END VALIDATION FUNCTIONS
       // [2] check required
       this.uploadSvc.checkRequired(data);
@@ -152,26 +153,22 @@ export class SampleUploadComponent implements OnInit {
       // [4] check dates
       // Consolidate dates down for review.
       let cleaned_dates = this.uploadSvc.checkDates();
-      // data = cleaned_dates.data;
-      // this.dateDict = cleaned_dates.dict;
 
 
       // [5] create sample IDs
       this.uploadSvc.createSampleIDs();
 
-      // [6] combine duplicates
-      this.uploadSvc.checkDupes(data);
+      // [6] check/combine duplicates
+      this.uploadSvc.checkDupes();
+      this.uploadSvc.combineDupes();
+
       data = this.uploadSvc.getData();
-      console.log(data)
+      // console.log(data)
 
       return (data);
     }
 
   }
-
-
-
-
 
   // from https://stackoverflow.com/questions/27979002/convert-csv-data-into-json-format-using-javascript
   csvJSON(csv) {
@@ -213,14 +210,10 @@ export class SampleUploadComponent implements OnInit {
     headers.filter(d => d !== "sampleID");
 
     let filtered = _.cloneDeep(data);
-    // let filtered = (data);
-    console.log(data)
-
 
     filtered.forEach(d => delete (d.sampleID));
 
     filtered = filtered.filter(d => Object.values(d).some(value => value !== ""));
-    console.log(filtered)
     this.uploadSvc.updateValidation("delete_extra", true, data.length - filtered.length, filtered);
 
     return (filtered)
