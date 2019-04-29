@@ -16,7 +16,8 @@ export class PreviewAdditionsComponent implements OnInit {
     uploadSvc.uploadSamplesState$.subscribe(merged => {
 
     this.previewData = merged.filter((d:any) => d._merge === "right_only");
-    console.log(this.previewData);
+    console.log('upload samples changed:');
+    console.log(merged);
   })
 
    }
