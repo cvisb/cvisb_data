@@ -4,8 +4,8 @@
 import pandas as pd
 import re
 
-input_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-02-26_DNA and RNA sample List_MP_PRIVATE.xlsx"
-output_file  = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-03-12_samples_PRIVATE.json"
+input_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/sample_rosters/2019-02-26_DNA and RNA sample List_MP_PRIVATE.xlsx"
+output_file  = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/samples/2019-04-30_samples_PRIVATE.json"
 
 lab = "TSRI-Andersen"
 numAliquots = 1
@@ -52,6 +52,7 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
 
     # separate out the patient ID from visit code.
     df['patientID'] = "unknown"
+    df['sampleLabel'] = df.timepointID
     df['privatePatientID'], df['visitCode'] = df['timepointID'].str.split('\-', 1).str
     df['privatePatientID'] = df.privatePatientID.apply(splitGID) # Add in hyphen
 
@@ -90,7 +91,6 @@ lassa2_date = pd.read_excel(input_file, sheetname=1, skiprows=0, header=None)
 lassa2_date = lassa2_date[2][0].strftime('%Y-%m-%d')
 l2 = cleanSamples(lassa2, lassa2_date, "#")
 
-ebola.head()
 # Ebola;
 ebola = pd.read_excel(input_file, sheetname=2, skiprows=1)
 ebola_date = pd.read_excel(input_file, sheetname=2, skiprows=0, header=None)
@@ -104,13 +104,13 @@ df = pd.concat([l1, l2, ebv])
 
 
 # Create new sampleID == type + running count
-df["rowNum"] = df.groupby("sampleType").cumcount()+1
-df["sampleID"] = df.apply(makeSampleID, axis = 1)
+# df["rowNum"] = df.groupby("sampleType").cumcount()+1
+# df["sampleID"] = df.apply(makeSampleID, axis = 1)
 
 df.columns
 df[df.duplicated(subset=["derivedIndex", "isolationDate", "dateModified", "lab", "numAliquots", "visitCode", "privatePatientID", "sampleType", "sourceSampleID", "sourceSampleType", "timepointID"])]
 # remove unneeded cols
-df.drop(["#", "Unnamed: 0", "variable", "rowNum"], axis=1, inplace=True)
+df.drop(["#", "Unnamed: 0", "variable", "timepointID"], axis=1, inplace=True)
 
 # --- Export ---
 df.to_json(output_file, orient="records")
