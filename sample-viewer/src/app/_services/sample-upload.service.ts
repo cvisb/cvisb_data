@@ -117,7 +117,7 @@ export class SampleUploadService {
     // Remove anything that needs to be removed.
     data_copy = this.dropCols(data_copy, vars2delete);
 
-    data_copy.forEach(d => {
+    data_copy.forEach((d:any) => {
       d['dateModified'] = this.datePipe.transform(this.today, "yyyy-MM-dd");
     })
 
@@ -125,34 +125,31 @@ export class SampleUploadService {
     console.log(data_copy);
 
     // Check if there are any updates to existing data
-    let mergedObj = this.mergeSvc.mergeSampleData(this.oldData, data_copy);
-
-
     let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
     this.apiSvc.getAll('sample', sampleIDs).pipe(
       // catchError(() => of([])),
       // finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(samples => {
+      .subscribe((samples) => {
         console.log('samples from call to backend')
         console.log(samples);
 
-        let x = this.mergeSvc.mergeSampleData(samples, data_copy);
-        console.log(x)
+        let mergedObj = this.mergeSvc.mergeSampleData(samples, data_copy);
+
+        // Save the merged form, doing the actual merge to combine old/new data.
+        data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
+
+        this.previewDifferencesSubject.next(mergedObj);
+
+
+        console.log("After data merge")
+        console.log(mergedObj)
+        console.log(data_copy);
+
+        this.uploadSamplesSubject.next(data_copy);
       });
 
-    // Save the merged form, doing the actual merge to combine old/new data.
-    data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
-
-    this.previewDifferencesSubject.next(mergedObj);
-
-
-    console.log("After data merge")
-    console.log(mergedObj)
-    console.log(data_copy);
-
-    this.uploadSamplesSubject.next(data_copy);
   }
 
 
