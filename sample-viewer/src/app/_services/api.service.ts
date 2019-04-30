@@ -53,10 +53,8 @@ export class ApiService {
     )
   }
 
-  // Generic getAll, which calls fetchAll
+  // Generic getAll, which calls fetchAll. Results will not be sorted.
   getAll(endpoint: string, qString): Observable<any[]> {
-    let all_data = [];
-
     let params = new HttpParams()
       .set('q', qString)
       .append('fetch_all', "true");
@@ -67,18 +65,18 @@ export class ApiService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      map((res: any[]) => {
+      map(data => {
         console.log('result of get all');
-        console.log(res);
+        console.log(data);
 
-        // let patientArray = res["body"]['hits'].map(patient => {
-        //   return ((patient));
-        // });
-
-        return (res['body'['hits']])
-      }
-      )
-    );
+        return (data['body']['hits']);
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
   }
 
   // Generic function to pull out the ES `_ids` for all entries in an endpoint.
@@ -186,12 +184,12 @@ export class ApiService {
     }
   }
 
-// Generic PUT function, done in `size` pieces.
-// Executed in a cascade, where the previous API completes before
-    putPiecewise(endpoint: string, newData: any, size: number = 50): Observable<any> {
-      let numChunks = Math.ceil(newData.length / size);
-      return(null)
-    }
+  // Generic PUT function, done in `size` pieces.
+  // Executed in a cascade, where the previous API completes before
+  putPiecewise(endpoint: string, newData: any, size: number = 50): Observable<any> {
+    let numChunks = Math.ceil(newData.length / size);
+    return (null)
+  }
 
 
   // Function to convert to a json object to be inserted by ES
