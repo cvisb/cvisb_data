@@ -1,4 +1,4 @@
-<div class="preview-sample" *ngIf="dataSource">
+<div class="preview-sample" *ngIf="dataSource && dataSource.data.length > 0">
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
