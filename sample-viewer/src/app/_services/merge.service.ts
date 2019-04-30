@@ -139,15 +139,20 @@ export class MergeService {
   }
 
 
+// Outer function to actually merge _x properties with _y.
   compressMergedSamples(merged) {
     // First, replace the 'location' with the consolidated form
     let compressed = _.cloneDeep(merged);
 
     compressed.forEach(sample => {
+      // Location is weird; want to concatenate together the results
       sample['location'] = this.compressMergedData(sample['location'], "concat");
+      sample['_id'] = this.compressMergedData(sample['_id'], "concat");
 
       delete sample['location_x'];
       delete sample['location_y'];
+      delete sample['_id_x'];
+      delete sample['_id_y'];
     })
 
     compressed = this.compressMergedData(compressed);
