@@ -133,7 +133,7 @@ export class MergeService {
     // sort displayedColumns
     displayedColumns = _.uniq(['sampleID'].concat(displayedColumns.sort()));
     // remove cols to ignore-- namely _id-- since it's used internalyl and shouldn't be shown.
-    displayedColumns = _.difference(displayedColumns, ignoreCols)
+    displayedColumns = _.difference(displayedColumns, ignoreCols);
 
     let locationColumns = this.getAllCols(left_data.map(d => d.location).flat(), right_data.map(d => d.location).flat());
 
@@ -148,8 +148,8 @@ export class MergeService {
 
     compressed.forEach(sample => {
       // Location is weird; want to concatenate together the results
-      sample['location'] = this.compressMergedData(sample['location'], "concat");
-      sample = this.updateMergedVals(sample, "_id", "concat");
+      sample['location'] = this.compressMergedData(sample['location'], "replace_left_first");
+      sample = this.updateMergedVals(sample, "_id", "replace_left_first");
 
       delete sample['location_x'];
       delete sample['location_y'];
@@ -173,7 +173,7 @@ export class MergeService {
 
       for (let column of col_pairs) {
         // Update with the new value: the left, the right, or (default) an array of both.
-        // If method = "concat", replaces with _y. If there's no _y, replaces w/ _x
+        // If method = "replace_left_first", replaces with _y. If there's no _y, replaces w/ _x
         sample = this.updateMergedVals(sample, column, method);
       }
     })
@@ -181,7 +181,11 @@ export class MergeService {
     return (merged);
   }
 
-// Actual function to change values
+  // Actual function to change values
+  // If `replace_left`, _y property will be the final value
+  // if `replace_right`, _x property will be the final value
+  // if `replace_left_first`, _y property will take precedence and be the final value. If no _y property, _x will be used.
+  // default: values get appended together in an array of two.
   updateMergedVals(sample, column, method) {
     switch (method) {
       case "replace_left":
@@ -190,7 +194,7 @@ export class MergeService {
       case "replace_right":
         sample[column] = sample[column + "_x"];
         break;
-      case "concat":
+      case "replace_left_first":
         sample[column] = sample[column + "_y"] ? sample[column + "_y"] : sample[column + "_x"];
         break;
       default:
