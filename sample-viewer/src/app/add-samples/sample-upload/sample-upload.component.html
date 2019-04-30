@@ -16,29 +16,6 @@
 
     <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
 
-    <div class="error-messages" *ngIf="errorObj">
-      <div class="error-message-group" *ngFor="let msg of errorObj">
-        <div class="error-message">
-          <span class="error-label">
-            Error:
-          </span>
-
-          {{ msg. key }}
-        </div>
-        <div class="error-ids">
-          <span class="error-label">
-            IDs:
-          </span>
-
-          <div *ngFor="let id of msg.value.ids; let index">
-            {{ id }}
-            <span *ngIf="index < msg.value.ids.length" class="id-separator"></span>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <div class="upload-button">
