@@ -53,8 +53,6 @@ export class SampleUploadComponent implements OnInit {
     // Clear previous states
     this.uploadSvc.clearProgress();
     this.errorMsg = null;
-    // this.errorObj = null;
-
 
     if (fileList.length > 0) {
 
