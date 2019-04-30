@@ -61,7 +61,7 @@ export class ApiService {
       .set('q', qString)
       .append('fetch_all', "true");
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),

@@ -129,11 +129,13 @@ export class SampleUploadService {
 
 
     let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
+
     let apiRes = this.apiSvc.getAll('sample', sampleIDs);
     apiRes.subscribe(x => {
       console.log("API call to backend")
       console.log(x)
     })
+
     console.log(apiRes);
 
     // Save the merged form, doing the actual merge to combine old/new data.
@@ -322,7 +324,7 @@ export class SampleUploadService {
       }
       if (!d.creatorInitials) {
         // d.creatorInitials = `${this.user.given_name[0]}${this.user.family_name[0]}`;
-        d.creatorInitials = "mp"
+        d.creatorInitials = ""
       }
       d['sampleID'] = `${d.creatorInitials}${d.sampleLabel}_${d.sampleType}${d.isolationDate}`;
       // d['sampleID'] = `${d.creatorInitials}${d.timepointID}_${d.sampleType}${d.isolationDate}`;
