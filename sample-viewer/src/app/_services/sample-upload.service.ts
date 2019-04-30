@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 })
 
 export class SampleUploadService {
+  today = new Date();
   oldData = [
     { "sampleLabel": "example1", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample1_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Briney", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
     { "sampleLabel": "example2", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample2_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 0, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
@@ -115,6 +116,10 @@ export class SampleUploadService {
 
     // Remove anything that needs to be removed.
     data_copy = this.dropCols(data_copy, vars2delete);
+
+    data_copy.forEach(d => {
+      d['dateModified'] = this.datePipe.transform(this.today, "yyyy-MM-dd");
+    })
 
     console.log("Front-end validated data")
     console.log(data_copy);
@@ -268,10 +273,10 @@ export class SampleUploadService {
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
       // !!! REMEMBER: dates in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
-      let today = new Date();
+
 
       // Check date is within realisitic bounds
-      let withinBounds = (converted <= today) && (converted >= lowerLimit);
+      let withinBounds = (converted <= this.today) && (converted >= lowerLimit);
 
       let converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
       let converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
