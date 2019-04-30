@@ -33,13 +33,12 @@ export class PreviewSamplesComponent implements OnChanges {
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
 
-    if (this.data.length > 0) {
-      this.dataSource = new MatTableDataSource(this.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    } else {
+    if (this.data.length == 0) {
       this.hidePagination = true;
     }
+    this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   sortingFunc(a) {
