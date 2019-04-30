@@ -115,7 +115,7 @@ export class SampleUploadService {
 
 
     // Remove anything that needs to be removed.
-    data_copy = this.dropCols(data_copy, vars2delete);
+    data_copy = this.apiSvc.dropCols(data_copy, vars2delete);
 
     data_copy.forEach((d:any) => {
       d['dateModified'] = this.datePipe.transform(this.today, "yyyy-MM-dd");
@@ -381,7 +381,7 @@ export class SampleUploadService {
 
     disagreements.forEach(d => {
       delete d['keys'];
-      d['values'] = this.dropCols(d.values, ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id'], false);
+      d['values'] = this.apiSvc.dropCols(d.values, ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id'], false);
     })
 
     this.updateValidation("check_dupes", true, disagreements.length, disagreements);
@@ -451,23 +451,6 @@ export class SampleUploadService {
   }
 
 
-  // Removes fields from each object in an array of objects.
-  dropCols(data, cols, copy = true) {
-    let filtered;
-    if (copy) {
-      filtered = _.cloneDeep(data)
-    } else {
-      filtered = data;
-    }
-
-    filtered.forEach(d => {
-      cols.forEach(col_name => {
-        delete d[col_name];
-      })
-    })
-
-    return (filtered)
-  }
 
   nestLocations(data) {
 
