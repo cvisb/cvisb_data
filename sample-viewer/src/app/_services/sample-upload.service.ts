@@ -20,9 +20,9 @@ import * as _ from 'lodash';
 export class SampleUploadService {
   today = new Date();
   oldData = [
-    { "sampleLabel": "example1", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample1_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Briney", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
-    { "sampleLabel": "example2", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample2_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 0, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
-    { "sampleLabel": "example3", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "PBMC", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample3_PBMC2019-01-01", "location": [{ "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] }];
+    { "_id": "id1", "sampleLabel": "example1", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample1_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Briney", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
+    { "_id": "id2", "sampleLabel": "example2", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample2_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 0, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
+    { "_id": "id3", "sampleLabel": "example3", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "PBMC", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample3_PBMC2019-01-01", "location": [{ "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] }];
 
 
   user: CvisbUser;
@@ -117,7 +117,7 @@ export class SampleUploadService {
     // Remove anything that needs to be removed.
     data_copy = this.apiSvc.dropCols(data_copy, vars2delete);
 
-    data_copy.forEach((d:any) => {
+    data_copy.forEach((d: any) => {
       d['dateModified'] = this.datePipe.transform(this.today, "yyyy-MM-dd");
     })
 
@@ -149,6 +149,21 @@ export class SampleUploadService {
 
         this.uploadSamplesSubject.next(data_copy);
       });
+
+
+    // let mergedObj = this.mergeSvc.mergeSampleData(this.oldData, data_copy);
+    //
+    // // Save the merged form, doing the actual merge to combine old/new data.
+    // data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
+    //
+    // this.previewDifferencesSubject.next(mergedObj);
+    //
+    //
+    // console.log("After data merge")
+    // console.log(mergedObj)
+    // console.log(data_copy);
+    //
+    // this.uploadSamplesSubject.next(data_copy);
 
   }
 
@@ -185,18 +200,22 @@ export class SampleUploadService {
   clearProgress() {
     // this.uploadStepSubject.next(-1);
 
-    this.steps.forEach(d => {
+    this.steps.forEach((d) => {
       d.complete = false;
       d.data = null;
     })
 
-    this.frontend_validation.forEach(d => {
+    this.frontend_validation.forEach((d) => {
       d.complete = false;
       d.data = null;
       d.numErrors = null;
       d.verified = null;
     })
 
+    // Update BehaviorSubjects
+    this.previewDifferencesSubject.next({});
+    this.uploadSamplesSubject.next([]);
+    this.progressSubject.next(this.steps);
   }
 
   checkIDs() {
@@ -370,7 +389,7 @@ export class SampleUploadService {
 
     // Find the disagreements for each sample group
     // If there are multiple values for a given variable within a sample ID, flag it
-    data_by_id.forEach(d => {
+    data_by_id.forEach((d) => {
       d['disagreements'] = this.getDupes(d);
       d['highlight'] = _.uniq(_.flatMap(d.disagreements, 'column'));
     })
@@ -379,7 +398,7 @@ export class SampleUploadService {
     let disagreements = data_by_id.filter(d => d.disagreements.length > 0);
     disagreements = _.cloneDeep(disagreements)
 
-    disagreements.forEach(d => {
+    disagreements.forEach((d) => {
       delete d['keys'];
       d['values'] = this.apiSvc.dropCols(d.values, ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id'], false);
     })
