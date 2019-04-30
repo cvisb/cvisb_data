@@ -11,7 +11,7 @@ import { environment } from "../../environments/environment";
 
 // services
 import { MyHttpClient } from './http-cookies.service';
-
+import { cloneDeep } from 'lodash';
 // models
 
 
@@ -66,10 +66,15 @@ export class ApiService {
       params: params
     }).pipe(
       map(data => {
-        console.log('result of get all');
+        console.log('getAll Backend call:');
         console.log(data);
 
-        return (data['body']['hits']);
+        let result = data['body']['hits'];
+
+        // Remove ES variables that we won't need.
+        result = this.dropCols(result, ['_score', '_version'], false)
+
+        return (result);
       }),
       catchError(e => {
         console.log(e)
@@ -233,5 +238,25 @@ export class ApiService {
       }
     })
   }
+
+
+  // Removes fields from each object in an array of objects.
+  dropCols(data, cols, copy = true) {
+    let filtered;
+    if (copy) {
+      filtered = cloneDeep(data)
+    } else {
+      filtered = data;
+    }
+
+    filtered.forEach(d => {
+      cols.forEach(col_name => {
+        delete d[col_name];
+      })
+    })
+
+    return (filtered)
+  }
+
 
 }

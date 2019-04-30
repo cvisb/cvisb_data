@@ -57,7 +57,7 @@ export class MergeService {
   }
 
 
-  getAllCols(left_data, right_data, special_cols = ['_id']) {
+  getAllCols(left_data, right_data, special_cols = []) {
     // Grab whatever columns exist in the data
     let cols = [];
 
