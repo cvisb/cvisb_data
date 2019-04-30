@@ -492,7 +492,6 @@ button.stepper-button {
   width: 100%;
 }
 
-
 .done-icon {
     font-size: 20px !important;
     height: 20px !important;
@@ -502,4 +501,8 @@ button.stepper-button {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+
+.error-message-group {
+  margin-bottom: 35px;
 }
