@@ -3,11 +3,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from '../../_services';
 import { nest } from 'd3';
 
+import { cloneDeep } from 'lodash';
+
 @Component({
   selector: 'app-submit-samples',
   templateUrl: './submit-samples.component.html',
   styleUrls: ['./submit-samples.component.scss']
 })
+
 export class SubmitSamplesComponent implements OnInit {
   uploadResponse: string;
   errorMsg: string;
@@ -30,7 +33,21 @@ export class SubmitSamplesComponent implements OnInit {
     if (this.data.length > 0) {
       this.uploadResponse = "Attempting to submit data to database.";
 
-      this.apiSvc.put("sample", this.data).subscribe(resp => {
+      // Before uploading the data, create a copy and get rid of the _merge variables used internally.
+      let data2upload = cloneDeep(this.data);
+
+      data2upload.forEach(d => {
+        delete d._merge;
+
+        d.location.forEach(loc => {
+          delete loc._merge;
+        })
+      })
+
+      console.log('data to submit:')
+      console.log(data2upload)
+
+      this.apiSvc.put("sample", data2upload).subscribe(resp => {
         this.uploadResponse = `Success! ${resp}`;
         console.log(resp)
       }, err => {
