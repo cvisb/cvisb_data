@@ -33,9 +33,13 @@ export class PreviewSamplesComponent implements OnChanges {
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
 
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.data.length > 0) {
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } else {
+      this.hidePagination = true;
+    }
   }
 
   sortingFunc(a) {
@@ -48,7 +52,7 @@ export class PreviewSamplesComponent implements OnChanges {
   }
 
   isObject(data) {
-    return (typeof(data) === "object" && !Array.isArray(data));
+    return (typeof (data) === "object" && !Array.isArray(data));
   }
 
   isArray(data) {
