@@ -130,13 +130,17 @@ export class SampleUploadService {
 
     let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
-    let apiRes = this.apiSvc.getAll('sample', sampleIDs);
-    apiRes.subscribe(x => {
-      console.log("API call to backend")
-      console.log(x)
-    })
+    this.apiSvc.getAll('sample', sampleIDs).pipe(
+      // catchError(() => of([])),
+      // finalize(() => this.loadingSubject.next(false))
+    )
+      .subscribe(samples => {
+        console.log('samples from call to backend')
+        console.log(samples);
 
-    console.log(apiRes);
+        let x = this.mergeSvc.mergeSampleData(samples, data_copy);
+        console.log(x)
+      });
 
     // Save the merged form, doing the actual merge to combine old/new data.
     data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
