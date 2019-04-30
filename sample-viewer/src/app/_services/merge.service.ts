@@ -62,10 +62,10 @@ export class MergeService {
     let cols = [];
 
     // Double check that the data is an array of objects...
-    if (left_data && (left_data.map(d => typeof(d) === "object").every(d => d))) {
+    if (left_data && (left_data.map(d => typeof (d) === "object").every(d => d))) {
       left_data.forEach(d => cols = cols.concat(Object.keys(d)));
     }
-    if (right_data && (right_data.map(d => typeof(d) === "object").every(d => d))) {
+    if (right_data && (right_data.map(d => typeof (d) === "object").every(d => d))) {
       right_data.forEach(d => cols = cols.concat(Object.keys(d)));
     }
 
@@ -117,7 +117,7 @@ export class MergeService {
   }
 
 
-  mergeSampleData(left_data, right_data, left_on = "sampleID", right_on = "sampleID", how = "right", method = "merge") {
+  mergeSampleData(left_data, right_data, left_on = "sampleID", right_on = "sampleID", how = "right", method = "merge", ignoreCols = ["_id"]) {
     let merged = this.merge(left_data, right_data, left_on, right_on, how, method);
 
     // Create a new ['location'] object to store the merged locations
@@ -132,14 +132,16 @@ export class MergeService {
     let displayedColumns = this.getAllCols(left_data, right_data);
     // sort displayedColumns
     displayedColumns = _.uniq(['sampleID'].concat(displayedColumns.sort()));
+    // remove cols to ignore-- namely _id-- since it's used internalyl and shouldn't be shown.
+    displayedColumns = _.difference(displayedColumns, ignoreCols)
 
     let locationColumns = this.getAllCols(left_data.map(d => d.location).flat(), right_data.map(d => d.location).flat());
 
-    return ({merged: merged, displayedColumns: displayedColumns, locationColumns: locationColumns});
+    return ({ merged: merged, displayedColumns: displayedColumns, locationColumns: locationColumns });
   }
 
 
-// Outer function to actually merge _x properties with _y.
+  // Outer function to actually merge _x properties with _y.
   compressMergedSamples(merged) {
     // First, replace the 'location' with the consolidated form
     let compressed = _.cloneDeep(merged);
@@ -147,12 +149,10 @@ export class MergeService {
     compressed.forEach(sample => {
       // Location is weird; want to concatenate together the results
       sample['location'] = this.compressMergedData(sample['location'], "concat");
-      sample['_id'] = this.compressMergedData(sample['_id'], "concat");
+      sample = this.updateMergedVals(sample, "_id", "concat");
 
       delete sample['location_x'];
       delete sample['location_y'];
-      delete sample['_id_x'];
-      delete sample['_id_y'];
     })
 
     compressed = this.compressMergedData(compressed);
@@ -174,29 +174,33 @@ export class MergeService {
       for (let column of col_pairs) {
         // Update with the new value: the left, the right, or (default) an array of both.
         // If method = "concat", replaces with _y. If there's no _y, replaces w/ _x
-        switch (method) {
-          case "replace_left":
-            sample[column] = sample[column + "_y"];
-            break;
-          case "replace_right":
-            sample[column] = sample[column + "_x"];
-            break;
-          case "concat":
-            sample[column] = sample[column + "_y"] ? sample[column + "_y"] : sample[column + "_x"];
-            break;
-          default:
-            sample[column] = [sample[column + "_x"], sample[column + "_y"]];
-        }
-        // Remove the _x and _y vars
-        delete sample[column + "_x"];
-        delete sample[column + "_y"];
+        sample = this.updateMergedVals(sample, column, method);
       }
     })
 
     return (merged);
   }
 
+// Actual function to change values
+  updateMergedVals(sample, column, method) {
+    switch (method) {
+      case "replace_left":
+        sample[column] = sample[column + "_y"];
+        break;
+      case "replace_right":
+        sample[column] = sample[column + "_x"];
+        break;
+      case "concat":
+        sample[column] = sample[column + "_y"] ? sample[column + "_y"] : sample[column + "_x"];
+        break;
+      default:
+        sample[column] = [sample[column + "_x"], sample[column + "_y"]];
+    }
+    // Remove the _x and _y vars
+    delete sample[column + "_x"];
+    delete sample[column + "_y"];
 
-
+    return (sample)
+  }
 
 }
