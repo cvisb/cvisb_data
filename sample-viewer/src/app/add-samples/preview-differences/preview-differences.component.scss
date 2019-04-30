@@ -55,3 +55,7 @@ $old-color: accent-redder(600);
     background:  lighten(#cfe9d4, 10%)
   }
 }
+
+.hide-pagination {
+  display: none !important;
+}

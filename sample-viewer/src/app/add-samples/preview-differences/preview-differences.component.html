@@ -95,7 +95,7 @@
 
 </div>
 
-<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons [ngClass]="{'hide-pagination': dataSource && dataSource.data.length > 0}"></mat-paginator>
 
 
 <ng-template #no_data>
