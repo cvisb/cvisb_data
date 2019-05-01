@@ -132,7 +132,7 @@ export class SampleUploadService {
     // Check if there are any updates to existing data
     let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
-    this.apiSvc.getAll('sample', sampleIDs).pipe(
+    this.apiSvc.fetchAll('sample', sampleIDs).pipe(
       // catchError(() => of([])),
       // finalize(() => this.loadingSubject.next(false))
     )
@@ -225,7 +225,7 @@ export class SampleUploadService {
 
 // Converts any values which are meant to be arrays into arrays. Splits on this.arrayDelim
   convert2Array() {
-    this.data.forEach(d => {
+    this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
         d[col] = d[col] && d[col] !== "" ? d[col].split(this.arrayDelim) : null;
       })
@@ -233,6 +233,9 @@ export class SampleUploadService {
   }
 
   checkIDs() {
+    // just for now... testing...
+    this.apiSvc.getAll("patient", "cohort:Lassa");
+
     this.data.forEach((d: any) => {
       // Check if the IDs are correct
       if (d.privatePatientID) {
@@ -378,7 +381,7 @@ export class SampleUploadService {
         d.creatorInitials = (this.user && this.user.given_name && this.user.family_name) ? `${this.user.given_name[0]}${this.user.family_name[0]}` : "";
       }
       // Make sure to replace any spaces in the sampleLabel with _ so ES is happier.
-      d['sampleID'] = `${d.creatorInitials}${d.sampleLabel.replace(/\s/g, "_")}_${d.sampleType}${d.isolationDate}`;
+      d['sampleID'] = `${d.creatorInitials.toLowerCase()}${d.sampleLabel.replace(/\s/g, "_")}_${d.sampleType}${d.isolationDate}`;
     })
 
     this.updateValidation("create_sampleID", true, err_ct);
