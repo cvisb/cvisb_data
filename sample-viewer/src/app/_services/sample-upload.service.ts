@@ -51,6 +51,7 @@ export class SampleUploadService {
     { id: "check_ids", complete: false, label: "Checking patient ID structure", numErrors: null, verified: null, fatal: false },
     { id: "check_dupes", complete: false, label: "Checking duplicate sample IDs", numErrors: null, verified: null, fatal: true },
     { id: "combine_dupes", complete: false, label: "Combining duplicate samples", numErrors: null, verified: null, fatal: false },
+    // { id: "check_timepoints", complete: false, label: "Checking timepoint IDs (visit codes)", numErrors: null, verified: null, fatal: false },
     { id: "parse_dates", complete: false, label: "Parsing dates", numErrors: null, verified: null, fatal: false },
     { id: "create_sampleID", complete: false, label: "Creating unique sample ID", numErrors: null, fatal: true },
     // { id: "check_locations", complete: false, label: "Checking location changes", numErrors: null },
@@ -152,7 +153,7 @@ export class SampleUploadService {
 
 
     // let mergedObj = this.mergeSvc.mergeSampleData(this.oldData, data_copy);
-    //
+    // 
     // // Save the merged form, doing the actual merge to combine old/new data.
     // data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
     //
@@ -223,29 +224,32 @@ export class SampleUploadService {
       // Check if the IDs are correct
       if (d.privatePatientID) {
         d['originalID'] = d.privatePatientID;
+        d['originalVisitCode'] = d.visitCode;
         d['id_check'] = this.idSvc.checkPatientID(d.privatePatientID);
         d['id_okay'] = d.id_check['id'] === d.originalID;
+        d['visitCodeDisagree'] = (d.visitCode) && (d.visitCode !== d.id_check['timepoint']);
       }
     });
 
 
     let badIDs = this.data.filter((d: any) => d.id_okay === false);
     this.updateValidation("check_ids", true, badIDs.length, badIDs);
-
-
   }
 
+  // Function to actually change the IDs, visitCodes.
+  // Called from app-frontend-validation, depending on the radio button selection
   convertIDs(convert: boolean) {
     if (convert) {
       this.data.forEach((d: any) => {
-        d.privatePatientID = d.id_check.id;
+        // If there's no conversion possible, revert to the originalID
+        d.privatePatientID = d.id_check.id ? d.id_check.id : d.originalID;
+        d.visitCode = d.id_check.timepoint ? d.id_check.timepoint : d.originalVisitCode;
       })
     } else {
       this.data.forEach((d: any) => {
         d.privatePatientID = d.originalID;
       })
     }
-    // console.log(this.data)
   }
 
   // Returns a table containing the missing fields per row
@@ -288,28 +292,38 @@ export class SampleUploadService {
     // remove null values
     dates = dates.filter(d => d && d !== "");
 
-    dates.forEach(d => {
+    dates.forEach((d) => {
       // Check if the date is already in the right format.
       // If so, double check it's within bounds.
       // Necessary b/c new Date("YYYY-mm-dd") has cross-browser weirdness. On Chrome, generates a date which is at 5 pm the day before.
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
-      // !!! REMEMBER: dates in Javascript are base 0.  Because...
+      // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
 
 
       // Check date is within realisitic bounds
-      let withinBounds = (converted <= this.today) && (converted >= lowerLimit);
+      let withinBounds: string;
+      if (converted > this.today) {
+        withinBounds = "date is after today";
+      } else if (converted < lowerLimit) {
+        withinBounds = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
+      } else {
+        withinBounds = "";
+      }
 
       let converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
       let converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
 
+      // binary if the inputted date was okay.
       let date_match = converted_numeric === d;
 
-      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, date_withinBound: withinBounds, date_match: date_match })
+      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBounds, date_match: date_match })
     })
 
     // Filter out only the weirdos
-    date_dict = date_dict.filter(d => !d.date_withinBound || !d.date_match);
+    date_dict = date_dict.filter((d) => !d.date_withinBound || !d.date_match);
+    // Remove the indicator for the weirdos
+    date_dict = this.apiSvc.dropCols(date_dict, ["date_match"], false);
 
     this.data.forEach((d: any) => {
       let idxIsolation = date_dict.findIndex(dict => dict["original date"] === d.isolationDate);
@@ -324,10 +338,13 @@ export class SampleUploadService {
       }
     })
 
+    // Sort so those outside range are highlighted first.
+    date_dict.sort((a, b) => b["date outside range"] < a["date outside range"] ? -1 : 1);
+
     this.updateValidation("parse_dates", true, date_dict.length, date_dict);
 
     // Remove the numeric form of the date from what will be passed back to the front-end.
-    date_dict.forEach(d => {
+    date_dict.forEach((d) => {
       delete d.new_date;
     })
 
@@ -337,17 +354,15 @@ export class SampleUploadService {
   createSampleIDs() {
     let err_ct = 0;
 
-
     this.data.forEach((d: any) => {
       if ((!d.sampleLabel) || (!d.isolationDate) || (!d.sampleType)) {
         err_ct += 1;
       }
       if (!d.creatorInitials) {
-        // d.creatorInitials = `${this.user.given_name[0]}${this.user.family_name[0]}`;
-        d.creatorInitials = ""
+        d.creatorInitials = (this.user && this.user.given_name && this.user.family_name) ? `${this.user.given_name[0]}${this.user.family_name[0]}` : "";
       }
-      d['sampleID'] = `${d.creatorInitials}${d.sampleLabel}_${d.sampleType}${d.isolationDate}`;
-      // d['sampleID'] = `${d.creatorInitials}${d.timepointID}_${d.sampleType}${d.isolationDate}`;
+      // Make sure to replace any spaces in the sampleLabel with _ so ES is happier.
+      d['sampleID'] = `${d.creatorInitials}${d.sampleLabel.replace(/\s/g, "_")}_${d.sampleType}${d.isolationDate}`;
     })
 
     this.updateValidation("create_sampleID", true, err_ct);
