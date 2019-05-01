@@ -68,6 +68,7 @@ def cleanSamples(df, date, id_col, species="human", modified = dateModified, upd
     df['numAliquots'] = numAliquots
     df['dateModified'] = modified
     df['updatedBy'] = updated
+    df['creatorInitials'] = "mp"
 
     # drop blank rows
     df.dropna(subset=["timepointID"], inplace=True)
