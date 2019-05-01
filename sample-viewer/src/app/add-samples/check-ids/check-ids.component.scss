@@ -1,3 +1,16 @@
+@import "../../../sass/material-theme.scss";
+
 .id-paginator .mat-paginator-container {
   justify-content: flex-start !important;
+}
+
+
+td.mat-cell, th.mat-header-cell {
+    padding: 2px 10px;
+    text-align: center;
+}
+
+.bad-id {
+  font-weight: 400;
+  color: accent-redder(A700);
 }
