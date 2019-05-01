@@ -16,5 +16,6 @@ export * from './http-cookies.service';
 export * from './api.service';
 export * from './request-parameters.service';
 export * from './sample-upload.service';
-export * from './check-ids.service'
-export * from './merge.service'
+export * from './check-ids.service';
+export * from './merge.service';
+export * from './nested2long.service';
