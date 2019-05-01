@@ -59,6 +59,10 @@ export class SampleUploadService {
 
   requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 
+  // Checks and converts these fields into arrays
+  arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier"];
+  arrayDelim = "/"
+
 
 
   public uploadSamplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
@@ -153,7 +157,7 @@ export class SampleUploadService {
 
 
     // let mergedObj = this.mergeSvc.mergeSampleData(this.oldData, data_copy);
-    // 
+    //
     // // Save the merged form, doing the actual merge to combine old/new data.
     // data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
     //
@@ -219,6 +223,15 @@ export class SampleUploadService {
     this.progressSubject.next(this.steps);
   }
 
+// Converts any values which are meant to be arrays into arrays. Splits on this.arrayDelim
+  convert2Array() {
+    this.data.forEach(d => {
+      this.arrayFields.forEach(col => {
+        d[col] = d[col] && d[col] !== "" ? d[col].split(this.arrayDelim) : null;
+      })
+    })
+  }
+
   checkIDs() {
     this.data.forEach((d: any) => {
       // Check if the IDs are correct
@@ -261,6 +274,9 @@ export class SampleUploadService {
       d.missing = [];
       d.numAliquots = +d.numAliquots;
     });
+
+    // Convert to arrays, as needed.
+    this.convert2Array();
 
     for (let field of this.requiredFields) {
       // Filter out the fields that are null or ""
