@@ -3,7 +3,7 @@
 
 
     <ng-container *ngFor="let key of displayedColumns" [matColumnDef]="key">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" [ngClass]="{'highlight': highlightCols.includes(key)}">{{ key }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="table-header" [ngClass]="{'highlight': highlightCols.includes(key)}">{{ key }}</th>
       <td mat-cell *matCellDef="let element" class="message" [ngClass]="{'highlight': highlightCols.includes(key)}">
         <ng-container *ngIf="element[key] && element[key] !== ''">
           <div [ngTemplateOutlet]="isArray(element[key]) ? (isObject(element[key][0]) ? objectArrayData : arrayData) :
