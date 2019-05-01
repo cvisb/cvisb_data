@@ -3,7 +3,7 @@
 
   <ng-container *ngIf="ready2validate">
     <div class="import-count">
-      <b>{{ dataLength }} {{dataLength > 1 ? "rows" : "row"}}</b> {{dataLength > 1 ? "have" : "has"}} been imported.
+      <b>{{ dataLength }} {{dataLength > 1 ? "rows" : "row"}}</b> {{dataLength > 1 ? "have" : "has"}} been read.
     </div>
 
     <div class="error-count" [ngClass]="{'has-error': numErrors > 0}">
@@ -41,7 +41,7 @@
       <div *ngSwitchCase="'delete_extra'">
         <div class="some-deleted" *ngIf="step.numErrors > 0">
           <div class="import-count">
-            {{ dataLength }} non-blank {{dataLength > 1 ? "rows" : "row"}} {{dataLength > 1 ? "have" : "has"}} been imported.
+            {{ dataLength }} non-blank {{dataLength > 1 ? "rows" : "row"}} {{dataLength > 1 ? "have" : "has"}} been read.
           </div>
 
           <div class="num-deleted">
