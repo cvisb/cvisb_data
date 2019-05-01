@@ -30,25 +30,47 @@
       </ng-container>
 
       <ng-container matColumnDef="id_check.id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">modified ID</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">corrected ID</th>
         <td mat-cell *matCellDef="let element" class="patient-id new-id">
           {{ element.id_check.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id_check.timepoint">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">corrected visit code</th>
+        <td mat-cell *matCellDef="let element" class="patient-id new-timepoint">
+          {{ element.id_check.timepoint }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="originalVisitCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">original visit code</th>
+        <td mat-cell *matCellDef="let element" class="patient-id old-timepoint">
+          {{ element.originalVisitCode }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="visitCodeDisagree">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">visit code mismatch</th>
+        <td mat-cell *matCellDef="let element" class="patient-id old-timepoint">
+            <span [ngClass]="{'bad-id': element.visitCodeDisagree}">{{ element.visitCodeDisagree ? "double check visit code" : ""}}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="id_check.message">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">Modification</th>
         <td mat-cell *matCellDef="let element" class="message">
-          {{ element.id_check.message }}
+          <span [ngClass]="{'bad-id': element.id_check.status === 400}">{{ element.id_check.message }}</span>
         </td>
       </ng-container>
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
   </div>
 </div>
 
-<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons class="id-paginator"></mat-paginator>
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="100" showFirstLastButtons class="id-paginator"></mat-paginator>

@@ -58,8 +58,8 @@
         <app-check-ids [data]="badIDs" *ngIf="badIDs"></app-check-ids>
 
         <mat-radio-group aria-label="Select an option" *ngIf="step.numErrors > 0" [(ngModel)]="approve_ids" (ngModelChange)="verifyStep($event, 'check_ids')">
-          <mat-radio-button [value]="true">Yep, let's convert those IDs.</mat-radio-button>
-          <mat-radio-button [value]="false">Nope! They shouldn't be changed</mat-radio-button>
+          <mat-radio-button class="select-btn" [value]="true">Yep, let's convert the IDs we can. Any ID that can't be converted will revert to whatever was originally suppleid.</mat-radio-button>
+          <mat-radio-button class="select-btn" [value]="false">Nope! They shouldn't be changed</mat-radio-button>
         </mat-radio-group>
 
       </div>

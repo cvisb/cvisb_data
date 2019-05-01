@@ -15,7 +15,7 @@ export class CheckIdsComponent implements OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['originalID', 'id_check.id', 'id_check.message'];
+  displayedColumns: string[] = ['originalID', 'id_check.id', 'id_check.timepoint', 'originalVisitCode', 'visitCodeDisagree', 'id_check.message'];
 
   constructor() { }
 
