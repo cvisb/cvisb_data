@@ -140,7 +140,7 @@ export class SampleUploadService {
         console.log('samples from call to backend')
         console.log(samples);
 
-        let mergedObj = this.mergeSvc.mergeSampleData(samples, data_copy);
+        let mergedObj = this.mergeSvc.mergeSampleData(samples['hits'], data_copy);
 
         // Save the merged form, doing the actual merge to combine old/new data.
         data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
