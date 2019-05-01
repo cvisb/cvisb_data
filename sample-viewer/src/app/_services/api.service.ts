@@ -55,53 +55,58 @@ export class ApiService {
 
 
   // Generic getAll, which calls fetchAll. Results will not be sorted.
-getAll(endpoint: string, qString) {
-console.log('starting get all')
-  let scrollID = null;
-  let done = false;
+  getAll(endpoint: string, qString) {
+    console.log('starting get all')
+    let scrollID = null;
+    let done = false;
 
-  let results = [];
+    let results = [];
 
-for(let i = 0; i < 3; i++){
-  // while (!done) {
-    console.log("still going!")
-    console.log(i);
+    for (let i = 0; i < 3; i++) {
+      // while (!done) {
+      console.log("still going!")
+      console.log(i);
 
-    this.fetchAll(endpoint, qString, scrollID).pipe(
-      catchError(e => {
-        console.log('error!')
-        console.log(e)
-        done = true;
-        return (new Observable<any>())
-      }),
-      // finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe((result) => {
-        console.log('samples from call to backend')
-        done = true;
-        console.log(result);
+      this.fetchAll(endpoint, qString, scrollID).pipe(
+        catchError(e => {
+          console.log('error!')
+          console.log(e)
+          done = true;
+          return (new Observable<any>())
+        }),
+        // finalize(() => this.loadingSubject.next(false))
+      )
+        .subscribe((result) => {
+          console.log('samples from call to backend')
+          done = true;
+          console.log(result);
 
-        // Remove ES variables that we won't need.
-        let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
-        scrollID = result['_scroll_id'];
-        console.log(scrollID)
+          // Remove ES variables that we won't need.
+          let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
+          scrollID = result['_scroll_id'];
+          console.log(scrollID)
 
-        results = results.concat(resultArr);
-        console.log(results.length / result.total);
+          results = results.concat(resultArr);
+          console.log(results.length / result.total);
 
-      });
+        });
+    }
+
+    return (results)
+
+
   }
 
-  return(results)
-
-
-}
-
   fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
+
     let params = new HttpParams()
       .set('q', qString)
-      .set('scroll_id', scrollID)
       .append('fetch_all', "true");
+
+    if (scrollID) {
+      params = params.append("scroll_id", scrollID);
+      console.log(params)
+    }
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
