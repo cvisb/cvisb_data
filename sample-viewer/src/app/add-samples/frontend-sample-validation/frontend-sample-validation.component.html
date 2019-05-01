@@ -116,16 +116,16 @@
           been converted to a different format and/or they're outside of the acceptable range.</h3>
 
           <p>
-            Verify the dates are correct.
+            Verify the dates are correct. Excel does funny things to dates, so we want to make sure that we interpret the dates correctly.
           </p>
           <p>
             If they're not, please input the date in the format <b>YYYY-MM-DD</b>.
           </p>
           <p>
-            If the dates are out of range, double check that the year is > 2000.
+            If the dates are out of range, double check that the year is > 2000 and the date is before today.
           </p>
 
-          <app-preview-samples [data]="dateCheck"></app-preview-samples>
+          <app-preview-samples [data]="dateCheck" [highlightCols]='["date outside range"]'></app-preview-samples>
           <mat-checkbox *ngIf="dateCheck" [(ngModel)]="approve_dates" (ngModelChange)="verifyStep($event, 'parse_dates')">Yep, let's convert those dates.</mat-checkbox>
         </ng-container>
       </div>
