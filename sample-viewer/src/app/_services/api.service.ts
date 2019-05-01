@@ -62,8 +62,10 @@ console.log('starting get all')
 
   let results = [];
 
-  while (!done) {
+for(let i = 0; i < 3; i++){
+  // while (!done) {
     console.log("still going!")
+    console.log(i);
 
     this.fetchAll(endpoint, qString, scrollID).pipe(
       catchError(e => {
