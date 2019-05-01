@@ -76,6 +76,7 @@ console.log('starting get all')
     )
       .subscribe((result) => {
         console.log('samples from call to backend')
+        done = true;
         console.log(result);
 
         // Remove ES variables that we won't need.
