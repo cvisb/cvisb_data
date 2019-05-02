@@ -31,7 +31,7 @@ export class SubmitSamplesComponent implements OnInit {
 
   submitData() {
     if (this.data.length > 0) {
-      this.uploadResponse = "Attempting to submit data to database.";
+      this.uploadResponse = "Attempting to submit data to database. Be patient-- this can take a few minutes.";
 
       // Before uploading the data, create a copy and get rid of the _merge variables used internally.
       let data2upload = cloneDeep(this.data);
