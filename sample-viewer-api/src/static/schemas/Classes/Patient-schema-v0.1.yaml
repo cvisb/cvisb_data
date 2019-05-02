@@ -1,4 +1,4 @@
-# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+ # Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
 # Schema built on top of https://schema.org/Patient
 # Verified structure using:
 #
@@ -366,7 +366,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Integer
+    - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
   minimum:               1
