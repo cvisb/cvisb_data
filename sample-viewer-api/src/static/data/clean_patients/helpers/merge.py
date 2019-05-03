@@ -76,11 +76,12 @@ def combineIDs(row, columns=["gID", "sID", "publicGID", "publicSID"]):
     ids = []
 
     for column in columns:
-        if isinstance(row[column], list):
-            if((row[column] == row[column]) & (pd.notnull(row[column]).any()) & (row[column] is not None)):
+        if ((isinstance(row[column], list)) | (isinstance(row[column], np.ndarray))):
+            if(pd.notnull(row[column]).any()):
                 ids.extend(row[column])
         elif ((row[column] == row[column]) & (pd.notnull(row[column])) & (row[column] is not None)):
             ids.append(row[column])
+
     return([ids])
 
 def mergeByPublicIDs(df1, df2, on=["publicPatientID"], how="left",
@@ -130,14 +131,38 @@ dropMerge = True, leftErrorMsg = None, rightErrorMsg = None, ignoreUnknown = Tru
     merged_cols = merged.columns
 
 
-
     for colVar in mergeCols2Check:
         # Double check that the columns exist in the merged dataframe
         if((f"{colVar}_x" in merged_cols) & (f"{colVar}_y" in merged_cols)):
             merged[colVar] = pd.np.nan
             merged[errorCol] = merged.apply(lambda x: checkMergeRowwise(x, colVar, errorCol, df1_label, df2_label, ignoreUnknown, cols2Ignore), axis=1)
             merged[colVar] = merged.apply(lambda x: combineColsRowwise(x, colVar, ignoreUnknown), axis=1)
+    # Get rid of the _merge tracking variable
+    if(dropMerge):
+        merged.drop(['_merge'], axis = 1, inplace = True)
+    return(merged)
 
+
+def checkMerge2(merged, mergeCols2Check, df1_label, df2_label, mergeCol, errorCol,
+dropMerge = True, leftErrorMsg = None, rightErrorMsg = None, ignoreUnknown = True, cols2Ignore = ["issue"]):
+    # Add in _merge error.
+    if(leftErrorMsg is not None):
+        merged = addError(merged, merged._merge == "left_only", leftErrorMsg, errorCol)
+    else:
+        merged = addError(merged, merged._merge == "left_only", f"{df2_label} doesn't include this {mergeCol} value", errorCol)
+    if(rightErrorMsg is not None):
+        merged = addError(merged, merged._merge == "right_only", rightErrorMsg, errorCol)
+    else:
+        merged = addError(merged, merged._merge == "right_only", f"{df1_label} doesn't include this {mergeCol} value", errorCol)
+    merged_cols = merged.columns
+
+
+    for colVar in mergeCols2Check:
+        # Double check that the columns exist in the merged dataframe
+        if((f"{colVar}_x" in merged_cols) & (f"{colVar}_y" in merged_cols)):
+            merged[colVar] = pd.np.nan
+            merged[errorCol] = merged.apply(lambda x: checkMergeRowwise(x, colVar, errorCol, df1_label, df2_label, ignoreUnknown, cols2Ignore), axis=1)
+            merged[colVar] = merged.apply(lambda x: combineColsRowwise2(x, colVar, ignoreUnknown), axis=1)
     # Get rid of the _merge tracking variable
     if(dropMerge):
         merged.drop(['_merge'], axis = 1, inplace = True)
@@ -166,9 +191,10 @@ def checkMergeRowwise(row, colVar, errorCol, df1_label, df2_label, ignoreUnknown
     # If either x or y is null, assuming that the non-null value is the correct one; replace info
     if((x != y) & ((x == x) & (y == y)) & (colVar not in cols2Ignore)):
         new_msg = updateError(row[errorCol],  f"{colVar} disagrees in {df1_label} and {df2_label}")
-    else:
-        new_msg = row[errorCol]
-    return(new_msg)
+        return(new_msg)
+    # Else, return the previous error message
+    return(row[errorCol])
+
 
 def combineColsRowwise(row, colVar, ignoreUnknown):
     """
@@ -208,6 +234,82 @@ def combineColsRowwise(row, colVar, ignoreUnknown):
         # x and y aren't lists; concatenate and remove duplicates
         return(list(set([x, y])))
     return(x)
+
+def combineColsRowwise2(row, colVar, ignoreUnknown):
+    """
+    Returns the combination of two columns from a merge
+    e.g. sID_x and sID_y
+    if they're the same, return just the value
+    otherwise, return the list.
+    If they're NA, return the non-NA value.
+    """
+    x = row[colVar + "_x"]
+    y = row[colVar + "_y"]
+
+    # Special, custom merge objects
+    if(colVar == "issue"):
+        # For `issue`, concat together the previous issues
+        return(updateError(x, y))
+
+    # if(ignoreUnknown & (colVar != "outcome")):
+    #     # Replaces "unknown" or "Unknown" with NA
+    #     if(str(x).lower() == "unknown"):
+    #         x = pd.np.nan
+    #     if(str(y).lower() == "unknown"):
+    #         y = pd.np.nan
+
+    xIsList = isinstance(x, list)
+    yIsList = isinstance(y, list)
+
+    if(xIsList | yIsList):
+        if(x == y):
+            return([x])
+        else:
+            if(x != x):
+                return([y])
+            if(y != y):
+                return([x])
+            if(xIsList):
+                arr = x.copy()
+                arr.extend(y)
+                try:
+                    # Try to return only unique items.
+                    # Will not work for array of dicts (like ELISAs)-- so just return the values
+                    return([np.unique(arr)])
+                except:
+                    return(arr)
+            if(yIsList):
+                arr = y.copy()
+                arr.extend(x)
+                try:
+                    # Try to return only unique items.
+                    # Will not work for array of dicts (like ELISAs)-- so just return the values
+                    return([np.unique(arr)])
+                except:
+                    return(arr)
+    else:
+        if(x != y):
+            # x is NA; return y
+            if (x != x):
+                return(y)
+            # y is NA; return x
+            if (y != y):
+                return(x)
+            # If one of the values is 'unknown', replace with the toher.
+            if (x.lower() == "unknown"):
+                return(y)
+            if (y.lower() == "unknown"):
+                return(x)
+            # if (isinstance(x, list)):
+            #     x.extend(y)
+            #     return(x)
+            # if (isinstance(y, list)):
+            #     y.extend(x)
+            #     return(y)
+            # x and y aren't lists; concatenate and remove duplicates
+            return(list(set([x, y])))
+        # Equal; just return x (since they're the same)
+        return(x)
 
 def drop_mergeVars(df, cols2drop):
     """
