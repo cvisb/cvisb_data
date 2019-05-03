@@ -19,7 +19,7 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids['publicSID'] = ids.apply(lambda x: helpers.makePublicPatientID(x, "Study Specific #"), axis=1)
 
     # Extract useful info from the ID number
-    ids['contactGroupIdentifier'] = ids['Study Specific #'].apply(lambda x: x[:-1])
+    ids['contactGroupIdentifier'] = ids['Study Specific #'].apply(lambda x: str(x[:-1]))
     ids['contactGroupNumber'] = ids['Study Specific #'].apply(lambda x: x[-1])
 
     # Split and convert G-ids
