@@ -188,16 +188,16 @@ export class ApiService {
   // --- PUT ---
   // Generic function to add data to a given endpoint on the API
   //
-  putRecursive(endpoint: string, newData: any, idx: number = 0) {
-    return this.put(endpoint, newData)
-      .map((response) => {
-        console.log("put response")
-        console.log(response)
-        return ({ data: response; index: idx += 1 });
-      }, err =>{
-        console.log(err)
-      })
-  }
+  // putRecursive(endpoint: string, newData: any, idx: number = 0) {
+  //   return this.put(endpoint, newData)
+  //     .map((response) => {
+  //       console.log("put response")
+  //       console.log(response)
+  //       return ({ data: response; index: idx += 1 });
+  //     }, err =>{
+  //       console.log(err)
+  //     })
+  // }
 
 
   put(endpoint: string, newData: any): Observable<any> {
