@@ -253,13 +253,26 @@ putRecursive(endpoint, newData, idx, maxIdx) {
   putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
 
-    let result = this.putRecursive(endpoint, newData.slice(0, size), 0, size)
-      .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index, size))
-      .take(numChunks)
+    let results = [];
 
-    console.log(result)
+    for(let i = 0; i < numChunks; i++) {
+      console.log(i)
+      this.uploadProgressSubject.next(idx/maxIdx);
+      results.push(this.put(endoint, newData.slice(i*numChunks, (i+1)*numChunks)));
+      console.log(results);
 
-    return (result)
+    }
+    return Observable.forkjoin(results).pipe().subscribe(res => {
+      console.log(res)
+    })
+
+    // let result = this.putRecursive(endpoint, newData.slice(0, size), 0, size)
+    //   .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index, size))
+    //   .take(numChunks)
+    //
+    // console.log(result)
+    //
+    // return (result)
   }
 
 
