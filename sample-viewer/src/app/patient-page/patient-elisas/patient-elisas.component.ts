@@ -18,7 +18,7 @@ export class PatientElisasComponent implements OnChanges {
   test_types: string[] = ["IgG", "IgM", "Ag"];
 
   elisaSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["virus"].concat(this.test_types);
+  displayedColumns: string[] = ["virus"].concat(this.test_types).concat(["timepoint"]);
 
 
   constructor() { }
