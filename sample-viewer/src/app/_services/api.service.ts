@@ -188,120 +188,106 @@ export class ApiService {
   // --- PUT ---
   // Generic function to add data to a given endpoint on the API
   //
-  put(endpoint: string, newData: any, idx: number = 0): Observable<any> {
-    if (newData) {
-      console.log('adding new data')
-      console.log('chunk ' + idx)
-      return new Promise<any>((resolve, reject) => {
-        this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-          this.jsonify(newData),
-          { headers: new HttpHeaders()
-        }).subscribe((response) => {
-            console.log("put response")
-            console.log(response)
-            resolve("Put!");
-
-            return ({ data: response; index: idx += 1 });
-          },
-            err => {
-              console.log(err)
-              resolve("put failed!");
-            })
+  putRecursive(endpoint: string, newData: any, idx: number = 0) {
+    return this.put(endpoint, newData)
+      .map((response) => {
+        console.log("put response")
+        console.log(response)
+        return ({ data: response; index: idx += 1 });
       })
-  
-
-  // .pipe(
-  //   map(resp => {
-  //     console.log(resp)
-  //     // return (new Observable<any>(resp))
-  //   }),
-  //   catchError(e => {
-  //     console.log(e)
-  //     throwError(e);
-  //     return (new Observable<any>(e))
-  //   })
-  // )?
-
-} else {
-  console.log('no data to add')
-}
   }
 
-// Generic PUT function, done in `size` pieces.
-// Executed in a cascade, where the previous API completes before
-putPiecewise(endpoint: string, newData: any, size: number = 3): Observable < any > {
-  let numChunks = Math.ceil(newData.length / size);
 
-  let result = this.put(endpoint, newData.slice(0, size), 0)
-    .expand(res => this.put(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
-    .take(numChunks)
+  put(endpoint: string, newData: any): Observable<any> {
+    if (newData) {
+      console.log('adding new data')
+      return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+        this.jsonify(newData),
+        {
+          headers: new HttpHeaders()
+        });
+    } else {
+      console.log('no data to add')
+    }
+  }
+
+
+
+  // Generic PUT function, done in `size` pieces.
+  // Executed in a cascade, where the previous API completes before
+  putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
+    let numChunks = Math.ceil(newData.length / size);
+
+    let result = this.putRecursive(endpoint, newData.slice(0, size), 0)
+      .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
+      .take(numChunks)
 
     console.log(result)
 
-    return(result)
-}
-
-
-// Function to convert to a json object to be inserted by ES
-jsonify(arr: any[]): string {
-  let json_arr = [];
-
-  for (let record of arr) {
-    json_arr.push(JSON.stringify(record))
+    return (result)
   }
-  return (json_arr.join("\n"))
-}
 
 
-// --- DELETE ---
-// Generic function to delete a single record.
-deleteObject(endpoint: string, id: string) {
-  console.log("attempting to delete obj: " + id)
-  // TODO: build-in dialoge box to confirm?
-  this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
-    .subscribe(resp => {
-      console.log(resp)
-    },
-      err => {
-        console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
-        console.log(err)
-      }
-    )
-}
+  // Function to convert to a json object to be inserted by ES
+  jsonify(arr: any[]): string {
+    let json_arr = [];
 
-// Generic function to delete a single record.
-wipeEndpoint(endpoint: string) {
-  console.log("attempting to delete all objects from endpoint")
-  // TODO: build-in dialoge box to confirm / controls so not anyone can access
-
-  this.getESIDs(endpoint).subscribe(ids => {
-    console.log("list of IDs to delete:")
-    console.log(ids);
-
-    for (let id of ids) {
-      this.deleteObject(endpoint, id);
+    for (let record of arr) {
+      json_arr.push(JSON.stringify(record))
     }
-  })
-}
-
-
-// Removes fields from each object in an array of objects.
-dropCols(data, cols, copy = true) {
-  let filtered;
-  if (copy) {
-    filtered = cloneDeep(data)
-  } else {
-    filtered = data;
+    return (json_arr.join("\n"))
   }
 
-  filtered.forEach(d => {
-    cols.forEach(col_name => {
-      delete d[col_name];
-    })
-  })
 
-  return (filtered)
-}
+  // --- DELETE ---
+  // Generic function to delete a single record.
+  deleteObject(endpoint: string, id: string) {
+    console.log("attempting to delete obj: " + id)
+    // TODO: build-in dialoge box to confirm?
+    this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
+      .subscribe(resp => {
+        console.log(resp)
+      },
+        err => {
+          console.log(`Error in deleting object ${id} from endpoint /${endpoint}`)
+          console.log(err)
+        }
+      )
+  }
+
+  // Generic function to delete a single record.
+  wipeEndpoint(endpoint: string) {
+    console.log("attempting to delete all objects from endpoint")
+    // TODO: build-in dialoge box to confirm / controls so not anyone can access
+
+    this.getESIDs(endpoint).subscribe(ids => {
+      console.log("list of IDs to delete:")
+      console.log(ids);
+
+      for (let id of ids) {
+        this.deleteObject(endpoint, id);
+      }
+    })
+  }
+
+
+  // Removes fields from each object in an array of objects.
+  dropCols(data, cols, copy = true) {
+    let filtered;
+    if (copy) {
+      filtered = cloneDeep(data)
+    } else {
+      filtered = data;
+    }
+
+    filtered.forEach(d => {
+      cols.forEach(col_name => {
+        delete d[col_name];
+      })
+    })
+
+    return (filtered)
+  }
 
 
 }
