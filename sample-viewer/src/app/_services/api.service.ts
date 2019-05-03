@@ -200,7 +200,7 @@ export class ApiService {
   // }
 
 
-  put(endpoint: string, newData: any): Observable<any> {
+  put(endpoint: string, newData: any) {
     if (newData) {
       console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -258,7 +258,7 @@ export class ApiService {
     for(let i = 0; i < numChunks; i++) {
       console.log(i)
       this.uploadProgressSubject.next(i/numChunks);
-      results.push(this.put2(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
+      results.push(this.put(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
       console.log(results);
 
     }
