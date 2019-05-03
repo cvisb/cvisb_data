@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
@@ -257,12 +257,12 @@ export class ApiService {
 
     for(let i = 0; i < numChunks; i++) {
       console.log(i)
-      this.uploadProgressSubject.next(idx/maxIdx);
-      results.push(this.put(endoint, newData.slice(i*numChunks, (i+1)*numChunks)));
+      this.uploadProgressSubject.next(i/numChunks);
+      results.push(this.put(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
       console.log(results);
 
     }
-    return Observable.forkjoin(results).pipe().subscribe(res => {
+    return forkJoin(results).pipe().subscribe(res => {
       console.log(res)
     })
 
