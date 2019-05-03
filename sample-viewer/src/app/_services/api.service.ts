@@ -213,11 +213,27 @@ export class ApiService {
     }
   }
 
+  put2(endpoint: string, newData: any) {
+    if (newData) {
+      console.log('adding new data')
+      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+        this.jsonify(newData),
+        {
+          headers: new HttpHeaders()
+        }).subscribe((res) => {
+          console.log('put2')
+          console.log(res)
+        });
+    } else {
+      console.log('no data to add')
+    }
+  }
+
 
 
 putRecursive(endpoint, newData, idx, maxIdx) {
 
-  return this.put("patient", newData).pipe(map(resp => {
+  return this.put2("patient", newData).pipe(map(resp => {
     // this.uploadResponse = `Success! ${resp}`;
     console.log(resp);
     this.uploadProgressSubject.next(idx/maxIdx)
