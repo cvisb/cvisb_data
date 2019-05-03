@@ -194,6 +194,8 @@ export class ApiService {
         console.log("put response")
         console.log(response)
         return ({ data: response; index: idx += 1 });
+      }, err =>{
+        console.log(err)
       })
   }
 
