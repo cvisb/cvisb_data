@@ -18,8 +18,8 @@ def clean_survivors(id_filename, ebola_filename, output_allSurvivors, output_sur
     merged = merge_survivors(ids, ebola, lassa, dateModified_ebola)
 
     merged.to_csv(output_allSurvivors + ".csv", index=False)
-    merged.to_json(output_allSurvivors + ".json", orient="records")
-    df2export = helpers.removeIssues(merged, "ebola survivor patients")
+    # merged.to_json(output_allSurvivors + ".json", orient="records")
+    df2export = helpers.removeIssues(merged, "survivor patients")
 
     return(merged)
 
