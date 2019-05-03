@@ -219,7 +219,11 @@ putRecursive(endpoint, newData, idx) {
 
   this.put("patient", newData).subscribe(resp => {
     // this.uploadResponse = `Success! ${resp}`;
-    console.log(resp)
+    console.log(resp);
+    return {
+              data:resp,
+              index: idx
+          }
   }, err => {
     // this.uploadResponse = "Uh oh. Something went wrong."
     // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
