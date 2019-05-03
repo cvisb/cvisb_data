@@ -217,7 +217,7 @@ export class ApiService {
 
 putRecursive(endpoint, newData, idx, maxIdx) {
 
-  return this.put("patient", newData).map(resp => {
+  return this.put("patient", newData).pipe(map(resp => {
     // this.uploadResponse = `Success! ${resp}`;
     console.log(resp);
     this.uploadProgressSubject.next(idx/maxIdx)
@@ -225,18 +225,10 @@ putRecursive(endpoint, newData, idx, maxIdx) {
               data:resp,
               index: idx + 1
           }
-  }, err => {
-    // this.uploadResponse = "Uh oh. Something went wrong."
-    // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-    //
-    // this.errorObj = err.error.error_list;
-    //
-    // if (this.errorObj) {
-    //   this.errorObj = this.tidyBackendErrors(this.errorObj)
-    //   console.log(this.errorObj)
-    // }
-    console.log(err)
-  });
+  }))
+  // , err => {
+  //   console.log(err)
+  // });
 
 }
 
