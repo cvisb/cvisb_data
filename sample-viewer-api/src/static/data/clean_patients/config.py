@@ -48,10 +48,18 @@ output_lassaAcute_ids = f"{output_dir}/lassaAcuteIDs_cleaned_{today}_PRIVATE"
 output_lassaAcuteWeirdos_ids = f"{inconsistencies_dir}/lassaAcuteIDs_inconsistencies_{today}_PRIVATE"
 
 # [ Columns to export ] -----------------------------------------------------------------------------------
+# sans dates, temporarily
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
                'age', 'gender', 'country', 'homeLocation',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo',
-               'infectionDate', 'infectionYear', 'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
-               'symptoms', 'elisa', 'dateModified']
+                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
+               'elisa', 'dateModified']
+              # Temp: removing symptoms, infectionDate, infectionYear
+# export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
+#                'age', 'gender', 'country', 'homeLocation',
+#                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo',
+#                'infectionDate', 'infectionYear', 'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
+#                'symptoms', 'elisa', 'dateModified']
+
 dict_cols = ["patientID", "gID", "sID",
              "cohort", "outcome", "age", "gender", "countryName"]
