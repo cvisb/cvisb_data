@@ -213,40 +213,40 @@ export class ApiService {
     }
   }
 
-  put2(endpoint: string, newData: any) {
-    if (newData) {
-      console.log('adding new data')
-      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-        this.jsonify(newData),
-        {
-          headers: new HttpHeaders()
-        }).subscribe((res) => {
-          console.log('put2')
-          console.log(res)
-        });
-    } else {
-      console.log('no data to add')
-    }
-  }
-
-
-
-putRecursive(endpoint, newData, idx, maxIdx) {
-
-  return this.put2("patient", newData).map(resp => {
-    // this.uploadResponse = `Success! ${resp}`;
-    console.log(resp);
-    this.uploadProgressSubject.next(idx/maxIdx)
-    return {
-              data:resp,
-              index: idx + 1
-          }
-  })
-  // , err => {
-  //   console.log(err)
-  // });
-
-}
+//   put2(endpoint: string, newData: any) {
+//     if (newData) {
+//       console.log('adding new data')
+//       this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+//         this.jsonify(newData),
+//         {
+//           headers: new HttpHeaders()
+//         }).subscribe((res) => {
+//           console.log('put2')
+//           console.log(res)
+//         });
+//     } else {
+//       console.log('no data to add')
+//     }
+//   }
+//
+//
+//
+// putRecursive(endpoint, newData, idx, maxIdx) {
+//
+//   return this.put2("patient", newData).map(resp => {
+//     // this.uploadResponse = `Success! ${resp}`;
+//     console.log(resp);
+//     this.uploadProgressSubject.next(idx/maxIdx)
+//     return {
+//               data:resp,
+//               index: idx + 1
+//           }
+//   })
+//   // , err => {
+//   //   console.log(err)
+//   // });
+//
+// }
 
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
