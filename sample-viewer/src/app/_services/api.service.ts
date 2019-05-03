@@ -20,6 +20,9 @@ import { cloneDeep } from 'lodash';
 })
 
 export class ApiService {
+  public uploadProgressSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public uploadProgressState$ = this.uploadProgressSubject.asObservable();
+
 
   constructor(
     public myhttp: MyHttpClient,
@@ -84,9 +87,9 @@ export class ApiService {
           // Remove ES variables that we won't need.
           let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
           scrollID = result['_scroll_id'];
-          console.log(scrollID)
 
           results = results.concat(resultArr);
+          console.log(results)
           console.log(results.length / result.total);
 
         });
@@ -184,38 +187,21 @@ export class ApiService {
 
   // --- PUT ---
   // Generic function to add data to a given endpoint on the API
-  put(endpoint: string, newData: any): Observable<any> {
-
-    // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
-
-    // Check if there are already duplicates within the index.
-    // let ids = id_dict.map((d) => d.uniqueID);
-    // let unique_ids = new Set(ids);
-
-    // if (Array.from(unique_ids).length !== ids.length) {
-    //   console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
-    //   return (null);
-    // }
-
-    // id_dict.forEach((dict_row) => {
-    //   // check if index is unique, exists within newData
-    //   if (newData.filter((d) => d[uniqueID] === dict_row.uniqueID).length === 1) {
-    //
-    //     let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
-    //
-    //     newData[idx]["_id"] = dict_row['_id'];
-    //   } else {
-    //     console.log("Oops! More than one record in the new documents has the same unique ID.  Check whatever the IDs are of what you're trying to insert and try again.")
-    //     return (null);
-    //   }
-    // })
+  put(endpoint: string, newData: any, idx: number = 0): Observable<any> {
     if (newData) {
       console.log('adding new data')
+      console.log('chunk ' + idx)
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
           headers: new HttpHeaders()
-        });
+        }.map((response) => {
+          console.log("put response")
+          console.log(response)
+
+          return ({ data: response; index: idx += 1 });
+        })
+      );
 
       // .pipe(
       //   map(resp => {
@@ -236,9 +222,16 @@ export class ApiService {
 
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
-  putPiecewise(endpoint: string, newData: any, size: number = 50): Observable<any> {
+  putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
-    return (null)
+
+    let result = this.put(endpoint, newData.slice(0, size), 0)
+      .expand(res => this.put(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
+      .take(numChunks)
+
+    console.log(result)
+
+    return (result)
   }
 
 
