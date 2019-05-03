@@ -157,6 +157,7 @@
                          - Ebola
                          - Lassa
                          - control
+                         - Unknown
   authenticated:         false
 
 # Outcome cohort
