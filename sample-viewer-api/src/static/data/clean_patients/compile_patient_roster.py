@@ -21,8 +21,6 @@
 #               2. `python compile_patient_roster.py`
 
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 import config
 import acute_patients as acute
@@ -57,15 +55,25 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     # --- concat together all data and assign primary patient ids ---
     merged = merge_patients(acuteLassa, acuteEbola, survivorsAll)
 
+
+    def fixAge(x):
+        if(x == x):
+            return(round(x))
+
+
+    merged['age'] = merged.age.apply(lambda x: fixAge(x))
+
     # --- export data ---
     # remove any patient IDs that are NA-- no identifier to use!
-    # Aslo removing any row that has an issue that needs to be resolved by Tulane.
+    # Also removing any row that has an issue that needs to be resolved by Tulane.
     df2export = helpers.removeIssues(merged, "patients")
     df2export = df2export[df2export.patientID == df2export.patientID]
 
     # Export just the transformed values to be uploaded to ES -- handled in the main function.
     # df2export = df2export.iloc[0:5]
     df2export[export_cols].to_json(output_patients + ".json", orient="records")
+    df2export.to_csv(output_patients + ".csv", index = False)
+    # df2export[export_cols].to_csv(output_patients + ".csv", index = False)
 
     df_dict, _ = helpers.createDict(
         df2export, "alternateIdentifier", dict_cols)
@@ -107,11 +115,18 @@ def cleanup_IDs(df):
     # Pull out the country name from the country object
     df['country'] = df.countryName.apply(helpers.getCountry)
     # Double check the gIDs are saved as an array, since they need to be an array for ES
-    df['gID'] = df.gID.apply(helpers.listify)
+    # df['gID'] = df.gID.apply(helpers.listify)
+
+    # Double check that all Genders exist; it's required to be either Male, Female, or Unknown
+    # For patients with IDs but no metadata/data, this info is missing... so subsitute w/ Unknown
+    df['gender'] = df.gender.apply(helpers.convertGender)
 
     df['alternateIdentifier'] = None # necessary to initialize, b/c there's an uneven number of IDs for each patient returned
     df['alternateIdentifier'] = df.apply(
         lambda x: helpers.combineIDs(x), axis=1)
+
+    df = helpers.idDupes(df, idCol="patientID", errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
+
     return(df)
 
 
@@ -144,6 +159,8 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
     acute = helpers.drop_mergeVars(acute, varsInCommon)
     survivors = helpers.drop_mergeVars(survivors, varsInCommon)
 
+
+
     # --- (1) create survivor G --> publicS dictionary ---
     _, g_dict = helpers.createDict(
         survivors[survivors[keyVar] == survivors[keyVar]], keyVar, [newKey])
@@ -157,10 +174,11 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
     # --- (3) merge and reconcile ---
     merged = pd.merge(acute, survivors, on=[newKey], how="outer", indicator=True)
 
-    cols2check = ["cohort"]
-    cols2check = ["cohort", "outcome", "age", "dateModified", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue"]
+
+    # cols2check = ["gID", "cohort", "elisa"]
+    cols2check = ["cohort", "outcome", "age", "dateModified", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID"]
     printable = cols2check.copy()
-    printable.extend(["gID_x", "gID_y", "publicSID", "publicGID", "sID"])
+    printable.extend(["gID_x", "gID_y", "publicSID", "publicGID", "sID", 'elisa_x', "elisa_y"])
 
     # --- (4) reconcile discrepancies ---
     # Make sure first that GIDs are lists...
@@ -168,24 +186,22 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
     merged['gID_y'] = merged.gID_y.apply(helpers.listify)
 
 
-    merged = helpers.checkMerge(merged,
+
+    merged = helpers.checkMerge2(merged,
                                 mergeCols2Check= cols2check,
-                                df1_label="acute patient data", df2_label="survivor data",
+                                df1_label="acute patient data", df2_label="survivor data ((ACUTE-SURVIVOR MERGE))",
                                 mergeCol=newKey, dropMerge=False,
                                 errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
-    print("\n\n************************************************")
-    print(merged.mergeIssue.value_counts(dropna = False))
-    print("\n************************************************")
-    # print(merged.issue.value_counts())
 
-    # print(merged.loc[merged.mergeIssue == merged.mergeIssue, printable])
-    print(merged.loc[merged._merge == "both", ["gID", "gID_x", "gID_y", "cohort_x", "cohort_y", "cohort"]])
-    # print(merged.loc[merged._merge == "both", printable])
+    # Merge together error messages.
+    # Needs to happen after merge, b/c need to combine issue_x with issue_y --> issue.
+    merged['issue'] = merged.apply(combineIssues, axis = 1)
 
-    # merged = helpers.idDupes(merged, idCol="patientID",
-    # errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
+
     return(merged)
 
+def combineIssues(row, issueCol = "issue", mergeIssueCol = "mergeIssue"):
+    return(helpers.updateError(row[issueCol], row[mergeIssueCol]))
 
 def check_coverage():
     return()
