@@ -217,7 +217,7 @@ export class ApiService {
 
 putRecursive(endpoint, newData, idx, maxIdx) {
 
-  return this.put("patient", newData).subscribe(resp => {
+  return this.put("patient", newData).map(resp => {
     // this.uploadResponse = `Success! ${resp}`;
     console.log(resp);
     this.uploadProgressSubject.next(idx/maxIdx)
