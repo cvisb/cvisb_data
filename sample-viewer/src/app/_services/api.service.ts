@@ -215,6 +215,10 @@ export class ApiService {
 
 
 
+putRecursive(endpoint, newData, idx) {
+
+}
+
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
