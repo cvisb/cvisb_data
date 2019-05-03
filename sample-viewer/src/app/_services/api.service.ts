@@ -217,6 +217,13 @@ export class ApiService {
 
 putRecursive(endpoint, newData, idx) {
 
+  this.put(endpoint, newData).subscribe(resp => {
+    console.log(resp);
+     return ({ data: resp; index: idx += 1 });
+  }, err => {
+    console.log(err)
+  });
+
 }
 
   // Generic PUT function, done in `size` pieces.
