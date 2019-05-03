@@ -217,19 +217,19 @@ export class ApiService {
 
 putRecursive(endpoint, newData, idx) {
 
-  this.put("patient", data).subscribe(resp => {
-    this.uploadResponse = `Success! ${resp}`;
+  this.put("patient", newData).subscribe(resp => {
+    // this.uploadResponse = `Success! ${resp}`;
     console.log(resp)
   }, err => {
-    this.uploadResponse = "Uh oh. Something went wrong."
-    this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-
-    this.errorObj = err.error.error_list;
-
-    if (this.errorObj) {
-      this.errorObj = this.tidyBackendErrors(this.errorObj)
-      console.log(this.errorObj)
-    }
+    // this.uploadResponse = "Uh oh. Something went wrong."
+    // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+    //
+    // this.errorObj = err.error.error_list;
+    //
+    // if (this.errorObj) {
+    //   this.errorObj = this.tidyBackendErrors(this.errorObj)
+    //   console.log(this.errorObj)
+    // }
     console.log(err)
   });
 
