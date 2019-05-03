@@ -258,7 +258,13 @@ export class ApiService {
     for(let i = 0; i < numChunks; i++) {
       console.log(i)
       this.uploadProgressSubject.next(i/numChunks);
-      results.push(this.put(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
+
+      let data = newData.slice(i*numChunks, (i+1)*numChunks);
+      results.push(  this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+          this.jsonify(data),
+          {
+            headers: new HttpHeaders()
+          }));
       console.log(results);
 
     }
