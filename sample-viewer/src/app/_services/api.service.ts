@@ -213,21 +213,21 @@ export class ApiService {
     }
   }
 
-//   put2(endpoint: string, newData: any) {
-//     if (newData) {
-//       console.log('adding new data')
-//       this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-//         this.jsonify(newData),
-//         {
-//           headers: new HttpHeaders()
-//         }).subscribe((res) => {
-//           console.log('put2')
-//           console.log(res)
-//         });
-//     } else {
-//       console.log('no data to add')
-//     }
-//   }
+  put2(endpoint: string, newData: any) {
+    if (newData) {
+      console.log('adding new data')
+      this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+        this.jsonify(newData),
+        {
+          headers: new HttpHeaders()
+        }).subscribe((res) => {
+          console.log('put2')
+          console.log(res)
+        });
+    } else {
+      console.log('no data to add')
+    }
+  }
 //
 //
 //
@@ -258,7 +258,7 @@ export class ApiService {
     for(let i = 0; i < numChunks; i++) {
       console.log(i)
       this.uploadProgressSubject.next(i/numChunks);
-      results.push(this.put(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
+      results.push(this.put2(endpoint, newData.slice(i*numChunks, (i+1)*numChunks)));
       console.log(results);
 
     }
