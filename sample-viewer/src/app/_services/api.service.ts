@@ -215,7 +215,7 @@ export class ApiService {
 
 
 
-putRecursive(endpoint, newData, idx, maxIdx) {
+putRecursive(endpoint, newData, idx, maxIdx): Object {
 
   this.put("patient", newData).subscribe(resp => {
     // this.uploadResponse = `Success! ${resp}`;
@@ -246,7 +246,7 @@ putRecursive(endpoint, newData, idx, maxIdx) {
     let numChunks = Math.ceil(newData.length / size);
 
     let result = this.putRecursive(endpoint, newData.slice(0, size), 0, size)
-      .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
+      .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index, size))
       .take(numChunks)
 
     console.log(result)
