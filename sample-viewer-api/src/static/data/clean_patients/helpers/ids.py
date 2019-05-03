@@ -27,10 +27,10 @@ def num2GID(id):
         return("G-" + fourdigit[1])
     threedigit = re.match("^(\d\d\d)$", id)
     if(threedigit):
-        return("G-" + threedigit[1])
+        return("G-" + str(threedigit[1]).zfill(4))
     twodigit = re.match("^(\d\d)$", id)
     if(twodigit):
-        return("G-" + twodigit[1])
+        return("G-" + str(twodigit[1]).zfill(4))
     return(id)
 
 
@@ -50,35 +50,35 @@ def checkIDtype(id):
 
     g2 = re.search("^(G\-)(\d\d)$", id)
     if(g2):
-        return("acute", g2[1] + g2[2])
+        return("acute", g2[1] + str(g2[2]).zfill(4))
 
     g2nohyphen = re.search("^(G)(\d\d)$", id)
     if(g2nohyphen):
-        return("acute", g2nohyphen[1] + "-" + g2nohyphen[2])
+        return("acute", g2nohyphen[1] + "-" + str(g2nohyphen[2]).zfill(4))
 
     g3 = re.search("^(G\-)(\d\d\d)$", id)
     if(g3):
-        return("acute", g3[1] + g3[2])
+        return("acute", g3[1] + str(g3[2]).zfill(4))
 
     g3nohyphen = re.search("^(G)(\d\d\d)$", id)
     if(g3nohyphen):
-        return("acute", g3nohyphen[1] + "-" + g3nohyphen[2])
+        return("acute", g3nohyphen[1] + "-" + str(g3nohyphen[2]).zfill(4))
 
     g3timepoint = re.search("^(G)\-(\d\d\d)\-(\d)$", id)
     if(g3timepoint):
-        return("acute", g3timepoint[1] + "-" + g3timepoint[2])
+        return("acute", g3timepoint[1] + "-" + str(g3timepoint[2]).zfill(4))
 
     g3timepoint2 = re.search("^(G)(\d\d\d)\-(\d)$", id)
     if(g3timepoint2):
-        return("acute", g3timepoint2[1] + "-" + g3timepoint2[2])
+        return("acute", g3timepoint2[1] + "-" + str(g3timepoint2[2]).zfill(4))
 
     g3underscore = re.search("^(G)\_(\d\d\d)$", id)
     if(g3underscore):
-        return("acute", g3underscore[1] + "-" + g3underscore[2])
+        return("acute", g3underscore[1] + "-" + str(g3underscore[2]).zfill(4))
 
     g3_timepoint = re.search("^(G)\_(\d\d\d)\-(\d)$", id)
     if(g3_timepoint):
-        return("acute", g3_timepoint[1] + "-" + g3_timepoint[2])
+        return("acute", g3_timepoint[1] + "-" + str(g3_timepoint[2]).zfill(4))
 
     g4 = re.search("^(G\-)(\d\d\d\d)$", id)
     if(g4):
