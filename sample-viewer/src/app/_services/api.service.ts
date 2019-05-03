@@ -224,9 +224,10 @@ putRecursive(endpoint, newData, idx) {
   putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
 
-    let result = this.putRecursive(endpoint, newData.slice(0, size), 0)
-      .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
-      .take(numChunks)
+    let result;
+    // = this.putRecursive(endpoint, newData.slice(0, size), 0)
+    //   .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index))
+    //   .take(numChunks)
 
     console.log(result)
 
