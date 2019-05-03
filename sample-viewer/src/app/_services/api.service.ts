@@ -228,25 +228,25 @@ export class ApiService {
       console.log('no data to add')
     }
   }
-//
-//
-//
-// putRecursive(endpoint, newData, idx, maxIdx) {
-//
-//   return this.put2("patient", newData).map(resp => {
-//     // this.uploadResponse = `Success! ${resp}`;
-//     console.log(resp);
-//     this.uploadProgressSubject.next(idx/maxIdx)
-//     return {
-//               data:resp,
-//               index: idx + 1
-//           }
-//   })
-//   // , err => {
-//   //   console.log(err)
-//   // });
-//
-// }
+  //
+  //
+  //
+  // putRecursive(endpoint, newData, idx, maxIdx) {
+  //
+  //   return this.put2("patient", newData).map(resp => {
+  //     // this.uploadResponse = `Success! ${resp}`;
+  //     console.log(resp);
+  //     this.uploadProgressSubject.next(idx/maxIdx)
+  //     return {
+  //               data:resp,
+  //               index: idx + 1
+  //           }
+  //   })
+  //   // , err => {
+  //   //   console.log(err)
+  //   // });
+  //
+  // }
 
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
@@ -255,22 +255,24 @@ export class ApiService {
 
     let results = [];
 
-    for(let i = 0; i < numChunks; i++) {
-      console.log(i)
-      this.uploadProgressSubject.next(i/numChunks);
+    this.put(endpoint, newData);
 
-      let data = newData.slice(i*numChunks, (i+1)*numChunks);
-      results.push(  this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-          this.jsonify(data),
-          {
-            headers: new HttpHeaders()
-          }));
-      console.log(results);
-
-    }
-    return forkJoin(results).pipe().subscribe(res => {
-      console.log(res)
-    })
+    // for (let i = 0; i < numChunks; i++) {
+    //   console.log(i)
+    //   this.uploadProgressSubject.next(i / numChunks);
+    //
+    //   let data = newData.slice(i * numChunks, (i + 1) * numChunks);
+    //   results.push(this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+    //     this.jsonify(data),
+    //     {
+    //       headers: new HttpHeaders()
+    //     }));
+    //   console.log(results);
+    //
+    // }
+    // return forkJoin(results).pipe().subscribe(res => {
+    //   console.log(res)
+    // })
 
     // let result = this.putRecursive(endpoint, newData.slice(0, size), 0, size)
     //   .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index, size))
