@@ -30,10 +30,10 @@ def prep_id_data(filename):
     # structure: dd, ddd, dddd, G-dddd-d, G-dddd-d\s
     ids['gID'] = ids['Original G No.'].apply(helpers.splitGID)
 
+    # --- add in country; all patients from Sierra Leone ---
+    ids['countryName'] = "Sierra Leone"
 
-
-
-    # --- pull out the year the  ---
+    # --- pull out the year the patient presented in the hospital ---
     # first two digits of study specific number are year
     ids['presentationYear'] = ids['Study Specific #'].apply(
         lambda x: int("20" + x[0:2]))

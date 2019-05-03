@@ -32,7 +32,7 @@
 import pandas as pd
 import re
 from datetime import datetime, timedelta
-import os
+# import os
 # os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
 import helpers # Helpers module, for common cleanup functions
 
@@ -71,11 +71,8 @@ export_weirdos, export_id_weirdos, dateModified = datetime.today().strftime('%Y-
     # Export everything-- including original, unmodified data
     # df_merged.sort_values(by=["gID", "Original G No.", "Study Specific #"]).to_csv(
     df_merged.to_csv(export_filename + ".csv", index=False)
-    df_merged.to_json(export_filename + ".json", orient="records")
+    # df_merged.to_json(export_filename + ".json", orient="records")
 
-    # Export just the transformed values to be uploaded to ES -- handled in the main compilation script.
-    # Can't include infectionYear b/c requires backend to translate to date range.
-    # cols = ["publicGID", "alternateIdentifier", "cohort", "outcome", "age", "gender", "elisa", "country", "dateModified"]
 
     df2export = helpers.removeIssues(df_merged, "acute Lassa patients")
     # df2export = df_merged[df_merged.issue != df_merged.issue]
@@ -133,11 +130,9 @@ def mergeMetadata(df, ids, dateModified):
     # df_merged = helpers.addError(
         # df_merged, df_merged._merge == "left_only", "Missing Study Specific ID")
 
-    # Merge together gID arrays, since they can't
+    # Merge together gID arrays, since they can't be auto combined
+
     df_merged = helpers.checkMerge(df_merged, ["gID"], df1_label="patient data", df2_label="id roster", mergeCol="gID", errorCol="issue", leftErrorMsg="Missing Study Specific ID", rightErrorMsg="")
-
-
-
 
     return(df_merged)
 
@@ -176,9 +171,6 @@ def cleanAcute(filename):
 
     # --- age ---
     df['age'] = df.apply(helpers.getAge, axis = 1)
-
-    # --- add in country; all patients from Sierra Leone ---
-    df['countryName'] = "Sierra Leone"
 
     # -- elisas --
     df['elisa'] = df.apply(helpers.nestELISAs, axis = 1)
