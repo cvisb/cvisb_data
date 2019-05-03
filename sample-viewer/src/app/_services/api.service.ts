@@ -215,7 +215,7 @@ export class ApiService {
 
 
 
-putRecursive(endpoint, newData, idx, maxIdx): Object {
+const putRecursive = (endpoint, newData, idx, maxIdx) => {
 
   this.put("patient", newData).subscribe(resp => {
     // this.uploadResponse = `Success! ${resp}`;
