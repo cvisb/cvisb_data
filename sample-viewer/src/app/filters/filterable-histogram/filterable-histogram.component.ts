@@ -22,8 +22,6 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() public xDomain: number[];
   @Input() public endpoint: string;
   @Input() public filter_title: string;
-  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
-  public filterState$: Observable<Object>;
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -71,6 +69,9 @@ export class FilterableHistogramComponent implements OnInit {
   private sendParams: any;
   // private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
   yearLimits: Object;
+  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public filterState$ = this.filterSubject.asObservable();
+
 
   constructor(private requestSvc: RequestParametersService) {
     // Update the class of the bars on update.
@@ -78,8 +79,8 @@ export class FilterableHistogramComponent implements OnInit {
     this.filterState$.subscribe((limits: Object) => {
       // ignore initial setting
       if (limits) {
-        // console.log("NEW LIMITS FOUND")
-        // console.log(limits)
+        console.log("NEW LIMITS FOUND")
+        console.log(limits)
         this.yearLimits = limits;
 
         this.updateLimits(limits);
@@ -90,8 +91,8 @@ export class FilterableHistogramComponent implements OnInit {
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the filterSubject to update.
     this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log('NEW SEARCH PARAMS FOUND')
-      // console.log(params);
+      console.log('NEW SEARCH PARAMS FOUND')
+      console.log(params);
       // ASSUMPTION: should only be one object that matches the yearField.  Based on replacement logic in requestSvc
       let yearParam = params.filter(d => d.field === 'infectionYear');
 
@@ -124,7 +125,7 @@ export class FilterableHistogramComponent implements OnInit {
 
   ngOnChanges() {
     // If the data didn't arrive on ngOnInit, call createPlot to initialize everything.
-    if(!this.element && this.data && this.data.length > 0) {
+    if (!this.element && this.data && this.data.length > 0) {
       this.createPlot();
     }
 
@@ -145,9 +146,6 @@ export class FilterableHistogramComponent implements OnInit {
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
-
-    // console.log(this.num_data)
-    // console.log(this.unknown_data)
   }
 
   createPlot() {
