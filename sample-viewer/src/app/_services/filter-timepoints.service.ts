@@ -40,7 +40,6 @@ export class FilterTimepointsService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
         let patient_timepoints = res['body']['facets']["privatePatientID.keyword"].terms.map(d => {
           return ({
             "privatePatientID": d.term, "numTimepoints": d['visitCode.keyword']['terms'].length
@@ -67,22 +66,21 @@ export class FilterTimepointsService {
             };
           }).value();
 
-        console.log(summary);
-
         return (summary);
       })
     )
   }
 
+  // Returns an array of patientIDs to use in a subsequent filter.
   filterTimepoints(lowerLimit: number, upperLimit: number) {
-    this.getTimepoints("__all__").subscribe((res: PatientTimepoints[]) => {
-      let filtered = res
-        .filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit)
-        .map(d => d.privatePatientID);
+    return this.getTimepoints("__all__").pipe(
+      map((res: PatientTimepoints[]) => {
+        let filtered = res
+          .filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit)
+          .map(d => d.privatePatientID);
 
-      console.log(filtered);
-
-      return (filtered);
-    })
+        return (filtered);
+      })
+    )
   }
 }

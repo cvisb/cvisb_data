@@ -22,11 +22,6 @@ export class FilterSampleTimepointsComponent implements OnInit {
     this.filterSvc.summarizeTimepoints().subscribe(res => {
       this.data = res;
     });
-
-    console.log(this.data)
-
-    this.filterSvc.filterTimepoints(2,3);
-
   }
 
 }
