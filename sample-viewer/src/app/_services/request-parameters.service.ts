@@ -154,7 +154,7 @@ export class RequestParametersService {
   // Requires a q string to execute-- patientID acts as a filter on top of the original query.
   reduceParams(request_params: RequestParamArray): HttpParams {
     let param_string: string;
-    let patient_string: string;
+    let patient_string: string = "";
     let params: string[] = [];
 
     let request_copy = cloneDeep(request_params);
