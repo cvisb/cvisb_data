@@ -150,6 +150,7 @@ export class RequestParametersService {
 
   // Example for searching both patientID and altID:
   // https://dev.cvisb.org/api/patient/query?q=__all__&size=10&patientID="G-0001","C-8743183"
+  // Ex: ELISA filter: https://dev.cvisb.org/api/patient/query?q=elisa.virus.keyword:Ebola%20AND%20elisa.ELISAresult:positive&size=10
   // Requires a q string to execute-- patientID acts as a filter on top of the original query.
   reduceParams(request_params: RequestParamArray): HttpParams {
     let param_string: string;
