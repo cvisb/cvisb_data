@@ -12,3 +12,4 @@ export * from './filter-lab/filter-lab.component';
 export * from './filter-sample-type/filter-sample-type.component';
 export * from './filter-organization/filter-organization.component';
 export * from './filter-species/filter-species.component';
+export * from './filter-sample-timepoints/filter-sample-timepoints.component';

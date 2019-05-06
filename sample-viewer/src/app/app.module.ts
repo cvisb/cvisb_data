@@ -61,6 +61,7 @@ import {
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
   FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
+  FilterSampleTimepointsComponent
 } from './filters';
 
 // Patient page components
@@ -153,6 +154,7 @@ import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes
     FilterSampleComponent,
     FilterSampleTypeComponent,
     FilterSpeciesComponent,
+    FilterSampleTimepointsComponent,
     FilterOrganizationComponent,
 
     AddPatientsComponent,
