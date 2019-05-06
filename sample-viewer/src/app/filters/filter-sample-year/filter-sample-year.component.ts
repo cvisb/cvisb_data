@@ -21,7 +21,6 @@ export class FilterSampleYearComponent implements OnInit {
 
   filter_title: string = "Sample Year";
 
-
   constructor(private requestSvc: RequestParametersService) {
   }
 

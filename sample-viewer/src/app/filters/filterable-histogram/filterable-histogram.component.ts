@@ -125,7 +125,7 @@ export class FilterableHistogramComponent implements OnInit {
 
   ngOnChanges() {
     // If the data didn't arrive on ngOnInit, call createPlot to initialize everything.
-    if (!this.element && this.data && this.data.length > 0) {
+    if (!this.svg && this.data && this.data.length > 0) {
       this.createPlot();
     }
 
