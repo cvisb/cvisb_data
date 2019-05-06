@@ -216,6 +216,9 @@ export class FilterableHistogramComponent implements OnInit {
       .paddingOuter(this.outerPadding)
       .domain(this.xDomain.map(String));
 
+      console.log(this.x)
+      console.log(this.xLinear)
+
 
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
