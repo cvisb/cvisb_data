@@ -200,7 +200,7 @@ export class ApiService {
   // }
 
 
-  put(endpoint: string, newData: any) {
+  put(endpoint: string, newData: any): Observable<any> {
     if (newData) {
       console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -255,7 +255,7 @@ export class ApiService {
 
     let results = [];
 
-    this.put(endpoint, newData);
+    return(this.put(endpoint, newData));
 
     // for (let i = 0; i < numChunks; i++) {
     //   console.log(i)
