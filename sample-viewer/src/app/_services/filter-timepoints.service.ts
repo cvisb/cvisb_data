@@ -56,8 +56,7 @@ export class FilterTimepointsService {
   }
 
   summarizeTimepoints() {
-    // summarizeTimepoints(): ESFacetTerms[] {
-    this.getTimepoints("__all__").subscribe((res: PatientTimepoints[]) => {
+    return (this.getTimepoints("__all__").subscribe((res: PatientTimepoints[]) => {
       let summary = _(res)
         .groupBy('numTimepoints')
         .map((items, id) => {
@@ -71,13 +70,16 @@ export class FilterTimepointsService {
 
       return (summary);
     })
+    )
   }
 
   filterTimepoints(lowerLimit: number, upperLimit: number) {
     this.getTimepoints("__all__").subscribe((res: PatientTimepoints[]) => {
-      let filtered = res.filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit);
+      let filtered = res
+        .filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit)
+        .map(d => d.privatePatientID);
+
       console.log(filtered);
-      console.log(filtered.map(d => d.privatePatientID));
 
       return (filtered);
     })
