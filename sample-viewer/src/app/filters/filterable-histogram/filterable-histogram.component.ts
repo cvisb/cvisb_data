@@ -124,10 +124,11 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnChanges() {
-    // If the dat
-    if(! this.element) {
+    // If the data didn't arrive on ngOnInit, call createPlot to initialize everything.
+    if(! this.element && this.data && this.data.length > 0) {
       this.createPlot();
     }
+
     this.updateData();
   }
 
@@ -263,10 +264,6 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateData() {
-    console.log(this.data);
-    console.log(this.xDomain);
-    console.log(this.endpoint);
-
     if (this.data && this.data.length > 0 && this.num_data && this.unknown_data) {
       var t = d3.transition()
         .duration(1000);
