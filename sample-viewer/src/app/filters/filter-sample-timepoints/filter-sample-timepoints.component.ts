@@ -24,7 +24,7 @@ export class FilterSampleTimepointsComponent implements OnInit {
     this.filterSvc.summarizeTimepoints().subscribe(res => {
       console.log(res)
       this.data = res;
-      this.freqDomain = [Math.min(... res.map(d => d.term)), Math.max(... res.map(d => d.term))];
+      this.freqDomain = res.map(d => d.term);
     });
   }
 
