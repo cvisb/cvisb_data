@@ -22,8 +22,8 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() public xDomain: number[];
   @Input() public endpoint: string;
   @Input() public filter_title: string;
-  @Input() public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
-  @Input() public filterState$: Observable<Object>;
+  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public filterState$: Observable<Object>;
 
 
   private num_data: Object[]; // numeric portion of the data
