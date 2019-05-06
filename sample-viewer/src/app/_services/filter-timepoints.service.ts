@@ -33,7 +33,7 @@ export class FilterTimepointsService {
       .append('size', '0')
       .append('facet_size', '10000');
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
@@ -41,7 +41,7 @@ export class FilterTimepointsService {
     }).pipe(
       map(res => {
         console.log(res);
-        let patient_timepoints = res['facets']["privatePatientID.keyword"].terms.map(d => {
+        let patient_timepoints = res['body']['facets']["privatePatientID.keyword"].terms.map(d => {
           return ({
             "privatePatientID": d.term, "numTimepoints": d['visitCode.keyword']['terms'].length
           })
