@@ -19,7 +19,7 @@ export class FilterSampleYearComponent implements OnInit {
   @Input() public yearDomain: number[];
   @Input() public endpoint: string;
 
-  filter_title: string = "Sample Year!!";
+  filter_title: string = "Sample Year";
 
 
   constructor(private requestSvc: RequestParametersService) {
