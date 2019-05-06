@@ -118,6 +118,9 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
+    console.log(this.yearDomain);
+    console.log(this.endpoint);
     if (this.data) {
       this.createPlot();
     }
