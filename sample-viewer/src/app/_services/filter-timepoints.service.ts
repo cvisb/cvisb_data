@@ -56,20 +56,21 @@ export class FilterTimepointsService {
   }
 
   summarizeTimepoints() {
-    return (this.getTimepoints("__all__").subscribe((res: PatientTimepoints[]) => {
-      let summary = _(res)
-        .groupBy('numTimepoints')
-        .map((items, id) => {
-          return {
-            term: +id,
-            count: items.length
-          };
-        }).value();
+    return this.getTimepoints("__all__").pipe(
+      map((res: PatientTimepoints[]) => {
+        let summary = _(res)
+          .groupBy('numTimepoints')
+          .map((items, id) => {
+            return {
+              term: +id,
+              count: items.length
+            };
+          }).value();
 
-      console.log(summary);
+        console.log(summary);
 
-      return (summary);
-    })
+        return (summary);
+      })
     )
   }
 

@@ -19,7 +19,9 @@ export class FilterSampleTimepointsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data = this.filterSvc.summarizeTimepoints();
+    this.filterSvc.summarizeTimepoints().subscribe(res => {
+      this.data = res;
+    });
 
     console.log(this.data)
 
