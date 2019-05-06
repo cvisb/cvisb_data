@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Observable, BehaviorSubject } from 'rxjs';
+
 import { FilterTimepointsService } from '../../_services';
 
 @Component({
@@ -13,6 +15,9 @@ export class FilterSampleTimepointsComponent implements OnInit {
   data;
   freqDomain: number[];
   filter_title: string = "Sample Timepoints";
+
+  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public filterState$ = this.filterSubject.asObservable();
 
 
   // temp1.facets["privatePatientID.keyword"].terms.forEach(d => d["numTimepoints"] = d["visitCode.keyword"].terms.length)

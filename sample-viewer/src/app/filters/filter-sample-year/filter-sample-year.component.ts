@@ -19,6 +19,9 @@ export class FilterSampleYearComponent implements OnInit {
   @Input() public yearDomain: number[];
   @Input() public endpoint: string;
 
+  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public filterState$ = this.filterSubject.asObservable();
+
   filter_title: string = "Sample Year";
 
   constructor(private requestSvc: RequestParametersService) {

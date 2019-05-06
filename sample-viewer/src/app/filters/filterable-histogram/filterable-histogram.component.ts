@@ -69,8 +69,8 @@ export class FilterableHistogramComponent implements OnInit {
   private sendParams: any;
   // private yearField: string = "infectionYear"; // field name in ES to filter the sample year.
   yearLimits: Object;
-  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
-  public filterState$ = this.filterSubject.asObservable();
+  @Input() filterSubject: BehaviorSubject<Object>;
+  @Input() filterState$: Observable<Object>;
 
 
   constructor(private requestSvc: RequestParametersService) {
