@@ -105,22 +105,7 @@ export class PatientUploadComponent implements OnInit {
         let ids = data.map(d => d.privatePatientID);
 
 
-        this.apiSvc.putPiecewise("patient", data).subscribe(resp => {
-          this.uploadResponse = `Success! ${resp}`;
-          console.log(resp)
-        }, err => {
-          this.uploadResponse = "Uh oh. Something went wrong."
-          this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-
-          this.errorObj = err.error.error_list;
-
-          if (this.errorObj) {
-            this.errorObj = this.tidyBackendErrors(this.errorObj)
-            console.log(this.errorObj)
-          }
-          console.log(err)
-        });
-        // this.apiSvc.put("patient", data).subscribe(resp => {
+        // this.apiSvc.putPiecewise("patient", data).subscribe(resp => {
         //   this.uploadResponse = `Success! ${resp}`;
         //   console.log(resp)
         // }, err => {
@@ -135,6 +120,21 @@ export class PatientUploadComponent implements OnInit {
         //   }
         //   console.log(err)
         // });
+        this.apiSvc.put("patient", data).subscribe(resp => {
+          this.uploadResponse = `Success! ${resp}`;
+          console.log(resp)
+        }, err => {
+          this.uploadResponse = "Uh oh. Something went wrong."
+          this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+
+          this.errorObj = err.error.error_list;
+
+          if (this.errorObj) {
+            this.errorObj = this.tidyBackendErrors(this.errorObj)
+            console.log(this.errorObj)
+          }
+          console.log(err)
+        });
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
