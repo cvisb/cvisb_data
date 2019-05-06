@@ -11,6 +11,7 @@ import { FilterTimepointsService } from '../../_services';
 export class FilterSampleTimepointsComponent implements OnInit {
 
   data;
+  filter_title: string = "Sample Timepoints";
 
 
   // temp1.facets["privatePatientID.keyword"].terms.forEach(d => d["numTimepoints"] = d["visitCode.keyword"].terms.length)
