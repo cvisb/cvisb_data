@@ -12,10 +12,7 @@ export class CheckIdsService {
   accepted_patterns: RegExp[] = [
     // "G-1234".match(/^(G\-)(\d\d\d\d)$/)
     /^(G\-)(\d\d\d\d)$/,
-    // "G-123".match(/^(G\-)(\d\d\d)$/)
-    /^(G\-)(\d\d\d)$/,
 
-    /^(G\-)(\d\d)$/,
     // "S-123".match(/^(S\-)(\d\d\d)$/)
     /^(S\-)(\d\d\d)$/,
     // "C-123-4".match(/^(C\-)(\d\d\d)\-([1-4])$/)
@@ -136,18 +133,31 @@ export class CheckIdsService {
 
 
   // Functions to convert unacceptable but predictable IDs into acceptable ones.
-  padHyphenate(matchArr, idxArr, n: number = 3) {
+  padHyphenate(matchArr, idxArr, n: number) {
+    if (matchArr[1] === "G") {
+      // For G-ids, pad to four digits.
+      n = 4;
+    } else {
+      n = 3;
+    }
     // combine the two pieces of the regex match, separated by a hyphen
-    return ({id: `${matchArr[1]}-${matchArr[2].padStart(n, '0')}`, timepointID: null})
+    return ({ id: `${matchArr[1]}-${matchArr[2].padStart(n, '0')}`, timepointID: null })
   }
 
-  removeVisitCode(matchArr, idxArr, n: number = 3) {
+  removeVisitCode(matchArr, idxArr, n: number) {
     // remove the visit code portion of the ID.
     // idxArr is a triple containing the indices to use to get the components:
     // idxArr[0] is the letter (G, S, C)
     // idxArr[1] is the three- or four-number ID. Note: for C-ids, will include the `-{contact number}`
     // idxArr[2] is the single digit visit code.
-    return ({id: `${matchArr[idxArr[0]]}\-${matchArr[idxArr[1]].padStart(n, '0')}`, timepointID: matchArr[idxArr[2]]})
+    if (matchArr[idxArr[0]] === "G") {
+      // For G-ids, pad to four digits.
+      n = 4;
+    } else {
+      n = 3;
+    }
+
+    return ({ id: `${matchArr[idxArr[0]]}\-${matchArr[idxArr[1]].padStart(n, '0')}`, timepointID: matchArr[idxArr[2]] })
   }
 
 }
