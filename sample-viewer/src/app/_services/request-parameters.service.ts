@@ -154,22 +154,22 @@ export class RequestParametersService {
   // Requires a q string to execute-- patientID acts as a filter on top of the original query.
   reduceParams(request_params: RequestParamArray): HttpParams {
     let param_string: string;
+    let patient_string: string;
     let params: string[] = [];
 
     let request_copy = cloneDeep(request_params);
 
-    // Separate out the patientID portion of the params... if they exist.
-    let patientIdx = request_copy.findIndex(d => d.field === "patientID");
-    let patient_string: string;
-    if (patientIdx > -1) {
-      let patient_params = request_copy.splice(patientIdx, 1);
-      patient_string = this.patientParams2String(patient_params[0]);
-    } else {
-      patient_string = "";
-    }
-
-
     if (request_copy && request_copy.length > 0) {
+
+    // Separate out the patientID portion of the params... if they exist.
+      let patientIdx = request_copy.findIndex(d => d.field === "patientID");
+
+      if (patientIdx > -1) {
+        let patient_params = request_copy.splice(patientIdx, 1);
+        patient_string = this.patientParams2String(patient_params[0]);
+      } else {
+        patient_string = "";
+      }
 
       // Collapse each parameter down into a parameter string
       for (let param of request_copy) {
@@ -209,7 +209,7 @@ export class RequestParametersService {
 
   // Function to reduce the patientID query.
   patientParams2String(param: RequestParam) {
-  // Must be ampersand, not AND, to append to q string
+    // Must be ampersand, not AND, to append to q string
     return (`\"${param.value.join('","')}\"`);
   }
 
