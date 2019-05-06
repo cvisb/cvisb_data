@@ -4,7 +4,7 @@ import { ApiService, AuthService, SampleUploadService, GetSamplesService } from 
 
 import { CvisbUser } from '../../_models';
 
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-sample-upload',
@@ -207,7 +207,7 @@ export class SampleUploadComponent implements OnInit {
   removeEmpties(data, headers) {
     headers.filter(d => d !== "sampleID");
 
-    let filtered = _.cloneDeep(data);
+    let filtered = cloneDeep(data);
 
     filtered.forEach(d => delete (d.sampleID));
 
