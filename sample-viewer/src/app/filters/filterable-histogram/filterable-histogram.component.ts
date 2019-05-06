@@ -124,6 +124,10 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnChanges() {
+    // If the dat
+    if(! this.element) {
+      this.createPlot();
+    }
     this.updateData();
   }
 
