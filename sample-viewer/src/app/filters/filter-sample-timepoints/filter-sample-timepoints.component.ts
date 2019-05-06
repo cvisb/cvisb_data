@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { FilterTimepointsService } from '../../_services';
 
@@ -9,8 +9,9 @@ import { FilterTimepointsService } from '../../_services';
 })
 
 export class FilterSampleTimepointsComponent implements OnInit {
-
+  @Input() endpoint: string;
   data;
+  freqDomain: number[];
   filter_title: string = "Sample Timepoints";
 
 
@@ -21,7 +22,9 @@ export class FilterSampleTimepointsComponent implements OnInit {
 
   ngOnInit() {
     this.filterSvc.summarizeTimepoints().subscribe(res => {
+      console.log(res)
       this.data = res;
+      this.freqDomain = [Math.min(... res.map(d => d.term)), Math.max(... res.map(d => d.term))];
     });
   }
 

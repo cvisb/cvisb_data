@@ -19,7 +19,7 @@ export class FilterableHistogramComponent implements OnInit {
 
   // data
   @Input() public data: D3Nested[];
-  @Input() public yearDomain: number[];
+  @Input() public xDomain: number[];
   @Input() public endpoint: string;
   @Input() public filter_title: string;
 
@@ -118,9 +118,6 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
-    console.log(this.yearDomain);
-    console.log(this.endpoint);
     if (this.data) {
       this.createPlot();
     }
@@ -142,7 +139,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
 
     // Add in any values if they're missing.
-    this.num_data = this.requestSvc.addMissing(this.num_data, this.yearDomain);
+    this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
 
     // console.log(this.num_data)
@@ -212,7 +209,7 @@ export class FilterableHistogramComponent implements OnInit {
       .rangeRound([0, this.width])
       .paddingInner(this.innerPadding)
       .paddingOuter(this.outerPadding)
-      .domain(this.yearDomain.map(String));
+      .domain(this.xDomain.map(String));
 
 
     // Linear version of the scaleBand.
@@ -223,7 +220,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
       // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      .domain(d3.extent(this.yearDomain))
+      .domain(d3.extent(this.xDomain))
       .clamp(true);
 
 
@@ -262,6 +259,10 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateData() {
+    console.log(this.data);
+    console.log(this.xDomain);
+    console.log(this.endpoint);
+
     if (this.data && this.data.length > 0 && this.num_data && this.unknown_data) {
       var t = d3.transition()
         .duration(1000);
