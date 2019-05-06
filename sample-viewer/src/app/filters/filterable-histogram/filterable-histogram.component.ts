@@ -74,19 +74,6 @@ export class FilterableHistogramComponent implements OnInit {
 
 
   constructor(private requestSvc: RequestParametersService) {
-    // Update the class of the bars on update.
-    // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
-    this.filterState$.subscribe((limits: Object) => {
-      // ignore initial setting
-      if (limits) {
-        console.log("NEW LIMITS FOUND")
-        console.log(limits)
-        this.yearLimits = limits;
-
-        this.updateLimits(limits);
-      }
-    })
-
     // Listen for changes to the limits. Required to reset the positions upon "clear filters"
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the filterSubject to update.
@@ -133,6 +120,20 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    console.log(this.filterState$)
+    // Update the class of the bars on update.
+    // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
+    this.filterState$.subscribe((limits: Object) => {
+      // ignore initial setting
+      if (limits) {
+        console.log("NEW LIMITS FOUND")
+        console.log(limits)
+        this.yearLimits = limits;
+
+        this.updateLimits(limits);
+      }
+    })
+
     // Wait till everything is loaded; then set the initial limits
     // this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
     this.updateLimits(this.yearLimits);
