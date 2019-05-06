@@ -61,7 +61,7 @@ import {
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
   FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
-  FilterSampleTimepointsComponent
+  FilterSampleTimepointsComponent, FilterableHistogramComponent
 } from './filters';
 
 // Patient page components
@@ -168,6 +168,7 @@ import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes
     CheckDupesComponent,
     PreviewAdditionsComponent,
     CombineDupesComponent,
+    FilterableHistogramComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
