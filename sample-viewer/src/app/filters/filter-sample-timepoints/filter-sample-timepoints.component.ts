@@ -1,45 +1,53 @@
-import { Component, OnInit, Input } from '@angular/core';
+  import { Component, OnInit, Input } from '@angular/core';
 
-import { Observable, BehaviorSubject } from 'rxjs';
+  import { Observable, BehaviorSubject } from 'rxjs';
 
-import { FilterTimepointsService } from '../../_services';
+  import { FilterTimepointsService, RequestParametersService } from '../../_services';
 
-@Component({
-  selector: 'app-filter-sample-timepoints',
-  templateUrl: './filter-sample-timepoints.component.html',
-  styleUrls: ['./filter-sample-timepoints.component.scss']
-})
+  @Component({
+    selector: 'app-filter-sample-timepoints',
+    templateUrl: './filter-sample-timepoints.component.html',
+    styleUrls: ['./filter-sample-timepoints.component.scss']
+  })
 
-export class FilterSampleTimepointsComponent implements OnInit {
-  @Input() endpoint: string;
-  data;
-  freqDomain: number[];
-  filter_title: string = "Number of Timepoints";
-
-
-  public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
-  public filterState$ = this.filterSubject.asObservable();
+  export class FilterSampleTimepointsComponent implements OnInit {
+    @Input() endpoint: string;
+    data;
+    freqDomain: number[];
+    filter_title: string = "Number of Timepoints";
 
 
-  // temp1.facets["privatePatientID.keyword"].terms.forEach(d => d["numTimepoints"] = d["visitCode.keyword"].terms.length)
+    public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+    public filterState$ = this.filterSubject.asObservable();
 
-  constructor(private filterSvc: FilterTimepointsService) {
+
+    // temp1.facets["privatePatientID.keyword"].terms.forEach(d => d["numTimepoints"] = d["visitCode.keyword"].terms.length)
+
+    constructor(
+      private filterSvc: FilterTimepointsService,
+      private requestSvc: RequestParametersService
+    ) {
+    }
+
+    ngOnInit() {
+      this.filterSvc.summarizeTimepoints().subscribe(res => {
+        console.log(res)
+        this.data = res;
+        this.freqDomain = res.map(d => d.term);
+      });
+
+      this.filterHandler({term: 2})
+    }
+
+    filterHandler(params) {
+      console.log("Calling filter handler in timepoints!")
+      console.log(params)
+
+      let patientIDs = this.filterSvc.filterTimepoints(params.term, params.term);
+      console.log(patientIDs);
+
+      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: patientIDs });
+
+    }
+
   }
-
-  ngOnInit() {
-    this.filterSvc.summarizeTimepoints().subscribe(res => {
-      console.log(res)
-      this.data = res;
-      this.freqDomain = res.map(d => d.term);
-    });
-  }
-
-  filterHandler(params) {
-    console.log("Calling filter handler in timepoints!")
-    console.log(params)
-
-    let patients = this.filterSvc.filterTimepoints(params.term, params.term);
-    console.log(patients);
-  }
-
-}

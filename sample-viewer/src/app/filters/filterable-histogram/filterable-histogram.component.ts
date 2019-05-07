@@ -200,8 +200,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.unknown_rects = this.unknown.append("g")
       .attr("class", 'filter--hist unknown');
 
-    this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_"))
-    .selectAll(".count-rect");
+    this.rects = d3.selectAll("#" + this.filter_title.replace(/\s/g, "_") + " .count-rect");
 
     // --- x & y axes ---
     this.y = d3.scaleLinear()
