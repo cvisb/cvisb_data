@@ -249,7 +249,7 @@ export class FilterableHistogramComponent implements OnInit {
 
   updateData() {
     console.log(this.data);
-    if (this.data && this.data.length > 0 && this.num_data && this.unknown_data) {
+    if (this.data && this.data.length > 0) {
       var t = d3.transition()
         .duration(1000);
 
