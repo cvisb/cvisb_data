@@ -206,8 +206,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.x = d3.scaleBand()
       .rangeRound([0, this.width])
       .paddingInner(this.innerPadding)
-      .paddingOuter(this.outerPadding)
-      .domain(this.xDomain.map(String));
+      .paddingOuter(this.outerPadding);
 
     // Linear version of the scaleBand.
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
@@ -251,7 +250,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr('class', 'axis axis--x axis--unknown')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
 
-    this.createSlider();
+    // this.createSlider();
   }
 
   updateData() {
@@ -262,6 +261,9 @@ export class FilterableHistogramComponent implements OnInit {
       // console.log(this.data)
 
       this.prepData();
+
+      this.x
+      .domain(this.xDomain.map(String));
 
       this.y
         .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
