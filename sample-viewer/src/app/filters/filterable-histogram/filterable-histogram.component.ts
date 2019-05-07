@@ -209,7 +209,7 @@ export class FilterableHistogramComponent implements OnInit {
 
     // Initialize w/ data, if it exists.
     if (this.data) {
-      this.updateData();
+      // this.updateData();
     }
 
     // this.createSlider();
