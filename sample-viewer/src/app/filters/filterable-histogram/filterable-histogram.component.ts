@@ -297,12 +297,12 @@ export class FilterableHistogramComponent implements OnInit {
       //     sendParams(filterSubject, requestSvc, endpoint);
       //   }
       // }
-      let selectYear = function(filterFunc, filterSvc, requestSvc) {
+      let selectYear = function(filterFunc, filterSvc, requestSvc, endpoint) {
         console.log('selecting in d3 func')
         console.log(filterFunc)
         return function(d) {
           console.log(d)
-          filterFunc(d, filterSvc, requestSvc);
+          filterFunc(d, filterSvc, requestSvc, endpoint);
         }
       }
 
@@ -354,7 +354,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
 
       this.rects
-        .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc));
+        .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint));
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
