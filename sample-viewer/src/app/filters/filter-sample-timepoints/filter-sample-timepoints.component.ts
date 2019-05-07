@@ -14,7 +14,7 @@ export class FilterSampleTimepointsComponent implements OnInit {
   @Input() endpoint: string;
   data;
   freqDomain: number[];
-  filter_title: string = "Sample Timepoints";
+  filter_title: string = "Number of Timepoints";
 
   public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
   public filterState$ = this.filterSubject.asObservable();
