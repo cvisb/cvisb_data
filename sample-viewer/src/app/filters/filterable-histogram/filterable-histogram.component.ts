@@ -216,7 +216,6 @@ export class FilterableHistogramComponent implements OnInit {
       this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
       // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      .domain(d3.extent(this.xDomain))
       .clamp(true);
 
 
@@ -235,11 +234,6 @@ export class FilterableHistogramComponent implements OnInit {
       .paddingOuter(0)
       .domain(['unknown']);
 
-    this.xAxis = d3.axisBottom(this.x)
-      .tickSizeOuter(0)
-      .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
-
-    this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
     // --- Create axes ---
     this.years.append('g')
@@ -262,13 +256,25 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.prepData();
 
+      // --- Update axes ---
+
+
       this.x
-      .domain(this.xDomain.map(String));
+        .domain(this.xDomain.map(String));
+
+      this.xLinear
+        .domain(d3.extent(this.xDomain));
+
+      this.xAxis = d3.axisBottom(this.x)
+        .tickSizeOuter(0)
+        .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
+
+      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
+
 
       this.y
         .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
 
-      // --- Update axes ---
       d3.select(".axis--hists")
         .call(this.xAxis);
 
