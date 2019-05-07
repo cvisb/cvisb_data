@@ -36,7 +36,7 @@
         this.freqDomain = res.map(d => d.term);
       });
 
-      this.filterHandler({term: 2})
+      // this.filterHandler({term: 2})
     }
 
     filterHandler(params) {
