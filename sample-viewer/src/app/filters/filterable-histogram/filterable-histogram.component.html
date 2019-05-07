@@ -1,5 +1,5 @@
-<div class="patient-id-filter container" *ngIf="data && filterState$">
-  <h4 class="filter-label">{{ filter_title }}</h4>
+<div class="patient-id-filter container">
+  <h4 class="filter-label" *ngIf="data">{{ filter_title }}</h4>
 
   <div class="filterable-hist" #hist></div>
 </div>
