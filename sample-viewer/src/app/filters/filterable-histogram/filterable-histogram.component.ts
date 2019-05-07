@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
-import { RequestParametersService } from '../../_services';
+import { RequestParametersService, FilterTimepointsService } from '../../_services';
 import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
 
 @Component({
@@ -77,7 +77,7 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() filterState$: Observable<Object>;
 
 
-  constructor(private requestSvc: RequestParametersService) {
+  constructor(private filterSvc: FilterTimepointsService, private requestSvc: RequestParametersService) {
     // Listen for changes to the limits. Required to reset the positions upon "clear filters"
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the filterSubject to update.
@@ -301,7 +301,7 @@ export class FilterableHistogramComponent implements OnInit {
       //     sendParams(filterSubject, requestSvc, endpoint);
       //   }
       // }
-      let selectYear = function(filterFunc) {
+      let selectYear = function(filterFunc, filterSvc, requestSvc) {
         console.log('selecting in d3 func')
         console.log(filterFunc)
         return function(d) {
@@ -353,13 +353,12 @@ export class FilterableHistogramComponent implements OnInit {
 
 
 
-      console.log(this.rects)
-      this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
-      console.log(this.rects)
-
       // Event listener for click event on rects
+      // Select the rects after they've been drawn.
+      this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
+
       this.rects
-        .on("click", selectYear(this.filterHandler));
+        .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc));
 
       // console.log(d3.selectAll(" .count-rect"))
       // console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect"))
