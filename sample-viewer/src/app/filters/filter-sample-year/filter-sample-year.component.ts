@@ -22,7 +22,7 @@ export class FilterSampleYearComponent implements OnInit {
   public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
   public filterState$ = this.filterSubject.asObservable();
 
-  filter_title: string = "Year of Initial Evaluation";
+  filter_title: string = "Initial Evaluation Date";
 
   constructor(private requestSvc: RequestParametersService) {
   }
