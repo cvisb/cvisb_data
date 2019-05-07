@@ -16,6 +16,7 @@ export class FilterSampleTimepointsComponent implements OnInit {
   freqDomain: number[];
   filter_title: string = "Number of Timepoints";
 
+
   public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
   public filterState$ = this.filterSubject.asObservable();
 
@@ -31,6 +32,11 @@ export class FilterSampleTimepointsComponent implements OnInit {
       this.data = res;
       this.freqDomain = res.map(d => d.term);
     });
+  }
+
+  filterHandler(params) {
+    console.log("Calling filter handler in timepoints!")
+    console.log(params)
   }
 
 }
