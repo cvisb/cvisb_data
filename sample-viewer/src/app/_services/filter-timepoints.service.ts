@@ -75,11 +75,11 @@ export class FilterTimepointsService {
   filterTimepoints(lowerLimit: number, upperLimit: number) {
     return this.getTimepoints("__all__").pipe(
       map((res: PatientTimepoints[]) => {
-        let filtered = res
+        let filteredPatients = res
           .filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit)
           .map(d => d.privatePatientID);
 
-        return (filtered);
+        return (filteredPatients);
       })
     )
   }

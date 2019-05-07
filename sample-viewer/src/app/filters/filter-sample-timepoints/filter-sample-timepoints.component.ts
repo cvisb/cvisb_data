@@ -37,6 +37,9 @@ export class FilterSampleTimepointsComponent implements OnInit {
   filterHandler(params) {
     console.log("Calling filter handler in timepoints!")
     console.log(params)
+
+    let patients = this.filterSvc.filterTimepoints(params.term, params.term);
+    console.log(patients);
   }
 
 }

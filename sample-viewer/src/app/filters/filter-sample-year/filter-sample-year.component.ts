@@ -31,9 +31,16 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
 
-    filterHandler(params) {
-      console.log("Calling filter handler in years!")
-      console.log(params)
-    }
+  filterHandler(params) {
+    console.log("Calling filter handler in years!")
+    console.log(params)
 
+    //   params.term === "unknown" ?
+    //        filterSubject.next({ lower: 0, upper: 0, unknown: true }) :
+    //        filterSubject.next({ lower: d.term, upper: d.term, unknown: false });
+    //
+    //      // update parameters.
+    //      sendParams(filterSubject, requestSvc, endpoint);
+    // }
+  }
 }

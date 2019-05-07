@@ -43,6 +43,7 @@ export class FilterableHistogramComponent implements OnInit {
   // --- Selectors ---
   private years: any; // normal histogram
   private year_rects: any; // normal histogram bars
+  private rects: any; // any histogram bar
   private unknown: any; // unknown graph
   private unknown_rects: any; // unknown bar
   private svg: any;
@@ -350,7 +351,7 @@ export class FilterableHistogramComponent implements OnInit {
 
 
       // Event listener for click event on rects
-      d3.selectAll(".count-rect")
+      this.rects
         .on("click", selectYear(this.filterHandler));
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
