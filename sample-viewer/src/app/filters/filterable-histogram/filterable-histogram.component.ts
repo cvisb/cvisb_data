@@ -59,6 +59,7 @@ export class FilterableHistogramComponent implements OnInit {
   private colorScale: any;
   private xAxis: any;
   private xAxis2: any;
+  private axisHist: any;
 
   // --- Constants ---
   handle_path: string = "M4.1,11V-1L0.5-5.5L-3.1-1v12H4.1z";
@@ -172,6 +173,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.svg = d3.select(this.element)
       .append('svg')
       .attr("class", "barplot")
+      .attr("id", this.filter_title.replace(/\s/g, "_"))
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
     // Slider SVG
@@ -216,7 +218,7 @@ export class FilterableHistogramComponent implements OnInit {
 
 
     // --- Create axes ---
-    this.years.append('g')
+    this.axisHist = this.years.append('g')
       .attr('class', 'axis axis--x axis--hists')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
@@ -277,7 +279,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.y
         .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
 
-      d3.select(".axis--hists")
+      this.axisHist
         .call(this.xAxis);
 
       d3.select(".axis--unknown")
