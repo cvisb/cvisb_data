@@ -217,8 +217,6 @@ export class FilterableHistogramComponent implements OnInit {
     this.xLinear = d3.scaleLinear()
       .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
       this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-      // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       .clamp(true);
 
 
@@ -243,8 +241,6 @@ export class FilterableHistogramComponent implements OnInit {
     if (this.data && this.data.length > 0 && this.svg && this.x && this.y) {
       var t = d3.transition()
         .duration(1000);
-
-      // console.log(this.data)
 
       this.prepData();
 
@@ -306,7 +302,7 @@ export class FilterableHistogramComponent implements OnInit {
         console.log(filterFunc)
         return function(d) {
           console.log(d)
-          filterFunc(d);
+          filterFunc(d, filterSvc, requestSvc);
         }
       }
 
@@ -359,13 +355,6 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.rects
         .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc));
-
-      // console.log(d3.selectAll(" .count-rect"))
-      // console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect"))
-      // console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist"))
-      // console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist"))
-      // console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist").selectAll("rect"))
-      // console.log(d3.selectAll(".filter--hist").selectAll(" .count-rect"))
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
