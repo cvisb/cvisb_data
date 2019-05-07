@@ -224,7 +224,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr('class', 'axis axis--x axis--unknown')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
-// Initialize w/ data, if it exists.
+    // Initialize w/ data, if it exists.
     if (this.data) {
       this.updateData();
     }
@@ -250,21 +250,8 @@ export class FilterableHistogramComponent implements OnInit {
       this.xLinear
         .domain(d3.extent(this.xDomain));
 
-      this.xAxis = d3.axisBottom(this.x)
-        .tickSizeOuter(0)
-        .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
-
-      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
-
 
       let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
-
-      // rescale svg to proper width
-      this.svg
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
-
-      this.svg_slider
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
       this.x2 = d3.scaleBand()
         .rangeRound([0, width2])
@@ -272,6 +259,19 @@ export class FilterableHistogramComponent implements OnInit {
         .paddingOuter(0)
         .domain(['unknown']);
 
+      this.xAxis = d3.axisBottom(this.x)
+        .tickSizeOuter(0)
+        .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
+
+      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
+
+
+      // rescale svg to proper width
+      this.svg
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+      this.svg_slider
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
 
       this.y
