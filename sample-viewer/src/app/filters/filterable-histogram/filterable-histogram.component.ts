@@ -106,10 +106,6 @@ export class FilterableHistogramComponent implements OnInit {
 
   ngOnInit() {
     this.createPlot();
-
-    if (this.data) {
-      this.updateData();
-    }
   }
 
   ngOnChanges() {
@@ -219,22 +215,6 @@ export class FilterableHistogramComponent implements OnInit {
       .clamp(true);
 
 
-    let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
-
-    // rescale svg to proper width
-    this.svg
-      .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
-
-    this.svg_slider
-      .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2)
-
-    this.x2 = d3.scaleBand()
-      .rangeRound([0, width2])
-      .paddingInner(0)
-      .paddingOuter(0)
-      .domain(['unknown']);
-
-
     // --- Create axes ---
     this.years.append('g')
       .attr('class', 'axis axis--x axis--hists')
@@ -242,7 +222,12 @@ export class FilterableHistogramComponent implements OnInit {
 
     this.unknown.append('g')
       .attr('class', 'axis axis--x axis--unknown')
-      .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
+      .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
+
+    // Initialize w/ data, if it exists.
+    if (this.data) {
+      this.updateData();
+    }
 
     // this.createSlider();
   }
@@ -258,8 +243,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.prepData();
 
       // --- Update axes ---
-
-
+      console.log(this.xDomain)
       this.x
         .domain(this.xDomain.map(String));
 
@@ -271,6 +255,23 @@ export class FilterableHistogramComponent implements OnInit {
         .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
 
       this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
+
+
+      let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
+
+      // rescale svg to proper width
+      this.svg
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+      this.svg_slider
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+      this.x2 = d3.scaleBand()
+        .rangeRound([0, width2])
+        .paddingInner(0)
+        .paddingOuter(0)
+        .domain(['unknown']);
+
 
 
       this.y
