@@ -22,6 +22,7 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() public xDomain: number[];
   @Input() public endpoint: string;
   @Input() public filter_title: string;
+  @Input() public filterHandler: Function;
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -60,6 +61,7 @@ export class FilterableHistogramComponent implements OnInit {
   private xAxis: any;
   private xAxis2: any;
   private axisHist: any;
+  private axisUnknown: any;
 
   // --- Constants ---
   handle_path: string = "M4.1,11V-1L0.5-5.5L-3.1-1v12H4.1z";
@@ -222,7 +224,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr('class', 'axis axis--x axis--hists')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
-    this.unknown.append('g')
+    this.axisUnknown = this.unknown.append('g')
       .attr('class', 'axis axis--x axis--unknown')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
@@ -235,7 +237,6 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateData() {
-    console.log(this.data);
     if (this.data && this.data.length > 0 && this.svg && this.x && this.y) {
       var t = d3.transition()
         .duration(1000);
@@ -245,7 +246,6 @@ export class FilterableHistogramComponent implements OnInit {
       this.prepData();
 
       // --- Update axes ---
-      console.log(this.xDomain)
       this.x
         .domain(this.xDomain.map(String));
 
@@ -282,7 +282,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.axisHist
         .call(this.xAxis);
 
-      d3.select(".axis--unknown")
+      this.axisUnknown
         .call(this.xAxis2);
 
 
@@ -298,6 +298,14 @@ export class FilterableHistogramComponent implements OnInit {
       //     sendParams(filterSubject, requestSvc, endpoint);
       //   }
       // }
+      let selectYear = function(filterFunc) {
+        console.log('selecting in d3 func')
+        console.log(filterFunc)
+        return function(d) {
+          console.log(d)
+          filterFunc(d);
+        }
+      }
 
 
       // --- Create bars ---
@@ -342,7 +350,8 @@ export class FilterableHistogramComponent implements OnInit {
 
 
       // Event listener for click event on rects
-      // d3.selectAll(".count-rect")
+      d3.selectAll(".count-rect")
+        .on("click", selectYear(this.filterHandler));
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }

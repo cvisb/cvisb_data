@@ -30,4 +30,10 @@ export class FilterSampleYearComponent implements OnInit {
   ngOnInit() {
   }
 
+
+    filterHandler(params) {
+      console.log("Calling filter handler in years!")
+      console.log(params)
+    }
+
 }
