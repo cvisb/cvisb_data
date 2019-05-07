@@ -200,7 +200,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.unknown_rects = this.unknown.append("g")
       .attr("class", 'filter--hist unknown');
 
-    this.rects = d3.selectAll("#" + this.filter_title.replace(/\s/g, "_") + " .count-rect");
+    this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(" .count-rect");
 
     // --- x & y axes ---
     this.y = d3.scaleLinear()
@@ -353,10 +353,16 @@ export class FilterableHistogramComponent implements OnInit {
 
 
       // Event listener for click event on rects
-      this.rects
+      d3.selectAll(".count-rects")
         .on("click", selectYear(this.filterHandler));
 
         console.log(this.rects)
+        console.log(d3.selectAll(" .count-rect");)
+        console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");)
+        console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist");)
+        console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist");)
+        console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist").selectAll("rect");)
+        console.log(d3.selectAll(".filter--hist").selectAll(" .count-rect");)
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }

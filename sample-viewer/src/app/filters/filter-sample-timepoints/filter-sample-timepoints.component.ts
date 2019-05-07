@@ -43,11 +43,13 @@
       console.log("Calling filter handler in timepoints!")
       console.log(params)
 
-      let patientIDs = this.filterSvc.filterTimepoints(params.term, params.term);
-      console.log(patientIDs);
+      this.filterSvc.filterTimepoints(params.term, params.term).subscribe(patients => {
+        let patientIDs = patients;
 
-      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: patientIDs });
+        console.log(patientIDs);
 
+        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: patientIDs });
+      });
     }
 
   }
