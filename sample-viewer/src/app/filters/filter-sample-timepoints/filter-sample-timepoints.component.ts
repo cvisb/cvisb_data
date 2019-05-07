@@ -39,7 +39,7 @@
       // this.filterHandler({term: 2})
     }
 
-    filterHandler(params, filterSvc, requestSvc) {
+    filterHandler(params, filterSvc, requestSvc, endpoint) {
       console.log("Calling filter handler in timepoints!")
       console.log(params)
 
@@ -48,7 +48,7 @@
 
         console.log(patientIDs);
 
-        requestSvc.updateParams(this.endpoint, { field: 'patientID', value: patientIDs });
+        requestSvc.updateParams(endpoint, { field: 'patientID', value: patientIDs });
       });
     }
 
