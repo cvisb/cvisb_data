@@ -195,24 +195,7 @@ export class FilterableHistogramComponent implements OnInit {
     this.unknown_rects = this.unknown.append("g")
       .attr("class", 'filter--hist unknown');
 
-    // --- x & y axes ---
-    this.y = d3.scaleLinear()
-      .rangeRound([this.height, 0]);
 
-    this.x = d3.scaleBand()
-      .rangeRound([0, this.width])
-      .paddingInner(this.innerPadding)
-      .paddingOuter(this.outerPadding);
-
-    // Linear version of the scaleBand.
-    // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
-    // Range is funky to account for padding on edges.
-    this.xLinear = d3.scaleLinear()
-      .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-      this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-      // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
-      .clamp(true);
 
 
     // --- Create axes ---
@@ -244,11 +227,27 @@ export class FilterableHistogramComponent implements OnInit {
 
       // --- Update axes ---
       console.log(this.xDomain)
-      this.x
+      // --- x & y axes ---
+      this.y = d3.scaleLinear()
+        .rangeRound([this.height, 0])
+        .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
+
+      this.x = d3.scaleBand()
+        .rangeRound([0, this.width])
+        .paddingInner(this.innerPadding)
+        .paddingOuter(this.outerPadding)
         .domain(this.xDomain.map(String));
 
-      this.xLinear
-        .domain(d3.extent(this.xDomain));
+      // Linear version of the scaleBand.
+      // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
+      // Range is funky to account for padding on edges.
+      this.xLinear = d3.scaleLinear()
+        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+        // .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        // this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
+        .domain(d3.extent(this.xDomain))
+        .clamp(true);
 
       this.xAxis = d3.axisBottom(this.x)
         .tickSizeOuter(0)
@@ -274,8 +273,6 @@ export class FilterableHistogramComponent implements OnInit {
 
 
 
-      this.y
-        .domain([0, Math.max(d3.max(this.num_data, (d: any) => d.count), d3.max(this.unknown_data, (d: any) => d.count))]).nice();
 
       d3.select(".axis--hists")
         .call(this.xAxis);
