@@ -105,38 +105,34 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createPlot();
+
     if (this.data) {
-      this.createPlot();
+      this.updateData();
     }
   }
 
   ngOnChanges() {
-    // If the data didn't arrive on ngOnInit, call createPlot to initialize everything.
-    if (!this.svg && this.data && this.data.length > 0) {
-      this.createPlot();
-    }
-
     this.updateData();
   }
 
   ngAfterViewInit() {
-    console.log(this.filterState$)
     // Update the class of the bars on update.
     // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
-    this.filterState$.subscribe((limits: Object) => {
-      // ignore initial setting
-      if (limits) {
-        console.log("NEW LIMITS FOUND")
-        console.log(limits)
-        this.yearLimits = limits;
-
-        this.updateLimits(limits);
-      }
-    })
+    // this.filterState$.subscribe((limits: Object) => {
+    //   // ignore initial setting
+    //   if (limits) {
+    //     console.log("NEW LIMITS FOUND")
+    //     console.log(limits)
+    //     this.yearLimits = limits;
+    //
+    //     this.updateLimits(limits);
+    //   }
+    // })
 
     // Wait till everything is loaded; then set the initial limits
     // this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
-    this.updateLimits(this.yearLimits);
+    // this.updateLimits(this.yearLimits);
   }
 
   prepData() {
@@ -174,7 +170,6 @@ export class FilterableHistogramComponent implements OnInit {
     //       { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
     // }
 
-    this.prepData();
 
 
     // Append SVG
@@ -256,7 +251,6 @@ export class FilterableHistogramComponent implements OnInit {
       .attr('class', 'axis axis--x axis--unknown')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);;
 
-    this.updateData();
     this.createSlider();
   }
 
@@ -337,7 +331,7 @@ export class FilterableHistogramComponent implements OnInit {
 
       // Event listener for click event on rects
       // d3.selectAll(".count-rect")
-        // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
+      // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
   }
