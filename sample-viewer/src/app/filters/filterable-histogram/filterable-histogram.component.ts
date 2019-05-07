@@ -362,7 +362,7 @@ export class FilterableHistogramComponent implements OnInit {
         console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist"))
         console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist"))
         console.log(d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll("#filter_hist").selectAll(".filter--hist").selectAll("rect"))
-        console.log(d3.selectAll(".filter--hist").selectAll(" .count-rect");)
+        console.log(d3.selectAll(".filter--hist").selectAll(" .count-rect"))
       // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
