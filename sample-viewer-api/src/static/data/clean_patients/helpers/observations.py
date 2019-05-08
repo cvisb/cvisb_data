@@ -72,35 +72,34 @@ def nestELISAs(row):
     # return(elisas)
     try:
         # survivor; timepoint = survivor enrollment
-        if((row['ebola IgG'] == row['ebola IgG']) & (row['lassa IgG'] == row['lassa IgG'])):
-            return([
-                {
-                    "virus": "Ebola",
-                    "assayType": "IgG",
-                    "ELISAresult": row['ebola IgG'],
-                    "timepoint": "survivor enrollment"
-                },
-                {
-                    "virus": "Lassa",
-                    "assayType": "IgG",
-                    "ELISAresult": row['lassa IgG'],
-                    "timepoint": "survivor enrollment"
-                }
-            ])
-        elif(row['ebola IgG'] == row['ebola IgG']):
-            return([{
+        if(row['ebola IgG'] == row['ebola IgG']):
+            elisas.append({
+                "virus": "Ebola",
+                "assayType": "IgG",
+                "ELISAresult": row['ebola IgG'].lower(),
+                "timepoint": "survivor enrollment"
+            })
+        else:
+            elisas.append({
                 "virus": "Ebola",
                 "assayType": "IgG",
                 "ELISAresult": row['ebola IgG'],
                 "timepoint": "survivor enrollment"
-            }])
-        elif(row['lassa IgG'] == row['lassa IgG']):
-            return([{
+            })
+        if(row['lassa IgG'] == row['lassa IgG']):
+            elisas.append({
+                "virus": "Lassa",
+                    "assayType": "IgG",
+                    "ELISAresult": row['lassa IgG'].lower(),
+                    "timepoint": "survivor enrollment"
+                    })
+        else:
+            elisas.append({
                 "virus": "Lassa",
                     "assayType": "IgG",
                     "ELISAresult": row['lassa IgG'],
                     "timepoint": "survivor enrollment"
-                    }])
+                    })
     except:
         # Acute; timepoint = patient admission
         if((row['agvresultcc1'] == row['agvresultcc1'])):
@@ -111,12 +110,28 @@ def nestELISAs(row):
                     "ELISAresult": row['agvresultcc1'].lower(),
                     "timepoint": "patient admission"
                 })
+        else: # NA
+            elisas.append(
+            {
+                "virus": "Lassa",
+                "assayType": "Ag",
+                "ELISAresult": row['agvresultcc1'],
+                "timepoint": "patient admission"
+            })
         if((row['iggvresultcc1'] == row['iggvresultcc1'])):
             elisas.append(
                 {
                     "virus": "Lassa",
                     "assayType": "IgG",
                     "ELISAresult": row['iggvresultcc1'].lower(),
+                    "timepoint": "patient admission"
+                })
+        else:
+            elisas.append(
+                {
+                    "virus": "Lassa",
+                    "assayType": "IgG",
+                    "ELISAresult": row['iggvresultcc1'],
                     "timepoint": "patient admission"
                 })
         if((row['igmvresultcc1'] == row['igmvresultcc1'])):
@@ -127,4 +142,70 @@ def nestELISAs(row):
                     "ELISAresult": row['igmvresultcc1'].lower(),
                     "timepoint": "patient admission"
                 })
+        else:
+            elisas.append(
+                {
+                    "virus": "Lassa",
+                    "assayType": "IgM",
+                    "ELISAresult": row['igmvresultcc1'],
+                    "timepoint": "patient admission"
+                })
         return(elisas)
+    # try:
+    #     # survivor; timepoint = survivor enrollment
+    #     if((row['ebola IgG'] == row['ebola IgG']) & (row['lassa IgG'] == row['lassa IgG'])):
+    #         return([
+    #             {
+    #                 "virus": "Ebola",
+    #                 "assayType": "IgG",
+    #                 "ELISAresult": row['ebola IgG'],
+    #                 "timepoint": "survivor enrollment"
+    #             },
+    #             {
+    #                 "virus": "Lassa",
+    #                 "assayType": "IgG",
+    #                 "ELISAresult": row['lassa IgG'],
+    #                 "timepoint": "survivor enrollment"
+    #             }
+    #         ])
+    #     elif(row['ebola IgG'] == row['ebola IgG']):
+    #         return([{
+    #             "virus": "Ebola",
+    #             "assayType": "IgG",
+    #             "ELISAresult": row['ebola IgG'],
+    #             "timepoint": "survivor enrollment"
+    #         }])
+    #     elif(row['lassa IgG'] == row['lassa IgG']):
+    #         return([{
+    #             "virus": "Lassa",
+    #                 "assayType": "IgG",
+    #                 "ELISAresult": row['lassa IgG'],
+    #                 "timepoint": "survivor enrollment"
+    #                 }])
+    # except:
+    #     # Acute; timepoint = patient admission
+    #     if((row['agvresultcc1'] == row['agvresultcc1'])):
+    #         elisas.append(
+    #             {
+    #                 "virus": "Lassa",
+    #                 "assayType": "Ag",
+    #                 "ELISAresult": row['agvresultcc1'].lower(),
+    #                 "timepoint": "patient admission"
+    #             })
+    #     if((row['iggvresultcc1'] == row['iggvresultcc1'])):
+    #         elisas.append(
+    #             {
+    #                 "virus": "Lassa",
+    #                 "assayType": "IgG",
+    #                 "ELISAresult": row['iggvresultcc1'].lower(),
+    #                 "timepoint": "patient admission"
+    #             })
+    #     if((row['igmvresultcc1'] == row['igmvresultcc1'])):
+    #         elisas.append(
+    #             {
+    #                 "virus": "Lassa",
+    #                 "assayType": "IgM",
+    #                 "ELISAresult": row['igmvresultcc1'].lower(),
+    #                 "timepoint": "patient admission"
+    #             })
+    #     return(elisas)
