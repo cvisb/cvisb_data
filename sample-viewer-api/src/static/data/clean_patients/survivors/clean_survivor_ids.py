@@ -31,6 +31,12 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids['relatedTo'] = ids.groupby("contactGroupIdentifier")['relatedTo'].transform(listicle)
     ids['relatedTo'] = ids.apply(removeSelfID, axis = 1)
 
+    # Private form of the ID.
+    ids["relatedToPrivate"] = ids.sID # create a copy that will be collapsed.
+    # group by contact group, create a list, and remove the ID from that row (remove self)
+    ids['relatedToPrivate'] = ids.groupby("contactGroupIdentifier")['relatedToPrivate'].transform(listicle)
+    ids['relatedToPrivate'] = ids.apply(lambda x: removeSelfID(x, 'sID'), axis = 1)
+
 
     # --- Check data is as expected ---
     ids = runIDChecks(ids, ids_raw)
@@ -49,10 +55,10 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
 def listicle(group):
     return([(list(group))])
 
-def removeSelfID(row, idVar = "publicSID"):
-    if(isinstance(row.relatedTo, list)):
-        if(len(row.relatedTo) > 0):
-            ids = row.relatedTo.copy()
+def removeSelfID(row, relatedVar = "relatedTo", idVar = "publicSID"):
+    if(isinstance(row[relatedVar], list)):
+        if(len(row[relatedVar]) > 0):
+            ids = row[relatedVar].copy()
             ids.remove(row[idVar])
         return(ids)
 

@@ -335,6 +335,18 @@
   marginality:           optional
   authenticated:         false
 
+- "@id":                 cvisb:relatedToPrivate
+  "@type":               rdf:Property
+  rdfs:comment:          A list of related household contacts's private patientIDs
+  rdfs:label:            relatedToPrivate
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
 - "@id":                 cvisb:exposureType
   "@type":               rdf:Property
   rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.

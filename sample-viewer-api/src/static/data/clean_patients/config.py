@@ -51,7 +51,7 @@ output_lassaAcuteWeirdos_ids = f"{inconsistencies_dir}/lassaAcuteIDs_inconsisten
 # sans dates, temporarily
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
                'age', 'gender', 'country', 'homeLocation',
-               'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo',
+               'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
                 'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
                'elisa', 'dateModified']
               # Temp: removing symptoms, infectionDate, infectionYear
