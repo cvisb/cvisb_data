@@ -1,10 +1,41 @@
 <h4>Metadata for {{data['sampleID']}}</h4>
 
 <div *ngFor="let key of sample_vars" class="metadata-pair">
-  <div class="metadata-key">
-    {{ key }}
-  </div>
-  <div class="metadata-value">
-    {{ data[key] || 'n/a' }}
-  </div>
+  <ng-container [ngTemplateOutlet]="key === 'location' ? locations : flatData" [ngTemplateOutletContext]="{ data: data, key: key }"></ng-container>
+
+  <ng-template #flatData let-data="data" let-key="key">
+    <div class="metadata-key">
+      {{ key }}
+    </div>
+    <div class="metadata-value">
+      {{ data[key] || 'n/a' }}
+    </div>
+  </ng-template>
+
+
+  <ng-template #flatData let-data="data" let-key="key">
+    <div class="metadata-key">
+      {{ key }}
+    </div>
+    <div class="metadata-value">
+      {{ data[key] || 'n/a' }}
+    </div>
+  </ng-template>
+
+  <!-- LOCATION DATA -->
+  <ng-template #locations let-key="key" let-data="data">
+    <div class="metadata-key">
+      {{ key }}
+    </div>
+
+    <div *ngFor="let location of data[key]; let idx = index" class="location-group">
+      <div *ngFor="let loc_key of location | getKeys">
+        <div ngTemplateOutlet="flatData" [ngTemplateOutletContext]="{ data: location[loc_key], key: loc_key }">
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+
 </div>
