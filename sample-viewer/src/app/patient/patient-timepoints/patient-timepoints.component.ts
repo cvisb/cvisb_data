@@ -24,18 +24,18 @@ export class PatientTimepointsComponent implements OnInit {
     console.log(this.alternateIDs);
 
     this.alternateIDs.forEach(id => {
-      this.apiSvc.getOne('sample', id, 'privatePatientID').subscribe(res => {
+      this.apiSvc.getOne('sample', id, 'privatePatientID', true).subscribe(res => {
         console.log(res);
         this.samples = this.samples.concat(res);
       })
     })
     console.log(this.samples)
-
-    this.samples = [{ "visitCode": "1", "sampleType": "viralRNA" }, { "visitCode": "1", "sampleType": "PBMC" }, { "visitCode": "2", "sampleType": "viralRNA" }, { "visitCode": "1", "sampleType": "DNA" }];
-
   }
 
-  showSampleMD(sample): void {
+  showSampleMD($event: Event, sample): void {
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+
     console.log("metadata!")
     console.log(sample)
     const dialogRef = this.dialog.open(SampleMetadataComponent, {

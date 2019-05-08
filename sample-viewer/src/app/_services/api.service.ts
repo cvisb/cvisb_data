@@ -31,7 +31,7 @@ export class ApiService {
 
   // --- GET ---
   // Generic GET to access a single document with a particular ID.
-  getOne(endpoint: string, id: string, idVar: string = 'identifier') {
+  getOne(endpoint: string, id: string, idVar: string = 'identifier', returnAll: boolean = false) {
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -40,6 +40,9 @@ export class ApiService {
         .set('q', `${idVar}:\"${id}\"`)
     }).pipe(
       map(data => {
+        if(returnAll) {
+          return(data['body']['hits']);
+        } else {
         if (data['body']['total'] === 1) {
           // One result found, as expected.
           return (data['body']['hits'][0])
@@ -47,6 +50,7 @@ export class ApiService {
           console.log("More than one object returned. Check if your ID is unique!")
           console.log(data)
         }
+      }
       }),
       catchError(e => {
         console.log(e)
