@@ -14,7 +14,7 @@
     @Input() endpoint: string;
     data;
     freqDomain: number[];
-    filter_title: string = "Number of Timepoints";
+    filter_title: string = "Number of Sample Timepoints";
 
 
     public filterSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
