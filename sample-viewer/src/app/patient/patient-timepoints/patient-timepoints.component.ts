@@ -21,15 +21,11 @@ export class PatientTimepointsComponent implements OnInit {
     public dialog: MatDialog, ) { }
 
   ngOnInit() {
-    console.log(this.alternateIDs);
-
     this.alternateIDs.forEach(id => {
       this.apiSvc.getOne('sample', id, 'privatePatientID', true).subscribe(res => {
-        console.log(res);
         this.samples = this.samples.concat(res);
       })
     })
-    console.log(this.samples)
   }
 
   showSampleMD($event: Event, sample): void {
