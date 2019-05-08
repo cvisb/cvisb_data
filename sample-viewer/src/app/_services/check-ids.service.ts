@@ -75,6 +75,9 @@ export class CheckIdsService {
     // "S0123-7".match(/^(S)0(\d\d\d)\-(\d)$/)
     { pattern: /^(S)0(\d\d\d)\-(\d)$/, message: "Removing first 0 from ID, adding hyphen", converter: this.removeVisitCode, idxArr: [1, 2, 3] },
 
+    // "S-0123-7".match(/^(S)\-0(\d\d\d)\-(\d)$/)
+    { pattern: /^(S)\-0(\d\d\d)\-(\d)$/, message: "Removing first 0 from ID, adding hyphen", converter: this.removeVisitCode, idxArr: [1, 2, 3] },
+
     // "S7-0123".match(/^(S)(\d)\-0(\d\d\d)$/)
     { pattern: /^(S)(\d)\-0(\d\d\d)$/, message: "Removing first 0 from ID, adding hyphen", converter: this.removeVisitCode, idxArr: [1, 3, 2] },
 
