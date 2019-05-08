@@ -1,5 +1,5 @@
 <div class="container sample-timepoints">
   <div class="sample" *ngFor="let sample of samples">
-    <span class="sample-type">{{ sample.sampleType }}</span>-T<span class="sample-timepoint">{{ sample.visitCode }}</span>
+    <span class="sample-type">{{ sample.sampleType }}</span>-<span class="sample-timepoint">{{ sample.sampleCohort === "acute" ? "G" : "S"}}{{ sample.visitCode }}</span>
   </div>
 </div>

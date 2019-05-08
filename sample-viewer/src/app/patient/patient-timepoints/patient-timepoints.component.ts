@@ -13,6 +13,7 @@ export class PatientTimepointsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.samples)
   }
 
 }
