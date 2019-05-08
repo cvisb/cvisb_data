@@ -78,6 +78,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     df_dict, _ = helpers.createDict(
         df2export, "alternateIdentifier", dict_cols)
     df_dict[dict_cols].to_csv(output_patients + "_dict.csv")
+    df_dict[dict_cols].to_json(output_patients + "_dict.json")
 
     return(merged)
 
