@@ -1,5 +1,8 @@
-<div class="container sample-timepoints">
-  <div class="sample" *ngFor="let sample of samples">
-    <span class="sample-type">{{ sample.sampleType }}</span>-<span class="sample-timepoint">{{ sample.sampleCohort === "acute" ? "G" : "S"}}{{ sample.visitCode }}</span>
+<div class="container sample-timepoints" *ngIf="sample && sample.sampleType && sample.visitCode">
+  <div class="sample" *ngFor="let sample of samples" [matTooltip]="sample.sampleType + ' sample at ' + sample.sampleGroup + ' timepoint ' + sample.visitCode" (click)="showSampleMD(sample)">
+    <span class="sample-type">{{ sample.sampleType }}</span> -
+    <span class="sample-timepoint">
+      {{ sample.sampleGroup === "acute" ? "G" : "S"}}{{ sample.visitCode }}
+    </span>
   </div>
 </div>
