@@ -89,6 +89,7 @@ import { PatientDatesComponent } from './patient-page/patient-dates/patient-date
 import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
 import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
 import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
+import { PatientTimepointsComponent } from './patient/patient-timepoints/patient-timepoints.component';
 
 
 @NgModule({
@@ -169,6 +170,7 @@ import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes
     PreviewAdditionsComponent,
     CombineDupesComponent,
     FilterableHistogramComponent,
+    PatientTimepointsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),

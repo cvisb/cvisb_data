@@ -37,14 +37,17 @@
     <ng-container matColumnDef="associatedSamples">
       <th mat-header-cell *matHeaderCellDef>timepoints</th>
       <td mat-cell *matCellDef="let element">
-        <mat-chip-list>
-          <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome">
-            <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i>
+        <app-patient-timepoints [samples]="testSamples"></app-patient-timepoints>
+        <!-- <app-patient-timepoints [samples]="element.associatedSamples"></app-patient-timepoints> -->
+        <!-- <mat-chip-list> -->
+          <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
+            <!-- <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i> -->
             <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
             <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
-            <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }}
-          </mat-chip>
-        </mat-chip-list>
+            <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }} -->
+          <!-- </mat-chip> -->
+        <!-- </mat-chip-list> -->
+
       </td>
     </ng-container>
 
