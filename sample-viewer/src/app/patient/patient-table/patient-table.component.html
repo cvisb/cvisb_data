@@ -35,9 +35,9 @@
     </ng-container>
 
     <ng-container matColumnDef="associatedSamples">
-      <th mat-header-cell *matHeaderCellDef>timepoints</th>
+      <th mat-header-cell *matHeaderCellDef>samples</th>
       <td mat-cell *matCellDef="let element">
-        <app-patient-timepoints [samples]="testSamples"></app-patient-timepoints>
+        <app-patient-timepoints [alternateIDs]="element.alternateIdentifier"></app-patient-timepoints>
         <!-- <app-patient-timepoints [samples]="element.associatedSamples"></app-patient-timepoints> -->
         <!-- <mat-chip-list> -->
           <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
