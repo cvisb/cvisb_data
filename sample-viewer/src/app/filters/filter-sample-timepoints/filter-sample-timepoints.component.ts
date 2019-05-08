@@ -21,8 +21,6 @@
     public filterState$ = this.filterSubject.asObservable();
 
 
-    // temp1.facets["privatePatientID.keyword"].terms.forEach(d => d["numTimepoints"] = d["visitCode.keyword"].terms.length)
-
     constructor(
       private filterSvc: FilterTimepointsService,
       private requestSvc: RequestParametersService
@@ -36,7 +34,6 @@
         this.freqDomain = res.map(d => d.term);
       });
 
-      // this.filterHandler({term: 2})
     }
 
     filterHandler(params, filterSvc, requestSvc, endpoint) {

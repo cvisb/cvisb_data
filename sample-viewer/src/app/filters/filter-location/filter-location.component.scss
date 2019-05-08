@@ -1,10 +1,10 @@
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
 
-.NG-icon,
-.SL-icon,
 .GN-icon,
 .LR-icon,
+.NG-icon,
+.SL-icon,
 .unknown-icon {
   width: 30px;
   height: 30px;
@@ -38,6 +38,8 @@
   align-items: center;
   background-color: lighten($grey-200, 10%);
   margin-right: 25px;
+  margin-bottom: 15px;
+
   &:hover {
     background-color: $grey-100;
   }
