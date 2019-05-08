@@ -25,8 +25,6 @@ export class PatientTableComponent implements OnInit {
 
   displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
-  testSamples: Object[] = [{"visitCode": "1", "sampleType": "viralRNA"}, {"visitCode": "1", "sampleType": "PBMC"},{"visitCode": "2", "sampleType": "viralRNA"},{"visitCode": "1", "sampleType": "DNA"}]
-
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
