@@ -57,7 +57,7 @@ export class SampleUploadService {
     // { id: "check_locations", complete: false, label: "Checking location changes", numErrors: null },
   ]
 
-  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "isolationDate", "lab", "numAliquots"];
+  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
 
   // Checks and converts these fields into arrays
   arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier"];
