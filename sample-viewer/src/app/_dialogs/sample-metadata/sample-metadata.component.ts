@@ -18,6 +18,6 @@ export class SampleMetadataComponent {
     @Inject(MAT_DIALOG_DATA) public data: Object) {
     this.sample_vars = Object.keys(this.data);
 
-    this.sample_vars.filter(d => !this.vars2ignore.includes(d));
+    this.sample_vars = this.sample_vars.filter(d => !this.vars2ignore.includes(d));
   }
 }
