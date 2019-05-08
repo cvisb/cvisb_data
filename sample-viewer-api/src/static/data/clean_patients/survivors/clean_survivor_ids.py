@@ -35,7 +35,7 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids["relatedToPrivate"] = ids.sID # create a copy that will be collapsed.
     # group by contact group, create a list, and remove the ID from that row (remove self)
     ids['relatedToPrivate'] = ids.groupby("contactGroupIdentifier")['relatedToPrivate'].transform(listicle)
-    ids['relatedToPrivate'] = ids.apply(lambda x: removeSelfID(x, 'sID'), axis = 1)
+    ids['relatedToPrivate2'] = ids.apply(lambda x: removeSelfID(x, 'relatedToPrivate', 'sID'), axis = 1)
 
 
     # --- Check data is as expected ---
