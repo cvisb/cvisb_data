@@ -32,8 +32,6 @@ export class PatientTimepointsComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();  // <- that will stop propagation on lower layers
 
-    console.log("metadata!")
-    console.log(sample)
     const dialogRef = this.dialog.open(SampleMetadataComponent, {
       width: '450px',
       data: sample
