@@ -161,6 +161,22 @@
   marginality:           required
   authenticated:         true
 
+# sample type: from an acute or survivor patient.
+- "@id":                 cvisb:sampleGroup
+  "@type":               rdf:Property
+  rdfs:comment:          'Sample group type: whether it comes from the *acute* phase while the patient treated in the hospital, or from the *survivor* study where survivors and contacts of the survivors are sampled after the infection.'
+  rdfs:label:            sampleGroup
+  schema:domainIncludes:
+    - "@id":             cvisb:Sample
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  schema:Enumeration:
+                        - acute
+                        - survivor
+
 # sample type
 - "@id":                 cvisb:sampleType
   "@type":               rdf:Property
