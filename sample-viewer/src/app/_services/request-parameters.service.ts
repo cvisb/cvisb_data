@@ -162,7 +162,7 @@ export class RequestParametersService {
 
     if (request_copy && request_copy.length > 0) {
 
-    // Separate out the patientID portion of the params... if they exist.
+      // Separate out the patientID portion of the params... if they exist.
       let patientIdx = request_copy.findIndex(d => d.field === "patientID");
 
       if (patientIdx > -1) {
@@ -195,7 +195,8 @@ export class RequestParametersService {
         }
       }
 
-      param_string = params.join(" AND ");
+      // If there's jsut a patientID string, replace qString with __all__
+      param_string = params.length > 0 ? params.join(" AND ") : "__all__";
     } else {
       param_string = "__all__"
     }
