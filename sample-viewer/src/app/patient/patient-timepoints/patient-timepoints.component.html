@@ -1,5 +1,5 @@
 <div class="container sample-timepoints" *ngIf="samples">
-  <div class="sample" *ngFor="let sample of samples" [matTooltip]="sample.sampleType + ' sample at ' + sample.sampleGroup + ' timepoint ' + sample.visitCode" (click)="showSampleMD(sample)">
+  <div class="sample" *ngFor="let sample of samples" [matTooltip]="sample.sampleType + ' sample at ' + sample.sampleGroup + ' timepoint ' + sample.visitCode" (click)="showSampleMD($event, sample)">
     <span class="sample-type">{{ sample.sampleType }}</span> -
     <span class="sample-timepoint">
       {{ sample.sampleGroup === "acute" ? "G" : "S"}}{{ sample.visitCode }}
