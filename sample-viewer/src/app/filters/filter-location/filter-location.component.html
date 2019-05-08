@@ -1,4 +1,4 @@
-<div class="filter filter-adm0" *ngIf="countries">
+<div class="filter filter-adm0 container-column" *ngIf="countries">
   <h4 class="filter-label">location</h4>
 
   <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.term)" class="location mat-shadow" [ngClass]="ctry.term">
