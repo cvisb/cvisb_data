@@ -365,26 +365,32 @@ export class FilterableHistogramComponent implements OnInit {
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
     // Drag event listeners
-    let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
+    let endDrag = function(xLinear: any, side: string, updateLimits) {
+    // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
-      updateHandles(xLinear, side, filterSubject);
+      updateHandles(xLinear, side, updateLimits);
+      // updateHandles(xLinear, side, filterSubject);
 
       // sendParams(filterSubject, requestSvc, endpoint);
     }
 
-    let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
+    let updateHandles = function(xLinear: any, handleSide: string, updateLimits) {
+    // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
       // convert the pixel position (range value) to data value (domain value)
       // round to the nearest integer to snap to a year.
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
-      // let xValue = Math.round(xScale.invert(d3.event.x));
+      let xValue = Math.round(xScale.invert(d3.event.x));
+      console.log(xValue)
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
+        updateLimits({lower: 0,  upper: xValue, unknown: true});
         // filterSubject.next({ ...filterSubject.value, upper: xValue });
       } else {
+      updateLimits({lower: xValue,  upper: 3000, unknown: true});
         // // Left side updated; lower limit
         // filterSubject.next({ ...filterSubject.value, lower: xValue });
       }
@@ -422,6 +428,8 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
+        .on("start drag", () => updateHandles(this.xLinear, 'right', this.updateLimits))
+        .on("end", () => endDrag(this.xLinear, 'right', this.updateLimits))
         // Update positions on start or drag events
         // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
@@ -435,9 +443,11 @@ export class FilterableHistogramComponent implements OnInit {
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.xLinear, 'left', this.updateLimits))
         // .on("start drag", () => updateHandles(this.xLinear, 'left', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
         // .on("end", () => endDrag(this.xLinear, 'left', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
+        .on("end", () => endDrag(this.xLinear, 'left', this.updateLimits))
       );
 
 
@@ -447,7 +457,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x", this.width + this.margin.betweenGraphs + this.x.bandwidth() * (5 / 8))
       .attr("y", "0.55em")
       .attr("dy", 2)
-      .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
+      // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     // check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
