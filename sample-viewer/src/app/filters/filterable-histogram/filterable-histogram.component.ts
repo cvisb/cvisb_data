@@ -234,7 +234,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.updateData();
     }
 
-    // this.createSlider();
+    this.createSlider();
   }
 
   updateData() {
