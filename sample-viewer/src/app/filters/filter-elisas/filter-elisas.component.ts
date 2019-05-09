@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { RequestParametersService } from '../../_services';
 
@@ -14,30 +14,41 @@ import { RequestParametersService } from '../../_services';
 export class FilterElisasComponent implements OnInit {
   @Input() endpoint: string;
 
-  elisaForm = this.fb.group({
-    Ebola: this.fb.group({
-      IgG_positive: [true],
-      IgG_negative: [true],
-      IgG_unknown: [true],
-      IgM_positive: [true],
-      IgM_negative: [true],
-      IgM_unknown: [true],
-      Ag_positive: [true],
-      Ag_negative: [true],
-      Ag_unknown: [true],
-    }),
+  viruses: string[] = ["Ebola", "Lassa"];
+  assays: string[] = ["IgG", "IgM", "Ag"];
+  results: string[] = ["positive", "negative", "unknown"];
+  timepoints: string[] = ["acute patient enrollment", "survivor enrollment"];
 
-    Lassa: this.fb.group({
-      IgG_positive: [true],
-      IgG_negative: [true],
-      IgG_unknown: [true],
-      IgM_positive: [true],
-      IgM_negative: [true],
-      IgM_unknown: [true],
-      Ag_positive: [true],
-      Ag_negative: [true],
-      Ag_unknown: [true],
-    })
+  elisaForm = this.fb.group({
+    virus: [[], Validators.required],
+    assay: [[], Validators.required],
+    result: [[], Validators.required],
+    timepoint: [[]]
+
+
+    // Ebola: this.fb.group({
+    //   IgG_positive: [true],
+    //   IgG_negative: [true],
+    //   IgG_unknown: [true],
+    //   IgM_positive: [true],
+    //   IgM_negative: [true],
+    //   IgM_unknown: [true],
+    //   Ag_positive: [true],
+    //   Ag_negative: [true],
+    //   Ag_unknown: [true],
+    // }),
+    //
+    // Lassa: this.fb.group({
+    //   IgG_positive: [true],
+    //   IgG_negative: [true],
+    //   IgG_unknown: [true],
+    //   IgM_positive: [true],
+    //   IgM_negative: [true],
+    //   IgM_unknown: [true],
+    //   Ag_positive: [true],
+    //   Ag_negative: [true],
+    //   Ag_unknown: [true],
+    // })
   });
 
 
