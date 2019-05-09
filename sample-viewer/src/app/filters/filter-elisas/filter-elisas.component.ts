@@ -47,7 +47,7 @@ export class FilterElisasComponent implements OnInit {
     this.elisaForm.valueChanges.subscribe(val => {
       console.log(val)
 
-      this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val });
+      this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: [val] });
     })
   }
 

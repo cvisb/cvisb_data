@@ -115,7 +115,7 @@ export class RequestParametersService {
             // https://dev.cvisb.org/api/patient/query?q=(cohort:Lassa)%20OR%20(NOT%20cohort:Lassa)
           };
         } else if (Array.isArray(newParam.value)) {
-          // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
+          // For things like new patient IDs, replace the entire shebang with the new value, since it comes in as an array.
           currentParams[idx].value = newParam.value;
         } else {
           if (Array.isArray(currentParams[idx].value)) {
