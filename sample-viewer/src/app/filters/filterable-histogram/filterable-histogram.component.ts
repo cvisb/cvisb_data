@@ -382,7 +382,7 @@ export class FilterableHistogramComponent implements OnInit {
       // round to the nearest integer to snap to a year.
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
-      let xValue = Math.round(xScale.invert(d3.event.x));
+      // let xValue = Math.round(xScale.invert(d3.event.x));
       console.log(xValue)
 
       // Right side updated; upper limit
