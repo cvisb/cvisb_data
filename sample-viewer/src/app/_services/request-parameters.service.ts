@@ -72,6 +72,7 @@ export class RequestParametersService {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
+        this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
         break;
@@ -199,53 +200,104 @@ export class RequestParametersService {
   }
 
   elisaHandler(param, params) {
-    params = this.handleELISAResultsLoop(param, params, 'Ebola');
-    params = this.handleELISAResultsLoop(param, params, 'Lassa');
+    let elisa_vals = param.value[0];
+    // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
+    if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
+      let elisaparams;
 
+      for (let virus of elisa_vals.virus) {
+        let pairs = [];
+        pairs.push({ field: "elisa.virus", value: virus });
+        for (let assay of elisa_vals.assay) {
+          pairs.push({ field: "elisa.assayType", value: assay });
+
+          // for(let timepoint of param.timepoint){
+          for (let result of elisa_vals.result) {
+            pairs.push({ field: "elisa.ELISAresult", value: result });
+
+            elisaparams = {
+              pairs: pairs,
+              connector: "AND"
+            };
+            // elisaparams.push(
+            //   {
+            //     pairs:
+            //       [{
+            //         pairs: pairs,
+            //         connector: "AND"
+            //       }],
+            //     connector: "OR"
+            //   }
+            // )
+          }
+        }
+      }
+      console.log(this.connectKeyValues(elisaparams))
+
+
+      params.push(this.connectKeyValues(elisaparams));
+    }
     return (params)
   }
 
-  handleELISAResultsLoop(param, params, virus, varName = "elisa") {
-    let virus_obj = param.value[0][virus];
-
-    let virus_keys = Object.keys(virus_obj);
-
-    // Compress each result into a virus:result:assay triple
-    let virus_strings = virus_keys.map(d => {
-      return (this.handleELISAResult(virus_obj, d, virus, varName));
-    })
-    console.log(virus_strings)
-
-    // Join results by OR
-    // Filter out the null results
-    let elisa_result = `${virus_strings.filter(d => d).join(" OR ")}`;
-    if (elisa_result) {
-      params.push(`(${elisa_result})`);
-    }
-
-    console.log(params);
-    return (params)
+  reduceKeyValues(obj): string {
+    return (`${obj.field}:${obj.value}`);
   }
 
-  handleELISAResult(obj, key, virus, varName = "elisa"): string {
-    let result_string: string;
-    let val = obj[key];
+  connectKeyValues(obj): string {
+    console.log(obj)
+    let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
 
-    // For those true values-- the ones that are checked-- compress down to a string
-    if (val) {
-      let [assay, result] = key.split("_");
-      result_string = `${varName}.virus:${virus}`;
-      result_string = `${result_string} AND ${varName}.assayType:${assay}`;
-      result_string = result === "unknown" ? `${result_string} AND -_exists_: ${varName}.ELISAresult` : `${result_string} AND ${varName}.ELISAresult:${result}`;
-
-    }
-    // console.log(result_string)
-    if (result_string) {
-      return (`(${result_string})`);
-    } else {
-      return;
-    }
+    return (`(${pairs.join(` ${obj.connector} `)})`);
   }
+
+  // params = this.handleELISAResultsLoop(param, params, 'Ebola');
+  // params = this.handleELISAResultsLoop(param, params, 'Lassa');
+  //
+  // return (params)
+
+
+  // handleELISAResultsLoop(param, params, virus, varName = "elisa") {
+  //   let virus_obj = param.value[0][virus];
+  //
+  //   let virus_keys = Object.keys(virus_obj);
+  //
+  //   // Compress each result into a virus:result:assay triple
+  //   let virus_strings = virus_keys.map(d => {
+  //     return (this.handleELISAResult(virus_obj, d, virus, varName));
+  //   })
+  //   console.log(virus_strings)
+  //
+  //   // Join results by OR
+  //   // Filter out the null results
+  //   let elisa_result = `${virus_strings.filter(d => d).join(" OR ")}`;
+  //   if (elisa_result) {
+  //     params.push(`(${elisa_result})`);
+  //   }
+  //
+  //   console.log(params);
+  //   return (params)
+  // }
+  //
+  // handleELISAResult(obj, key, virus, varName = "elisa"): string {
+  //   let result_string: string;
+  //   let val = obj[key];
+  //
+  //   // For those true values-- the ones that are checked-- compress down to a string
+  //   if (val) {
+  //     let [assay, result] = key.split("_");
+  //     result_string = `${varName}.virus:${virus}`;
+  //     result_string = `${result_string} AND ${varName}.assayType:${assay}`;
+  //     result_string = result === "unknown" ? `${result_string} AND -_exists_: ${varName}.ELISAresult` : `${result_string} AND ${varName}.ELISAresult:${result}`;
+  //
+  //   }
+  //   // console.log(result_string)
+  //   if (result_string) {
+  //     return (`(${result_string})`);
+  //   } else {
+  //     return;
+  //   }
+  // }
 
 
   defaultHandler(param, params) {

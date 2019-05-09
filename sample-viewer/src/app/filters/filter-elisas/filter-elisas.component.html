@@ -1,7 +1,48 @@
 <div class="filter filter-expts container-column">
   <h4 class="filter-label">ELISA result</h4>
 
-  <form [formGroup]="elisaForm">
+  <form [formGroup]="elisaForm" >
+
+    <mat-form-field class="form-selector" id="elisa-virus">
+      <mat-select placeholder="virus" formControlName="virus" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("virus").value ? elisaForm.get("virus").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let virus of viruses" [value]="virus">{{ virus }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-selector" id="elisa-assay">
+      <mat-select placeholder="assay" formControlName="assay" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("assay").value ? elisaForm.get("assay").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-selector" id="elisa-result">
+      <mat-select placeholder="result" formControlName="result" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("result").value ? elisaForm.get("result").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-selector" id="elisa-timepoint">
+      <mat-select placeholder="timepoint" formControlName="timepoint" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("timepoint").value ? elisaForm.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let timepoint of timepoints" [value]="timepoint">{{ timepoint }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+
+
+  <!-- <form [formGroup]="elisaForm">
     <ng-container *ngFor="let virus of ['Lassa', 'Ebola']">
       <table [formGroupName]="virus">
         <tr>
@@ -86,6 +127,6 @@
       </table>
 
     </ng-container>
-  </form>
+  </form> -->
 
 </div>
