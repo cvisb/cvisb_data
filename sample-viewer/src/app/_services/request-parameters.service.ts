@@ -71,7 +71,9 @@ export class RequestParametersService {
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
-        // console.log(params)
+        console.log(params)
+
+        console.log(this.reduceParams(params))
 
         this.patientParamsSubject.next(params);
         break;
@@ -161,38 +163,21 @@ export class RequestParametersService {
     let request_copy = cloneDeep(request_params);
 
     if (request_copy && request_copy.length > 0) {
-
-      // Separate out the patientID portion of the params... if they exist.
-      let patientIdx = request_copy.findIndex(d => d.field === "patientID");
-
-      if (patientIdx > -1) {
-        let patient_params = request_copy.splice(patientIdx, 1);
-        patient_string = this.patientParams2String(patient_params[0]);
-      } else {
-        patient_string = "";
-      }
-
       // Collapse each parameter down into a parameter string
       for (let param of request_copy) {
-        if (!param.field) {
-          // generic search query; no variable-level searching
-          params.push(param.value);
-        } else {
-          // convert the parameter object into a string and add to array.
-          let new_param = this.params2String(param);
 
-          // console.log(new_param)
-
-          // Check if there's an OR parameter to relate to that property.
-          if (param.orSelector) {
-            let or_param = this.params2String(param.orSelector);
-            new_param = `${new_param} OR ${or_param}`
-            // console.log(or_param)
-            // console.log(new_param)
-
-          }
-          params.push(new_param);
+        switch (param.field) {
+          // Separate out the patientID portion of the params... if they exist.
+          case 'patientID':
+            patient_string = this.patientIDHandler(param);
+            break;
+          case 'elisa':
+            params = this.elisaHandler(param, params);
+            break;
+          default:
+            params = this.defaultHandler(param, params);
         }
+
       }
 
       // If there's jsut a patientID string, replace qString with __all__
@@ -201,7 +186,7 @@ export class RequestParametersService {
       param_string = "__all__"
     }
 
-    // console.log(param_string + patient_string)
+    console.log(param_string + patient_string)
     let http_params = new HttpParams()
       .set('q', param_string)
       .set('patientID', patient_string);
@@ -210,9 +195,88 @@ export class RequestParametersService {
   }
 
   // Function to reduce the patientID query.
-  patientParams2String(param: RequestParam) {
+  patientIDHandler(param: RequestParam) {
     // Must be ampersand, not AND, to append to q string
     return (`\"${param.value.join('","')}\"`);
+  }
+
+  elisaHandler(param, params) {
+    params = this.handleELISAResultsLoop(param, params, 'Ebola');
+    params = this.handleELISAResultsLoop(param, params, 'Lassa');
+
+    return (params)
+  }
+
+  handleELISAResultsLoop(param, params, virus, varName = "elisa") {
+    let virus_obj = param.value[0][virus];
+
+    let virus_keys = Object.keys(virus_obj);
+
+    // Compress each result into a virus:result:assay triple
+    let virus_strings = virus_keys.map(d => {
+      return (this.handleELISAResult(virus_obj, d, virus, varName));
+    })
+    console.log(virus_strings)
+
+    // Join results by OR
+    params.push(`(${virus_strings.join(" OR ")})`);
+    console.log(params);
+
+
+    return (params)
+  }
+
+  handleELISAResults(obj, key, virus, varName = "elisa"): string {
+    let result_string: string;
+    let val = obj[key];
+
+    // For those true values-- the ones that are checked-- compress down to a string
+    if (val) {
+      let [assay, result] = key.split("_");
+      result_string = result === "unknown" ? `-_exists_: ${varName}.ELISAresult` : `ELISAresult:${result}`;
+      result_string = `${result_string} AND ${varName}.virus: ${virus}`;
+      result_string = `${result_string} AND ${varName}.assayType: ${assay}`;
+    }
+    // console.log(result_string)
+    return (`(${result_string})`);
+  }
+
+  handleELISAResult(obj, key, virus, varName = "elisa"): string {
+    let result_string: string;
+    let val = obj[key];
+
+    // For those true values-- the ones that are checked-- compress down to a string
+    if (val) {
+      let [assay, result] = key.split("_");
+      result_string = result === "unknown" ? `-_exists_: ${varName}.ELISAresult` : `ELISAresult:${result}`;
+      result_string = `${result_string} AND ${varName}.virus: ${virus}`;
+      result_string = `${result_string} AND ${varName}.assayType: ${assay}`;
+    }
+    // console.log(result_string)
+    return (`(${result_string})`);
+  }
+
+  defaultHandler(param, params) {
+    if (!param.field) {
+      // generic search query; no variable-level searching
+      params.push(param.value);
+    } else {
+      // convert the parameter object into a string and add to array.
+      let new_param = this.params2String(param);
+
+      console.log(new_param)
+
+      // Check if there's an OR parameter to relate to that property.
+      if (param.orSelector) {
+        let or_param = this.params2String(param.orSelector);
+        new_param = `${new_param} OR ${or_param}`
+        console.log(or_param)
+        console.log(new_param)
+      }
+      params.push(new_param);
+    }
+
+    return (params);
   }
 
   params2String(param: RequestParam) {
