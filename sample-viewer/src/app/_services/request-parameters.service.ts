@@ -71,9 +71,7 @@ export class RequestParametersService {
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
-        console.log(params)
-
-        console.log(this.reduceParams(params))
+        // console.log(params)
 
         this.patientParamsSubject.next(params);
         break;
@@ -226,21 +224,6 @@ export class RequestParametersService {
     return (params)
   }
 
-  handleELISAResults(obj, key, virus, varName = "elisa"): string {
-    let result_string: string;
-    let val = obj[key];
-
-    // For those true values-- the ones that are checked-- compress down to a string
-    if (val) {
-      let [assay, result] = key.split("_");
-      result_string = result === "unknown" ? `-_exists_: ${varName}.ELISAresult` : `ELISAresult:${result}`;
-      result_string = `${result_string} AND ${varName}.virus: ${virus}`;
-      result_string = `${result_string} AND ${varName}.assayType: ${assay}`;
-    }
-    // console.log(result_string)
-    return (`(${result_string})`);
-  }
-
   handleELISAResult(obj, key, virus, varName = "elisa"): string {
     let result_string: string;
     let val = obj[key];
@@ -248,13 +231,15 @@ export class RequestParametersService {
     // For those true values-- the ones that are checked-- compress down to a string
     if (val) {
       let [assay, result] = key.split("_");
-      result_string = result === "unknown" ? `-_exists_: ${varName}.ELISAresult` : `ELISAresult:${result}`;
-      result_string = `${result_string} AND ${varName}.virus: ${virus}`;
-      result_string = `${result_string} AND ${varName}.assayType: ${assay}`;
+      result_string = `${varName}.virus:${virus}`;
+      result_string = `${result_string} AND ${varName}.assayType:${assay}`;
+      result_string = result === "unknown" ? `${result_string} AND -_exists_: ${varName}.ELISAresult` : `${result_string} AND ${varName}.ELISAresult:${result}`;
+
     }
     // console.log(result_string)
     return (`(${result_string})`);
   }
+
 
   defaultHandler(param, params) {
     if (!param.field) {
