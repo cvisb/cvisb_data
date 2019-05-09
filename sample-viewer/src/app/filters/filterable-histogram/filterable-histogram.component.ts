@@ -364,41 +364,41 @@ export class FilterableHistogramComponent implements OnInit {
     // Modified from https://bl.ocks.org/mbostock/6452972
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
-    // // Drag event listeners
-    // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
-    //   // Update the position of the handles, rectangle highlighting.
-    //   updateHandles(xLinear, side, filterSubject);
-    //
-    //   sendParams(filterSubject, requestSvc, endpoint);
-    // }
-    //
-    // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
-    //   d3.event.sourceEvent.stopPropagation();
-    //
-    //   // convert the pixel position (range value) to data value (domain value)
-    //   // round to the nearest integer to snap to a year.
-    //   // After personal testing, I find this behavior to be slightly annoying... smooth feels better
-    //   let xValue = (xLinear.invert(d3.event.x));
-    //   // let xValue = Math.round(xScale.invert(d3.event.x));
-    //
-    //   // Right side updated; upper limit
-    //   if (handleSide === 'right') {
-    //     filterSubject.next({ ...filterSubject.value, upper: xValue });
-    //   } else {
-    //     // // Left side updated; lower limit
-    //     filterSubject.next({ ...filterSubject.value, lower: xValue });
-    //   }
-    // }
-    //
-    // // --- Checkbox for whether to include unknown values.
-    // let checkUnknown = function(filterSubject, requestSvc, endpoint, sendParams) {
-    //   return function(d) {
-    //     // update the status of checkbox
-    //     filterSubject.next({ ...filterSubject.value, unknown: !filterSubject.value.unknown });
-    //
-    //     sendParams(filterSubject, requestSvc, endpoint);
-    //   }
-    // }
+    // Drag event listeners
+    let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
+      // Update the position of the handles, rectangle highlighting.
+      updateHandles(xLinear, side, filterSubject);
+
+      // sendParams(filterSubject, requestSvc, endpoint);
+    }
+
+    let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
+      d3.event.sourceEvent.stopPropagation();
+
+      // convert the pixel position (range value) to data value (domain value)
+      // round to the nearest integer to snap to a year.
+      // After personal testing, I find this behavior to be slightly annoying... smooth feels better
+      let xValue = (xLinear.invert(d3.event.x));
+      // let xValue = Math.round(xScale.invert(d3.event.x));
+
+      // Right side updated; upper limit
+      if (handleSide === 'right') {
+        // filterSubject.next({ ...filterSubject.value, upper: xValue });
+      } else {
+        // // Left side updated; lower limit
+        // filterSubject.next({ ...filterSubject.value, lower: xValue });
+      }
+    }
+
+    // --- Checkbox for whether to include unknown values.
+    let checkUnknown = function(filterSubject, requestSvc, endpoint, sendParams) {
+      return function(d) {
+        // update the status of checkbox
+        // filterSubject.next({ ...filterSubject.value, unknown: !filterSubject.value.unknown });
+
+        // sendParams(filterSubject, requestSvc, endpoint);
+      }
+    }
 
 
     this.slider = this.svg_slider.append("g")
