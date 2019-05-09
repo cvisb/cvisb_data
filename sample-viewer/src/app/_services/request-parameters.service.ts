@@ -217,7 +217,10 @@ export class RequestParametersService {
     console.log(virus_strings)
 
     // Join results by OR
-    params.push(`(${virus_strings.join(" OR ")})`);
+    // Filter out the null results
+    let elisa_result = `(${virus_strings.filter(d => d).join(" OR ")})`;
+
+    params.push(elisa_result);
     console.log(params);
 
 
@@ -237,7 +240,11 @@ export class RequestParametersService {
 
     }
     // console.log(result_string)
-    return (`(${result_string})`);
+    if (result_string) {
+      return (`(${result_string})`);
+    } else {
+      return;
+    }
   }
 
 
