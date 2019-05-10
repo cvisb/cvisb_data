@@ -104,6 +104,10 @@ def checkIDtype(id):
     if(g4_timepoint):
         return("acute", g4_timepoint[1] + "-" + g4_timepoint[2])
 
+    g4dottimepoint = re.search("^(G)(\d\d\d\d)\.(\d)$", id)
+    if(g4dottimepoint):
+        return("acute", g4dottimepoint[1] + "-" + g4dottimepoint[2])
+
     s1 = re.search("^(S\-)(\d)$", id)
     if(s1):
         return("survivor", s1[1] + "00" + s1[2])
