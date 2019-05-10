@@ -5,6 +5,7 @@
 
     <div class="patient-content">
 
+      <!-- NAV: ID + cohort -->
       <div class="patient-header">
         <div class="page-header" [ngClass]="patient.cohort">
           <h1 *ngIf="patient.alternateIdentifier">Patient {{ patient.alternateIdentifier.sort()[0] }}</h1>
@@ -17,6 +18,7 @@
         </div>
       </div>
 
+      <!-- IDS -->
       <div class="container patient-ids">
         <div class="container-column column-left">
           <div class="updated">
@@ -35,14 +37,15 @@
           </div>
         </div>
 
+        <!-- DATES -->
         <div class="container-column column-right">
           <app-patient-dates [patient]="patient"></app-patient-dates>
         </div>
 
       </div>
 
+      <!-- METADATA -->
       <div class="container patient-metadata">
-
         <div class="container-column patient-demographics">
           <app-patient-demographics [patient]="patient"></app-patient-demographics>
           <app-patient-relationships [patient]="patient"></app-patient-relationships>
@@ -58,7 +61,14 @@
 
       </div>
 
+      <!-- CITATIONS -->
+      <div class="patient-citations">
+        <h4 class="patient" id="citations">Cited in</h4>
+        <app-patient-citations [patientID]="patientID"></app-patient-citations>
+      </div>
 
+
+      <!-- DATA -->
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <app-patient-hla [patient]="patient"></app-patient-hla>
