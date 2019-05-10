@@ -2,7 +2,7 @@ import pandas as pd
 import collections
 import numpy as np
 
-def createDict(df, index_col, cols2include = "all"):
+def createDict(df, index_col, cols2include = "all", dropdupes = False):
     """
     Creates dictionary from a DataFrame
     If the index_col is an array, will explode out the values, so there is one row for each instance of the index_col.
@@ -14,10 +14,18 @@ def createDict(df, index_col, cols2include = "all"):
         cols2include.append(index_col)
         cols2include = np.unique(cols2include)
     df = df[cols2include]
+
     if(df[index_col].apply(lambda x: isinstance(x, list)).any()):
         df = explode(df, index_col)
 
     df.rename(index=str, columns = {index_col: "ID"}, inplace = True)
+
+    if(dropdupes):
+        df_orig = len(df)
+        df.drop_duplicates(subset=["ID"], inplace = True)
+        if(df_orig != len(df)):
+            print("\n\n" + str(df_orig - len(df)) + " IDS REMOVED FROM DICTIONARY BECAUSE DUPLICATED!")
+
     df = df.set_index("ID")
 
     return((df, df.to_dict("index")))

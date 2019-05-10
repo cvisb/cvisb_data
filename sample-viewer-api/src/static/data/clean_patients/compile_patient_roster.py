@@ -63,6 +63,8 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
 
     merged['age'] = merged.age.apply(lambda x: fixAge(x))
 
+    merged.to_csv(output_patients + "_ALL.csv", index = False)
+
     # --- export data ---
     # remove any patient IDs that are NA-- no identifier to use!
     # Also removing any row that has an issue that needs to be resolved by Tulane.
@@ -76,7 +78,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     # df2export[export_cols].to_csv(output_patients + ".csv", index = False)
 
     df_dict, _ = helpers.createDict(
-        df2export, "alternateIdentifier", dict_cols)
+        merged, "alternateIdentifier", dict_cols, True)
     df_dict[dict_cols].to_csv(output_patients + "_dict.csv")
     df_dict[dict_cols].to_json(output_patients + "_dict.json")
 
@@ -111,6 +113,9 @@ def cleanup_IDs(df):
     """
     Minor cleanup / merging of various IDs used
     """
+    # indicate the source of the patient data
+    df['_source'] = "Tulane_JS"
+
     # Set the primary public ID
     df['patientID'] = df.apply(assign_publicID, axis=1)
     # Pull out the country name from the country object
