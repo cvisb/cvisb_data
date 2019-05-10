@@ -135,6 +135,20 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the experiment data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
   # versions
 - "@id":                 cvisb:_version
   "@type":               rdf:Property

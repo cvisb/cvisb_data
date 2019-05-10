@@ -327,6 +327,21 @@
   marginality:           required
   authenticated:         false
 
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the data download data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
 # Author
 - "@id":                 cvisb:author
   "@type":               rdf:Property

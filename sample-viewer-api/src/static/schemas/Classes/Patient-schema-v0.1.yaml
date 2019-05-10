@@ -127,6 +127,39 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the patient data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:_source
+  "@type":               rdf:Property
+  rdfs:comment:          Internal tracking of who supplied the patient metadata
+  rdfs:label:            _source
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+  # Suggested but not enforced...
+  # schema:Enumeration:
+  #                        - Tulane_JS
+  #                        - HLA_KG
+  #                        - ViralSeq_RK
+  #                        - Broad_DK
+
   # versions
 - "@id":                 cvisb:_version
   "@type":               rdf:Property

@@ -412,6 +412,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
 
   # versions
 - "@id":                 cvisb:_version

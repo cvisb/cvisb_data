@@ -227,6 +227,20 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the dataset data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
 - "@id":                 cvisb:temporalCoverage
   "@type":               rdf:Property
   rdfs:comment:          The temporalCoverage of a dataset indicates the period that the content applies to, i.e. that it describes, either as a DateTime or as a textual string indicating a time period in ISO 8601 time interval format.
