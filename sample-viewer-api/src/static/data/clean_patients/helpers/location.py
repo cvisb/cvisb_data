@@ -47,12 +47,13 @@ def getCountry(countryID):
     else:
         return()
 
-def getCountryName(countryObj):
+def getCountryName(countryID):
     """
     Pull out the country name from a country object.
     If there's no "name" property in the object, returns null
     """
     try:
+        countryObj = getCountry(countryID)
         return(countryObj['name'])
     except:
         pass
