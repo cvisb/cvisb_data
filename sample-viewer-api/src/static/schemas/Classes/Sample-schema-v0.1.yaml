@@ -172,7 +172,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   schema:Enumeration:
                         - acute
                         - survivor
