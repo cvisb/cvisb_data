@@ -1,7 +1,8 @@
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/cvisb_patient_roster")
-import getHLApatients as hla
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
+
+import cvisb_known_patients.getHLApatients as hla
 
 sample_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/"
 

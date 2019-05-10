@@ -30,7 +30,7 @@ import os as os
 import re
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
 
-output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_PRIVATE"
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_20190510_PRIVATE"
 
 # [1] HLA data
 import cvisb_known_patients.getHLApatients as hla
@@ -40,6 +40,7 @@ hla.hla_df
 hla.hla_df.drop('availableData', axis=1, inplace= True)
 
 df1 = hla.hla_df
+df1.head()
 
 # [2] Systems Serology data
 import cvisb_known_patients.getSerologyPatients as ss
@@ -61,12 +62,18 @@ df6 = bdf
 df7 = wl
 df8 = lsv
 
+# [6] Raphaelle's merged viral sequences from publicly available datasets.
+from cvisb_known_patients.getViralSeqPatients import viralseq
+df9 = viralseq
 
+# [7] Matthias's cleaned and verified list of samples from May 2019, post shipment from KGH.
+from cvisb_known_patients.getSamplesMay2019 import samples
+df10 = samples
 
 # [LAST] Merge together all the patients, and export for John ----------------------------------------------------------------------------------------------------
 # df = pd.merge(df1, df2, how="outer", on=["patientID", "cohort", "outcome"], indicator=True)
 
-df = pd.concat([df1, df2, df3, df4, df5, df6, df7, df8])
+df = pd.concat([df1, df2, df3, df4, df5, df6, df7, df8, df9, df10])
 # df.country = df.country.apply(lambda x: hla.cleanCountry(x))
 
 df.cohort.value_counts()
@@ -194,7 +201,7 @@ patients.country.dataDisagreement.value_counts()
 patients.cohort.dataDisagreement.value_counts()
 patients.outcome.dataDisagreement.value_counts()
 
-patients[patients.outcome.dataDisagreement == True].to_csv("2019-02-05_LSVseq_outcomeDisagreements_PRIVATE.csv")
+patients[patients.outcome.dataDisagreement == True].to_csv("2019-05-10_LSVseq_outcomeDisagreements_PRIVATE.csv")
 
 
 # Reset column names
