@@ -62,4 +62,4 @@ export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outc
 #                'symptoms', 'elisa', 'dateModified']
 
 dict_cols = ["patientID", "gID", "sID",
-             "cohort", "outcome", "age", "gender", "countryName"]
+             "cohort", "outcome", "age", "gender", "countryName", "issue"]
