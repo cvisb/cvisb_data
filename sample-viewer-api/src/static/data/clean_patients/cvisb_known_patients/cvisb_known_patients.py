@@ -86,6 +86,7 @@ df = df[['patientID', 'alternateIdentifier', 'cohort', 'outcome', 'country', 'so
 #
 df.source.value_counts(dropna= False)
 
+
 # hla_df[hla_df.patientID == "SMS7020"]
 # hla_df.to_json(output_file, orient='records')
 # df.drop('_merge', axis=1).to_json(output_file+".json", orient='records')
@@ -156,15 +157,10 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 
 from helpers import interpretID
 
-def getID(row):
-    if row.Gnum == row.Gnum:
-        return(row.Gnum)
-    return(interpretID(row.patientID))
-
 # Find the G-numbers, standardize them.
 df['Gnum'] = df.apply(getG, axis = 1)
 df['allIDs'] = df.apply(combineIDs, axis = 1)
-df['ID'] = df.apply(getID, axis = 1)
+df['ID'] = df.patientID.apply(interpretID)
 
 df.sample(15)
 
@@ -191,7 +187,6 @@ def extendIDs(ids):
     flat_list = [item for sublist in list(ids) for item in sublist]
     return(combine(flat_list))
 
-
 # Combine and aggregate!
 patients = df.groupby(['ID']).agg({'allIDs': extendIDs, 'country': [combine, dataDisagreement], 'cohort': [combine, dataDisagreement], 'outcome': [combine, dataDisagreement], 'source': combine}).reset_index()
 patients.shape
@@ -201,6 +196,7 @@ patients.outcome.dataDisagreement.value_counts()
 
 patients[patients.outcome.dataDisagreement == True].to_csv("2019-05-10_LSVseq_outcomeDisagreements_PRIVATE.csv")
 
+
 # Reset column names
 patients.columns = ['_'.join(tup).rstrip('_').replace('_extendIDs', '').replace('_combine', '') for tup in patients.columns.values]
 patients = patients[['ID', 'allIDs', 'country', 'cohort', 'outcome', 'source']]
@@ -208,8 +204,9 @@ patients.sort_values('ID', inplace = True)
 patients.sample(14)
 
 
-patients[patients.country != 'Nigeria'].drop('country', axis = 1).shape
+
+# patients[patients.country != 'Nigeria'].drop('country', axis = 1).shape
 # Export everything.
 patients.to_json(output_file + ".json", orient='records')
 # Ignore Nigerian samples for John
-patients[patients.country != 'Nigeria'].drop('country', axis = 1).to_csv(output_file+".csv", index = False)
+patients.to_csv(output_file+".csv", index = False)
