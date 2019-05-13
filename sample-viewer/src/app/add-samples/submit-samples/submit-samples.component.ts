@@ -52,7 +52,7 @@ export class SubmitSamplesComponent implements OnInit {
         console.log(resp)
       }, err => {
         this.uploadResponse = "Uh oh. Something went wrong."
-        this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+        this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 samples at a time. It may have worked or not-- be patient and check in a few minutes if your samples have been added. Sorry I can't be more helpful. :("
 
         this.errorObj = err.error.error_list;
 
