@@ -117,19 +117,19 @@ def getG(df):
 
 def findG(x):
     if x == x:
-        hyphenated = re.search("G\-[0-9][0-9][0-9][0-9]", x)
+        hyphenated = re.search("^G\-[0-9][0-9][0-9][0-9]$", x)
         if hyphenated:
             return(hyphenated[0])
 
-        nohyphen = re.search("G[0-9][0-9][0-9][0-9]", x)
+        nohyphen = re.search("^G[0-9][0-9][0-9][0-9]$", x)
         if nohyphen:
             return(nohyphen[0].replace("G", "G-"))
 
-        shorthyphenated = re.search("G\-[0-9][0-9][0-9]", x)
+        shorthyphenated = re.search("^G\-[0-9][0-9][0-9]$", x)
         if shorthyphenated:
             return(shorthyphenated[0])
 
-        shortnohyphen = re.search("G[0-9][0-9][0-9]", x)
+        shortnohyphen = re.search("^G[0-9][0-9][0-9]$", x)
         if shortnohyphen:
             return(shortnohyphen[0].replace("G", "G-"))
     return(pd.np.nan)
@@ -192,8 +192,6 @@ def extendIDs(ids):
     return(combine(flat_list))
 
 
-
-df.ID.value_counts()
 # Combine and aggregate!
 patients = df.groupby(['ID']).agg({'allIDs': extendIDs, 'country': [combine, dataDisagreement], 'cohort': [combine, dataDisagreement], 'outcome': [combine, dataDisagreement], 'source': combine}).reset_index()
 patients.shape
@@ -202,7 +200,6 @@ patients.cohort.dataDisagreement.value_counts()
 patients.outcome.dataDisagreement.value_counts()
 
 patients[patients.outcome.dataDisagreement == True].to_csv("2019-05-10_LSVseq_outcomeDisagreements_PRIVATE.csv")
-
 
 # Reset column names
 patients.columns = ['_'.join(tup).rstrip('_').replace('_extendIDs', '').replace('_combine', '') for tup in patients.columns.values]
