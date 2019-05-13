@@ -19,7 +19,7 @@ cols2save = ['patientID', 'cohort', 'outcome', 'country', 'source']
 
 # [clean ebola]  ----------------------------------------------------------------------------------------------------
 ebv['cohort'] = "Ebola"
-ebv['source'] = "ViralSeq_Raphaelle_02262019"
+ebv['source'] = "ViralSeq_Raphaelle_EBV02262019"
 ebv['outcome_input'] = ebv.outcome
 ebv['outcome'] = ebv.outcome_input.apply(helpers.cleanOutcome)
 ebv['country'] = ebv.country.apply(helpers.getCountryName)
@@ -27,11 +27,14 @@ ebv['patientID'] = ebv.sample_id.apply(helpers.interpretID)
 
 
 ebv = ebv[cols2save]
+ebv['kgh']= ebv.patientID.apply(helpers.checkIDstructure).apply(lambda x: not x)
+
+ebv.kgh.value_counts()
 
 
 # [clean lassa]  ----------------------------------------------------------------------------------------------------
 lsv['cohort'] = "Lassa"
-lsv['source'] = "ViralSeq_Raphaelle_04112019"
+lsv['source'] = "ViralSeq_Raphaelle_LSV04112019"
 
 lsv['outcome_input'] = lsv.outcome
 lsv['outcome'] = lsv.outcome_input.apply(helpers.cleanOutcome)
