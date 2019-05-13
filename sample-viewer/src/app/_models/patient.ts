@@ -57,7 +57,7 @@ export class PatientDownload {
 
   constructor(patient: Patient) {
     this.patientID = patient.patientID;
-    this.alternateIdentifier = patient.alternateIdentifier.join(", ");
+    this.alternateIdentifier = patient.alternateIdentifier ? patient.alternateIdentifier.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
     this.country = patient.country['name'];
