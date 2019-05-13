@@ -64,7 +64,7 @@ export class PatientDownload {
     this.gender = patient.gender;
     this.age = patient.age;
     this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
-    this.relatedTo = patient.relatedTo.join(", ");
+    this.relatedTo = patient.relatedTo ? patient.relatedTo.join(", ") : null;
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
 
