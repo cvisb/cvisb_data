@@ -50,7 +50,7 @@ export_weirdos, export_id_weirdos, dateModified = datetime.today().strftime('%Y-
     df_merged = mergePublicIDs(df, id_filename, dateModified)
 
     # --- Export all values ---
-    id_cols = ["gid", "Original G No.", "Study Specific #", "infectionYear", "hasPatientData", "issue"]
+    id_cols = ["gID", "gid", "Original G No.", "Study Specific #", "infectionYear", "hasPatientData", "issue"]
 
     # --- Export weird values ---
     weirdos = df_merged.loc[df_merged.issue == df_merged.issue, id_cols]
