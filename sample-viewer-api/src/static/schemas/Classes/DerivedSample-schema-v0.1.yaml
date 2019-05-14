@@ -84,7 +84,6 @@
   schema:domainIncludes:
     - "@id":                 cvisb:DerivedSample
   schema:rangeIncludes:
-    - "@id":                 schema:Date
     - "@id":                 cvisb:DateRange
   owl:cardinality:           one
   marginality:               recommended
