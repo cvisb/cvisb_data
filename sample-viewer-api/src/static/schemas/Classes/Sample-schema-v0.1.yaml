@@ -155,12 +155,12 @@
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
-    - "@id":
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           required
   authenticated:         true
 
-# sample type: from an acute or survivor patient.
+# sample type:           from an acute or survivor patient.
 - "@id":                 cvisb:sampleGroup
   "@type":               rdf:Property
   rdfs:comment:          'Sample group type: whether it comes from the *acute* phase while the patient treated in the hospital, or from the *survivor* study where survivors and contacts of the survivors are sampled after the infection.'
@@ -328,62 +328,62 @@
   #                       - "Tulane-Schieffelin"
   #                       - "Tulane-Garry"
 
-# - "@id":                 cvisb:numAliquots
-#   "@type":               rdf:Property
-#   rdfs:comment:          Number of aliquots for a particular sampleID at a particular lab location. If sample has been used up, numAliquots = 0
-#   rdfs:label:            numAliquots
+# - "@id":               cvisb:numAliquots
+#   "@type":             rdf:Property
+#   rdfs:comment:        Number of aliquots for a particular sampleID at a particular lab location. If sample has been used up, numAliquots = 0
+#   rdfs:label:          numAliquots
 #   schema:domainIncludes:
-#     - "@id":             cvisb:Sample
+#     - "@id":           cvisb:Sample
 #   schema:rangeIncludes:
-#     - "@id":             schema:Integer
-#   owl:cardinality:       one
-#   marginality:           required
+#     - "@id":           schema:Integer
+#   owl:cardinality:     one
+#   marginality:         required
 #
 #
 # # sample physical location
-# - "@id":                 cvisb:freezerID
-#   "@type":               rdf:Property
-#   rdfs:comment:          Freezer in which the sample is located within the lab.
-#   rdfs:label:            freezerID
+# - "@id":               cvisb:freezerID
+#   "@type":             rdf:Property
+#   rdfs:comment:        Freezer in which the sample is located within the lab.
+#   rdfs:label:          freezerID
 #   schema:domainIncludes:
-#     - "@id":             cvisb:Sample
+#     - "@id":           cvisb:Sample
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           optional
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         optional
 #
-# - "@id":                 cvisb:freezerRack
-#   "@type":               rdf:Property
-#   rdfs:comment:          Rack in the freezer in which the sample is located within the lab.
-#   rdfs:label:            freezerRack
+# - "@id":               cvisb:freezerRack
+#   "@type":             rdf:Property
+#   rdfs:comment:        Rack in the freezer in which the sample is located within the lab.
+#   rdfs:label:          freezerRack
 #   schema:domainIncludes:
-#     - "@id":             cvisb:Sample
+#     - "@id":           cvisb:Sample
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           optional
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         optional
 #
-# - "@id":                 cvisb:freezerBox
-#   "@type":               rdf:Property
-#   rdfs:comment:          Box in the rack/freezer in which the sample is located within the lab.
-#   rdfs:label:            freezerBox
+# - "@id":               cvisb:freezerBox
+#   "@type":             rdf:Property
+#   rdfs:comment:        Box in the rack/freezer in which the sample is located within the lab.
+#   rdfs:label:          freezerBox
 #   schema:domainIncludes:
-#     - "@id":             cvisb:Sample
+#     - "@id":           cvisb:Sample
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           optional
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         optional
 #
-# - "@id":                 cvisb:freezerBoxCell
-#   "@type":               rdf:Property
-#   rdfs:comment:          Cell within the freezer box in which the sample is located within the lab, for example "C12".
-#   rdfs:label:            freezerBoxCell
+# - "@id":               cvisb:freezerBoxCell
+#   "@type":             rdf:Property
+#   rdfs:comment:        Cell within the freezer box in which the sample is located within the lab, for example "C12".
+#   rdfs:label:          freezerBoxCell
 #   schema:domainIncludes:
-#     - "@id":             cvisb:Sample
+#     - "@id":           cvisb:Sample
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           optional
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         optional
 
 
 # when updated
@@ -394,7 +394,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
-    - "@id":
+    - "@id":             schema:Date
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one
