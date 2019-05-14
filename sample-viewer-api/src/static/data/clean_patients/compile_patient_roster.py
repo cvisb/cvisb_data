@@ -55,14 +55,6 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     # --- concat together all data and assign primary patient ids ---
     merged = merge_patients(acuteLassa, acuteEbola, survivorsAll)
 
-
-    def fixAge(x):
-        if(x == x):
-            return(round(x))
-
-
-    merged['age'] = merged.age.apply(lambda x: fixAge(x))
-
     merged.to_csv(output_patients + "_ALL.csv", index = False)
 
     # --- export data ---
@@ -104,12 +96,12 @@ def merge_patients(acuteLassa, acuteEbola, survivorsAll):
 
     merged = merge_function(acute, survivorsAll)
 
-    merged = cleanup_IDs(merged)
+    merged = cleanup_merged(merged)
 
     return(merged)
 
 
-def cleanup_IDs(df):
+def cleanup_merged(df):
     """
     Minor cleanup / merging of various IDs used
     """
@@ -130,6 +122,10 @@ def cleanup_IDs(df):
     df['alternateIdentifier'] = None # necessary to initialize, b/c there's an uneven number of IDs for each patient returned
     df['alternateIdentifier'] = df.apply(
         lambda x: helpers.combineIDs(x), axis=1)
+
+    # Fix dates to date ranges
+    df['infectionDate'] = df.infectionDate.apply(helpers.date2Range)
+    df['infectionYear'] = df.infectionYear.apply(helpers.year2Range)
 
     df = helpers.idDupes(df, idCol="patientID", errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
 
