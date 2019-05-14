@@ -34,3 +34,4 @@ sample-viewer-api/src/static/data/**/*.json
 notes/*.md
 notes/wordpress_css_link_underline.css
 sample-viewer-api/src/static/data/clean_samples/exploratory_scripts/2019-05-06_prioritize4briney.py
+sample-viewer-api/src/static/data/clean_patients/exploratory_scripts/2019-05-14_acuteEbola_dylanExploration.R
