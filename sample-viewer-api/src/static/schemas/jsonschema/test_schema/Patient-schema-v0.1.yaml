@@ -1,4 +1,4 @@
-# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+ # Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
 # Schema built on top of https://schema.org/Patient
 # Verified structure using:
 #
@@ -29,7 +29,7 @@
     "@id":               health:Patient
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-  root_entity:           true
+
 
 # identifier
 - "@id":                 cvisb:patientID
@@ -127,6 +127,39 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the patient data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:_source
+  "@type":               rdf:Property
+  rdfs:comment:          Internal tracking of who supplied the patient metadata
+  rdfs:label:            _source
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+  # Suggested but not enforced...
+  # schema:Enumeration:
+  #                        - Tulane_JS
+  #                        - HLA_KG
+  #                        - ViralSeq_RK
+  #                        - Broad_DK
+
   # versions
 - "@id":                 cvisb:_version
   "@type":               rdf:Property
@@ -145,7 +178,7 @@
 # Main cohort
 - "@id":                 cvisb:cohort
   "@type":               rdf:Property
-  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or Control"
+  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for."
   rdfs:label:            cohort
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -157,12 +190,13 @@
                          - Ebola
                          - Lassa
                          - control
+                         - Unknown
   authenticated:         false
 
 # Outcome cohort
 - "@id":                 cvisb:outcome
   "@type":               rdf:Property
-  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead"
+  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead, or unknown."
   rdfs:label:            outcome
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -216,7 +250,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    #- "@id":             schema:Date
     - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
@@ -225,7 +259,7 @@
 # Approximate year of infection
 - "@id":                 cvisb:infectionYear
   "@type":               rdf:Property
-  rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.
+  rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.
   rdfs:label:            infectionDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -249,11 +283,50 @@
   marginality:           optional
   authenticated:         true
 
+# Date of first evaluation
+- "@id":                 cvisb:evalDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of first evaluation within the hospital
+  rdfs:label:            evalDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+# Date of discharge from the hospital
+- "@id":                 cvisb:dischargeDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of discharge from the hospital
+  rdfs:label:            dischargeDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 # time from onset of symptoms
 - "@id":                 cvisb:daysOnset
   "@type":               rdf:Property
-  rdfs:comment:          Number of days between onset of symptoms and hospital admission
+  rdfs:comment:          Number of days between onset of symptoms and hospital admission, as self-reported
   rdfs:label:            daysOnset
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+# time in the hospital
+- "@id":                 cvisb:daysInHospital
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between first evaluation and discharge or death
+  rdfs:label:            daysInHospital
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
@@ -295,6 +368,18 @@
   marginality:           optional
   authenticated:         false
 
+- "@id":                 cvisb:relatedToPrivate
+  "@type":               rdf:Property
+  rdfs:comment:          A list of related household contacts's private patientIDs
+  rdfs:label:            relatedToPrivate
+  schema:domainIncludes:
+    - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
 - "@id":                 cvisb:exposureType
   "@type":               rdf:Property
   rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.
@@ -327,7 +412,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Integer
+    - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
   minimum:               1

@@ -11,9 +11,7 @@
     $schema: http://json-schema.org/draft-04/schema#
     properties:
       symptoms:
-        items:
-        - $ref: http://dev.cvisb.org/jsonschema/Symptom.json
-        type: array
+        $ref: http://dev.cvisb.org/jsonschema/Symptom.json
       timepoint:
         type: string
     required:
@@ -36,7 +34,7 @@
   '@type': rdf:Property
   authenticated: false
   marginality: required
-  owl:cardinality: many
+  owl:cardinality: one
   rdfs:comment: Array of symptoms observed in or reported by the patient at the timepoint.
   rdfs:label: symptoms
   schema:domainIncludes:
