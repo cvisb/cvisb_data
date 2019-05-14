@@ -112,6 +112,7 @@ def calcOnsetDischargeGap(row):
 
 def date2Range(date_string):
     return({"gte": date_string, "lte": date_string})
-
 def year2Range(year):
-    return({"gte": f"{year}-01-01", "lte": f"{year}-12-31"})
+    if(year == year):
+        year_string = "{:.0f}".format(year)
+        return({"gte": f"{year_string}-01-01", "lte": f"{year_string}-12-31"})
