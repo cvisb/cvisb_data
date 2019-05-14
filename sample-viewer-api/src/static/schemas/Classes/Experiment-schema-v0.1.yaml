@@ -58,6 +58,20 @@
   marginality:           recommended
   authenticated:         false
 
+# NCBI_ID
+- "@id":                 cvisb:NCBI_ID
+  "@type":               rdf:Property
+  rdfs:comment:          ID used by the National Center for Biotechnology Information (NCBI) to identify the experimental measurement, typically an accession number
+  rdfs:label:            NCBI_ID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 # name
 - "@id":                 cvisb:name
   "@type":               rdf:Property
