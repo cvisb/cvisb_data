@@ -185,7 +185,7 @@
   schema:sameAs:
     "@id":               schema:measurementTechnique
   owl:cardinality:       many
-  marginality:           recommended
+  marginality:           required
   authenticated:         false
   schema:Enumeration:
                            - HLA sequencing

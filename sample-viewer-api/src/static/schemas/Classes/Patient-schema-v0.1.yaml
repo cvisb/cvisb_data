@@ -289,7 +289,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             
+    - "@id":
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -351,6 +351,7 @@
                          - Male
                          - Female
                          - Unknown
+                         - null
   authenticated:         false
 
 # contacts:
