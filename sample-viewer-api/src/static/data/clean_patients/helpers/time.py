@@ -108,3 +108,10 @@ def calcOnsetDischargeGap(row):
     if((row.converted_onsetDate == row.converted_onsetDate) & (row.converted_dischargeDate == row.converted_dischargeDate)):
         return((row.converted_dischargeDate - row.converted_onsetDate).days)
     return(None)
+
+
+def date2Range(date_string):
+    return({"gte": date_string, "lte": date_string})
+
+def year2Range(year):
+    return({"gte": f"{year}-01-01", "lte": f"{year}-12-31"})
