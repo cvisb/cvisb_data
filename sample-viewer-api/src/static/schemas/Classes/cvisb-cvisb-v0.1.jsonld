@@ -960,7 +960,7 @@
           "@id": "schema:Date"
         },
         {
-          "@id": "cvsib:DateRange"
+          "@id": "cvisb:DateRange"
         }
       ],
       "owl:cardinality": "one",
@@ -1382,7 +1382,7 @@
           "@id": "schema:Date"
         },
         {
-          "@id": "cvsib:DateRange"
+          "@id": "cvisb:DateRange"
         }
       ],
       "owl:cardinality": "one",

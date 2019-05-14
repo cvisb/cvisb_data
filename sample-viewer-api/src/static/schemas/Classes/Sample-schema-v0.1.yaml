@@ -155,7 +155,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
-    - "@id":             cvsib:DateRange
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           required
   authenticated:         true
