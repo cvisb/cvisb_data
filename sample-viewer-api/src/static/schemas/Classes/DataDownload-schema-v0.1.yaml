@@ -151,6 +151,7 @@
   schema:Enumeration:
                         - SRA
                         - AWS
+                        - null
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
@@ -283,6 +284,7 @@
                          - application/xml
                          - application/zip
                          - application/gzip
+                         - null
   authenticated:         false
 
 # dates

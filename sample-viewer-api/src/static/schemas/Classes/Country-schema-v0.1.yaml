@@ -43,12 +43,13 @@
   schema:sameAs:
     "@id":               schema:identifier
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   schema:Enumeration:
                           - SL
                           - NG
                           - LR
                           - GN
+                          - null
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -68,6 +69,7 @@
                           - https://www.iso.org/obp/ui/#iso:code:3166:NG
                           - https://www.iso.org/obp/ui/#iso:code:3166:LR
                           - https://www.iso.org/obp/ui/#iso:code:3166:GN
+                          - null
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -81,7 +83,7 @@
   schema:sameAs:
     "@id":               schema:name
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
   schema:Enumeration:
                           - Sierra Leone
                           - Nigeria

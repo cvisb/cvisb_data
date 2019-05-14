@@ -66,6 +66,7 @@
   schema:Enumeration:
                         - phagocytic score
                         - C3 deposition MFI
+                        - null
   authenticated:         false
 
 - "@id":                 cvisb:sampleDilution
