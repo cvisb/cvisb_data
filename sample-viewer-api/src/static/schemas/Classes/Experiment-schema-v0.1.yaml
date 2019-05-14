@@ -112,7 +112,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             schema:Date
     - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           required
@@ -142,7 +141,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one

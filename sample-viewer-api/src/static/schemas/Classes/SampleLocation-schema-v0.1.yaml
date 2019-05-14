@@ -117,7 +117,7 @@
 #   schema:domainIncludes:
 #     - "@id":             cvisb:SampleLocation
 #   schema:rangeIncludes:
-#     - "@id":             schema:Date
+#     - "@id":             cvisb:DateRange
 #   schema:sameAs:
 #     "@id":               "schema:dateModified"
 #   owl:cardinality:       one

@@ -120,7 +120,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    "@id":               schema:Date
+    "@id":               cvisb:DateRange
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one
@@ -250,7 +250,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
     - "@id":             cvsib:DateRange
   owl:cardinality:       one
   marginality:           optional
@@ -277,7 +276,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
     - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
@@ -291,7 +289,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -304,7 +302,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true

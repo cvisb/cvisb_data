@@ -96,7 +96,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:rangeIncludes:
-    - "@id":             schema:Date
+    - "@id":             cvisb:DateRange
   schema:sameAs:
     "@id":               schema:datePublished
   owl:cardinality:       one
