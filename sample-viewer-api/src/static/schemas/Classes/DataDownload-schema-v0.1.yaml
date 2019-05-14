@@ -228,19 +228,6 @@
   marginality:           recommended
   authenticated:         false
 
-# patient ID list
-- "@id":                 cvisb:patientIDs
-  "@type":               rdf:Property
-  rdfs:comment:          List of patient IDs contained within the data file
-  rdfs:label:            patientIDs
-  schema:domainIncludes:
-    - "@id":             cvisb:DataDownload
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
 
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
