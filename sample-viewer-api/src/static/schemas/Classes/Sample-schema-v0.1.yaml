@@ -151,11 +151,11 @@
 - "@id":                 cvisb:isolationDate
   "@type":               rdf:Property
   rdfs:comment:          "Date of sample creation/collection (NOT date of blood draw/tissue collection, unless the sample is that primary sample) (YYYY-MM-DD)"
-  rdfs:label:            visitCode
+  rdfs:label:            isolationDate
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":
   owl:cardinality:       one
   marginality:           required
   authenticated:         true
@@ -392,7 +392,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one

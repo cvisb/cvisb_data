@@ -107,12 +107,12 @@
 # date
 - "@id":                 cvisb:experimentDate
   "@type":               rdf:Property
-  rdfs:comment:          Date or Date range of the Experiment
+  rdfs:comment:          Date of the Experiment
   rdfs:label:            experimentDate
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
@@ -141,7 +141,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":             schema:Date
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one

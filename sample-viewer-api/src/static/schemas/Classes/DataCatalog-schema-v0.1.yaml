@@ -178,7 +178,7 @@
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
   schema:rangeIncludes:
-    "@id":                 cvisb:DateRange
+    "@id":                 schema:Date
   schema:sameAs:
     "@id":                 "schema:datePublished"
   owl:cardinality:         one
@@ -193,7 +193,7 @@
   schema:domainIncludes:
     - "@id":               cvisb:DataCatalog
   schema:rangeIncludes:
-    "@id":                 cvisb:DateRange
+    "@id":                 schema:Date
   schema:sameAs:
     "@id":                 "schema:dateModified"
   owl:cardinality:         one
