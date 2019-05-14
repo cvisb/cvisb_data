@@ -10,7 +10,7 @@
   validation:
     $schema: http://json-schema.org/draft-04/schema#
     properties:
-      ebola_Ag:
+      ELISAresult:
         enum:
         - positive
         - negative
@@ -18,54 +18,69 @@
         oneOf:
         - type: string
         - type: 'null'
-      ebola_IgG:
+      ELISAvalue:
+        oneOf:
+        - type: number
+        - type: 'null'
+      assayType:
         enum:
-        - positive
-        - negative
-        - indeterminate
+        - IgG
+        - IgM
+        - Ag
+        type: string
+      sampleID:
         oneOf:
         - type: string
         - type: 'null'
-      ebola_IgM:
-        enum:
-        - positive
-        - negative
-        - indeterminate
+      timepoint:
         oneOf:
         - type: string
         - type: 'null'
-      lassa_Ag:
+      virus:
         enum:
-        - positive
-        - negative
-        - indeterminate
-        oneOf:
-        - type: string
-        - type: 'null'
-      lassa_IgG:
-        enum:
-        - positive
-        - negative
-        - indeterminate
-        oneOf:
-        - type: string
-        - type: 'null'
-      lassa_IgM:
-        enum:
-        - positive
-        - negative
-        - indeterminate
-        oneOf:
-        - type: string
-        - type: 'null'
+        - Ebola
+        - Lassa
+        type: string
+    required:
+    - virus
+    - assayType
     type: object
-- '@id': cvisb:ebola_IgG
+- '@id': cvisb:virus
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: Virus tested in ELISA (Ebola or Lassa)
+  rdfs:label: virus
+  schema:Enumeration:
+  - Ebola
+  - Lassa
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:assayType
+  '@type': rdf:Property
+  authenticated: false
+  marginality: required
+  owl:cardinality: one
+  rdfs:comment: 'Type of ELISA: IgG, IgM, or Ag'
+  rdfs:label: assayType
+  schema:Enumeration:
+  - IgG
+  - IgM
+  - Ag
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Text
+- '@id': cvisb:ELISAresult
   '@type': rdf:Property
   authenticated: false
   marginality: recommended
   owl:cardinality: one
-  rdfs:comment: Result of Ebola IgG ELISA, either positive/negative/indeterminate
-  rdfs:label: ebola_IgG
+  rdfs:comment: Result of ELISA, either positive/negative/indeterminate
+  rdfs:label: ELISAresult
   schema:Enumeration:
   - positive
   - negative
@@ -74,77 +89,36 @@
   - '@id': cvisb:ELISA
   schema:rangeIncludes:
   - '@id': schema:Text
-- '@id': cvisb:ebola_IgM
+- '@id': cvisb:ELISAvalue
   '@type': rdf:Property
   authenticated: false
   marginality: recommended
   owl:cardinality: one
-  rdfs:comment: Result of Ebola IgM ELISA, either positive/negative/indeterminate
-  rdfs:label: ebola_IgM
-  schema:Enumeration:
-  - positive
-  - negative
-  - indeterminate
+  rdfs:comment: Result of ELISA, as a quantitative calibrated value
+  rdfs:label: ELISAvalue
+  schema:domainIncludes:
+  - '@id': cvisb:ELISA
+  schema:rangeIncludes:
+  - '@id': schema:Number
+- '@id': cvisb:sampleID
+  '@type': rdf:Property
+  authenticated: true
+  marginality: optional
+  owl:cardinality: one
+  rdfs:comment: sampleID associated with the ELISA measurement
+  rdfs:label: sampleID
   schema:domainIncludes:
   - '@id': cvisb:ELISA
   schema:rangeIncludes:
   - '@id': schema:Text
-- '@id': cvisb:ebola_Ag
+- '@id': cvisb:timepoint
   '@type': rdf:Property
   authenticated: false
-  marginality: recommended
+  marginality: optional
   owl:cardinality: one
-  rdfs:comment: Result of Ebola Ag ELISA, either positive/negative/indeterminate
-  rdfs:label: ebola_Ag
-  schema:Enumeration:
-  - positive
-  - negative
-  - indeterminate
-  schema:domainIncludes:
-  - '@id': cvisb:ELISA
-  schema:rangeIncludes:
-  - '@id': schema:Text
-- '@id': cvisb:lassa_IgG
-  '@type': rdf:Property
-  authenticated: false
-  marginality: recommended
-  owl:cardinality: one
-  rdfs:comment: Result of Lassa IgG ELISA, either positive/negative/indeterminate
-  rdfs:label: lassa_IgG
-  schema:Enumeration:
-  - positive
-  - negative
-  - indeterminate
-  schema:domainIncludes:
-  - '@id': cvisb:ELISA
-  schema:rangeIncludes:
-  - '@id': schema:Text
-- '@id': cvisb:lassa_IgM
-  '@type': rdf:Property
-  authenticated: false
-  marginality: recommended
-  owl:cardinality: one
-  rdfs:comment: Result of Lassa IgM ELISA, either positive/negative/indeterminate
-  rdfs:label: lassa_IgM
-  schema:Enumeration:
-  - positive
-  - negative
-  - indeterminate
-  schema:domainIncludes:
-  - '@id': cvisb:ELISA
-  schema:rangeIncludes:
-  - '@id': schema:Text
-- '@id': cvisb:lassa_Ag
-  '@type': rdf:Property
-  authenticated: false
-  marginality: recommended
-  owl:cardinality: one
-  rdfs:comment: Result of Lassa Ag ELISA, either positive/negative/indeterminate
-  rdfs:label: lassa_Ag
-  schema:Enumeration:
-  - positive
-  - negative
-  - indeterminate
+  rdfs:comment: description of the time at which the ELISA was taken, e.g. at patient
+    presentation, survivor enrollment etc.
+  rdfs:label: timepoint
   schema:domainIncludes:
   - '@id': cvisb:ELISA
   schema:rangeIncludes:

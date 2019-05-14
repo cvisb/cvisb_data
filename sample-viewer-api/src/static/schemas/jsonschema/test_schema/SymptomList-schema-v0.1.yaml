@@ -49,6 +49,6 @@
     - "@id":             cvisb:SymptomList
   schema:rangeIncludes:
     - "@id":             cvisb:Symptom
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
   authenticated:         false

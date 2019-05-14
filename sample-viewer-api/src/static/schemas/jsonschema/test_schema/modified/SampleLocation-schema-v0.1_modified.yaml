@@ -10,9 +10,6 @@
   validation:
     $schema: http://json-schema.org/draft-04/schema#
     properties:
-      dateModified:
-        format: cvisb-date
-        type: string
       freezerBox:
         oneOf:
         - type: string
@@ -41,14 +38,9 @@
         type: string
       numAliquots:
         type: integer
-      updatedBy:
-        oneOf:
-        - type: string
-        - type: 'null'
     required:
     - lab
     - numAliquots
-    - dateModified
     type: object
 - '@id': cvisb:lab
   '@type': rdf:Property
@@ -121,27 +113,4 @@
   schema:domainIncludes:
   - '@id': cvisb:SampleLocation
   schema:rangeIncludes:
-  - '@id': schema:Text
-- '@id': cvisb:dateModified
-  '@type': rdf:Property
-  marginality: required
-  owl:cardinality: one
-  rdfs:comment: Date of last update (YYYY-MM-DD)
-  rdfs:label: dateModified
-  schema:domainIncludes:
-  - '@id': cvisb:SampleLocation
-  schema:rangeIncludes:
-  - '@id': schema:Date
-  schema:sameAs:
-    '@id': schema:dateModified
-- '@id': cvisb:updatedBy
-  '@type': rdf:Property
-  marginality: recommended
-  owl:cardinality: one
-  rdfs:comment: Person who updated the sample location
-  rdfs:label: updatedBy
-  schema:domainIncludes:
-  - '@id': cvisb:SampleLocation
-  schema:rangeIncludes:
-  - '@id': xsd:string
   - '@id': schema:Text

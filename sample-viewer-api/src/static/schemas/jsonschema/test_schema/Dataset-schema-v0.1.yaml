@@ -35,7 +35,7 @@
     "@id":               schema:Dataset
   schema:isPartOf:
     "@id":               http://schema.cvisb.org
-  root_entity:           true
+
 
 # name
 - "@id":                 cvisb:name
@@ -226,6 +226,20 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the dataset data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:temporalCoverage
   "@type":               rdf:Property

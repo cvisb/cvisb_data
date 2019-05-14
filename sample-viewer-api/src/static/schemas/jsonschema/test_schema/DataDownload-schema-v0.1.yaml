@@ -30,7 +30,7 @@
     "@id":               schema:DataDownload
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-  root_entity:           true
+
 # name
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -149,13 +149,13 @@
   owl:cardinality:       one
   marginality:           recommended
   schema:Enumeration:
-  - SRA
-  - AWS
+                        - SRA
+                        - AWS
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
   "@type":               rdf:Property
-  rdfs:comment:          Unique identifier used at the contentUrl location, for instance the NIH SRA id for the file
+  rdfs:comment:          Unique identifier used at the contentUrl location, for instance the NIH SRA id for the file/sample or Accession number
   rdfs:label:            contentUrlIdentifier
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -165,6 +165,20 @@
   marginality:           recommended
   authenticated:         false
 
+
+- "@id":                 cvisb:publication
+  "@type":               rdf:Property
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:label:            publication
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:sameAs:
+    "@id":               schema:publication
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
 
 # duplicate source
 - "@id":                 cvisb:sameAs
@@ -326,6 +340,21 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the data download data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
 
 # Author
 - "@id":                 cvisb:author
