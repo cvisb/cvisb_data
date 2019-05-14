@@ -15,9 +15,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/AdministrativeArea/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/AdministrativeArea/0.1"
 
 # "@graph":
 - "@id":                 cvisb:AdministrativeArea
