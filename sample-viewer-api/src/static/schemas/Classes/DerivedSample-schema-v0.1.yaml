@@ -82,7 +82,7 @@
   rdfs:comment:              "Date of *primary* sample creation/collection (e.g. blood draw, tissue sample, urine/feces collection) (YYYY-MM-DD)"
   rdfs:label:                primarySampleDate
   schema:domainIncludes:
-    - "@id":                 cvisb:DerivedSample
+    - "@id":                 schema:Date
   schema:rangeIncludes:
     - "@id":                 cvisb:DateRange
   owl:cardinality:           one
