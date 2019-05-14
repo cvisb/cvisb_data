@@ -171,6 +171,7 @@ Lassa# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Da
                          - positive
                          - negative
                          - indeterminate
+                         - null
   authenticated:         false
 
 
@@ -207,5 +208,5 @@ Lassa# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Da
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           optional
+  marginality:           recommended
   authenticated:         false
