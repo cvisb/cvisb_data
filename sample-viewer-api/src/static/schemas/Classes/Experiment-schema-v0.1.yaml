@@ -241,6 +241,20 @@
   authenticated:         false
 
 # Citation and other link identifiers
+- "@id":                 cvisb:publisher
+  "@type":               rdf:Property
+  rdfs:comment:          Publisher of this dataset, usually the host organization
+  rdfs:label:            publisher
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    - "@id":             "cvisb:Organization"
+  schema:sameAs:
+    "@id":               "schema:publisher"
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:publication
   "@type":               rdf:Property
   rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
