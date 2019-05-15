@@ -13,7 +13,7 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class FilterSampleTypeComponent implements OnInit {
-  sample_types: string[] = ['plasma', 'PBMC', 'viralRNA', 'DNA'].sort();
+  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'].sort();
 
   myForm: FormGroup;
 
