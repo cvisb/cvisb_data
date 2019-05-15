@@ -14,7 +14,7 @@
     </ng-container>
 
     <ng-container matColumnDef="gID">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">gID</th>
+      <th mat-header-cell *matHeaderCellDef>gID</th>
       <td mat-cell *matCellDef="let element">
         <span *ngIf="element.gID">
         <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
