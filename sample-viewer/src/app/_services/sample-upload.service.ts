@@ -19,11 +19,6 @@ import * as _ from 'lodash';
 
 export class SampleUploadService {
   today = new Date();
-  oldData = [
-    { "_id": "id1", "sampleLabel": "example1", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample1_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Briney", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
-    { "_id": "id2", "sampleLabel": "example2", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "DNA", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample2_DNA2019-01-01", "location": [{ "lab": "KGH", "numAliquots": 0, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }, { "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] },
-    { "_id": "id3", "sampleLabel": "example3", "privatePatientID": "C-123-1", "visitCode": "", "isolationDate": "2019-01-01", "sampleType": "PBMC", "sourceSampleID": "", "sourceSampleType": "", "primarySampleDate": "", "sampleID": "lhexample3_PBMC2019-01-01", "location": [{ "lab": "Scripps-Andersen", "numAliquots": 1, "freezerID": "", "freezerRack": "", "freezerBox": "", "freezerBoxCell": "" }] }];
-
 
   user: CvisbUser;
   data: Object[]; // copy of sample data to be uploaded.
@@ -112,7 +107,7 @@ export class SampleUploadService {
 
   // Return only the fields needed to be uploaded, after front-end validation
   // No going back from this point! (well, there is, since I made a copy)
-  getCleanedData(vars2delete = ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id'].concat(this.locationCols)) {
+  getCleanedData(vars2delete = ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode'].concat(this.locationCols)) {
     let data_copy = _.cloneDeep(this.data);
 
     // turn location into a nested data object.
@@ -276,6 +271,8 @@ export class SampleUploadService {
     this.data.forEach((d: any) => {
       d.missing = [];
       d.numAliquots = +d.numAliquots;
+      // clean AVLinactivated; should be a boolean or null.
+      d['AVLinactivated'] = (d['AVLinactivated'] && d['AVLinactivated'] !== "") ? d['AVLinactivated'] : null;
     });
 
     // Convert to arrays, as needed.
