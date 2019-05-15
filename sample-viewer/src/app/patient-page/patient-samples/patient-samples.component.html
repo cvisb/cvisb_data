@@ -1,7 +1,3 @@
 <h4 class="patient patient-samples" id="samples">Samples</h4>
 
-<app-patient-timepoints [alternateIDs]="patient.alternateIdentifier"></app-patient-timepoints>
-
-<ng-template #nodata>
-  <span class="nodata">no known samples</span>
-</ng-template>
+<app-patient-timepoints [alternateIDs]="patient.alternateIdentifier" showMissing='true'></app-patient-timepoints>

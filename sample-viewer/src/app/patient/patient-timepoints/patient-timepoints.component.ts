@@ -15,6 +15,7 @@ import { ApiService } from '../../_services';
 
 export class PatientTimepointsComponent implements OnInit {
   @Input() alternateIDs: string[];
+  @Input() showMissing: boolean = false;
   samples: Object[] = [];
 
   constructor(private apiSvc: ApiService,

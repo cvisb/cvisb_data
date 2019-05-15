@@ -1,10 +1,8 @@
-<div class="patient-elisas" *ngIf="patient.elisa">
-
+<div class="patient-elisas">
 
   <h4 class="patient" id="elisa">ELISA results</h4>
 
-
-  <div class="preview-sample">
+  <div class="preview-sample" *ngIf="patient.elisa; else no_data">
     <table mat-table [dataSource]="elisaSource">
 
 
@@ -49,5 +47,12 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+
+    <ng-template #no_data class="nodata">
+      <p>
+        no available data
+      </p>
+    </ng-template>
 
   </div>
