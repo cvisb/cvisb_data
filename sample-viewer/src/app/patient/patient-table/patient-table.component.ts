@@ -41,11 +41,6 @@ export class PatientTableComponent implements OnInit {
       this.selectedLength = params.patients.total;
       // console.log("selected length: " + this.selectedLength)
     });
-
-
-
-
-
   }
 
   ngOnInit() {
@@ -91,7 +86,6 @@ export class PatientTableComponent implements OnInit {
 
   loadPatientPage() {
     // console.log("loadPatientPage Q:" + this.qString)
-    console.log(this.sort)
     this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
 
