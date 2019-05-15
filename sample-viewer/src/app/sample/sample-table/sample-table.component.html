@@ -1,0 +1,209 @@
+<!-- <form [formGroup]="locationForms" (ngSubmit)="onSubmit()">
+  <h1>
+  <button mat-stroked-button color="accent" type="button" (click)="clearInput()">
+  <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid">
+    Undo changes
+  </button>
+  <button mat-raised-button color="accent" type="submit">
+  <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid">
+    Save changes
+  </button>
+</h1>
+  <app-bulk-edit></app-bulk-edit> -->
+
+<!--
+<div class="sample-locations">
+    <input type="text" name="aliquots" class="edit-aliquots" value="2">
+
+    <select class="location" name="location-dropdown">
+      <option value="1">KGH</option>
+      <option value="2">Sullivan</option>
+      <option value="3">Briney</option>
+    </select>
+
+    <div class="edit-btn-grp">
+      <button class="small-icon edit-location edit">
+      <mat-icon aria-label="Edit">edit</mat-icon>
+      </button>
+
+      <button class="small-icon edit-location split">
+      <mat-icon aria-label="Split aliquot(s)">share</mat-icon>
+      </button>
+
+      <button class="small-icon edit-location delete">
+      <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
+      </button>
+    </div>
+</div> -->
+
+
+<!-- TABLE -->
+<mat-table [dataSource]="dataSource" matSort class="sample-table">
+  <!-- Checkbox Column -->
+  <!-- <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container> -->
+
+  <!-- Patient ID -->
+  <ng-container matColumnDef="key">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>key</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="patientID">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.patientID}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="privatePatientID">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>private patient id</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
+  </ng-container>
+
+  <!-- Patient cohort -->
+
+  <ng-container matColumnDef="cohort">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="outcome">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Timepoint -->
+  <ng-container matColumnDef="visitCode">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>visit code</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="timepoint"> {{element.visitCode}} </mat-cell>
+  </ng-container>
+
+  <!-- Splay out the sample types wide -->
+  <ng-container *ngFor="let sample of sample_types; let i=index">
+    <ng-container matColumnDef="{{ sample }}">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <!-- <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+         -->
+        {{ sample }}
+        <!-- <button mat-icon-button color="primary" class="">
+                  <mat-icon aria-label="Edit button">edit</mat-icon>
+                </button> -->
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="sample-locations">
+        <ng-container [ngTemplateOutlet]="element[sample] ? show_sample : add_sample" [ngTemplateOutletContext]="{sample:sample}">
+
+          <ng-template #show_sample let-sample="sample">
+
+            <!-- Loop over the sample groups. Should be only one sample ID per sample type in most cases -->
+            <div class="sample-group" *ngFor="let sample of element[sample]">
+
+
+              <div class="flex-container sample-id">
+                <p>{{ sample.key }}</p>
+                <!-- <h4>{{ sample.key }}</h4> -->
+              </div>
+
+            <!-- Loop over the sample locations -->
+              <div *ngFor="let location of sample.values; let i=index" class="sample-location-groups" (click)="showSampleMD(location)">
+                <h4 matTooltip="view metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
+                <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
+
+                <!-- <mat-select [(value)]="location" class="location"
+                [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
+                  <mat-option *ngFor="let lab of labs" [value]="lab.id">{{ location.lab }}</mat-option>
+                </mat-select> -->
+
+                <!-- <div class="edit-btn-grp">
+                  <button class="small-icon edit-location edit" (click)="switchEditable()" type="button">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+              </button>
+
+                  <button class="small-icon edit-location split" type="button">
+              <mat-icon aria-label="Split aliquot(s)">share</mat-icon>
+              </button>
+
+                  <button class="small-icon edit-location delete" type="button">
+              <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
+              </button>
+                </div> -->
+              </div> <!-- END OF LOCATION LOOP -->
+
+            </div>
+          </ng-template>
+
+
+          <ng-template #add_sample let-sample="sample">
+            <!-- <button mat-icon-button class="add" type="button">
+            <mat-icon aria-label="Add a sample" [matTooltip]="'add ' + sample + ' sample'" matTooltipPosition="right">add</mat-icon>
+          </button> -->
+          </ng-template>
+        </ng-container>
+        <!-- <form class="flex-container">
+          <div *ngFor="let location of element[sample].location; let i=index" class="location-form">
+
+
+            <mat-form-field class="location-aliquots">
+              <input matInput [value]="numAliquots" disabled="true">
+            </mat-form-field>
+
+            <mat-form-field class="location-lab">
+              <mat-select [(value)]="location" disabled="false">
+                <mat-option [value]="location">{{location}}</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+
+        <!-- <div class="small-icon edit-location">
+              <button mat-icon-button color="primary" class="col">
+                  <mat-icon aria-label="Example icon-button with a heart icon">share</mat-icon>
+                </button>
+
+              <button mat-icon-button color="warn" class="col">
+                  <mat-icon aria-label="Example icon-button with a heart icon">delete_outline</mat-icon>
+                </button>
+            </div> -->
+
+
+        <!-- <div class="button-row">
+              <button mat-icon-button>
+                <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+              </button>
+              <button mat-icon-button color="primary">
+                <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+              </button>
+              <button mat-icon-button color="accent">
+                <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+              </button>
+              <button mat-icon-button color="warn">
+                <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+              </button>
+</div> -->
+        <!-- </div>
+        </form> -->
+
+      </mat-cell>
+    </ng-container>
+  </ng-container>
+
+  <!-- GENERATE TABLE -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+
+</mat-table>
+<!-- </form> -->
+<!-- PAGINATION -->
+<mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 25, 50, 100]">
+</mat-paginator>
