@@ -378,7 +378,7 @@ export class SampleUploadService {
         d.creatorInitials = (this.user && this.user.given_name && this.user.family_name) ? `${this.user.given_name[0]}${this.user.family_name[0]}` : "";
       }
       // Make sure to replace any spaces in the sampleLabel with _ so ES is happier.
-      d['sampleID'] = `${d.creatorInitials.toLowerCase()}${d.sampleLabel.replace(/\s/g, "_")}_${d.sampleType}${d.isolationDate}`;
+      d['sampleID'] = `${d.creatorInitials.toLowerCase()}-${d.sampleLabel.replace(/\s/g, "_")}_${d.sampleType}_${d.isolationDate}`;
     })
 
     this.updateValidation("create_sampleID", true, err_ct);
