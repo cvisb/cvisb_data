@@ -150,7 +150,7 @@ def nestELISAs(row):
                     "ELISAresult": row['igmvresultcc1'],
                     "timepoint": "patient admission"
                 })
-        return(elisas)
+    return(elisas)
     # try:
     #     # survivor; timepoint = survivor enrollment
     #     if((row['ebola IgG'] == row['ebola IgG']) & (row['lassa IgG'] == row['lassa IgG'])):
