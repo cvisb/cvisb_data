@@ -9,7 +9,7 @@
     </div>
 
     <div class="infection-year" [ngClass]="patient.cohort">
-      {{ patient.infectionYear ? patient.infectionYear.gte | date: "y" : "date unknown"}}
+      {{ patient.infectionYear ? (patient.infectionYear.gte | date: "y") : "date unknown"}}
     </div>
   </div>
 
