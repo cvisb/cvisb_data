@@ -63,8 +63,9 @@ export class GetPatientsService {
 
   sortFunc(sortVar): string {
     // Sorting func for ES.
+
     let numericVars = ["age"];
-    if (numericVars.includes(sortVar)) {
+    if (numericVars.includes(sortVar) || !sortVar) {
       return (sortVar);
     }
 
