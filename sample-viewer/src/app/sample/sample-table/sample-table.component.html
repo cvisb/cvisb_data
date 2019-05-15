@@ -64,7 +64,7 @@
 
   <ng-container matColumnDef="privatePatientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>private patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id"> {{element.privatePatientID}} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id emphasis"> {{element.privatePatientID}} </mat-cell>
   </ng-container>
 
   <!-- Patient cohort -->
@@ -86,7 +86,7 @@
   <!-- Timepoint -->
   <ng-container matColumnDef="visitCode">
     <mat-header-cell *matHeaderCellDef mat-sort-header>visit code</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="timepoint"> {{element.visitCode}} </mat-cell>
+    <mat-cell *matCellDef="let element" class="timepoint emphasis"> {{element.visitCode}} </mat-cell>
   </ng-container>
 
   <!-- Splay out the sample types wide -->

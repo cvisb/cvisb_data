@@ -17,27 +17,23 @@ p {
   margin-bottom: 0;
 }
 
-.sample-id {
-  // color: #aaa;
-  // font-size: 0.85em;
-}
-// td.mat-cell,
-// th.mat-header-cell {
-//   border: none;
-// }
-
-.sample-table > .mat-row:nth-child(even) {
-  // background: lighten(primary(50), 5);
+.emphasis {
+  font-weight: 400;
+  font-size: 1em;
 }
 // --- Column widths ---
-
 .mat-cell,
 .mat-header-cell {
   padding: 0 10px;
 }
 
-.mat-column-patientid {
-  flex: 0 0 100px;
+.mat-column-patientID,
+.mat-column-privatePatientID {
+  max-width: 75px;
+}
+
+.mat-column-visitCode {
+  max-width: 25px;
 }
 
 .mat-column-cohort {
