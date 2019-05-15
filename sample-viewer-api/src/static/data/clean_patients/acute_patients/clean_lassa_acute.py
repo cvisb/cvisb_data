@@ -39,7 +39,7 @@ import helpers # Helpers module, for common cleanup functions
 from .clean_lassa_acute_ids import prep_id_data
 
 def clean_lassa_acute(filename, id_filename, export_filename, export_id_filename,
-export_weirdos, export_id_weirdos, dateModified = datetime.today().strftime('%Y-%m-%d')):
+export_weirdos, export_id_weirdos):
     print('\n cleaning lassa')
 
     # --- Load acute patient data, clean it up ---
@@ -47,7 +47,7 @@ export_weirdos, export_id_weirdos, dateModified = datetime.today().strftime('%Y-
 
 
     # --- Add Public PatientIDs ---
-    df_merged = mergePublicIDs(df, id_filename, dateModified)
+    df_merged = mergePublicIDs(df, id_filename)
 
     # --- Export all values ---
     id_cols = ["gID", "gid", "Original G No.", "Study Specific #", "infectionYear", "hasPatientData", "issue"]
@@ -97,7 +97,7 @@ def read_data(filename):
     return(df)
 
 #
-def mergeMetadata(df, ids, dateModified):
+def mergeMetadata(df, ids):
     """
     Merge together public/private IDs to check that all patient data has a publicID associated with it.
     """
@@ -114,9 +114,6 @@ def mergeMetadata(df, ids, dateModified):
     # collapse to [survivor, dead, contact, control, unknown]
     # Happens AFTER merge, so we can add in patient who have an ID but no data/metadata.
     df_merged['outcome'] = df_merged.outcome_lba2.apply(helpers.cleanOutcome)
-
-    # --- dateModified ---
-    df_merged['dateModified'] = dateModified
 
     # --- cohort ---
     # All Lassa
@@ -137,14 +134,14 @@ def mergeMetadata(df, ids, dateModified):
     return(df_merged)
 
 
-def mergePublicIDs(df, id_filename, dateModified):
+def mergePublicIDs(df, id_filename):
     """
     Import and clean ID dictionary of public/private ID crosswalk
     """
     ids = prep_id_data(id_filename)
 
     # Read in the metadata for the patients and merge
-    df_merged = mergeMetadata(df, ids, dateModified)
+    df_merged = mergeMetadata(df, ids)
     return(df_merged)
 
 def cleanAcute(filename):

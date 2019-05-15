@@ -26,6 +26,7 @@ import config
 import acute_patients as acute
 import survivors
 import helpers
+from datetime import datetime
 
 
 # Main function to stitch together the patients.
@@ -33,7 +34,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
                      input_ebolaSurvivor, output_ebolaSurvivor, output_ebolaSurvivorWeirdos,
                      input_lassaAcute, input_lassaAcute_ids,
                      output_lassaAcute, output_lassaAcute_ids, output_lassaAcuteWeirdos, output_lassaAcuteWeirdos_ids,
-                     export_cols, dict_cols):
+                     export_cols, dict_cols, dateModified = datetime.today().strftime('%Y-%m-%d')):
     print('Compiling CViSB patients...')
 
     # --- acute Lassa ---
@@ -53,7 +54,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
         output_survivorRoster, output_survivorRosterWeirdos, output_ebolaSurvivor, output_ebolaSurvivorWeirdos)
 
     # --- concat together all data and assign primary patient ids ---
-    merged = merge_patients(acuteLassa, acuteEbola, survivorsAll)
+    merged = merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified)
 
     merged.to_csv(output_patients + "_ALL.csv", index = False)
 
@@ -77,7 +78,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     return(merged)
 
 
-def merge_patients(acuteLassa, acuteEbola, survivorsAll):
+def merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified):
     """
     Merges together all the disparate data sources and assigns their primary IDs.
 
@@ -96,15 +97,18 @@ def merge_patients(acuteLassa, acuteEbola, survivorsAll):
 
     merged = merge_function(acute, survivorsAll)
 
-    merged = cleanup_merged(merged)
+    merged = cleanup_merged(merged, dateModified)
 
     return(merged)
 
 
-def cleanup_merged(df):
+def cleanup_merged(df, dateModified):
     """
     Minor cleanup / merging of various IDs used
     """
+    # --- dateModified ---
+    df['dateModified'] = dateModified
+
     # indicate the source of the patient data
     df['_source'] = "Tulane_JS"
 
@@ -143,7 +147,7 @@ def assign_publicID(row):
     return(row.publicSID)
 
 
-def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["age", "gender", "cohort", "elisas", "outcome", "country", "gID", "sID"]):
+def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["cohort", "outcome", "age","gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID"]):
     """
     Workhorse to combine together acute and survivor datasets.
 
@@ -178,9 +182,9 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
 
 
     # cols2check = ["gID", "cohort", "elisa"]
-    cols2check = ["cohort", "outcome", "age", "dateModified", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID"]
-    printable = cols2check.copy()
-    printable.extend(["gID_x", "gID_y", "publicSID", "publicGID", "sID", 'elisa_x', "elisa_y"])
+    # cols2check = ["cohort", "outcome", "age", "dateModified", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID"]
+    # printable = cols2check.copy()
+    printable = ['elisa_x', "elisa_y", "elisa"]
 
     # --- (4) reconcile discrepancies ---
     # Make sure first that GIDs are lists...
@@ -190,7 +194,7 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
 
 
     merged = helpers.checkMerge2(merged,
-                                mergeCols2Check= cols2check,
+                                mergeCols2Check= varsInCommon,
                                 df1_label="acute patient data", df2_label="survivor data ((ACUTE-SURVIVOR MERGE))",
                                 mergeCol=newKey, dropMerge=False,
                                 errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
@@ -198,6 +202,8 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
     # Merge together error messages.
     # Needs to happen after merge, b/c need to combine issue_x with issue_y --> issue.
     merged['issue'] = merged.apply(combineIssues, axis = 1)
+
+    print(merged.sample(10)[printable])
 
 
     return(merged)
