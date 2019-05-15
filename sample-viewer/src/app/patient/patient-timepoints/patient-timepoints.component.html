@@ -1,3 +1,4 @@
+<div>
 <div class="container sample-timepoints" *ngIf="samples.length > 0; else no_data">
   <div class="sample" *ngFor="let sample of samples" [matTooltip]="sample.sampleType + ' sample at ' + sample.sampleGroup + ' timepoint ' + sample.visitCode" (click)="showSampleMD($event, sample)">
     <span class="sample-type">{{ sample.sampleType }}</span> -
@@ -10,3 +11,4 @@
 <ng-template #no_data>
   <span class="nodata" ngIf="showMissing">no known samples</span>
 </ng-template>
+</div>
