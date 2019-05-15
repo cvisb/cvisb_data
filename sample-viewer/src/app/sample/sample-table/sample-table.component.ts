@@ -25,7 +25,7 @@ export class SampleTableComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
 
-  sample_types: string[] = ['DNA', 'viralRNA', 'plasma', 'PBMC'];
+  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'];
   displayedColumns: string[] = ["patientID", "privatePatientID", "visitCode"].concat(this.sample_types);
   // displayedColumns: string[] = ["key", "privatePatientID", "cohort", "outcome", "visitCode"].concat(this.sample_types);
   selection = new SelectionModel<any>(true, []);
