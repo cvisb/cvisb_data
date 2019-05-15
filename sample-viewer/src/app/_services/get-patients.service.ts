@@ -62,16 +62,20 @@ export class GetPatientsService {
   }
 
   sortFunc(sortVar): string {
-    // Sorting func for ES. Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
-    let keywordVars = ["patientID", "outcome", "cohort", "gender"];
-    if (keywordVars.includes(sortVar)) {
-      return (`${sortVar}.keyword`);
+    // Sorting func for ES.
+    let numericVars = ["age"];
+    if (numericVars.includes(sortVar)) {
+      return (sortVar);
     }
 
+    // custom: nested objects
     if (sortVar === "country") {
       return ("country.name.keyword");
     }
-    return (sortVar);
+
+    // Default: string
+    // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
+    return (`${sortVar}.keyword`);
   }
 
 
