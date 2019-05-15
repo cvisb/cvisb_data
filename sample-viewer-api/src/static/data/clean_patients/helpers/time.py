@@ -18,7 +18,7 @@ def convertExcelDateNum(row):
             if ordinal > 60:
                 if ordinal > 59:
                     ordinal -= 1  # Excel leap year bug, 1900 is not a leap year!
-                return (datetime(1899, 12, 31) + timedelta(days=ordinal))
+                return (datetime(1899, 12, 31) + timedelta(days = ordinal))
             else:
                 # likely to be daysOnset, not IllnessOnset
                 # Calculate IllnessOnset as days difference from the evalDate
@@ -111,7 +111,9 @@ def calcOnsetDischargeGap(row):
 
 
 def date2Range(date_string):
-    return({"gte": date_string, "lte": date_string})
+    if(date_string == date_string):
+        return({"gte": date_string, "lte": date_string})
+
 def year2Range(year):
     if(year == year):
         year_string = "{:.0f}".format(year)
