@@ -109,29 +109,28 @@
   owl:cardinality:       one
   marginality:           optional
 
-# # when updated
-# - "@id":                 cvisb:dateModified
-#   "@type":               rdf:Property
-#   rdfs:comment:          Date of last update (YYYY-MM-DD)
-#   rdfs:label:            dateModified
-#   schema:domainIncludes:
-#     - "@id":             cvisb:SampleLocation
-#   schema:rangeIncludes:
-#     - "@id":             schema:Date
-#   schema:sameAs:
-#     "@id":               "schema:dateModified"
-#   owl:cardinality:       one
-#   marginality:           required
+# when updated
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date of last update (YYYY-MM-DD)
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           required
 
-# - "@id":                 cvisb:updatedBy
-#   "@type":               rdf:Property
-#   rdfs:comment:          Person who updated the sample location
-#   rdfs:label:            updatedBy
-#   schema:domainIncludes:
-#     - "@id":             cvisb:SampleLocation
-#   schema:rangeIncludes:
-#     # - "@id":           schema:Person
-#     - "@id":             xsd:string
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the sample location
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:SampleLocation
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
