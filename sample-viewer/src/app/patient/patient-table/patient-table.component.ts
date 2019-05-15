@@ -91,6 +91,7 @@ export class PatientTableComponent implements OnInit {
 
   loadPatientPage() {
     // console.log("loadPatientPage Q:" + this.qString)
+    console.log(this.sort)
     this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
 
