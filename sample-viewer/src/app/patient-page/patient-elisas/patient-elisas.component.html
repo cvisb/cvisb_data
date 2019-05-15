@@ -1,6 +1,6 @@
 <div class="patient-elisas">
 
-  <h4 class="patient" id="elisa">ELISA results</h4>
+  <h4 class="patient-elisa" id="elisa">ELISA results</h4>
 
   <div class="preview-sample" *ngIf="patient.elisa; else no_data">
     <table mat-table [dataSource]="elisaSource">
@@ -51,8 +51,8 @@
 
   </div>
 
-  <ng-template #no_data class="nodata">
-      no available data
+  <ng-template #no_data>
+      <span class="nodata">no available data</span>
   </ng-template>
 
 </div>
