@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 })
 
 export class DateRangePipe extends DatePipe implements PipeTransform {
-  transform(value: any, dateFormat: string = "d MMMM y"): any {
+  transform(value: any, dateFormat?: string): any {
     let dateString: string;
 
     switch (typeof (value)) {
