@@ -350,7 +350,7 @@ svg-icon.country-icon {
   color: white;
 }
 
-.cohort.control {
+.cohort.control, .cohort.Unknown {
   background-color: $grey-400;
   color: white;
   border: $grey-600 1px solid;
