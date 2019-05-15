@@ -19,17 +19,17 @@
       <div id="infection-date">
         <span class="variable-label">onset of symptoms:
         </span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange) : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': !patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange) : "unknown"}}</span>
       </div>
 
       <div id="evaluation-date">
         <span class="variable-label">hospital evaluation:</span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange) : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': !patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange) : "unknown"}}</span>
       </div>
 
       <div id="discharge-date">
         <span class="variable-label">hospital discharge:</span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange) : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': !patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange) : "unknown"}}</span>
       </div>
 
     </div>
@@ -41,18 +41,18 @@
         <div id="days-onset">
           <span class="variable-label">days onset:
         </span>
-          <span class="variable-value" [ngClass]="{'nodata': patient.daysOnset}">{{ patient.daysOnset ? (patient.daysOnset + " days") : "unknown"}}</span>
+          <span class="variable-value" [ngClass]="{'nodata': !patient.daysOnset}">{{ patient.daysOnset ? (patient.daysOnset + " days") : "unknown"}}</span>
         </div>
 
         <div id="evaluation-date">
           <span class="variable-label">days in hospital:</span>
-          <span class="variable-value" [ngClass]="{'nodata': patient.daysInHospital}">{{ patient.daysInHospital ? patient.daysInHospital : "unknown"}}</span>
+          <span class="variable-value" [ngClass]="{'nodata': !patient.daysInHospital}">{{ patient.daysInHospital ? patient.daysInHospital : "unknown"}}</span>
         </div>
       </ng-container>
 
       <div id="discharge-date">
         <span class="variable-label">outcome:</span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.outcome}">{{ patient.outcome ? patient.outcome : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': !patient.outcome}">{{ patient.outcome ? patient.outcome : "unknown"}}</span>
       </div>
 
     </div>
