@@ -42,7 +42,7 @@ def getHHID(id):
 
 def getHHIDPrivate(id):
     if(id == id):
-        return(id[:-1])
+        return(str(id[:-1]))
 
 df['hhID_private'] = df["ID number"].apply(getHHID)
 
