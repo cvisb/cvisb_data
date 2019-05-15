@@ -5,4 +5,8 @@
       {{ sample.sampleGroup === "acute" ? "G" : "S"}}{{ sample.visitCode }}
     </span>
   </div>
+
+  <ng-template #nodata>
+    <span class="nodata" ngIf="showMissing">no known samples</span>
+  </ng-template>
 </div>
