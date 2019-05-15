@@ -14,7 +14,7 @@
   </div>
 
   <div class="container container-right date-group">
-    <div class="container-column container-left hospital-dates" *ngIf = "loggedIn">
+    <div class="container-column container-left hospital-dates" *ngIf="authorized && patient.outcome !== 'contact'">
 
       <div id="infection-date">
         <span class="variable-label">onset of symptoms:
@@ -37,16 +37,18 @@
 
     <div class="container-column container-right hospital-spans">
 
-      <div id="days-onset">
-        <span class="variable-label">onset of symptoms:
+      <ng-container *ngIf="patient.outcome !== 'contact'">
+        <div id="days-onset">
+          <span class="variable-label">onset of symptoms:
         </span>
-        <span class="variable-value">{{ patient.daysOnset ? patient.daysOnset : "unknown"}}</span>
-      </div>
+          <span class="variable-value">{{ patient.daysOnset ? (patient.daysOnset + " days") : "unknown"}}</span>
+        </div>
 
-      <div id="evaluation-date">
-        <span class="variable-label">days in hospital:</span>
-        <span class="variable-value">{{ patient.daysInHospital ? patient.daysInHospital : "unknown"}}</span>
-      </div>
+        <div id="evaluation-date">
+          <span class="variable-label">days in hospital:</span>
+          <span class="variable-value">{{ patient.daysInHospital ? patient.daysInHospital : "unknown"}}</span>
+        </div>
+      </ng-container>
 
       <div id="discharge-date">
         <span class="variable-label">outcome:</span>
@@ -54,6 +56,6 @@
       </div>
 
     </div>
-</div>
+  </div>
 
 </div>
