@@ -6,21 +6,20 @@ import { DatePipe } from '@angular/common';
   name: 'dateRange'
 })
 
-export class DateRangePipe extends DatePipe implements PipeTransform {
-  constructor(dateFormat: string){
-       super(dateFormat);
-   }
+export class DateRangePipe implements PipeTransform {
+  constructor(private datePipe: DatePipe) {
+  }
 
   transform(value: any, dateFormat: string = "d MMMM y"): any {
     let dateString: string;
 
     switch (typeof (value)) {
       case "string":
-        dateString = super.transform(value, dateFormat);
+        dateString = this.datePipe.transform(value, dateFormat);
         break;
       case "object":
-        let lower = super.transform(value.gte, dateFormat);
-        let upper = super.transform(value.lte, dateFormat);
+        let lower = this.datePipe.transform(value.gte, dateFormat);
+        let upper = this.datePipe.transform(value.lte, dateFormat);
 
         dateString = lower === upper ? lower : `${lower}-${upper}`;
         break;
