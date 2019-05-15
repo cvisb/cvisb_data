@@ -9,7 +9,7 @@
     </div>
 
     <div class="infection-year" [ngClass]="patient.cohort">
-      {{ patient.infectionYear ? (patient.infectionYear | date: "y") : "date unknown"}}
+      {{ patient.infectionYear ? (patient.infectionYear.gte | date: "y") : "date unknown"}}
     </div>
   </div>
 
@@ -19,7 +19,7 @@
       <div id="infection-date">
         <span class="variable-label">onset of symptoms:
         </span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | date: "d MMMM y") : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate.gte | date: "d MMMM y") : "unknown"}}</span>
       </div>
 
       <div id="evaluation-date">
@@ -39,7 +39,7 @@
 
       <ng-container *ngIf="patient.outcome !== 'contact'">
         <div id="days-onset">
-          <span class="variable-label">days onset:
+          <span class="variable-label">onset of symptoms:
         </span>
           <span class="variable-value" [ngClass]="{'nodata': patient.daysOnset}">{{ patient.daysOnset ? (patient.daysOnset + " days") : "unknown"}}</span>
         </div>
