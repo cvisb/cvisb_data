@@ -180,6 +180,8 @@ export class GetSamplesService {
       return (return_val)
     }
 
+    console.log(samples)
+
     // Converts the long table into a wide one, with patientID, privatePatientID, and visitCode pulled out to the highest level
     // Each sample type is an array containing the sample locations + associated metadata.
     this.samples_wide = d3.nest()
