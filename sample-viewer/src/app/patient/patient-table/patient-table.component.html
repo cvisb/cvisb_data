@@ -28,7 +28,7 @@
     <ng-container matColumnDef="sID">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">sID</th>
       <td mat-cell *matCellDef="let element">
-        <span *ngIf="element.sID">
+        <span class="alt-id" *ngIf="element.sID">
           {{ element.sID }}
         </span>
       </td>
