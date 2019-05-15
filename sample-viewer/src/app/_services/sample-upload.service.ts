@@ -503,7 +503,6 @@ export class SampleUploadService {
 
 
   nestLocations(data) {
-
     // Create location variable on each, which is an object containing all the individual location properties.
     data.forEach((row: any) => {
       let loc = {};
@@ -512,13 +511,16 @@ export class SampleUploadService {
         loc[column] = row[column];
       })
 
+      loc['dateModified'] = this.datePipe.transform(this.today, "yyyy-MM-dd");
+      loc['updatedBy'] = this.user.name;
+
       row['location'] = loc;
     })
 
     // Group by the sampleID and return the locations as an array of objects
     // Save only the first entry of the items.
     // * Assumes that the metadata is equal for all the samples. *
-    // Should be a safe
+    // Should be a safe assumption
     let data_by_id = _(data)
       .groupBy('sampleID')
       .map((items, id) => {
