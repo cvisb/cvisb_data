@@ -272,7 +272,7 @@ export class SampleUploadService {
       d.missing = [];
       d.numAliquots = +d.numAliquots;
       // clean AVLinactivated; should be a boolean or null.
-      d['AVLinactivated'] = (d['AVLinactivated'] && d['AVLinactivated'] !== "") ? d['AVLinactivated'] : null;
+      d['AVLinactivated'] = (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null));
     });
 
     // Convert to arrays, as needed.
