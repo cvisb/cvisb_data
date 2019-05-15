@@ -52,14 +52,8 @@ output_lassaAcuteWeirdos_ids = f"{inconsistencies_dir}/lassaAcuteIDs_inconsisten
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
                'age', 'gender', 'country', 'homeLocation',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
-                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
+                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',
                'elisa', 'dateModified']
-              # Temp: removing symptoms, infectionDate, infectionYear
-# export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
-#                'age', 'gender', 'country', 'homeLocation',
-#                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo',
-#                'infectionDate', 'infectionYear', 'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital',
-#                'symptoms', 'elisa', 'dateModified']
 
 dict_cols = ["patientID", "gID", "sID",
              "cohort", "outcome", "age", "gender", "countryName", "issue"]
