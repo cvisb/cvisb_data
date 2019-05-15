@@ -9,7 +9,7 @@
     </div>
 
     <div class="infection-year" [ngClass]="patient.cohort">
-      {{ patient.infectionYear ? (patient.infectionYear | dateRange: "y") : "date unknown"}}
+      {{ patient.infectionYear ? (patient.infectionYear | date: "y") : "date unknown"}}
     </div>
   </div>
 
@@ -19,17 +19,17 @@
       <div id="infection-date">
         <span class="variable-label">onset of symptoms:
         </span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange: "d MMMM y") : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | date: "d MMMM y") : "unknown"}}</span>
       </div>
 
       <div id="evaluation-date">
         <span class="variable-label">hospital evaluation:</span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange: "d MMMM y") : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | date: "d MMMM y") : "unknown"}}</span>
       </div>
 
       <div id="discharge-date">
         <span class="variable-label">hospital discharge:</span>
-        <span class="variable-value" [ngClass]="{'nodata': patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange: "d MMMM y") : "unknown"}}</span>
+        <span class="variable-value" [ngClass]="{'nodata': patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | date: "d MMMM y") : "unknown"}}</span>
       </div>
 
     </div>
