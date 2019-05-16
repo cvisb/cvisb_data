@@ -29,7 +29,7 @@
 
     ngOnInit() {
       this.filterSvc.summarizeTimepoints().subscribe(res => {
-        console.log(res)
+        // console.log(res)
         this.data = res;
         this.freqDomain = res.map(d => d.term);
       });

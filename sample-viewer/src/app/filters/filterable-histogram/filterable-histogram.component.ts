@@ -298,10 +298,10 @@ export class FilterableHistogramComponent implements OnInit {
       //   }
       // }
       let selectYear = function(filterFunc, filterSvc, requestSvc, endpoint) {
-        console.log('selecting in d3 func')
-        console.log(filterFunc)
+        // console.log('selecting in d3 func')
+        // console.log(filterFunc)
         return function(d) {
-          console.log(d)
+          // console.log(d)
           filterFunc(d, filterSvc, requestSvc, endpoint);
         }
       }
