@@ -110,13 +110,13 @@
             <div class="sample-group" *ngFor="let sample of element[sampleType]">
 
               <!-- SampleID  -->
-              <div class="flex-container sample-id">
-                <p>{{ sample.key }}</p>
+              <div class="flex-container sample-id" matTooltip="view metadata" (click)="showSampleMD(sample)">
+                {{ sample.sampleID }}
               </div>
 
               <!-- Loop over the sample locations -->
-              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(sample)">
-                <h4 matTooltip="view metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
+              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(sample.location)">
+                <h4 matTooltip="view location metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
                 <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
 
                 <!-- <mat-select [(value)]="location" class="location"
