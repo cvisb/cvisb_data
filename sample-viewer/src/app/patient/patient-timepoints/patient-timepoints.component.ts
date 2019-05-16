@@ -28,8 +28,6 @@ export class PatientTimepointsComponent implements OnInit {
       })
     })
 
-    console.log(this.samples)
-
     this.samples.sort((a:any, b:any) => +a.visitCode - +b.visitCode)
   }
 
@@ -38,7 +36,7 @@ export class PatientTimepointsComponent implements OnInit {
     $event.stopPropagation();  // <- that will stop propagation on lower layers
 
     const dialogRef = this.dialog.open(SampleMetadataComponent, {
-      width: '450px',
+      width: '850px',
       data: sample
     });
   }
