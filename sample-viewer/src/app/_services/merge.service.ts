@@ -117,7 +117,7 @@ export class MergeService {
   }
 
 
-  mergeSampleData(left_data, right_data, left_on = "sampleID", right_on = "sampleID", how = "right", method = "merge", ignoreCols = ["_id"]) {
+  mergeSampleData(left_data, right_data, left_on = "sampleID", right_on = "sampleID", how = "right", method = "merge", ignoreCols = ["_id", "_score", "_version"]) {
     let merged = this.merge(left_data, right_data, left_on, right_on, how, method);
 
     // Create a new ['location'] object to store the merged locations
