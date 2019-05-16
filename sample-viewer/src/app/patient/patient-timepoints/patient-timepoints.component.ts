@@ -27,6 +27,8 @@ export class PatientTimepointsComponent implements OnInit {
         this.samples = this.samples.concat(res);
       })
     })
+
+    this.samples.sort((a:any, b:any) => +a.visitCode - b.visitCode)
   }
 
   showSampleMD($event: Event, sample): void {
