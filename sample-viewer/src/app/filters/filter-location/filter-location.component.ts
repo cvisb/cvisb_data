@@ -29,7 +29,7 @@ export class FilterLocationComponent implements OnChanges {
     let keys = this.countries.map(d => d.term);
 
 
-    console.log(this.all_countries)
+    // console.log(this.all_countries)
     if (this.all_countries) {
       let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
 
