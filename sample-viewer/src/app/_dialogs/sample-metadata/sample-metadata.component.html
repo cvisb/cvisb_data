@@ -31,7 +31,7 @@
       </div>
 
       <div *ngFor="let location of data[key]; let idx = index" class="location-group">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="location-panel">
           <mat-expansion-panel-header class="metadata-key">
             <mat-panel-title>
               {{ location.lab }}
@@ -42,7 +42,7 @@
           </mat-expansion-panel-header>
 
           <ng-container *ngFor="let loc_key of location | getKeys">
-            <div [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location[loc_key], key: loc_key }">
+            <div [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location, key: loc_key }">
             </div>
           </ng-container>
 
