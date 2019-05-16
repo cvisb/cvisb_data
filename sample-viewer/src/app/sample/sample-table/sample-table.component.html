@@ -115,7 +115,7 @@
               </div>
 
               <!-- Loop over the sample locations -->
-              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(sample.location)">
+              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(location)">
                 <h4 matTooltip="view location metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
                 <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
 
