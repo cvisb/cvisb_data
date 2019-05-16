@@ -30,7 +30,7 @@ export class PatientTimepointsComponent implements OnInit {
 
     console.log(this.samples)
 
-    this.samples.sort((a:any, b:any) => +a.visitCode - b.visitCode)
+    this.samples.sort((a:any, b:any) => +a.visitCode - +b.visitCode)
   }
 
   showSampleMD($event: Event, sample): void {
