@@ -19,7 +19,7 @@ import { RequestParametersService } from './request-parameters.service';
 export class GetSamplesService {
   request_params: RequestParamArray;
 
-// Event listeners to pass data.
+  // Event listeners to pass data.
   private samples_wide: SampleWide[] = [];
   public samplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>(null);
   public samplesWideSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
@@ -29,15 +29,9 @@ export class GetSamplesService {
 
   constructor(
     public myhttp: MyHttpClient,
-    // public http: HttpClient,
     private requestSvc: RequestParametersService,
     private authSvc: AuthService) {
-    // console.log(this.samples.slice(20, 25));
-    // this.putSamples(this.samples);
-    // this.putSample(this.samples[1]);
-    // this.getSamples();
-    // this.getSample('test_1');
-    //
+
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
         this.getSamples();
@@ -115,52 +109,6 @@ export class GetSamplesService {
     // return (this.samples)
   }
 
-  // putSample(sample: Sample) {
-  //   let sampleID = sample['sampleID'];
-  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/" + sampleID,
-  //     JSON.stringify(sample),
-  //     {
-  //       headers: new HttpHeaders()
-  //     }).subscribe(resp => {
-  //       console.log(resp)
-  //     },
-  //       err => {
-  //         console.log(err)
-  //       })
-  //
-  // }
-  //
-  //
-  // putSamples(samples: Sample[]) {
-  //   // let test = this.jsonify(this.samples.slice(0,2));
-  //   console.log('attempting to add new record')
-  //   // console.log(this.jsonify(samples))
-  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/",
-  //     this.jsonify(samples),
-  //     {
-  //       // observe: 'response',
-  //       headers: new HttpHeaders()
-  //       // .set('data', )
-  //     }).subscribe(resp => {
-  //       console.log(resp)
-  //     },
-  //       err => {
-  //         console.log(err)
-  //       })
-  //
-  // }
-  //
-  // // Function to convert
-  // jsonify(arr: any[]): string {
-  //   let json_arr = [];
-  //
-  //   for (let record of arr) {
-  //     json_arr.push(JSON.stringify(record))
-  //   }
-  //   return (json_arr.join("\n"))
-  // }
-
-
   nestSamples(samples) {
 
     // Update function: either creates an array of unique values, or a single value.
@@ -194,7 +142,6 @@ export class GetSamplesService {
         return d.reduce(function(prev, curr) {
           // If it already exists-- append
           // If not-- create it as an array/set (for unique values)
-          prev["patientID"] = updateSet(prev, curr, "patientID");
           prev["privatePatientID"] = updateSet(prev, curr, "privatePatientID");
           prev["visitCode"] = updateSet(prev, curr, "visitCode");
 
@@ -205,20 +152,20 @@ export class GetSamplesService {
       .entries(samples)
       .map((d) => d.value);
 
-    // console.log(this.samples_wide)
+    console.log(this.samples_wide)
 
     // For each sample type, nest the locations together. Key = sample ID; values = array of locations + metadata.
-    let sample_types = Array.from(new Set(samples.map(d => d.sampleType)));
-    this.samples_wide.forEach(patientGroup => {
-
-      sample_types.forEach((type: any) => {
-        if (patientGroup[type]) {
-          patientGroup[type] = d3.nest()
-            .key((d: any) => d.sampleID)
-            .entries(patientGroup[type])
-        }
-      })
-    })
+    // let sample_types = Array.from(new Set(samples.map(d => d.sampleType)));
+    // this.samples_wide.forEach(patientGroup => {
+    //
+    //   sample_types.forEach((type: any) => {
+    //     if (patientGroup[type]) {
+    //       patientGroup[type] = d3.nest()
+    //         .key((d: any) => d.sampleID)
+    //         .entries(patientGroup[type])
+    //     }
+    //   })
+    // })
 
     // console.log(this.samples_wide)
 
