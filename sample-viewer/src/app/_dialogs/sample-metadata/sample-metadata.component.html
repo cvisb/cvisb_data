@@ -30,7 +30,7 @@
 
     <div *ngFor="let location of data[key]; let idx = index" class="location-group">
       <div *ngFor="let loc_key of location | getKeys">
-        <div ngTemplateOutlet="flatData" [ngTemplateOutletContext]="{ data: location[loc_key], key: loc_key }">
+        <div [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location[loc_key], key: loc_key }">
         </div>
       </div>
     </div>
