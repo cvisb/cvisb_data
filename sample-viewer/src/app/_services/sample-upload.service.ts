@@ -229,7 +229,7 @@ export class SampleUploadService {
 
   checkIDs() {
     // just for now... testing...
-    this.apiSvc.getAll("patient", "cohort:Lassa");
+    // this.apiSvc.getAll("patient", "cohort:Lassa");
 
     this.data.forEach((d: any) => {
       // Check if the IDs are correct
@@ -271,6 +271,8 @@ export class SampleUploadService {
     this.data.forEach((d: any) => {
       d.missing = [];
       d.numAliquots = +d.numAliquots;
+      // clean up "" strings-- if the type is not a string (e.g. bool, date, number)
+      d.primarySampleDate = d.primarySampleDate !== "" ? d.primarySampleDate : null;
       // clean AVLinactivated; should be a boolean or null.
       d['AVLinactivated'] = (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null));
     });
