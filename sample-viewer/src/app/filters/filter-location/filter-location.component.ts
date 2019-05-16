@@ -28,11 +28,15 @@ export class FilterLocationComponent implements OnChanges {
   addMissing() {
     let keys = this.countries.map(d => d.term);
 
-    let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
 
-    // missing_data.forEach(d => {
-    //   this.countries.push({ key: d.term, name: d.name, value: 0 });
-    // })
+    console.log(this.all_countries)
+    if (this.all_countries) {
+      let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
+
+      missing_data.forEach(d => {
+        this.countries.push({ key: d.term, name: d.name, value: 0 });
+      })
+    }
   }
 
 }

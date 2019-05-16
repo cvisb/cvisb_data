@@ -108,7 +108,7 @@ export class FilterPatientsComponent implements OnInit {
 
       this.patientSummary = params.patients;
       console.log(this.patientSummary)
-      // console.log(pList)
+      console.log(pList)
 
     });
 
