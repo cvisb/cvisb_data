@@ -46,7 +46,7 @@ export class FilterTimepointsService {
           })
         });
 
-        console.log(patient_timepoints);
+        // console.log(patient_timepoints);
 
         return (patient_timepoints);
       }
