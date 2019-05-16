@@ -98,8 +98,8 @@ export class FilterPatientsComponent implements OnInit {
       this.all_cohorts = pList.patientTypes.map(d => d.term);
       this.all_outcomes = pList.patientOutcomes.map(d => d.term);
 
-      this.all_years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
-      this.all_years.sort();
+      // this.all_years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+      // this.all_years.sort();
       if (this.all_years.length === 0) {
         this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
       }
