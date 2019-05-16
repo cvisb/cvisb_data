@@ -96,12 +96,13 @@ ul {
 }
 // Bottom footer
 
-.copyright, .citation, .terms, .updated {
+.copyright, .citation, .terms, .updated, .email {
   line-height: 22px;
   font-size: 12px;
   font-weight: 400;
   margin: auto 75px auto 0px;
 }
+
 
 .updated {
   color: $ebola-md;
