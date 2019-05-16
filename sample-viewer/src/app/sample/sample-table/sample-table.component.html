@@ -90,33 +90,32 @@
   </ng-container>
 
   <!-- Splay out the sample types wide -->
-  <ng-container *ngFor="let sample of sample_types; let i=index">
-    <ng-container matColumnDef="{{ sample }}">
+  <ng-container *ngFor="let sampleType of sample_types; let i=index">
+    <ng-container matColumnDef="{{ sampleType }}">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         <!-- <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
          -->
-        {{ sample }}
+        {{ sampleType }}
         <!-- <button mat-icon-button color="primary" class="">
                   <mat-icon aria-label="Edit button">edit</mat-icon>
                 </button> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let element" class="sample-locations">
-        <ng-container [ngTemplateOutlet]="element[sample] ? show_sample : add_sample" [ngTemplateOutletContext]="{sample:sample}">
+        <ng-container [ngTemplateOutlet]="element[sampleType] ? show_sample : add_sample" [ngTemplateOutletContext]="{sampleType:sampleType}">
 
-          <ng-template #show_sample let-sample="sample">
+          <ng-template #show_sample let-sampleType="sampleType">
 
-            <!-- Loop over the sample groups. Should be only one sample ID per sample type in most cases -->
-            <div class="sample-group" *ngFor="let sample of element[sample]">
+            <!-- Loop over the sample groups. -->
+            <div class="sample-group" *ngFor="let sample of element[sampleType]">
 
-
+              <!-- SampleID  -->
               <div class="flex-container sample-id">
                 <p>{{ sample.key }}</p>
-                <!-- <h4>{{ sample.key }}</h4> -->
               </div>
 
-            <!-- Loop over the sample locations -->
-              <div *ngFor="let location of sample.values; let i=index" class="sample-location-groups" (click)="showSampleMD(location)">
+              <!-- Loop over the sample locations -->
+              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(sample)">
                 <h4 matTooltip="view metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
                 <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
 
