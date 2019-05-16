@@ -141,6 +141,18 @@
   marginality:           recommended
   authenticated:         true
 
+- "@id":                 cvisb:updateNotes
+  "@type":               rdf:Property
+  rdfs:comment:          A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:UpdateLog
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         true
+
 - "@id":                 cvisb:_source
   "@type":               rdf:Property
   rdfs:comment:          Internal tracking of who supplied the patient metadata
