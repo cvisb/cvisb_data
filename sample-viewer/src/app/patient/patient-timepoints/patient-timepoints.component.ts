@@ -57,16 +57,15 @@ export class PatientTimepointsComponent implements OnInit {
   //   })
   //
   // this.samples.sort((a:any, b:any) => +a.visitCode - +b.visitCode)
-}
 
-showSampleMD($event: Event, sample): void {
-  $event.preventDefault();
-  $event.stopPropagation();  // <- that will stop propagation on lower layers
+  showSampleMD($event: Event, sample): void {
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
 
-  const dialogRef = this.dialog.open(SampleMetadataComponent, {
-    width: '850px',
-    data: sample
-  });
-}
+    const dialogRef = this.dialog.open(SampleMetadataComponent, {
+      width: '850px',
+      data: sample
+    });
+  }
 
 }
