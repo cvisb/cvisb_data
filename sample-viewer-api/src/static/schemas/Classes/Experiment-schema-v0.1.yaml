@@ -184,7 +184,7 @@
     - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:measurementTechnique
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
   authenticated:         false
   schema:Enumeration:
