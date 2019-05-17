@@ -169,7 +169,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Date
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 # measurementTechnique
