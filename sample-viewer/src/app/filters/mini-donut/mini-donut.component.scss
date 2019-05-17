@@ -38,9 +38,9 @@ path.unknown {
   }
 }
 
-text.Unknown,
-text.unknown {
-  fill: $grey-300;
+tspan.Unknown,
+tspan.unknown {
+  fill: $grey-400;
 
   &:hover {
     fill: $grey-500;
