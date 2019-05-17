@@ -20,6 +20,14 @@ button {
   }
 }
 
+.patients button {
+  background: lighten($lassa-lt, 18%);
+
+  &:hover {
+    background: lighten($lassa-lt, 8%);
+  }
+}
+
 .samples button {
   background: accent-redder(50);
 
