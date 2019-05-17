@@ -206,7 +206,7 @@
   schema:rangeIncludes:
     "@id":               schema:Text
     "@id":               xsd:string
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
   schema:Enumeration:
                         - raw data
