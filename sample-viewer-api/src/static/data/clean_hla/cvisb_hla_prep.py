@@ -3,8 +3,9 @@
 # And convert to a long dataset from wide
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/cvisb_patient_roster")
-from getHLApatients import cleanCohort, cleanOutcome, cleanCountry, getAltIDs
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+# from getHLApatients import cleanCohort, cleanOutcome, cleanCountry, getAltIDs
+import helpers
 import re
 
 import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/HLA/HLA_genotypeCalls_v1_2019-01-09_PRIVATE.csv"
@@ -14,7 +15,17 @@ export_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer/src/assets/dat
 # Import HLA dataset
 df = pd.read_csv(import_path)
 
-# df.head()
+df.head()
+
+df['privatePatientID'] = df.ID.apply(helpers.interpretID)
+
+df['experimentID'] = df.apply(lambda x: "HLA" + str(x.name), axis= 1)
+df['experimentDate'] = "2000-01-01"
+df['dateModified'] = "2019-05-17"
+df['measurementTechnique'] = "HLA sequencing"
+
+df.head()
+
 
 
 # rename columns
