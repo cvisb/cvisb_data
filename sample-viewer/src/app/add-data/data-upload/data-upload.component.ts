@@ -50,8 +50,8 @@ export class DataUploadComponent implements OnInit {
   }
 
   deletePatients() {
-    console.log("deleting all!  eep!")
-    this.apiSvc.wipeEndpoint('patient');
+    console.log(`deleting all in ${this.endpoint}!  eep!`)
+    this.apiSvc.wipeEndpoint(this.endpoint);
   }
 
   fileChange(event) {
