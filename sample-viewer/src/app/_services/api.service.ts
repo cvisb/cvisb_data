@@ -40,17 +40,17 @@ export class ApiService {
         .set('q', `${idVar}:\"${id}\"`)
     }).pipe(
       map(data => {
-        if(returnAll) {
-          return(data['body']['hits']);
+        if (returnAll) {
+          return (data['body']['hits']);
         } else {
-        if (data['body']['total'] === 1) {
-          // One result found, as expected.
-          return (data['body']['hits'][0])
-        } else {
-          console.log("More than one object returned. Check if your ID is unique!")
-          console.log(data)
+          if (data['body']['total'] === 1) {
+            // One result found, as expected.
+            return (data['body']['hits'][0])
+          } else {
+            console.log("More than one object returned. Check if your ID is unique!")
+            console.log(data)
+          }
         }
-      }
       }),
       catchError(e => {
         console.log(e)
@@ -60,6 +60,64 @@ export class ApiService {
     )
   }
 
+// Sorting function, to convert sort variable into the proper syntax for ES
+// numeric variables should return just their string'd name
+// string variables need to be {string}.keyword
+// and there's a few special cases for nested variables
+  sortFunc(sortVar): string {
+    let numericVars = ["age"];
+    if (numericVars.includes(sortVar) || !sortVar) {
+      return (sortVar);
+    }
+
+    // custom: nested objects
+    if (sortVar === "country") {
+      return ("country.name.keyword");
+    }
+
+    // Default: string
+    // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
+    return (`${sortVar}.keyword`);
+  }
+
+
+  // based on https://blog.angular-university.io/angular-material-data-table/
+  // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
+  getPaginated(endpoint, qParams, pageNum: number = 0,
+    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    console.log(qParams.toString());
+
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
+
+    let params = qParams
+      .append('size', pageSize.toString())
+      .append('from', (pageSize * pageNum).toString())
+      .append("sort", sortString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
 
   // Generic getAll, which calls fetchAll. Results will not be sorted.
   getAll(endpoint: string, qString) {
@@ -259,7 +317,7 @@ export class ApiService {
 
     let results = [];
 
-    return(this.put(endpoint, newData));
+    return (this.put(endpoint, newData));
 
     // for (let i = 0; i < numChunks; i++) {
     //   console.log(i)
