@@ -1,7 +1,7 @@
 // based on https://blog.angular-university.io/angular-material-data-table/
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { GetPatientsService } from "./get-patients.service";
+import { ApiService } from "./api.service";
 import { catchError, finalize } from "rxjs/operators";
 
 import { Patient } from '../_models';
@@ -19,7 +19,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   private resultCountSubject = new BehaviorSubject<number>(0);
   public resultCountState$ = this.resultCountSubject.asObservable();
 
-  constructor(private patientSvc: GetPatientsService) {
+  constructor(private apiSvc: ApiService) {
 
   }
 
@@ -28,7 +28,7 @@ export class PatientsDataSource implements DataSource<Patient> {
 
     this.loadingSubject.next(true);
 
-    this.patientSvc.getPatientsPaginated(qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )

@@ -39,7 +39,6 @@ export class PatientTimepointsComponent implements OnInit {
       .set("q", "__all__");
 
     this.apiSvc.getPaginated('sample', params).subscribe(res => {
-      console.log(res)
       this.samples = res['hits'];
       this.samples.sort((a: any, b: any) => +a.visitCode - +b.visitCode)
     })
