@@ -34,29 +34,18 @@ export class PatientTimepointsComponent implements OnInit {
     private myhttp: MyHttpClient) { }
 
   ngOnInit() {
+    let params = new HttpParams()
+      .set("patientID", this.alternateIDs[0])
+      .set("q", "__all__");
 
-    this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', `__all__`)
-        .set('patientID', this.alternateIDs[0])
-    }).pipe(
-      map(res => {
-        console.log(res);
-        this.samples = res["body"];
-        this.samples.sort((a: any, b: any) => +a.visitCode - +b.visitCode);
-      }
-      )
-    );
+    this.apiSvc.getPaginated('sample', params).subscribe(res => {
+      console.log(res)
+      this.samples = res['body']['hits'];
+      this.samples.sort((a: any, b: any) => +a.visitCode - +b.visitCode)
+    })
+
+
   }
-
-  //   this.apiSvc.getOne('sample', id, 'privatePatientID', true).subscribe(res => {
-  //     this.samples = this.samples.concat(res);
-  //   })
-  //
-  // this.samples.sort((a:any, b:any) => +a.visitCode - +b.visitCode)
 
   showSampleMD($event: Event, sample): void {
     $event.preventDefault();
