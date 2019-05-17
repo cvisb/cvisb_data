@@ -151,7 +151,7 @@
   schema:sameAs:
     "@id":               schema:identifier
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
   authenticated:         false
 
 - "@id":                 cvisb:@id
