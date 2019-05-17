@@ -398,5 +398,5 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           recommended
+  marginality:           required
   authenticated:         false
