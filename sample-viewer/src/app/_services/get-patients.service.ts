@@ -117,46 +117,46 @@ export class GetPatientsService {
   }
 
 
-  // based on https://blog.angular-university.io/angular-material-data-table/
-  // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
-  getPatientsPaginated(qParams, pageNum: number = 0,
-    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
-    // let param_string: string = this.requestSvc.reduceParams(qParams);
-    // console.log(qParams)
-
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: { q: qParams.toString() },
-    //     queryParamsHandling: "merge", // remove to replace all query params by provided
-    //   });
-
-    console.log(qParams.toString());
-
-    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
-    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
-    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
-
-
-    let params = qParams
-      .append('size', pageSize.toString())
-      .append('from', (pageSize * pageNum).toString())
-      .append("sort", sortString);
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(res => {
-        console.log(res);
-        return (res["body"])
-      }
-      )
-    );
-  }
+  // // based on https://blog.angular-university.io/angular-material-data-table/
+  // // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
+  // getPatientsPaginated(qParams, pageNum: number = 0,
+  //   pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
+  //   // let param_string: string = this.requestSvc.reduceParams(qParams);
+  //   // console.log(qParams)
+  //
+  //   // this.router.navigate(
+  //   //   [],
+  //   //   {
+  //   //     relativeTo: this.route,
+  //   //     queryParams: { q: qParams.toString() },
+  //   //     queryParamsHandling: "merge", // remove to replace all query params by provided
+  //   //   });
+  //
+  //   console.log(qParams.toString());
+  //
+  //   // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+  //   // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+  //   let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
+  //
+  //
+  //   let params = qParams
+  //     .append('size', pageSize.toString())
+  //     .append('from', (pageSize * pageNum).toString())
+  //     .append("sort", sortString);
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: params
+  //   }).pipe(
+  //     map(res => {
+  //       console.log(res);
+  //       return (res["body"])
+  //     }
+  //     )
+  //   );
+  // }
 
 
   // getPatients() {
