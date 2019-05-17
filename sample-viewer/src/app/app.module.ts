@@ -92,6 +92,8 @@ import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes
 import { PatientTimepointsComponent } from './patient/patient-timepoints/patient-timepoints.component';
 import { PatientCitationsComponent } from './patient-page/patient-citations/patient-citations.component';
 import { SampleTableComponent } from './sample/sample-table/sample-table.component';
+import { AddDataComponent } from './add-data/add-data/add-data.component';
+import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
 
 
 @NgModule({
@@ -175,6 +177,8 @@ import { SampleTableComponent } from './sample/sample-table/sample-table.compone
     PatientTimepointsComponent,
     PatientCitationsComponent,
     SampleTableComponent,
+    AddDataComponent,
+    DataUploadComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
