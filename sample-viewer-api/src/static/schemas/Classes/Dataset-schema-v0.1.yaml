@@ -132,7 +132,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    "@id":               cvisb:DataCatalog
+    "@id":               schema:URL
   schema:sameAs:
     "@id":               schema:includedInDataCatalog
   owl:cardinality:       many
