@@ -47,7 +47,7 @@
         </p>
 
         <!-- Dummy so the document has something to select with the data bound -->
-        <input hidden class="d-none" type="text" [value]="data.DNAsequence" #rawseq>
+        <input hidden class="d-none" type="text" [value]="data.DNAsequence | async" #rawseq>
         <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
       </div>
 
