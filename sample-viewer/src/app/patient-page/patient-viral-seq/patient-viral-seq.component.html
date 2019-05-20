@@ -40,20 +40,20 @@
     </div> -->
 
 
-    <div class="raw-sequence">
+    <div class="raw-sequence" *ngFor="let data of seq.data">
       <div class="container sequence-header">
         <p class="sequence-label">
           raw sequence
         </p>
 
         <!-- Dummy so the document has something to select with the data bound -->
-        <input hidden class="d-none" type="text" [value]="seq.data.DNAsequence" #rawseq>
+        <input hidden class="d-none" type="text" [value]="data.DNAsequence" #rawseq>
         <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
       </div>
 
 
       <p class="sequence DNA-sequence">
-        {{ seq.data.DNAsequence }}
+        {{ data.DNAsequence }}
       </p>
     </div>
 
