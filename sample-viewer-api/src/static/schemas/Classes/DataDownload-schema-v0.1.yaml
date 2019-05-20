@@ -64,6 +64,21 @@
   marginality:           recommended
   authenticated:         false
 
+# Connection to dataset
+- "@id":                 cvisb:includedInDataset
+  "@type":               rdf:Property
+  rdfs:comment:          "A unique identifier for the Dataset that the DataDownload is contained in. Note: should be an internal, CViSB identifier;"
+  rdfs:label:            includedInDataset
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    "@id":               xsd:string
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 # DOI
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
