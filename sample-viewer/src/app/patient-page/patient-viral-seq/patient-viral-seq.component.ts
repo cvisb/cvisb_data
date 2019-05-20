@@ -47,6 +47,11 @@ export class PatientViralSeqComponent implements OnInit {
     });
   }
 
+  getSeq(data) {
+    console.log(data);
+    return(data.DNAsequence)
+  }
+
 
 
 
