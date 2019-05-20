@@ -1,4 +1,4 @@
-<h4 class="patient-data" id="Viral-Seq">Viral Sequencing</h4>
+<h4 class="patient-data" id="Viral-Sequencing">Viral Sequencing</h4>
 
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
   <div class="sequence-group" *ngFor="let seq of sequences">
@@ -47,7 +47,7 @@
         </p>
 
         <!-- Dummy so the document has something to select with the data bound -->
-        <input hidden class="d-none" type="text" [value]="data.DNAsequence | async" #rawseq>
+        <input hidden class="d-none" type="text" [value]="getSeq(data)" #rawseq>
         <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
       </div>
 
