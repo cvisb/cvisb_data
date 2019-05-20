@@ -35,7 +35,7 @@ def getDNAseq(all_seq, df, df_id, virus):
         id = seq.id.split("|")[0]
         if(sum(df[df_id] == id) == 0):
             print(seq.id)
-        seq_obj = {"DNAsequence": str(seq.seq)}
+        seq_obj = [{"DNAsequence": str(seq.seq), "virus": virus}]
         df.at[df[df_id] == id, 'data'] = seq_obj
     return(df)
 
@@ -80,8 +80,6 @@ ebv = getDNAseq(ebv_seq, ebv, 'sample_id', "Ebola")
 sum(ebv.data.apply(lambda x: x is None))
 
 ebv[ebv.data.apply(lambda x: x is None)]
-ebv[exptCols].sample(6)
-
 ebv = pd.merge(ebv, ids, how="left", indicator=True,
                right_on="ID", left_on="privatePatientID")
 ebv.columns
@@ -97,7 +95,6 @@ ebv.mergeIssue.value_counts()
 ebv.loc[ebv.mergeIssue == ebv.mergeIssue, ['sample_id', 'ncbi_accession',
                                            'outcome', 'outcome_x', 'outcome_y', 'cohort', 'cohort_x', 'cohort_y']]
 ebv.groupby('KGH_id')._merge.value_counts()
-
 
 # [Lassa]  ----------------------------------------------------------------------------------------------------
 lsv = pd.read_csv(lsv_file)
@@ -152,4 +149,5 @@ sum((lsv.countryName_x != lsv.countryName_y) &
 expts = pd.concat([ebv[exptCols], lsv[exptCols]])
 ebv[ebv._merge == "both"]
 expts['data'] = expts.data.apply(helpers.listify)
-expts.iloc[520:530].to_json(f"{expt_dir}viral_seq_{today}_1.json", orient="records")
+expts['publication'] = expts.publication.apply(helpers.listify)
+expts.to_json(f"{expt_dir}viral_seq_{today}.json", orient="records")
