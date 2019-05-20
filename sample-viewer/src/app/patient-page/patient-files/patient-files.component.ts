@@ -11,7 +11,6 @@ export class PatientFilesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.datadownload)
   }
 
 }
