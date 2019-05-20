@@ -64,7 +64,7 @@
       <!-- CITATIONS -->
       <div class="patient-citations">
         <h4 class="patient" id="citations">Cited in</h4>
-        <app-patient-citations [patientID]="patientID"></app-patient-citations>
+        <app-patient-citations [publications]="publications"></app-patient-citations>
       </div>
 
 
@@ -72,7 +72,7 @@
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <app-patient-hla [patient]="patient"></app-patient-hla>
-        <app-patient-viral-seq [patientID]="patient.patientID"></app-patient-viral-seq>
+        <app-patient-viral-seq [sequences]="viralSeq"></app-patient-viral-seq>
 
         <app-patient-serology [patient]="patient"></app-patient-serology>
       </div>

@@ -12,7 +12,7 @@ export class GetExperimentsService {
   constructor(private apiSvc: ApiService) { }
 
   getExpt(patientID: string, measurementTechnique: string) {
-    let qString = `measurementTechnique:${measurementTechnique}`;
+    let qString = `measurementTechnique:"${measurementTechnique}"`;
 
     let params = new HttpParams()
       .set('q', qString)

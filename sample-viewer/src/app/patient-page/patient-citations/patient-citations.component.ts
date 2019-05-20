@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Citation } from '../../_models';
+
 @Component({
   selector: 'app-patient-citations',
   templateUrl: './patient-citations.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 
 export class PatientCitationsComponent implements OnInit {
-  @Input() patientID: string;
+  @Input() publications: Citation[];
   citations: Object[];
 
   constructor() { }
