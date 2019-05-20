@@ -1,4 +1,4 @@
-<div *ngIf="publications; else no_citations">
+<div *ngIf="publications && publications.length > 0; else no_citations">
   <app-format-citation [citations]="publications" [simplifiedCitation]="false" class="citation-group"></app-format-citation>
 </div>
 
