@@ -39,6 +39,7 @@ export class PatientViralSeqComponent implements OnInit {
   }
 
   copySeq(seqElement, seqType) {
+    console.log(seqElement)
     seqElement.select();
     document.execCommand('copy');
     this.snackBar.open(`${seqType} sequence`, "copied to clipboard!", {
