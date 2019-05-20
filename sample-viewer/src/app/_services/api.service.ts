@@ -60,10 +60,10 @@ export class ApiService {
     )
   }
 
-// Sorting function, to convert sort variable into the proper syntax for ES
-// numeric variables should return just their string'd name
-// string variables need to be {string}.keyword
-// and there's a few special cases for nested variables
+  // Sorting function, to convert sort variable into the proper syntax for ES
+  // numeric variables should return just their string'd name
+  // string variables need to be {string}.keyword
+  // and there's a few special cases for nested variables
   sortFunc(sortVar): string {
     let numericVars = ["age"];
     if (numericVars.includes(sortVar) || !sortVar) {
@@ -104,6 +104,35 @@ export class ApiService {
       .append('size', pageSize.toString())
       .append('from', (pageSize * pageNum).toString())
       .append("sort", sortString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
+
+  // generic get function
+  // assumes size = 1000 unless otherwise specified.
+  get(endpoint, qParams, pageSize: number = 1000): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    let params = qParams
+      .append('size', pageSize.toString());
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',

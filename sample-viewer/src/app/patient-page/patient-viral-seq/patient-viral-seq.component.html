@@ -1,0 +1,65 @@
+<h4 class="patient-data" id="Viral-Seq">Viral Sequencing</h4>
+
+<ng-container *ngIf="sequences && sequences.length > 0; else nodata">
+  <div class="sequence-group" *ngFor="let seq of sequences">
+    <div class="container sequence-header">
+
+      <h4 class="virus">{{ seq.data.virus }} sequence</h4>
+
+      <div class="quality-rating">
+        quality:
+        <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
+        <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
+      </div>
+
+      <div class="source container" [ngClass]="seq.cvisb_data ? 'cvisb-data' : 'public-data'">
+        <ng-container *ngIf="seq.cvisb_data; else public_data">
+          <svg-icon icon="cvisb" class="cvisb-icon"></svg-icon>
+          <span class="source-tag">data</span>
+        </ng-container>
+        <ng-template #public_data>
+          <span class="source-tag">public data</span>
+        </ng-template>
+      </div>
+
+      <app-format-citation [citations]="seq.publication" class="citation"></app-format-citation>
+    </div>
+
+
+    <!-- <div class="aligned-sequence">
+      <div class="container sequence-header">
+        <p class="sequence-label">
+          aligned sequence
+        </p>
+
+        <input hidden class="d-none" type="text" [value]="seq.data.DNAsequenceAligned" #alignedseq>
+        <i class="far fa-copy copy-icon" matTooltip="copy aligned sequence to clipboard" (click)="copySeq(alignedseq, 'aligned')"></i>
+
+      </div>
+
+    </div> -->
+
+
+    <div class="raw-sequence">
+      <div class="container sequence-header">
+        <p class="sequence-label">
+          raw sequence
+        </p>
+
+        <!-- Dummy so the document has something to select with the data bound -->
+        <input hidden class="d-none" type="text" [value]="seq.data.DNAsequence" #rawseq>
+        <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
+      </div>
+
+
+      <p class="sequence DNA-sequence">
+        {{ seq.data.DNAsequence }}
+      </p>
+    </div>
+
+  </div>
+</ng-container>
+
+<ng-template #nodata>
+  <span class="nodata">not available</span>
+</ng-template>

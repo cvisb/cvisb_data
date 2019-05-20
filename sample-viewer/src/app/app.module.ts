@@ -94,6 +94,8 @@ import { PatientCitationsComponent } from './patient-page/patient-citations/pati
 import { SampleTableComponent } from './sample/sample-table/sample-table.component';
 import { AddDataComponent } from './add-data/add-data/add-data.component';
 import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
+import { PatientViralSeqComponent } from './patient-page/patient-viral-seq/patient-viral-seq.component';
+import { FormatCitationComponent } from './format-citation/format-citation.component';
 
 
 @NgModule({
@@ -179,6 +181,8 @@ import { DataUploadComponent } from './add-data/data-upload/data-upload.componen
     SampleTableComponent,
     AddDataComponent,
     DataUploadComponent,
+    PatientViralSeqComponent,
+    FormatCitationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
