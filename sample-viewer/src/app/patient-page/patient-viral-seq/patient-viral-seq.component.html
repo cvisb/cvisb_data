@@ -6,7 +6,7 @@
 
       <h4 class="virus">{{ seq.data.virus }} sequence</h4>
 
-      <div class="quality-rating">
+      <div class="quality-rating" *ngIf="seq.data.quality">
         quality:
         <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
         <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
