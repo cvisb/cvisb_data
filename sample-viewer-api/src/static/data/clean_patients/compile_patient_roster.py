@@ -129,7 +129,7 @@ def cleanup_merged(df, dateModified):
 
     # Fix dates to date ranges
     df['infectionDate'] = df.infectionDate.apply(helpers.date2Range)
-    df['infectionYear'] = df.infectionYear.apply(helpers.year2Range)
+    # df['infectionYear'] = df.infectionYear.apply(helpers.year2Range)
 
     df = helpers.idDupes(df, idCol="patientID", errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
 
