@@ -41,7 +41,7 @@ export class PatientPageComponent implements OnInit {
 
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
-        this.publications = expts['hits'].map(d => d.publication);
+        this.publications = expts['hits'].map(d => d.publication).filter(d => d).flat();
       })
     })
 

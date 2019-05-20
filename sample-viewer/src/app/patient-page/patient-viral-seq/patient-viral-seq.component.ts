@@ -12,7 +12,6 @@ import { ViralSeqObj } from '../../_models';
   styleUrls: ['./patient-viral-seq.component.scss']
 })
 export class PatientViralSeqComponent implements OnChanges {
-  // @Input() patientID: string;
   maxStars: number = 5;
   @Input() sequences: ViralSeqObj[];
 
@@ -20,8 +19,6 @@ export class PatientViralSeqComponent implements OnChanges {
     private snackBar: MatSnackBar) { }
 
   ngOnChanges() {
-    // this.exptSvc.getExpt(this.patientID, 'viral sequencing').subscribe(res => {
-    //   this.sequences = res['hits'];
     if (this.sequences) {
       this.sequences.forEach((seq: any) => {
         if (seq.data.quality) {
@@ -30,9 +27,6 @@ export class PatientViralSeqComponent implements OnChanges {
         }
       });
     }
-
-    console.log(this.sequences)
-    // })
   }
 
   copySeq(seqElement, seqType) {

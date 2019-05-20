@@ -10,11 +10,11 @@ import { Citation } from '../../_models';
 
 export class PatientCitationsComponent implements OnInit {
   @Input() publications: Citation[];
-  citations: Object[];
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.publications)
   }
 
 }
