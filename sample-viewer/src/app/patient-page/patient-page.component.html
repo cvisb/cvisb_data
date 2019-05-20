@@ -71,6 +71,11 @@
       <!-- DATA -->
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
+        <!-- icons of available experiments -->
+        <div class="expt-type mat-shadow" *ngFor="let expt of exptTypes">
+          <svg-icon [icon]="expt.key" [class]="expt.key"></svg-icon>
+        </div>
+
         <app-patient-hla [patient]="patient"></app-patient-hla>
         <app-patient-viral-seq [sequences]="viralSeq"></app-patient-viral-seq>
 

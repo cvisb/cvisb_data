@@ -18,6 +18,8 @@ export class PatientPageComponent implements OnInit {
   viralSeq: ViralSeqObj[];
   HLA: any[];
   publications: any[];
+  allExpts = [{ key: "viralseq", name: "viral sequencing", link: "Viral-Sequencing" }, { key: "hla", name: "HLA sequencing", link: "HLA" }];
+  exptTypes: Object[];
 
 
   constructor(
@@ -37,6 +39,9 @@ export class PatientPageComponent implements OnInit {
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
         console.log(expts);
+        let exptData = expts.map(d => d.measurementTechnique);
+        this.exptTypes = this.allExpts.filter(d => exptData.includes(d.name));
+
         this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
