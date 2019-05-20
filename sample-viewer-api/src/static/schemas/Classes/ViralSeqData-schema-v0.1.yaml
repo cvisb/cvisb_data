@@ -53,6 +53,18 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:isReferenceSeq
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the data is a reference sequence
+  rdfs:label:            isReferenceSeq
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 # Data
 - "@id":                 cvisb:DNAsequence
   "@type":               rdf:Property
