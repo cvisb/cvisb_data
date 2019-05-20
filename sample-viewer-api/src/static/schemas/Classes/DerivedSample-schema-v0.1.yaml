@@ -54,7 +54,7 @@
   schema:rangeIncludes:
     - "@id":                 xsd:string
     - "@id":                 schema:Text
-  owl:cardinality:           many
+  owl:cardinality:           one
   marginality:               required
   schema:Enumeration:
                             - "blood_purple-EDTA"

@@ -43,13 +43,13 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           required
-  schema:Enumeration:
-                        - ADNP
-                        - ADCD
-                        - ADCP
-                        - NKD-CD107a
-                        - NKD-IFNg
-                        - NKD-MIP-1b
+  # schema:Enumeration:
+  #                       - ADNP
+  #                       - ADCD
+  #                       - ADCP
+  #                       - NKD-CD107a
+  #                       - NKD-IFNg
+  #                       - NKD-MIP-1b
   authenticated:         false
 
 - "@id":                 cvisb:assayReadout
@@ -63,10 +63,10 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           recommended
-  schema:Enumeration:
-                        - phagocytic score
-                        - C3 deposition MFI
-                        - null
+  # schema:Enumeration:
+  #                       - phagocytic score
+  #                       - C3 deposition MFI
+  #                       - null
   authenticated:         false
 
 - "@id":                 cvisb:sampleDilution
