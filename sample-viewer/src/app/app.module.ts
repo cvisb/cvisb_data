@@ -96,6 +96,7 @@ import { AddDataComponent } from './add-data/add-data/add-data.component';
 import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
 import { PatientViralSeqComponent } from './patient-page/patient-viral-seq/patient-viral-seq.component';
 import { FormatCitationComponent } from './format-citation/format-citation.component';
+import { PatientFilesComponent } from './patient-page/patient-files/patient-files.component';
 
 
 @NgModule({
@@ -183,6 +184,7 @@ import { FormatCitationComponent } from './format-citation/format-citation.compo
     DataUploadComponent,
     PatientViralSeqComponent,
     FormatCitationComponent,
+    PatientFilesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),

@@ -9,7 +9,7 @@
     <div class="hla-files">
       <h5 class="patient-data">files</h5>
       <div *ngFor="let file of files">
-        <a>{{ file }}</a>
+        <app-patient-file [datadownload]="file"></app-patient-file>
       </div>
     </div>
 
