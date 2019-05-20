@@ -16,9 +16,13 @@ export class PatientPageComponent implements OnInit {
   patient: Patient;
   fragment: string;
   viralSeq: ViralSeqObj[];
+  viralFiles: Object[];
   HLA: any[];
+  HLAFiles: any[];
   publications: any[];
-  allExpts = [{ key: "viralseq", name: "viral sequencing", link: "Viral-Sequencing" }, { key: "hla", name: "HLA sequencing", link: "HLA" }];
+  allExpts = [
+    { key: "hla", name: "HLA sequencing", link: "HLA" },
+    { key: "viralseq", name: "viral sequencing", link: "Viral-Sequencing" },];
   exptTypes: Object[];
 
 
@@ -47,6 +51,13 @@ export class PatientPageComponent implements OnInit {
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
         this.publications = expts['hits'].map(d => d.publication).filter(d => d).flat();
+      })
+
+      this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
+        console.log(files);
+        this.viralFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
+
+        this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
       })
     })
 

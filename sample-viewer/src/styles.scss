@@ -350,7 +350,8 @@ svg-icon.country-icon {
   color: white;
 }
 
-.cohort.control, .cohort.Unknown {
+.cohort.Unknown,
+.cohort.control {
   background-color: $grey-400;
   color: white;
   border: $grey-600 1px solid;
@@ -472,6 +473,7 @@ h5.patient-data {
   font-size: 0.8em;
 }
 // --- upload ---
+
 button.stepper-button {
   background: accent(50) !important;
   margin-right: 25px;
@@ -492,26 +494,31 @@ button.stepper-button {
 }
 
 .done-icon {
-    font-size: 20px !important;
-    height: 20px !important;
-    width: 20px !important;
-    position: absolute;
-    font-weight: 700;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+  font-size: 20px !important;
+  height: 20px !important;
+  width: 20px !important;
+  position: absolute;
+  font-weight: 700;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 
 .error-message-group {
   margin-bottom: 35px;
 }
-
 // EXPERIMENT ICONS
 .expt-type {
   display: inline-block;
   margin: 0.5em 1.5em 0.5em 0;
   padding: 5px 8px 5px 5px;
   border-radius: 5px;
+
+  & svg-icon {
+    height: 35px;
+    width: 35px;
+    vertical-align: middle;
+  }
 
   &:hover {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, .5), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
@@ -520,6 +527,8 @@ button.stepper-button {
 
 .hla {
   background: lighten($female-color, 41%);
+  stroke: $default-color;
+  stroke-width: 0.75;
 }
 
 .tcr {
