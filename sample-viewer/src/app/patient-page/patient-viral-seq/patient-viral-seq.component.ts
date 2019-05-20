@@ -22,15 +22,20 @@ export class PatientViralSeqComponent implements OnInit {
 
   ngOnInit() {
     this.exptSvc.getExpt(this.patientID, 'viral sequencing').subscribe(res => {
-      console.log(res);
       this.sequences = res['hits'];
+
+      this.sequences.forEach((seq: any) => {
+        if (seq.data.quality) {
+          seq['data']['good'] = new Array(seq.data.quality);
+          seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
+        }
+      });
+
+      console.log(this.sequences)
     })
 
 
-    this.sequences.forEach((seq: any) => {
-      seq['data']['good'] = new Array(seq.data.quality);
-      seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
-    })
+
   }
 
   copySeq(seqElement, seqType) {
