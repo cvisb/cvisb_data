@@ -39,7 +39,7 @@ export class PatientPageComponent implements OnInit {
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
         console.log(expts);
-        let exptData = expts.map(d => d.measurementTechnique);
+        let exptData = expts['hits'].map(d => d.measurementTechnique);
         this.exptTypes = this.allExpts.filter(d => exptData.includes(d.name));
 
         this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
