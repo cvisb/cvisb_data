@@ -72,7 +72,7 @@
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <!-- icons of available experiments -->
-        <div class="expt-type mat-shadow" [class]="expt.key" *ngFor="let expt of exptTypes">
+        <div class="expt-type mat-shadow" [ngClass]="expt.key" *ngFor="let expt of exptTypes">
           <svg-icon [icon]="expt.key" ></svg-icon>
         </div>
 
