@@ -15,7 +15,7 @@ export class PatientNavComponent {
 
   links: any =
     ['samples', 'demographics', 'related patients', 'citations',
-      { 'key': 'data', 'values': ['HLA', 'Systems Serology'] }
+      { 'key': 'data', 'values': ['HLA', 'Systems Serology', "Viral Sequencing"] }
     ];
 
   constructor(

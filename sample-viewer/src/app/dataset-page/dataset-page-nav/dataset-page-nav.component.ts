@@ -18,7 +18,7 @@ export class DatasetPageNavComponent implements OnInit {
         { key: "compare", name: "compare allelic frequencies" },
         { key: "files", name: "view files / metadata" },
       ],
-      viralseq: [
+      viralsequencing: [
         { key: "description", name: "about Viral Sequencing" },
         { key: "summary", name: "summary" },
         { key: "files", name: "view files / metadata" },
