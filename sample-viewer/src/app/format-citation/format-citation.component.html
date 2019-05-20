@@ -26,7 +26,7 @@
 <span id="vol">{{citation.volume}}</span>, <span id="issue">{{citation.issue}}</span>, <span id="page">{{citation.page}}</span>.
 </div>
 
-<div class="links" *ngIf="simplifiedCitation === false">
+<div class="links container" *ngIf="simplifiedCitation === false">
   <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
 
   <span class="data-separator"></span>
