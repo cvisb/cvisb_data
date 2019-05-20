@@ -20,9 +20,7 @@ export class PatientHlaComponent implements OnChanges {
   selectedAllele: string;
   backgroundColor: string;
 
-  files: string[] = [
-    'Genotype_calls.csv'
-  ]
+  @Input() files: any[];
 
   constructor(private hlaSvc: GetHlaDataService, private hlaColorSvc: HlaService) {
     // --- unique alleles: population of all samples ---
