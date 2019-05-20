@@ -14,7 +14,6 @@ export class PatientCitationsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.publications)
   }
 
 }

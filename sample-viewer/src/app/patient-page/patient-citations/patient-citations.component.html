@@ -1,5 +1,5 @@
 <div *ngIf="publications; else no_citations">
-  <app-format-citation [citations]="publications" [simplifiedCitation]="false"></app-format-citation>
+  <app-format-citation [citations]="publications" [simplifiedCitation]="false" class="citation-group"></app-format-citation>
 </div>
 
 <ng-template #no_citations>
