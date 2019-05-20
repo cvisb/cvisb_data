@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material';
 
@@ -11,7 +11,7 @@ import { ViralSeqObj } from '../../_models';
   templateUrl: './patient-viral-seq.component.html',
   styleUrls: ['./patient-viral-seq.component.scss']
 })
-export class PatientViralSeqComponent implements OnInit {
+export class PatientViralSeqComponent implements OnChanges {
   // @Input() patientID: string;
   maxStars: number = 5;
   @Input() sequences: ViralSeqObj[];
@@ -19,16 +19,17 @@ export class PatientViralSeqComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     // this.exptSvc.getExpt(this.patientID, 'viral sequencing').subscribe(res => {
     //   this.sequences = res['hits'];
-
-    this.sequences.forEach((seq: any) => {
-      if (seq.data.quality) {
-        seq['data']['good'] = new Array(seq.data.quality);
-        seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
-      }
-    });
+    if (this.sequences) {
+      this.sequences.forEach((seq: any) => {
+        if (seq.data.quality) {
+          seq['data']['good'] = new Array(seq.data.quality);
+          seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
+        }
+      });
+    }
 
     console.log(this.sequences)
     // })
