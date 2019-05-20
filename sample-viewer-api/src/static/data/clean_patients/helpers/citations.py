@@ -5,4 +5,8 @@ import requests
 def getCitation(pmid, ncbi_stub = ncbi_stub):
     res = requests.get(ncbi_stub + str(pmid))
     if(res.status_code == 200):
-        return(res.json())
+        citation = res.json()
+        citation['url'] = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation['PMID']
+        return(citation)
+
+# getCitation("26276630")
