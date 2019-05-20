@@ -72,6 +72,7 @@
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <app-patient-hla [patient]="patient"></app-patient-hla>
+        <app-patient-viral-seq [patientID]="patient.patientID"></app-patient-viral-seq>
 
         <app-patient-serology [patient]="patient"></app-patient-serology>
       </div>

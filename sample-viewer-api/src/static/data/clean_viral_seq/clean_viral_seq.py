@@ -13,7 +13,7 @@ import helpers
 today = datetime.today().strftime('%Y-%m-%d')
 
 exptCols = ['privatePatientID', 'experimentID', 'GenBank_ID',
-            'measurementTechnique', 'publisher', 'publication', 'data', 'dateModified']
+            'measurementTechnique', 'publisher', 'publication', 'data', 'dateModified', 'cvisb_data']
 
 def getPublisher(row, varName="cvisb_data"):
     # Check binary if CVISB_data
@@ -37,7 +37,7 @@ def getDNAseq(all_seq, df, df_id, virus):
             print(seq.id)
         seq_obj = {"DNAsequence": str(seq.seq)}
         df.at[df[df_id] == id, 'data'] = seq_obj
-    return([df])
+    return(df)
 
 expt_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/"
 
@@ -52,7 +52,6 @@ ids.rename(columns={'index': 'ID'}, inplace=True)
 # Import data  ----------------------------------------------------------------------------------------------------
 ebv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_02262019.csv"
 lsv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/survival_dataset_lasv_04112019.csv"
-
 # [Ebola]  ----------------------------------------------------------------------------------------------------
 ebv = pd.read_csv(ebv_file)
 
@@ -77,7 +76,6 @@ ebv['publication'] = ebv.publisher.apply(helpers.getCitation)
 ebv_seq = list(SeqIO.parse(
     "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/ebola_wg_ntseq_names_02152019_orfs.fasta", "fasta"))
 ebv['data'] = None
-ebv['data'] = ebv['data'].astype(object)
 ebv = getDNAseq(ebv_seq, ebv, 'sample_id', "Ebola")
 sum(ebv.data.apply(lambda x: x is None))
 
@@ -99,7 +97,6 @@ ebv.mergeIssue.value_counts()
 ebv.loc[ebv.mergeIssue == ebv.mergeIssue, ['sample_id', 'ncbi_accession',
                                            'outcome', 'outcome_x', 'outcome_y', 'cohort', 'cohort_x', 'cohort_y']]
 ebv.groupby('KGH_id')._merge.value_counts()
-ebv.columns
 
 
 # [Lassa]  ----------------------------------------------------------------------------------------------------
@@ -153,4 +150,6 @@ sum((lsv.countryName_x != lsv.countryName_y) &
 
 # [Merge and export: experimental data]  ----------------------------------------------------------------------------------------------------
 expts = pd.concat([ebv[exptCols], lsv[exptCols]])
-expts.iloc[500:505].to_json(f"{expt_dir}viral_seq_{today}_1.json", orient="records")
+ebv[ebv._merge == "both"]
+expts['data'] = expts.data.apply(helpers.listify)
+expts.iloc[520:530].to_json(f"{expt_dir}viral_seq_{today}_1.json", orient="records")
