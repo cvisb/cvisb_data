@@ -48,7 +48,7 @@ export class PatientPageComponent implements OnInit {
 
         this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
-        this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
+        this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
 
         this.publications = expts['hits'].map(d => d.publication).filter(d => d).flat();
       })
@@ -57,7 +57,7 @@ export class PatientPageComponent implements OnInit {
         console.log(files);
         this.viralFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
-        this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
+        this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
       })
     })
 
