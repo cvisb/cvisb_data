@@ -5,6 +5,8 @@ import { AuthService } from './_services/auth.service';
 
 import { environment } from '../environments/environment';
 
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+
 // Google Analytics autotrack for tracking sites on single page application.
 // https://github.com/googleanalytics/autotrack#installation-and-usage
 // `npm install autotrack` --> not necessary on servers, since package.json updated. Did have to run an `npm install`
@@ -33,8 +35,11 @@ export class AppComponent {
 
   constructor(
     private authSvc: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
+
+    angulartics2GoogleAnalytics.startTracking();
   }
 
   changeRoutes() {
