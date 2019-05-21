@@ -63,6 +63,7 @@ export class PatientUploadComponent implements OnInit {
     // Clear previous states
     this.errorMsg = null;
     this.errorObj = null;
+    this.uploadProgress = 0;
 
     if (fileList.length > 0) {
 
@@ -117,15 +118,15 @@ export class PatientUploadComponent implements OnInit {
           this.uploadResponse = `Success! ${resp}`;
           console.log(resp)
         }, err => {
-          // this.uploadResponse = "Uh oh. Something went wrong."
-          // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+          this.uploadResponse = "Uh oh. Something went wrong."
+          this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
           //
-          // this.errorObj = err.error.error_list;
+          this.errorObj = err.error.error_list;
           //
-          // if (this.errorObj) {
-          //   this.errorObj = this.tidyBackendErrors(this.errorObj)
-          //   console.log(this.errorObj)
-          // }
+          if (this.errorObj) {
+            this.errorObj = this.tidyBackendErrors(this.errorObj)
+            console.log(this.errorObj)
+          }
           console.log(err)
         });
 
