@@ -358,11 +358,12 @@ export class ApiService {
         .pipe(
           map(single => {
             console.log(single);
-            pct_done = pct_done + (data.length / newData.length)*100;
+            pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
+            return (single);
           }),
           catchError(e => {
-            pct_done = pct_done + (data.length / newData.length)*100;
+            pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
             // console.log(e)
             // throwError(e);

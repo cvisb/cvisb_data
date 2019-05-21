@@ -109,16 +109,42 @@ export class PatientUploadComponent implements OnInit {
         let ids = data.map(d => d.privatePatientID);
 
         let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
+        // double check upload size is greater than 0.
+        uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
 
         this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(
-    tasksArray => {
+    responses => {
       console.log("END OF CALL")
-        console.log(tasksArray)
+        console.log(responses)
+
+        let errs = responses.filter(d => !d.success);
+        let uploaded = responses.filter(d => d.success);
+        let updatedCount = uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
+
+        if(errs.length > 0) {
+          this.uploadResponse = `Uh oh. Something went wrong. ${updatedCount} patients updated; ${this.dataLength - updatedCount} failed.`
+            // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+            this.errorMsg = errs.map(d => d.error.error).join("; ");
+            this.errorMsg = this.errorMsg ? this.errorMsg : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+            console.log(this.errorMsg)
+            console.log(this.errorObj)
+            this.errorObj = errs.map(d => d.error.error_list).flat();
+            //
+            if (this.errorObj) {
+              this.errorObj = this.tidyBackendErrors(this.errorObj)
+              console.log(this.errorObj)
+            }
+            // console.log(err)
+        } else {
+          this.uploadResponse = `Success! ${updatedCount} patients updated`;
+        }
+
+
       })
 
         // .subscribe(resp => {
-        // // let updatedCount = resp.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
+        // //
         //   // this.uploadResponse = `Success! ${updatedCount} patients updated`;
         //   console.log(resp)
         // }, err => {
