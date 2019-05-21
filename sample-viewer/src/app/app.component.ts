@@ -13,14 +13,12 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 // `npm install --save-dev @types/google.analytics` --> `ga` works as a function.
 
 
-declare let ga: Function;
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
   title = 'sample-viewer';
 
@@ -39,7 +37,6 @@ export class AppComponent {
     @Inject(PLATFORM_ID) private platformId: Object,
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
-
     // angulartics2GoogleAnalytics.startTracking();
   }
 
@@ -51,29 +48,12 @@ export class AppComponent {
     this.authSvc.checkLogin();
     if (isPlatformServer(this.platformId)) {
       this.setGTagManager();
-      // this.angulartics2GoogleAnalytics.startTracking();
     }
   }
 
-  // <script async src="https://www.googletagmanager.com/gtag/js"></script>
-  // <!-- <script>
-  //   (function(i, s, o, g, r, a, m) {
-  //     i['GoogleAnalyticsObject'] = r;
-  //     i[r] = i[r] || function() {
-  //       (i[r].q = i[r].q || []).push(arguments)
-  //     }, i[r].l = 1 * new Date();
-  //     a = s.createElement(o),
-  //       m = s.getElementsByTagName(o)[0];
-  //     a.async = 1;
-  //     a.src = g;
-  //     m.parentNode.insertBefore(a, m)
-  //   })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-  //
-  //   ga('create', 'UA-136260805-2', 'auto');
-  // </script> -->
-
   // Adapted from https://github.com/angular/angular-cli/issues/4451#issuecomment-384992203
   private setGTagManager() {
+    console.log('adding Google Analytics')
     const s = this.doc.createElement('script');
     s.type = 'text/javascript';
     s.innerHTML = '  (function(i, s, o, g, r, a, m) { ' +
@@ -94,26 +74,5 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    // this.angulartics2GoogleAnalytics.startTracking();
-    // Only send GA if in client-side operations
-    //   if (isPlatformBrowser(this.platformId)) {
-    //   this.angulartics2GoogleAnalytics.startTracking();
-    // } else {
-    //   this.angulartics2GoogleAnalytics.startTracking();
-    // }
-    //   if (environment.production) {
-    //     ga('create', 'UA-136260805-1', 'auto');
-    //
-    //   } else {
-    //     ga('create', 'UA-136260805-2', 'auto');
-    //   }
-
-    // // Add in autotrack modules I want.
-    // ga('require', 'eventTracker');
-    // ga('require', 'outboundLinkTracker');
-    // ga('require', 'urlChangeTracker');
-    //
-    // ga('send', 'pageview');
-    // }
   }
 }
