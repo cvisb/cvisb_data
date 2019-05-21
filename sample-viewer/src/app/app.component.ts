@@ -52,7 +52,7 @@ export class AppComponent {
 
   ngAfterViewInit() {
     // Only send GA if in client-side operations
-    if (isPlatformBrowser(this.platformId)) {
+    // if (isPlatformBrowser(this.platformId)) {
       if (environment.production) {
         ga('create', 'UA-136260805-1', 'auto');
 
@@ -66,6 +66,6 @@ export class AppComponent {
       // ga('require', 'urlChangeTracker');
       //
       // ga('send', 'pageview');
-    }
+    // }
   }
 }
