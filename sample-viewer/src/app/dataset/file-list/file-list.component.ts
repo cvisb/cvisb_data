@@ -12,7 +12,7 @@ import { getDatasetsService, FileMetadataService, ApiService } from '../../_serv
 
 export class FileListComponent implements OnInit {
   @Input() datasetID: string;
-  downloads: Object[];
+  downloads: any[];
   file_list: MatTableDataSource<any>;
   anything_selected: boolean;
 
