@@ -44,6 +44,7 @@ export class DatasetPageComponent implements OnInit {
       }
 
       this.schema_dataset = dataset;
+      console.log(this.schema_dataset);
     })
 
     // TEMP: shim to remove non-schema.org offensive fields
