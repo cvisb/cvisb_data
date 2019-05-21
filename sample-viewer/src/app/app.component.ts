@@ -37,7 +37,7 @@ export class AppComponent {
     @Inject(PLATFORM_ID) private platformId: Object,
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
-    // angulartics2GoogleAnalytics.startTracking();
+    angulartics2GoogleAnalytics.startTracking();
   }
 
   changeRoutes() {
