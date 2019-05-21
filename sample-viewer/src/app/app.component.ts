@@ -49,16 +49,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.authSvc.checkLogin();
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       console.log('adding GA')
       this.setGTagManager();
-      //   if (environment.production) {
-      //     ga('create', 'UA-136260805-1', 'auto');
-      //
-      //   } else {
-      //     ga('create', 'UA-136260805-2', 'auto');
-      //   }
-      //   this.angulartics2GoogleAnalytics.startTracking();
+      this.angulartics2GoogleAnalytics.startTracking();
     }
   }
 
@@ -102,7 +96,7 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    this.angulartics2GoogleAnalytics.startTracking();
+    // this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
     // if (isPlatformBrowser(this.platformId)) {
     //   if (environment.production) {
