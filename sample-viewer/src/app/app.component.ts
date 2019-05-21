@@ -40,7 +40,7 @@ export class AppComponent {
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
 
-    // angulartics2GoogleAnalytics.startTracking();
+    angulartics2GoogleAnalytics.startTracking();
   }
 
   changeRoutes() {
@@ -49,7 +49,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.authSvc.checkLogin();
-    if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformServer(this.platformId)) {
       console.log('adding GA')
       this.setGTagManager();
       this.angulartics2GoogleAnalytics.startTracking();
@@ -92,18 +92,17 @@ export class AppComponent {
     const head = this.doc.getElementsByTagName('head')[0];
     head.appendChild(s);
 
-    // this.angulartics2GoogleAnalytics.startTracking();
+    this.angulartics2GoogleAnalytics.startTracking();
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      console.log('adding GA')
-      this.setGTagManager();
-      this.angulartics2GoogleAnalytics.startTracking();
-    }
-    // this.angulartics2GoogleAnalytics.startTracking();
+    this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
-    // if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
+    this.angulartics2GoogleAnalytics.startTracking();
+  } else {
+    this.angulartics2GoogleAnalytics.startTracking();
+  }
     //   if (environment.production) {
     //     ga('create', 'UA-136260805-1', 'auto');
     //
