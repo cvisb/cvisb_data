@@ -383,7 +383,7 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       console.log(i)
 
-      let data = newData.slice(i * numChunks, (i + 1) * numChunks);
+      let data = newData.slice(i * size, (i + 1) * size);
       console.log(data)
       results.push(this.put("patient", data));
       this.uploadProgressSubject.next((i / numChunks) * 100);
@@ -408,6 +408,7 @@ export class ApiService {
     this.uploadProgressSubject.next(100);
 
     // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    console.log(forkJoin(results));
     return forkJoin(results);
 
 
