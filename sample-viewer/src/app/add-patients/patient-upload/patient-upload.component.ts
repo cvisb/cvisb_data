@@ -27,7 +27,7 @@ export class PatientUploadComponent implements OnInit {
   previewData: Object[];
   dataLength: number;
   fileKB: number;
-  maxUploadKB: number = 200; // actually 1 MB, but I want them to all resolve within 1 min.
+  maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(
     private apiSvc: ApiService,
@@ -71,7 +71,6 @@ export class PatientUploadComponent implements OnInit {
 
       let file: File = fileList[0];
       this.fileKB = file.size / 1000;
-      console.log(this.fileKB)
       this.fileType = file.type;
 
       switch (this.fileType) {
@@ -107,28 +106,33 @@ export class PatientUploadComponent implements OnInit {
         let data = this.prepData(reader.result);
         console.log(data)
 
-
         let ids = data.map(d => d.privatePatientID);
 
         let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
 
 
-        this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(resp => {
-        // let updatedCount = resp.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
-          // this.uploadResponse = `Success! ${updatedCount} patients updated`;
-          console.log(resp)
-        }, err => {
-          this.uploadResponse = "Uh oh. Something went wrong. Some patients were not uploaded."
-          // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-          // //
-          // this.errorObj = err.error.error_list;
-          // //
-          // if (this.errorObj) {
-          //   this.errorObj = this.tidyBackendErrors(this.errorObj)
-          //   // console.log(this.errorObj)
-          // }
-          // console.log(err)
-        });
+        this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(
+    tasksArray => {
+      console.log("END OF CALL")
+        console.log(tasksArray)
+      })
+
+        // .subscribe(resp => {
+        // // let updatedCount = resp.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
+        //   // this.uploadResponse = `Success! ${updatedCount} patients updated`;
+        //   console.log(resp)
+        // }, err => {
+        //   this.uploadResponse = "Uh oh. Something went wrong. Some patients were not uploaded."
+        //   // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+        //   // //
+        //   // this.errorObj = err.error.error_list;
+        //   // //
+        //   // if (this.errorObj) {
+        //   //   this.errorObj = this.tidyBackendErrors(this.errorObj)
+        //   //   // console.log(this.errorObj)
+        //   // }
+        //   // console.log(err)
+        // });
 
         // this.apiSvc.put("patient", data).subscribe(resp => {
         //   this.uploadResponse = `Success! ${resp}`;
@@ -184,7 +188,7 @@ export class PatientUploadComponent implements OnInit {
 
       this.dataLength = data.length;
 
-      console.log(data)
+      // console.log(data)
       this.previewData = data;
 
       return (data);
