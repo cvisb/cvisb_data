@@ -96,6 +96,11 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('adding GA')
+      this.setGTagManager();
+      this.angulartics2GoogleAnalytics.startTracking();
+    }
     // this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
     // if (isPlatformBrowser(this.platformId)) {
