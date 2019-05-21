@@ -14,8 +14,8 @@ import { getDatasetsService, FileMetadataService } from '../_services';
 export class DatasetPageComponent implements OnInit {
   private dsid: string; // file ID
   private datasets: any[];
-  dataset: Object;
-  schema_dataset: Object;
+  dataset: any;
+  schema_dataset: any;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
