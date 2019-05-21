@@ -19,6 +19,9 @@ import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver } from './_services/';
 
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+
 // Dialogue boxes
 import { SampleMetadataComponent } from './_dialogs/index';
 
@@ -200,6 +203,7 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     AppRoutingModule,
     AdminModule,
     HlaModule,
+    Angulartics2Module.forRoot(), // Google Analytics
   ],
   exports: [
     // EmbedJsonldDirective
