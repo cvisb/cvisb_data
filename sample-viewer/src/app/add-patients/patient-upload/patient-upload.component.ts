@@ -39,7 +39,7 @@ export class PatientUploadComponent implements OnInit {
       this.user = user;
     })
 
-    apiSvc.uploadProgressState$.subscribe((progress:number) => {
+    apiSvc.uploadProgressState$.subscribe((progress: number) => {
       console.log(progress)
       this.uploadProgress = progress;
     })
@@ -114,67 +114,29 @@ export class PatientUploadComponent implements OnInit {
 
 
         this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(
-    responses => {
-      console.log("END OF CALL")
-        console.log(responses)
+          responses => {
+            console.log(responses)
 
-        let errs = responses.filter(d => !d.success);
-        let uploaded = responses.filter(d => d.success);
-        let updatedCount = uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
+            let errs = responses.filter(d => !d.success);
+            let uploaded = responses.filter(d => d.success);
+            let updatedCount = uploaded.length > 0 ? uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total + num) : 0;
 
-        if(errs.length > 0) {
-          this.uploadResponse = `Uh oh. Something went wrong. ${updatedCount} patients updated; ${this.dataLength - updatedCount} failed.`
-            // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-            this.errorMsg = errs.map(d => d.error.error).join("; ");
-            this.errorMsg = this.errorMsg ? this.errorMsg : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-            console.log(this.errorMsg)
-            console.log(this.errorObj)
-            this.errorObj = errs.map(d => d.error.error_list).flat();
-            //
-            if (this.errorObj) {
-              this.errorObj = this.tidyBackendErrors(this.errorObj)
-              console.log(this.errorObj)
+            if (errs.length > 0) {
+              this.uploadResponse = `Uh oh. Something went wrong. ${updatedCount} patients updated; ${this.dataLength - updatedCount} failed.`
+              let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
+              this.errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+
+              this.errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
+              //
+              if (this.errorObj.length > 0) {
+                this.errorObj = this.tidyBackendErrors(this.errorObj)
+              }
+            } else {
+              this.uploadResponse = `Success! ${updatedCount} patients updated`;
             }
-            // console.log(err)
-        } else {
-          this.uploadResponse = `Success! ${updatedCount} patients updated`;
-        }
 
 
-      })
-
-        // .subscribe(resp => {
-        // //
-        //   // this.uploadResponse = `Success! ${updatedCount} patients updated`;
-        //   console.log(resp)
-        // }, err => {
-        //   this.uploadResponse = "Uh oh. Something went wrong. Some patients were not uploaded."
-        //   // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-        //   // //
-        //   // this.errorObj = err.error.error_list;
-        //   // //
-        //   // if (this.errorObj) {
-        //   //   this.errorObj = this.tidyBackendErrors(this.errorObj)
-        //   //   // console.log(this.errorObj)
-        //   // }
-        //   // console.log(err)
-        // });
-
-        // this.apiSvc.put("patient", data).subscribe(resp => {
-        //   this.uploadResponse = `Success! ${resp}`;
-        //   console.log(resp)
-        // }, err => {
-        //   this.uploadResponse = "Uh oh. Something went wrong."
-        //   this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 patients at a time. It may have worked or not-- be patient and check in a few minutes if your patients have been added. Sorry I can't be more helpful. :("
-        //
-        //   this.errorObj = err.error.error_list;
-        //
-        //   if (this.errorObj) {
-        //     this.errorObj = this.tidyBackendErrors(this.errorObj)
-        //     console.log(this.errorObj)
-        //   }
-        //   console.log(err)
-        // });
+          })
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";

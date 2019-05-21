@@ -348,16 +348,12 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       let data = newData.slice(i * size, (i + 1) * size);
       miniDatasets.push(data);
-      // this.put("patient", data);
-      // this.uploadProgressSubject.next((i / numChunks) * 100);
     }
-    // console.log(miniDatasets)
 
     let singleObservables = miniDatasets.map((data: any[]) => {
       return this.put("patient", data)
         .pipe(
           map(single => {
-            console.log(single);
             pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
             return (single);
@@ -365,15 +361,10 @@ export class ApiService {
           catchError(e => {
             pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
-            // console.log(e)
-            // throwError(e);
-            // return (new Observable<any>(null))
             return of(e);
           })
         )
     });
-    // console.log(singleObservables)
-    // console.log(forkJoin(singleObservables))
 
     return forkJoin(singleObservables);
   }
