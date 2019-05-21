@@ -98,10 +98,11 @@ export class AppComponent {
     const head = this.doc.getElementsByTagName('head')[0];
     head.appendChild(s);
 
-    this.angulartics2GoogleAnalytics.startTracking();
+    // this.angulartics2GoogleAnalytics.startTracking();
   }
 
   ngAfterViewInit() {
+    this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
     // if (isPlatformBrowser(this.platformId)) {
     //   if (environment.production) {
