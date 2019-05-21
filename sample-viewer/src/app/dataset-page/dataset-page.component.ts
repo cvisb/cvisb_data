@@ -13,7 +13,7 @@ import { getDatasetsService, FileMetadataService } from '../_services';
 
 export class DatasetPageComponent implements OnInit {
   private dsid: string; // file ID
-  private datasets: Object[];
+  private datasets: any[];
   dataset: Object;
   schema_dataset: Object;
 
