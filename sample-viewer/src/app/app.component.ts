@@ -50,9 +50,8 @@ export class AppComponent {
   ngOnInit() {
     this.authSvc.checkLogin();
     if (isPlatformServer(this.platformId)) {
-      console.log('adding GA')
       this.setGTagManager();
-      this.angulartics2GoogleAnalytics.startTracking();
+      // this.angulartics2GoogleAnalytics.startTracking();
     }
   }
 
@@ -91,12 +90,10 @@ export class AppComponent {
       `ga('create', '${environment.GA_tracking}', 'auto');`
     const head = this.doc.getElementsByTagName('head')[0];
     head.appendChild(s);
-
-    // this.angulartics2GoogleAnalytics.startTracking();
   }
 
   ngAfterViewInit() {
-    this.angulartics2GoogleAnalytics.startTracking();
+    // this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
   //   if (isPlatformBrowser(this.platformId)) {
   //   this.angulartics2GoogleAnalytics.startTracking();
