@@ -373,28 +373,43 @@ export class ApiService {
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
+    console.log("PUT PIECEWISE")
     let numChunks = Math.ceil(newData.length / size);
 
     let results = [];
 
-    return (this.put(endpoint, newData));
+    // return (this.put(endpoint, newData));
 
-    // for (let i = 0; i < numChunks; i++) {
-    //   console.log(i)
-    //   this.uploadProgressSubject.next(i / numChunks);
-    //
-    //   let data = newData.slice(i * numChunks, (i + 1) * numChunks);
-    //   results.push(this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
-    //     this.jsonify(data),
-    //     {
-    //       headers: new HttpHeaders()
-    //     }));
-    //   console.log(results);
-    //
-    // }
-    // return forkJoin(results).pipe().subscribe(res => {
-    //   console.log(res)
-    // })
+    for (let i = 0; i < numChunks; i++) {
+      console.log(i)
+
+
+      //
+        let data = newData.slice(i * numChunks, (i + 1) * numChunks);
+        results.push(this.put("patient", data));
+        this.uploadProgressSubject.next((i / numChunks) * 100);
+      //   results.push(this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
+      //     this.jsonify(data),
+      //     {
+      //       headers: new HttpHeaders()
+      //     }));
+      //   console.log(results);
+      //
+      // }
+      // return forkJoin(results).pipe().subscribe(res => {
+      //   console.log(res)
+      // })
+    }
+
+    // let response1 = this.put("patient", newData);
+    // let response2 = this.put("patient", newData);
+    // let response3 = this.put("patient", newData);
+    // Update progress bar
+    this.uploadProgressSubject.next(100);
+
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin(results);
+
 
     // let result = this.putRecursive(endpoint, newData.slice(0, size), 0, size)
     //   .expand(res => this.putRecursive(endpoint, newData.slice(res.index * size, (res.index + 1) * size), res.index, size))

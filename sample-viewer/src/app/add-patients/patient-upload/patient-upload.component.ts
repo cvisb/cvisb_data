@@ -26,6 +26,8 @@ export class PatientUploadComponent implements OnInit {
   missingReq: Object[];
   previewData: Object[];
   dataLength: number;
+  fileKB: number;
+  maxUploadKB: number = 900; // actually 1 MB, but adding some buffer.
 
   constructor(
     private apiSvc: ApiService,
@@ -38,6 +40,7 @@ export class PatientUploadComponent implements OnInit {
     })
 
     apiSvc.uploadProgressState$.subscribe((progress:number) => {
+      console.log(progress)
       this.uploadProgress = progress;
     })
 
@@ -66,6 +69,8 @@ export class PatientUploadComponent implements OnInit {
       this.uploadResponse = "Uploading file..."
 
       let file: File = fileList[0];
+      this.fileKB = file.size / 1000;
+      console.log(this.fileKB)
       this.fileType = file.type;
 
       switch (this.fileType) {
@@ -104,13 +109,32 @@ export class PatientUploadComponent implements OnInit {
 
         let ids = data.map(d => d.privatePatientID);
 
+        let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
 
-        // this.apiSvc.putPiecewise("patient", data).subscribe(resp => {
+
+        this.apiSvc.putPiecewise("patient", data).subscribe(resp => {
+        // this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(resp => {
+          this.uploadResponse = `Success! ${resp}`;
+          console.log(resp)
+        }, err => {
+          // this.uploadResponse = "Uh oh. Something went wrong."
+          // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+          //
+          // this.errorObj = err.error.error_list;
+          //
+          // if (this.errorObj) {
+          //   this.errorObj = this.tidyBackendErrors(this.errorObj)
+          //   console.log(this.errorObj)
+          // }
+          console.log(err)
+        });
+
+        // this.apiSvc.put("patient", data).subscribe(resp => {
         //   this.uploadResponse = `Success! ${resp}`;
         //   console.log(resp)
         // }, err => {
         //   this.uploadResponse = "Uh oh. Something went wrong."
-        //   this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+        //   this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 patients at a time. It may have worked or not-- be patient and check in a few minutes if your patients have been added. Sorry I can't be more helpful. :("
         //
         //   this.errorObj = err.error.error_list;
         //
@@ -120,21 +144,6 @@ export class PatientUploadComponent implements OnInit {
         //   }
         //   console.log(err)
         // });
-        this.apiSvc.put("patient", data).subscribe(resp => {
-          this.uploadResponse = `Success! ${resp}`;
-          console.log(resp)
-        }, err => {
-          this.uploadResponse = "Uh oh. Something went wrong."
-          this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 patients at a time. It may have worked or not-- be patient and check in a few minutes if your patients have been added. Sorry I can't be more helpful. :("
-
-          this.errorObj = err.error.error_list;
-
-          if (this.errorObj) {
-            this.errorObj = this.tidyBackendErrors(this.errorObj)
-            console.log(this.errorObj)
-          }
-          console.log(err)
-        });
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
