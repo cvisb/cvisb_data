@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
@@ -324,7 +324,7 @@ export class ApiService {
 
   put(endpoint: string, newData: any): Observable<any> {
     if (newData) {
-      console.log('adding new data')
+      // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
@@ -351,30 +351,28 @@ export class ApiService {
       // this.put("patient", data);
       // this.uploadProgressSubject.next((i / numChunks) * 100);
     }
-    console.log(miniDatasets)
-    // this.uploadProgressSubject.next(100);
-    //
+    // console.log(miniDatasets)
+
     let singleObservables = miniDatasets.map((data: any[]) => {
       return this.put("patient", data)
         .pipe(
           map(single => {
             console.log(single);
             pct_done = pct_done + (data.length / newData.length)*100;
-            console.log(pct_done)
             this.uploadProgressSubject.next(pct_done);
           }),
           catchError(e => {
             pct_done = pct_done + (data.length / newData.length)*100;
             this.uploadProgressSubject.next(pct_done);
-            console.log(pct_done)
             // console.log(e)
             // throwError(e);
-            return (new Observable<any>(null))
+            // return (new Observable<any>(null))
+            return of(e);
           })
         )
     });
-    console.log(singleObservables)
-    console.log(forkJoin(singleObservables))
+    // console.log(singleObservables)
+    // console.log(forkJoin(singleObservables))
 
     return forkJoin(singleObservables);
   }
