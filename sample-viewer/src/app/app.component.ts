@@ -40,7 +40,7 @@ export class AppComponent {
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
 
-    angulartics2GoogleAnalytics.startTracking();
+    // angulartics2GoogleAnalytics.startTracking();
   }
 
   changeRoutes() {
@@ -72,6 +72,7 @@ export class AppComponent {
   //   ga('create', 'UA-136260805-2', 'auto');
   // </script> -->
 
+  // Adapted from https://github.com/angular/angular-cli/issues/4451#issuecomment-384992203
   private setGTagManager() {
     const s = this.doc.createElement('script');
     s.type = 'text/javascript';
@@ -95,11 +96,11 @@ export class AppComponent {
   ngAfterViewInit() {
     // this.angulartics2GoogleAnalytics.startTracking();
     // Only send GA if in client-side operations
-  //   if (isPlatformBrowser(this.platformId)) {
-  //   this.angulartics2GoogleAnalytics.startTracking();
-  // } else {
-  //   this.angulartics2GoogleAnalytics.startTracking();
-  // }
+    //   if (isPlatformBrowser(this.platformId)) {
+    //   this.angulartics2GoogleAnalytics.startTracking();
+    // } else {
+    //   this.angulartics2GoogleAnalytics.startTracking();
+    // }
     //   if (environment.production) {
     //     ga('create', 'UA-136260805-1', 'auto');
     //
