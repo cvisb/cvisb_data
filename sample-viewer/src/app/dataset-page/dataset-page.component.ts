@@ -27,6 +27,8 @@ export class DatasetPageComponent implements OnInit {
     // Pull out the file ID
     route.params.subscribe(params => {
       this.dsid = params['dsid'];
+      console.log(params);
+      this.schema_dataset = params['datasetData'];
     });
 
     // Hit API to get data

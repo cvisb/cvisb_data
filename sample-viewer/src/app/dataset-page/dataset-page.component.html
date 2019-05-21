@@ -1,6 +1,9 @@
+<router-outlet name="datasets"></router-outlet>
+
 <div class="container" id="dataset.identifier">
 
-  <div class="dataset-container dataset-page" *ngIf="dataset">
+  <div class="dataset-container dataset-page" >
+  <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->
 
     <app-dataset-page-nav [id]="dataset.identifier" class="nav dataset-nav"></app-dataset-page-nav>
 
@@ -25,6 +28,8 @@
       <ng-container *ngIf="dataset.identifier === 'hla'" id="compare">
         <app-hla-page></app-hla-page>
       </ng-container>
+
+
 
       <div id="files">
         <h3>Download files and view metadata</h3>
