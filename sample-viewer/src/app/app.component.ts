@@ -67,6 +67,6 @@ export class AppComponent {
       ga('require', 'urlChangeTracker');
 
       ga('send', 'pageview');
-    // }
+    }
   }
 }
