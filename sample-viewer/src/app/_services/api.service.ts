@@ -383,11 +383,10 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       console.log(i)
 
-
-      //
-        let data = newData.slice(i * numChunks, (i + 1) * numChunks);
-        results.push(this.put("patient", data));
-        this.uploadProgressSubject.next((i / numChunks) * 100);
+      let data = newData.slice(i * numChunks, (i + 1) * numChunks);
+      console.log(data)
+      results.push(this.put("patient", data));
+      this.uploadProgressSubject.next((i / numChunks) * 100);
       //   results.push(this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
       //     this.jsonify(data),
       //     {
@@ -400,6 +399,7 @@ export class ApiService {
       //   console.log(res)
       // })
     }
+    console.log(results)
 
     // let response1 = this.put("patient", newData);
     // let response2 = this.put("patient", newData);
