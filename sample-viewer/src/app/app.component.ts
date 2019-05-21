@@ -28,13 +28,9 @@ export class AppComponent {
     { 'path': 'home', 'label': 'home', 'selected': true },
     { 'path': 'dataset', 'label': 'data', 'selected': false },
     { 'path': 'patient', 'label': 'patients', 'selected': false },
-    // { 'path': 'patient/upload', 'label': 'add patients', 'selected': false },
     { 'path': 'sample', 'label': 'samples', 'selected': false },
-    // { 'path': 'sample/upload', 'label': 'add samples', 'selected': false },
     { 'path': 'upload', 'label': 'upload', 'selected': false },
     { 'path': 'documentation', 'label': 'documentation', 'selected': false },
-    // { 'path': 'schema', 'label': 'schema', 'selected': false },
-    // { 'path': 'login', 'label': 'login', 'selected': false }
   ]
 
   constructor(
