@@ -337,19 +337,46 @@ export class ApiService {
 
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
+  // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 3): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
+    let pct_done = 0;
 
     let results = [];
+    let miniDatasets = [];
 
     for (let i = 0; i < numChunks; i++) {
       let data = newData.slice(i * size, (i + 1) * size);
-      results.push(this.put("patient", data));
-      this.uploadProgressSubject.next((i / numChunks) * 100);
+      miniDatasets.push(data);
+      // this.put("patient", data);
+      // this.uploadProgressSubject.next((i / numChunks) * 100);
     }
-    this.uploadProgressSubject.next(100);
+    console.log(miniDatasets)
+    // this.uploadProgressSubject.next(100);
+    //
+    let singleObservables = miniDatasets.map((data: any[]) => {
+      return this.put("patient", data)
+        .pipe(
+          map(single => {
+            console.log(single);
+            pct_done = pct_done + (data.length / newData.length)*100;
+            console.log(pct_done)
+            this.uploadProgressSubject.next(pct_done);
+          }),
+          catchError(e => {
+            pct_done = pct_done + (data.length / newData.length)*100;
+            this.uploadProgressSubject.next(pct_done);
+            console.log(pct_done)
+            // console.log(e)
+            // throwError(e);
+            return (new Observable<any>(null))
+          })
+        )
+    });
+    console.log(singleObservables)
+    console.log(forkJoin(singleObservables))
 
-    return forkJoin(results);
+    return forkJoin(singleObservables);
   }
 
   // Function to convert to a json object to be inserted by ES

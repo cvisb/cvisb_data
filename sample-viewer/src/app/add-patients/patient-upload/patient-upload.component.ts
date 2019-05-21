@@ -27,7 +27,7 @@ export class PatientUploadComponent implements OnInit {
   previewData: Object[];
   dataLength: number;
   fileKB: number;
-  maxUploadKB: number = 500; // actually 1 MB, but I want them to all resolve within 1 min.
+  maxUploadKB: number = 200; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(
     private apiSvc: ApiService,
@@ -114,20 +114,20 @@ export class PatientUploadComponent implements OnInit {
 
 
         this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(resp => {
-        let updatedCount = resp.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
-          this.uploadResponse = `Success! ${updatedCount} patients updated`;
-          // console.log(resp)
+        // let updatedCount = resp.map(d => +d.message.split(" ")[0]).reduce((total, num) => total+num);
+          // this.uploadResponse = `Success! ${updatedCount} patients updated`;
+          console.log(resp)
         }, err => {
           this.uploadResponse = "Uh oh. Something went wrong. Some patients were not uploaded."
-          this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-          //
-          this.errorObj = err.error.error_list;
-          //
-          if (this.errorObj) {
-            this.errorObj = this.tidyBackendErrors(this.errorObj)
-            // console.log(this.errorObj)
-          }
-          console.log(err)
+          // this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+          // //
+          // this.errorObj = err.error.error_list;
+          // //
+          // if (this.errorObj) {
+          //   this.errorObj = this.tidyBackendErrors(this.errorObj)
+          //   // console.log(this.errorObj)
+          // }
+          // console.log(err)
         });
 
         // this.apiSvc.put("patient", data).subscribe(resp => {
