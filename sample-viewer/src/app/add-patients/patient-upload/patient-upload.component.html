@@ -7,9 +7,12 @@
 
 
   <div class="client-responses">
-    <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
 
     <h1 *ngIf="uploadResponse">{{ uploadResponse }}</h1>
+    <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
+    <p class="pct-complete">
+      {{ uploadProgress | number:'1.0-0' }}% complete
+    </p>
 
     <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
 
