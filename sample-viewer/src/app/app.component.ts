@@ -1,17 +1,17 @@
-import { Component, OnInit, PLATFORM_ID, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer, DOCUMENT } from '@angular/common';
 
 import { AuthService } from './_services/auth.service';
 
 import { environment } from '../environments/environment';
 
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
-
 // Google Analytics autotrack for tracking sites on single page application.
-// https://github.com/googleanalytics/autotrack#installation-and-usage
-// `npm install autotrack` --> not necessary on servers, since package.json updated. Did have to run an `npm install`
-// `npm install --save-dev @types/google.analytics` --> `ga` works as a function.
-
+// Added https://github.com/angulartics/angulartics2 instead of Google's autotrack (https://github.com/googleanalytics/autotrack)
+// ... seemed more compatible with Angular Universal
+// SSR --> webpack complains that the Autotrack doesn't contain document... and therefore fails to embed the tracking code, etc.
+// Therefore, statically embed the GA 'create' script server-side on load (with different tracking IDs for dev/prod)
+// and then use angulartics2 to trigger the SPA changes
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +53,6 @@ export class AppComponent {
 
   // Adapted from https://github.com/angular/angular-cli/issues/4451#issuecomment-384992203
   private setGTagManager() {
-    console.log('adding Google Analytics')
     const s = this.doc.createElement('script');
     s.type = 'text/javascript';
     s.innerHTML = '  (function(i, s, o, g, r, a, m) { ' +
@@ -71,8 +70,5 @@ export class AppComponent {
       `ga('create', '${environment.GA_tracking}', 'auto');`
     const head = this.doc.getElementsByTagName('head')[0];
     head.appendChild(s);
-  }
-
-  ngAfterViewInit() {
   }
 }
