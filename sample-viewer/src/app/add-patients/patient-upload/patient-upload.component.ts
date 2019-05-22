@@ -101,7 +101,7 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded. Sending data to the database..."
+        this.uploadResponse = "File uploaded; sending data to the database.  Be patient! This can take a few minutes"
 
         let data = this.prepData(reader.result);
         console.log(data)
