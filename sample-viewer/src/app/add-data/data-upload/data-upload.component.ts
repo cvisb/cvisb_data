@@ -61,6 +61,7 @@ export class DataUploadComponent implements OnInit {
     // Clear previous states
     this.errorMsg = null;
     this.errorObj = null;
+    this.uploadProgress = 0;
 
     if (fileList.length > 0) {
 

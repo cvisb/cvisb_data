@@ -17,10 +17,15 @@ export class SubmitSamplesComponent implements OnInit {
   errorObj: Object[];
   @Input() data: Object[];
 
+
+  uploadProgress: number = 0;
   fileKB: number;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(private apiSvc: ApiService, ) {
+    apiSvc.uploadProgressState$.subscribe((progress: number) => {
+      this.uploadProgress = progress;
+    })
   }
 
   ngOnInit() {
@@ -30,6 +35,7 @@ export class SubmitSamplesComponent implements OnInit {
     this.uploadResponse = "";
     this.errorMsg = "";
     this.errorObj = null;
+    this.uploadProgress = 0;
   }
 
   submitData() {
