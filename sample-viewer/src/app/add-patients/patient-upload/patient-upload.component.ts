@@ -5,7 +5,7 @@ import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
 
 import { CvisbUser } from '../../_models';
 
-import { nest } from 'd3';
+
 import { cloneDeep } from 'lodash';
 
 
