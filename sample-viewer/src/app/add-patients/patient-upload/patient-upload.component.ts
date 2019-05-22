@@ -117,25 +117,11 @@ export class PatientUploadComponent implements OnInit {
           responses => {
             console.log(responses)
 
-            let errs = responses.filter(d => !d.success);
-            let uploaded = responses.filter(d => d.success);
-            let updatedCount = uploaded.length > 0 ? uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total + num) : 0;
+            let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, 'patients');
 
-            if (errs.length > 0) {
-              this.uploadResponse = `Uh oh. Something went wrong. ${updatedCount} patients updated; ${this.dataLength - updatedCount} failed.`
-              let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
-              this.errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
-
-              this.errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
-              //
-              if (this.errorObj.length > 0) {
-                this.errorObj = this.tidyBackendErrors(this.errorObj)
-              }
-            } else {
-              this.uploadResponse = `Success! ${updatedCount} patients updated`;
-            }
-
-
+            this.uploadResponse = result.uploadResponse;
+            this.errorMsg = result.errorMsg;
+            this.errorObj = result.errorObj;
           })
 
         // Clear input so can re-upload the same file.
@@ -237,31 +223,5 @@ export class PatientUploadComponent implements OnInit {
   }
 
 
-  tidyBackendErrors(error_array) {
-    let errs = [];
 
-    // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(
-      msg => errs.push({
-        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
-        id: document.input_obj.patientID,
-        input: document.input_obj
-      })))
-    console.log(errs)
-
-    // Group by error type
-    let nested = nest()
-      .key((d: any) => d.message)
-      .rollup(function(values: any): any {
-        return {
-          count: values.length,
-          ids: values.map(x => x.id),
-          inputs: values.map(x => x.input)
-        }
-      }).entries(errs);
-
-    console.log(nested)
-
-    return (nested)
-  }
 }

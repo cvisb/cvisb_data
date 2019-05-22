@@ -338,7 +338,7 @@ export class ApiService {
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
-  putPiecewise(endpoint: string, newData: any, size: number = 25, initialUpload: number = 3): Observable<any> {
+  putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
 
@@ -346,15 +346,7 @@ export class ApiService {
     let miniDatasets = [];
 
     for (let i = 0; i < numChunks; i++) {
-      // for i = 0, add in a separate block for the first three entries
-      // intended for UX experience -- show something is happening quickly.
-      if (i === 0) {
-        initialUpload = initialUpload <= size ? initialUpload : size;
-        miniDatasets.push(newData.slice(i * size, initialUpload));
-        miniDatasets.push(newData.slice(initialUpload, (i + 1) * size));
-      } else {
-        miniDatasets.push(newData.slice(i * size, (i + 1) * size));
-      }
+      miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
 
     let singleObservables = miniDatasets.map((data: any[]) => {
@@ -384,6 +376,60 @@ export class ApiService {
       json_arr.push(JSON.stringify(record))
     }
     return (json_arr.join("\n"))
+  }
+
+  tidyPutResponse(responses, dataLength, dataType) {
+    let errs = responses.filter(d => !d.success);
+    let uploaded = responses.filter(d => d.success);
+    let updatedCount = uploaded.length > 0 ? uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total + num) : 0;
+    let uploadResponse: string;
+    let errorMsg: string;
+    let errorObj: Object[];
+
+    if (errs.length > 0) {
+      uploadResponse = `Uh oh. Something went wrong. ${updatedCount} ${dataType} updated; ${dataLength - updatedCount} failed.`
+      let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
+      errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+
+      errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
+      //
+      if (errorObj.length > 0) {
+        errorObj = this.tidyBackendErrors(errorObj)
+      }
+    } else {
+      uploadResponse = `Success! ${updatedCount} ${dataType} updated`;
+    }
+
+    return ({ uploadResponse: uploadResponse, errorMsg: errorMsg, errorObj: errorObj })
+  }
+
+
+  tidyBackendErrors(error_array) {
+    let errs = [];
+
+    // Reformat the errors
+    error_array.forEach(document => document.error_messages.forEach(
+      msg => errs.push({
+        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
+        id: document.input_obj.patientID,
+        input: document.input_obj
+      })))
+    console.log(errs)
+
+    // Group by error type
+    let nested = nest()
+      .key((d: any) => d.message)
+      .rollup(function(values: any): any {
+        return {
+          count: values.length,
+          ids: values.map(x => x.id),
+          inputs: values.map(x => x.input)
+        }
+      }).entries(errs);
+
+    console.log(nested)
+
+    return (nested)
   }
 
 
