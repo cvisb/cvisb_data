@@ -17,10 +17,7 @@ export class SubmitSamplesComponent implements OnInit {
   errorObj: Object[];
   @Input() data: Object[];
 
-
   uploadProgress: number = 0;
-  fileKB: number;
-  maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(private apiSvc: ApiService, ) {
     apiSvc.uploadProgressState$.subscribe((progress: number) => {
@@ -56,12 +53,7 @@ export class SubmitSamplesComponent implements OnInit {
       console.log('data to submit:')
       console.log(data2upload)
 
-      let uploadSize = Math.floor((data2upload.length / this.fileKB) * this.maxUploadKB);
-      console.log(uploadSize)
-      // double check upload size is greater than 0.
-      uploadSize = uploadSize === 0 ? 1 : uploadSize;
-
-      this.apiSvc.putPiecewise("sample", data2upload, uploadSize).subscribe(
+      this.apiSvc.putPiecewise("sample", data2upload).subscribe(
         responses => {
           console.log(responses)
 
