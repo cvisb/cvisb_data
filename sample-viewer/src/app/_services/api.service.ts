@@ -345,6 +345,7 @@ export class ApiService {
 
     let results = [];
     let miniDatasets = [];
+    console.log(numChunks)
 
     for (let i = 0; i < numChunks; i++) {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));

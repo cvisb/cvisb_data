@@ -57,6 +57,7 @@ export class SubmitSamplesComponent implements OnInit {
       console.log(data2upload)
 
       let uploadSize = Math.floor((data2upload.length / this.fileKB) * this.maxUploadKB);
+      console.log(uploadSize)
       // double check upload size is greater than 0.
       uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
