@@ -46,6 +46,7 @@
     "@id":               schema:streetAddress
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # streetAddress
 - "@id":                 cvisb:streetAddress
@@ -61,6 +62,7 @@
     "@id":               schema:streetAddress
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # addressLocality
 - "@id":                 cvisb:addressLocality
@@ -76,6 +78,7 @@
     "@id":               schema:addressLocality
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # addressRegion
 - "@id":                 cvisb:addressRegion
@@ -91,6 +94,7 @@
     "@id":               schema:addressRegion
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # postalCode
 - "@id":                 cvisb:postalCode
@@ -106,6 +110,7 @@
     "@id":               schema:postalCode
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # addressCountry
 - "@id":                 cvisb:addressCountry
@@ -120,3 +125,4 @@
     "@id":               schema:addressCountry
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false

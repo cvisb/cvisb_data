@@ -246,7 +246,7 @@
   rdfs:comment:          Publisher of this dataset, usually the host organization
   rdfs:label:            publisher
   schema:domainIncludes:
-    - "@id":             cvisb:DataDownload
+    - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             "cvisb:Organization"
   schema:sameAs:

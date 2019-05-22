@@ -44,6 +44,7 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                           - SL
                           - NG
@@ -64,6 +65,7 @@
     "@id":               schema:url
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                           - https://www.iso.org/obp/ui/#iso:code:3166:SL
                           - https://www.iso.org/obp/ui/#iso:code:3166:NG
@@ -84,6 +86,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
   schema:Enumeration:
                           - Sierra Leone
                           - Nigeria
@@ -103,3 +106,4 @@
     "@id":               schema:alternateName
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
