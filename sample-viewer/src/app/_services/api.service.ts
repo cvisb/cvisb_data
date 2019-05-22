@@ -350,7 +350,7 @@ export class ApiService {
     }
 
     let singleObservables = miniDatasets.map((data: any[]) => {
-      return this.put("patient", data)
+      return this.put(endpoint, data)
         .pipe(
           map(single => {
             pct_done = pct_done + (data.length / newData.length) * 100;
