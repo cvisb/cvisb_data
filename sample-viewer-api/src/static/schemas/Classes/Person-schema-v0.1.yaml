@@ -46,6 +46,7 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:additionalName
   "@type":               rdf:Property
@@ -59,6 +60,7 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:familyName
   "@type":               rdf:Property
@@ -72,6 +74,8 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
+
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -85,3 +89,4 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true

@@ -43,6 +43,7 @@
     - "@id":                 schema:Text
   owl:cardinality:           many
   marginality:               required
+  authenticated:             true
 
 # source sample type
 - "@id":                     cvisb:sourceSampleType
@@ -75,6 +76,7 @@
                             - "viralRNA"
                             - "totalRNA"
                             - "DNA"
+  authenticated:             false
 
   # date of primary sample collection
 - "@id":                     cvisb:primarySampleDate
@@ -82,8 +84,9 @@
   rdfs:comment:              "Date of *primary* sample creation/collection (e.g. blood draw, tissue sample, urine/feces collection) (YYYY-MM-DD)"
   rdfs:label:                primarySampleDate
   schema:domainIncludes:
-    - "@id":                 schema:Date
+    - "@id":                 cvisb:DerivedSample
   schema:rangeIncludes:
-    - "@id":                 cvisb:DateRange
+    - "@id":                 cvisb:Date
   owl:cardinality:           one
   marginality:               recommended
+  authenticated:             true

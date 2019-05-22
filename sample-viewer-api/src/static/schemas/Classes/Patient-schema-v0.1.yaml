@@ -372,7 +372,7 @@
   rdfs:comment:          A list of related household contacts's public patientIDs
   rdfs:label:            relatedTo
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       many
@@ -384,7 +384,7 @@
   rdfs:comment:          A list of related household contacts's private patientIDs
   rdfs:label:            relatedToPrivate
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       many
@@ -396,7 +396,7 @@
   rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.
   rdfs:label:            exposureType
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
@@ -408,7 +408,7 @@
   rdfs:comment:          For contacts, how they are related to the infected person.
   rdfs:label:            contactSurvivorRelationship
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
