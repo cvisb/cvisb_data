@@ -110,7 +110,7 @@
             <div class="sample-group" *ngFor="let sample of element[sampleType]">
 
               <!-- SampleID  -->
-              <div class="flex-container sample-id" matTooltip="view metadata" (click)="showSampleMD(sample)">
+              <div class="flex-container sample-id" class="sample-label" matTooltip="view sample metadata" (click)="showSampleMD(sample)">
                 {{ sample.sampleID }}
               </div>
 
