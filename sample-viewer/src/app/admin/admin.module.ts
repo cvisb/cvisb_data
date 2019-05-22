@@ -13,6 +13,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FundingComponent } from './funding/funding.component';
 import { AboutDataComponent } from './about-data/about-data.component';
+import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AboutDataComponent } from './about-data/about-data.component';
     UnauthorizedComponent,
     PageNotFoundComponent,
     FundingComponent,
-    AboutDataComponent,],
+    AboutDataComponent,
+    DisclaimerComponent,],
 })
 export class AdminModule { }
