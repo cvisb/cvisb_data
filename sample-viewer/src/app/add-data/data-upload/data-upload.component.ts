@@ -4,7 +4,6 @@ import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
 
 import { CvisbUser } from '../../_models';
 
-import { nest } from 'd3';
 import { cloneDeep } from 'lodash';
 
 @Component({
@@ -24,6 +23,8 @@ export class DataUploadComponent implements OnInit {
   missingReq: Object[];
   previewData: Object[];
   dataLength: number;
+  fileKB: number;
+  maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   endpoint: string;
 
@@ -37,7 +38,7 @@ export class DataUploadComponent implements OnInit {
       this.user = user;
     })
 
-    apiSvc.uploadProgressState$.subscribe((progress:number) => {
+    apiSvc.uploadProgressState$.subscribe((progress: number) => {
       this.uploadProgress = progress;
     })
 
@@ -66,6 +67,7 @@ export class DataUploadComponent implements OnInit {
       this.uploadResponse = "Uploading file..."
 
       let file: File = fileList[0];
+      this.fileKB = file.size / 1000;
       this.fileType = file.type;
 
       switch (this.fileType) {
@@ -102,21 +104,21 @@ export class DataUploadComponent implements OnInit {
         console.log(data)
 
 
-        this.apiSvc.put(this.endpoint, data).subscribe(resp => {
-          this.uploadResponse = `Success! ${resp}`;
-          console.log(resp)
-        }, err => {
-          this.uploadResponse = "Uh oh. Something went wrong."
-          this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 patients at a time. It may have worked or not-- be patient and check in a few minutes if your patients have been added. Sorry I can't be more helpful. :("
+        let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
+        // double check upload size is greater than 0.
+        uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
-          this.errorObj = err.error.error_list;
 
-          if (this.errorObj) {
-            this.errorObj = this.tidyBackendErrors(this.errorObj)
-            console.log(this.errorObj)
-          }
-          console.log(err)
-        });
+        this.apiSvc.putPiecewise(this.endpoint, data, uploadSize).subscribe(
+          responses => {
+            console.log(responses)
+
+            let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, this.endpoint + "s");
+
+            this.uploadResponse = result.uploadResponse;
+            this.errorMsg = result.errorMsg;
+            this.errorObj = result.errorObj;
+          })
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
@@ -164,10 +166,6 @@ export class DataUploadComponent implements OnInit {
 
   }
 
-
-
-
-
   // from https://stackoverflow.com/questions/27979002/convert-csv-data-into-json-format-using-javascript
   csvJSON(csv) {
 
@@ -214,34 +212,5 @@ export class DataUploadComponent implements OnInit {
     filtered = filtered.filter(d => Object.values(d).some(value => value !== ""));
 
     return (filtered)
-  }
-
-
-  tidyBackendErrors(error_array) {
-    let errs = [];
-
-    // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(
-      msg => errs.push({
-        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
-        id: document.input_obj.patientID,
-        input: document.input_obj
-      })))
-    console.log(errs)
-
-    // Group by error type
-    let nested = nest()
-      .key((d: any) => d.message)
-      .rollup(function(values: any): any {
-        return {
-          count: values.length,
-          ids: values.map(x => x.id),
-          inputs: values.map(x => x.input)
-        }
-      }).entries(errs);
-
-    console.log(nested)
-
-    return (nested)
   }
 }

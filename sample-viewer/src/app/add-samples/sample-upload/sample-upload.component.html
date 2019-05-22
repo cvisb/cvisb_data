@@ -12,7 +12,9 @@
 
   <div class="client-responses">
 
-    <h1 *ngIf="uploadResponse">{{ uploadResponse }}</h1>
+    <ng-container *ngIf="uploadResponse">
+      <h1>{{ uploadResponse }}</h1>
+    </ng-container>
 
     <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
 

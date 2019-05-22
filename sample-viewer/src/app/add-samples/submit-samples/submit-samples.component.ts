@@ -17,6 +17,9 @@ export class SubmitSamplesComponent implements OnInit {
   errorObj: Object[];
   @Input() data: Object[];
 
+  fileKB: number;
+  maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
+
   constructor(private apiSvc: ApiService, ) {
   }
 
@@ -47,21 +50,20 @@ export class SubmitSamplesComponent implements OnInit {
       console.log('data to submit:')
       console.log(data2upload)
 
-      this.apiSvc.put("sample", data2upload).subscribe(resp => {
-        this.uploadResponse = `Success! ${resp}`;
-        console.log(resp)
-      }, err => {
-        this.uploadResponse = "Uh oh. Something went wrong."
-        this.errorMsg = err.error.error ? err.error.error : "Hmm... hard to say why. Often this happens if you're trying to upload more than 100 samples at a time. It may have worked or not-- be patient and check in a few minutes if your samples have been added. Sorry I can't be more helpful. :("
+      let uploadSize = Math.floor((data2upload.length / this.fileKB) * this.maxUploadKB);
+      // double check upload size is greater than 0.
+      uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
-        this.errorObj = err.error.error_list;
+      this.apiSvc.putPiecewise("sample", data2upload, uploadSize).subscribe(
+        responses => {
+          console.log(responses)
 
-        if (this.errorObj) {
-          this.errorObj = this.tidyBackendErrors(this.errorObj)
-          console.log(this.errorObj)
-        }
-        console.log(err)
-      });
+          let result = this.apiSvc.tidyPutResponse(responses, data2upload.length, "samples");
+
+          this.uploadResponse = result.uploadResponse;
+          this.errorMsg = result.errorMsg;
+          this.errorObj = result.errorObj;
+        })
     } else {
       console.log("no data to submit!")
     }
