@@ -40,7 +40,6 @@ export class PatientUploadComponent implements OnInit {
     })
 
     apiSvc.uploadProgressState$.subscribe((progress: number) => {
-      console.log(progress)
       this.uploadProgress = progress;
     })
 

@@ -339,6 +339,7 @@ export class ApiService {
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
+    console.log('put piecewise')
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
 
@@ -348,16 +349,19 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
+    console.log(miniDatasets)
 
     let singleObservables = miniDatasets.map((data: any[]) => {
       return this.put(endpoint, data)
         .pipe(
           map(single => {
+            console.log(single)
             pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
             return (single);
           }),
           catchError(e => {
+            console.log(e)
             pct_done = pct_done + (data.length / newData.length) * 100;
             this.uploadProgressSubject.next(pct_done);
             return of(e);

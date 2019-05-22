@@ -37,14 +37,6 @@ export class SampleUploadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.testUploadProgressChange()
-  }
-
-  testUploadProgressChange() {
-    for (let i = 0; i <= 10; i++) {
-      setTimeout(() => this.uploadProgress = i * 10, 5000);
-      setTimeout(() => this.uploadProgress = i * 10, 2000);
-    }
   }
 
   fileChange(event) {
