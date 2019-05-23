@@ -51,7 +51,7 @@ export class PatientTimepointsComponent implements OnInit {
     $event.stopPropagation();  // <- that will stop propagation on lower layers
 
     const dialogRef = this.dialog.open(SampleMetadataComponent, {
-      width: '850px',
+      width: '75vw',
       data: sample
     });
   }
