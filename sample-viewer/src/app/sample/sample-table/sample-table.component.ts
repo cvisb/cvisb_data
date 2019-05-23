@@ -79,7 +79,7 @@ export class SampleTableComponent implements OnInit {
     console.log("metadata!")
     console.log(sample)
     const dialogRef = this.dialog.open(SampleMetadataComponent, {
-      width: '850px',
+      width: '75vw',
       data: sample
     });
   }
