@@ -12,7 +12,7 @@
 #   # bts:               "http://schema.biothings.io/"
 #   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "https://data.cvisb.org/jsonschema/Experiment/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/HLAData/0.1"
 #
 # "@graph":
 

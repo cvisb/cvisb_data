@@ -29,7 +29,7 @@
 
 - "@id":                 cvisb:Dataset
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing Dataset in the Center for Viral Systems Biology
+  rdfs:comment:          "A schema describing Dataset in the Center for Viral Systems Biology. A dataset is a collection of data of a particular experimental type and may contain information on suspected Lassa cases, suspected Ebola cases, contacts of suspected cases, and/or controls."
   rdfs:label:            Dataset
   rdfs:subClassOf:
     "@id":               schema:Dataset
