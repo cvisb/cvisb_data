@@ -12,9 +12,9 @@
     properties:
       alignmentReference:
         oneOf:
-        - type: string
         - format: cvisb-url
           type: string
+        - type: string
         - type: 'null'
       analysisVersion:
         oneOf:
@@ -22,9 +22,9 @@
         - type: 'null'
       assemblyReference:
         oneOf:
-        - type: string
         - format: cvisb-url
           type: string
+        - type: string
         - type: 'null'
       libraryKit:
         oneOf:
@@ -36,9 +36,9 @@
         - type: 'null'
       metagenomeDBVersion:
         oneOf:
-        - type: string
         - format: cvisb-url
           type: string
+        - type: string
         - type: 'null'
       metagenomeDatabase:
         oneOf:

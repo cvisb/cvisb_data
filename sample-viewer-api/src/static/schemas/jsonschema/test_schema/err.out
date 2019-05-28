@@ -7,7 +7,11 @@ Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schem
 ********************************************************************************
 Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RepertoireSequencing-schema-v0.1.yaml
 
-Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/RepertoireSequencing-schema-v0.1_modified.yaml" to file...
+File /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RepertoireSequencing-schema-v0.1.yaml failed loading with error sequence entries are not allowed here
+  in "<unicode string>", line 45, column 26:
+      enumeration:           - "B-cell"
+                             ^....  Skipping conversion...
+
 ********************************************************************************
 
 ********************************************************************************

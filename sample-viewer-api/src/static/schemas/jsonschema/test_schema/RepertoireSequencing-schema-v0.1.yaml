@@ -30,6 +30,21 @@
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
 
+- "@id":                 cvisb:cellType
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the repertoire sequencing was performed on B-cells or T-cells
+  rdfs:label:            cellType
+  schema:domainIncludes:
+    - "@id":             cvisb:RepertoireSequencing
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  enumeration:           - "B-cell"
+                         - "T-cell"
+
 - "@id":                 cvisb:primerSet
   "@type":               rdf:Property
   rdfs:comment:          Primer set

@@ -1,17 +1,17 @@
 ********************************************************************************
 /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Sample-schema-v0.1.yaml
 
-authorized_keys: ['isolationDate', 'name', 'location.*', 'alternateIdentifier', 'sampleID', 'privatePatientID', 'description', 'updatedBy', 'sampleLabel']
+authorized_keys: ['location.*', 'description', 'alternateIdentifier', 'updatedBy', 'privatePatientID', 'sampleLabel', 'isolationDate', 'sampleID', 'name']
 
-unauthorized_keys: ['protocolURL', 'protocolVersion', 'visitCode', 'freezingBuffer', 'dilutionFactor', 'sampleType', 'AVLinactivated', 'dateModified', 'patientID', 'species', 'derivedIndex', 'sampleGroup']
+unauthorized_keys: ['AVLinactivated', 'protocolURL', 'derivedIndex', 'freezingBuffer', 'species', 'dateModified', 'dilutionFactor', 'patientID', 'sampleType', 'protocolVersion', 'visitCode', 'sampleGroup']
 ********************************************************************************
 
 ********************************************************************************
 /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Experiment-schema-v0.1.yaml
 
-authorized_keys: ['updatedBy', 'sampleID', 'privatePatientID']
+authorized_keys: ['sampleID', 'privatePatientID', 'updatedBy']
 
-unauthorized_keys: ['experimentID', 'experimentDate', 'GenBank_ID', 'data.*', 'name', 'publisher.*', 'batchID', 'analysisCode.*', 'publication.*', 'dateModified', 'description', 'patientID', 'SRA_ID', 'measurementTechnique']
+unauthorized_keys: ['experimentID', 'description', 'measurementTechnique', 'publication.*', 'SRA_ID', 'dateModified', 'GenBank_ID', 'analysisCode.*', 'patientID', 'publisher.*', 'name', 'batchID', 'experimentDate', 'data.*']
 ********************************************************************************
 
 ********************************************************************************
@@ -19,7 +19,7 @@ unauthorized_keys: ['experimentID', 'experimentDate', 'GenBank_ID', 'data.*', 'n
 
 authorized_keys: ['updatedBy']
 
-unauthorized_keys: ['isBasedOn', 'author.*', 'publisher.*', 'contentUrlIdentifier', 'publication.*', 'keywords', 'sourceCode.*', 'encodingFormat', 'identifier', 'sameAs', 'dateModified', 'contentUrl', '@id', 'includedInDataset', 'datePublished', 'experimentIDs', 'description', 'contentUrlRepository', 'additionalType', 'name', 'dateCreated', 'measurementTechnique']
+unauthorized_keys: ['measurementTechnique', 'publication.*', 'dateCreated', 'sameAs', 'dateModified', 'sourceCode.*', 'contentUrlRepository', 'datePublished', 'includedInDataset', 'keywords', 'contentUrlIdentifier', 'contentUrl', 'name', 'description', 'identifier', '@id', 'encodingFormat', 'experimentIDs', 'author.*', 'additionalType', 'isBasedOn', 'publisher.*']
 ********************************************************************************
 
 ********************************************************************************
@@ -27,15 +27,15 @@ unauthorized_keys: ['isBasedOn', 'author.*', 'publisher.*', 'contentUrlIdentifie
 
 authorized_keys: ['updatedBy']
 
-unauthorized_keys: ['identifier', 'dataset', 'temporalCoverage.*', 'name', 'datePublished', 'publisher.*', 'funder.*', 'sameAs', 'alternateName', 'keywords', 'dateModified', 'description', 'spatialCoverage.*', 'schemaVersion', '@id', 'url']
+unauthorized_keys: ['dataset', 'schemaVersion', 'description', 'keywords', 'identifier', '@id', 'alternateName', 'sameAs', 'temporalCoverage.*', 'spatialCoverage.*', 'dateModified', 'funder.*', 'publisher.*', 'name', 'datePublished', 'url']
 ********************************************************************************
 
 ********************************************************************************
 /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Patient-schema-v0.1.yaml
 
-authorized_keys: ['homeLocation.*', 'gID', 'infectionDate.*', 'updateNotes.*', 'evalDate', 'exposureType', '_source', 'dischargeDate', 'admitDate', 'contactSurvivorRelationship', 'alternateIdentifier', 'sID', 'updatedBy', 'relatedToPrivate']
+authorized_keys: ['updatedBy', 'alternateIdentifier', 'homeLocation.*', 'contactSurvivorRelationship', 'infectionDate.*', 'evalDate', 'admitDate', 'updateNotes.*', 'dischargeDate', 'relatedToPrivate', 'sID', '_source', 'exposureType', 'gID']
 
-unauthorized_keys: ['symptoms.*', 'age', 'country.*', 'daysOnset', 'outcome', 'sameAs', 'relatedTo', 'contactGroupIdentifier', 'availableData.*', 'rapidDiagostics.*', 'dateModified', 'cohort', 'infectionYear', 'gender', 'associatedSamples', 'patientID', 'elisa.*', 'rtpcr.*', 'daysInHospital']
+unauthorized_keys: ['daysInHospital', 'symptoms.*', 'associatedSamples', 'age', 'relatedTo', 'gender', 'sameAs', 'infectionYear', 'dateModified', 'rtpcr.*', 'availableData.*', 'patientID', 'daysOnset', 'outcome', 'cohort', 'elisa.*', 'country.*', 'rapidDiagostics.*', 'contactGroupIdentifier']
 ********************************************************************************
 
 ********************************************************************************
@@ -43,6 +43,6 @@ unauthorized_keys: ['symptoms.*', 'age', 'country.*', 'daysOnset', 'outcome', 's
 
 authorized_keys: ['updatedBy']
 
-unauthorized_keys: ['author.*', 'publisher.*', 'keywords', 'publication.*', 'sourceCode.*', 'identifier', 'sameAs', 'includedInDataCatalog', 'dateModified', 'schemaVersion', '@id', 'variableMeasured', 'temporalCoverage.*', 'datePublished', 'dataDownloadIDs', 'funder.*', 'description', 'url', 'name', 'license', 'citation', 'spatialCoverage.*', 'measurementTechnique']
+unauthorized_keys: ['variableMeasured', 'measurementTechnique', 'publication.*', 'sameAs', 'spatialCoverage.*', 'dateModified', 'sourceCode.*', 'license', 'funder.*', 'datePublished', 'url', 'schemaVersion', 'keywords', 'name', 'includedInDataCatalog', 'description', 'citation', 'identifier', '@id', 'author.*', 'dataDownloadIDs', 'temporalCoverage.*', 'publisher.*']
 ********************************************************************************
 
