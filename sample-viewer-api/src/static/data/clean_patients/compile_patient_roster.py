@@ -203,7 +203,7 @@ def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCom
     # Needs to happen after merge, b/c need to combine issue_x with issue_y --> issue.
     merged['issue'] = merged.apply(combineIssues, axis = 1)
 
-    print(merged.sample(10)[printable])
+    # print(merged.sample(10)[printable])
 
 
     return(merged)
