@@ -1,0 +1,84 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/ComaScore/0.1"
+
+# "@graph":
+- "@id":                 cvisb:ComaScore
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing a series of observations about a patient, to calculate a Glasgow Coma Score in the Center for Viral Systems Biology experiments
+  rdfs:label:            ComaScore
+  rdfs:subClassOf:
+    "@id":               schema:Thing
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when when the coma score was evaluated. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:ComaScore
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:eyeOpening
+  "@type":               rdf:Property
+  rdfs:comment:          How a patient opens his/her eyes: Spontaneously (4), to speech (3), to pain (2), none (1)
+  rdfs:label:            eyeOpening
+  schema:domainIncludes:
+    - "@id":             cvisb:ComaScore
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1
+  maximum:               4
+
+- "@id":                 cvisb:verbalResponse
+  "@type":               rdf:Property
+  rdfs:comment:          How a patient verbally communicates: oriented (5), confused (4), Inappropriate (3), Incomprehensible (2), none (1)
+  rdfs:label:            verbalResponse
+  schema:domainIncludes:
+    - "@id":             cvisb:ComaScore
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1
+  maximum:               5
+
+- "@id":                 cvisb:motorResponse
+  "@type":               rdf:Property
+  rdfs:comment:          Motor response of patient: obeys commands (6), localizes to pain (5), withdraws from pain (4), flexion to pain (3), extension to pain (2), none (1)
+  rdfs:label:            motorResponse
+  schema:domainIncludes:
+    - "@id":             cvisb:ComaScore
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1
+  maximum:               6
