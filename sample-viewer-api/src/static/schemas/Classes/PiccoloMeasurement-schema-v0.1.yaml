@@ -27,19 +27,38 @@
     "@id":               https://schema.cvisb.org
 
 
-# Data
-- "@id":                 cvisb:ALT
+- "@id":                 cvisb:timepoint
   "@type":               rdf:Property
-  rdfs:comment:          "Alanine Aminotransferase (ALT) measurement in U/L. Typical values are 10-47 U/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf)"
-  rdfs:label:            ALT
+  rdfs:comment:          Description of when the Piccolo Measurement was taken(e.g. at survivor enrollment, initial presentation in hospital, etc.)
+  rdfs:label:            timepoint
   schema:domainIncludes:
     - "@id":             cvisb:PiccoloMeasurement
   schema:rangeIncludes:
-    - "@id":             schema:Float
+    - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
 
-date
-days since admit
-timepoint
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when Piccolo data was measured. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloMeasurement
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:piccolo
+  "@type":               rdf:Property
+  rdfs:comment:          Array of Piccolo data measured for the patient at the timepoint.
+  rdfs:label:            symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             cvisb:Symptom
+  owl:cardinality:       many
+  marginality:           required
+  authenticated:         false

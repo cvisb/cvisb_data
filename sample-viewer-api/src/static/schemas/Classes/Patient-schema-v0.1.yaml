@@ -83,7 +83,7 @@
   marginality:           optional
   authenticated:         true
 
-# sameAs: handle into the public alternate identifier(s) that also represent the patient.
+# sameAs:                handle into the public alternate identifier(s) that also represent the patient.
 # Used to connect S- and G-numbers together.
 - "@id":                 cvisb:sameAs
   "@type":               rdf:Property
@@ -442,7 +442,7 @@
 
 - "@id":                 cvisb:ethnicity
   "@type":               rdf:Property
-  rdfs:comment:          Patient ethnicity.
+  rdfs:comment:          Patient ethnicity
   rdfs:label:            ethnicity
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -451,7 +451,12 @@
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
-  enumeration:           - Mende
+  schema:Enumeration:
+                          - Mende
+                          - Fullah
+                          - Temne
+                          - Krio
+                          - Other
 
 # age
 - "@id":                 cvisb:age

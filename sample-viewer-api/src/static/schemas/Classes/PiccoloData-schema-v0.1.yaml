@@ -52,8 +52,8 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-minimum:                 10
-maximum:                 65
+  minimum:               10
+  maximum:               65
 
 - "@id":                 cvisb:alkalinePhosphatase
   "@type":               rdf:Property
@@ -66,8 +66,8 @@ maximum:                 65
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-minimum:                 5
-maximum:                 2400
+  minimum:               5
+  maximum:               2400
 
 
 - "@id":                 cvisb:aspatateAminotransferase
@@ -95,8 +95,8 @@ maximum:                 2400
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-minimum:                 0.7
-maximum:                 64.3
+  minimum:               0.7
+  maximum:               64.3
 
 - "@id":                 cvisb:calcium
   "@type":               rdf:Property
@@ -128,7 +128,7 @@ maximum:                 64.3
 
 - "@id":                 cvisb:creatinine
   "@type":               rdf:Property
-  rdfs:comment:          "Creatinine (CRE) measurement in µmol/L. Typical values are and 53-106 µmol/L dynamic range of the assay is 18-1768 µmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:comment:          "Creatinine (CRE) measurement in umol/L. Typical values are and 53-106 umol/L dynamic range of the assay is 18-1768 umol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
   rdfs:label:            creatinine
   schema:domainIncludes:
     - "@id":             cvisb:PiccoloData
@@ -184,7 +184,7 @@ maximum:                 64.3
 
 - "@id":                 cvisb:totalBilirubin
   "@type":               rdf:Property
-  rdfs:comment:          "Total Bilirubin (TBIL) measurement in µmol/L. Typical values are 3.4-27.4 µmol/L and dynamic range of the assay is 1.7-513 µmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:comment:          "Total Bilirubin (TBIL) measurement in umol/L. Typical values are 3.4-27.4 umol/L and dynamic range of the assay is 1.7-513 umol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
   rdfs:label:            totalBilirubin
   schema:domainIncludes:
     - "@id":             cvisb:PiccoloData
