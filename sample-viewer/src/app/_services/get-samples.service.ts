@@ -100,11 +100,12 @@ export class GetSamplesService {
   }
 
 
-  getSampleSummary(qParams?) {
+  getSampleSummary(qParams?){
     forkJoin(this.getSampleCount(qParams), this.getSamplePatientFacet(qParams)
     ).pipe(map(([first, second]) => {
-console.log(first)
-console.log(second)
+      console.log(first)
+      console.log(second)
+      return([first, second])
     })
     )
 
