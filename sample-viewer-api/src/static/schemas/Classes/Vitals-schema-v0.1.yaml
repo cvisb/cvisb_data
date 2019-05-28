@@ -87,6 +87,18 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:meanArterialPressure
+  "@type":               rdf:Property
+  rdfs:comment:          Mean artertial blood pressure
+  rdfs:label:            meanArterialPressure
+  schema:domainIncludes:
+    - "@id":             cvisb:Vitals
+  # schema:rangeIncludes:
+  #   - "@id":             cvisb:RespiratoryRate
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:skinTemperature
   "@type":               rdf:Property
   rdfs:comment:          Skin temperature of a patient, typically captured through a PhysIQ wearable sensor
