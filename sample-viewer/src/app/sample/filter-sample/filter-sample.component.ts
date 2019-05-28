@@ -44,13 +44,11 @@ export class FilterSampleComponent implements OnInit {
         }
       })
 
-    let x = this.sampleSvc.getSampleSummary();
-    console.log(x)
-    // .subscribe(
-    //   responses => {
-    //     console.log("backend summarization called for samples")
-    //     console.log(responses)
-    //   })
+    let x = this.sampleSvc.getSampleSummary().subscribe(
+      responses => {
+        console.log("backend summarization called for samples")
+        console.log(responses)
+      })
 
     // // grab the data
     this.sampleSvc.samplesState$.subscribe((sList) => {
