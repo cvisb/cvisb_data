@@ -181,10 +181,11 @@ cvisb:Patient,rdf:Property,updatedBy,"A list of the changes made to the Patient 
 cvisb:Patient,rdf:Property,_source,Internal tracking of who supplied the patient metadata,True,recommended,one,,,,,
 cvisb:Patient,rdf:Property,_version,"Version number of patient, auto-assigned by CViSB database",False,recommended,one,,,,,schema:version
 cvisb:Patient,rdf:Property,cohort,"Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for.",False,required,one,"['Ebola', 'Lassa', 'control', 'Unknown']",,,,
-cvisb:Patient,rdf:Property,outcome,"Outcome for patient: control, survivor, contact, dead, or unknown.",False,required,one,"['control', 'survivor', 'contact', 'dead', 'unknown']",,,,
+cvisb:Patient,rdf:Property,outcome,"Outcome for patient: control, survivor, contact, dead, or unknown. Patients are considered survivors if they are alive at least 10 days after presentation of symptoms in the hospital, the time at which they are commonly discharged from the hospital.",False,required,one,"['control', 'survivor', 'contact', 'dead', 'unknown']",,,,
 cvisb:Patient,rdf:Property,Country,Country where Patient lives / was treated,False,required,one,,,,,schema:geographicArea
 cvisb:Patient,rdf:Property,homeLocation,"A contact location for a person's residence. Should include country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village + displaced GPS coordinates (optional)",True,recommended,many,,,,,schema:homeLocation
-cvisb:Patient,rdf:Property,admitDate,Date of admission,True,optional,one,,,,,
+cvisb:Patient,rdf:Property,admittedLassaWard,Whether the patient was admitted to the Lassa isolation ward at KGH.,False,optional,one,,,,,
+cvisb:Patient,rdf:Property,admitDate,Date of admission or first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.,True,optional,one,,,,,
 cvisb:Patient,rdf:Property,infectionDate,"Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.",False,optional,one,,,,,
 cvisb:Patient,rdf:Property,infectionDate,"Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.",True,optional,one,,,,,
 cvisb:Patient,rdf:Property,evalDate,Date of first evaluation within the hospital,True,optional,one,,,,,
