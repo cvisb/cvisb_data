@@ -43,7 +43,7 @@
 
 - "@id":                 cvisb:eyeOpening
   "@type":               rdf:Property
-  rdfs:comment:          How a patient opens his/her eyes: Spontaneously (4), to speech (3), to pain (2), none (1)
+  rdfs:comment:          "How a patient opens his/her eyes: Spontaneously (4), to speech (3), to pain (2), none (1)"
   rdfs:label:            eyeOpening
   schema:domainIncludes:
     - "@id":             cvisb:ComaScore
@@ -57,7 +57,7 @@
 
 - "@id":                 cvisb:verbalResponse
   "@type":               rdf:Property
-  rdfs:comment:          How a patient verbally communicates: oriented (5), confused (4), Inappropriate (3), Incomprehensible (2), none (1)
+  rdfs:comment:          "How a patient verbally communicates: oriented (5), confused (4), Inappropriate (3), Incomprehensible (2), none (1)"
   rdfs:label:            verbalResponse
   schema:domainIncludes:
     - "@id":             cvisb:ComaScore
@@ -71,7 +71,7 @@
 
 - "@id":                 cvisb:motorResponse
   "@type":               rdf:Property
-  rdfs:comment:          Motor response of patient: obeys commands (6), localizes to pain (5), withdraws from pain (4), flexion to pain (3), extension to pain (2), none (1)
+  rdfs:comment:          "Motor response of patient: obeys commands (6), localizes to pain (5), withdraws from pain (4), flexion to pain (3), extension to pain (2), none (1)"
   rdfs:label:            motorResponse
   schema:domainIncludes:
     - "@id":             cvisb:ComaScore

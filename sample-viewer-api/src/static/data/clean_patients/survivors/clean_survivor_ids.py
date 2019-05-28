@@ -48,6 +48,8 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids['survivorEvalDates'] = ids['Date of 1st Visit'].apply(helpers.dates2String)
     ids['survivorEvalDates'] = ids['survivorEvalDates'].apply(helpers.listify)
 
+    ids['age'] = ids.apply()
+
 
     # --- Check data is as expected ---
     ids = runIDChecks(ids, ids_raw)
