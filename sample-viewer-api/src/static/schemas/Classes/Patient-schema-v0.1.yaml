@@ -208,7 +208,7 @@
 # Outcome cohort
 - "@id":                 cvisb:outcome
   "@type":               rdf:Property
-  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead, or unknown."
+  rdfs:comment:          "Outcome for patient: control, survivor, contact, dead, or unknown. Patients are considered survivors if they are alive at least 10 days after presentation of symptoms in the hospital, the time at which they are commonly discharged from the hospital."
   rdfs:label:            outcome
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -255,9 +255,21 @@
   authenticated:         true
 
 # date of admission
+- "@id":                 cvisb:admittedLassaWard
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the patient was admitted to the Lassa isolation ward at KGH.
+  rdfs:label:            admittedLassaWard
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
 - "@id":                 cvisb:admitDate
   "@type":               rdf:Property
-  rdfs:comment:          Date of admission
+  rdfs:comment:          Date of admission or first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.
   rdfs:label:            admitDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
