@@ -44,6 +44,12 @@ CVISB_ENDPOINTS = {
         "index": 'patient_metadata_current',
         "public_permitted_search_fields": ['availableData.*', 'cohort', 'sameAs', 'relatedTo', 'infectionYear', 'elisa.*', 'dateModified', 'outcome', 'contactGroupIdentifier', 'gender', 'associatedSamples', 'rtpcr.*', 'country.*', 'symptoms.*', 'rapidDiagostics.*', 'patientID', 'age', 'daysOnset'],
         "public_excluded_return_fields": ['exposureType', 'alternateIdentifier', 'admitDate', 'infectionDate', 'homeLocation.*', 'contactSurvivorRelationship', 'gID', 'sID']
+    },
+    "datacatalog": {
+        "cache_key": "DataCatalog",
+        "index": 'datacatalog_metadata_current',
+        "public_permitted_search_fields": [],
+        "public_excluded_return_fields": []
     }
 }
 
@@ -69,11 +75,18 @@ ALLOW_NESTED_AGGS = True
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
 
 QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
-QUERY_GET_ESQB_KWARGS['relatedTo'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['patientQuery'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['sampleQuery'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['experimentQuery'] = {'default': None, 'type': str}
+#QUERY_GET_ESQB_KWARGS['relatedTo'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['outcome'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['cohort'] = {'default': None, 'type': list}
-QUERY_GET_ESQB_KWARGS['availableData'] = {'default': None, 'type': list}
+#QUERY_GET_ESQB_KWARGS['availableData'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['country'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['elisa'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['infectionYear'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['measurementTechnique'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['length'] = {'default': None, 'type': str}
 QUERY_GET_ESQB_KWARGS['facet_size']['max'] = 10000
 QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
