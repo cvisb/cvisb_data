@@ -41,6 +41,18 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:SymptomList
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:symptoms
   "@type":               rdf:Property
   rdfs:comment:          Array of symptoms observed in or reported by the patient at the timepoint.
