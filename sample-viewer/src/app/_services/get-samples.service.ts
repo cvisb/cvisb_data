@@ -79,7 +79,7 @@ export class GetSamplesService {
     let params = qParams
       .append('size', 0)
       .append("facet_size", 10000)
-      .append("sampleQuery", encodeURI(`*&facets=alternateIdentifier.keyword(${facetVar}.keyword)`));
+      .append("sampleQuery", (`*&facets=alternateIdentifier.keyword(${facetVar}.keyword)`));
 
     console.log(params);
 

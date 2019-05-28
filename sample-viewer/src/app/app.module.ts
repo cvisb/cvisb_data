@@ -9,10 +9,12 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
 
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
+import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
@@ -217,7 +219,12 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     DatasetResolver,
     PatientsResolver,
     AllPatientsResolver,
-    HlaResolver
+    HlaResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EncodeHttpParamsInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [
     SampleMetadataComponent
