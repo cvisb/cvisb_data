@@ -25,7 +25,7 @@
 - "@id":                 cvisb:ContactPoint
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing a ContactPoint for the Center for Viral Systems Biology
-  rdfs:label:            RTPCRResult
+  rdfs:label:            ContactPoint
   rdfs:subClassOf:
     "@id":               schema:ContactPoint
   schema:isPartOf:
