@@ -16,9 +16,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/Patient/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Patient/0.1"
 #
 # "@graph":
 - "@id":                 cvisb:Patient
@@ -29,7 +29,7 @@
     "@id":               health:Patient
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-
+  root_entity:           true
 
 # identifier
 - "@id":                 cvisb:patientID
@@ -120,7 +120,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    "@id":               schema:Date
+    - "@id":             schema:Date
   schema:sameAs:
     "@id":               "schema:dateModified"
   owl:cardinality:       one
@@ -138,6 +138,18 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:updateNotes
+  "@type":               rdf:Property
+  rdfs:comment:          A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:UpdateLog
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
 
@@ -250,8 +262,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    #- "@id":             schema:Date
-    - "@id":             cvisb:DateRange
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -264,7 +275,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           optional
   authenticated:         false
@@ -277,7 +288,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             schema:Date
     - "@id":             cvisb:DateRange
   owl:cardinality:       one
   marginality:           optional
@@ -353,6 +363,7 @@
                          - Male
                          - Female
                          - Unknown
+                         - null
   authenticated:         false
 
 # contacts:
@@ -361,7 +372,7 @@
   rdfs:comment:          A list of related household contacts's public patientIDs
   rdfs:label:            relatedTo
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       many
@@ -373,7 +384,7 @@
   rdfs:comment:          A list of related household contacts's private patientIDs
   rdfs:label:            relatedToPrivate
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       many
@@ -385,7 +396,7 @@
   rdfs:comment:          For contacts, the type or level of exposure they had to the infected person.
   rdfs:label:            exposureType
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
@@ -397,7 +408,7 @@
   rdfs:comment:          For contacts, how they are related to the infected person.
   rdfs:label:            contactSurvivorRelationship
   schema:domainIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one

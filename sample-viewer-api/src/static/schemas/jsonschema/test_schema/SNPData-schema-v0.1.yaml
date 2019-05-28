@@ -1,0 +1,88 @@
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/Experiment/0.1"
+#
+# "@graph":
+
+- "@id":                 cvisb:SNPData
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing viral sequencing data in the Center for Viral Systems Biology.
+  rdfs:label:            SNPData
+  rdfs:subClassOf:
+    "@id":               cvisb:Data
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+
+- "@id":                 cvisb:SNP
+  "@type":               rdf:Property
+  rdfs:comment:          Single nucleotide polymorphism, e.g. Q9H
+  rdfs:label:            SNP
+  schema:domainIncludes:
+    - "@id":             cvisb:SNPData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:SNPdetected
+  "@type":               rdf:Property
+  rdfs:comment:          Whether or not the SNP was found in the sequencing
+  rdfs:label:            SNPdetected
+  schema:domainIncludes:
+    - "@id":             cvisb:SNPData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:SNPlocation
+  "@type":               rdf:Property
+  rdfs:comment:          Amino acid number of the SNP, relative to the reference sequence.
+  rdfs:label:            SNPlocation
+  schema:domainIncludes:
+    - "@id":             cvisb:SNPData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:originalAA
+  "@type":               rdf:Property
+  rdfs:comment:          Amino acid code for the amino acid at the reference sequence.
+  rdfs:label:            originalAA
+  schema:domainIncludes:
+    - "@id":             cvisb:SNPData
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
+- "@id":                 cvisb:mutatedAA
+  "@type":               rdf:Property
+  rdfs:comment:          Amino acid code for the amino acid at the mutation site.
+  rdfs:label:            mutatedAA
+  schema:domainIncludes:
+    - "@id":             cvisb:SNPData
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false

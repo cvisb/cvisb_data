@@ -11,9 +11,6 @@
     $schema: http://json-schema.org/draft-04/schema#
     properties:
       assayReadout:
-        enum:
-        - phagocytic score
-        - C3 deposition MFI
         oneOf:
         - type: 'null'
         - items:
@@ -26,13 +23,6 @@
           - type: string
           type: array
       assayType:
-        enum:
-        - ADNP
-        - ADCD
-        - ADCP
-        - NKD-CD107a
-        - NKD-IFNg
-        - NKD-MIP-1b
         items:
         - type: string
         type: array
@@ -53,13 +43,6 @@
   rdfs:comment: 'Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, NKD-CD107a,
     NKD-IFNg, NKD-MIP-1b'
   rdfs:label: assayType
-  schema:Enumeration:
-  - ADNP
-  - ADCD
-  - ADCP
-  - NKD-CD107a
-  - NKD-IFNg
-  - NKD-MIP-1b
   schema:domainIncludes:
   - '@id': cvisb:SystemsSerology
   schema:rangeIncludes:
@@ -72,9 +55,6 @@
   owl:cardinality: many
   rdfs:comment: Type of assay readout, such as phagocytic score, C3 deposition MFI
   rdfs:label: assayReadout
-  schema:Enumeration:
-  - phagocytic score
-  - C3 deposition MFI
   schema:domainIncludes:
   - '@id': cvisb:SystemsSerology
   schema:rangeIncludes:

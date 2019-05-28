@@ -15,9 +15,9 @@
 #
 #   # bsc:                 "http://bioschemas.org/"
 #   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "http://schema.cvisb.org/"
+#   cvisb:                 "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "http://schema.cvisb.org/SoftwareSourceCode/0.1"
+# "@id":                   "https://data.cvisb.org/jsonschema/SoftwareSourceCode/0.1"
 
 # "@graph":
 - "@id":                 cvisb:SoftwareSourceCode
@@ -45,6 +45,7 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 
 - "@id":                 cvisb:@id
@@ -75,6 +76,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # description
 - "@id":                 cvisb:description
@@ -90,6 +92,7 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           optional
+  authenticated:         false
 
 # code repository location
 - "@id":                 cvisb:codeRepository
@@ -106,6 +109,7 @@
     "@id":               schema:codeRepository
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # programming language
 - "@id":                 cvisb:programmingLanguage
@@ -121,6 +125,7 @@
     "@id":               schema:programmingLanguage
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false
 
 # author
 - "@id":                 cvisb:author
@@ -136,6 +141,7 @@
     "@id":               schema:author
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # Publications
 - "@id":                 cvisb:publication
@@ -150,6 +156,7 @@
     "@id":               schema:publication
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
@@ -163,6 +170,7 @@
     "@id":               schema:citation
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # license
 - "@id":                 cvisb:license
@@ -179,6 +187,7 @@
     "@id":               schema:license
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # dates
 - "@id":                 cvisb:datePublished
@@ -193,6 +202,7 @@
     "@id":               "schema:datePublished"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
@@ -206,3 +216,4 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
