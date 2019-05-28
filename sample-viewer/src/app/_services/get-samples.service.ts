@@ -101,13 +101,17 @@ export class GetSamplesService {
 
 
   getSampleSummary(qParams?){
-    forkJoin(this.getSampleCount(qParams), this.getSamplePatientFacet(qParams)
-    ).pipe(map(([first, second]) => {
-      console.log(first)
-      console.log(second)
-      return([first, second])
-    })
-    )
+    return forkJoin(this.getSampleCount(qParams),
+    this.getSamplePatientFacet("cohort", qParams),
+    this.getSamplePatientFacet("outcome", qParams)
+  )
+  // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
+  //     console.log(sampleCounts)
+  //     console.log(cohorts)
+  //     console.log(outcomes)
+  //     return([])
+  //   })
+    // )
 
   }
 
