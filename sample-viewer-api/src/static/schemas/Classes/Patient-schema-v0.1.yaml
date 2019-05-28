@@ -306,6 +306,31 @@
   marginality:           optional
   authenticated:         true
 
+# Date of survivor enrollment, evaluation
+- "@id":                 cvisb:survivorEnrollmentDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of enrollment of the survivor or contact in the KGH survivor study
+  rdfs:label:            survivorEnrollmentDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:survivorEvalDates
+  "@type":               rdf:Property
+  rdfs:comment:          Dates of evaluation of the survivor or contact in the KGH survivor study
+  rdfs:label:            survivorEvalDates
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
 # Date of discharge from the hospital
 - "@id":                 cvisb:dischargeDate
   "@type":               rdf:Property
@@ -415,6 +440,19 @@
   marginality:           optional
   authenticated:         true
 
+- "@id":                 cvisb:ethnicity
+  "@type":               rdf:Property
+  rdfs:comment:          Patient ethnicity.
+  rdfs:label:            ethnicity
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+  enumeration:           - Mende
+
 # age
 - "@id":                 cvisb:age
   "@type":               rdf:Property
@@ -430,33 +468,68 @@
   maximum:               100
   authenticated:         false
 
-
-# sample IDs
-- "@id":                 cvisb:associatedSamples
+# height
+- "@id":                 cvisb:height
   "@type":               rdf:Property
-  rdfs:comment:          List of Sample IDs associated with the patient
-  rdfs:label:            associatedSamples
+  rdfs:comment:          Patient height, in meters
+  rdfs:label:            height
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
+    - "@id":             schema:Float
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
 
-  # Merged data:         availableData
-- "@id":                 cvisb:availableData
+- "@id":                 cvisb:weight
   "@type":               rdf:Property
-  rdfs:comment:          List of available data and results (where known) for the patient
-  rdfs:label:            availableData
+  rdfs:comment:          Patient weight, in kilograms
+  rdfs:label:            weight
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:ExperimentData
-  owl:cardinality:       many
+    - "@id":             schema:Float
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+
+- "@id":                 cvisb:pregnant
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the patient was pregnant at the time of presentation
+  rdfs:label:            pregnant
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:LassaExposed
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the patient was exposed to another person who had Lassa fever
+  rdfs:label:            LassaExposed
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+
+- "@id":                 cvisb:LassaHHDeaths
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the patient had recent Lassa-related deaths in their household
+  rdfs:label:            LassaHHDeaths
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 
 # ELISAs
 - "@id":                 cvisb:elisa
@@ -506,6 +579,43 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:SymptomList
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:comaScore
+  "@type":               rdf:Property
+  rdfs:comment:          Observations of the patient's activity, to calculate Glasgow Coma Score
+  rdfs:label:            comaScore
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:ComaScore
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:medications
+  "@type":               rdf:Property
+  rdfs:comment:          Medications administered to patient during his/her stay in the hospital
+  rdfs:label:            medications
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Medication
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+# Piccolo blood chemistry data
+- "@id":                 cvisb:piccolo
+  "@type":               rdf:Property
+  rdfs:comment:          List of Piccolo blood chemistry measurements for a patient
+  rdfs:label:            piccolo
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:PiccoloMeasurement
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
