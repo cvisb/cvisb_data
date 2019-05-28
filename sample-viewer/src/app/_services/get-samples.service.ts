@@ -46,7 +46,7 @@ export class GetSamplesService {
 
   }
 
-  getSampleCount(qParams?) {
+  getSampleCount(qParams?): Observable<any> {
     // If unspecified, set q string to return all.
     qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
 
@@ -63,7 +63,7 @@ export class GetSamplesService {
     }).pipe(
       map(res => {
         console.log(res);
-        return (res["facets"]["privatePatientID.keyword"].terms)
+        return (res["body"]["facets"]["privatePatientID.keyword"].terms)
       }),
       catchError(e => {
         return of(e);
@@ -71,7 +71,7 @@ export class GetSamplesService {
     );
   }
 
-  getSamplePatientFacet(facetVar: string = "cohort", qParams?) {
+  getSamplePatientFacet(facetVar: string = "cohort", qParams?): Observable<any> {
     // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
     // If unspecified, set q string to return all.
     qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
@@ -91,7 +91,7 @@ export class GetSamplesService {
     }).pipe(
       map(res => {
         console.log(res);
-        return (res["facets"]["alternateIdentifier.keyword"].terms)
+        return (res["body"]["facets"]["alternateIdentifier.keyword"].terms)
       }),
       catchError(e => {
         return of(e);
@@ -101,7 +101,13 @@ export class GetSamplesService {
 
 
   getSampleSummary(qParams?) {
-    return forkJoin([this.getSampleCount(qParams), this.getSamplePatientFacet(qParams)]);
+    forkJoin(this.getSampleCount(qParams), this.getSamplePatientFacet(qParams)
+    ).pipe(map(([first, second]) => {
+console.log(first)
+console.log(second)
+    })
+    )
+
   }
 
   //
