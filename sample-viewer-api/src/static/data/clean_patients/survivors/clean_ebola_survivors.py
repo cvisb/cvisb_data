@@ -78,10 +78,7 @@ def cleanESurvivors(df):
     df['gender'] = df.gender.apply(helpers.convertGender)
 
     # --- cohort ---
-    # # Add in cohort / outcome
-    # Everything Ebola b/c this is the Ebola survivor study
     # outcome assumed to be survivor if S-number; contact if C-number
-    df['cohort'] = "Ebola"
     df['outcome'] = df["ID number"].apply(helpers.assignOutcome)
 
     # --- patient IDs ---

@@ -3,18 +3,24 @@ import helpers
 
 def import_survivor_ids(filename):
     print('\n\ncleaning survivor IDs')
-    ids_raw = pd.read_excel(filename, converters={'Study Specific #': str, 'ID': str})
+    ids_raw = pd.read_excel(filename, usecols=list(range(0,15)), converters={'Study Specific #': str, 'ID Number': str})
     print("\t" + str(len(ids_raw)) + "  survivors imported")
     return(ids_raw)
 
 def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids_raw = import_survivor_ids(filename)
 
-
+    # Rename to agree w/ previous code
+    ids_raw.rename(columns = {'G-NUM': "G-Number", "ID Number": "ID", "Subject Type": "Type", "Unnamed: 5": "age_months", "Unnamed: 6": "age_days"}, inplace = True)
+    # Drop rows for future patients
+    ids_raw.dropna(subset=["ID"], inplace = True)
 
     # Assign outcome, publicSID
     ids = ids_raw.copy()
+
     ids['sID'] = ids.apply(lambda x: x.Type.upper() + x.ID.zfill(3), axis = 1)
+    ids['cohort'] = ids['Case Type'].apply(helpers.cleanCohort)
+
     ids['outcome'] = ids.sID.apply(helpers.assignOutcome)
     ids['publicSID'] = ids.apply(lambda x: helpers.makePublicPatientID(x, "Study Specific #"), axis=1)
 
@@ -35,7 +41,12 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
     ids["relatedToPrivate"] = ids.sID # create a copy that will be collapsed.
     # group by contact group, create a list, and remove the ID from that row (remove self)
     ids['relatedToPrivate'] = ids.groupby("contactGroupIdentifier")['relatedToPrivate'].transform(listicle)
-    ids['relatedToPrivate2'] = ids.apply(lambda x: removeSelfID(x, 'relatedToPrivate', 'sID'), axis = 1)
+    ids['relatedToPrivate'] = ids.apply(lambda x: removeSelfID(x, 'relatedToPrivate', 'sID'), axis = 1)
+
+    # Grab the dates
+    ids['survivorEnrollmentDate'] = ids['Date of Enrollment '].apply(helpers.dates2String)
+    ids['survivorEvalDates'] = ids['Date of 1st Visit'].apply(helpers.dates2String)
+    ids['survivorEvalDates'] = ids['survivorEvalDates'].apply(helpers.listify)
 
 
     # --- Check data is as expected ---
