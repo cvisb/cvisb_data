@@ -99,11 +99,41 @@ export class GetSamplesService {
     );
   }
 
+  getSamplePatientData(qParams?): Observable<any> {
+    // NOTE: will fail for results > 1000
+    // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
+    // If unspecified, set q string to return all.
+    qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
+
+    let params = qParams
+      .append('size', 1000)
+      .append("sampleQuery", (`_exists_:privatePatientID`));
+
+    console.log(params);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"]["hits"])
+      }),
+      catchError(e => {
+        return of(e);
+      })
+    );
+  }
+
 
   getSampleSummary(qParams?){
     return forkJoin(this.getSampleCount(qParams),
-    this.getSamplePatientFacet("cohort", qParams),
-    this.getSamplePatientFacet("outcome", qParams)
+    this.getSamplePatientData(qParams)
+    // return forkJoin(this.getSampleCount(qParams),
+    // this.getSamplePatientFacet("cohort", qParams),
+    // this.getSamplePatientFacet("outcome", qParams)
   )
   // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
   //     console.log(sampleCounts)
