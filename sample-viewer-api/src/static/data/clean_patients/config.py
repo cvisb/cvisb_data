@@ -18,7 +18,7 @@ input_lassaAcute_ids = "../input_data/patient_rosters/acuteLassa_IDdict_v1_2019-
 input_lassaAcute = "../input_data/patient_rosters/acuteLassa_metadata_v1_2019-03-27_PRIVATE.csv"
 
 # survivor patient roster, containing public patient IDs ("study specific numbers")
-input_survivor_ids = "../input_data/patient_rosters/survivor_IDdict_v1_2012-02-27_PRIVATE.xlsx"
+input_survivor_ids = "../input_data/patient_rosters/survivor_IDdict_v2_2019-03-06_PRIVATE.xlsx"
 
 # ebola survivor data, containing demographics, ELISA results, etc. for Ebola survivors and contacts tracked by KGH
 input_ebolaSurvivor = "../input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx"
