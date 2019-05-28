@@ -29,7 +29,8 @@
     "@id":               schema:Thing
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-
+  root_entity:           true
+  
 # id
 - "@id":                 cvisb:experimentID
   "@type":               rdf:Property
