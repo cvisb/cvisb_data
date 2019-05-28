@@ -15,6 +15,7 @@
         - positive
         - negative
         - indeterminate
+        - null
         oneOf:
         - type: string
         - type: 'null'
@@ -85,6 +86,7 @@
   - positive
   - negative
   - indeterminate
+  - null
   schema:domainIncludes:
   - '@id': cvisb:ELISA
   schema:rangeIncludes:
@@ -114,7 +116,7 @@
 - '@id': cvisb:timepoint
   '@type': rdf:Property
   authenticated: false
-  marginality: optional
+  marginality: recommended
   owl:cardinality: one
   rdfs:comment: description of the time at which the ELISA was taken, e.g. at patient
     presentation, survivor enrollment etc.

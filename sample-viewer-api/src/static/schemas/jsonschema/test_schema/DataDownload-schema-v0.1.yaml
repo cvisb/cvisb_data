@@ -16,9 +16,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/DataDownload/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/DataDownload/0.1"
 #
 # "@graph":
 
@@ -30,6 +30,7 @@
     "@id":               schema:DataDownload
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
+  root_entity:           true
 
 # name
 - "@id":                 cvisb:name
@@ -62,6 +63,21 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
+
+# Connection to dataset
+- "@id":                 cvisb:includedInDataset
+  "@type":               rdf:Property
+  rdfs:comment:          "A unique identifier for the Dataset that the DataDownload is contained in. Note: should be an internal, CViSB identifier;"
+  rdfs:label:            includedInDataset
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    "@id":               xsd:string
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
 
 # DOI
@@ -151,6 +167,7 @@
   schema:Enumeration:
                         - SRA
                         - AWS
+                        - null
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
@@ -205,7 +222,7 @@
   schema:rangeIncludes:
     "@id":               schema:Text
     "@id":               xsd:string
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
   schema:Enumeration:
                         - raw data
@@ -228,19 +245,6 @@
   marginality:           recommended
   authenticated:         false
 
-# patient ID list
-- "@id":                 cvisb:patientIDs
-  "@type":               rdf:Property
-  rdfs:comment:          List of patient IDs contained within the data file
-  rdfs:label:            patientIDs
-  schema:domainIncludes:
-    - "@id":             cvisb:DataDownload
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
 
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
@@ -296,6 +300,7 @@
                          - application/xml
                          - application/zip
                          - application/gzip
+                         - null
   authenticated:         false
 
 # dates
@@ -409,5 +414,5 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           recommended
+  marginality:           required
   authenticated:         false

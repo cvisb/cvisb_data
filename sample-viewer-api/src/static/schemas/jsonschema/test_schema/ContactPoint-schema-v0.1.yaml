@@ -16,9 +16,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/Organization/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Organization/0.1"
 #
 # "@graph":
 
@@ -48,6 +48,7 @@
     "@id":               schema:contactType
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
   schema:Enumeration:
     - technical support
     - customer support
@@ -66,6 +67,7 @@
     "@id":               schema:url
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # email
 - "@id":                 cvisb:email
@@ -81,3 +83,4 @@
     "@id":               schema:email
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

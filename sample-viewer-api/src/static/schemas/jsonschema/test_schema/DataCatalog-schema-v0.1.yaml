@@ -16,9 +16,9 @@
 #
 #   # bsc:                 "http://bioschemas.org/"
 #   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "http://schema.cvisb.org/"
+#   cvisb:                 "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "http://schema.cvisb.org/DataCatalog/0.1"
+# "@id":                   "https://data.cvisb.org/jsonschema/DataCatalog/0.1"
 #
 # "@graph":
 - "@id":                   cvisb:DataCatalog
@@ -31,6 +31,7 @@
     "@id":                 https://schema.cvisb.org
   schema:sameAs:
     "@id":                 schema:DataCatalog
+  root_entity:             true
 
 # name
 - "@id":                   cvisb:name

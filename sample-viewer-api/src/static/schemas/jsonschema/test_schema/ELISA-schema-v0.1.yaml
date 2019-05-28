@@ -1,4 +1,4 @@
-#Lassa# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
 # Verified structure using:
 #
 
@@ -15,9 +15,9 @@
 #
 #   # bsc:                 "http://bioschemas.org/"
 #   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "http://schema.cvisb.org/"
+#   cvisb:                 "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "http://schema.cvisb.org/ELISA/0.1"
+# "@id":                   "https://data.cvisb.org/jsonschema/ELISA/0.1"
 
 # "@graph":
 - "@id":                 cvisb:ELISA
@@ -171,6 +171,7 @@
                          - positive
                          - negative
                          - indeterminate
+                         - null
   authenticated:         false
 
 
@@ -207,5 +208,5 @@
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           optional
+  marginality:           recommended
   authenticated:         false

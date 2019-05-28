@@ -1,8 +1,3 @@
-# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
-# Cross-referencing where applicable:
-# Verified structure using:
-#
-
 ---
 # "@context":
 #   dct:                 "http://purl.org/dc/terms/"
@@ -17,25 +12,79 @@
 #   # bts:               "http://schema.biothings.io/"
 #   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "https://data.cvisb.org/jsonschema/RepertoireSequencing/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Experiment/0.1"
 #
 # "@graph":
 
-- "@id":                 cvisb:RepertoireSequencing
+- "@id":                 cvisb:ViralSeqData
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology
-  rdfs:label:            RepertoireSequencing
+  rdfs:comment:          A schema describing viral sequencing data in the Center for Viral Systems Biology.
+  rdfs:label:            ViralSeqData
   rdfs:subClassOf:
-    "@id":               cvisb:sequencingExperiment
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
 
-- "@id":                 cvisb:primerSet
+
+# Data
+- "@id":                 cvisb:virus
   "@type":               rdf:Property
-  rdfs:comment:          Primer set
-  rdfs:label:            primerSet
+  rdfs:comment:          Virus sequenced
+  rdfs:label:            virus
   schema:domainIncludes:
-    - "@id":             cvisb:RepertoireSequencing
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:referenceSeq
+  "@type":               rdf:Property
+  rdfs:comment:          reference sequence used for alignment.
+  rdfs:label:            referenceSeq
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:isReferenceSeq
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the data is a reference sequence
+  rdfs:label:            isReferenceSeq
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+# Data
+- "@id":                 cvisb:DNAsequence
+  "@type":               rdf:Property
+  rdfs:comment:          DNA sequence for the virus
+  rdfs:label:            DNAsequence
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:AAsequence
+  "@type":               rdf:Property
+  rdfs:comment:          Amino acid sequence for the virus
+  rdfs:label:            AAsequence
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -43,57 +92,14 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:analysisVersion
+- "@id":                 cvisb:SNP
   "@type":               rdf:Property
-  rdfs:comment:          Analysis pipeline version
-  rdfs:label:            analysisVersion
+  rdfs:comment:          single nucleotide polymorphisms for the virus
+  rdfs:label:            SNPsequence
   schema:domainIncludes:
-    - "@id":             cvisb:RepertoireSequencing
+    - "@id":             cvisb:ViralSeqData
   schema:rangeIncludes:
-    # - "@id":           schema:URL
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:abstarVersion
-  "@type":               rdf:Property
-  rdfs:comment:          Abstar Version
-  rdfs:label:            abstarVersion
-  schema:domainIncludes:
-    - "@id":             cvisb:RepertoireSequencing
-  schema:rangeIncludes:
-    # - "@id":           schema:URL
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:germlineDatabase
-  "@type":               rdf:Property
-  rdfs:comment:          germline database name or URL
-  rdfs:label:            germlineDatabase
-  schema:domainIncludes:
-    - "@id":             cvisb:RepertoireSequencing
-  schema:rangeIncludes:
-    # - "@id":           schema:URL
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:germlineDBVersion
-  "@type":               rdf:Property
-  rdfs:comment:          Germline database version
-  rdfs:label:            germlineDBVersion
-  schema:domainIncludes:
-    - "@id":             cvisb:RepertoireSequencing
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
+    - "@id":             cvisb:SNPData
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

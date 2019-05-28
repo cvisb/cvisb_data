@@ -12,9 +12,7 @@
     properties:
       primarySampleDate:
         oneOf:
-        - $ref: http://dev.cvisb.org/jsonschema/DateRange.json
-        - format: cvisb-date
-          type: string
+        - $ref: http://dev.cvisb.org/jsonschema/Date.json
         - type: 'null'
       sourceSampleID:
         items:
@@ -40,15 +38,14 @@
         - viralRNA
         - totalRNA
         - DNA
-        items:
-        - type: string
-        type: array
+        type: string
     required:
     - sourceSampleID
     - sourceSampleType
     type: object
 - '@id': cvisb:sourceSampleID
   '@type': rdf:Property
+  authenticated: true
   marginality: required
   owl:cardinality: many
   rdfs:comment: Sample ID for the primary source of the derived sample
@@ -60,8 +57,9 @@
   - '@id': schema:Text
 - '@id': cvisb:sourceSampleType
   '@type': rdf:Property
+  authenticated: false
   marginality: required
-  owl:cardinality: many
+  owl:cardinality: one
   rdfs:comment: Sample ID for the primary source of the derived sample
   rdfs:label: sourceSampleID
   schema:Enumeration:
@@ -90,6 +88,7 @@
   - '@id': schema:Text
 - '@id': cvisb:primarySampleDate
   '@type': rdf:Property
+  authenticated: true
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Date of *primary* sample creation/collection (e.g. blood draw, tissue
@@ -98,5 +97,4 @@
   schema:domainIncludes:
   - '@id': cvisb:DerivedSample
   schema:rangeIncludes:
-  - '@id': schema:Date
-  - '@id': cvisb:DateRange
+  - '@id': cvisb:Date

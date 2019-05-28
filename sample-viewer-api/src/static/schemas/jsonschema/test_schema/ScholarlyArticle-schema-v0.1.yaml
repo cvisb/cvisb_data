@@ -15,9 +15,9 @@
 #
 #   # bsc:                 "http://bioschemas.org/"
 #   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "http://schema.cvisb.org/"
+#   cvisb:                 "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "http://schema.cvisb.org/ScholarlyArticle/0.1"
+# "@id":                   "https://data.cvisb.org/jsonschema/ScholarlyArticle/0.1"
 
 # "@graph":
 - "@id":                 cvisb:ScholarlyArticle
@@ -44,6 +44,7 @@
     "@id":               schema:identifier
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # url
 - "@id":                 cvisb:url
@@ -58,6 +59,7 @@
     "@id":               schema:url
   owl:cardinality:       one
   marginality:           required
+  authenticated:         false
 
 # authors
 - "@id":                 cvisb:author
@@ -72,6 +74,7 @@
     "@id":               schema:author
   owl:cardinality:       many
   marginality:           recommended
+  authenticated:         false
 
 # name of article
 - "@id":                 cvisb:name
@@ -86,6 +89,7 @@
     "@id":               schema:name
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 
 # publication date
@@ -101,6 +105,7 @@
     "@id":               schema:datePublished
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # page number
 - "@id":                 cvisb:pageStart
@@ -115,6 +120,7 @@
     "@id":               schema:pageStart
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:pageEnd
   "@type":               rdf:Property
@@ -128,6 +134,7 @@
     "@id":               schema:pageEnd
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 
 # journal title
@@ -144,6 +151,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # issue number
 # NOTE: by schema.org definition, issueNumber should be under PublicationIssue
@@ -161,6 +169,7 @@
     "@id":               schema:issueNumber
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
 
 # volume number
 # NOTE: by schema.org definition, issueNumber should be under PublicationIssue
@@ -178,3 +187,4 @@
     "@id":               schema:volumeNumber
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false

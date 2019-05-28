@@ -32,6 +32,7 @@
         - 2
         - 3
         - 4
+        - null
         oneOf:
         - type: integer
         - type: 'null'
@@ -2367,6 +2368,7 @@
     type: object
 - '@id': cvisb:name
   '@type': rdf:Property
+  authenticated: true
   marginality: required
   owl:cardinality: one
   rdfs:comment: Name of the adminstrative area, e.g. Sierra Leone
@@ -4694,6 +4696,7 @@
     '@id': schema:name
 - '@id': cvisb:alternateName
   '@type': rdf:Property
+  authenticated: true
   marginality: optional
   owl:cardinality: many
   rdfs:comment: Alternative name of the admin area, for instance in a different language
@@ -4707,6 +4710,7 @@
     '@id': schema:alternateName
 - '@id': cvisb:administrativeType
   '@type': rdf:Property
+  authenticated: true
   marginality: required
   owl:cardinality: one
   rdfs:comment: Type of administative area, e.g. province (Adm 1), district (Adm 2),
@@ -4728,6 +4732,7 @@
   - '@id': schema:Text
 - '@id': cvisb:administrativeUnit
   '@type': rdf:Property
+  authenticated: true
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: 'level of administative area, e.g. 1: province, 2: district, 3: chiefdom,
@@ -4739,12 +4744,14 @@
   - 2
   - 3
   - 4
+  - null
   schema:domainIncludes:
   - '@id': cvisb:AdministrativeArea
   schema:rangeIncludes:
   - '@id': schema:Integer
 - '@id': cvisb:identifier
   '@type': rdf:Property
+  authenticated: true
   marginality: optional
   owl:cardinality: one
   rdfs:comment: 'identifier  / short name for administrative area. Note: where possible,
