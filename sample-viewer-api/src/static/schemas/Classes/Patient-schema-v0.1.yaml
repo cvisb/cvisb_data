@@ -29,7 +29,7 @@
     "@id":               health:Patient
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-
+  root_entity:           true
 
 # identifier
 - "@id":                 cvisb:patientID

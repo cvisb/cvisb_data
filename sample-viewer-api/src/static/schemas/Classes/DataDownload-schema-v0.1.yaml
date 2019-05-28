@@ -30,6 +30,7 @@
     "@id":               schema:DataDownload
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
+  root_entity:           true
 
 # name
 - "@id":                 cvisb:name

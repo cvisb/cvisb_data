@@ -35,7 +35,7 @@
     "@id":               schema:Dataset
   schema:isPartOf:
     "@id":               https://data.cvisb.org/jsonschema
-
+  root_entity:           true
 
 # name
 - "@id":                 cvisb:name
