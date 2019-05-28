@@ -414,6 +414,18 @@
   marginality:           optional
   authenticated:         false
 
+- "@id":                 cvisb:shortnessBreath
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have shortness of breath
+  rdfs:label:            shortnessBreath
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
+
 - "@id":                 cvisb:rales
   "@type":               rdf:Property
   rdfs:comment:          If the patient is observed to have rales

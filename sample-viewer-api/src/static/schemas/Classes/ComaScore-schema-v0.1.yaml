@@ -41,6 +41,20 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:glasgowComaScore
+  "@type":               rdf:Property
+  rdfs:comment:          "Combined Glasgow Coma Score"
+  rdfs:label:            glasgowComaScore
+  schema:domainIncludes:
+    - "@id":             cvisb:ComaScore
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               3
+  maximum:               15
+
 - "@id":                 cvisb:eyeOpening
   "@type":               rdf:Property
   rdfs:comment:          "How a patient opens his/her eyes: Spontaneously (4), to speech (3), to pain (2), none (1)"
