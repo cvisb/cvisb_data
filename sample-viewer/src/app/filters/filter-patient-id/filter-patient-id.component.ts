@@ -23,16 +23,11 @@ export class FilterPatientIdComponent implements OnInit {
   constructor(private requestSvc: RequestParametersService) { }
 
   ngOnInit() {
-    // console.log(this.states)
-    console.log(this.patients)
   }
 
 
 
   filterPatientIDs(patientIDs) {
-    // console.log(patientIDs);
-
-
     if (this.inclContacts) {
       this.requestSvc.updateParams(this.endpoint,
         {
