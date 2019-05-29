@@ -219,12 +219,14 @@ export class GetSamplesService {
       //
       this.getSamplePatientData()
         .pipe(flatMap(firstMethodResult => this.getNPrepSamples()),
-        finalize(() => this.loadingSubject.next(false))
-      )
+          finalize(() => this.loadingSubject.next(false))
+        )
         .subscribe(thirdMethodResult => {
         });
     } else {
-      this.getNPrepSamples().subscribe();
+      this.getNPrepSamples().pipe(
+        finalize(() => this.loadingSubject.next(false))
+      ).subscribe();
     }
 
   }
