@@ -27,6 +27,21 @@ p {
   padding: 0 10px;
 }
 
+
+.mat-cell,
+.mat-header-cell {
+  &.mat-column-cohort {
+    padding-right: 0;
+    text-align: end;
+  }
+
+  &.mat-column-outcome {
+    padding-left: 0;
+    // display: flex;
+    // justify-content: flex-end;
+  }
+}
+
 .mat-column-patientID,
 .mat-column-privatePatientID {
   max-width: 75px;
