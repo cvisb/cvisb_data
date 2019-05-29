@@ -8,8 +8,6 @@
             [multiple]="true"
             [closeOnSelect]="true"
             [hideSelected]="true"
-            [typeahead]="states"
-            bindLabel="name"
             placeholder="Select patients"
             (search)="onSearch($event)"
             (ngModelChange)="filterPatientIDs($event)"
