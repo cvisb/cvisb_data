@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
-import { Sample, SampleWide, AuthState, RequestParamArray, Patient } from '../_models/';
+import { Sample, SampleWide, AuthState, RequestParamArray, Patient, ESFacetTerms } from '../_models/';
 import { AuthService } from './auth.service';
 import { MyHttpClient } from './http-cookies.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -27,6 +27,9 @@ export class GetSamplesService {
   public samplesWideSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
+
+  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public sampleSummaryState$ = this.sampleSummarySubject.asObservable();
 
   samplePatientMD: Patient[] = [];
 
@@ -138,22 +141,22 @@ export class GetSamplesService {
   }
 
 
-  getSampleSummary(qParams?) {
-    return forkJoin(this.getSampleCount(qParams),
-      this.getSamplePatientData(qParams)
-      // return forkJoin(this.getSampleCount(qParams),
-      // this.getSamplePatientFacet("cohort", qParams),
-      // this.getSamplePatientFacet("outcome", qParams)
-    )
-    // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
-    //     console.log(sampleCounts)
-    //     console.log(cohorts)
-    //     console.log(outcomes)
-    //     return([])
-    //   })
-    // )
-
-  }
+  // getSampleSummary(qParams?) {
+  //   return forkJoin(this.getSampleCount(qParams),
+  //     this.getSamplePatientData(qParams)
+  //     // return forkJoin(this.getSampleCount(qParams),
+  //     // this.getSamplePatientFacet("cohort", qParams),
+  //     // this.getSamplePatientFacet("outcome", qParams)
+  //   )
+  //   // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
+  //   //     console.log(sampleCounts)
+  //   //     console.log(cohorts)
+  //   //     console.log(outcomes)
+  //   //     return([])
+  //   //   })
+  //   // )
+  //
+  // }
 
   //
   //     //
@@ -227,7 +230,40 @@ export class GetSamplesService {
 
   }
 
+  getSampleSummary(samples): Object {
+    let summary = {};
+
+    summary['outcome'] = this.countBy(samples, "outcome", "unknown");
+    summary['cohort'] = this.countBy(samples, "cohort", "Unknown");
+
+    console.log(summary)
+
+    return(summary)
+  }
+
+  countBy(objArr: Object[], groupBy: string, undefinedLabel = "Unknown"): ESFacetTerms {
+    let result = objArr.map(d => d[groupBy]).reduce(function(acc, curr) {
+      // compress undefined --> unknown
+      if (!curr) {
+        curr = undefinedLabel;
+      }
+
+      let idx = acc.findIndex(d => d.term === curr);
+
+      if (idx == -1) {
+        acc.push({term: curr, count: 1})
+      } else {
+        acc[idx]['count'] += 1;
+      }
+
+      return acc;
+    }, []);
+
+    return(result);
+  }
+
   getNPrepSamples() {
+    console.log("Calling prep samples")
     let param_string = this.requestSvc.reduceParams(this.request_params);
     param_string = param_string.set('size', "1000")
 
@@ -256,6 +292,8 @@ export class GetSamplesService {
           })
 
           this.samplesSubject.next(samples);
+
+          this.sampleSummarySubject.next(this.getSampleSummary(samples));
 
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);

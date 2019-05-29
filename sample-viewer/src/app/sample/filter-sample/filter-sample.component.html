@@ -30,9 +30,9 @@
     <app-filter-patient-id [all_patients]="all_patients" [patients]="patients" endpoint="sample"></app-filter-patient-id>
   </div> -->
 
-  <!-- <div class="filter-item filter-patient-types">
-    <app-filter-patient-type [viruses]="" [outcomes]="" [all_cohorts]="" [all_outcomes]="" endpoint="sample"></app-filter-patient-type>
-  </div> -->
+  <div class="filter-item filter-patient-types">
+    <app-filter-patient-type [viruses]="cohorts" [outcomes]="outcomes" [all_cohorts]='["Ebola", "Lassa", "Unknown"]' [all_outcomes]='["dead", "survivor", "unknown", "control", "contact"]' endpoint="sample"></app-filter-patient-type>
+  </div>
 
   <!-- <div class="filter-item filter-elisas">
     <app-filter-elisas endpoint='sample'></app-filter-elisas>
