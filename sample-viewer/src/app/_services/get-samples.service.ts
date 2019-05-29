@@ -276,6 +276,7 @@ export class GetSamplesService {
 
             if (filtered.length === 1) {
               d['patientID'] = filtered[0].patientID;
+              d['alternateIdentifier'] = filtered[0].alternateIdentifier;
               d['cohort'] = filtered[0].cohort;
               d['outcome'] = filtered[0].outcome;
               d['country'] = filtered[0].country['name'];
@@ -336,6 +337,7 @@ export class GetSamplesService {
           // If it already exists-- append
           // If not-- create it as an array/set (for unique values)
           prev["patientID"] = updateSet(prev, curr, "patientID");
+          prev["alternateIdentifier"] = updateSet(prev, curr, "alternateIdentifier");
           prev["cohort"] = updateSet(prev, curr, "cohort");
           prev["outcome"] = updateSet(prev, curr, "outcome");
           prev["privatePatientID"] = updateSet(prev, curr, "privatePatientID");
