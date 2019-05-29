@@ -24,6 +24,7 @@ export class FilterPatientIdComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.states)
+    console.log(this.patients)
   }
 
 
