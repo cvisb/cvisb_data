@@ -52,19 +52,14 @@
   </ng-container> -->
 
   <!-- Patient ID -->
-  <ng-container matColumnDef="key">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>key</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id"> {{element.key}} </mat-cell>
-  </ng-container>
-
   <ng-container matColumnDef="patientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id"> {{element.patientID}} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{ samplePatientMD | filterByAltID: "C-111-3":"patientID" }} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="privatePatientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>private patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id emphasis"> {{element.privatePatientID}} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id emphasis"> {{ element.privatePatientID }} </mat-cell>
   </ng-container>
 
   <!-- Patient cohort -->
@@ -137,7 +132,8 @@
               <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
               </button>
                 </div> -->
-              </div> <!-- END OF LOCATION LOOP -->
+              </div>
+              <!-- END OF LOCATION LOOP -->
 
             </div>
           </ng-template>
