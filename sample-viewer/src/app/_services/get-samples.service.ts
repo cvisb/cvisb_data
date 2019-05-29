@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
-import { Sample, SampleWide, AuthState, RequestParamArray } from '../_models/';
+import { Sample, SampleWide, AuthState, RequestParamArray, Patient } from '../_models/';
 import { AuthService } from './auth.service';
 import { MyHttpClient } from './http-cookies.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -28,6 +28,8 @@ export class GetSamplesService {
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
+  samplePatientMD: Patient[];
+
 
   constructor(
     public myhttp: MyHttpClient,
@@ -45,6 +47,11 @@ export class GetSamplesService {
       // console.log(params)
       this.request_params = params;
       this.getSamples();
+    })
+
+    this.getSamplePatientData().subscribe(patients => {
+      console.log("Saving all samplePatientMD")
+      this.samplePatientMD = patients;
     })
 
   }
@@ -201,16 +208,16 @@ export class GetSamplesService {
       // this.samplesSubject.next(this.samples.slice(0, 11));
       if (samples) {
       console.log(this.route.snapshot)
-        let samplePatientMD = this.route.snapshot.data.samplePatientMD;
-        console.log(samplePatientMD)
+        // let samplePatientMD = this.route.snapshot.data.samplePatientMD;
+        console.log(this.samplePatientMD)
         samples.forEach(d => {
-          let filtered = samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
+          let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
 
           if (filtered.length === 1) {
             d['patientID'] = filtered[0].patientID;
             d['cohort'] = filtered[0].cohort;
             d['outcome'] = filtered[0].outcome;
-            d['country'] = filtered[0].country.name;
+            d['country'] = filtered[0].country['name'];
             d['infectionYear'] = filtered[0].infectionYear;
             // d['elisa'] = filtered[0].elisa;
           }
