@@ -65,7 +65,7 @@ export class SampleTableComponent implements OnInit {
 
     this.sampleSvc.samplesWideState$.subscribe((sList: Sample[]) => {
       this.samples_wide = sList;
-      console.log(sList)
+      // console.log(sList)
 
       this.dataSource = new MatTableDataSource(this.samples_wide);
       this.dataSource.sort = this.sort;
