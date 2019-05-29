@@ -28,7 +28,7 @@ export class GetSamplesService {
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
-  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({cohort: null, outcome: null});
   public sampleSummaryState$ = this.sampleSummarySubject.asObservable();
 
   samplePatientMD: Patient[] = [];
