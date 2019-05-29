@@ -54,7 +54,8 @@
   <!-- Patient ID -->
   <ng-container matColumnDef="patientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id"> {{ samplePatientMD | filterByAltID: "C-111-3":"patientID" }} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id"> {{ element.patientID }} </mat-cell>
+    <!-- <mat-cell *matCellDef="let element" class="patient-id"> {{ samplePatientMD | filterByAltID: element.privatePatientID:"patientID" }} </mat-cell> -->
   </ng-container>
 
   <ng-container matColumnDef="privatePatientID">
