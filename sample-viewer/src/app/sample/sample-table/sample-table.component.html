@@ -54,13 +54,21 @@
   <!-- Patient ID -->
   <ng-container matColumnDef="patientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id"> {{ element.patientID }} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id">
+      <a [routerLink]="['/patient', element.patientID]">
+      {{ element.patientID }}
+      </a>
+    </mat-cell>
     <!-- <mat-cell *matCellDef="let element" class="patient-id"> {{ samplePatientMD | filterByAltID: element.privatePatientID:"patientID" }} </mat-cell> -->
   </ng-container>
 
   <ng-container matColumnDef="privatePatientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>private patient id</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="patient-id emphasis"> {{ element.privatePatientID }} </mat-cell>
+    <mat-cell *matCellDef="let element" class="patient-id emphasis">
+      <a [routerLink]="['/patient', element.patientID]">
+            {{ element.privatePatientID }}
+          </a>
+    </mat-cell>
   </ng-container>
 
   <!-- Patient cohort -->
