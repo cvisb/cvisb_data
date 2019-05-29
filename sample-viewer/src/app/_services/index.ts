@@ -6,6 +6,7 @@ export * from './get-patients.service';
 export * from './patients.datasource';
 export * from './allpatients.resolver';
 export * from './patients.resolver';
+export * from './samples.resolver';
 export * from './file-metadata.service';
 export * from './anchor.service';
 export * from './get-hla-data.service';

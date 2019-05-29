@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { GetSamplesService, LabLocationsService, AuthService } from '../../_services/';
-import { Sample, SampleWide, Lab } from '../../_models';
+import { Sample, SampleWide, Lab, Patient } from '../../_models';
 import { SampleMetadataComponent } from '../../_dialogs';
 
 import * as d3 from 'd3';
@@ -17,10 +17,11 @@ import * as d3 from 'd3';
   templateUrl: './sample-table.component.html',
   styleUrls: ['./sample-table.component.scss']
 })
+
 export class SampleTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  samplePatientMD: Patient[];
   editable: boolean = false;
 
   dataSource: MatTableDataSource<any>;
@@ -73,6 +74,9 @@ export class SampleTableComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.route.snapshot.data);
+    this.samplePatientMD = this.route.snapshot.data.samplePatientMD;
+    console.log(this.samplePatientMD);
   }
 
   showSampleMD(sample): void {

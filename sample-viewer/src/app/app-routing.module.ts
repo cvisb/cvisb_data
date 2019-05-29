@@ -19,7 +19,7 @@ import { UploadComponent } from './upload/upload.component';
 // import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
 
 // --- Resolvers ---
-import { AllPatientsResolver, PatientsResolver, DatasetResolver, HlaResolver } from './_services';
+import { AllPatientsResolver, PatientsResolver, DatasetResolver, HlaResolver, SamplesResolver } from './_services';
 
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
@@ -36,7 +36,8 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
-  { canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
+  {
+    canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
       patients: PatientsResolver,
       all: AllPatientsResolver
@@ -48,7 +49,11 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'upload/dataset', component: AddDataComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
 
-  { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' } },
+  { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' },
+    resolve: {
+      samplePatientMD: SamplesResolver,
+    }
+  },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { canActivate: [AuthGuard], path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // {
