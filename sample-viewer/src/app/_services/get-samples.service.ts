@@ -200,6 +200,7 @@ export class GetSamplesService {
       console.log(data)
       // this.samplesSubject.next(this.samples.slice(0, 11));
       if (samples) {
+      console.log(this.route.snapshot)
         let samplePatientMD = this.route.snapshot.data.samplePatientMD;
         console.log(samplePatientMD)
         samples.forEach(d => {
