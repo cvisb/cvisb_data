@@ -220,7 +220,7 @@ export class GetSamplesService {
         });
     } else {
       console.log("Metadata exists")
-      this.getNPrepSamples();
+      this.getNPrepSamples().subscribe();
       // this.getSamplePatientData()
       //   .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
       //   .subscribe(thirdMethodResult => {
