@@ -154,21 +154,25 @@ export class RequestParametersService {
   }
 
   reduceSampleParams(request_params): HttpParams {
-    let patientParams = request_params
-      .filter(d => this.patientProperties
-        .includes(d.field)).map(param => this.reduceHandler(param));
+    // default options
+    let patient_string: string = "*";
+    let q_string: string = "__all__";
 
-    let patient_string: string = patientParams.length > 0 ? patientParams.join(" AND ") : "*"
+    if (request_params) {
+      let patientParams = request_params
+        .filter(d => this.patientProperties
+          .includes(d.field)).map(param => this.reduceHandler(param));
 
-    console.log(patient_string)
+      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : "*";
+      // console.log(patient_string)
 
-    let sampleParams = request_params
-      .filter(d => this.sampleProperites
-        .includes(d.field)).map(param => this.reduceHandler(param));
+      let sampleParams = request_params
+        .filter(d => this.sampleProperites
+          .includes(d.field)).map(param => this.reduceHandler(param));
 
-    let q_string: string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__"
-
-    console.log(q_string)
+      q_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__";
+      // console.log(q_string)
+    }
 
     let http_params = new HttpParams()
       .set('q', q_string)

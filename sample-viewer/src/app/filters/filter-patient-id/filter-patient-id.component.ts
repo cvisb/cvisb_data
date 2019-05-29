@@ -36,7 +36,7 @@ export class FilterPatientIdComponent implements OnInit {
           }
         });
     } else {
-      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: patientIDs });
+      this.requestSvc.updateParams(this.endpoint, { field: 'alternateIdentifier', value: patientIDs });
     }
   }
 
