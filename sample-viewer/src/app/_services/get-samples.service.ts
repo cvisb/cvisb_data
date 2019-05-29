@@ -217,11 +217,12 @@ export class GetSamplesService {
         });
     } else {
       console.log("Metadata exists")
-      this.getSamplePatientData()
-        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
-        .subscribe(thirdMethodResult => {
-          console.log(thirdMethodResult);
-        });
+      this.getNPrepSamples();
+      // this.getSamplePatientData()
+      //   .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
+      //   .subscribe(thirdMethodResult => {
+      //     console.log(thirdMethodResult);
+      //   });
     }
 
   }
