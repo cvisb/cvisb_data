@@ -192,30 +192,31 @@ export class GetSamplesService {
 
   getSamples() {
     console.log('calling get samples')
-    // if (this.samplePatientMD.length === 0) {
-    this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
-    // this.getSamplePatientData().pipe(
-    //   tap(e => console.log(e)),
-    //   mergeMap(e => console.log(e))
-    // )
-    //
-    // this.getSamplePatientData().pipe(
-    //   map(x => console.log(x)),
-    //   mergeMap(n => this.getNPrepSamples().pipe(
-    //     console.log(n)
-    //   )),
-    //   catchError(err => of('error found')),
-    // ).subscribe(console.log('fsdjk'));
+    if (this.samplePatientMD.length === 0) {
+      this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
+      // this.getSamplePatientData().pipe(
+      //   tap(e => console.log(e)),
+      //   mergeMap(e => console.log(e))
+      // )
+      //
+      // this.getSamplePatientData().pipe(
+      //   map(x => console.log(x)),
+      //   mergeMap(n => this.getNPrepSamples().pipe(
+      //     console.log(n)
+      //   )),
+      //   catchError(err => of('error found')),
+      // ).subscribe(console.log('fsdjk'));
 
-    // } else {
-    //   this.getNPrepSamples();
-    // }
-    //
-    this.getSamplePatientData()
-    .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
-    .subscribe(thirdMethodResult => {
-          console.log(thirdMethodResult);
-     });
+
+      //
+      this.getSamplePatientData()
+        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
+      // .subscribe(thirdMethodResult => {
+      //       console.log(thirdMethodResult);
+      //  });
+    } else {
+      this.getNPrepSamples();
+    }
 
   }
 
@@ -252,7 +253,7 @@ export class GetSamplesService {
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);
           this.samplesWideSubject.next(this.samples_wide);
-          return(samples)
+          return (samples)
         } else {
           console.log('Error in getting samples')
           this.samplesSubject.next(samples);
