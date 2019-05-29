@@ -29,6 +29,9 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
+  private patientProperties: string[] = ["patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
+  private sampleProperites: string[] = ["sampleType", "location.lab", "species"];
+
   constructor(
   ) {
     // subscribe to current parameters
@@ -148,6 +151,32 @@ export class RequestParametersService {
       }
     }
     return (currentParams)
+  }
+
+  reduceSampleParams(request_params): HttpParams {
+    let patientParams = request_params
+      .filter(d => this.patientProperties
+        .includes(d.field)).map(param => this.reduceHandler(param));
+
+    let patient_string: string = patientParams.length > 0 ? patientParams.join(" AND ") : "*"
+
+    console.log(patient_string)
+
+    let sampleParams = request_params
+      .filter(d => this.sampleProperites
+        .includes(d.field)).map(param => this.reduceHandler(param));
+
+    let q_string: string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__"
+
+    console.log(q_string)
+
+    let http_params = new HttpParams()
+      .set('q', q_string)
+      // .set('sampleQuery', sample_string)
+      // .set('experimentQuery', experiment_string)
+      .set('patientQuery', patient_string);
+
+    return (http_params);
   }
 
   // Example for searching both patientID and altID:
@@ -321,6 +350,27 @@ export class RequestParametersService {
     }
 
     return (params);
+  }
+
+  reduceHandler(param) {
+    if (!param.field) {
+      // generic search query; no variable-level searching
+      return (param.value);
+    } else {
+      // convert the parameter object into a string and add to array.
+      let new_param = this.params2String(param);
+
+      console.log(new_param)
+
+      // Check if there's an OR parameter to relate to that property.
+      if (param.orSelector) {
+        let or_param = this.params2String(param.orSelector);
+        new_param = `${new_param} OR ${or_param}`
+        console.log(or_param)
+        console.log(new_param)
+      }
+      return (new_param);
+    }
   }
 
   params2String(param: RequestParam) {

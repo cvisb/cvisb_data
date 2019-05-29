@@ -51,9 +51,9 @@ export class GetSamplesService {
 
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
       // console.log("Re-getting samples with new parameters:")
-      // console.log(params)
+      console.log(params)
       this.request_params = params;
-      this.getSamples();
+      this.getSamples(params);
     })
 
     // this.getSamplePatientData().subscribe(patients => {
@@ -116,6 +116,7 @@ export class GetSamplesService {
   //   );
   // }
 
+  // TODO: Scroll to deal w/ > 1000 patients
   getSamplePatientData(qParams?): Observable<any> {
     // NOTE: will fail for results > 1000
     // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
@@ -196,7 +197,7 @@ export class GetSamplesService {
   }
 
 
-  getSamples() {
+  getSamples(qParams?) {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       console.log("Metadata doesn't exist")
@@ -218,13 +219,13 @@ export class GetSamplesService {
 
       //
       this.getSamplePatientData()
-        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()),
+        .pipe(flatMap(firstMethodResult => this.getNPrepSamples(qParams)),
           finalize(() => this.loadingSubject.next(false))
         )
         .subscribe(thirdMethodResult => {
         });
     } else {
-      this.getNPrepSamples().pipe(
+      this.getNPrepSamples(qParams).pipe(
         finalize(() => this.loadingSubject.next(false))
       ).subscribe();
     }
@@ -265,16 +266,22 @@ export class GetSamplesService {
     return (result);
   }
 
-  getNPrepSamples() {
+  getNPrepSamples(filterParamArray) {
     console.log("Calling prep samples")
-    let param_string = this.requestSvc.reduceParams(this.request_params);
-    param_string = param_string.set('size', "1000")
+    let params = this.requestSvc.reduceSampleParams(filterParamArray);
+    console.log(filterParamArray)
+
+    params = params.set('size', "1000")
+
+
+    console.log('sample params:')
+    console.log(params)
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
-      params: param_string
+      params: params
     }).pipe(
       map(data => {
         let samples = data['body']['hits'];
