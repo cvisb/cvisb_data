@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
+import { map, catchError, mergeMap, tap, flatMap } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -28,7 +28,7 @@ export class GetSamplesService {
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
-  samplePatientMD: Patient[];
+  samplePatientMD: Patient[] = [];
 
 
   constructor(
@@ -44,15 +44,16 @@ export class GetSamplesService {
     })
 
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log(params)
+      console.log("Re-getting samples with new parameters:")
+      console.log(params)
       this.request_params = params;
       this.getSamples();
     })
 
-    this.getSamplePatientData().subscribe(patients => {
-      console.log("Saving all samplePatientMD")
-      this.samplePatientMD = patients;
-    })
+    // this.getSamplePatientData().subscribe(patients => {
+    //   console.log("Saving all samplePatientMD")
+    //   this.samplePatientMD = patients;
+    // })
 
   }
 
@@ -119,8 +120,6 @@ export class GetSamplesService {
       .append('size', 1000)
       .append("sampleQuery", (`_exists_:privatePatientID`));
 
-    console.log(params);
-
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -129,6 +128,7 @@ export class GetSamplesService {
     }).pipe(
       map(res => {
         console.log(res);
+        this.samplePatientMD = res["body"]["hits"];
         return (res["body"]["hits"])
       }),
       catchError(e => {
@@ -183,76 +183,86 @@ export class GetSamplesService {
         .set('Accept', 'application/json')
     }).subscribe(data => {
       console.log(data)
-      return (data.body)
     },
       err => {
         console.log(err)
       })
   }
 
+
   getSamples() {
-    let param_string = this.requestSvc.reduceParams(this.request_params);
-    // console.log(param_string);
+    console.log('calling get samples')
+    // if (this.samplePatientMD.length === 0) {
+    this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
+    // this.getSamplePatientData().pipe(
+    //   tap(e => console.log(e)),
+    //   mergeMap(e => console.log(e))
+    // )
     //
+    // this.getSamplePatientData().pipe(
+    //   map(x => console.log(x)),
+    //   mergeMap(n => this.getNPrepSamples().pipe(
+    //     console.log(n)
+    //   )),
+    //   catchError(err => of('error found')),
+    // ).subscribe(console.log('fsdjk'));
+
+    // } else {
+    //   this.getNPrepSamples();
+    // }
+    //
+    this.getSamplePatientData()
+    .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
+    .subscribe(thirdMethodResult => {
+          console.log(thirdMethodResult);
+     });
+
+  }
+
+  getNPrepSamples() {
+    let param_string = this.requestSvc.reduceParams(this.request_params);
     param_string = param_string.set('size', "1000")
 
-    this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
-      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: param_string
-    }).subscribe(data => {
-      let samples = data['body']['hits'];
-      console.log(data)
-      // this.samplesSubject.next(this.samples.slice(0, 11));
-      if (samples) {
-      console.log(this.route.snapshot)
-        // let samplePatientMD = this.route.snapshot.data.samplePatientMD;
-        console.log(this.samplePatientMD)
-        samples.forEach(d => {
-          let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
-
-          if (filtered.length === 1) {
-            d['patientID'] = filtered[0].patientID;
-            d['cohort'] = filtered[0].cohort;
-            d['outcome'] = filtered[0].outcome;
-            d['country'] = filtered[0].country['name'];
-            d['infectionYear'] = filtered[0].infectionYear;
-            // d['elisa'] = filtered[0].elisa;
-          }
-        })
-
-        this.samplesSubject.next(samples);
-        // console.log(this.samples_wide)
-
-        // for(let i =0; i < this.samples.length)
-
-        // this.nestSamples(this.samples_wide[0].value.samples)
-        // this.samples_wide.forEach((obj: any) => {
-        //   obj['PBMC'] = this.nestSamples(obj.value.all_data);
-        // });
-
-        // Set status to be authorized
-        // this.authSvc.setAuthorized();
-
-
-        // Grab the sample locations and data and reshape to display in the table.
-        this.nestSamples(samples);
-        this.samplesWideSubject.next(this.samples_wide);
-      } else {
-        console.log('Error in getting samples')
-        this.samplesSubject.next(samples);
+    }).pipe(
+      map(data => {
+        let samples = data['body']['hits'];
         console.log(data)
-      }
-      // console.log(this.samples_wide)
-    },
-      err => {
-        console.log(err);
-        // check if unauthorized; if so, redirect.
-        // this.authSvc.redirectUnauthorized(err);
+        if (samples) {
+          console.log(this.samplePatientMD)
+          samples.forEach(d => {
+            let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
+
+            if (filtered.length === 1) {
+              d['patientID'] = filtered[0].patientID;
+              d['cohort'] = filtered[0].cohort;
+              d['outcome'] = filtered[0].outcome;
+              d['country'] = filtered[0].country['name'];
+              d['infectionYear'] = filtered[0].infectionYear;
+              // d['elisa'] = filtered[0].elisa;
+            }
+          })
+
+          this.samplesSubject.next(samples);
+
+          // Grab the sample locations and data and reshape to display in the table.
+          this.nestSamples(samples);
+          this.samplesWideSubject.next(this.samples_wide);
+          return(samples)
+        } else {
+          console.log('Error in getting samples')
+          this.samplesSubject.next(samples);
+          console.log(data)
+        }
+      }),
+      catchError(e => {
+        return of(e);
       })
-    // return (this.samples)
+    )
   }
 
   nestSamples(samples) {
