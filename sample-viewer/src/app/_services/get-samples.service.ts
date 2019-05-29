@@ -193,7 +193,8 @@ export class GetSamplesService {
   getSamples() {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
-      this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
+      console.log("Metadata doesn't exist")
+      // this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
       // this.getSamplePatientData().pipe(
       //   tap(e => console.log(e)),
       //   mergeMap(e => console.log(e))
@@ -211,11 +212,16 @@ export class GetSamplesService {
       //
       this.getSamplePatientData()
         .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
-      // .subscribe(thirdMethodResult => {
-      //       console.log(thirdMethodResult);
-      //  });
+        .subscribe(thirdMethodResult => {
+          console.log(thirdMethodResult);
+        });
     } else {
-      this.getNPrepSamples();
+      console.log("Metadata exists")
+      this.getSamplePatientData()
+        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
+        .subscribe(thirdMethodResult => {
+          console.log(thirdMethodResult);
+        });
     }
 
   }
