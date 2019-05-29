@@ -47,8 +47,8 @@ export class FilterSampleComponent implements OnInit {
       })
 
     this.sampleSvc.sampleSummaryState$.subscribe((sObj) => {
-      this.cohorts = sObj['cohorts'];
-      this.outcomes = sObj['outcomes'];
+      this.cohorts = sObj['cohort'];
+      this.outcomes = sObj['outcome'];
     })
 
 
