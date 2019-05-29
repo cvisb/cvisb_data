@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
 
+import { ActivatedRoute } from '@angular/router';
+
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
@@ -30,6 +32,7 @@ export class GetSamplesService {
   constructor(
     public myhttp: MyHttpClient,
     private requestSvc: RequestParametersService,
+    private route: ActivatedRoute,
     private authSvc: AuthService) {
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
@@ -128,19 +131,19 @@ export class GetSamplesService {
   }
 
 
-  getSampleSummary(qParams?){
+  getSampleSummary(qParams?) {
     return forkJoin(this.getSampleCount(qParams),
-    this.getSamplePatientData(qParams)
-    // return forkJoin(this.getSampleCount(qParams),
-    // this.getSamplePatientFacet("cohort", qParams),
-    // this.getSamplePatientFacet("outcome", qParams)
-  )
-  // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
-  //     console.log(sampleCounts)
-  //     console.log(cohorts)
-  //     console.log(outcomes)
-  //     return([])
-  //   })
+      this.getSamplePatientData(qParams)
+      // return forkJoin(this.getSampleCount(qParams),
+      // this.getSamplePatientFacet("cohort", qParams),
+      // this.getSamplePatientFacet("outcome", qParams)
+    )
+    // .pipe(map(([sampleCounts, cohorts, outcomes]) => {
+    //     console.log(sampleCounts)
+    //     console.log(cohorts)
+    //     console.log(outcomes)
+    //     return([])
+    //   })
     // )
 
   }
@@ -195,9 +198,24 @@ export class GetSamplesService {
     }).subscribe(data => {
       let samples = data['body']['hits'];
       console.log(data)
-      this.samplesSubject.next(samples);
       // this.samplesSubject.next(this.samples.slice(0, 11));
       if (samples) {
+        let samplePatientMD = this.route.snapshot.data.samplePatientMD;
+        console.log(samplePatientMD)
+        samples.forEach(d => {
+          let filtered = samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
+
+          if (filtered.length === 1) {
+            d['patientID'] = filtered[0].patientID;
+            d['cohort'] = filtered[0].cohort;
+            d['outcome'] = filtered[0].outcome;
+            d['country'] = filtered[0].country.name;
+            d['infectionYear'] = filtered[0].infectionYear;
+            // d['elisa'] = filtered[0].elisa;
+          }
+        })
+
+        this.samplesSubject.next(samples);
         // console.log(this.samples_wide)
 
         // for(let i =0; i < this.samples.length)
@@ -216,6 +234,7 @@ export class GetSamplesService {
         this.samplesWideSubject.next(this.samples_wide);
       } else {
         console.log('Error in getting samples')
+        this.samplesSubject.next(samples);
         console.log(data)
       }
       // console.log(this.samples_wide)
