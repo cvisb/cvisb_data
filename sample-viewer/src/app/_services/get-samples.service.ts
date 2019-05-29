@@ -28,7 +28,7 @@ export class GetSamplesService {
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
-  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({cohort: null, outcome: null});
+  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({ patients: null, cohort: null, outcome: null });
   public sampleSummaryState$ = this.sampleSummarySubject.asObservable();
 
   samplePatientMD: Patient[] = [];
@@ -47,8 +47,8 @@ export class GetSamplesService {
     })
 
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      console.log("Re-getting samples with new parameters:")
-      console.log(params)
+      // console.log("Re-getting samples with new parameters:")
+      // console.log(params)
       this.request_params = params;
       this.getSamples();
     })
@@ -60,58 +60,58 @@ export class GetSamplesService {
 
   }
 
-  getSampleCount(qParams?): Observable<any> {
-    // If unspecified, set q string to return all.
-    qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
+  // getSampleCount(qParams?): Observable<any> {
+  //   // If unspecified, set q string to return all.
+  //   qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
+  //
+  //   let params = qParams
+  //     .append('size', 0)
+  //     .append("facet_size", 10000)
+  //     .append("facets", "privatePatientID.keyword");
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: params
+  //   }).pipe(
+  //     map(res => {
+  //       console.log(res);
+  //       return (res["body"]["facets"]["privatePatientID.keyword"].terms)
+  //     }),
+  //     catchError(e => {
+  //       return of(e);
+  //     })
+  //   );
+  // }
 
-    let params = qParams
-      .append('size', 0)
-      .append("facet_size", 10000)
-      .append("facets", "privatePatientID.keyword");
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(res => {
-        console.log(res);
-        return (res["body"]["facets"]["privatePatientID.keyword"].terms)
-      }),
-      catchError(e => {
-        return of(e);
-      })
-    );
-  }
-
-  getSamplePatientFacet(facetVar: string = "cohort", qParams?): Observable<any> {
-    // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
-    // If unspecified, set q string to return all.
-    qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
-
-    let params = qParams
-      .append('size', 0)
-      .append("facet_size", 10000)
-      .append("sampleQuery", (`*&facets=alternateIdentifier.keyword(${facetVar}.keyword)`));
-
-    console.log(params);
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(res => {
-        console.log(res);
-        return (res["body"]["facets"]["alternateIdentifier.keyword"].terms)
-      }),
-      catchError(e => {
-        return of(e);
-      })
-    );
-  }
+  // getSamplePatientFacet(facetVar: string = "cohort", qParams?): Observable<any> {
+  //   // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
+  //   // If unspecified, set q string to return all.
+  //   qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
+  //
+  //   let params = qParams
+  //     .append('size', 0)
+  //     .append("facet_size", 10000)
+  //     .append("sampleQuery", (`*&facets=alternateIdentifier.keyword(${facetVar}.keyword)`));
+  //
+  //   console.log(params);
+  //
+  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: params
+  //   }).pipe(
+  //     map(res => {
+  //       console.log(res);
+  //       return (res["body"]["facets"]["alternateIdentifier.keyword"].terms)
+  //     }),
+  //     catchError(e => {
+  //       return of(e);
+  //     })
+  //   );
+  // }
 
   getSamplePatientData(qParams?): Observable<any> {
     // NOTE: will fail for results > 1000
@@ -216,16 +216,9 @@ export class GetSamplesService {
       this.getSamplePatientData()
         .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
         .subscribe(thirdMethodResult => {
-          console.log(thirdMethodResult);
         });
     } else {
-      console.log("Metadata exists")
       this.getNPrepSamples().subscribe();
-      // this.getSamplePatientData()
-      //   .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
-      //   .subscribe(thirdMethodResult => {
-      //     console.log(thirdMethodResult);
-      //   });
     }
 
   }
@@ -235,10 +228,11 @@ export class GetSamplesService {
 
     summary['outcome'] = this.countBy(samples, "outcome", "unknown");
     summary['cohort'] = this.countBy(samples, "cohort", "Unknown");
+    summary['patients'] = samples.map(d => d.alternateIdentifier).flat();
 
     console.log(summary)
 
-    return(summary)
+    return (summary)
   }
 
   countBy(objArr: Object[], groupBy: string, undefinedLabel = "Unknown"): ESFacetTerms {
@@ -251,7 +245,7 @@ export class GetSamplesService {
       let idx = acc.findIndex(d => d.term === curr);
 
       if (idx == -1) {
-        acc.push({term: curr, count: 1})
+        acc.push({ term: curr, count: 1 })
       } else {
         acc[idx]['count'] += 1;
       }
@@ -259,7 +253,7 @@ export class GetSamplesService {
       return acc;
     }, []);
 
-    return(result);
+    return (result);
   }
 
   getNPrepSamples() {
@@ -277,7 +271,6 @@ export class GetSamplesService {
         let samples = data['body']['hits'];
         console.log(data)
         if (samples) {
-          console.log(this.samplePatientMD)
           samples.forEach(d => {
             let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
 
@@ -329,8 +322,6 @@ export class GetSamplesService {
       }
       return (return_val)
     }
-
-    console.log(samples)
 
     // Converts the long table into a wide one, with patientID, privatePatientID, and visitCode pulled out to the highest level
     // Each sample type is an array containing the sample locations + associated metadata.

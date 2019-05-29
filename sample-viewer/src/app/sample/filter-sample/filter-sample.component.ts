@@ -49,6 +49,7 @@ export class FilterSampleComponent implements OnInit {
     this.sampleSvc.sampleSummaryState$.subscribe((sObj) => {
       this.cohorts = sObj['cohort'];
       this.outcomes = sObj['outcome'];
+      this.patients = sObj['patients'];
     })
 
 
@@ -56,7 +57,7 @@ export class FilterSampleComponent implements OnInit {
     this.sampleSvc.samplesState$.subscribe((sList) => {
       if (sList) {
         this.sample_count = sList.length;
-        this.patients = sList.map((d: any) => d.privatePatientID);
+        // this.patients = sList.map((d: any) => d.privatePatientID);
 
         // On the initial return object, set the maximum parameters
         if (this.first_call) {
