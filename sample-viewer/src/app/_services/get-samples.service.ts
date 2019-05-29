@@ -298,6 +298,9 @@ export class GetSamplesService {
         return d.reduce(function(prev, curr) {
           // If it already exists-- append
           // If not-- create it as an array/set (for unique values)
+          prev["patientID"] = updateSet(prev, curr, "patientID");
+          prev["cohort"] = updateSet(prev, curr, "cohort");
+          prev["outcome"] = updateSet(prev, curr, "outcome");
           prev["privatePatientID"] = updateSet(prev, curr, "privatePatientID");
           prev["visitCode"] = updateSet(prev, curr, "visitCode");
 
