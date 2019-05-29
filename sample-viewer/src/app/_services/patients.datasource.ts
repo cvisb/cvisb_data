@@ -1,4 +1,5 @@
 // based on https://blog.angular-university.io/angular-material-data-table/
+// For server-side filtering
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { ApiService } from "./api.service";

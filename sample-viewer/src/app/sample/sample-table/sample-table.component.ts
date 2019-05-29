@@ -24,6 +24,8 @@ export class SampleTableComponent implements OnInit {
   samplePatientMD: Patient[];
   editable: boolean = false;
 
+  loading: boolean;
+
   dataSource: MatTableDataSource<any>;
 
   sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'];
@@ -68,6 +70,10 @@ export class SampleTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.samples_wide);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    })
+
+    this.sampleSvc.loadingState$.subscribe((state: boolean) => {
+      this.loading = state;
     })
   }
 

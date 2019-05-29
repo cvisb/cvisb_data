@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap, tap, flatMap } from "rxjs/operators";
+import { map, catchError, mergeMap, tap, flatMap, finalize } from "rxjs/operators";
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
 
 import { ActivatedRoute } from '@angular/router';
@@ -30,6 +30,9 @@ export class GetSamplesService {
 
   public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({ patients: null, cohort: null, outcome: null });
   public sampleSummaryState$ = this.sampleSummarySubject.asObservable();
+
+  public loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
 
   samplePatientMD: Patient[] = [];
 
@@ -197,6 +200,7 @@ export class GetSamplesService {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       console.log("Metadata doesn't exist")
+      this.loadingSubject.next(true);
       // this.getSamplePatientData().pipe(mergeMap(patients => this.getNPrepSamples()))
       // this.getSamplePatientData().pipe(
       //   tap(e => console.log(e)),
@@ -214,7 +218,9 @@ export class GetSamplesService {
 
       //
       this.getSamplePatientData()
-        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()))
+        .pipe(flatMap(firstMethodResult => this.getNPrepSamples()),
+        finalize(() => this.loadingSubject.next(false))
+      )
         .subscribe(thirdMethodResult => {
         });
     } else {
