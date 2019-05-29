@@ -236,7 +236,8 @@ export class GetSamplesService {
 
     summary['outcome'] = this.countBy(samples, "outcome", "unknown");
     summary['cohort'] = this.countBy(samples, "cohort", "Unknown");
-    summary['patients'] = samples.map(d => d.alternateIdentifier).flat();
+    // Make sure to remove nulls-- ngSelect can't have nulls as options
+    summary['patients'] = samples.map(d => d.alternateIdentifier).flat().filter(d => d);
 
     console.log(summary)
 
