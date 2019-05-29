@@ -74,9 +74,6 @@ export class SampleTableComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.route.snapshot.data);
-    this.samplePatientMD = this.route.snapshot.data.samplePatientMD;
-    console.log(this.samplePatientMD);
   }
 
   showSampleMD(sample): void {
