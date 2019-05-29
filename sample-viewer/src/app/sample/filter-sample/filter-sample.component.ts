@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { GetSamplesService, RequestParametersService, AuthService } from '../../_services/';
-import { AuthState, RequestParam, RequestParamArray } from '../../_models';
+import { AuthState, RequestParam, RequestParamArray, ESFacetTerms } from '../../_models';
 
 
 @Component({
@@ -19,6 +19,8 @@ export class FilterSampleComponent implements OnInit {
   all_patients: string[];
   sample_count: number;
   total_samples: number;
+  cohorts: ESFacetTerms[];
+  outcomes: ESFacetTerms[];
 
   first_call: boolean = true;
 
@@ -44,11 +46,11 @@ export class FilterSampleComponent implements OnInit {
         }
       })
 
-    let x = this.sampleSvc.getSampleSummary().subscribe(
-      responses => {
-        console.log("backend summarization called for samples")
-        console.log(responses)
-      })
+    this.sampleSvc.sampleSummaryState$.subscribe((sObj) => {
+      this.cohorts = sObj['cohorts'];
+      this.outcomes = sObj['outcomes'];
+    })
+
 
     // // grab the data
     this.sampleSvc.samplesState$.subscribe((sList) => {
