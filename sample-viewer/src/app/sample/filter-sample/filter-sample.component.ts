@@ -50,6 +50,7 @@ export class FilterSampleComponent implements OnInit {
       this.cohorts = sObj['cohort'];
       this.outcomes = sObj['outcome'];
       this.patients = sObj['patients'];
+      console.log(this.patients)
     })
 
 
