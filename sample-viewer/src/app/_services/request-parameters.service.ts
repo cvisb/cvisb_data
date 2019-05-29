@@ -155,7 +155,7 @@ export class RequestParametersService {
 
   reduceSampleParams(request_params): HttpParams {
     // default options
-    let patient_string: string = "*";
+    let patient_string: string = ""; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let q_string: string = "__all__";
 
     if (request_params) {
@@ -163,7 +163,7 @@ export class RequestParametersService {
         .filter(d => this.patientProperties
           .includes(d.field)).map(param => this.reduceHandler(param));
 
-      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : "*";
+      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : "";
       // console.log(patient_string)
 
       let sampleParams = request_params
