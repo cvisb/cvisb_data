@@ -29,7 +29,7 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
-  private patientProperties: string[] = ["patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
+  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
   private sampleProperites: string[] = ["sampleType", "location.lab", "species"];
 
   constructor(
