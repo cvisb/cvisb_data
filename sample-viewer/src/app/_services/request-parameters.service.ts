@@ -383,14 +383,14 @@ export class RequestParametersService {
       if (param.value.length === 1 && /\[.+\]/.test(param.value[0])) {
         // array containing a range query; don't encapuslate in quote marks.
         return (`${param.field}:${param.value[0]}`);
-      } else if (param.value.length === 1 && param.field.includes("\_exists\_")) {
+      } else if (param.value.length === 1 && param.value.includes("\_exists\_")) {
         // If the parameter is all null / all not null, encapsulate in parens
-        return (`\(${param.field}:${param.value[0]}\)`)
+        return (`\(${param.value[0]}:${param.field}\)`)
       }
       return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
-    } else if (param.field.includes("\_exists\_")) {
+    } else if (param.value.includes("\_exists\_")) {
       // If the parameter is all null / all not null, encapsulate in parens
-      return (`\(${param.field}:${param.value}\)`)
+      return (`\(${param.value}:${param.field}\)`)
     } else if (/\[.+\]/.test(param.value)) {
       // range query; don't encapuslate in quote marks.
       return (`${param.field}:${param.value}`);
