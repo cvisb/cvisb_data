@@ -296,7 +296,7 @@ export class GetSamplesService {
               d['alternateIdentifier'] = filtered[0].alternateIdentifier;
               d['cohort'] = filtered[0].cohort;
               d['outcome'] = filtered[0].outcome;
-              d['country'] = filtered[0].country['name'];
+              d['country'] = filtered[0].country['identifier'];
               d['infectionYear'] = filtered[0].infectionYear;
               // d['elisa'] = filtered[0].elisa;
             }
