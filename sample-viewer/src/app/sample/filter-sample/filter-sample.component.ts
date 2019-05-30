@@ -21,6 +21,7 @@ export class FilterSampleComponent implements OnInit {
   total_samples: number;
   cohorts: ESFacetTerms[];
   outcomes: ESFacetTerms[];
+  years: ESFacetTerms[];
 
   first_call: boolean = true;
 
@@ -50,6 +51,7 @@ export class FilterSampleComponent implements OnInit {
       this.cohorts = sObj['cohort'];
       this.outcomes = sObj['outcome'];
       this.patients = sObj['patients'];
+      this.years = sObj['years'];
     })
 
 
