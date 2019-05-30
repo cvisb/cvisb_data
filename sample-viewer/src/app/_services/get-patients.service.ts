@@ -87,8 +87,6 @@ export class GetPatientsService {
   }
 
   getPatientSummary(params: HttpParams): Observable<any> {
-    // getPatientSummary(param_string: string): Observable<any> {
-    // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
     params = params
