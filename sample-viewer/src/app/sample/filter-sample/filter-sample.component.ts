@@ -53,7 +53,7 @@ export class FilterSampleComponent implements OnInit {
       this.outcomes = sObj['outcome'];
       this.patients = sObj['patients'];
       this.years = sObj['years'];
-      this.countries = sObj['countries'];
+      this.countries = sObj['country'];
     })
 
 
