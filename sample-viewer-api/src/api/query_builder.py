@@ -167,111 +167,96 @@ class ESQueryBuilder(ESQueryBuilder):
             }]
 
     def _query_GET_query(self, q):
-        # override to add new things to biothings
-        if ((not self.options.cvisb_user) or 
-            ('email' not in self.options.cvisb_user) or 
-            (self.options.cvisb_user['email'] not in self.options.cvisb_user_list)):
-            self.es_options['_source']['excludes'] = self.options.cvisb_endpoints[self.options.entity]['public_excluded_return_fields']
-            return self._return_query_kwargs({'body': self.queries.raw_query({"query": 
-                {
-                    "simple_query_string": 
-                        {
-                            "query": q,
-                            "fields": self.options.cvisb_endpoints[self.options.entity]['public_permitted_search_fields']
-                        }
-                    }
-                })})
         self.join_filter = []
-        if self.options.cvisb_user and self.options.cvisb_user['email'] in self.options.cvisb_user_list:
-            # check joined queries
-            if self.options.patientQuery:
-                self.do_cvisb_patient_joins({
-                    "query": {
-                        "query_string": {
-                            "query": self.options.patientQuery
-                        }
+        # check joined queries
+        if self.options.patientQuery:
+            self.do_cvisb_patient_joins({
+                "query": {
+                    "query_string": {
+                        "query": self.options.patientQuery
+                    }
+                }
+            })
+        elif self.options.sampleQuery:
+            self.do_cvisb_sample_joins({
+                "query": {
+                    "query_string": {
+                        "query": self.options.sampleQuery
+                    }
+                }
+            })
+        elif self.options.experimentQuery:
+            self.do_cvisb_experiment_joins({
+                "query": {
+                    "query_string": {
+                        "query": self.options.experimentQuery
+                    }
+                }
+            })
+        elif (self.options.patientID or self.options.cohort or self.options.outcome or self.options.country or 
+              self.options.infectionYear or self.options.elisa):
+            stage_one_patient_queries = []
+            if self.options.patientID:
+                stage_one_patient_queries.append({
+                    "terms": {"alternateIdentifier.keyword": self.options.patientID}
+                })
+            if self.options.cohort:
+                stage_one_patient_queries.append({
+                    "terms": {"cohort.keyword": self.options.cohort}
+                })
+            if self.options.outcome:
+                stage_one_patient_queries.append({
+                    "terms": {"outcome.keyword": self.options.outcome}
+                })
+            if self.options.country:
+                stage_one_patient_queries.append({
+                    "terms": {"country.name.keyword": self.options.country}
+                })
+            if self.options.infectionYear:
+                stage_one_patient_queries.append({
+                    "query_string": {
+                        "query": "infectionYear:{}".format(self.options.infectionYear)
                     }
                 })
-            elif self.options.sampleQuery:
-                self.do_cvisb_sample_joins({
+            if self.options.elisa:
+                stage_one_patient_queries.append(parseElisaString(self.options.elisa)['query'])
+            # combine the patient queries
+            if stage_one_patient_queries:
+                if len(stage_one_patient_queries) == 1:
+                    self.do_cvisb_patient_joins({'query': stage_one_patient_queries[0]})
+                else:
+                    self.do_cvisb_patient_joins({'query': {'bool': {'must': stage_one_patient_queries}}})
+        elif self.options.measurementTechnique:
+            self.do_cvisb_experiment_joins({
+                "query": {
+                    "terms": {"measurementTechnique.keyword": self.options.measurementTechnique}
+                }
+            })
+        elif self.options.length:
+            # TODO: should be analyzed carefully for possible injection.... 
+            # inserting url strings into scripts is potentially risky business
+            parse_regex = r'\s*(?P<entity>(sample|patient|experiment))\.(?P<compare_clause>\S+)\s*(?P<operator>(<|<=|>|>=))\s*(?P<number>\d+)\s*'
+            m = re.fullmatch(parse_regex, self.options.length)
+            if m:
+                d = m.groupdict()
+                _query = {
                     "query": {
-                        "query_string": {
-                            "query": self.options.sampleQuery
-                        }
-                    }
-                })
-            elif self.options.experimentQuery:
-                self.do_cvisb_experiment_joins({
-                    "query": {
-                        "query_string": {
-                            "query": self.options.experimentQuery
-                        }
-                    }
-                })
-            elif (self.options.patientID or self.options.cohort or self.options.outcome or self.options.country or 
-                  self.options.infectionYear or self.options.elisa):
-                stage_one_patient_queries = []
-                if self.options.patientID:
-                    stage_one_patient_queries.append({
-                        "terms": {"alternateIdentifier.keyword": self.options.patientID}
-                    })
-                if self.options.cohort:
-                    stage_one_patient_queries.append({
-                        "terms": {"cohort.keyword": self.options.cohort}
-                    })
-                if self.options.outcome:
-                    stage_one_patient_queries.append({
-                        "terms": {"outcome.keyword": self.options.outcome}
-                    })
-                if self.options.country:
-                    stage_one_patient_queries.append({
-                        "terms": {"country.name.keyword": self.options.country}
-                    })
-                if self.options.infectionYear:
-                    stage_one_patient_queries.append({
-                        "query_string": {
-                            "query": "infectionYear:{}".format(self.options.infectionYear)
-                        }
-                    })
-                if self.options.elisa:
-                    stage_one_patient_queries.append(parseElisaString(self.options.elisa)['query'])
-                # combine the patient queries
-                if stage_one_patient_queries:
-                    if len(stage_one_patient_queries) == 1:
-                        self.do_cvisb_patient_joins({'query': stage_one_patient_queries[0]})
-                    else:
-                        self.do_cvisb_patient_joins({'query': {'bool': {'must': stage_one_patient_queries}}})
-            elif self.options.measurementTechnique:
-                self.do_cvisb_experiment_joins({
-                    "query": {
-                        "terms": {"measurementTechnique.keyword": self.options.measurementTechnique}
-                    }
-                })
-            elif self.options.length:
-                # TODO: should be analyzed carefully for possible injection.... 
-                # inserting url strings into scripts is potentially risky business
-                parse_regex = r'\s*(?P<entity>(sample|patient|experiment))\.(?P<compare_clause>\S+)\s*(?P<operator>(<|<=|>|>=))\s*(?P<number>\d+)\s*'
-                m = re.fullmatch(parse_regex, self.options.length)
-                if m:
-                    d = m.groupdict()
-                    _query = {
-                        "query": {
-                            "bool": {
-                                "filter": {
+                        "bool": {
+                            "filter": {
+                                "script": {
                                     "script": {
-                                        "script": {
-                                            "source": "if (doc.containsKey('{cc}')) {{doc['{cc}'].values.length {op} {nu};}}".format(cc=d['compare_clause'], op=d['operator'], nu=d['number']),
-                                            "lang": "painless"
-                                        }
+                                        "source": "if (doc.containsKey('{cc}')) {{doc['{cc}'].values.length {op} {nu};}}".format(cc=d['compare_clause'], op=d['operator'], nu=d['number']),
+                                        "lang": "painless"
                                     }
                                 }
                             }
                         }
                     }
-                    if d['entity'] == 'sample':
-                        self.do_cvisb_sample_joins(_query)
-                    elif d['entity'] == 'patient':
-                        self.do_cvisb_patient_joins(_query)
-                    elif d['entity'] == 'experiment':
-                        self.do_cvisb_experiment_joins(_query, full_stage_one_results=True)
+                }
+                if d['entity'] == 'sample':
+                    self.do_cvisb_sample_joins(_query)
+                elif d['entity'] == 'patient':
+                    self.do_cvisb_patient_joins(_query)
+                elif d['entity'] == 'experiment':
+                    self.do_cvisb_experiment_joins(_query)
         return super(ESQueryBuilder, self)._query_GET_query(q)
