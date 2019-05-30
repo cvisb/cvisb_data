@@ -126,6 +126,16 @@ svg-icon {
   align-items: center;
 }
 // --- elisas ---
+.elisa-group {
+  display: flex;
+  align-items: center;
+}
+
+#positive, #negative, #unknown {
+  height: 24px;
+  margin-left: 3px;
+}
+//
 #positive {
   color: accent-redder(A700);
   // color: map-get($mat-pink, A700);
