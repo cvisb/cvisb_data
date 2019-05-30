@@ -2,8 +2,9 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 // import { SelectComponent } from '@ng-select/ng-select';
 
+import { AuthState } from '../../_models';
 
-import { RequestParametersService } from '../../_services';
+import { RequestParametersService, AuthService } from '../../_services';
 
 @Component({
   selector: 'app-filter-patient-id',
@@ -15,12 +16,22 @@ export class FilterPatientIdComponent implements OnInit {
   @Input() patients: string[];
   @Input() all_patients: string[];
   @ViewChild('selectpatients') public ngSelect: any;
+  authorized: boolean;
 
   selectedPatients: string[] = [];
   inclContacts: boolean;
-  states: any;
+  inclSID: boolean;
+  inclGID: boolean;
 
-  constructor(private requestSvc: RequestParametersService) { }
+  constructor(
+    private requestSvc: RequestParametersService,
+    private authSvc: AuthService
+  ) {
+
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
+      this.authorized = authState.authorized
+    })
+  }
 
   ngOnInit() {
   }
@@ -61,8 +72,19 @@ export class FilterPatientIdComponent implements OnInit {
     }
   }
 
+  filterID(includeID: boolean, ID_type) {
+    // console.log(includeSID)
 
-  // G-fakePatient-0003, G-fakePatient-0002
+    if (includeID) {
+      this.requestSvc.updateParams(this.endpoint, {
+        field: ID_type, value: '_exists_'
+      })
+    } else {
+      this.requestSvc.updateParams(this.endpoint, { field: ID_type, value: null });
+    }
+  }
+
+
   onSearch(input) {
     // console.log(this.ngSelect)
     // console.log(input)
