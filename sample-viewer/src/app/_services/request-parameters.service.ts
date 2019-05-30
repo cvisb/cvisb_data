@@ -157,7 +157,8 @@ export class RequestParametersService {
     let reduced = this.reduceParams(request_params);
 
     // default options
-    let patient_string: string = reduced.patient_string ? reduced.patient_string : ""; // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    let patient_string: string = reduced.patient_string ? reduced.patient_string : "";
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "__all__";
 
     let http_params = new HttpParams()
@@ -171,8 +172,11 @@ export class RequestParametersService {
 
   reducePatientParams(request_params): HttpParams {
     // default options
-    let patient_string: string = "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
-    let sample_string: string = "";
+    let reduced = this.reduceParams(request_params);
+
+    let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
+
 
     let http_params = new HttpParams()
       .set('q', patient_string)
