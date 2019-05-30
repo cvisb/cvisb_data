@@ -30,7 +30,7 @@ SCHEMA_ROOT_TYPE_MAP = {
     'schema:Float': {'type': 'number'}
 }
 
-SKIPPED_KEYS = ['_version']
+SKIPPED_KEYS = ['_version', '_source']
 
 # setup command line argument parser
 parser = argparse.ArgumentParser(description='Convert schema.org input schema to jsonschema style schema')
