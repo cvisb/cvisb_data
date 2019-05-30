@@ -95,7 +95,7 @@ class EntityHandler(UserAuth, BiothingHandler):
         by a dictionary in config_web.CVISB_ENDPOINTS '''
     def _get_es_index(self, options):
         _user = self.get_current_user() or {}
-        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_readers_list']):
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
             return self.web_settings.CVISB_ENDPOINTS[self.entity]['public_index']
         else:
             return self.web_settings.CVISB_ENDPOINTS[self.entity]['private_index']
@@ -199,7 +199,7 @@ class QueryHandler(UserAuth, QueryHandler):
     ''' This class is for the /query endpoint. '''
     def _get_es_index(self, options):
         _user = self.get_current_user() or {}
-        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_readers_list']):
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
             return self.web_settings.CVISB_ENDPOINTS[self.entity]['public_index']
         else:
             return self.web_settings.CVISB_ENDPOINTS[self.entity]['private_index']
