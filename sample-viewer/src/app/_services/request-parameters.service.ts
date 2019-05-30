@@ -75,7 +75,7 @@ export class RequestParametersService {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
-        this.reduceParams(params);
+        // this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
         break;
@@ -153,10 +153,39 @@ export class RequestParametersService {
     return (currentParams)
   }
 
-  reduceSampleParams(request_params): HttpParams {
+  reduceSampleParams(request_params: RequestParamArray): HttpParams {
+    let reduced = this.reduceParams(request_params);
+
+    // default options
+    let patient_string: string = reduced.patient_string ? reduced.patient_string : ""; // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    let sample_string: string = reduced.sample_string ? reduced.sample_string : "__all__";
+
+    let http_params = new HttpParams()
+      .set('q', sample_string)
+      // .set('sampleQuery', sample_string)
+      // .set('experimentQuery', experiment_string)
+      .set('patientQuery', patient_string);
+
+    return (http_params);
+  }
+
+  reducePatientParams(request_params): HttpParams {
     // default options
     let patient_string: string = ""; // Note: * will only return those samples who are in the patient registry.  "" will return everything
-    let q_string: string = "__all__";
+    let sample_string: string = "__all__";
+
+    let http_params = new HttpParams()
+      .set('q', patient_string)
+      .set('sampleQuery', sample_string)
+    // .set('experimentQuery', experiment_string)
+    // .set('patientQuery', patient_string);
+
+    return (http_params);
+  }
+
+  reduceParams(request_params: RequestParamArray) {
+    let patient_string: string;
+    let sample_string: string;
 
     if (request_params) {
       let patientParams = request_params
@@ -170,61 +199,53 @@ export class RequestParametersService {
         .filter(d => this.sampleProperites
           .includes(d.field)).map(param => this.reduceHandler(param));
 
-      q_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__";
-      // console.log(q_string)
+      sample_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__";
     }
-
-    let http_params = new HttpParams()
-      .set('q', q_string)
-      // .set('sampleQuery', sample_string)
-      // .set('experimentQuery', experiment_string)
-      .set('patientQuery', patient_string);
-
-    return (http_params);
+    return ({ patient_string: patient_string, sample_string: sample_string })
   }
 
   // Example for searching both patientID and altID:
   // https://dev.cvisb.org/api/patient/query?q=__all__&size=10&patientID="G-0001","C-8743183"
   // Ex: ELISA filter: https://dev.cvisb.org/api/patient/query?q=elisa.virus.keyword:Ebola%20AND%20elisa.ELISAresult:positive&size=10
   // Requires a q string to execute-- patientID acts as a filter on top of the original query.
-  reduceParams(request_params: RequestParamArray): HttpParams {
-    let param_string: string;
-    let patient_string: string = "";
-    let params: string[] = [];
+  // reduceParams(request_params: RequestParamArray): HttpParams {
+  //   let param_string: string;
+  //   let patient_string: string = "";
+  //   let params: string[] = [];
+  //
+  //   let request_copy = cloneDeep(request_params);
+  //
+  //   if (request_copy && request_copy.length > 0) {
+  //     // Collapse each parameter down into a parameter string
+  //     for (let param of request_copy) {
+  //
+  //       switch (param.field) {
+  //         // Separate out the patientID portion of the params... if they exist.
+  //         case 'patientID':
+  //           patient_string = this.patientIDHandler(param);
+  //           break;
+  //         case 'elisa':
+  //           params = this.elisaHandler(param, params);
+  //           break;
+  //         default:
+  //           params = this.defaultHandler(param, params);
+  //       }
+  //
+  //     }
 
-    let request_copy = cloneDeep(request_params);
+  //   // If there's jsut a patientID string, replace qString with __all__
+  //   param_string = params.length > 0 ? params.join(" AND ") : "__all__";
+  // } else {
+  //   param_string = "__all__"
+  // }
 
-    if (request_copy && request_copy.length > 0) {
-      // Collapse each parameter down into a parameter string
-      for (let param of request_copy) {
-
-        switch (param.field) {
-          // Separate out the patientID portion of the params... if they exist.
-          case 'patientID':
-            patient_string = this.patientIDHandler(param);
-            break;
-          case 'elisa':
-            params = this.elisaHandler(param, params);
-            break;
-          default:
-            params = this.defaultHandler(param, params);
-        }
-
-      }
-
-      // If there's jsut a patientID string, replace qString with __all__
-      param_string = params.length > 0 ? params.join(" AND ") : "__all__";
-    } else {
-      param_string = "__all__"
-    }
-
-    console.log(param_string + patient_string)
-    let http_params = new HttpParams()
-      .set('q', param_string)
-      .set('patientID', patient_string);
-
-    return (http_params);
-  }
+  //   console.log(param_string + patient_string)
+  //   let http_params = new HttpParams()
+  //     .set('q', param_string)
+  //     .set('patientID', patient_string);
+  //
+  //   return (http_params);
+  // }
 
   // Function to reduce the patientID query.
   patientIDHandler(param: RequestParam) {
