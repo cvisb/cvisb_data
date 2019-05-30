@@ -199,14 +199,14 @@ export class RequestParametersService {
         .filter(d => this.patientProperties
           .includes(d.field)).map(param => this.reduceHandler(param));
 
-      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : "";
+      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : null;
       // console.log(patient_string)
 
       let sampleParams = request_params
         .filter(d => this.sampleProperites
           .includes(d.field)).map(param => this.reduceHandler(param));
 
-      sample_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : "__all__";
+      sample_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : null;
     }
     return ({ patient_string: patient_string, sample_string: sample_string })
   }
