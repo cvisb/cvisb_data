@@ -1,6 +1,5 @@
 @import "../../../sass/variables.scss";
 @import "../../../sass/material-theme.scss";
-
 // --- table ---
 .mat-cell,
 .mat-header-cell {
@@ -22,9 +21,7 @@
 .spinner-container {
   justify-content: space-around;
 }
-
 // --- links ---
-
 a {
   color: $default-color;
 
@@ -37,10 +34,8 @@ a {
   font-weight: 400;
   font-size: 1em;
 }
-
 // --- icons ---
 $icon-size: 32px;
-
 // .expt-type {
 //   display: inline-block;
 //   margin: 0.5em 1.5em 0.5em 0;
@@ -57,7 +52,6 @@ svg-icon {
   width: $icon-size;
   vertical-align: middle;
 }
-
 // .hla {
 //   background: lighten($female-color, 41%);
 // }
@@ -91,7 +85,6 @@ svg-icon {
 // .viralseq {
 //   background: #e4fffc;
 // }
-
 // --- timepoints ---
 .timepoints {
   display: inline-block;
@@ -126,8 +119,23 @@ svg-icon {
   margin-bottom: 0.75em;
 }
 // --- country ---
+
 .table-country {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+// --- elisas ---
+#positive {
+  color: accent-redder(A700);
+  // color: map-get($mat-pink, A700);
+  // color: $ebola-md;
+}
+
+#negative {
+  color: $sierraleone-blue;
+}
+
+#unknown {
+  color: $grey-400;
 }

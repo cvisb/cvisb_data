@@ -40,14 +40,13 @@
         <app-patient-timepoints [alternateIDs]="element.alternateIdentifier"></app-patient-timepoints>
         <!-- <app-patient-timepoints [samples]="element.associatedSamples"></app-patient-timepoints> -->
         <!-- <mat-chip-list> -->
-          <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
-            <!-- <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i> -->
-            <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
-            <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
-            <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }} -->
-          <!-- </mat-chip> -->
+        <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
+        <!-- <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }} -->
+        <!-- </mat-chip> -->
         <!-- </mat-chip-list> -->
-
       </td>
     </ng-container>
 
@@ -110,6 +109,26 @@
           <a [routerLink]="['/patient', element.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="elisa">
+      <th mat-header-cell *matHeaderCellDef>ELISA</th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngFor="let elisa of element.elisa" class="elisa-group">
+          {{ elisa.virus }} {{ elisa.assayType }}
+          <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
+            <mat-icon>control_point</mat-icon>
+            </span>
+          <span id="negative" *ngIf="elisa.ELISAresult === 'negative'">
+            <mat-icon>remove_circle_outline</mat-icon>
+            </span>
+          <span id="unknown" *ngIf="!elisa.ELISAresult">
+            <mat-icon>help_outline</mat-icon>
+            </span>
+
         </div>
 
       </td>
