@@ -30,7 +30,8 @@ export class RequestParametersService {
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
   private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
-  private sampleProperites: string[] = ["sampleType", "location.lab", "species"];
+  private sampleProperties: string[] = ["sampleType", "location.lab", "species"];
+  private exptProperties: string[] = ["measurementTechnique"];
 
   constructor(
   ) {
@@ -160,12 +161,13 @@ export class RequestParametersService {
     // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "";
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "__all__";
+    let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
 
     let http_params = new HttpParams()
       .set('q', sample_string)
       // .set('sampleQuery', sample_string)
-      // .set('experimentQuery', experiment_string)
-      .set('patientQuery', patient_string);
+      .set('patientQuery', patient_string)
+      .set('experimentQuery', expt_string);
 
     return (http_params);
   }
@@ -173,19 +175,15 @@ export class RequestParametersService {
   reducePatientParams(request_params): HttpParams {
     // default options
     let reduced = this.reduceParams(request_params);
-    console.log(reduced)
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
-
+    let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
 
     let http_params = new HttpParams()
       .set('q', patient_string)
       .set('sampleQuery', sample_string)
-    // .set('experimentQuery', experiment_string)
-    // .set('patientQuery', patient_string);
-    //
-    console.log(http_params)
+      .set('experimentQuery', expt_string);
 
     return (http_params);
   }
@@ -193,22 +191,22 @@ export class RequestParametersService {
   reduceParams(request_params: RequestParamArray) {
     let patient_string: string;
     let sample_string: string;
+    let expt_string: string;
 
     if (request_params) {
-      let patientParams = request_params
-        .filter(d => this.patientProperties
-          .includes(d.field)).map(param => this.reduceHandler(param));
-
-      patient_string = patientParams.length > 0 ? patientParams.join(" AND ") : null;
-      // console.log(patient_string)
-
-      let sampleParams = request_params
-        .filter(d => this.sampleProperites
-          .includes(d.field)).map(param => this.reduceHandler(param));
-
-      sample_string = sampleParams.length > 0 ? sampleParams.join(" AND ") : null;
+      patient_string = this.reduceParams2string(request_params, this.patientProperties);
+      sample_string = this.reduceParams2string(request_params, this.sampleProperties);
+      expt_string = this.reduceParams2string(request_params, this.exptProperties);
     }
-    return ({ patient_string: patient_string, sample_string: sample_string })
+
+    return ({ patient_string: patient_string, sample_string: sample_string, expt_string: expt_string })
+  }
+
+  reduceParams2string(request_params: RequestParamArray, filterBy): string {
+    let params = request_params
+      .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
+
+    return (params.length > 0 ? params.join(" AND ") : null);
   }
 
   // Example for searching both patientID and altID:
@@ -415,7 +413,7 @@ export class RequestParametersService {
         // If the parameter is all null / all not null, encapsulate in parens
         return (`\(${param.value[0]}:${param.field}\)`)
       }
-      return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
+      return ((`${param.field}:\(\"${param.value.join('","')}\"\)`));
     } else if (param.value.includes("\_exists\_")) {
       // If the parameter is all null / all not null, encapsulate in parens
       return (`\(${param.value}:${param.field}\)`)

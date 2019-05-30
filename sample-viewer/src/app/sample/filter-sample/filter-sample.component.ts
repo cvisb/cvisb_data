@@ -22,6 +22,7 @@ export class FilterSampleComponent implements OnInit {
   cohorts: ESFacetTerms[];
   outcomes: ESFacetTerms[];
   years: ESFacetTerms[];
+  countries: ESFacetTerms[];
 
   first_call: boolean = true;
 
@@ -52,6 +53,7 @@ export class FilterSampleComponent implements OnInit {
       this.outcomes = sObj['outcome'];
       this.patients = sObj['patients'];
       this.years = sObj['years'];
+      this.countries = sObj['countries'];
     })
 
 
