@@ -173,6 +173,7 @@ export class RequestParametersService {
   reducePatientParams(request_params): HttpParams {
     // default options
     let reduced = this.reduceParams(request_params);
+    console.log(reduced)
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
@@ -183,6 +184,8 @@ export class RequestParametersService {
       .set('sampleQuery', sample_string)
     // .set('experimentQuery', experiment_string)
     // .set('patientQuery', patient_string);
+    //
+    console.log(http_params)
 
     return (http_params);
   }
