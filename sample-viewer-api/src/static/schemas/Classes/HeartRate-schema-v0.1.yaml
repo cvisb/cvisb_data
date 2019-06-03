@@ -12,40 +12,39 @@
 #   # bts:               "http://schema.biothings.io/"
 #   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "https://data.cvisb.org/jsonschema/Experiment/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Heart Rate/0.1"
 #
 # "@graph":
 
-- "@id":                 cvisb:Data
+- "@id":                 cvisb:HeartRate
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing generic Data in the Center for Viral Systems Biology. Data are typically a summarization of data collected in an experiment for a given sample.
-  rdfs:label:            Data
+  rdfs:comment:          A schema describing a single Heart Rate datapoint collected from patients in the Center for Viral Systems Biology.
+  rdfs:label:            HeartRate
   rdfs:subClassOf:
-    "@id":               schema:Thing
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
 
-
-- "@id":                 cvisb:timepoint
+- "@id":                 cvisb:time
   "@type":               rdf:Property
-  rdfs:comment:          Description of when the data was taken (e.g. at survivor enrollment, initial presentation in hospital, etc.)
-  rdfs:label:            timepoint
+  rdfs:comment:          Date and time of heart rate measurement
+  rdfs:label:            time
   schema:domainIncludes:
-    - "@id":             cvisb:Data
+    - "@id":             cvisb:HeartRate
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             schema:DateTime
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:daysSinceAdmit
+- "@id":                 cvisb:heartRate
   "@type":               rdf:Property
-  rdfs:comment:          Number of days between the admission date and when data were measured. At initial clinical presentation, daysSinceAdmit = 0
-  rdfs:label:            daysSinceAdmit
+  rdfs:comment:          heart rate, in beats per minute
+  rdfs:label:            heartRate
   schema:domainIncludes:
-    - "@id":             cvisb:Data
+    - "@id":             cvisb:HeartRate
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
   authenticated:         false

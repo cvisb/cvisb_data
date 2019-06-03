@@ -33,8 +33,8 @@
   rdfs:label:            heartRate
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             cvisb:HeartRate
+  schema:rangeIncludes:
+    - "@id":             cvisb:HeartRate
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -57,8 +57,8 @@
   rdfs:label:            oxygenSaturation
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             cvisb:OxygenSaturation
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -69,8 +69,8 @@
   rdfs:label:            systolicPressure
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             cvisb:SystolicPressure
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -81,8 +81,8 @@
   rdfs:label:            diastolicPressure
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             cvisb:DiastolicPressure
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -93,8 +93,8 @@
   rdfs:label:            meanArterialPressure
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             cvisb:MeanArterialPressure
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -105,8 +105,8 @@
   rdfs:label:            skinTemperature
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             cvisb:SkinTemperature
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -117,8 +117,8 @@
   rdfs:label:            bodyTemperature
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             cvisb:BodyTemperature
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -130,8 +130,8 @@
   rdfs:label:            ECG
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             cvisb:ECGPoint
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -142,8 +142,8 @@
   rdfs:label:            accelerometry
   schema:domainIncludes:
     - "@id":             cvisb:Vitals
-  # schema:rangeIncludes:
-  #   - "@id":             schema:Text
+  schema:rangeIncludes:
+    - "@id":             cvisb:Accelerometry
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
