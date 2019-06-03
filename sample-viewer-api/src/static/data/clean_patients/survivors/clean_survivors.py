@@ -37,7 +37,6 @@ def merge_survivors(ids, ebola, lassa, idCol = "publicSID"):
 
     missing_ids = ids[(~ids[idCol].isin(ebola_ids))].copy()
     # Add in static data
-    missing_ids['cohort'] = "Unknown"
     missing_ids['hasSurvivorData'] = False
     # age, gender?
 
