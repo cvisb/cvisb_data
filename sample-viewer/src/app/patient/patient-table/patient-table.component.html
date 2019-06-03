@@ -117,7 +117,7 @@
     <ng-container matColumnDef="elisa">
       <th mat-header-cell *matHeaderCellDef>ELISA</th>
       <td mat-cell *matCellDef="let element">
-        <div *ngFor="let elisa of element.elisa" class="elisa-group">
+        <div *ngFor="let elisa of element.elisa" class="elisa-group" [matTooltip]="'at ' + elisa.timepoint">
           {{ elisa.virus }} {{ elisa.assayType }}
           <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
             <mat-icon>control_point</mat-icon>
