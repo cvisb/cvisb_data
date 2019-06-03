@@ -80,9 +80,10 @@ export class PatientTableComponent implements OnInit {
       this.loadPatientPage();
     })
 
-    // this.patientSource.resultCountState$.subscribe(ct => {
-    //   this.selectedLength = ct;
-    // });
+    this.patientSource.resultCountState$.subscribe(ct => {
+      this.selectedLength = ct;
+    });
+
   }
 
   loadPatientPage() {
@@ -93,9 +94,9 @@ export class PatientTableComponent implements OnInit {
     // console.log(this.patientSource);
 
 
-    this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
-      this.selectedLength = results.total;
-    })
+    // this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
+    //   this.selectedLength = results.total;
+    // })
 
   }
 
