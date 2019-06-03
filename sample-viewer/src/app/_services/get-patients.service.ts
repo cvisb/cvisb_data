@@ -122,6 +122,8 @@ export class GetPatientsService {
   getPatientRoster(qParams): Observable<Patient[]> {
     this.all_data = [];
 
+    console.log(qParams);
+
     let params = qParams
       .append('fetch_all', "true");
 
