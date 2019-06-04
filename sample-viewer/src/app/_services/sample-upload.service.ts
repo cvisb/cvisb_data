@@ -304,15 +304,13 @@ export class SampleUploadService {
   // Returns a dictionary converting dates to their proper format.
   checkDates(lowerLimit: Date = new Date("2000-01-01")) {
     let date_dict = [];
-    console.log(this.data)
     let dates = this.data.map((d: any) => d.isolationDate);
     dates = dates.concat(this.data.map((d: any) => d.primarySampleDate));
 
     // Remove duplicates.
     dates = Array.from(new Set(dates))
     // remove null values
-    dates = dates.filter(d => d && d !== "");
-    console.log(dates)
+    dates = dates.filter(d => d && d !== "" && d !== "null");
 
     dates.forEach((d) => {
       // Check if the date is already in the right format.
