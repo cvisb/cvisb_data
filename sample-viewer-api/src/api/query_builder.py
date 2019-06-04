@@ -33,10 +33,16 @@ class ESQueryBuilder(ESQueryBuilder):
             return {'query': q}
         return q
 
+    def get_entity_index(self, entity):
+        if self.options.is_authenticated:
+            return self.options.cvisb_endpoints[entity]['private_index']
+        else:
+            return self.options.cvisb_endpoints[entity]['public_index']
+
     def do_cvisb_sample_joins(self, stage_one_query):
         ''' join other objects to a sample '''
         if self.options.entity in ['patient', 'sample', 'experiment', 'dataset', 'datadownload']:
-            _samplePatientIdentifiers = get_all_hits(_index=self.options.cvisb_endpoints['sample']['index'],
+            _samplePatientIdentifiers = get_all_hits(_index=self.get_entity_index('sample'),
                 _doc_type='sample', _client=self.options.client, _field='privatePatientID', _query=stage_one_query)
             logging.debug('_samplePatientIdentifiers: {}'.format(_samplePatientIdentifiers))
             if self.options.entity == 'sample':
@@ -45,7 +51,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {'privatePatientID.keyword': _samplePatientIdentifiers}
                 }]
                 return
-            _patientIdentifiers = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient',
+            _patientIdentifiers = get_all_hits(_index=self.get_entity_index('patient'), _doc_type='patient',
                 _client=self.options.client, _field='alternateIdentifier', 
                 _query={"query": {"terms": {"alternateIdentifier.keyword": _samplePatientIdentifiers}}})
             logging.debug("_patientIdentifiers: {}".format(_patientIdentifiers))
@@ -59,7 +65,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {"privatePatientID.keyword": _patientIdentifiers}
                 }]
                 return
-            _experimentIDs = get_all_hits(_index=self.options.cvisb_endpoints['experiment']['index'], _doc_type='experiment',
+            _experimentIDs = get_all_hits(_index=self.get_entity_index('experiment'), _doc_type='experiment',
                 _client=self.options.client, _field='experimentID', _query={
                     "query": {"terms": {"privatePatientID.keyword": _patientIdentifiers}}})
             logging.debug("_experimentIDs: {}".format(_experimentIDs))
@@ -68,7 +74,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {"experimentIDs.keyword": _experimentIDs}
                 }]
                 return
-            _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], _doc_type='datadownload', _client=self.options.client, _field='identifier',
+            _datadownloads = get_all_hits(_index=self.get_entity_index('datadownload'), _doc_type='datadownload', _client=self.options.client, _field='identifier',
                 _query={"query": {
                         "terms": {"experimentIDs.keyword": _experimentIDs}
                         }})
@@ -80,7 +86,7 @@ class ESQueryBuilder(ESQueryBuilder):
     def do_cvisb_experiment_joins(self, stage_one_query):
         ''' join other objects to an experiment '''
         if self.options.entity in ['patient', 'sample', 'experiment']:
-            _experimentPatientIdentifiers = get_all_hits(_index=self.options.cvisb_endpoints['experiment']['index'],
+            _experimentPatientIdentifiers = get_all_hits(_index=self.get_entity_index('experiment'),
                 _doc_type='experiment', _client=self.options.client, _field='privatePatientID', _query=stage_one_query)
             logging.debug('_experimentPatientIdentifiers: {}'.format(_experimentPatientIdentifiers))
             if self.options.entity == 'experiment':
@@ -89,7 +95,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {'privatePatientID.keyword': _experimentPatientIdentifiers}
                 }]
                 return
-            _patientIdentifiers = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'], _doc_type='patient',
+            _patientIdentifiers = get_all_hits(_index=self.get_entity_index('patient'), _doc_type='patient',
                 _client=self.options.client, _field='alternateIdentifier', 
                 _query={"query": {"terms": {"alternateIdentifier.keyword": _experimentPatientIdentifiers}}})
             if self.options.entity == 'patient':
@@ -103,7 +109,7 @@ class ESQueryBuilder(ESQueryBuilder):
                 }]
                 return
         elif self.options.entity in ['datadownload', 'dataset']:
-            _experimentIDs = get_all_hits(_index=self.options.cvisb_endpoints['experiment']['index'], _doc_type='experiment',
+            _experimentIDs = get_all_hits(_index=self.get_entity_index('experiment'), _doc_type='experiment',
                 _client=self.options.client, _field='experimentID', _query=stage_one_query)
             logging.debug("_experimentIDs: {}".format(_experimentIDs))
             if self.options.entity == 'datadownload':
@@ -111,7 +117,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {"experimentIDs.keyword": _experimentIDs}
                 }]
                 return
-            _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], _doc_type='datadownload', _client=self.options.client, _field='identifier',
+            _datadownloads = get_all_hits(_index=self.get_entity_index('datadownload'), _doc_type='datadownload', _client=self.options.client, _field='identifier',
                 _query={"query": {
                         "terms": {"experimentIDs.keyword": _experimentIDs}
                         }})
@@ -123,7 +129,7 @@ class ESQueryBuilder(ESQueryBuilder):
     def do_cvisb_patient_joins(self, stage_one_query):
         ''' takes a stange_one_query that filters patient objects, and does the join between patient and patient, patient and sample, and patient and dataset '''
         if self.options.entity in ['patient', 'sample', 'experiment', 'dataset', 'datadownload']:
-            _patientIdentifiers = get_all_hits(_index=self.options.cvisb_endpoints['patient']['index'],
+            _patientIdentifiers = get_all_hits(_index=self.get_entity_index('patient'),
                 _doc_type='patient', _client=self.options.client, _field='alternateIdentifier',
                 _query=stage_one_query)
             logging.debug('_patientIdentifiers: {}'.format(_patientIdentifiers))
@@ -145,7 +151,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {"privatePatientID.keyword": _patientIdentifiers}
                 }]
                 return
-            _experimentIDs = get_all_hits(_index=self.options.cvisb_endpoints['experiment']['index'], _doc_type='experiment',
+            _experimentIDs = get_all_hits(_index=self.get_entity_index('experiment'), _doc_type='experiment',
                 _client=self.options.client, _field='experimentID', _query={
                     "query": {
                         "terms": {"privatePatientID.keyword": _patientIdentifiers}
@@ -157,7 +163,7 @@ class ESQueryBuilder(ESQueryBuilder):
                     "terms": {"experimentIDs.keyword": _experimentIDs}
                 }]
                 return
-            _datadownloads = get_all_hits(_index=self.options.cvisb_endpoints['datadownload']['index'], _doc_type='datadownload', _client=self.options.client, _field='identifier',
+            _datadownloads = get_all_hits(_index=self.get_entity_index('datadownload'), _doc_type='datadownload', _client=self.options.client, _field='identifier',
                 _query={"query": {
                         "terms": {"experimentIDs.keyword": _experimentIDs}
                         }})
