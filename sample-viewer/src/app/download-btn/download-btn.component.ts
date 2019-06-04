@@ -19,6 +19,8 @@ export class DownloadBtnComponent implements OnInit {
   today: string;
   qParams;
 
+  sampleSortCols: string[] = ["creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
+
   constructor(
     private authSvc: AuthService,
     private requestSvc: RequestParametersService,
@@ -53,6 +55,11 @@ export class DownloadBtnComponent implements OnInit {
 
     if (this.data && this.data.length > 0) {
       let colnames = Object.keys(this.data[0]);
+
+      if (this.filetype === "samples") {
+        colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
+      }
+
       // colnames = colnames.map(d => this.colnames_dict[d] || d) // convert to their longer name, if they have one. If not, return the existing value
 
       var dwnld_data = '';
@@ -92,13 +99,21 @@ export class DownloadBtnComponent implements OnInit {
         break;
       case ("samples"):
         this.data = this.longSvc.prep4download(this.data, ['_score', '_version', '_id']);
-        console.log(this.data)
         this.parseData();
         break;
       default:
         this.parseData();
         break;
     }
+  }
+
+  sortingFunc(a, columnOrder) {
+    let idx = columnOrder.indexOf(a);
+    // if not found, return dummy so sorts at the end
+    if (idx < 0) {
+      return (1000);
+    }
+    return (idx);
   }
 
 
