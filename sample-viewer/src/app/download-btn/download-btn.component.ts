@@ -91,8 +91,8 @@ export class DownloadBtnComponent implements OnInit {
         });
         break;
       case ("samples"):
+        this.data = this.longSvc.prep4download(this.data, ['_score', '_version', '_id']);
         console.log(this.data)
-        console.log(this.longSvc.prep4download(this.data));
         this.parseData();
         break;
       default:
