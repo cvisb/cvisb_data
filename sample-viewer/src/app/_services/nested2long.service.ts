@@ -12,14 +12,14 @@ export class Nested2longService {
   constructor(private apiSvc: ApiService) {
   }
 
-  // If a key contains an object, will splay out the
+  // If a key contains an object, will splay out the object
   denestObjects(data) {
     data.forEach(d => {
       let keys = Object.keys(d);
 
       keys.forEach(key => {
         // For every object (not array of objects), unnest that sucker
-        if (typeof (d[key]) === "object" && !Array.isArray(d[key])) {
+        if (d[key] && typeof (d[key]) === "object" && !Array.isArray(d[key])) {
           let nested_cols = Object.keys(d[key]);
           nested_cols.forEach(col => {
             d[col] = d[key][col];
@@ -28,12 +28,12 @@ export class Nested2longService {
           delete d[key];
         }
       })
-
     })
     return (data);
   }
 
-
+  // (1) flattens arrays
+  // (2) calls denestObjects to flatten objects
   nested2long(data) {
     let flattened = [];
 
@@ -62,8 +62,8 @@ export class Nested2longService {
     let flattened = this.nested2long(data);
 
     flattened = this.apiSvc.dropCols(flattened, cols2remove, false);
-    
-    return(flattened);
+
+    return (flattened);
   }
 
 
