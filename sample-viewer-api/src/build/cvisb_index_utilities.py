@@ -26,6 +26,7 @@ def create_indices(config_object, *es_args, **es_kwargs):
         "{entity}": {
             "public_alias": string, if given, will assign this alias to new public index
             "private_alias": string, if given, will assign this alias to new private index
+            "source_index": string, must be the exact index name (not an alias), denotes the source index to create new indices from
             "create_public_index": boolean, if given, will create a public index
             "create_private_index": boolean, if given, will create a private index
             "transfer_data": boolean, if given, will transfer data from source index to new private and/or public indices
@@ -64,7 +65,6 @@ def create_indices(config_object, *es_args, **es_kwargs):
                                                     document_transform_function=public_document_transform_function),
                                                     raise_on_exception=raise_on_transfer_error, raise_on_error=raise_on_transfer_error)
             
-            # Append correct index names and corresponding aliases
             if public_alias:
                 # get current alias, if any
                 try:
@@ -90,7 +90,6 @@ def create_indices(config_object, *es_args, **es_kwargs):
                                                     document_transform_function=private_document_transform_function),
                                                     raise_on_exception=raise_on_transfer_error, raise_on_error=raise_on_transfer_error)
             
-            # Append correct index names and corresponding aliases
             if private_alias:
                 # get current alias, if any
                 try:
