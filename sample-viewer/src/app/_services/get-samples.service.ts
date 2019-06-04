@@ -207,7 +207,7 @@ export class GetSamplesService {
     // Make sure to remove nulls-- ngSelect can't have nulls as options
     // Should also remove duplicates, since there are multiple samples / patient
     summary['patients'] = samples.map((d:any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
-    summary['uniq_patients'] = Array.from(new Set(summary['patients']));
+    summary['patients'] = Array.from(new Set(summary['patients']));
 
     console.log(summary)
 
