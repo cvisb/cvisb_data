@@ -4,6 +4,8 @@ import { DatePipe } from '@angular/common';
 import { AuthService, GetPatientsService, RequestParametersService, Nested2longService } from '../_services';
 import { AuthState, RequestParamArray } from '../_models';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SpinnerPopupComponent } from '../_dialogs';
 
 @Component({
   selector: 'app-download-btn',
@@ -19,6 +21,8 @@ export class DownloadBtnComponent implements OnInit {
   today: string;
   qParams;
 
+  dialogRef;
+
   sampleSortCols: string[] = ["creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
 
   constructor(
@@ -26,7 +30,8 @@ export class DownloadBtnComponent implements OnInit {
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
     private datePipe: DatePipe,
-    private longSvc: Nested2longService
+    private longSvc: Nested2longService,
+    public dialog: MatDialog,
   ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
@@ -46,11 +51,17 @@ export class DownloadBtnComponent implements OnInit {
   }
 
   download() {
+    this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
+      width: '300px',
+      data: "downloading sample data...",
+      disableClose: true
+    });
+
     this.downloadData();
   }
 
   parseData() {
-    const columnDelimiter = '\t'; // technically, tab-separated, since some chemical cmpds have commas in names.
+    const columnDelimiter = '\t'; // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
     if (this.data && this.data.length > 0) {
@@ -59,8 +70,6 @@ export class DownloadBtnComponent implements OnInit {
       if (this.filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
       }
-
-      // colnames = colnames.map(d => this.colnames_dict[d] || d) // convert to their longer name, if they have one. If not, return the existing value
 
       var dwnld_data = '';
       dwnld_data += colnames.join(columnDelimiter);
@@ -71,7 +80,8 @@ export class DownloadBtnComponent implements OnInit {
         colnames.forEach(function(key) {
           if (counter > 0) dwnld_data += columnDelimiter;
 
-          dwnld_data += item[key];
+          // For null values, return empty string.
+          dwnld_data += item[key] ? item[key] : "";
           counter++;
         });
         dwnld_data += lineDelimiter;
@@ -87,6 +97,7 @@ export class DownloadBtnComponent implements OnInit {
     hiddenElement.target = '_blank';
     hiddenElement.download = this.filename;
     hiddenElement.click();
+    this.dialogRef.close();
   }
 
   downloadData() {
