@@ -90,6 +90,11 @@ export class DownloadBtnComponent implements OnInit {
           this.parseData();
         });
         break;
+      case ("samples"):
+        console.log(this.data)
+        console.log(this.longSvc.prep4download(this.data));
+        this.parseData();
+        break;
       default:
         this.parseData();
         break;
