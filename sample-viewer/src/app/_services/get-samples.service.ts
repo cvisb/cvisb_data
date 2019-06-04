@@ -298,6 +298,7 @@ export class GetSamplesService {
               d['outcome'] = filtered[0].outcome;
               d['country'] = filtered[0].country['identifier'];
               d['infectionYear'] = filtered[0].infectionYear;
+              d['dateModified_patient'] = filtered[0].dateModified;
               // d['elisa'] = filtered[0].elisa;
             }
           })
