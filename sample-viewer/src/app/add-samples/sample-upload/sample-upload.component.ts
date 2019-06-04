@@ -123,9 +123,12 @@ export class SampleUploadComponent implements OnInit {
         }
         break;
       case "text/csv":
-        data = this.csvJSON(datastring, ",")
+        data = this.csvJSON(datastring, ",");
+        break;
+
       case "text/tab-separated-values":
         data = this.csvJSON(datastring, "\t")
+        break;
       default:
         break;
     }
@@ -171,7 +174,6 @@ export class SampleUploadComponent implements OnInit {
 
   // from https://stackoverflow.com/questions/27979002/convert-csv-data-into-json-format-using-javascript
   csvJSON(csv, delim) {
-
     var lines = csv.split("\n");
 
     var result = [];
@@ -214,8 +216,6 @@ export class SampleUploadComponent implements OnInit {
 
     filtered = filtered.filter(d => Object.values(d).some(value => value !== ""));
     this.uploadSvc.updateValidation("delete_extra", true, data.length - filtered.length, filtered);
-
-    console.log(filtered)
 
     return (filtered)
   }
