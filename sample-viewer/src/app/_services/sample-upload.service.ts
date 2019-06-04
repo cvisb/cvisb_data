@@ -55,8 +55,9 @@ export class SampleUploadService {
   requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
 
   // Checks and converts these fields into arrays
-  arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier"];
-  arrayDelim = "/"
+  arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
+    "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
+  arrayDelim = ","
 
 
 
@@ -224,7 +225,7 @@ export class SampleUploadService {
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
-        d[col] = d[col] && d[col] !== "" ? d[col].split(this.arrayDelim) : null;
+        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim) : null;
       })
     })
   }
@@ -459,7 +460,12 @@ export class SampleUploadService {
           sampleID: v[0].sampleID,
           lab: v[0].lab,
           samples: v,
-          // to_save: v[0],
+          // array-ize the location properties
+          allFreezers: v.map(d => d.freezerID).flat(),
+          allRacks: v.map(d => d.freezerRack).flat(),
+          allBoxes: v.map(d => d.freezerBox).flat(),
+          allFreezerCells: v.map(d => d.freezerBoxCell).flat(),
+          // count the total number of aliquots.
           totalAliquots: _.sumBy(v, 'numAliquots'),
         }))
       .filter(d => d.numRows > 1)
@@ -473,7 +479,7 @@ export class SampleUploadService {
       d['idx'] = getAllIndices(this.data.map((sample: any) => sample.id), d.id);
 
       // Remove the duplicates.
-      this.removeDupes(d.idx, d.totalAliquots);
+      this.removeDupes(d.idx, d);
     })
 
 
@@ -493,13 +499,17 @@ export class SampleUploadService {
 
   }
 
-  removeDupes(indices, totalAliquots) {
+  removeDupes(indices, obj) {
     for (let i = 0; i < indices.length; i++) {
       if (i !== 0) {
         // remove the element.
         this.data.splice(indices[i], 1);
       } else {
-        this.data[indices[i]]['numAliquots'] = totalAliquots;
+        this.data[indices[i]]['numAliquots'] = obj['totalAliquots'];
+        this.data[indices[i]]['freezerID'] = obj['allFreezers'];
+        this.data[indices[i]]['freezerRack'] = obj['allRacks'];
+        this.data[indices[i]]['freezerBox'] = obj['allBoxes'];
+        this.data[indices[i]]['freezerBoxCell'] = obj['allFreezerCells'];
       }
     }
   }
