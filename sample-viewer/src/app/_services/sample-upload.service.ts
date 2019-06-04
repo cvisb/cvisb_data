@@ -127,9 +127,9 @@ export class SampleUploadService {
     console.log(data_copy);
 
     // Check if there are any updates to existing data
-    let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
+    // let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
-    this.apiSvc.fetchAll('sample', sampleIDs).pipe(
+    this.apiSvc.fetchAll('sample', "__all__").pipe(
       // catchError(() => of([])),
       // finalize(() => this.loadingSubject.next(false))
     )
