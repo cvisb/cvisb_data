@@ -1,8 +1,9 @@
 <h2><span class="stepper-title">Select file and read data</span></h2>
 
-<div *ngIf="user.write" class="container-column">
+<div  class="container-column">
+<!-- <div *ngIf="user.write" class="container-column"> -->
   <p>
-    Sample lists should be uploaded as either a .csv or a .json.
+    Sample lists should be uploaded as either a .csv, .tsv, or a .json.
   </p>
 
   <div class="file-info" *ngIf="fileName">
@@ -23,7 +24,7 @@
     <!-- Dummy for styling -->
     <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload sample list</button>
     <!-- Actual workhorse to upload the data on the client side -->
-    <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+    <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.tsv,.xlsx,.xls,.json" id="file_uploader">
   </div>
 
   <!-- TEMPORARY: JUST FOR ME WHILE TESTING -->
