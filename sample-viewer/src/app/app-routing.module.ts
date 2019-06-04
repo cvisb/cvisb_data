@@ -84,8 +84,7 @@ const appRoutes: Routes = [
   { path: 'citation', component: CitationComponent, pathMatch: 'full', data: { title: 'Citing CViSB Data' } },
   { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
   { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
-  { path: 'home', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },
+  { path: 'home', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },
   { path: '**', component: PageNotFoundComponent }
 ];
 
