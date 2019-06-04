@@ -107,7 +107,9 @@ export class SampleUploadService {
 
   // Return only the fields needed to be uploaded, after front-end validation
   // No going back from this point! (well, there is, since I made a copy)
-  getCleanedData(vars2delete = ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode'].concat(this.locationCols)) {
+  getCleanedData(vars2delete = ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
+    // patient metadata properties
+    'patientID', 'cohort', 'outcome', 'country', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
     let data_copy = _.cloneDeep(this.data);
 
     // turn location into a nested data object.
@@ -218,7 +220,7 @@ export class SampleUploadService {
     this.progressSubject.next(this.steps);
   }
 
-// Converts any values which are meant to be arrays into arrays. Splits on this.arrayDelim
+  // Converts any values which are meant to be arrays into arrays. Splits on this.arrayDelim
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
