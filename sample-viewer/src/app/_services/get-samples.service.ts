@@ -202,8 +202,11 @@ export class GetSamplesService {
     summary['cohort'] = this.countBy(samples, "cohort", "Unknown");
     summary['years'] = this.countBy(samples, "infectionYear", "Unknown");
     summary['country'] = this.countBy(samples, "country", "unknown");
+
     // Make sure to remove nulls-- ngSelect can't have nulls as options
-    summary['patients'] = samples.map(d => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
+    // d3.map should also remove duplicates, since there are multiple samples / patient 
+    summary['patients'] = d3.map(samples, (d:any) => d.alternateIdentifier)
+    summary['patients'] = summary['patients'].flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
 
     console.log(summary)
 
