@@ -34,15 +34,17 @@ export class Nested2longService {
 
   // (1) flattens arrays
   // (2) calls denestObjects to flatten objects
-  nested2long(data) {
+  nested2long(data, cols2unnest?) {
     let flattened = [];
 
     data.forEach(d => {
       let keys = Object.keys(d);
 
+      let unnest = cols2unnest ? cols2unnest : keys;
+
       keys.forEach(key => {
         // For every array of objects, duplicates the row and creates a long dataset.
-        if (typeof (d[key]) === "object" && Array.isArray(d[key])) {
+        if (typeof (d[key]) === "object" && Array.isArray(d[key]) && unnest.includes(key)) {
           d[key].forEach(loc => {
             let entry = cloneDeep(d);
             entry[key] = loc;
@@ -58,8 +60,8 @@ export class Nested2longService {
     return (flattened)
   }
 
-  prep4download(data, cols2remove = []) {
-    let flattened = this.nested2long(data);
+  prep4download(data, cols2unnest, cols2remove = []) {
+    let flattened = this.nested2long(data, cols2unnest);
 
     flattened = this.apiSvc.dropCols(flattened, cols2remove, false);
 

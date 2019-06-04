@@ -206,14 +206,16 @@ export class SampleUploadComponent implements OnInit {
   }
 
   removeEmpties(data, headers) {
-    headers.filter(d => d !== "sampleID");
+    headers.filter(d => d !== "privatePatientID");
 
     let filtered = cloneDeep(data);
 
-    filtered.forEach(d => delete (d.sampleID));
+    filtered.forEach(d => delete(d.sampleID));
 
     filtered = filtered.filter(d => Object.values(d).some(value => value !== ""));
     this.uploadSvc.updateValidation("delete_extra", true, data.length - filtered.length, filtered);
+
+    console.log(filtered)
 
     return (filtered)
   }
