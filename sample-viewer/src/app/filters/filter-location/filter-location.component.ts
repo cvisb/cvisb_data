@@ -18,8 +18,11 @@ export class FilterLocationComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    this.addMissing();
     console.log(this.countries);
+    if (this.countries && this.countries.length > 0) {
+      this.addMissing();
+    }
+
   }
 
   selectCountry(ctry: string) {

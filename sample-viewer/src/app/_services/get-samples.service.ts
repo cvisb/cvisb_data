@@ -125,6 +125,7 @@ export class GetSamplesService {
               // d['elisa'] = filtered[0].elisa;
             }
           })
+          console.log("merge complete.")
 
           this.samplesSubject.next(samples);
 
@@ -204,7 +205,7 @@ export class GetSamplesService {
     summary['country'] = this.countBy(samples, "country", "unknown");
 
     // Make sure to remove nulls-- ngSelect can't have nulls as options
-    // d3.map should also remove duplicates, since there are multiple samples / patient 
+    // d3.map should also remove duplicates, since there are multiple samples / patient
     summary['patients'] = d3.map(samples, (d:any) => d.alternateIdentifier)
     summary['patients'] = summary['patients'].flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
 
