@@ -1,5 +1,5 @@
 <div class="patient-lists">
-  <div class="spinner-container" *ngIf="patientSource.loadingState$ | async">
+  <div class="spinner-container container" *ngIf="patientSource.loadingState$ | async">
     <mat-spinner></mat-spinner>
   </div>
 
@@ -7,34 +7,46 @@
 
     <!-- ID Column -->
     <ng-container matColumnDef="patientID">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">ID</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">public ID</th>
       <td mat-cell *matCellDef="let element" class="patient-id">
         {{ element.patientID }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="alternateIdentifier">
-      <th mat-header-cell *matHeaderCellDef>alt. ID</th>
+    <ng-container matColumnDef="gID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">gID</th>
       <td mat-cell *matCellDef="let element">
-        <span *ngIf="element.alternateIdentifier">
-        <span class="alt-id" *ngFor="let id of element.alternateIdentifier.sort(); let idx=index">
-          {{ id }} <span class="data-separator" *ngIf="idx < element.alternateIdentifier.length - 1"></span>
+        <span *ngIf="element.gID">
+        <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
+          {{ id }} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
         </span>
         </span>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="associatedSamples">
-      <th mat-header-cell *matHeaderCellDef>timepoints</th>
+
+    <ng-container matColumnDef="sID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">sID</th>
       <td mat-cell *matCellDef="let element">
-        <mat-chip-list>
-          <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome">
-            <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i>
-            <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
-            <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
-            <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }}
-          </mat-chip>
-        </mat-chip-list>
+        <span class="alt-id">
+          {{ element.sID }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="associatedSamples">
+      <th mat-header-cell *matHeaderCellDef>samples</th>
+      <td mat-cell *matCellDef="let element">
+        <app-patient-timepoints [alternateIDs]="element.alternateIdentifier"></app-patient-timepoints>
+        <!-- <app-patient-timepoints [samples]="element.associatedSamples"></app-patient-timepoints> -->
+        <!-- <mat-chip-list> -->
+        <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
+        <!-- <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
+        <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }} -->
+        <!-- </mat-chip> -->
+        <!-- </mat-chip-list> -->
       </td>
     </ng-container>
 
@@ -97,6 +109,26 @@
           <a [routerLink]="['/patient', element.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="elisa">
+      <th mat-header-cell *matHeaderCellDef>ELISA</th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngFor="let elisa of element.elisa" class="elisa-group" [matTooltip]="'at ' + elisa.timepoint">
+          {{ elisa.virus }} {{ elisa.assayType }}
+          <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
+            <mat-icon>control_point</mat-icon>
+            </span>
+          <span id="negative" *ngIf="elisa.ELISAresult === 'negative'">
+            <mat-icon>remove_circle_outline</mat-icon>
+            </span>
+          <span id="unknown" *ngIf="!elisa.ELISAresult">
+            <mat-icon>help_outline</mat-icon>
+            </span>
+
         </div>
 
       </td>

@@ -1,0 +1,196 @@
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SequencingExperiment-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SequencingExperiment-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RepertoireSequencing-schema-v0.1.yaml
+
+File /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RepertoireSequencing-schema-v0.1.yaml failed loading with error sequence entries are not allowed here
+  in "<unicode string>", line 45, column 26:
+      enumeration:           - "B-cell"
+                             ^....  Skipping conversion...
+
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Sample-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Sample-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SoftwareSourceCode-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SoftwareSourceCode-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DerivedSample-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/DerivedSample-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/PostalAddress-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/PostalAddress-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Experiment-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Experiment-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RTPCR-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/RTPCR-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DataDownload-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/DataDownload-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Organization-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Organization-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/ViralSeqData-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/ViralSeqData-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/HLAData-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/HLAData-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/AndersenSequencing-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/AndersenSequencing-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/ContactPoint-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/ContactPoint-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DataCatalog-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/DataCatalog-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Patient-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Patient-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Person-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Person-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/ELISA-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/ELISA-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SystemsSerology-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SystemsSerology-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/AdministrativeArea-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/AdministrativeArea-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/UpdateLog-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/UpdateLog-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/ScholarlyArticle-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/ScholarlyArticle-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Place-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Place-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Dataset-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Dataset-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Country-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Country-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DateRange-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/DateRange-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/RDT-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/RDT-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SymptomList-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SymptomList-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SNPData-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SNPData-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Symptom-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Symptom-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Data-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/Data-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+
+********************************************************************************
+Starting file /home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/SampleLocation-schema-v0.1.yaml
+
+Writing "/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/modified/SampleLocation-schema-v0.1_modified.yaml" to file...
+********************************************************************************
+

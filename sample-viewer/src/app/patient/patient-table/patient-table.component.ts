@@ -6,7 +6,7 @@ import { merge } from "rxjs/";
 // import { pipe } from 'rxjs';
 // import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
-import { GetPatientsService, PatientsDataSource, RequestParametersService } from '../../_services/';
+import { GetPatientsService, PatientsDataSource, RequestParametersService, ApiService } from '../../_services/';
 import { Patient, PatientArray, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
 
@@ -23,7 +23,7 @@ export class PatientTableComponent implements OnInit {
   selectedLength: number;
   qString: HttpParams;
 
-  displayedColumns: string[] = ['alternateIdentifier', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
+  displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,6 +34,7 @@ export class PatientTableComponent implements OnInit {
     private route: ActivatedRoute,
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
+    private apiSvc: ApiService,
   ) {
 
 
@@ -41,11 +42,6 @@ export class PatientTableComponent implements OnInit {
       this.selectedLength = params.patients.total;
       // console.log("selected length: " + this.selectedLength)
     });
-
-
-
-
-
   }
 
   ngOnInit() {
@@ -59,7 +55,7 @@ export class PatientTableComponent implements OnInit {
     //     default: return item[property];
     //   }
     // };
-    this.patientSource = new PatientsDataSource(this.patientSvc);
+    this.patientSource = new PatientsDataSource(this.apiSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
 
@@ -79,14 +75,15 @@ export class PatientTableComponent implements OnInit {
       // console.log("qParams heard in patient-table")
       // console.log(qParams)
 
-      this.qString = this.requestSvc.reduceParams(qParams);
+      this.qString = this.requestSvc.reducePatientParams(qParams);
       // console.log(this.qString);
       this.loadPatientPage();
     })
 
-    // this.patientSource.resultCountState$.subscribe(ct => {
-    //   this.selectedLength = ct;
-    // });
+    this.patientSource.resultCountState$.subscribe(ct => {
+      this.selectedLength = ct;
+    });
+
   }
 
   loadPatientPage() {
@@ -97,9 +94,9 @@ export class PatientTableComponent implements OnInit {
     // console.log(this.patientSource);
 
 
-    this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
-      this.selectedLength = results.total;
-    })
+    // this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
+    //   this.selectedLength = results.total;
+    // })
 
   }
 

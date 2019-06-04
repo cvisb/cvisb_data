@@ -1,5 +1,4 @@
 // Generic functions for all endpoints to update parameters for a given search.
-
 import { Injectable } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
@@ -8,7 +7,6 @@ import { HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 
 // services
-// import { GetPatientsService } from './get-patients.service';
 import { cloneDeep } from 'lodash';
 
 // models
@@ -28,6 +26,10 @@ export class RequestParametersService {
 
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
+
+  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
+  private sampleProperties: string[] = ["sampleType", "location.lab", "species"];
+  private exptProperties: string[] = ["measurementTechnique"];
 
   constructor(
   ) {
@@ -64,13 +66,15 @@ export class RequestParametersService {
 
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
-    // console.log(newParam)
+    console.log('newParam')
+    console.log(newParam)
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
+        // this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
         break;
@@ -114,7 +118,7 @@ export class RequestParametersService {
             // https://dev.cvisb.org/api/patient/query?q=(cohort:Lassa)%20OR%20(NOT%20cohort:Lassa)
           };
         } else if (Array.isArray(newParam.value)) {
-          // For things like new patient IDs, replace the entire sheband with the new value, since it comes in as an array.
+          // For things like new patient IDs, replace the entire shebang with the new value, since it comes in as an array.
           currentParams[idx].value = newParam.value;
         } else {
           if (Array.isArray(currentParams[idx].value)) {
@@ -148,68 +152,277 @@ export class RequestParametersService {
     return (currentParams)
   }
 
-  // Example for searching both patientID and altID:
-  // https://dev.cvisb.org/api/patient/query?q=__all__&size=10&patientID="G-0001","C-8743183"
-  // Requires a q string to execute-- patientID acts as a filter on top of the original query.
-  reduceParams(request_params: RequestParamArray): HttpParams {
-    let param_string: string;
-    let params: string[] = [];
+  reduceSampleParams(request_params: RequestParamArray): HttpParams {
+    let reduced = this.reduceParams(request_params);
 
-    let request_copy = cloneDeep(request_params);
+    // default options
+    // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    let patient_string: string = reduced.patient_string ? reduced.patient_string : "";
+    let sample_string: string = reduced.sample_string ? reduced.sample_string : "__all__";
+    let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
+    let elisa_string: string = reduced.elisa ? reduced.elisa : "";
 
-    // Separate out the patientID portion of the params... if they exist.
-    let patientIdx = request_copy.findIndex(d => d.field === "patientID");
-    let patient_string: string;
-    if (patientIdx > -1) {
-      let patient_params = request_copy.splice(patientIdx, 1);
-      patient_string = this.patientParams2String(patient_params[0]);
-    } else {
-      patient_string = "";
-    }
-
-
-    if (request_copy && request_copy.length > 0) {
-
-      // Collapse each parameter down into a parameter string
-      for (let param of request_copy) {
-        if (!param.field) {
-          // generic search query; no variable-level searching
-          params.push(param.value);
-        } else {
-          // convert the parameter object into a string and add to array.
-          let new_param = this.params2String(param);
-
-          // console.log(new_param)
-
-          // Check if there's an OR parameter to relate to that property.
-          if (param.orSelector) {
-            let or_param = this.params2String(param.orSelector);
-            new_param = `${new_param} OR ${or_param}`
-            // console.log(or_param)
-            // console.log(new_param)
-
-          }
-          params.push(new_param);
-        }
-      }
-
-      param_string = params.join(" AND ");
-    } else {
-      param_string = "__all__"
-    }
-
-    // console.log(param_string + patient_string)
     let http_params = new HttpParams()
-      .set('q', param_string)
-      .set('patientID', patient_string);
+      .set('q', sample_string)
+      // .set('sampleQuery', sample_string)
+      .set('elisa', elisa_string)
+      .set('patientQuery', patient_string)
+      .set('experimentQuery', expt_string);
 
     return (http_params);
   }
 
-  // Function to reduce the patientID query.
-  patientParams2String(param: RequestParam) {
-  // Must be ampersand, not AND, to append to q string
-    return (`\"${param.value.join('","')}\"`);
+  reducePatientParams(request_params): HttpParams {
+    console.log(request_params);
+    // default options
+    let reduced = this.reduceParams(request_params);
+
+    let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
+    let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
+    let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
+    let elisa_string: string = reduced.elisa ? reduced.elisa : "";
+
+    let http_params = new HttpParams()
+      .set('q', patient_string)
+      .set('elisa', elisa_string)
+      .set('sampleQuery', sample_string)
+      .set('experimentQuery', expt_string);
+      console.log(http_params)
+
+    return (http_params);
+  }
+
+  reduceParams(request_params: RequestParamArray) {
+    let patient_string: string;
+    let sample_string: string;
+    let expt_string: string;
+    let elisa_string: string;
+
+    if (request_params) {
+      patient_string = this.reduceParams2string(request_params, this.patientProperties);
+      sample_string = this.reduceParams2string(request_params, this.sampleProperties);
+      expt_string = this.reduceParams2string(request_params, this.exptProperties);
+      elisa_string = this.reduceElisas(request_params.filter(d => d.field === "elisa"));
+    }
+
+    return ({ patient_string: patient_string, sample_string: sample_string, expt_string: expt_string, elisa: elisa_string })
+  }
+
+  reduceParams2string(request_params: RequestParamArray, filterBy): string {
+    let params = request_params
+      .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
+
+    return (params.length > 0 ? params.join(" AND ") : null);
+  }
+
+  // example ELISA query:
+  // https://dev.cvisb.org/api/sample/query?q=__all__&elisa=[[elisa.virus.keyword:Lassa AND
+  // elisa.assayType.keyword:Ag AND elisa.ELISAresult.keyword:negative AND elisa.timepoint.keyword:"patient admission"]] AND
+  // [[elisa.virus.keyword:Lassa AND elisa.assayType.keyword:IgG AND elisa.ELISAresult.keyword:negative AND elisa.timepoint.keyword:"patient admission"]] AND
+  // [[elisa.virus.keyword:Lassa AND elisa.assayType.keyword:IgM AND elisa.ELISAresult.keyword:negative AND elisa.timepoint.keyword:"patient admission"]]
+  //
+  // generic way to combine:
+  // [[elisa.{propertyName}:{value} AND elisa.{propertyName}:{value} ...]] -- one set of ELISAs
+  // then combine those [[elisa-nested-group]] with OR, AND, NOT.
+
+  reduceElisas(elisaArr) {
+    let result = "";
+    // let elisa_vals = elisaArr[0];
+    //
+    // let pairs = [];
+    //
+    // Object.keys(elisa_group)
+    //
+    // let elisa_group = [];
+    // elisa_vals.forEach(grp => {
+    //   // remove any null values-- don't loop over those.
+    //   Object.keys(grp).forEach((key) => (grp[key].length === 0) && delete grp[key]);
+    //
+    //   Object.keys(grp).forEach(key => {
+    //     pairs.push(elisa_group.join(" AND "));
+    //     elisa_group = [];
+    //     grp[key].forEach(d => {
+    //       elisa_group.push({ key: key, value: d })
+    //     })
+    //   })
+    //
+    //   let elements = Object.keys(grp)
+    //
+    //   function combinations(grp, keys, size) {
+    //     var result = [];
+    //
+    //     if (size === 0) {
+    //
+    //       result.push([]);
+    //
+    //     } else {
+    //
+    //       combinations(grp, keys, size - 1).forEach(function(previousComb) {
+    //         console.log(previousComb)
+    //         grp[keys].forEach(function(element) {
+    //           result.push([element].concat(previousComb));
+    //         });
+    //       });
+    //     }
+
+        return result;
+      }
+
+      // grp.virus.forEach(virus => {
+      //   elisa_group.push({})
+      //   grp.assay.forEach(assay =>
+      //     elisa_vals.result.forEach(result =>
+      //       elisa_vals.timepoint.forEach(timepoint => {
+      //         let elisa_group = [];
+      //       }
+      //       )
+      //     )
+      //   )
+      // }
+      // )
+    // })
+
+
+
+  //   elisa_vals.virus.map(d => { return ({ field: "elisa.virus", value: d }) })
+  //   elisa_vals.assay.map(d => { return ({ field: "elisa.virus", value: d }) })
+  // }
+
+
+  elisaHandler(param, params) {
+    let elisa_vals = param.value[0];
+    // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
+    if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
+      let elisaparams;
+
+      for (let virus of elisa_vals.virus) {
+        console.log(virus)
+        let pairs = [];
+        pairs.push({ field: "elisa.virus", value: virus });
+        for (let assay of elisa_vals.assay) {
+          pairs.push({ field: "elisa.assayType", value: assay });
+
+          // for(let timepoint of param.timepoint){
+          for (let result of elisa_vals.result) {
+            pairs.push({ field: "elisa.ELISAresult", value: result });
+
+            elisaparams = {
+              pairs: pairs,
+              connector: "AND"
+            };
+          }
+        }
+      }
+      console.log(this.connectKeyValues(elisaparams))
+
+
+      params.push(this.connectKeyValues(elisaparams));
+    }
+    return (params)
+  }
+
+  reduceKeyValues(obj): string {
+    return (`${obj.field}:${obj.value}`);
+  }
+
+  connectKeyValues(obj): string {
+    console.log(obj)
+    let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
+
+    return (`(${pairs.join(` ${obj.connector} `)})`);
+  }
+
+  // params = this.handleELISAResultsLoop(param, params, 'Ebola');
+  // params = this.handleELISAResultsLoop(param, params, 'Lassa');
+  //
+  // return (params)
+
+
+  // handleELISAResultsLoop(param, params, virus, varName = "elisa") {
+  //   let virus_obj = param.value[0][virus];
+  //
+  //   let virus_keys = Object.keys(virus_obj);
+  //
+  //   // Compress each result into a virus:result:assay triple
+  //   let virus_strings = virus_keys.map(d => {
+  //     return (this.handleELISAResult(virus_obj, d, virus, varName));
+  //   })
+  //   console.log(virus_strings)
+  //
+  //   // Join results by OR
+  //   // Filter out the null results
+  //   let elisa_result = `${virus_strings.filter(d => d).join(" OR ")}`;
+  //   if (elisa_result) {
+  //     params.push(`(${elisa_result})`);
+  //   }
+  //
+  //   console.log(params);
+  //   return (params)
+  // }
+  //
+  // handleELISAResult(obj, key, virus, varName = "elisa"): string {
+  //   let result_string: string;
+  //   let val = obj[key];
+  //
+  //   // For those true values-- the ones that are checked-- compress down to a string
+  //   if (val) {
+  //     let [assay, result] = key.split("_");
+  //     result_string = `${varName}.virus:${virus}`;
+  //     result_string = `${result_string} AND ${varName}.assayType:${assay}`;
+  //     result_string = result === "unknown" ? `${result_string} AND -_exists_: ${varName}.ELISAresult` : `${result_string} AND ${varName}.ELISAresult:${result}`;
+  //
+  //   }
+  //   // console.log(result_string)
+  //   if (result_string) {
+  //     return (`(${result_string})`);
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+
+  defaultHandler(param, params) {
+    if (!param.field) {
+      // generic search query; no variable-level searching
+      params.push(param.value);
+    } else {
+      // convert the parameter object into a string and add to array.
+      let new_param = this.params2String(param);
+
+      console.log(new_param)
+
+      // Check if there's an OR parameter to relate to that property.
+      if (param.orSelector) {
+        let or_param = this.params2String(param.orSelector);
+        new_param = `${new_param} OR ${or_param}`
+        console.log(or_param)
+        console.log(new_param)
+      }
+      params.push(new_param);
+    }
+
+    return (params);
+  }
+
+  reduceHandler(param) {
+    if (!param.field) {
+      // generic search query; no variable-level searching
+      return (param.value);
+    } else {
+      // convert the parameter object into a string and add to array.
+      let new_param = this.params2String(param);
+
+      console.log(new_param)
+
+      // Check if there's an OR parameter to relate to that property.
+      if (param.orSelector) {
+        let or_param = this.params2String(param.orSelector);
+        new_param = `${new_param} OR ${or_param}`
+        console.log(or_param)
+        console.log(new_param)
+      }
+      return (new_param);
+    }
   }
 
   params2String(param: RequestParam) {
@@ -218,14 +431,14 @@ export class RequestParametersService {
       if (param.value.length === 1 && /\[.+\]/.test(param.value[0])) {
         // array containing a range query; don't encapuslate in quote marks.
         return (`${param.field}:${param.value[0]}`);
-      } else if (param.value.length === 1 && param.field.includes("\_exists\_")) {
+      } else if (param.value.length === 1 && param.value.includes("\_exists\_")) {
         // If the parameter is all null / all not null, encapsulate in parens
-        return (`\(${param.field}:${param.value[0]}\)`)
+        return (`\(${param.value[0]}:${param.field}\)`)
       }
-      return ((`${param.field}:\(\"${param.value.join('" "')}\"\)`));
-    } else if (param.field.includes("\_exists\_")) {
+      return ((`${param.field}:\(\"${param.value.join('","')}\"\)`));
+    } else if (param.value.includes("\_exists\_")) {
       // If the parameter is all null / all not null, encapsulate in parens
-      return (`\(${param.field}:${param.value}\)`)
+      return (`\(${param.value}:${param.field}\)`)
     } else if (/\[.+\]/.test(param.value)) {
       // range query; don't encapuslate in quote marks.
       return (`${param.field}:${param.value}`);
@@ -296,7 +509,6 @@ export class RequestParametersService {
       // split values by space `%20` into array
       values = vals[1].replace(/\"/g, "").replace(/%22/g, "").replace(/%20/g, " ").replace(/\(/g, "").replace(/\)/g, "").split(/\s/)
     }
-    // console.log(values)
 
     return ({ field: variable, value: values });
   }

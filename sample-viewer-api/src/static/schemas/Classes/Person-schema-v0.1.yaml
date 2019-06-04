@@ -15,9 +15,9 @@
 #
 #   # bsc:                 "http://bioschemas.org/"
 #   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "http://schema.cvisb.org/"
+#   cvisb:                 "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "http://schema.cvisb.org/Person/0.1"
+# "@id":                   "https://data.cvisb.org/jsonschema/Person/0.1"
 
 # "@graph":
 # PERSON Class-- just the essentials
@@ -46,6 +46,7 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:additionalName
   "@type":               rdf:Property
@@ -59,6 +60,7 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:familyName
   "@type":               rdf:Property
@@ -72,6 +74,8 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true
+
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -85,3 +89,4 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         true

@@ -1,0 +1,58 @@
+<div class="preview-sample" *ngIf="dataSource && dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
+
+
+    <ng-container *ngFor="let key of displayedColumns" [matColumnDef]="key">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="table-header" [ngClass]="{'highlight': highlightCols.includes(key)}">{{ key }}</th>
+      <td mat-cell *matCellDef="let element" class="message" [ngClass]="{'highlight': highlightCols.includes(key)}">
+        <ng-container *ngIf="element[key] && element[key] !== ''">
+          <div [ngTemplateOutlet]="isArray(element[key]) ? (isObject(element[key][0]) ? objectArrayData : arrayData) :
+          isObject(element[key]) ? objectData : flatData" [ngTemplateOutletContext]="{ element: element, key: key }">
+          </div>
+        </ng-container>
+      </td>
+
+      <!-- For 'location', the data is an Object, not a flat string/number/etc. So need to loop over the elements... -->
+      <ng-template #flatData let-element="element" , letkey="key">
+        <!-- Ignore _merge values from printing -->
+        <span *ngIf="key !== '_merge'">
+          {{ element[key] }}
+        </span>
+      </ng-template>
+
+      <ng-template #objectArrayData let-element="element" , letkey="key">
+        <div *ngFor="let location of element[key]; let idx = index" class="location-group">
+
+
+          <div *ngFor="let col of location | getKeys">
+            <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+              {{ col }}: {{ location[col] }}
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #arrayData let-element="element" , letkey="key">
+        <div *ngFor="let item of element[key]; let idx = index">
+          {{ item }} <span class="data-separator" *ngIf="idx < element[key].length - 1"></span>
+        </div>
+      </ng-template>
+
+
+      <ng-template #objectData let-element="element" , letkey="key">
+        <div *ngFor="let col of element[key] | getKeys">
+          <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+              {{ col }}: {{ element[key][col] }}
+            </span>
+        </div>
+      </ng-template>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx = index" [ngClass]="'mat-row-' + idx"></tr>
+  </table>
+
+</div>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons [hidden]="hidePagination" [ngClass]="{'hide-pagination': hidePagination}"></mat-paginator>

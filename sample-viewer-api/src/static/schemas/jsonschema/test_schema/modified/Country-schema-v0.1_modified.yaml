@@ -24,31 +24,34 @@
         - NG
         - LR
         - GN
-        type: string
+        - null
+        oneOf:
+        - type: string
+        - type: 'null'
       name:
         enum:
         - Sierra Leone
         - Nigeria
         - Liberia
         - Guinea
-        oneOf:
-        - type: string
-        - type: 'null'
+        type: string
       url:
         enum:
         - https://www.iso.org/obp/ui/#iso:code:3166:SL
         - https://www.iso.org/obp/ui/#iso:code:3166:NG
         - https://www.iso.org/obp/ui/#iso:code:3166:LR
         - https://www.iso.org/obp/ui/#iso:code:3166:GN
+        - null
         oneOf:
         - type: string
         - type: 'null'
     required:
-    - identifier
+    - name
     type: object
 - '@id': cvisb:identifier
   '@type': rdf:Property
-  marginality: required
+  authenticated: false
+  marginality: recommended
   owl:cardinality: one
   rdfs:comment: 2 letter ISO code of the country, e.g. SL
   rdfs:label: identifier
@@ -57,6 +60,7 @@
   - NG
   - LR
   - GN
+  - null
   schema:domainIncludes:
   - '@id': cvisb:Country
   schema:rangeIncludes:
@@ -66,6 +70,7 @@
     '@id': schema:identifier
 - '@id': cvisb:url
   '@type': rdf:Property
+  authenticated: false
   marginality: recommended
   owl:cardinality: one
   rdfs:comment: Link to the ISO country page
@@ -75,6 +80,7 @@
   - https://www.iso.org/obp/ui/#iso:code:3166:NG
   - https://www.iso.org/obp/ui/#iso:code:3166:LR
   - https://www.iso.org/obp/ui/#iso:code:3166:GN
+  - null
   schema:domainIncludes:
   - '@id': cvisb:Country
   schema:rangeIncludes:
@@ -84,7 +90,8 @@
     '@id': schema:url
 - '@id': cvisb:name
   '@type': rdf:Property
-  marginality: recommended
+  authenticated: false
+  marginality: required
   owl:cardinality: one
   rdfs:comment: Name of the country, e.g. Sierra Leone
   rdfs:label: name
@@ -102,6 +109,7 @@
     '@id': schema:name
 - '@id': cvisb:alternateName
   '@type': rdf:Property
+  authenticated: false
   marginality: optional
   owl:cardinality: many
   rdfs:comment: Alternative name of the country, for instance in a different language

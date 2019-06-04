@@ -1,0 +1,46 @@
+@import '../../../sass/variables.scss';
+@import "../../../sass/material-theme.scss";
+// Error banner
+.validation-error {
+  background: accent-redder(500);
+  color: white;
+  padding: 5px;
+
+  &.fatal {
+    background: accent-redder(A700);
+  }
+}
+
+.verified {
+  background: none;
+  color: darken($sierraleone-green, 10%);
+}
+
+.mat-cell,
+.mat-header-cell {
+  min-width: 100px;
+}
+
+.has-error {
+  font-size: 1.5em;
+  color: accent-redder(A700);
+  // color: white;
+  // padding: 5px;
+}
+
+.needs-verification {
+  font-size: 1.25em;
+  color: accent-redder(500);
+}
+
+.next-buttons {
+  margin-top: 25px;
+
+  & button {
+    background: $grey-100 !important;
+  }
+}
+
+.select-btn {
+  margin-right: 35px;
+}

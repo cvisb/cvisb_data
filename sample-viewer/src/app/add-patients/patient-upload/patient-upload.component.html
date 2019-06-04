@@ -1,5 +1,5 @@
-<!-- <div class="upload-button"> -->
-  <div class="upload-button" *ngIf="user.write">
+<div class="upload-button">
+  <!-- <div class="upload-button" *ngIf="user.write"> -->
   <!-- Dummy for styling -->
   <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
   <!-- Actual workhorse to upload the data on the client side -->
@@ -7,7 +7,14 @@
 
 
   <div class="client-responses">
-    <h1 *ngIf="uploadResponse">{{ uploadResponse }}</h1>
+
+    <ng-container *ngIf="uploadResponse">
+      <h1>{{ uploadResponse }}</h1>
+      <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
+      <p class="pct-complete">
+        {{ uploadProgress | number:'1.0-0' }}% complete
+      </p>
+    </ng-container>
 
     <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
 
@@ -37,7 +44,7 @@
 </div>
 
 <!-- TEMPORARY: JUST FOR ME WHILE TESTING -->
-  <div style="margin-top: 25px;">
+  <div style="margin-top: 25px;" *ngIf="user.email === 'laura.d.hughes@gmail.com'">
 <button type="button" mat-raised-button color="warn" (click)="deletePatients()">DON'T PRESS THIS BUTTON -- clears patient list</button>
 </div>
 

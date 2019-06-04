@@ -1,0 +1,11 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.emphasis {
+  font-weight: 400;
+}
+
+td.mat-cell, th.mat-header-cell {
+    padding: 2px 10px;
+    text-align: center;
+}

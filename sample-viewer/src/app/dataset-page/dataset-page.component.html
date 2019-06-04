@@ -1,6 +1,9 @@
+<router-outlet name="datasets"></router-outlet>
+
 <div class="container" id="dataset.identifier">
 
-  <div class="dataset-container dataset-page" *ngIf="dataset">
+  <div class="dataset-container dataset-page" >
+  <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->
 
     <app-dataset-page-nav [id]="dataset.identifier" class="nav dataset-nav"></app-dataset-page-nav>
 
@@ -26,10 +29,12 @@
         <app-hla-page></app-hla-page>
       </ng-container>
 
+
+
       <div id="files">
         <h3>Download files and view metadata</h3>
 
-        <app-file-list [dataset]="dataset"></app-file-list>
+        <app-file-list [datasetID]="dataset.identifier"></app-file-list>
 
         <div class="grid-item metadata">
           <app-file-metadata></app-file-metadata>

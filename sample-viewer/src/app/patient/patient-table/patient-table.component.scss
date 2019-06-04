@@ -17,6 +17,10 @@
     // justify-content: flex-end;
   }
 }
+
+.spinner-container {
+  justify-content: space-around;
+}
 // --- links ---
 
 a {
@@ -31,61 +35,58 @@ a {
   font-weight: 400;
   font-size: 1em;
 }
-
 // --- icons ---
-$icon-size: 45px;
-
-.expt-type {
-  display: inline-block;
-  margin: 0.5em 1.5em 0.5em 0;
-  padding: 5px 8px 5px 5px;
-  border-radius: 5px;
-
-  &:hover {
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, .5), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
-  }
-}
+$icon-size: 32px; // .expt-type {
+//   display: inline-block;
+//   margin: 0.5em 1.5em 0.5em 0;
+//   padding: 5px 8px 5px 5px;
+//   border-radius: 5px;
+//
+//   &:hover {
+//     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, .5), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+//   }
+// }
 
 svg-icon {
   height: $icon-size;
   width: $icon-size;
   vertical-align: middle;
 }
-
-.hla {
-  background: lighten($female-color, 41%);
-}
-
-.tcr {
-  background: accent(50);
-}
-
-.bcr {
-  background: lighten($cvisb-bright, 50%);
-}
-
-.systemsserology {
-  // background: lighten($lassa-lt, 20%);
-  background: #e3ffe2;
-}
-
-.elisa {
-  // background: #f3ffe4;
-  background: #faffd7;
-}
-
-.rt_pcr {
-  background: #fff8fb;
-}
-
-.rdt {
-  background: lighten($sierraleone-blue, 56%);
-}
-
-.viralseq {
-  background: #e4fffc;
-}
+// .hla {
+//   background: lighten($female-color, 41%);
+// }
+//
+// .tcr {
+//   background: accent(50);
+// }
+//
+// .bcr {
+//   background: lighten($cvisb-bright, 50%);
+// }
+//
+// .systemsserology {
+//   // background: lighten($lassa-lt, 20%);
+//   background: #e3ffe2;
+// }
+//
+// .elisa {
+//   // background: #f3ffe4;
+//   background: #faffd7;
+// }
+//
+// .rt_pcr {
+//   background: #fff8fb;
+// }
+//
+// .rdt {
+//   background: lighten($sierraleone-blue, 56%);
+// }
+//
+// .viralseq {
+//   background: #e4fffc;
+// }
 // --- timepoints ---
+
 .timepoints {
   display: inline-block;
 }
@@ -119,8 +120,38 @@ svg-icon {
   margin-bottom: 0.75em;
 }
 // --- country ---
+
 .table-country {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+// --- elisas ---
+
+.elisa-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#negative,
+#positive,
+#unknown {
+  height: 24px;
+  margin-left: 3px;
+}
+//
+
+#positive {
+  color: accent-redder(A700);
+  // color: map-get($mat-pink, A700);
+  // color: $ebola-md;
+}
+
+#negative {
+  color: $sierraleone-blue;
+}
+
+#unknown {
+  color: $grey-400;
 }

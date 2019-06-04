@@ -1,9 +1,3 @@
-<h4 class="patient" id="samples">Samples</h4>
+<h4 class="patient patient-samples" id="samples">Samples</h4>
 
-<ng-container *ngIf="patient.associatedSamples; else nodata">
-  <span *ngFor="let timepoint of patient.associatedSamples"> {{ timepoint }}</span>
-</ng-container>
-
-<ng-template #nodata>
-  <span class="nodata">no known samples</span>
-</ng-template>
+<app-patient-timepoints [alternateIDs]="patient.alternateIdentifier" showMissing='true'></app-patient-timepoints>

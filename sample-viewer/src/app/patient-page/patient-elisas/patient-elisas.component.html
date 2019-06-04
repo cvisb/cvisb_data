@@ -1,10 +1,8 @@
-<div class="patient-elisas" *ngIf="patient.elisa">
+<div class="patient-elisas">
 
+  <h4 class="patient-elisa" id="elisa">ELISA results</h4>
 
-  <h4 class="patient" id="elisa">ELISA results</h4>
-
-
-  <div class="preview-sample">
+  <div class="preview-sample" *ngIf="patient.elisa; else no_data">
     <table mat-table [dataSource]="elisaSource">
 
 
@@ -12,6 +10,13 @@
         <th mat-header-cell *matHeaderCellDef>virus</th>
         <td mat-cell *matCellDef="let element" class="message" class="virus">
           {{ element.virus }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timepoint">
+        <th mat-header-cell *matHeaderCellDef>timepoint</th>
+        <td mat-cell *matCellDef="let element" class="message" class="timepoint">
+          {{ element.timepoint }}
         </td>
       </ng-container>
 
@@ -43,4 +48,11 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
+
   </div>
+
+  <ng-template #no_data>
+      <span class="nodata">no available data</span>
+  </ng-template>
+
+</div>
