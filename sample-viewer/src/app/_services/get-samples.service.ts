@@ -43,14 +43,17 @@ export class GetSamplesService {
     private route: ActivatedRoute,
     private authSvc: AuthService) {
 
+    // Listener for changes in auth status
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       if (authState.authorized) {
+        console.log("change in auth status")
         this.getSamples();
       }
     })
 
+    // Listener for changes in query params
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log("Re-getting samples with new parameters:")
+      console.log("Re-getting samples with new parameters:")
       console.log(params)
       this.request_params = params;
       this.getSamples(params);
@@ -110,6 +113,7 @@ export class GetSamplesService {
         console.log(data)
         if (samples) {
           samples.forEach(d => {
+            // Merge in the patient properties associated with that sample
             let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
 
             if (filtered.length === 1) {
@@ -127,6 +131,8 @@ export class GetSamplesService {
           this.samplesSubject.next(samples);
 
           this.sampleSummarySubject.next(this.getSampleSummary(samples));
+          console.log('samples long')
+          console.log(samples)
 
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);
