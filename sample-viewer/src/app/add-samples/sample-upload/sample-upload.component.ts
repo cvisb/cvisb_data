@@ -64,6 +64,13 @@ export class SampleUploadComponent implements OnInit {
           // reader.readAsBinaryString(file); // For .xlsx
           break;
 
+        case "text/tab-separated-values":
+          var reader = new FileReader();
+
+          // Read in the file as a text object.
+          reader.readAsText(file, this.fileType);
+          break;
+
         case "application/json":
           var reader = new FileReader();
 
@@ -116,7 +123,9 @@ export class SampleUploadComponent implements OnInit {
         }
         break;
       case "text/csv":
-        data = this.csvJSON(datastring)
+        data = this.csvJSON(datastring, ",")
+      case "text/tab-separated-values":
+        data = this.csvJSON(datastring, "\t")
       default:
         break;
     }
@@ -161,21 +170,21 @@ export class SampleUploadComponent implements OnInit {
   }
 
   // from https://stackoverflow.com/questions/27979002/convert-csv-data-into-json-format-using-javascript
-  csvJSON(csv) {
+  csvJSON(csv, delim) {
 
     var lines = csv.split("\n");
 
     var result = [];
 
     // remove superfluous return character which bollocks things up
-    var headers = lines[0].replace(/\r/, "").split(",");
+    var headers = lines[0].replace(/\r/, "").split(delim);
     headers = headers.filter(d => d !== ""); // Remove empty columns
 
     for (var i = 1; i < lines.length; i++) {
       if (lines[i] !== "") { // skip line if just an enter / new return character
         var obj = {};
         // remove superfluous return character which bollocks things up
-        var currentline = lines[i].replace(/\r/, "").split(",");
+        var currentline = lines[i].replace(/\r/, "").split(delim);
 
 
         for (var j = 0; j < headers.length; j++) {
