@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { AuthService, GetPatientsService, RequestParametersService } from '../_services';
+import { AuthService, GetPatientsService, RequestParametersService, Nested2longService } from '../_services';
 import { AuthState, RequestParamArray } from '../_models';
 
 
@@ -23,7 +23,8 @@ export class DownloadBtnComponent implements OnInit {
     private authSvc: AuthService,
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private longSvc: Nested2longService
   ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
@@ -32,7 +33,9 @@ export class DownloadBtnComponent implements OnInit {
     })
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      this.qParams = this.requestSvc.reduceParams(qParams);
+      this.qParams = this.requestSvc.reducePatientParams(qParams);
+      console.log(qParams)
+      console.log(this.qParams)
     })
   }
 
@@ -48,25 +51,27 @@ export class DownloadBtnComponent implements OnInit {
     const columnDelimiter = '\t'; // technically, tab-separated, since some chemical cmpds have commas in names.
     const lineDelimiter = '\n';
 
-    let colnames = Object.keys(this.data[0]);
-    // colnames = colnames.map(d => this.colnames_dict[d] || d) // convert to their longer name, if they have one. If not, return the existing value
+    if (this.data && this.data.length > 0) {
+      let colnames = Object.keys(this.data[0]);
+      // colnames = colnames.map(d => this.colnames_dict[d] || d) // convert to their longer name, if they have one. If not, return the existing value
 
-    var dwnld_data = '';
-    dwnld_data += colnames.join(columnDelimiter);
-    dwnld_data += lineDelimiter;
-
-    this.data.forEach(function(item) {
-      let counter = 0;
-      colnames.forEach(function(key) {
-        if (counter > 0) dwnld_data += columnDelimiter;
-
-        dwnld_data += item[key];
-        counter++;
-      });
+      var dwnld_data = '';
+      dwnld_data += colnames.join(columnDelimiter);
       dwnld_data += lineDelimiter;
-    });
 
-    this.saveData(dwnld_data);
+      this.data.forEach(function(item) {
+        let counter = 0;
+        colnames.forEach(function(key) {
+          if (counter > 0) dwnld_data += columnDelimiter;
+
+          dwnld_data += item[key];
+          counter++;
+        });
+        dwnld_data += lineDelimiter;
+      });
+
+      this.saveData(dwnld_data);
+    }
   }
 
   saveData(dwnld_data) {
