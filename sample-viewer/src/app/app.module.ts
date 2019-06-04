@@ -25,7 +25,7 @@ import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 // Dialogue boxes
-import { SampleMetadataComponent } from './_dialogs/index';
+import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
 // Components
 import { AppComponent } from './app.component';
@@ -128,6 +128,7 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     FilterSearchComponent,
     DatasetComponent,
     SampleMetadataComponent,
+    SpinnerPopupComponent,
     SvgIconComponent,
     DatasetPageComponent,
     DatasetPageNavComponent,
@@ -228,7 +229,8 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     }
   ],
   entryComponents: [
-    SampleMetadataComponent
+    SampleMetadataComponent,
+    SpinnerPopupComponent
   ],
   bootstrap: [AppComponent]
 })
