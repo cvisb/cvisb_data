@@ -45,7 +45,7 @@
 
         console.log(patientIDs);
 
-        requestSvc.updateParams(endpoint, { field: 'patientID', value: patientIDs });
+        requestSvc.updateParams(endpoint, { field: 'alternateIdentifier', value: patientIDs });
       });
     }
 
