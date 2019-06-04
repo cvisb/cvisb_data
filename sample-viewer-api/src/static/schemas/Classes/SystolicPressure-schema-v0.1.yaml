@@ -1,0 +1,50 @@
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/SystolicPressure/0.1"
+#
+# "@graph":
+
+- "@id":                 cvisb:SystolicPressure
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing a single systolic blood pressure datapoint collected from patients in the Center for Viral Systems Biology.
+  rdfs:label:            SystolicPressure
+  rdfs:subClassOf:
+    "@id":               cvisb:Data
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+- "@id":                 cvisb:time
+  "@type":               rdf:Property
+  rdfs:comment:          Date and time of SystolicPressure measurement
+  rdfs:label:            time
+  schema:domainIncludes:
+    - "@id":             cvisb:SystolicPressure
+  schema:rangeIncludes:
+    - "@id":             schema:DateTime
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:systolicPressure
+  "@type":               rdf:Property
+  rdfs:comment:          Systolic Pressure, in mmHg
+  rdfs:label:            systolicPressure
+  schema:domainIncludes:
+    - "@id":             cvisb:SystolicPressure
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false

@@ -1,0 +1,45 @@
+<div *ngIf="data && data.length > 0">
+  <div class="duplicate-helper-text">
+
+    <p>
+      The number of aliquots for the duplicate sampleID/location pair(s) will be combined. The metadata in the <span class="row-keep">first row of data -- shown in
+    green-- will be saved</span> (with a sum of the totalAliquots), and the <span class="row-delete">other rows (in red) will be deleted</span>.
+    </p>
+
+    <p class="emphasis">
+      If you want to keep them as separate samples, change the sample label for one (so it will have a new sampleID generated) and re-upload.
+    </p>
+
+    <p class="emphasis">
+      If the extra row(s) is a mistake, delete the extra row(s) and re-upload.
+    </p>
+  </div>
+
+  <div class="preview-sample">
+    <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
+
+      <ng-container *ngFor="let key of flatColumns" [matColumnDef]="key">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key }}</th>
+        <td mat-cell *matCellDef="let element" class="message">
+          {{ element[key] }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="samples">
+        <th mat-header-cell *matHeaderCellDef>samples</th>
+        <td mat-cell *matCellDef="let element" class="sample-combine">
+          <app-preview-samples [data]="element.samples" [hidePagination]="true" [displayedColumns]="sampleColumns" class="sample-preview">
+          </app-preview-samples>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>

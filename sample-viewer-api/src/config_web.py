@@ -1,4 +1,5 @@
 from biothings.web.settings.default import *
+from config_cvisb_endpoints import CVISB_ENDPOINTS
 from api.query_builder import ESQueryBuilder
 from api.query import ESQuery
 from api.transform import ESResultTransformer
@@ -13,39 +14,6 @@ SCHEMA_DIR = os.path.join(os.path.split(os.path.abspath(__file__))[0], 'static',
 # *****************************************************************************
 # elasticsearch server transport url
 ES_HOST = 'localhost:9200'
-
-CVISB_ENDPOINTS = {
-    "sample": {
-        "cache_key": "Sample",
-        "index": 'sample_metadata_current',
-        "public_permitted_search_fields": ['species', 'protocolURL', 'freezerRack', 'freezerBox', 'derivedIndex', 'AVLinactivated', 'freezingBuffer', 'dateModified', 'visitCode', 'protocolVersion', 'updatedBy', 'sampleType', 'freezerID', 'freezerBoxCell', 'dilutionFactor', 'numAliquots', 'patientID'],
-        "public_excluded_return_fields": ['isolationDate', 'description', 'alternateIdentifier', 'location.*', 'privatePatientID', 'sampleID', 'name', 'sampleLabel']
-    },
-    "datadownload": {
-        "cache_key": "DataDownload",
-        "index": 'datadownload_metadata_current',
-        "public_permitted_search_fields": [],
-        "public_excluded_return_fields": []
-    },
-    "dataset": {
-        "cache_key": "Dataset",
-        "index": 'dataset_metadata_current',
-        "public_permitted_search_fields": [],
-        "public_excluded_return_fields": []
-    },
-    "experiment": {
-        "cache_key": "Experiment",
-        "index": 'experiment_metadata_current',
-        "public_permitted_search_fields": [],
-        "public_excluded_return_fields": []
-    },
-    "patient": {
-        "cache_key": "Patient",
-        "index": 'patient_metadata_current',
-        "public_permitted_search_fields": ['availableData.*', 'cohort', 'sameAs', 'relatedTo', 'infectionYear', 'elisa.*', 'dateModified', 'outcome', 'contactGroupIdentifier', 'gender', 'associatedSamples', 'rtpcr.*', 'country.*', 'symptoms.*', 'rapidDiagostics.*', 'patientID', 'age', 'daysOnset'],
-        "public_excluded_return_fields": ['exposureType', 'alternateIdentifier', 'admitDate', 'infectionDate', 'homeLocation.*', 'contactSurvivorRelationship', 'gID', 'sID']
-    }
-}
 
 # *****************************************************************************
 # App URL Patterns
@@ -69,17 +37,23 @@ ALLOW_NESTED_AGGS = True
 ACCESS_CONTROL_ALLOW_METHODS = 'GET,POST,PUT,DELETE,OPTIONS'
 
 QUERY_GET_ESQB_KWARGS['patientID'] = {'default': None, 'type': list}
-QUERY_GET_ESQB_KWARGS['relatedTo'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['patientQuery'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['sampleQuery'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['experimentQuery'] = {'default': None, 'type': str}
+#QUERY_GET_ESQB_KWARGS['relatedTo'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['outcome'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['cohort'] = {'default': None, 'type': list}
-QUERY_GET_ESQB_KWARGS['availableData'] = {'default': None, 'type': list}
+#QUERY_GET_ESQB_KWARGS['availableData'] = {'default': None, 'type': list}
 QUERY_GET_ESQB_KWARGS['country'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['elisa'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['infectionYear'] = {'default': None, 'type': str}
+QUERY_GET_ESQB_KWARGS['measurementTechnique'] = {'default': None, 'type': list}
+QUERY_GET_ESQB_KWARGS['length'] = {'default': None, 'type': str}
 QUERY_GET_ESQB_KWARGS['facet_size']['max'] = 10000
-QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
-QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
-ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
-ANNOTATION_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
-
+#QUERY_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+#QUERY_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+#ANNOTATION_GET_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
+#ANNOTATION_POST_ES_KWARGS['_source']['default'] = {"includes": ["*"], "excludes": []}
 
 ###############################################################################
 #    app-specific query builder, query, and result transformer classes

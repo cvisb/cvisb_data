@@ -1,0 +1,48 @@
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Sample-schema-v0.1.yaml
+
+authorized_keys: ['location.*', 'description', 'alternateIdentifier', 'updatedBy', 'privatePatientID', 'sampleLabel', 'isolationDate', 'sampleID', 'name']
+
+unauthorized_keys: ['AVLinactivated', 'protocolURL', 'derivedIndex', 'freezingBuffer', 'species', 'dateModified', 'dilutionFactor', 'patientID', 'sampleType', 'protocolVersion', 'visitCode', 'sampleGroup']
+********************************************************************************
+
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Experiment-schema-v0.1.yaml
+
+authorized_keys: ['sampleID', 'privatePatientID', 'updatedBy']
+
+unauthorized_keys: ['experimentID', 'description', 'measurementTechnique', 'publication.*', 'SRA_ID', 'dateModified', 'GenBank_ID', 'analysisCode.*', 'patientID', 'publisher.*', 'name', 'batchID', 'experimentDate', 'data.*']
+********************************************************************************
+
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DataDownload-schema-v0.1.yaml
+
+authorized_keys: ['updatedBy']
+
+unauthorized_keys: ['measurementTechnique', 'publication.*', 'dateCreated', 'sameAs', 'dateModified', 'sourceCode.*', 'contentUrlRepository', 'datePublished', 'includedInDataset', 'keywords', 'contentUrlIdentifier', 'contentUrl', 'name', 'description', 'identifier', '@id', 'encodingFormat', 'experimentIDs', 'author.*', 'additionalType', 'isBasedOn', 'publisher.*']
+********************************************************************************
+
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/DataCatalog-schema-v0.1.yaml
+
+authorized_keys: ['updatedBy']
+
+unauthorized_keys: ['dataset', 'schemaVersion', 'description', 'keywords', 'identifier', '@id', 'alternateName', 'sameAs', 'temporalCoverage.*', 'spatialCoverage.*', 'dateModified', 'funder.*', 'publisher.*', 'name', 'datePublished', 'url']
+********************************************************************************
+
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Patient-schema-v0.1.yaml
+
+authorized_keys: ['updatedBy', 'alternateIdentifier', 'homeLocation.*', 'contactSurvivorRelationship', 'infectionDate.*', 'evalDate', 'admitDate', 'updateNotes.*', 'dischargeDate', 'relatedToPrivate', 'sID', '_source', 'exposureType', 'gID']
+
+unauthorized_keys: ['daysInHospital', 'symptoms.*', 'associatedSamples', 'age', 'relatedTo', 'gender', 'sameAs', 'infectionYear', 'dateModified', 'rtpcr.*', 'availableData.*', 'patientID', 'daysOnset', 'outcome', 'cohort', 'elisa.*', 'country.*', 'rapidDiagostics.*', 'contactGroupIdentifier']
+********************************************************************************
+
+********************************************************************************
+/home/ubuntu/cvisb/sample_viewer_web/sample-viewer-api/src/static/schemas/jsonschema/test_schema/Dataset-schema-v0.1.yaml
+
+authorized_keys: ['updatedBy']
+
+unauthorized_keys: ['variableMeasured', 'measurementTechnique', 'publication.*', 'sameAs', 'spatialCoverage.*', 'dateModified', 'sourceCode.*', 'license', 'funder.*', 'datePublished', 'url', 'schemaVersion', 'keywords', 'name', 'includedInDataCatalog', 'description', 'citation', 'identifier', '@id', 'author.*', 'dataDownloadIDs', 'temporalCoverage.*', 'publisher.*']
+********************************************************************************
+

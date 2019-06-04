@@ -35,7 +35,7 @@ export class FilterLabComponent implements OnInit {
 
     this.myForm.valueChanges.subscribe(val => {
       console.log(val.labs);
-      this.requestSvc.updateParams("sample", { field: "lab", value: val.labs })
+      this.requestSvc.updateParams("sample", { field: "location.lab", value: val.labs })
 
     })
     //

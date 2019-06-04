@@ -11,21 +11,25 @@ import json
 import yaml
 import pandas as pd
 import csv
+from datetime import datetime
 
-
-export_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/cvisb_variables.csv"
+today = datetime.today().strftime('%Y-%m-%d')
+export_file = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/cvisb_variables_{today}.csv"
+export_cols = ['Class', '@type', 'variable', 'description', 'authenticated', 'marginality', 'cardinality', 'enumeration', 'minimum', 'maximum', 'derived_from', 'schema:sameAs']
 
 # Find all files containing schema
 os.chdir('/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes')
 all_files = os.listdir()
 all_files.sort()
+all_files.remove('cvisb-context.yaml')
 
 # Helper functions
 def open_yaml(yaml_file):
-    '''Convert input yaml file as JSON file.'''
-    with open(yaml_file) as in_f:
-        schema_data = yaml.load(in_f)
-    return(schema_data)
+    if yaml_file.endswith(".yaml"):
+        '''Convert input yaml file as JSON file.'''
+        with open(yaml_file) as in_f:
+            schema_data = yaml.load(in_f)
+        return(schema_data)
 
 # def write_csv(data, filename = export_file):
 #     with open(filename, 'w', newline='') as myfile:
@@ -67,18 +71,18 @@ def clean_schemas(schemas):
     return(df)
 
 
-def yaml2csv(all_files, filename=export_file):
+def yaml2csv(all_files, filename=export_file, exportCols=export_cols):
     schemas = []
     for file in all_files:
         schema = open_yaml(file)
-        schemas.extend(schema)
+        if schema:
+            schemas.extend(schema)
 
     schema_df = clean_schemas(schemas)
 
-    schema_df.to_csv(filename, index=False)
+    schema_df[exportCols].to_csv(filename, index=False)
     return(schema_df)
 
-schema = open_yaml('ELISA-schema-v0.1.yaml')
-pd.DataFrame(schema)
+# schema = open_yaml('AdministrativeArea-schema-v0.1.yaml')
 
 df = yaml2csv(all_files)

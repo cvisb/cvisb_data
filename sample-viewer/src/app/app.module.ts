@@ -9,18 +9,23 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
 
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
+import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
+
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver } from './_services/';
+import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver, SamplesResolver } from './_services/';
+
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 // Dialogue boxes
-import { SampleMetadataComponent } from './_dialogs/index';
+import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
 // Components
 import { AppComponent } from './app.component';
@@ -61,6 +66,7 @@ import {
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
   FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
+  FilterSampleTimepointsComponent, FilterableHistogramComponent
 } from './filters';
 
 // Patient page components
@@ -71,17 +77,31 @@ import {
 import { SchemaComponent } from './schema/schema.component';
 import { DownloadBtnComponent } from './download-btn/download-btn.component';
 import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
-// import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
-// import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
-// import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
-// import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
-// import { UploadDifferencesComponent } from './add-samples/upload-differences/upload-differences.component';
+import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
+import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
+import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
+import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
+import { PreviewDifferencesComponent } from './add-samples/preview-differences/preview-differences.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 import { PatientSymptomsComponent } from './patient-page/patient-symptoms/patient-symptoms.component';
 import { PatientElisasComponent } from './patient-page/patient-elisas/patient-elisas.component';
 import { PatientRelationshipsComponent } from './patient-page/patient-relationships/patient-relationships.component';
 import { FilterSampleComponent } from './sample/filter-sample/filter-sample.component';
+import { SubmitSamplesComponent } from './add-samples/submit-samples/submit-samples.component';
+import { UploadComponent } from './upload/upload.component';
+import { PatientDatesComponent } from './patient-page/patient-dates/patient-dates.component';
+import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
+import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
+import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
+import { PatientTimepointsComponent } from './patient/patient-timepoints/patient-timepoints.component';
+import { PatientCitationsComponent } from './patient-page/patient-citations/patient-citations.component';
+import { SampleTableComponent } from './sample/sample-table/sample-table.component';
+import { AddDataComponent } from './add-data/add-data/add-data.component';
+import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
+import { PatientViralSeqComponent } from './patient-page/patient-viral-seq/patient-viral-seq.component';
+import { FormatCitationComponent } from './format-citation/format-citation.component';
+import { PatientFilesComponent } from './patient-page/patient-files/patient-files.component';
 
 
 @NgModule({
@@ -108,6 +128,7 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     FilterSearchComponent,
     DatasetComponent,
     SampleMetadataComponent,
+    SpinnerPopupComponent,
     SvgIconComponent,
     DatasetPageComponent,
     DatasetPageNavComponent,
@@ -138,15 +159,16 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     DownloadBtnComponent,
     AddStepperComponent,
 
-    // UploadStepperComponent,
-    // CheckIdsComponent,
-    // PreviewSamplesComponent,
-    // FrontendSampleValidationComponent,
-    // UploadDifferencesComponent,
+    UploadStepperComponent,
+    CheckIdsComponent,
+    PreviewSamplesComponent,
+    FrontendSampleValidationComponent,
+    PreviewDifferencesComponent,
     FilterLabComponent,
     FilterSampleComponent,
     FilterSampleTypeComponent,
     FilterSpeciesComponent,
+    FilterSampleTimepointsComponent,
     FilterOrganizationComponent,
 
     AddPatientsComponent,
@@ -154,6 +176,21 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     PatientSymptomsComponent,
     PatientElisasComponent,
     PatientRelationshipsComponent,
+    SubmitSamplesComponent,
+    UploadComponent,
+    PatientDatesComponent,
+    CheckDupesComponent,
+    PreviewAdditionsComponent,
+    CombineDupesComponent,
+    FilterableHistogramComponent,
+    PatientTimepointsComponent,
+    PatientCitationsComponent,
+    SampleTableComponent,
+    AddDataComponent,
+    DataUploadComponent,
+    PatientViralSeqComponent,
+    FormatCitationComponent,
+    PatientFilesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
@@ -169,6 +206,7 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     AppRoutingModule,
     AdminModule,
     HlaModule,
+    Angulartics2Module.forRoot(), // Google Analytics
   ],
   exports: [
     // EmbedJsonldDirective
@@ -182,10 +220,17 @@ import { FilterSampleComponent } from './sample/filter-sample/filter-sample.comp
     DatasetResolver,
     PatientsResolver,
     AllPatientsResolver,
-    HlaResolver
+    SamplesResolver,
+    HlaResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EncodeHttpParamsInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [
-    SampleMetadataComponent
+    SampleMetadataComponent,
+    SpinnerPopupComponent
   ],
   bootstrap: [AppComponent]
 })

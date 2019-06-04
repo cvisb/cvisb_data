@@ -1,11 +1,12 @@
-<div class="filter filter-expts" *ngIf="expts">
+<div class="filter filter-expts container-column" *ngIf="expts">
   <h4 class="filter-label">experiment type</h4>
 
   <div class="expt-container">
-    <div class="filter-pair expt-type mat-shadow" *ngFor="let expt of expts" [ngClass]="{'disabled' : expt.value === 0}">
+    <div class="filter-pair expt-type mat-shadow" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
+    [ngClass]="{'disabled' : expt.disabled}">
       <svg-icon [icon]="expt.key" [class]="expt.key + '-icon'"></svg-icon>
       <div class="expt-name">{{ expt.name }}</div>
-      <div class="file-count">{{ expt.value }}</div>
+      <!-- <div class="file-count">{{ expt.value }}</div> -->
     </div>
   </div>
 </div>

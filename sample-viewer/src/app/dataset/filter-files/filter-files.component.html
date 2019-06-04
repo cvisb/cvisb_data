@@ -1,13 +1,14 @@
-<div class="filter-container" [ngClass]="anything_selected ? 'inactive' : 'active'">
+<!-- <button (click)="changeOutcomes()">change</button> -->
+<div class="filter-container" [ngClass]="anything_selected ? 'inactive' : 'active'" *ngIf='datasetSummary'>
 
-  <div class="filter-header">
+  <!-- <div class="filter-header">
     <div class="container">
       <h2>202 of 202 Files Selected</h2>
 
       <div class="pull-right">
-        <app-filter-search></app-filter-search>
+        <app-filter-search endpoint="patient" [(query)]="searchQuery"></app-filter-search>
 
-        <button mat-stroked-button>clear filters</button>
+        <button mat-stroked-button (click)="clearFilters()">clear filters</button>
       </div>
 
     </div>
@@ -16,11 +17,11 @@
 
 
   <div class="filter-item filter-patients">
-    <app-filter-patient-id [patients]="datasetSummary.patientIDs"></app-filter-patient-id>
+    <app-filter-patient-id ></app-filter-patient-id>
   </div>
 
   <div class="filter-item filter-patient-types">
-    <app-filter-patient-type [viruses]="datasetSummary.patientTypes" [outcomes]="datasetSummary.patientOutcomes" endpoint="dataset"></app-filter-patient-type>
+    <app-filter-patient-type [viruses]="datasetSummary.patientTypes" [outcomes]="datasetSummary.patientOutcomes" [all_cohorts]="all_cohorts" endpoint="patient"></app-filter-patient-type>
   </div>
 
   <div class="filter-item filter-elisas">
@@ -28,7 +29,7 @@
   </div>
 
   <div class="filter-item filter-dates">
-    <app-filter-sample-year [data]="datasetSummary.patientYears"></app-filter-sample-year>
+    <app-filter-sample-year [data]="datasetSummary.patientYears" endpoint="patient" [yearDomain]="[2013, 2014, 2015, 2016, 2017, 2018, 2019]"></app-filter-sample-year>
   </div>
 
   <div class="filter-item filter-files">
@@ -36,10 +37,10 @@
   </div>
 
   <div class="filter-item filter-expts">
-    <app-filter-experiment [expts]="datasetSummary.exptTypes"></app-filter-experiment>
+    <app-filter-experiment endpoint="dataset"></app-filter-experiment>
   </div>
 
   <div class="filter-item filter-ctry">
     <app-filter-location [countries]="datasetSummary.patientCountries"></app-filter-location>
-  </div>
+  </div> -->
 </div>

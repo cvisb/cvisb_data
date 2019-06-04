@@ -5,12 +5,15 @@ from jsonschema import validate, ValidationError
 from jsonschema.exceptions import relevance
 from api.schema import FormatChecker, iter_validate
 from web.handlers import encode_user, decode_user
+from biothings.utils.common import dotdict
 from elasticsearch.helpers import bulk
 from collections import OrderedDict
 import json
 import csv
 #import logging
 import yaml
+import copy
+
 
 class UserAuth(object):
     def get_current_user(self):
@@ -41,14 +44,6 @@ class UserAuth(object):
             return False
 
         return True
-
-def sanitize_source_param(inst, kwargs):
-    if inst._should_sanitize('_source', kwargs):
-        if (len(kwargs['_source']) == 0) or (len(kwargs['_source']) == 1 and kwargs['_source'][0].lower() == 'all'):
-            kwargs['_source'] = {"includes": ["*"], "excludes": []}
-        else:
-            kwargs['_source'] = {"includes": kwargs['_source'], "excludes": []}
-    return kwargs
 
 def form_actions(_source, index, doc_type, _id=None):
     for _doc in _source:
@@ -99,22 +94,21 @@ class EntityHandler(UserAuth, BiothingHandler):
     ''' This class is for handling requests to a generic entity endpoint.  Endpoints are configured
         by a dictionary in config_web.CVISB_ENDPOINTS '''
     def _get_es_index(self, options):
-        return self.web_settings.CVISB_ENDPOINTS[self.entity]['index']
+        _user = self.get_current_user() or {}
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
+            return self.web_settings.CVISB_ENDPOINTS[self.entity]['public_index']
+        else:
+            return self.web_settings.CVISB_ENDPOINTS[self.entity]['private_index']
 
     def _get_es_doc_type(self, options):
         return self.entity
-
-    def _sanitize_source_param(self, kwargs):
-        return sanitize_source_param(self, kwargs)
 
     def get(self, entity=None, bid=None):
         if not entity_check(self, entity):
             return
 
         self.entity = entity
-
-        if not self._authenticate_request(r=True):
-            return
+        self.op = 'r'
 
         super(EntityHandler, self).get(bid)
 
@@ -124,9 +118,7 @@ class EntityHandler(UserAuth, BiothingHandler):
             return
 
         self.entity = entity
-
-        if not self._authenticate_request(r=True):
-            return
+        self.op = 'r'
 
         super(EntityHandler, self).post(ids)
 
@@ -136,6 +128,7 @@ class EntityHandler(UserAuth, BiothingHandler):
             return
 
         self.entity = entity
+        self.op = 'w'
 
         if not self._authenticate_request(w=True):
             return
@@ -186,6 +179,7 @@ class EntityHandler(UserAuth, BiothingHandler):
             return
 
         self.entity = entity
+        self.op = 'w'
 
         if not self._authenticate_request(w=True):
             return
@@ -203,22 +197,27 @@ class EntityHandler(UserAuth, BiothingHandler):
 
 class QueryHandler(UserAuth, QueryHandler):
     ''' This class is for the /query endpoint. '''
+    def is_read_authenticated(self):
+        _user = self.get_current_user() or {}
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
+            return False
+        return True
+
     def _get_es_index(self, options):
-        return self.web_settings.CVISB_ENDPOINTS[self.entity]['index']
+        _user = self.get_current_user() or {}
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
+            return self.web_settings.CVISB_ENDPOINTS[self.entity]['public_index']
+        else:
+            return self.web_settings.CVISB_ENDPOINTS[self.entity]['private_index']
 
     def _get_es_doc_type(self, options):
         return self.entity
     
-    def _sanitize_source_param(self, kwargs):
-        return sanitize_source_param(self, kwargs)
-
     def _pre_query_builder_GET_hook(self, options):
-        _user = self.get_current_user() or {}
         options['esqb_kwargs']['entity'] = self.entity
-        options['esqb_kwargs']['cvisb_user_list'] = self.web_settings.MASTER_READ_LIST
-        options['esqb_kwargs']['cvisb_user'] = _user
         options['esqb_kwargs']['client'] = self.web_settings.es_client
         options['esqb_kwargs']['cvisb_endpoints'] = self.web_settings.CVISB_ENDPOINTS   
+        options['esqb_kwargs']['is_authenticated'] = self.is_read_authenticated()
         return options
 
     def get(self, entity=None):
@@ -226,6 +225,7 @@ class QueryHandler(UserAuth, QueryHandler):
             return
 
         self.entity = entity
+        self.op = 'r'
 
         super(QueryHandler, self).get()
 
@@ -234,9 +234,7 @@ class QueryHandler(UserAuth, QueryHandler):
             return
 
         self.entity = entity
-
-        if not self._authenticate_request(r=True):
-            return
+        self.op = 'r'
 
         super(QueryHandler, self).post()
 

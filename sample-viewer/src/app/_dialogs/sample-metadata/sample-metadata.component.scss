@@ -1,14 +1,21 @@
 @import '../../../sass/variables.scss';
-@import '../../../sass/material-theme.scss';
-// --- Containers ---
+@import '../../../sass/material-theme.scss'; // --- Containers ---
+
 .metadata {
   display: grid;
   padding: 5px 15px 15px;
   background: accent(50);
 }
 
+.metadata-value {
+  font-weight: 300;
+  font-family: $font-default;
+}
+
 .metadata-pair {
   margin-bottom: 10px;
+  width: 25%;
+  min-width: 150px;
 }
 
 .metadata-key {
@@ -17,11 +24,18 @@
   color: primary(500);
   font-size: 0.75em;
 }
+
+.location-panel {
+  box-shadow: none !important;
+}
+
 // --- Links ---
+
 .file-name {
   text-decoration: underline;
 }
 // --- Fonts ---
+
 h4 {
   margin: 0.5em 0 0.25em;
 }

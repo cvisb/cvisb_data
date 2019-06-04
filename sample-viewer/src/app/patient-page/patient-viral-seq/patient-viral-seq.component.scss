@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:300&display=swap');
+@import '../../../sass/variables.scss';
+
+.sequence-group {
+  max-width: 500px;
+  margin-bottom: 100px;
+}
+
+.sequence-header {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.virus {
+  margin: 0;
+  color: $cvisb-theme;
+}
+
+.sequence {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 300;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-size: 0.9em;
+  max-height: 175px;
+  overflow-y: scroll;
+  margin: 0.5em 0;
+}
+
+.citation {
+  font-size: 0.85em;
+  margin: 0;
+}
+
+.copy-icon {
+  font-size: 1.5em;
+}
+
+.cvisb-icon {
+  height: 30px;
+  width: 30px;
+  margin-right: 7px;
+}
+
+.source-tag {
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.source {
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
+
+  &.cvisb-data {
+    background: lighten($cvisb-bright, 50%);
+    color: darken(#0080C5, 5%);
+  }
+
+  &.public-data {
+    padding: 5px 10px;
+    color: $dev-dark;
+    background: lighten($dev-theme, 35%)
+  }
+}
+
+.aligned-sequence,
+.raw-sequence {
+  margin-bottom: 10px;
+}
+
+.raw-sequence .container {
+  align-items: baseline;
+}
+
+.sequence-label {
+  text-transform: uppercase;
+  margin: 0;
+  color: $grey-300;
+}
+
+.fa-star {
+  color: $grey-500;
+}
+
+.hidden {
+  opacity: 0;
+}
