@@ -107,7 +107,7 @@ export class SampleUploadService {
 
   // Return only the fields needed to be uploaded, after front-end validation
   // No going back from this point! (well, there is, since I made a copy)
-  getCleanedData(vars2delete = ['creatorInitials', 'id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
+  getCleanedData(vars2delete = ['id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
     // patient metadata properties
     'patientID', 'cohort', 'outcome', 'country', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
     let data_copy = _.cloneDeep(this.data);
@@ -319,6 +319,8 @@ export class SampleUploadService {
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
       // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
+      console.log(d)
+      console.log(converted)
 
 
       // Check date is within realisitic bounds
