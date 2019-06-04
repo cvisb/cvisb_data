@@ -84,7 +84,7 @@ def parseElisaString(elisa):
     except Exception:
         query = None
     
-    query = buildSubQuery(parsed_expression.asList())
+    #query = buildSubQuery(parsed_expression.asList())
     
     if query:
         return {"query": query}
