@@ -4,6 +4,9 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { SampleUploadService } from '../../_services';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SpinnerPopupComponent } from '../../_dialogs';
+
 @Component({
   selector: 'app-preview-differences',
   templateUrl: './preview-differences.component.html',
@@ -15,12 +18,14 @@ export class PreviewDifferencesComponent implements OnInit {
   locationColumns: string[];
   errorMsg: string;
 
+  loadingBox;
+
   columnOrder = ["sampleID", "sampleLabel", "privatePatientID", "visitCode", "location", "sampleType", "isolationDate", "_id"];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private uploadSvc: SampleUploadService) {
+  constructor(private uploadSvc: SampleUploadService, public dialog: MatDialog, ) {
     uploadSvc.previewDifferencesState$.subscribe((mergedObj: any) => {
 
       let merged = mergedObj.merged;
@@ -36,6 +41,20 @@ export class PreviewDifferencesComponent implements OnInit {
       } else {
         this.dataSource = new MatTableDataSource();
       }
+    })
+
+    uploadSvc.loadingState$.subscribe((loading: any) => {
+      console.log(loading)
+      if (loading) {
+        this.loadingBox = this.dialog.open(SpinnerPopupComponent, {
+          width: '300px',
+          data: `loading samples...`,
+          disableClose: true
+        });
+      } else if(this.loadingBox){
+        this.loadingBox.close()
+      }
+
     })
 
   }

@@ -3,6 +3,8 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { catchError, finalize } from "rxjs/operators";
+import { of } from "rxjs";
 
 import { CvisbUser } from '../_models';
 import { AuthService } from './auth.service';
@@ -79,6 +81,9 @@ export class SampleUploadService {
   public FEvalidationSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>(this.frontend_validation);
   public FEvalidationState$ = this.FEvalidationSubject.asObservable();
 
+  public loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
+
 
   constructor(
     private datePipe: DatePipe,
@@ -111,6 +116,9 @@ export class SampleUploadService {
   getCleanedData(vars2delete = ['id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
     // patient metadata properties
     'patientID', 'cohort', 'outcome', 'country', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
+    // turn on loading indicator
+    this.loadingSubject.next(true);
+
     let data_copy = _.cloneDeep(this.data);
 
     // turn location into a nested data object.
@@ -131,8 +139,12 @@ export class SampleUploadService {
     // let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
     this.apiSvc.fetchAll('sample', "__all__").pipe(
-      // catchError(() => of([])),
-      // finalize(() => this.loadingSubject.next(false))
+      catchError(() => {
+        console.log("FETCH ALL ERR")
+        this.loadingSubject.next(false);
+        return(of([]));
+      }),
+      finalize(() => this.loadingSubject.next(false))
     )
       .subscribe((samples) => {
         console.log('samples from call to backend')
