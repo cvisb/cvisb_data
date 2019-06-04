@@ -44,12 +44,12 @@ export class GetSamplesService {
     private authSvc: AuthService) {
 
     // Listener for changes in auth status
-    this.authSvc.authState$.subscribe((authState: AuthState) => {
-      if (authState.authorized) {
-        console.log("change in auth status")
-        this.getSamples();
-      }
-    })
+    // this.authSvc.authState$.subscribe((authState: AuthState) => {
+    //   if (authState.authorized) {
+    //     console.log("change in auth status")
+    //     this.getSamples();
+    //   }
+    // })
 
     // Listener for changes in query params
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
@@ -95,8 +95,6 @@ export class GetSamplesService {
   getNPrepSamples(filterParamArray) {
     console.log("Calling prep samples")
     let params = this.requestSvc.reduceSampleParams(filterParamArray);
-    console.log(filterParamArray)
-
     params = params.set('size', "1000")
 
     console.log('sample params:')
