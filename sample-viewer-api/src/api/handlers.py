@@ -197,6 +197,12 @@ class EntityHandler(UserAuth, BiothingHandler):
 
 class QueryHandler(UserAuth, QueryHandler):
     ''' This class is for the /query endpoint. '''
+    def is_read_authenticated(self):
+        _user = self.get_current_user() or {}
+        if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
+            return False
+        return True
+
     def _get_es_index(self, options):
         _user = self.get_current_user() or {}
         if ('email' not in _user) or (self.op == 'r' and _user['email'] not in self.web_settings.CVISB_ENDPOINTS[self.entity]['permitted_reader_list']):
@@ -211,6 +217,7 @@ class QueryHandler(UserAuth, QueryHandler):
         options['esqb_kwargs']['entity'] = self.entity
         options['esqb_kwargs']['client'] = self.web_settings.es_client
         options['esqb_kwargs']['cvisb_endpoints'] = self.web_settings.CVISB_ENDPOINTS   
+        options['esqb_kwargs']['is_authenticated'] = self.is_read_authenticated()
         return options
 
     def get(self, entity=None):
