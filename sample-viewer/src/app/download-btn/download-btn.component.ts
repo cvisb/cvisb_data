@@ -53,7 +53,7 @@ export class DownloadBtnComponent implements OnInit {
   download() {
     this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
       width: '300px',
-      data: `downloading data for selected ${this.filetype}...",
+      data: `downloading data for selected ${this.filetype}...`,
       disableClose: true
     });
 
