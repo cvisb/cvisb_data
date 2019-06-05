@@ -15,6 +15,7 @@ export class FrontendSampleValidationComponent implements OnInit {
   validation_steps: Object[];
   upload_steps: Object[];
   ready2validate: boolean;
+  ready2review: boolean;
   numErrors: number;
   numVerification: number;
   dataLength: number;
@@ -49,9 +50,12 @@ export class FrontendSampleValidationComponent implements OnInit {
     })
 
     uploadSvc.progressState$.subscribe(state => {
+      console.log(state)
       this.upload_steps = state;
       // Make sure data is uploaded.
       this.ready2validate = state.filter((d: any) => d.id == "upload")[0]['complete'];
+      this.ready2review = state.filter((d: any) => d.id == "process")[0]['complete'];
+
       // reset buttons if reload file
       if (!this.ready2validate) {
         this.approve_deletions = null;
@@ -73,6 +77,12 @@ export class FrontendSampleValidationComponent implements OnInit {
       this.uploadSvc.updateValidation(checkpointID, null, null, null, true);
     } else {
       this.uploadSvc.updateValidation(checkpointID, null, null, null, value);
+    }
+
+    // If already ready to review and a value is changed, call the function to get the uploadable data.
+    if (this.ready2review) {
+      console.log('updating data since a button was changed!')
+      this.uploadSvc.getCleanedData();
     }
   }
 
