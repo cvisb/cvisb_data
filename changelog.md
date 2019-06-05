@@ -5,6 +5,7 @@
 - updated to latest version of Biothings, which includes nested facets
 - auth list updated
 - dev merged to master
+- all indices wiped and recreated
 
 # Dev
 ### 2019-06-05
