@@ -124,6 +124,7 @@ export class DownloadBtnComponent implements OnInit {
         let labs = this.qParamArray.filter(d => d.field === "location.lab");
 
         if (labs.length === 1) {
+          labs = labs[0].value;
           this.data = this.data.filter(d => labs.includes(d.lab))
         }
         console.log(this.data)
