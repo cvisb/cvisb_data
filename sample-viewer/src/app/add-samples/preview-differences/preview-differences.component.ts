@@ -44,7 +44,6 @@ export class PreviewDifferencesComponent implements OnInit {
     })
 
     uploadSvc.loadingState$.subscribe((loading: any) => {
-      console.log(loading)
       if (loading) {
         this.loadingBox = this.dialog.open(SpinnerPopupComponent, {
           width: '300px',
