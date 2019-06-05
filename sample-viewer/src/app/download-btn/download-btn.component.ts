@@ -4,6 +4,8 @@ import { DatePipe } from '@angular/common';
 import { AuthService, GetPatientsService, RequestParametersService, Nested2longService } from '../_services';
 import { AuthState, RequestParamArray } from '../_models';
 
+import { HttpParams } from '@angular/common/http';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SpinnerPopupComponent } from '../_dialogs';
 
@@ -19,9 +21,10 @@ export class DownloadBtnComponent implements OnInit {
   filename: string;
   auth_stub: string;
   today: string;
-  qParams;
+  qParamArray: RequestParamArray;
+  qParams: HttpParams;
 
-  dialogRef;
+  dialogRef: MatDialogRef<any>;
 
   sampleSortCols: string[] = ["creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
 
@@ -41,8 +44,12 @@ export class DownloadBtnComponent implements OnInit {
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(qParams)
       console.log(this.qParams)
+    })
+
+    requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
+      this.qParamArray = qParams;
+      console.log(qParams)
     })
   }
 
@@ -110,6 +117,18 @@ export class DownloadBtnComponent implements OnInit {
         break;
       case ("samples"):
         this.data = this.longSvc.prep4download(this.data, ['location'], ['_score', '_version', '_id']);
+        console.log(this.data)
+
+        // sort of a hack; since location data is nested in the ES index, it will return *all* samples, regardless of location
+        // If location is selected, filter the data to remove the offending locations.
+        let labs = this.qParamArray.filter(d => d.field === "location.lab");
+
+        if (labs.length === 1) {
+          this.data = this.data.filter(d => labs.includes(d.lab))
+        }
+        console.log(this.data)
+
+
         this.parseData();
         break;
       default:
