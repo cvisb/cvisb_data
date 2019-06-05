@@ -139,11 +139,11 @@ export class SampleUploadService {
     // let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
     this.apiSvc.fetchAll('sample', "__all__").pipe(
-      catchError(() => {
-        console.log("FETCH ALL ERR")
-        this.loadingSubject.next(false);
-        return(of([]));
-      }),
+      catchError(
+        e => {
+          this.loadingSubject.next(false);
+          return (of([]))
+        }),
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe((samples) => {

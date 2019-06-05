@@ -150,6 +150,28 @@ export class ApiService {
 
   // generic get function
   // assumes size = 1000 unless otherwise specified.
+  getFacetSummary(endpoint, qParams, facetString: string): Observable<any[]> {
+    let params = qParams
+      .append('size', 0)
+      .append("facet_size", 10000)
+      .append("facets", facetString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
+
+  // generic get function
+  // assumes size = 1000 unless otherwise specified.
   getPatient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
 
     // this.router.navigate(
@@ -249,7 +271,7 @@ export class ApiService {
       catchError(e => {
         console.log(e)
         throwError(e);
-        return (new Observable<any>())
+        return (of(e))
       })
     )
   }
