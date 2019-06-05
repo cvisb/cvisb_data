@@ -16,9 +16,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/DataDownload/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/DataDownload/0.1"
 #
 # "@graph":
 
@@ -31,6 +31,7 @@
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
   root_entity:           true
+
 # name
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -62,6 +63,21 @@
     "@id":               schema:description
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
+
+# Connection to dataset
+- "@id":                 cvisb:includedInDataset
+  "@type":               rdf:Property
+  rdfs:comment:          "A unique identifier for the Dataset that the DataDownload is contained in. Note: should be an internal, CViSB identifier;"
+  rdfs:label:            includedInDataset
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    "@id":               xsd:string
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
 
 # DOI
@@ -149,13 +165,14 @@
   owl:cardinality:       one
   marginality:           recommended
   schema:Enumeration:
-  - SRA
-  - AWS
+                        - SRA
+                        - AWS
+                        - null
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
   "@type":               rdf:Property
-  rdfs:comment:          Unique identifier used at the contentUrl location, for instance the NIH SRA id for the file
+  rdfs:comment:          Unique identifier used at the contentUrl location, for instance the NIH SRA id for the file/sample or Accession number
   rdfs:label:            contentUrlIdentifier
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -165,6 +182,20 @@
   marginality:           recommended
   authenticated:         false
 
+
+- "@id":                 cvisb:publication
+  "@type":               rdf:Property
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:label:            publication
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:sameAs:
+    "@id":               schema:publication
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
 
 # duplicate source
 - "@id":                 cvisb:sameAs
@@ -191,7 +222,7 @@
   schema:rangeIncludes:
     "@id":               schema:Text
     "@id":               xsd:string
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
   schema:Enumeration:
                         - raw data
@@ -214,19 +245,6 @@
   marginality:           recommended
   authenticated:         false
 
-# patient ID list
-- "@id":                 cvisb:patientIDs
-  "@type":               rdf:Property
-  rdfs:comment:          List of patient IDs contained within the data file
-  rdfs:label:            patientIDs
-  schema:domainIncludes:
-    - "@id":             cvisb:DataDownload
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
 
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
@@ -282,6 +300,7 @@
                          - application/xml
                          - application/zip
                          - application/gzip
+                         - null
   authenticated:         false
 
 # dates
@@ -326,6 +345,21 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the data download data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
 
 # Author
 - "@id":                 cvisb:author
@@ -380,5 +414,5 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           recommended
+  marginality:           required
   authenticated:         false

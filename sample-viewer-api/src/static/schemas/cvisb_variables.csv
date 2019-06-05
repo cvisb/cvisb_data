@@ -133,7 +133,7 @@ cvisb:Patient,cohort,rdf:Property,"Cohort for virus exposure: Ebola, Lassa, or C
 cvisb:Patient,outcome,rdf:Property,"Outcome for patient: control, survivor, contact, dead",,,schema:Text,required,one,False,,,"['control', 'survivor', 'contact', 'dead', 'unknown']"
 cvisb:Patient,Country,rdf:Property,Country where Patient lives / was treated,,schema:geographicArea,cvisb:Country,required,one,False,,,
 cvisb:Patient,homeLocation,rdf:Property,"A contact location for a person's residence. Should include country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village + displaced GPS coordinates (optional)",,schema:homeLocation,"cvisb:AdministrativeArea, cvisb:Place",recommended,many,True,,,
-cvisb:Patient,admitDate,rdf:Property,Date of admission,,,"schema:Date, cvsib:DateRange",optional,one,True,,,
+cvisb:Patient,admitDate,rdf:Property,Date of admission,,,"schema:Date, cvisb:DateRange",optional,one,True,,,
 cvisb:Patient,infectionDate,rdf:Property,"Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.",,,cvisb:DateRange,optional,one,False,,,
 cvisb:Patient,infectionDate,rdf:Property,"Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.",,,"schema:Date, cvisb:DateRange",optional,one,True,,,
 cvisb:Patient,daysOnset,rdf:Property,Number of days between onset of symptoms and hospital admission,,,schema:Integer,optional,one,False,,,
@@ -181,7 +181,7 @@ cvisb:Sample,name,rdf:Property,Descriptive name of the derived sample,,schema:na
 cvisb:Sample,description,rdf:Property,Short description of the derived sample,,schema:description,"xsd:string, schema:Text",optional,one,False,,,
 cvisb:Sample,patientID,rdf:Property,Unique public patient id,,,"xsd:string, schema:Text",required,one,False,,,
 cvisb:Sample,visitCode,rdf:Property,"Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",,,"xsd:string, schema:Text",recommended,one,False,,,
-cvisb:Sample,visitCode,rdf:Property,"Date of sample creation/collection (NOT date of blood draw/tissue collection, unless the sample is that primary sample) (YYYY-MM-DD)",,,"schema:Date, cvsib:DateRange",recommended,one,True,,,
+cvisb:Sample,visitCode,rdf:Property,"Date of sample creation/collection (NOT date of blood draw/tissue collection, unless the sample is that primary sample) (YYYY-MM-DD)",,,"schema:Date, cvisb:DateRange",recommended,one,True,,,
 cvisb:Sample,sampleType,rdf:Property,"Sample type. Primary types: ""blood_purple-EDTA"", ""blood_blue-citrate"", ""blood_mixed"", ""blood_unknown"", ""urine"", ""feces"", ""organs"", ""tissue""; Derived types: ""plasma"", ""serum"", ""buffy coat"", ""PBMC"", ""frozenPBMC-DNA"", ""frozenPBMC-RNA"", ""viralRNA"", ""totalRNA"", ""DNA""",,,"xsd:string, schema:Text",required,one,False,,,"['blood_purple-EDTA', 'blood_blue-citrate', 'blood_mixed', 'blood_unknown', 'urine', 'feces', 'organs', 'tissue', 'plasma', 'serum', 'buffy coat', 'PBMC', 'frozenPBMC-DNA', 'frozenPBMC-RNA', 'viralRNA', 'totalRNA', 'DNA']"
 cvisb:Sample,derivedIndex,rdf:Property,"Integer expressing how far derived the sample is from the primary sample.  Primary sample (e.g. blood draw) has a derivedIndex=0; PBMC=1, ...",,,schema:Integer,recommended,one,False,,,
 cvisb:Sample,sampleType,rdf:Property,Source of sample (human or rat),,,"xsd:string, schema:Text",recommended,one,False,,,"['human', 'rat']"

@@ -1,0 +1,15 @@
+<h2><span class="stepper-title">Preview additions to database</span></h2>
+
+<div *ngIf="previewData && previewData.length > 0; else no_data">
+  <p>
+    Preview any new samples to be added to the database.
+  </p>
+</div>
+
+<ng-template #no_data>
+  <p>
+    No new samples added.  Looks like you're just modifying existing samples's metadata and/or locations.
+  </p>
+</ng-template>
+
+<app-preview-samples [data]="previewData"></app-preview-samples>

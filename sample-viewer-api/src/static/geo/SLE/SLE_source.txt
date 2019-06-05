@@ -1,0 +1,5 @@
+
+Mapshaper simplification: Adm2
+
+md: 2.0%
+sm: 0.69%

@@ -1,0 +1,7 @@
+<div *ngIf="publications && publications.length > 0; else no_citations">
+  <app-format-citation [citations]="publications" [simplifiedCitation]="false" class="citation-group"></app-format-citation>
+</div>
+
+<ng-template #no_citations>
+  <span class="nodata">no known publications</span>
+</ng-template>

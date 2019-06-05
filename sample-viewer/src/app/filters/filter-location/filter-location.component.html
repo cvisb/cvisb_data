@@ -1,10 +1,10 @@
-<div class="filter filter-adm0" *ngIf="countries">
+<div class="filter filter-adm0 container-column" *ngIf="countries">
   <h4 class="filter-label">location</h4>
 
   <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.term)" class="location mat-shadow" [ngClass]="ctry.term">
-    <div [ngClass]="{'disabled': ctry.count === 0}">
-      <svg-icon [icon]="ctry.term" [class]="ctry.term + '-icon'" *ngIf="ctry.term !== 'unknown'"></svg-icon>
-      <mat-icon *ngIf="ctry.term === 'unknown'" [ngClass]="ctry.term + '-icon'">help_outline</mat-icon>
+    <div class="container" [ngClass]="{'disabled': ctry.count === 0}">
+      <svg-icon [icon]="ctry.term" [class]="ctry.term + '-icon'" *ngIf="ctry.term !== 'unknown' && ctry.term !== 'Unknown'"></svg-icon>
+      <mat-icon *ngIf="ctry.term === 'unknown' || ctry.term === 'Unknown'" [ngClass]="ctry.term + '-icon'">help_outline</mat-icon>
 
       <div class="filter-pair">
         <div class="adm0-name" [ngSwitch]="ctry.term">

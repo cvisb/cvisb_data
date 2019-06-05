@@ -4,22 +4,25 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
 // services
 import { MyHttpClient } from './http-cookies.service';
+import { cloneDeep } from 'lodash';
 
-// models
-
+import { nest } from 'd3';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ApiService {
+  public uploadProgressSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public uploadProgressState$ = this.uploadProgressSubject.asObservable();
+
 
   constructor(
     public myhttp: MyHttpClient,
@@ -28,7 +31,7 @@ export class ApiService {
 
   // --- GET ---
   // Generic GET to access a single document with a particular ID.
-  getOne(endpoint: string, id: string, idVar: string = 'identifier') {
+  getOne(endpoint: string, id: string, idVar: string = 'identifier', returnAll: boolean = false) {
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -37,13 +40,211 @@ export class ApiService {
         .set('q', `${idVar}:\"${id}\"`)
     }).pipe(
       map(data => {
-        if (data['body']['total'] === 1) {
-          // One result found, as expected.
-          return (data['body']['hits'][0])
+        if (returnAll) {
+          return (data['body']['hits']);
         } else {
-          console.log("More than one object returned. Check if your ID is unique!")
-          console.log(data)
+          if (data['body']['total'] === 1) {
+            // One result found, as expected.
+            return (data['body']['hits'][0])
+          } else {
+            console.log("More than one object returned. Check if your ID is unique!")
+            console.log(data)
+          }
         }
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
+  }
+
+  // Sorting function, to convert sort variable into the proper syntax for ES
+  // numeric variables should return just their string'd name
+  // string variables need to be {string}.keyword
+  // and there's a few special cases for nested variables
+  sortFunc(sortVar): string {
+    let numericVars = ["age"];
+    if (numericVars.includes(sortVar) || !sortVar) {
+      return (sortVar);
+    }
+
+    // custom: nested objects
+    if (sortVar === "country") {
+      return ("country.name.keyword");
+    }
+
+    // Default: string
+    // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
+    return (`${sortVar}.keyword`);
+  }
+
+
+  // based on https://blog.angular-university.io/angular-material-data-table/
+  // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
+  getPaginated(endpoint, qParams, pageNum: number = 0,
+    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    console.log(qParams.toString());
+
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
+
+    let params = qParams
+      .append('size', pageSize.toString())
+      .append('from', (pageSize * pageNum).toString())
+      .append("sort", sortString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
+
+  // generic get function
+  // assumes size = 1000 unless otherwise specified.
+  get(endpoint, qParams, pageSize: number = 1000): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    let params = qParams
+      .append('size', pageSize.toString());
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
+
+  // generic get function
+  // assumes size = 1000 unless otherwise specified.
+  getPatient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    let params = new HttpParams()
+      .set('q', '__all__')
+      .set('patientID', patientID)
+      .set('size', pageSize.toString());
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
+  }
+
+  // Generic getAll, which calls fetchAll. Results will not be sorted.
+  getAll(endpoint: string, qString) {
+    console.log('starting get all')
+    let scrollID = null;
+    let done = false;
+
+    let results = [];
+
+    for (let i = 0; i < 3; i++) {
+      // while (!done) {
+      console.log("still going!")
+      console.log(i);
+
+      this.fetchAll(endpoint, qString, scrollID).pipe(
+        catchError(e => {
+          console.log('error!')
+          console.log(e)
+          done = true;
+          return (new Observable<any>())
+        }),
+        // finalize(() => this.loadingSubject.next(false))
+      )
+        .subscribe((result) => {
+          console.log('samples from call to backend')
+          done = true;
+          console.log(result);
+
+          // Remove ES variables that we won't need.
+          let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
+          scrollID = result['_scroll_id'];
+
+          results = results.concat(resultArr);
+          console.log(results)
+          console.log(results.length / result.total);
+
+        });
+    }
+
+    return (results)
+
+
+  }
+
+  fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
+
+    let params = new HttpParams()
+      .set('q', qString)
+      .append('fetch_all', "true");
+
+    if (scrollID) {
+      params = params.append("scroll_id", scrollID);
+      console.log(params)
+    }
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(data => {
+        console.log('getAll Backend call:');
+        console.log(data);
+
+        // let result = data['body']['hits'];
+        return (data['body']);
       }),
       catchError(e => {
         console.log(e)
@@ -108,56 +309,64 @@ export class ApiService {
 
   // --- PUT ---
   // Generic function to add data to a given endpoint on the API
+  //
+  // putRecursive(endpoint: string, newData: any, idx: number = 0) {
+  //   return this.put(endpoint, newData)
+  //     .map((response) => {
+  //       console.log("put response")
+  //       console.log(response)
+  //       return ({ data: response; index: idx += 1 });
+  //     }, err =>{
+  //       console.log(err)
+  //     })
+  // }
+
+
   put(endpoint: string, newData: any): Observable<any> {
-
-    // this.getIDs(newData, endpoint, uniqueID).subscribe(id_dict => {
-
-    // Check if there are already duplicates within the index.
-    // let ids = id_dict.map((d) => d.uniqueID);
-    // let unique_ids = new Set(ids);
-
-    // if (Array.from(unique_ids).length !== ids.length) {
-    //   console.log("Oops! The endpoint contains entries with duplicate identifers.  Exiting...");
-    //   return (null);
-    // }
-
-    // id_dict.forEach((dict_row) => {
-    //   // check if index is unique, exists within newData
-    //   if (newData.filter((d) => d[uniqueID] === dict_row.uniqueID).length === 1) {
-    //
-    //     let idx = newData.findIndex((d) => d[uniqueID] === dict_row.uniqueID);
-    //
-    //     newData[idx]["_id"] = dict_row['_id'];
-    //   } else {
-    //     console.log("Oops! More than one record in the new documents has the same unique ID.  Check whatever the IDs are of what you're trying to insert and try again.")
-    //     return (null);
-    //   }
-    // })
     if (newData) {
-      console.log('adding new data')
+      // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
         this.jsonify(newData),
         {
           headers: new HttpHeaders()
         });
-
-      // .pipe(
-      //   map(resp => {
-      //     console.log(resp)
-      //     // return (new Observable<any>(resp))
-      //   }),
-      //   catchError(e => {
-      //     console.log(e)
-      //     throwError(e);
-      //     return (new Observable<any>(e))
-      //   })
-      // )?
-
     } else {
       console.log('no data to add')
     }
   }
 
+  // Generic PUT function, done in `size` pieces.
+  // Executed in a cascade, where the previous API completes before
+  // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
+  putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
+    let numChunks = Math.ceil(newData.length / size);
+    let pct_done = 0;
+
+    let results = [];
+    let miniDatasets = [];
+
+    for (let i = 0; i < numChunks; i++) {
+      miniDatasets.push(newData.slice(i * size, (i + 1) * size));
+    }
+
+    let singleObservables = miniDatasets.map((data: any[]) => {
+      return this.put(endpoint, data)
+        .pipe(
+          map(single => {
+            pct_done = pct_done + (data.length / newData.length) * 100;
+            this.uploadProgressSubject.next(pct_done);
+            return (single);
+          }),
+          catchError(e => {
+            pct_done = pct_done + (data.length / newData.length) * 100;
+            this.uploadProgressSubject.next(pct_done);
+            return of(e);
+          })
+        )
+    });
+
+    return forkJoin(singleObservables);
+  }
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {
@@ -167,6 +376,60 @@ export class ApiService {
       json_arr.push(JSON.stringify(record))
     }
     return (json_arr.join("\n"))
+  }
+
+  tidyPutResponse(responses, dataLength, dataType) {
+    let errs = responses.filter(d => !d.success);
+    let uploaded = responses.filter(d => d.success);
+    let updatedCount = uploaded.length > 0 ? uploaded.map(d => +d.message.split(" ")[0]).reduce((total, num) => total + num) : 0;
+    let uploadResponse: string;
+    let errorMsg: string;
+    let errorObj: Object[];
+
+    if (errs.length > 0) {
+      uploadResponse = `Uh oh. Something went wrong. ${updatedCount} ${dataType} updated; ${dataLength - updatedCount} failed.`
+      let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
+      errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
+
+      errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
+      //
+      if (errorObj.length > 0) {
+        errorObj = this.tidyBackendErrors(errorObj)
+      }
+    } else {
+      uploadResponse = `Success! ${updatedCount} ${dataType} updated`;
+    }
+
+    return ({ uploadResponse: uploadResponse, errorMsg: errorMsg, errorObj: errorObj })
+  }
+
+
+  tidyBackendErrors(error_array) {
+    let errs = [];
+
+    // Reformat the errors
+    error_array.forEach(document => document.error_messages.forEach(
+      msg => errs.push({
+        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
+        id: document.input_obj.patientID,
+        input: document.input_obj
+      })))
+    console.log(errs)
+
+    // Group by error type
+    let nested = nest()
+      .key((d: any) => d.message)
+      .rollup(function(values: any): any {
+        return {
+          count: values.length,
+          ids: values.map(x => x.id),
+          inputs: values.map(x => x.input)
+        }
+      }).entries(errs);
+
+    console.log(nested)
+
+    return (nested)
   }
 
 
@@ -200,5 +463,25 @@ export class ApiService {
       }
     })
   }
+
+
+  // Removes fields from each object in an array of objects.
+  dropCols(data, cols, copy = true) {
+    let filtered;
+    if (copy) {
+      filtered = cloneDeep(data)
+    } else {
+      filtered = data;
+    }
+
+    filtered.forEach(d => {
+      cols.forEach(col_name => {
+        delete d[col_name];
+      })
+    })
+
+    return (filtered)
+  }
+
 
 }

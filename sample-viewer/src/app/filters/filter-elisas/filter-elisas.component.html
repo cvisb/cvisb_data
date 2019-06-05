@@ -1,37 +1,132 @@
-<div class="filter filter-expts">
+<div class="filter filter-expts container-column">
   <h4 class="filter-label">ELISA result</h4>
 
+  <form [formGroup]="elisaForm" >
 
-  <table>
-    <tr>
-      <th>
+    <mat-form-field class="form-selector" id="elisa-virus">
+      <mat-select placeholder="virus" formControlName="virus" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("virus").value ? elisaForm.get("virus").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let virus of viruses" [value]="virus">{{ virus }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      </th>
-      <th [attr.colspan]="elisa_results.length" class="virus-name">
-        Ebola
-      </th>
-    </tr>
+    <mat-form-field class="form-selector" id="elisa-assay">
+      <mat-select placeholder="assay" formControlName="assay" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("assay").value ? elisaForm.get("assay").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <tr>
-      <th>
+    <mat-form-field class="form-selector" id="elisa-result">
+      <mat-select placeholder="result" formControlName="result" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("result").value ? elisaForm.get("result").value.join(" or ") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      </th>
-      <th class="checkbox-group" [id]="test" *ngFor="let result of elisa_results" [id]="result.result">
-        <mat-icon>{{ result.icon }}</mat-icon>
-      </th>
-    </tr>
+    <mat-form-field class="form-selector" id="elisa-timepoint">
+      <mat-select placeholder="timepoint" formControlName="timepoint" multiple>
+        <mat-select-trigger>
+          {{ elisaForm.get("timepoint").value ? elisaForm.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute") : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let timepoint of timepoints" [value]="timepoint">{{ timepoint }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
 
 
-  <tr *ngFor="let test of elisa_tests">
-    <th class="elisa-type">
-      {{ test }}
-    </th>
+  <!-- <form [formGroup]="elisaForm">
+    <ng-container *ngFor="let virus of ['Lassa', 'Ebola']">
+      <table [formGroupName]="virus">
+        <tr>
+          <th>
 
-    <td class="checkbox-group" [id]="test" *ngFor="let result of elisa_results" [id]="result.result">
-      <mat-checkbox checked="true" [color]="result.result === 'positive' ? 'warn' : (result.result === 'negative' ? 'accent' : 'primary')"></mat-checkbox>
-    </td>
-  </tr>
+          </th>
+          <th [attr.colspan]="3" class="virus-name">
+            {{ virus | titlecase }}
+          </th>
+        </tr>
 
-</table>
+        <tr>
+          <th>
+
+          </th>
+          <th class="checkbox-group" id="positive">
+            <mat-icon>control_point</mat-icon>
+          </th>
+          <th class="checkbox-group" id="negative">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </th>
+          <th class="checkbox-group" id="unknown">
+            <mat-icon>help_outline</mat-icon>
+          </th>
+        </tr>
+
+
+        <tr id="IgG">
+          <th class="elisa-type">
+            IgG
+          </th>
+
+          <td class="checkbox-group" id="IgG-positive">
+            <mat-checkbox checked="true" color="warn" formControlName="IgG_positive"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="IgG-negative">
+            <mat-checkbox checked="true" color="accent" formControlName="IgG_negative"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="IgG-unknown">
+            <mat-checkbox checked="true" color="primary" formControlName="IgG_unknown"></mat-checkbox>
+          </td>
+        </tr>
+
+        <tr id="IgM">
+          <th class="elisa-type">
+            IgM
+          </th>
+
+          <td class="checkbox-group" id="IgM-positive">
+            <mat-checkbox checked="true" color="warn" formControlName="IgM_positive"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="IgM-negative">
+            <mat-checkbox checked="true" color="accent" formControlName="IgM_negative"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="IgM-unknown">
+            <mat-checkbox checked="true" color="primary" formControlName="IgM_unknown"></mat-checkbox>
+          </td>
+        </tr>
+
+        <tr id="Ag">
+          <th class="elisa-type">
+            Ag
+          </th>
+
+          <td class="checkbox-group" id="Ag-positive">
+            <mat-checkbox checked="true" color="warn" formControlName="Ag_positive"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="Ag-negative">
+            <mat-checkbox checked="true" color="accent" formControlName="Ag_negative"></mat-checkbox>
+          </td>
+
+          <td class="checkbox-group" id="Ag-unknown">
+            <mat-checkbox checked="true" color="primary" formControlName="Ag_unknown"></mat-checkbox>
+          </td>
+        </tr>
+
+      </table>
+
+    </ng-container>
+  </form> -->
 
 </div>

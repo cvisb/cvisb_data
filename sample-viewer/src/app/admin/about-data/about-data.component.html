@@ -1,0 +1,35 @@
+<div class="centered about-text">
+  <h1>Everything you need to know about the data</h1>
+
+  <h3 class="emphasis-title">We strongly believe not only in making data open, but actually making it <span class="emphasis">useful</span> to other people.</h3>
+  <p>To that end, we've done our best to document where these data come from, what they mean, and any known limitations about how they should be used.</p>
+  <p>Think we're missing something? Please let us know at
+    <a href="mailto:info@cvisb.org?subject=metadata documentation">info@cvisb.org</a>
+  </p>
+
+
+
+  <h4>Data overview</h4>
+  <p>
+    Data was last updated on {{ dateModified | date: "d MMMM y" }}.
+  </p>
+
+  <!-- <h4>How the data are compiled</h4> -->
+
+  <h4><a routerLink="/schema">Schema</a></h4>
+  <p>
+    Building off of <a href="http://www.schema.org" rel="noreferrer" target="_blank">schema.org</a>'s data models, we created schema to organize and standardize our patient, sample, dataset, experiment, and other related data.
+  </p>
+
+  <h4>Data dictionaries</h4>
+  <p>
+    ... will be coming soon. In the meantime, peruse our <a routerLink="/schema">schema</a>, which contain information about how we define variables in our datasets.
+  </p>
+
+  <h4>Limitations</h4>
+  <app-disclaimer></app-disclaimer>
+
+
+  <app-citation></app-citation>
+
+</div>

@@ -18,7 +18,7 @@ def convertExcelDateNum(row):
             if ordinal > 60:
                 if ordinal > 59:
                     ordinal -= 1  # Excel leap year bug, 1900 is not a leap year!
-                return (datetime(1899, 12, 31) + timedelta(days=ordinal))
+                return (datetime(1899, 12, 31) + timedelta(days = ordinal))
             else:
                 # likely to be daysOnset, not IllnessOnset
                 # Calculate IllnessOnset as days difference from the evalDate
@@ -36,6 +36,12 @@ def convertExcelDate(x):
         return(datetime.strptime(x, "%d-%b-%y"))
     except:
         return(pd.np.datetime64('NaT'))
+
+def dates2String(x):
+    try:
+        return(x.strftime("%Y-%m-%d"))
+    except:
+        return(pd.np.nan)
 
 def getYearfromDate(pythondate):
     """
@@ -58,7 +64,7 @@ def getInfectionYear(row):
     3. year from evalDate
     4. year from dischargeDate
     """
-    est_infection = getYearfromDate(row.infectionDate)
+    est_infection = getYearfromDate(row.converted_onsetDate)
     eval_date = getYearfromDate(row.converted_evalDate)
     discharge_date = getYearfromDate(row.converted_dischargeDate)
     if(est_infection == est_infection):
@@ -75,11 +81,11 @@ def calcOnset(row):
     calculate daysOnset-- the difference b/w presentation of symptoms and presentation in the hospital.
     Should be run after evaldate and infectionDate convert their respective variables to python dates
     """
-    if((row.converted_evalDate == row.converted_evalDate) & (row.infectionDate == row.infectionDate)):
-        return((row.converted_evalDate - row.infectionDate).days)
+    if((row.converted_evalDate == row.converted_evalDate) & (row.converted_onsetDate == row.converted_onsetDate)):
+        return((row.converted_evalDate - row.converted_onsetDate).days)
     elif((row.IllnessOnset == row.IllnessOnset)):
         # Some of the IllnessOnset seem to be b/w 0-60-- presumably these are already daysOnset (?)
-        # For these observations, infectionDate is None
+        # For these observations, converted_onsetDate is None
         try:
             ordinal = int(row.IllnessOnset)
             if(ordinal < 61):
@@ -99,6 +105,16 @@ def calcOnsetDischargeGap(row):
     """
     calculate number of days between discharge and est. onset (discharge - infectionDate)
     """
-    if((row.infectionDate == row.infectionDate) & (row.converted_dischargeDate == row.converted_dischargeDate)):
-        return((row.converted_dischargeDate - row.infectionDate).days)
+    if((row.converted_onsetDate == row.converted_onsetDate) & (row.converted_dischargeDate == row.converted_dischargeDate)):
+        return((row.converted_dischargeDate - row.converted_onsetDate).days)
     return(None)
+
+
+def date2Range(date_string):
+    if(date_string == date_string):
+        return({"gte": date_string, "lte": date_string})
+
+def year2Range(year):
+    if(year == year):
+        year_string = "{:.0f}".format(year)
+        return({"gte": f"{year_string}-01-01", "lte": f"{year_string}-12-31"})

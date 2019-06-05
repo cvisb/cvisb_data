@@ -1,0 +1,126 @@
+ <!-- Form Status: {{ firstFormGroup.status }} -->
+
+<!-- <form [formGroup]="formGroup"> -->
+<mat-horizontal-stepper linear #sample_upload_stepper>
+  <!-- <mat-step class="step-group" label="upload" [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <div class="upload-step" class="upload-file">
+        <app-sample-upload></app-sample-upload>
+      </div>
+      <button mat-raised-button matStepperNext >Next</button>
+
+    </form>
+  </mat-step> -->
+
+  <mat-step *ngFor="let step of steps; let idx = index" class="step-group" [label]="step.label" [ngClass]="{'complete' : step.complete}">
+
+    <!-- FILE UPLOAD -->
+    <div class="upload-step" [ngSwitch]="step.id">
+      <div *ngSwitchCase="'upload'" class="upload-file">
+        <app-sample-upload></app-sample-upload>
+        <div class="next-buttons">
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+          <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button">Next</button>
+        </div>
+      </div>
+
+
+      <!-- FRONT-END VALIDATION -->
+      <div *ngSwitchCase="'process'" class="review-data">
+        <app-frontend-sample-validation></app-frontend-sample-validation>
+
+        <div class="next-buttons">
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+          <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button"
+          [disabled]="!step.complete" (click)="uploadSvc.getCleanedData()">Next</button>
+        </div>
+      </div>
+
+
+      <!-- PREVIEW CHANGES -->
+      <div *ngSwitchCase="'changes'" class="review-data">
+        <app-preview-differences></app-preview-differences>
+        <div class="next-buttons">
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+          <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button">Next</button>
+        </div>
+      </div>
+
+      <!-- PREVIEW ADDITIONS -->
+      <div *ngSwitchCase="'additions'" class="review-data">
+        <app-preview-additions></app-preview-additions>
+        <div class="next-buttons">
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+          <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button">Next</button>
+        </div>
+      </div>
+
+
+      <!-- SUBMIT -->
+      <div *ngSwitchCase="'submit'">
+        <app-submit-samples [data]="previewData"></app-submit-samples>
+        <div class="next-buttons">
+          <button mat-raised-button matStepperPrevious *ngIf="idx > 0" class="stepper-button">Back</button>
+          <button mat-raised-button matStepperNext *ngIf="idx < steps.length - 1" class="stepper-button">Next</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </mat-step>
+
+
+  <!-- Change icons -->
+  <ng-template matStepperIcon="edit">
+      <mat-icon class="done-icon">done</mat-icon>
+    </ng-template>
+
+</mat-horizontal-stepper>
+
+<!-- </form> -->
+<!-- <mat-horizontal-stepper>
+  <mat-step label="Step 1" state="phone">
+    <p>Put down your phones.</p>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 2" state="chat">
+    <p>Socialize with each other.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 3">
+    <p>You're welcome.</p>
+  </mat-step>
+
+  Icon overrides.
+  <ng-template matStepperIcon="phone">
+    <mat-icon>call_end</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="chat">
+    <mat-icon>forum</mat-icon>
+  </ng-template>
+</mat-horizontal-stepper> -->
+
+
+<!-- <form [formGroup]="formGroup">
+  <mat-horizontal-stepper formArrayName="formArray" linear>
+
+    <mat-step formGroupName="first" [stepControl]="formArray.get([0])">
+      <div>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step formGroupName="last" [stepControl]="formArray.get([1])">
+      <div>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</form> -->

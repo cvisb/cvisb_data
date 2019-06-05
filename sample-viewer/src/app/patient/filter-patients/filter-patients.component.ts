@@ -52,10 +52,11 @@ export class FilterPatientsComponent implements OnInit {
 
     // listen for changes in the request parameters.
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      // console.log("qParams heard in filter-patients")
-      // console.log(qParams)
+      console.log("qParams heard in filter-patients")
+      console.log(qParams)
 
-      let http_params = this.requestSvc.reduceParams(qParams);
+      let http_params = this.requestSvc.reducePatientParams(qParams);
+      console.log(http_params)
       // let param_string: string = this.requestSvc.reduceParams(qParams);
       // console.log(param_string)
       this.patientSvc.getPatientSummary(http_params).subscribe(x => {
@@ -97,17 +98,17 @@ export class FilterPatientsComponent implements OnInit {
       this.all_cohorts = pList.patientTypes.map(d => d.term);
       this.all_outcomes = pList.patientOutcomes.map(d => d.term);
 
-      this.all_years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
-      this.all_years.sort();
-      if (this.all_years.length === 0) {
-        this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
-      }
+      // this.all_years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+      // this.all_years.sort();
+      // if (this.all_years.length === 0) {
+      //   this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
+      // }
 
-      this.all_countries = pList.patientCountries.map(d => d.term);
+      this.all_countries = pList.patientCountries;
 
       this.patientSummary = params.patients;
       console.log(this.patientSummary)
-      // console.log(pList)
+      console.log(pList)
 
     });
 

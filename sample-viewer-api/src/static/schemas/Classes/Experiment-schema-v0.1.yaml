@@ -15,25 +15,26 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/Experiment/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Experiment/0.1"
 #
 # "@graph":
 
 - "@id":                 cvisb:Experiment
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing an Experiment in the Center for Viral Systems Biology
+  rdfs:comment:          A schema describing an Experiment in the Center for Viral Systems Biology. An experiment is a measurement (specified by measurementTechnique) of a specific sample (e.g. a particular timepoint for a Patient).
   rdfs:label:            Experiment
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
-
+  root_entity:           true
+  
 # id
 - "@id":                 cvisb:experimentID
   "@type":               rdf:Property
-  rdfs:comment:          unique experiment ID created by the lab doing the experiment. One experiment can contain multiple batches
+  rdfs:comment:          unique experiment ID for that sample analysed by that experimental method
   rdfs:label:            experimentID
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
@@ -55,6 +56,75 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+# sample ID
+- "@id":                 cvisb:sampleID
+  "@type":               rdf:Property
+  rdfs:comment:          Sample ID used in the experiment
+  rdfs:label:            sampleID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+# patient ID
+- "@id":                 cvisb:patientID
+  "@type":               rdf:Property
+  rdfs:comment:          Public Patient IDs used within the experiment
+  rdfs:label:            patientID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:privatePatientID
+  "@type":               rdf:Property
+  rdfs:comment:          Private Patient ID used within the experiment. Link to patient metadata properties
+  rdfs:label:            privatePatientID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         true
+
+
+# NCBI IDs
+- "@id":                 cvisb:SRA_ID
+  "@type":               rdf:Property
+  rdfs:comment:          ID used by the National Center for Biotechnology Information (NCBI) to identify the data within the Sequence Read Archive (SRA)
+  rdfs:label:            SRA_ID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:GenBank_ID
+  "@type":               rdf:Property
+  rdfs:comment:          ID used to identify the data within GenBank, the NIH's genetic sequence database
+  rdfs:label:            GenBank_ID
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
 
@@ -93,15 +163,14 @@
 # date
 - "@id":                 cvisb:experimentDate
   "@type":               rdf:Property
-  rdfs:comment:          Date or Date range of the Experiment
+  rdfs:comment:          Date of the Experiment
   rdfs:label:            experimentDate
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             schema:Date
-    - "@id":             cvisb:DateRange
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 # measurementTechnique
@@ -116,10 +185,18 @@
     - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:measurementTechnique
-  owl:cardinality:       many
-  marginality:           recommended
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
-
+  schema:Enumeration:
+                           - HLA sequencing
+                           - viral sequencing
+                           - metagenome sequencing
+                           - BCR sequencing
+                           - TCR sequencing
+                           - Systems Serology
+                           - Metabolomics
+                           - other
 # when updated
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
@@ -134,6 +211,20 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the experiment data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
 
   # versions
 - "@id":                 cvisb:_version
@@ -150,6 +241,35 @@
   marginality:           recommended
   authenticated:         false
 
+# Citation and other link identifiers
+- "@id":                 cvisb:publisher
+  "@type":               rdf:Property
+  rdfs:comment:          Publisher of this dataset, usually the host organization
+  rdfs:label:            publisher
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             "cvisb:Organization"
+  schema:sameAs:
+    "@id":               "schema:publisher"
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:publication
+  "@type":               rdf:Property
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:label:            publication
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:sameAs:
+    "@id":               schema:publication
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
 # Code location
 - "@id":                 cvisb:analysisCode
   "@type":               rdf:Property
@@ -163,30 +283,15 @@
   marginality:           recommended
   authenticated:         false
 
-# sample IDs
-- "@id":                 cvisb:sampleIDs
+# Data
+- "@id":                 cvisb:data
   "@type":               rdf:Property
-  rdfs:comment:          List of public Samples used in the experiment
-  rdfs:label:            sampleIDs
+  rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
+  rdfs:label:            data
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           required
-  authenticated:         false
-
-# patient ID list
-- "@id":                 cvisb:patientIDs
-  "@type":               rdf:Property
-  rdfs:comment:          List of patient IDs used within the experiment
-  rdfs:label:            patientIDs
-  schema:domainIncludes:
-    - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
+    - "@id":             cvisb:Data
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
