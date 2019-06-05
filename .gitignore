@@ -8,6 +8,8 @@ sample-viewer-api/src/config.py
 notes/2018-10-01_cvisb-input.md
 sample-viewer/package-lock.json
 sample-viewer/src/assets/wp_style.css
+sample-viewer-api/src/static/schemas/jsonschema/test_schema/*
+sample-viewer-api/src/static/schemas/jsonschema/test_schema/Data-schema-v0.1.yaml
 sample-viewer-api/src/static/schemas/templates/sample_viewer_template.csv
 sample-viewer-api/src/static/schemas/templates/sample_viewer_template.xlsx
 sample-viewer-api/src/static/schemas/schemaorg-20181004.jsonld

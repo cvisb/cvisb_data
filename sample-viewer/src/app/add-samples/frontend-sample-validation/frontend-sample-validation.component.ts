@@ -33,7 +33,6 @@ export class FrontendSampleValidationComponent implements OnInit {
   constructor(private uploadSvc: SampleUploadService) {
     // Front-end validation states
     uploadSvc.FEvalidationState$.subscribe(state => {
-      // console.log(state);
       // Count number of errors
       this.numErrors = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && d.fatal).reduce((a: any, b: any) => <any>(a + b)));
       this.numVerification = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && !d.fatal).reduce((a: any, b: any) => <any>(a + b)));
@@ -53,6 +52,13 @@ export class FrontendSampleValidationComponent implements OnInit {
       this.upload_steps = state;
       // Make sure data is uploaded.
       this.ready2validate = state.filter((d: any) => d.id == "upload")[0]['complete'];
+      // reset buttons if reload file
+      if (!this.ready2validate) {
+        this.approve_deletions = null;
+        this.approve_ids = null;
+        this.approve_dates = null;
+        this.approve_dupes = null;
+      }
     })
   }
 
