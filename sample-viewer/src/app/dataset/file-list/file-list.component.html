@@ -1,7 +1,7 @@
 <!-- DATA FILE LOOP -->
 <!-- <div class="data-download" *ngFor="let file of dataSource.data.slice(0,1)" [ngClass]="anything_selected ? (file.selected ? 'active' : 'inactive') : 'active'"> -->
 <div class="file-lists">
-  <table mat-table [dataSource]="dataSource" class="data-download" matSort [id]="dataset['name'] | stripWhitespace">
+  <table mat-table [dataSource]="dataSource" class="data-download" matSort [id]="datasetID | stripWhitespace">
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">

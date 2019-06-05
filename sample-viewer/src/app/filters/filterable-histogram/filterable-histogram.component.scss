@@ -1,0 +1,88 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.filterable-hist {
+  display: flex;
+  flex-direction: column;
+  // .axis--x line,
+  .axis--x line {
+    display: none;
+  }
+
+  rect {
+    stroke-width: 1px;
+    shape-rendering: crispedges;
+    fill: $grey-300;
+    stroke: $grey-400;
+    cursor: pointer;
+  }
+
+  rect:hover {
+    fill: $cvisb-dark;
+    stroke: primary(900);
+  }
+  // .bar--annot text {
+  //   text-anchor: end;
+  //   dominant-baseline: middle;
+  //   fill: $default-color;
+  //   font-family: $font-default;
+  // }
+  //
+  //
+  .ticks {
+    font: 10px sans-serif;
+  }
+
+  .track,
+  .track-inset,
+  .track-overlay {
+    stroke-linecap: round;
+  }
+
+  .track {
+    stroke: $grey-250;
+    // stroke-opacity: 0.3;
+    stroke-width: 5px;
+  }
+
+  .track-filled {
+    stroke: $sierraleone-blue;
+    stroke-opacity: 1;
+  }
+
+  .track-inset {
+    stroke: #ddd;
+    stroke-width: 5px;
+  }
+
+  .track-overlay {
+    pointer-events: stroke;
+    stroke-width: 50px;
+    stroke: transparent;
+    cursor: grab;
+  }
+
+  .handle-left,
+  .handle-right {
+    fill: primary(50);
+    stroke: $sierraleone-blue;
+    stroke-width: 1.75px;
+    cursor: grab;
+  }
+
+  .handle-right {
+    // fill: tomato;
+  }
+
+  .slider-checkbox {
+    cursor: pointer;
+    font-size: 1.1em;
+    dominant-baseline: ideographic;
+    fill: $sierraleone-blue;
+  }
+
+  .selected {
+    fill: primary(300);
+    stroke: primary(600);
+  }
+}

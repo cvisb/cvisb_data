@@ -1,0 +1,45 @@
+<div class="stepper-header">
+  <h2><span class="stepper-title">Save data to database</span></h2>
+
+  <div class="import-count">
+    <b>{{ this.data.length }} {{ (this.data.length > 1) || (this.data.length === 0) ? "samples" : "sample"}}</b> will be uploaded.
+  </div>
+
+  <button mat-raised-button color="warn" class="submit-btn" type="submit" (click)="submitData()">Submit to database</button>
+
+</div>
+
+<div class="client-responses">
+  <ng-container *ngIf="uploadResponse">
+    <h1>{{ uploadResponse }}</h1>
+    <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
+    <p class="pct-complete">
+      {{ uploadProgress | number:'1.0-0' }}% complete
+    </p>
+  </ng-container>
+
+  <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
+
+  <div class="error-messages" *ngIf="errorObj">
+    <div class="error-message-group" *ngFor="let msg of errorObj">
+      <div class="error-message">
+        <span class="error-label">
+          Error:
+        </span>
+        {{ msg. key }}
+      </div>
+      <div class="error-ids">
+        <span class="error-label">
+          IDs:
+        </span>
+        <div *ngFor="let id of msg.value.ids; let index">
+          {{ id }}
+          <span *ngIf="index < msg.value.ids.length" class="id-separator">
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

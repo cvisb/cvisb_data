@@ -5,8 +5,8 @@ import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
 
 import { CvisbUser } from '../../_models';
 
-import { nest } from 'd3';
-import * as _ from 'lodash';
+
+import { cloneDeep } from 'lodash';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class PatientUploadComponent implements OnInit {
   user: CvisbUser;
   fileType: string;
   uploadResponse: string;
+  uploadProgress: number;
   errorMsg: string;
   errorObj: Object[];
   badIDs: Object[];
@@ -25,6 +26,8 @@ export class PatientUploadComponent implements OnInit {
   missingReq: Object[];
   previewData: Object[];
   dataLength: number;
+  fileKB: number;
+  maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(
     private apiSvc: ApiService,
@@ -34,6 +37,10 @@ export class PatientUploadComponent implements OnInit {
   ) {
     authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
+    })
+
+    apiSvc.uploadProgressState$.subscribe((progress: number) => {
+      this.uploadProgress = progress;
     })
 
   }
@@ -55,12 +62,14 @@ export class PatientUploadComponent implements OnInit {
     // Clear previous states
     this.errorMsg = null;
     this.errorObj = null;
+    this.uploadProgress = 0;
 
     if (fileList.length > 0) {
 
       this.uploadResponse = "Uploading file..."
 
       let file: File = fileList[0];
+      this.fileKB = file.size / 1000;
       this.fileType = file.type;
 
       switch (this.fileType) {
@@ -91,30 +100,28 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded. Sending data to the database..."
+        this.uploadResponse = "File uploaded; sending data to the database.  Be patient! This can take a few minutes"
 
         let data = this.prepData(reader.result);
         console.log(data)
 
-
         let ids = data.map(d => d.privatePatientID);
 
+        let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
+        // double check upload size is greater than 0.
+        uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
-        this.apiSvc.put("patient", data).subscribe(resp => {
-          this.uploadResponse = `Success! ${resp}`;
-          console.log(resp)
-        }, err => {
-          this.uploadResponse = "Uh oh. Something went wrong."
-          this.errorMsg = err.error.error ? err.error.error : "Dunno why-- are you logged in? Check the developer console. Sorry :("
 
-          this.errorObj = err.error.error_list;
+        this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(
+          responses => {
+            console.log(responses)
 
-          if (this.errorObj) {
-            this.errorObj = this.tidyBackendErrors(this.errorObj)
-            console.log(this.errorObj)
-          }
-          console.log(err)
-        });
+            let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, 'patients');
+
+            this.uploadResponse = result.uploadResponse;
+            this.errorMsg = result.errorMsg;
+            this.errorObj = result.errorObj;
+          })
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
@@ -154,7 +161,7 @@ export class PatientUploadComponent implements OnInit {
 
       this.dataLength = data.length;
 
-      console.log(data)
+      // console.log(data)
       this.previewData = data;
 
       return (data);
@@ -204,7 +211,7 @@ export class PatientUploadComponent implements OnInit {
   removeEmpties(data, headers) {
     headers.filter(d => d !== "patientID");
 
-    let filtered = _.cloneDeep(data);
+    let filtered = cloneDeep(data);
     // let filtered = (data);
 
     filtered.forEach(d => delete (d.sampleID));
@@ -215,31 +222,5 @@ export class PatientUploadComponent implements OnInit {
   }
 
 
-  tidyBackendErrors(error_array) {
-    let errs = [];
 
-    // Reformat the errors
-    error_array.forEach(document => document.error_messages.forEach(
-      msg => errs.push({
-        message: msg.split("\n").filter((d, i) => i === 0 || i === 2),
-        id: document.input_obj.patientID,
-        input: document.input_obj
-      })))
-    console.log(errs)
-
-    // Group by error type
-    let nested = nest()
-      .key((d: any) => d.message)
-      .rollup(function(values: any): any {
-        return {
-          count: values.length,
-          ids: values.map(x => x.id),
-          inputs: values.map(x => x.input)
-        }
-      }).entries(errs);
-
-    console.log(nested)
-
-    return (nested)
-  }
 }

@@ -1,0 +1,57 @@
+@import "../../../sass/variables.scss";
+@import "../../../sass/material-theme.scss";
+
+$step-size: 30px;
+
+.upload-stepper {
+  height: 125px;
+}
+
+.step-group {
+  width: 75px;
+  margin-left: 25px;
+  margin-right: 25px;
+
+  &:first-of-type {
+    margin-left: 0px;
+  }
+  &:last-of-type {
+    margin-right: 0px;
+  }
+}
+
+.step {
+  width: $step-size;
+  height: $step-size;
+  line-height: $step-size;
+  text-align: center;
+  font-size: 1.15em;
+  font-weight: 400;
+  color: $grey-300;
+  background: $grey-100;
+  border: 2px solid $grey-300;
+  margin: auto;
+
+  &.complete {
+    background: accent-redder(300);
+    border-color: accent-redder(600);
+    color: white;
+  }
+}
+
+.step-label {
+  font-size: 0.85em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-align: center;
+  color: $grey-500;
+
+  &.complete {
+    color: accent-redder(A700);
+  }
+}
+
+.next-buttons {
+  margin-top: 50px;
+}

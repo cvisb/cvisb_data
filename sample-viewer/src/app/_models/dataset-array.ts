@@ -12,6 +12,7 @@ export class DatasetArray {
   exptTypes: D3Nested[];
 
   constructor(datasets: any) {
+
     this.patientTypes = [
       { key: "Control", value: 117 },
       { key: "Ebola", value: 49 },
@@ -48,9 +49,9 @@ export class DatasetArray {
     // --- experiments ---
     this.exptTypes = [];
 
-    for (let dataset of datasets) {
-      this.exptTypes.push({ key: dataset.identifier, name: (dataset.alternateName || dataset.name), value: dataset.distribution.length })
-    }
+    // for (let dataset of datasets) {
+    //   this.exptTypes.push({ key: dataset.identifier, name: (dataset.alternateName || dataset.name), value: dataset.distribution.length })
+    // }
 
     this.exptTypes.sort((a: any, b: any) => b.value - a.value);
 

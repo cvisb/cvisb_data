@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { GetSamplesService, RequestParametersService, AuthService } from '../../_services/';
-import { AuthState, RequestParam, RequestParamArray } from '../../_models';
+import { AuthState, RequestParam, RequestParamArray, ESFacetTerms } from '../../_models';
 
 
 @Component({
@@ -19,6 +19,10 @@ export class FilterSampleComponent implements OnInit {
   all_patients: string[];
   sample_count: number;
   total_samples: number;
+  cohorts: ESFacetTerms[];
+  outcomes: ESFacetTerms[];
+  years: ESFacetTerms[];
+  countries: ESFacetTerms[];
 
   first_call: boolean = true;
 
@@ -44,17 +48,26 @@ export class FilterSampleComponent implements OnInit {
         }
       })
 
+    this.sampleSvc.sampleSummaryState$.subscribe((sObj) => {
+      this.cohorts = sObj['cohort'];
+      this.outcomes = sObj['outcome'];
+      this.patients = sObj['patients'];
+      this.years = sObj['years'];
+      this.countries = sObj['country'];
+    })
+
+
     // // grab the data
     this.sampleSvc.samplesState$.subscribe((sList) => {
       if (sList) {
         this.sample_count = sList.length;
-        this.patients = sList.map((d:any) => d.privatePatientID);
+        // this.patients = sList.map((d: any) => d.privatePatientID);
 
         // On the initial return object, set the maximum parameters
         if (this.first_call) {
           this.first_call = false;
           this.total_samples = sList.length;
-          this.all_patients = sList.map((d:any) => d.privatePatientID);
+          this.all_patients = sList.map((d: any) => d.privatePatientID);
           // this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
           // this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
           // this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);

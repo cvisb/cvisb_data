@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map, catchError, mergeMap, tap, flatMap, finalize } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
+
+import { ActivatedRoute } from '@angular/router';
 
 import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
-import { Sample, SampleWide, AuthState, RequestParamArray } from '../_models/';
+import { Sample, SampleWide, AuthState, RequestParamArray, Patient, ESFacetTerms } from '../_models/';
 import { AuthService } from './auth.service';
 import { MyHttpClient } from './http-cookies.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -19,38 +21,162 @@ import { RequestParametersService } from './request-parameters.service';
 export class GetSamplesService {
   request_params: RequestParamArray;
 
-// Event listeners to pass data.
+  // Event listeners to pass data.
   private samples_wide: SampleWide[] = [];
   public samplesSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>(null);
   public samplesWideSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>([]);
   public samplesState$ = this.samplesSubject.asObservable();
   public samplesWideState$ = this.samplesWideSubject.asObservable();
 
+  public sampleSummarySubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({ patients: null, cohort: null, outcome: null });
+  public sampleSummaryState$ = this.sampleSummarySubject.asObservable();
+
+  public loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
+
+  samplePatientMD: Patient[] = [];
+
 
   constructor(
     public myhttp: MyHttpClient,
-    // public http: HttpClient,
     private requestSvc: RequestParametersService,
+    private route: ActivatedRoute,
     private authSvc: AuthService) {
-    // console.log(this.samples.slice(20, 25));
-    // this.putSamples(this.samples);
-    // this.putSample(this.samples[1]);
-    // this.getSamples();
-    // this.getSample('test_1');
-    //
-    this.authSvc.authState$.subscribe((authState: AuthState) => {
-      if (authState.authorized) {
-        this.getSamples();
-      }
-    })
 
+    // Listener for changes in auth status
+    // this.authSvc.authState$.subscribe((authState: AuthState) => {
+    //   if (authState.authorized) {
+    //     console.log("change in auth status")
+    //     this.getSamples();
+    //   }
+    // })
+
+    // Listener for changes in query params
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log(params)
+      console.log("Re-getting samples with new parameters:")
+      console.log(params)
       this.request_params = params;
-      this.getSamples();
+      this.getSamples(params);
     })
-
   }
+
+  // Main function to get the samples + associated patient-level metadata
+  getSamples(qParams?) {
+    console.log('calling get samples')
+    if (this.samplePatientMD.length === 0) {
+      // samplePatientMD stores the patient metadata (cohort, outcome, etc.)
+      // for ALL samples currently in the database at load time.
+      // It's (ideally) called once and then stored for the rest of the session,
+      // since it shouldn't change unless new sample data is uploaded.
+
+      this.loadingSubject.next(true);
+
+      // (1) Call /patient to grab all the patient info for the patients for whom we have samples
+      // NOTE: needs to be moved to a resolver? When have URL states...
+      this.getSamplePatientData()
+        // (2) Call /sample to get the subset of samples indicated by the qParams
+        // Merge to patient metadata properties
+        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParams)),
+          finalize(() => this.loadingSubject.next(false))
+        )
+        .subscribe(samples => {
+        });
+    } else {
+      // Patient-Sample metadata already exists.
+      // Execute the /sample query to get the filtered samples.
+      this.getNPrepSamples(qParams).pipe(
+        finalize(() => this.loadingSubject.next(false))
+      ).subscribe();
+    }
+  }
+
+
+  // Main function to execute the call to /sample to get a list of samples and merge to patient props
+  getNPrepSamples(filterParamArray) {
+    console.log("Calling prep samples")
+    let params = this.requestSvc.reduceSampleParams(filterParamArray);
+    params = params.set('size', "1000")
+
+    console.log('sample params:')
+    console.log(params)
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(data => {
+        let samples = data['body']['hits'];
+        console.log(data)
+        if (samples) {
+          samples.forEach(d => {
+            // Merge in the patient properties associated with that sample
+            let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
+
+            if (filtered.length === 1) {
+              d['patientID'] = filtered[0].patientID;
+              d['alternateIdentifier'] = filtered[0].alternateIdentifier;
+              d['cohort'] = filtered[0].cohort;
+              d['outcome'] = filtered[0].outcome;
+              d['country'] = filtered[0].country['identifier'];
+              d['infectionYear'] = filtered[0].infectionYear;
+              d['dateModified_patient'] = filtered[0].dateModified;
+              // d['elisa'] = filtered[0].elisa;
+            }
+          })
+          console.log("merge complete.")
+
+          this.samplesSubject.next(samples);
+
+          this.sampleSummarySubject.next(this.getSampleSummary(samples));
+          console.log('samples long')
+          console.log(samples)
+
+          // Grab the sample locations and data and reshape to display in the table.
+          this.nestSamples(samples);
+          this.samplesWideSubject.next(this.samples_wide);
+          return (samples)
+        } else {
+          console.log('Error in getting samples')
+          this.samplesSubject.next(samples);
+          console.log(data)
+        }
+      }),
+      catchError(e => {
+        return of(e);
+      })
+    )
+  }
+
+  // TODO: Scroll to deal w/ > 1000 patients
+  getSamplePatientData(qParams?): Observable<any> {
+    // NOTE: will fail for results > 1000
+    // https://dev.cvisb.org/api/patient/query?q=__all__&sampleQuery=*&facets=alternateIdentifier.keyword(cohort.keyword)&facet_size=1000&size=0
+    // If unspecified, set q string to return all.
+    qParams = qParams ? qParams : new HttpParams().set("q", "__all__");
+
+    let params = qParams
+      .append('size', 1000)
+      .append("sampleQuery", (`_exists_:privatePatientID`));
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        this.samplePatientMD = res["body"]["hits"];
+        return (res["body"]["hits"])
+      }),
+      catchError(e => {
+        return of(e);
+      })
+    );
+  }
+
 
   getSample(id: string) {
     this.myhttp.get<any[]>(environment.api_url + "/api/sample/" + id, {
@@ -60,111 +186,63 @@ export class GetSamplesService {
         .set('Accept', 'application/json')
     }).subscribe(data => {
       console.log(data)
-      return (data.body)
     },
       err => {
         console.log(err)
       })
   }
 
-  getSamples() {
-    let param_string = this.requestSvc.reduceParams(this.request_params);
-    // console.log(param_string);
-    //
-    param_string = param_string.set('size', "1000")
 
-    this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
-      // this.myhttp.get<any[]>(environment.host_url + "/api/sample/test_2", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: param_string
-    }).subscribe(data => {
-      let samples = data['body']['hits'];
-      console.log(data)
-      this.samplesSubject.next(samples);
-      // this.samplesSubject.next(this.samples.slice(0, 11));
-      if (samples) {
-        // console.log(this.samples_wide)
+  // Using ES facetting on patient properties isn't possible, since it is a cross-endpoint query
+  // Although the query executes properly, it counts number of unique PATIENTS, not number of unique SAMPLES
+  // So... since they're already merged to the samples anyway, we'll count 'em up.
+  getSampleSummary(samples): Object {
+    let summary = {};
 
-        // for(let i =0; i < this.samples.length)
+    summary['outcome'] = this.countBy(samples, "outcome", "unknown");
+    summary['cohort'] = this.countBy(samples, "cohort", "Unknown");
+    summary['years'] = this.countBy(samples, "infectionYear", "Unknown");
+    summary['country'] = this.countBy(samples, "country", "unknown");
 
-        // this.nestSamples(this.samples_wide[0].value.samples)
-        // this.samples_wide.forEach((obj: any) => {
-        //   obj['PBMC'] = this.nestSamples(obj.value.all_data);
-        // });
+    // Make sure to remove nulls-- ngSelect can't have nulls as options
+    // Should also remove duplicates, since there are multiple samples / patient
+    summary['patients'] = samples.map((d:any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
+    summary['patients'] = Array.from(new Set(summary['patients']));
 
-        // Set status to be authorized
-        // this.authSvc.setAuthorized();
+    console.log(summary)
 
-
-        // Grab the sample locations and data and reshape to display in the table.
-        this.nestSamples(samples);
-        this.samplesWideSubject.next(this.samples_wide);
-      } else {
-        console.log('Error in getting samples')
-        console.log(data)
-      }
-      // console.log(this.samples_wide)
-    },
-      err => {
-        console.log(err);
-        // check if unauthorized; if so, redirect.
-        // this.authSvc.redirectUnauthorized(err);
-      })
-    // return (this.samples)
+    return (summary)
   }
 
-  // putSample(sample: Sample) {
-  //   let sampleID = sample['sampleID'];
-  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/" + sampleID,
-  //     JSON.stringify(sample),
-  //     {
-  //       headers: new HttpHeaders()
-  //     }).subscribe(resp => {
-  //       console.log(resp)
-  //     },
-  //       err => {
-  //         console.log(err)
-  //       })
-  //
-  // }
-  //
-  //
-  // putSamples(samples: Sample[]) {
-  //   // let test = this.jsonify(this.samples.slice(0,2));
-  //   console.log('attempting to add new record')
-  //   // console.log(this.jsonify(samples))
-  //   this.myhttp.put<any[]>(environment.api_url + "/api/sample/",
-  //     this.jsonify(samples),
-  //     {
-  //       // observe: 'response',
-  //       headers: new HttpHeaders()
-  //       // .set('data', )
-  //     }).subscribe(resp => {
-  //       console.log(resp)
-  //     },
-  //       err => {
-  //         console.log(err)
-  //       })
-  //
-  // }
-  //
-  // // Function to convert
-  // jsonify(arr: any[]): string {
-  //   let json_arr = [];
-  //
-  //   for (let record of arr) {
-  //     json_arr.push(JSON.stringify(record))
-  //   }
-  //   return (json_arr.join("\n"))
-  // }
+
+  /*
+  Internal function to return an ESFacetTerms object countaining {term: <blah>, count: <number>}
+   */
+  countBy(objArr: Object[], groupBy: string, undefinedLabel = "Unknown"): ESFacetTerms {
+    let result = objArr.map(d => d[groupBy]).reduce(function(acc, curr) {
+      // compress undefined --> unknown
+      if (!curr) {
+        curr = undefinedLabel;
+      }
+
+      let idx = acc.findIndex(d => d.term === curr);
+
+      if (idx == -1) {
+        acc.push({ term: curr, count: 1 })
+      } else {
+        acc[idx]['count'] += 1;
+      }
+
+      return acc;
+    }, []);
+
+    return (result);
+  }
 
 
   nestSamples(samples) {
-
-    // Update function: either creates an array of unique values, or a single value.
-    let updateSet = function(prev, curr, variable) {
+    // Internal update function: either creates an array of unique values, or a single value.
+    let _updateSet = function(prev, curr, variable) {
       let return_val;
       if (prev[variable]) {
         return_val = prev[variable];
@@ -192,9 +270,12 @@ export class GetSamplesService {
         return d.reduce(function(prev, curr) {
           // If it already exists-- append
           // If not-- create it as an array/set (for unique values)
-          prev["patientID"] = updateSet(prev, curr, "patientID");
-          prev["privatePatientID"] = updateSet(prev, curr, "privatePatientID");
-          prev["visitCode"] = updateSet(prev, curr, "visitCode");
+          prev["patientID"] = _updateSet(prev, curr, "patientID");
+          prev["alternateIdentifier"] = _updateSet(prev, curr, "alternateIdentifier");
+          prev["cohort"] = _updateSet(prev, curr, "cohort");
+          prev["outcome"] = _updateSet(prev, curr, "outcome");
+          prev["privatePatientID"] = _updateSet(prev, curr, "privatePatientID");
+          prev["visitCode"] = _updateSet(prev, curr, "visitCode");
 
           prev[curr["sampleType"]] ? prev[curr["sampleType"]].push(curr) : prev[curr["sampleType"]] = [curr];
           return prev;
@@ -203,99 +284,7 @@ export class GetSamplesService {
       .entries(samples)
       .map((d) => d.value);
 
-    // console.log(this.samples_wide)
-
-    // For each sample type, nest the locations together. Key = sample ID; values = array of locations + metadata.
-    let sample_types = Array.from(new Set(samples.map(d => d.sampleType)));
-    this.samples_wide.forEach(patientGroup => {
-
-      sample_types.forEach((type: any) => {
-        if (patientGroup[type]) {
-          patientGroup[type] = d3.nest()
-            .key((d: any) => d.sampleID)
-            .entries(patientGroup[type])
-        }
-      })
-    })
-
-    // console.log(this.samples_wide)
-
-    //
-    //
-
-    // // Splay out wide by patient ID.
-    // this.samples_wide = d3.nest()
-    //   .key((d: any) => (d.privatePatientID + String(d.visitCode)))
-    //   // .key((d: any) => d.visitCode)
-    //   .rollup(function(v: any): any {
-    //     return {
-    //       count: v.length,
-    //       patientID: v[0].patientID,
-    //       privatePatientID: v[0].privatePatientID,
-    //       visitCode: v[0].visitCode,
-    //       // patient_type: v[0].patient_type,
-    //       // patient_cohort: v[0].patient_cohort,
-    //       all_data: v.map(d => d)
-    //     };
-    //   })
-    //   .entries(samples);
-
-    // for (let i = 0; i < this.samples_wide.length; i++) {
-    //   let row = this.samples_wide[i];
-    //   let row_vals = row['value'].all_data;
-    //   let arr = [];
-    //
-    //   for (let j = 0; j < row_vals.length; j++) {
-    //     let stype = row_vals[j].sampleType;
-    //     // console.log(stype)
-    //     // let stype_idx = row.findIndex(d => stype === );
-    //     if (row.hasOwnProperty(stype)) {
-    //       this.samples_wide[i][stype]['location'].push({ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] });
-    //     } else {
-    //       let indiv_sample = {
-    //         'sampleID': row_vals[j]['sampleID'],
-    //         'dilutionFactor': row_vals[j]['dilutionFactor'],
-    //         'freezingBuffer': row_vals[j]['freezingBuffer'],
-    //         'isolationDate': row_vals[j]['isolationDate'],
-    //         'species': row_vals[j]['species'],
-    //         'protocol': row_vals[j]['protocol'],
-    //         'sourceSampleID': row_vals[j]['sourceSampleID'],
-    //         'sampleType': row_vals[j]['sampleType'],
-    //         'location': [{ 'lab': row_vals[j]['lab'], 'numAliquots': row_vals[j]['numAliquots'], 'updated': row_vals[j]['updated'], 'updatedBy': row_vals[j]['updatedBy'] }]
-    //       };
-    //
-    //       this.samples_wide[i][stype] = indiv_sample;
-    //     }
-    //   }
-    // }
-    // console.log(this.samples_wide)
-    // let arr_idx = arr.findIndex(d => d.sampleID === sample_data[i]['sampleID']);
-
+    console.log(this.samples_wide)
   }
 
-  // nestSamples(sample_data) {
-  //   let arr = [];
-  //
-  //   for (let i = 0; i < sample_data.length; i++) {
-  //     let arr_idx = arr.findIndex(d => d.sampleID === sample_data[i]['sampleID']);
-  //     if (arr_idx < 0) {
-  //       // Sample id isn't in the array; add it now.
-  //       arr.push({
-  //         'sampleID': sample_data[i]['sampleID'],
-  //         'dilutionFactor': sample_data[i]['dilutionFactor'],
-  //         'freezingBuffer': sample_data[i]['freezingBuffer'],
-  //         'isolationDate': sample_data[i]['isolationDate'],
-  //         'species': sample_data[i]['species'],
-  //         'protocol': sample_data[i]['protocol'],
-  //         'sourceSampleID': sample_data[i]['sourceSampleID'],
-  //         'sampleType': sample_data[i]['sampleType'],
-  //         'location': [{ 'lab': sample_data[i]['location'], 'numAliquots': sample_data[i]['numAliquots'] }]
-  //       });
-  //     } else {
-  //       arr[arr_idx]['location'].push({ 'lab': sample_data[i]['location'], 'numAliquots': sample_data[i]['numAliquots'] });
-  //     }
-  //   }
-  //   return (arr)
-  // }
-  //
 }

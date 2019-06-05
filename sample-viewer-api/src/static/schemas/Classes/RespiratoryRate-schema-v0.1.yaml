@@ -1,0 +1,50 @@
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/RespiratoryRate/0.1"
+#
+# "@graph":
+
+- "@id":                 cvisb:RespiratoryRate
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing a single respiratory rate datapoint collected from patients in the Center for Viral Systems Biology.
+  rdfs:label:            RespiratoryRate
+  rdfs:subClassOf:
+    "@id":               cvisb:Data
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+- "@id":                 cvisb:time
+  "@type":               rdf:Property
+  rdfs:comment:          Date and time of RespiratoryRate measurement
+  rdfs:label:            time
+  schema:domainIncludes:
+    - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             schema:DateTime
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:respiratoryRate
+  "@type":               rdf:Property
+  rdfs:comment:          RespiratoryRate, in breaths per minute
+  rdfs:label:            respiratoryRate
+  schema:domainIncludes:
+    - "@id":             cvisb:RespiratoryRate
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false

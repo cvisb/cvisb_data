@@ -1,0 +1,225 @@
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/PiccoloData/0.1"
+#
+# "@graph":
+
+- "@id":                 cvisb:PiccoloData
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing blood chemistry analysis of patients collected using a Piccolo Xpress analyzer in the Center for Viral Systems Biology.
+  rdfs:label:            PiccoloData
+  rdfs:subClassOf:
+    "@id":               cvisb:Data
+  schema:isPartOf:
+    "@id":               https://schema.cvisb.org
+
+
+# Data
+- "@id":                 cvisb:alanineAminotransferase
+  "@type":               rdf:Property
+  rdfs:comment:          "Alanine Aminotransferase (ALT) measurement in U/L. Typical values are 10-47 U/L and dynamic range of the assay is 5-2000 U/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            alanineAminotransferase
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               5
+  maximum:               2000
+
+- "@id":                 cvisb:albumin
+  "@type":               rdf:Property
+  rdfs:comment:          "Albumin (ALB) measurement in g/L. Typical values are 33-55 g/L and dynamic range of the assay is 10-65 g/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            albumin
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               10
+  maximum:               65
+
+- "@id":                 cvisb:alkalinePhosphatase
+  "@type":               rdf:Property
+  rdfs:comment:          "Alkaline Phosphatase (ALP) measurement in U/L. Typical values are 53-128 U/L (male) or 42-141 U/L (female) and dynamic range of the assay is 5-2400 U/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            alkalinePhosphatase
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               5
+  maximum:               2400
+
+
+- "@id":                 cvisb:aspatateAminotransferase
+  "@type":               rdf:Property
+  rdfs:comment:          "Aspartate Aminotransferase (AST) measurement in U/L. Typical values are 11-38 U/L and dynamic range of the assay is 5-2000 U/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            aspatateAminotransferase
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               5
+  maximum:               2000
+
+- "@id":                 cvisb:bloodUreaNitrogen
+  "@type":               rdf:Property
+  rdfs:comment:          "Blood Urea Nitrogen (BUN) measurement in mmol urea/L. Typical values are 2.5-7.9 mmol urea/L and dynamic range of the assay is 0.7-64.3 mmol urea/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            bloodUreaNitrogen
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               0.7
+  maximum:               64.3
+
+- "@id":                 cvisb:calcium
+  "@type":               rdf:Property
+  rdfs:comment:          "Calcium (CA) measurement in mmol/L. Typical values are 2.0-2.58 mmol/L and dynamic range of the assay is 1.0-4.0 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            calcium
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1
+  maximum:               4
+
+- "@id":                 cvisb:chloride
+  "@type":               rdf:Property
+  rdfs:comment:          "Chloride (CL-) measurement in mmol/L. Typical values are 98-108 mmol/L and dynamic range of the assay is 80-135 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            chloride
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               80
+  maximum:               135
+
+- "@id":                 cvisb:creatinine
+  "@type":               rdf:Property
+  rdfs:comment:          "Creatinine (CRE) measurement in umol/L. Typical values are and 53-106 umol/L dynamic range of the assay is 18-1768 umol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            creatinine
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               18
+  maximum:               1768
+
+- "@id":                 cvisb:glucose
+  "@type":               rdf:Property
+  rdfs:comment:          "Glucose (GLU) measurement in mmol/L. Typical values are 4.05-6.55 mmol/L and dynamic range of the assay is 0.56-38.9 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            glucose
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               0.56
+  maximum:               38.9
+
+- "@id":                 cvisb:potassium
+  "@type":               rdf:Property
+  rdfs:comment:          "Potassium (K+) measurement in mmol/L. Typical values are 3.6-5.1 mmol/L and dynamic range of the assay is 1.5-8.5 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            potassium
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1.5
+  maximum:               8.5
+
+- "@id":                 cvisb:sodium
+  "@type":               rdf:Property
+  rdfs:comment:          "Sodium (NA+) measurement in mmol/L. Typical values are 128-145 mmol/L and dynamic range of the assay is 110-170 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            sodium
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               110
+  maximum:               170
+
+- "@id":                 cvisb:totalBilirubin
+  "@type":               rdf:Property
+  rdfs:comment:          "Total Bilirubin (TBIL) measurement in umol/L. Typical values are 3.4-27.4 umol/L and dynamic range of the assay is 1.7-513 umol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            totalBilirubin
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               1.7
+  maximum:               513
+
+- "@id":                 cvisb:totalCarbonDioxide
+  "@type":               rdf:Property
+  rdfs:comment:          "Total Carbon Dioxide (tCO2) measurement in mmol/L. Typical values are 18-33 mmol/L and dynamic range of the assay is 5-40 mmol/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            totalCarbonDioxide
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               5
+  maximum:               40
+
+- "@id":                 cvisb:totalProtein
+  "@type":               rdf:Property
+  rdfs:comment:          "Total Protein (TP) measurement in g/L. Typical values are 64-81 g/L and dynamic range of the assay is 20-140 g/L (https://www.abaxis.com/sites/default/files/resource-packages/Comprehensive%20Metabolic%20Panel%20Package%20Insert-EN_0.pdf). If values are outside the dynamic range, they should be reported as missing."
+  rdfs:label:            totalProtein
+  schema:domainIncludes:
+    - "@id":             cvisb:PiccoloData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  minimum:               20
+  maximum:               140

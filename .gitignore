@@ -29,6 +29,11 @@ sample-viewer-api/src/static/data/**/*.fasta
 sample-viewer-api/src/static/data/**/*.xlsx
 sample-viewer-api/src/static/data/**/*.xls
 sample-viewer-api/src/static/data/**/*.csv
+sample-viewer-api/src/static/data/**/*.tsv
 sample-viewer-api/src/static/data/**/*.json
 notes/*.md
 notes/wordpress_css_link_underline.css
+sample-viewer-api/src/static/data/clean_samples/exploratory_scripts/2019-05-06_prioritize4briney.py
+sample-viewer-api/src/static/data/clean_patients/exploratory_scripts/2019-05-14_acuteEbola_dylanExploration.R
+notes/2019-05-14_experiment-dataset-metadata.json
+sample-viewer-api/src/static/schemas/cvisb_variables_2019-05-22.xlsx

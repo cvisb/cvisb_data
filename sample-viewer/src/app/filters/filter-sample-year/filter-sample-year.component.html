@@ -1,5 +1,4 @@
-<div class="patient-id-filter container">
-  <h4 class="filter-label" *ngIf="data">sample year</h4>
-
-  <div class="year-hist" #hist></div>
-</div>
+<app-filterable-histogram [data]="data" [xDomain]="yearDomain"
+[filterSubject] = "filterSubject" [filterState$] = "filterState$"
+[filterHandler] = "filterHandler"
+[endpoint]="endpoint" [filter_title]="filter_title"></app-filterable-histogram>

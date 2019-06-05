@@ -13,9 +13,9 @@ import { getDatasetsService, FileMetadataService } from '../_services';
 
 export class DatasetPageComponent implements OnInit {
   private dsid: string; // file ID
-  private datasets: Object[];
-  dataset: Object;
-  schema_dataset: Object;
+  private datasets: any[];
+  dataset: any;
+  schema_dataset: any;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
@@ -27,6 +27,8 @@ export class DatasetPageComponent implements OnInit {
     // Pull out the file ID
     route.params.subscribe(params => {
       this.dsid = params['dsid'];
+      console.log(params);
+      this.schema_dataset = params['datasetData'];
     });
 
     // Hit API to get data
@@ -44,6 +46,7 @@ export class DatasetPageComponent implements OnInit {
       }
 
       this.schema_dataset = dataset;
+      console.log(this.schema_dataset);
     })
 
     // TEMP: shim to remove non-schema.org offensive fields

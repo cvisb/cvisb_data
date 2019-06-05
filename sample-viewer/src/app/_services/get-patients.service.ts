@@ -31,7 +31,7 @@ export class GetPatientsService {
   public patientsState$ = this.patientsSubject.asObservable();
 
   // Array of variables to calculate the summary stats for.
-  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "infectionYear", "country.identifier.keyword"];
+  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "country.identifier.keyword"];
 
   constructor(
     public myhttp: MyHttpClient,
@@ -62,16 +62,21 @@ export class GetPatientsService {
   }
 
   sortFunc(sortVar): string {
-    // Sorting func for ES. Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
-    let keywordVars = ["patientID", "outcome", "cohort", "gender"];
-    if (keywordVars.includes(sortVar)) {
-      return (`${sortVar}.keyword`);
+    // Sorting func for ES.
+
+    let numericVars = ["age"];
+    if (numericVars.includes(sortVar) || !sortVar) {
+      return (sortVar);
     }
 
+    // custom: nested objects
     if (sortVar === "country") {
       return ("country.name.keyword");
     }
-    return (sortVar);
+
+    // Default: string
+    // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
+    return (`${sortVar}.keyword`);
   }
 
 
@@ -82,8 +87,6 @@ export class GetPatientsService {
   }
 
   getPatientSummary(params: HttpParams): Observable<any> {
-    // getPatientSummary(param_string: string): Observable<any> {
-    // let param_string: string = this.requestSvc.reduceParams(this.request_params);
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -112,93 +115,14 @@ export class GetPatientsService {
   }
 
 
-  // based on https://blog.angular-university.io/angular-material-data-table/
-  // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
-  getPatientsPaginated(qParams, pageNum: number = 0,
-    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<Patient[]> {
-    // let param_string: string = this.requestSvc.reduceParams(qParams);
-    // console.log(qParams)
-
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: { q: qParams.toString() },
-    //     queryParamsHandling: "merge", // remove to replace all query params by provided
-    //   });
-
-    console.log(qParams.toString());
-
-    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
-    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
-    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
-
-
-    let params = qParams
-      .append('size', pageSize.toString())
-      .append('from', (pageSize * pageNum).toString())
-      .append("sort", sortString);
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(res => {
-        console.log(res);
-        return (res["body"])
-      }
-      )
-    );
-  }
-
-
-  // getPatients() {
-  //   let param_string: string = this.requestSvc.reduceParams(this.request_params);
-  //
-  //   this.router.navigate(
-  //     [],
-  //     {
-  //       relativeTo: this.route,
-  //       queryParams: { q: param_string },
-  //       queryParamsHandling: "merge", // remove to replace all query params by provided
-  //     });
-  //
-  //   return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-  //     observe: 'response',
-  //     headers: new HttpHeaders()
-  //       .set('Accept', 'application/json'),
-  //     params: new HttpParams()
-  //       .set('q', param_string)
-  //       .set('size', "1000")
-  //   }).subscribe(data => {
-  //     let patients = data['body']['hits'];
-  //     // console.log(data)
-  //
-  //     // Sort patients by available data length, then alpha.
-  //     patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
-  //
-  //     // send new patients to subscription services.
-  //     this.patientsSubject.next(new PatientArray(patients));
-  //
-  //   },
-  //     err => {
-  //       console.log('Error in getting patients')
-  //       console.log(err)
-  //
-  //       // check if unauthorized; if so, redirect.
-  //       // this.authSvc.redirectUnauthorized(err);
-  //     })
-  // }
-
-
   // Using MyGene fetch_all to grab all the data, unscored:
   // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
   getPatientRoster(qParams): Observable<Patient[]> {
     this.all_data = [];
+
+    console.log(qParams);
 
     let params = qParams
       .append('fetch_all', "true");

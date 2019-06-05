@@ -1,0 +1,51 @@
+<div *ngIf="data && data.length > 0">
+  <div class="duplicate-helper-text">
+
+    <p>
+      Fix the metadata so they agree with each other and re-load the data.
+    </p>
+
+    <p class="emphasis">
+      If you want to keep them as separate samples, change the sample label for one (so it will have a new sampleID generated) and re-upload.
+    </p>
+
+  </div>
+
+
+  <div class="preview-sample">
+    <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
+
+      <ng-container *ngFor="let key of flatColumns" [matColumnDef]="key">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key }}</th>
+        <td mat-cell *matCellDef="let element" class="message">
+          {{ element[key] }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="disagreements">
+        <th mat-header-cell *matHeaderCellDef>disagreements</th>
+        <td mat-cell *matCellDef="let element" class="message">
+          <div *ngFor="let problem of element.disagreements">
+            {{ problem.column }}
+          </div>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="samples">
+        <th mat-header-cell *matHeaderCellDef>samples</th>
+        <td mat-cell *matCellDef="let element" class="sample">
+          <app-preview-samples [data]="element.samples" [hidePagination]="true" [displayedColumns]="sampleColumns" class="sample-preview" [highlightCols]="element.highlight">
+          </app-preview-samples>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
+
+<mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>

@@ -57,32 +57,32 @@ export class PatientDownload {
 
   constructor(patient: Patient) {
     this.patientID = patient.patientID;
-    this.alternateIdentifier = patient.alternateIdentifier.join(", ");
+    this.alternateIdentifier = patient.alternateIdentifier ? patient.alternateIdentifier.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
     this.country = patient.country['name'];
     this.gender = patient.gender;
     this.age = patient.age;
     this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
-    this.relatedTo = patient.relatedTo.join(", ");
+    this.relatedTo = patient.relatedTo ? patient.relatedTo.join(", ") : null;
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
 
 
     // TODO: ELISAs
-    //
-    this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'];
-    this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'];
-    this.dry_eyes = patient.symptoms[0]['symptoms']['dry_eyes'];
-    this.eye_foreign_body_sensation = patient.symptoms[0]['symptoms']['eye_foreign_body_sensation'];
-    this.eye_pain = patient.symptoms[0]['symptoms']['eye_pain'];
-    this.hearing_loss = patient.symptoms[0]['symptoms']['hearing_loss'];
-    this.joint_pain = patient.symptoms[0]['symptoms']['joint_pain'];
-    this.light_sensitivity = patient.symptoms[0]['symptoms']['light_sensitivity'];
-    this.muscle_pain = patient.symptoms[0]['symptoms']['muscle_pain'];
-    this.ringing_in_ears = patient.symptoms[0]['symptoms']['ringing_in_ears'];
-    this.vision_loss = patient.symptoms[0]['symptoms']['vision_loss']
-
+    if (patient.symptoms && patient.symptoms[0]) {
+      this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'];
+      this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'];
+      this.dry_eyes = patient.symptoms[0]['symptoms']['dry_eyes'];
+      this.eye_foreign_body_sensation = patient.symptoms[0]['symptoms']['eye_foreign_body_sensation'];
+      this.eye_pain = patient.symptoms[0]['symptoms']['eye_pain'];
+      this.hearing_loss = patient.symptoms[0]['symptoms']['hearing_loss'];
+      this.joint_pain = patient.symptoms[0]['symptoms']['joint_pain'];
+      this.light_sensitivity = patient.symptoms[0]['symptoms']['light_sensitivity'];
+      this.muscle_pain = patient.symptoms[0]['symptoms']['muscle_pain'];
+      this.ringing_in_ears = patient.symptoms[0]['symptoms']['ringing_in_ears'];
+      this.vision_loss = patient.symptoms[0]['symptoms']['vision_loss']
+    }
 
     this._version = patient._version;
     this.dateModified = patient.dateModified;

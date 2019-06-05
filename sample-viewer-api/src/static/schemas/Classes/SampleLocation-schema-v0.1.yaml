@@ -15,9 +15,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/SampleLocation/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/SampleLocation/0.1"
 #
 # "@graph":
 
@@ -51,6 +51,7 @@
                         - "TSRI-Sullivan"
                         - "Tulane-Schieffelin"
                         - "Tulane-Garry"
+  authenticated:         true
 
 # source sample type
 - "@id":                 cvisb:numAliquots
@@ -63,6 +64,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           required
+  authenticated:         true
 
 # sample physical location
 - "@id":                 cvisb:freezerID
@@ -73,8 +75,9 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
+  authenticated:         true
 
 - "@id":                 cvisb:freezerRack
   "@type":               rdf:Property
@@ -84,8 +87,9 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
+  authenticated:         true
 
 - "@id":                 cvisb:freezerBox
   "@type":               rdf:Property
@@ -95,8 +99,9 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
+  authenticated:         true
 
 - "@id":                 cvisb:freezerBoxCell
   "@type":               rdf:Property
@@ -106,8 +111,9 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
+  authenticated:         true
 
 # when updated
 - "@id":                 cvisb:dateModified
@@ -122,6 +128,7 @@
     "@id":               "schema:dateModified"
   owl:cardinality:       one
   marginality:           required
+  authenticated:         true
 
 - "@id":                 cvisb:updatedBy
   "@type":               rdf:Property
@@ -130,8 +137,8 @@
   schema:domainIncludes:
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
-    # - "@id":           schema:Person
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
+  authenticated:         true

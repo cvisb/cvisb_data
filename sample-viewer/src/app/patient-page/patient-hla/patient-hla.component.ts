@@ -20,9 +20,7 @@ export class PatientHlaComponent implements OnChanges {
   selectedAllele: string;
   backgroundColor: string;
 
-  files: string[] = [
-    'Genotype_calls.csv'
-  ]
+  @Input() files: any[];
 
   constructor(private hlaSvc: GetHlaDataService, private hlaColorSvc: HlaService) {
     // --- unique alleles: population of all samples ---
@@ -45,9 +43,7 @@ export class PatientHlaComponent implements OnChanges {
 
   ngOnChanges() {
     let hla: any;
-
     let hla_data = this.hlaSvc.getpatientHLA(this.patient.patientID);
-    console.log(hla_data);
 
     if (hla_data.length > 0) {
       this.genotype = hla_data.map(d => d.allele);

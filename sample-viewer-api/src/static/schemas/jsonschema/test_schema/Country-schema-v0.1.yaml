@@ -15,9 +15,9 @@
 #
 #   # bsc:               "http://bioschemas.org/"
 #   # bts:               "http://schema.biothings.io/"
-#   cvisb:               "http://schema.cvisb.org/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                 "http://schema.cvisb.org/Country/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/Country/0.1"
 
 # "@graph":
 - "@id":                 cvisb:Country
@@ -43,12 +43,14 @@
   schema:sameAs:
     "@id":               schema:identifier
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                           - SL
                           - NG
                           - LR
                           - GN
+                          - null
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -63,11 +65,13 @@
     "@id":               schema:url
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                           - https://www.iso.org/obp/ui/#iso:code:3166:SL
                           - https://www.iso.org/obp/ui/#iso:code:3166:NG
                           - https://www.iso.org/obp/ui/#iso:code:3166:LR
                           - https://www.iso.org/obp/ui/#iso:code:3166:GN
+                          - null
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -81,7 +85,8 @@
   schema:sameAs:
     "@id":               schema:name
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
+  authenticated:         false
   schema:Enumeration:
                           - Sierra Leone
                           - Nigeria
@@ -101,3 +106,4 @@
     "@id":               schema:alternateName
   owl:cardinality:       many
   marginality:           optional
+  authenticated:         false

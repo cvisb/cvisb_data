@@ -10,3 +10,55 @@
     "@id":               https://schema.cvisb.org
   schema:sameAs:
     "@id":               schema:Date
+
+- "@id":                 cvisb:lte
+  "@type":               rdf:Property
+  rdfs:comment:          Inclusive upper bound of a date range
+  rdfs:label:            lte
+  schema:domainIncludes:
+    - "@id":             cvisb:DateRange
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:lt
+  "@type":               rdf:Property
+  rdfs:comment:          Exclusive upper bound of a date range
+  rdfs:label:            lt
+  schema:domainIncludes:
+    - "@id":             cvisb:DateRange
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:gte
+  "@type":               rdf:Property
+  rdfs:comment:          Inclusive lower bound of a date range
+  rdfs:label:            gte
+  schema:domainIncludes:
+    - "@id":             cvisb:DateRange
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:gt
+  "@type":               rdf:Property
+  rdfs:comment:          Exclusive lower bound of a date range
+  rdfs:label:            gt
+  schema:domainIncludes:
+    - "@id":             cvisb:DateRange
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false

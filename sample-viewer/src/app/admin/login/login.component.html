@@ -1,12 +1,10 @@
 <ng-container *ngIf="loggedIn; else gotologin">
   <h2>Logout</h2>
 
-  <p>Currently logged in as {{ user.name }}</p>
+  <p>Hi {{ user.name }}!</p>
 
   <p>
-    <!-- <button (click)="login()"  *ngIf="!loggedIn">Login</button> -->
-    <button (click)="logout()">Logout</button>
-    <!-- <button (click)="logout()" *ngIf="loggedIn">Logout</button> -->
+    <button type="button" mat-raised-button color="primary" (click)="logout()">Logout</button>
   </p>
 </ng-container>
 
@@ -19,6 +17,6 @@
   <p>{{ message ? message : '' }}</p>
 
   <p>
-    <button (click)="login()">Login</button>
+    <button type="button" mat-raised-button color="primary" (click)="login()">Login</button>
   </p>
 </ng-template>

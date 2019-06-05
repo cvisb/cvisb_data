@@ -15,9 +15,9 @@
 #
 #   # bsc:                     "http://bioschemas.org/"
 #   # bts:                     "http://schema.biothings.io/"
-#   cvisb:                     "http://schema.cvisb.org/"
+#   cvisb:                     "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                       "http://schema.cvisb.org/DerivedSample/0.1"
+# "@id":                       "https://data.cvisb.org/jsonschema/DerivedSample/0.1"
 #
 # "@graph":
 
@@ -43,6 +43,7 @@
     - "@id":                 schema:Text
   owl:cardinality:           many
   marginality:               required
+  authenticated:             true
 
 # source sample type
 - "@id":                     cvisb:sourceSampleType
@@ -54,7 +55,7 @@
   schema:rangeIncludes:
     - "@id":                 xsd:string
     - "@id":                 schema:Text
-  owl:cardinality:           many
+  owl:cardinality:           one
   marginality:               required
   schema:Enumeration:
                             - "blood_purple-EDTA"
@@ -75,6 +76,7 @@
                             - "viralRNA"
                             - "totalRNA"
                             - "DNA"
+  authenticated:             false
 
   # date of primary sample collection
 - "@id":                     cvisb:primarySampleDate
@@ -84,7 +86,7 @@
   schema:domainIncludes:
     - "@id":                 cvisb:DerivedSample
   schema:rangeIncludes:
-    - "@id":                 schema:Date
-    - "@id":                 cvisb:DateRange
+    - "@id":                 cvisb:Date
   owl:cardinality:           one
   marginality:               recommended
+  authenticated:             true

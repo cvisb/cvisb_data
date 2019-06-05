@@ -11,3 +11,6 @@ export * from './auth-state';
 export * from './request-param';
 export * from './cvisb-user';
 export * from './es-result';
+export * from './patient-timepoints';
+export * from './citation';
+export * from './viral-seq-data';
