@@ -332,6 +332,9 @@ export class SampleUploadService {
       // If so, double check it's within bounds.
       // Necessary b/c new Date("YYYY-mm-dd") has cross-browser weirdness. On Chrome, generates a date which is at 5 pm the day before.
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
+      console.log(d)
+      console.log(correct_format)
+      console.log(converted)
       // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
 
