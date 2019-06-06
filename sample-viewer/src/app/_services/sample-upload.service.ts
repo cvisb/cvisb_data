@@ -27,6 +27,15 @@ export class SampleUploadService {
 
   // List of properties that will be nested together.
   locationCols: string[] = ["lab", "numAliquots", "freezerID", "freezerRack", "freezerBox", "freezerBoxCell"];
+  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
+
+  // Checks and converts these fields into arrays
+  arrayFields: string[]  = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
+    "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
+  // delimiters to split strings into arrays for array fields.
+  // Need two separate delimiters: commas are needed for .tsvs, since exported arrays from Angular come in as comma-delimited.
+  // BUT-- .csvs obviously can't handle extra commas, so using / as a csv array separator.
+  arrayDelim: string[] = [",", "/"];
 
   steps = [
     { id: "upload", complete: false, label: "select file", data: null },
@@ -53,13 +62,6 @@ export class SampleUploadService {
     { id: "create_sampleID", complete: false, label: "Creating unique sample ID", numErrors: null, fatal: true },
     // { id: "check_locations", complete: false, label: "Checking location changes", numErrors: null },
   ]
-
-  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
-
-  // Checks and converts these fields into arrays
-  arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
-    "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
-  arrayDelim = ","
 
 
 
@@ -237,7 +239,7 @@ export class SampleUploadService {
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
-        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim) : null;
+        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim[0]).map(d => d.split(this.arrayDelim[1])).flat() : null;
       })
     })
   }
