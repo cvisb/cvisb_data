@@ -13,7 +13,7 @@ def convertGender(gender):
 # --- cohort ---
 def cleanCohort(input):
     if(input != input):
-        return(pd.np.nan)
+        return("Unknown")
     if(re.search("Lassa", input.title())):
         return("Lassa")
     if(re.search("LSV", input.upper())):
@@ -28,6 +28,8 @@ def cleanCohort(input):
         return("Ebola")
     if(re.search("EVD", input.upper())):
         return("Ebola")
+    else:
+        return("Unknown")
 
 # --- outcome ---
 # collapse to [survivor, dead, contact, control, unknown]
