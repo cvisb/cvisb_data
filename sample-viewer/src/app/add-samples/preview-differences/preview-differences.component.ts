@@ -38,8 +38,8 @@ export class PreviewDifferencesComponent implements OnChanges {
         this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
 
         this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       } else {
         this.dataSource = new MatTableDataSource();
       }
@@ -61,9 +61,9 @@ export class PreviewDifferencesComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    console.log(this.dataSource)
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    // console.log(this.dataSource)
   }
 
   checkEqual(a, b) {
