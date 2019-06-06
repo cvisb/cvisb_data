@@ -40,6 +40,7 @@ export class PreviewDifferencesComponent implements OnChanges {
         this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        console.log(this.dataSource)
       } else {
         this.dataSource = new MatTableDataSource();
       }
