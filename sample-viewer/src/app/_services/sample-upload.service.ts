@@ -30,7 +30,7 @@ export class SampleUploadService {
   requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
 
   // Checks and converts these fields into arrays
-  arrayFields: string[]  = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
+  arrayFields: string[] = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
     "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
   // delimiters to split strings into arrays for array fields.
   // Need two separate delimiters: commas are needed for .tsvs, since exported arrays from Angular come in as comma-delimited.
@@ -475,10 +475,10 @@ export class SampleUploadService {
           lab: v[0].lab,
           samples: v,
           // array-ize the location properties
-          allFreezers: v.map(d => d.freezerID).flat(),
-          allRacks: v.map(d => d.freezerRack).flat(),
-          allBoxes: v.map(d => d.freezerBox).flat(),
-          allFreezerCells: v.map(d => d.freezerBoxCell).flat(),
+          allFreezers: arrayizeLocations(v, "freezerID"),
+          allRacks: arrayizeLocations(v, "freezerRack"),
+          allBoxes: arrayizeLocations(v, "freezerBox"),
+          allFreezerCells: arrayizeLocations(v, "freezerBoxCell"),
           // count the total number of aliquots.
           totalAliquots: _.sumBy(v, 'numAliquots'),
         }))
@@ -495,6 +495,14 @@ export class SampleUploadService {
       // Remove the duplicates.
       this.removeDupes(d.idx, d);
     })
+
+    // helper function to combine the array values.
+    // should combine values into an array.
+    // HOWEVER-- nulls aren't valid inputs for an array of strings in ES (sigh)
+    // so filtering out null values... people will just have to check and find the locations themselves.
+    function arrayizeLocations(v, varName): string[] {
+      return (v.map(d => d[varName]).flat().filter(d => d));
+    }
 
 
 
