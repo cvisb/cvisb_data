@@ -39,3 +39,4 @@ sample-viewer-api/src/static/data/clean_samples/exploratory_scripts/2019-05-06_p
 sample-viewer-api/src/static/data/clean_patients/exploratory_scripts/2019-05-14_acuteEbola_dylanExploration.R
 notes/2019-05-14_experiment-dataset-metadata.json
 sample-viewer-api/src/static/schemas/cvisb_variables_2019-05-22.xlsx
+sample-viewer-api/src/static/privacy/*

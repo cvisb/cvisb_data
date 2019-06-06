@@ -115,7 +115,7 @@ export class SampleUploadService {
   // No going back from this point! (well, there is, since I made a copy)
   getCleanedData(vars2delete = ['id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
     // patient metadata properties
-    'patientID', 'cohort', 'outcome', 'country', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
+    'patientID', 'cohort', 'outcome', 'country', 'alternateIdentifier', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
     // turn on loading indicator
     this.loadingSubject.next(true);
 
