@@ -26,7 +26,7 @@
 
           <div *ngFor="let col of location | getKeys">
             <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
-              {{ col }}: {{ location[col] }}
+              <span class="key">{{ col }}: </span> <span class="value">{{ location[col] }}</span>
             </span>
           </div>
         </div>
@@ -42,8 +42,8 @@
       <ng-template #objectData let-element="element" , letkey="key">
         <div *ngFor="let col of element[key] | getKeys">
           <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
-              {{ col }}: {{ element[key][col] }}
-            </span>
+              <span class="key">{{ col }}: </span><span class="value">{{ element[key][col] }}</span>
+          </span>
         </div>
       </ng-template>
     </ng-container>

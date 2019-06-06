@@ -61,13 +61,13 @@
 
             <div [ngClass]="{'new-data': true}" *ngIf="(element[key+'_y'] !== undefined) && (element[key+'_y'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
-              {{type === "location" ? key + ": " : ""}} {{ element[key+'_y'] }}
+              <span class="key">{{type === "location" ? key + ": " : ""}}</span> <span class="value">{{ element[key+'_y'] }}</span>
             </span>
             </div>
 
             <div [ngClass]="{'old-data': ((element[key+'_x'] !== element[key+'_y']) && (type !== 'location')) || ((element[key+'_y'] !== undefined) && (type === 'location') && (element[key+'_x'] !== element[key+'_y']))}" *ngIf="(element[key+'_x'] !== undefined) && (element[key+'_x'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
-              {{type === "location" ? key + ": " : ""}} {{ element[key+'_x'] }}
+              <span class="key">{{type === "location" ? key + ": " : ""}}</span> <span class="value">{{ element[key+'_x'] }}</span>
             </span>
             </div>
           </div>
