@@ -50,7 +50,6 @@ export class FrontendSampleValidationComponent implements OnInit {
     })
 
     uploadSvc.progressState$.subscribe(state => {
-      console.log(state)
       this.upload_steps = state;
       // Make sure data is uploaded.
       this.ready2validate = state.filter((d: any) => d.id == "upload")[0]['complete'];
@@ -81,7 +80,6 @@ export class FrontendSampleValidationComponent implements OnInit {
 
     // If already ready to review and a value is changed, call the function to get the uploadable data.
     if (this.ready2review) {
-      console.log('updating data since a button was changed!')
       this.uploadSvc.getCleanedData();
     }
   }
