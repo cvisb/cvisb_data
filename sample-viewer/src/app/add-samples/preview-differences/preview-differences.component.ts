@@ -32,15 +32,23 @@ export class PreviewDifferencesComponent implements OnChanges {
 
       let merged = mergedObj.merged;
       this.displayedColumns = mergedObj.displayedColumns;
-      this.locationColumns = mergedObj.locationColumns;
+      this.locationColumns = mergedObj.locationColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
 
       if (merged && merged.length > 0) {
         this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
 
         this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
         this.dataSource.paginator = this.paginator;
+
+        // custom sorting function, to deal w/ the nested-ness of the data.
+        // sort by default by the *new* value, not the old one.
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            default: return item[property + "_y"];
+          }
+        };
         this.dataSource.sort = this.sort;
-        console.log(this.dataSource)
+        
       } else {
         this.dataSource = new MatTableDataSource();
       }
