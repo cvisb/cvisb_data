@@ -15,10 +15,8 @@ import { HttpParams } from '@angular/common/http';
   templateUrl: './patient-table.component.html',
   styleUrls: ['./patient-table.component.scss']
 })
+
 export class PatientTableComponent implements OnInit {
-  // private patients: PatientArray;
-  // private patientSummary: PatientArray;
-  // patientSource: MatTableDataSource<Patient>;
   patientSource: PatientsDataSource;
   selectedLength: number;
   qString: HttpParams;
@@ -40,21 +38,10 @@ export class PatientTableComponent implements OnInit {
 
     route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
-      // console.log("selected length: " + this.selectedLength)
     });
   }
 
   ngOnInit() {
-    // // custom sorters for nested objects
-    // // Note: it seems to be working without this on a small sample size, but good to be explicit.
-    // this.patientSource.sortingDataAccessor = (item, property) => {
-    //   switch (property) {
-    //     case 'associatedSamples': return item.associatedSamples ? item.associatedSamples.length : 0;
-    //     case 'country': return item.country['name'];
-    //     case 'availableData': return item.availableData ? item.availableData.length : 0;
-    //     default: return item[property];
-    //   }
-    // };
     this.patientSource = new PatientsDataSource(this.apiSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
@@ -87,23 +74,11 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    // console.log("loadPatientPage Q:" + this.qString)
     this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
-
-    // console.log(this.patientSource);
-
-
-    // this.patientSvc.getPatientSummary(this.qString).subscribe(results => {
-    //   this.selectedLength = results.total;
-    // })
-
   }
 
   selectRow($event, row) {
-    // $event.preventDefault();
-    // $event.stopPropagation();  // <- that will stop propagation on lower layers
-
     this.router.navigate(['/patient', row.patientID]);
   }
 
