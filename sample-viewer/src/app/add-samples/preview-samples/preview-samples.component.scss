@@ -1,4 +1,5 @@
 @import "../../../sass/material-theme.scss";
+@import "../../../sass/variables.scss";
 
 .mat-column-missing {
   color: accent-redder(500);
@@ -9,7 +10,6 @@
   color: accent-redder(A700);
   font-weight: 400;
 }
-
 // Center text in table
 td.mat-cell,
 th.mat-header-cell {
@@ -21,6 +21,10 @@ th.mat-header-cell {
   justify-content: center !important;
 }
 
+.mat-column-location {
+  min-width: 225px;
+  text-align: start !important;
+}
 // Locations
 .lab {
   font-weight: 400;
@@ -34,4 +38,8 @@ th.mat-header-cell {
 
 .hide-pagination {
   // display: none !important;
+}
+
+.key {
+  color: $grey-400;
 }

@@ -14,16 +14,16 @@ $old-color: accent-redder(600);
 }
 
 .mat-column-sampleID {
-    min-width: 200px;
+  min-width: 200px;
 }
 
 .mat-column-location {
-    min-width: 170px;
+  min-width: 225px;
+  text-align: start !important;
 }
 
-
 .changed-group {
-  margin: 10px 0px;
+  margin: 10px 0;
 }
 
 .lab {
@@ -45,17 +45,20 @@ $old-color: accent-redder(600);
   text-decoration: line-through;
 }
 
-
 .location-group {
   padding: 5px 10px;
   margin: 10px;
   background: $grey-50;
 
   &.right_only {
-    background:  lighten(#cfe9d4, 10%)
+    background: lighten(#cfe9d4, 10%);
   }
 }
 
 .hide-pagination {
   display: none !important;
+}
+
+.key {
+  color: $grey-400;
 }
