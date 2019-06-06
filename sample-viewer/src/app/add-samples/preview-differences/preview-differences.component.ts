@@ -7,6 +7,8 @@ import { SampleUploadService } from '../../_services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SpinnerPopupComponent } from '../../_dialogs';
 
+import { isEqual } from 'lodash';
+
 @Component({
   selector: 'app-preview-differences',
   templateUrl: './preview-differences.component.html',
@@ -59,6 +61,10 @@ export class PreviewDifferencesComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  checkEqual(a,b){
+    return(isEqual(a,b))
   }
 
   sortingFunc(a) {
