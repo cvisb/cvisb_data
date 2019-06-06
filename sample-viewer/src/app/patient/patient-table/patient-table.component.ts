@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
-// import { pipe } from 'rxjs';
-// import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
 import { PatientsDataSource, RequestParametersService, ApiService } from '../../_services/';
 import { Patient, PatientArray, RequestParamArray } from '../../_models';
