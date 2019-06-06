@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
@@ -14,7 +14,7 @@ import { isEqual } from 'lodash';
   templateUrl: './preview-differences.component.html',
   styleUrls: ['./preview-differences.component.scss']
 })
-export class PreviewDifferencesComponent implements OnInit {
+export class PreviewDifferencesComponent implements OnChanges {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   locationColumns: string[];
@@ -38,8 +38,8 @@ export class PreviewDifferencesComponent implements OnInit {
         this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
 
         this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
       } else {
         this.dataSource = new MatTableDataSource();
       }
@@ -52,7 +52,7 @@ export class PreviewDifferencesComponent implements OnInit {
           data: `loading samples...`,
           disableClose: true
         });
-      } else if(this.loadingBox){
+      } else if (this.loadingBox) {
         this.loadingBox.close()
       }
 
@@ -60,11 +60,14 @@ export class PreviewDifferencesComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    console.log(this.dataSource)
   }
 
-  checkEqual(a,b){
-    return(isEqual(a,b))
+  checkEqual(a, b) {
+    return (isEqual(a, b))
   }
 
   sortingFunc(a) {
