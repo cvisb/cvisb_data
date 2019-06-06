@@ -195,7 +195,7 @@ export class MergeService {
         sample[column] = sample[column + "_x"];
         break;
       case "replace_left_first":
-        sample[column] = sample[column + "_y"] ? sample[column + "_y"] : sample[column + "_x"];
+        sample[column] = (sample[column + "_y"] || sample[column + "_y"] === 0) ? sample[column + "_y"] : sample[column + "_x"];
         break;
       default:
         sample[column] = [sample[column + "_x"], sample[column + "_y"]];
