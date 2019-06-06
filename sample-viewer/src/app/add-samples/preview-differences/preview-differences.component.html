@@ -1,7 +1,7 @@
 <div class="stepper-header">
   <h2><span class="stepper-title">Review changes to database</span></h2>
 
-  <h2 *ngIf="dataSource && dataSource.data">{{ dataSource.data.length }} samples will be changed</h2>
+  <h2 *ngIf="dataSource && dataSource.data">{{ dataSource.data.length }} {{ dataSource.data.length === 1 ? "sample" : "samples" }} will be changed</h2>
 
   <div class="helper-text" [ngClass]='dataSource && dataSource.data.length > 0 ? "visible": "hidden"'>
     <p>
