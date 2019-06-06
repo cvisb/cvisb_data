@@ -42,7 +42,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
         console.log('sample list from data source:')
         console.log(sampleList)
         this.resultCountSubject.next(sampleList.samples.length);
-        this.samplesSubject.next(sampleList.samples.length);
+        this.samplesSubject.next(sampleList.sampleWide);
       });
 
   }
