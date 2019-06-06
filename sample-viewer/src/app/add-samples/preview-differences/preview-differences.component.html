@@ -33,16 +33,9 @@
 
         <!-- NORMAL DATA -->
         <ng-template #flatData let-key="key" let-element="element">
-          <!-- <div [ngClass]="{'new-data': !element[key]['agree']}" *ngIf="element[key]['new']">
-            {{ element[key]['new'] }}
-          </div> -->
 
-          <div [ngTemplateOutlet]="element[key+'_x'] === element[key+'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: element, key: key }">
+          <div [ngTemplateOutlet]="checkEqual(element[key+'_x'], element[key+'_y']) ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: element, key: key }">
           </div>
-
-          <!-- <div [ngClass]="{'old-data': !element[key]['agree']}" *ngIf="!element[key]['agree'] && element[key]['old']">
-            {{ element[key]['old'] }}
-          </div> -->
 
         </ng-template>
 
@@ -50,8 +43,8 @@
         <ng-template #data_unchanged let-element="element" let-key="key" let-type="type">
           <div *ngIf="element[key+'_x'] !== undefined">
             <span [ngClass]="{'lab': key === 'lab'}">
-              {{type === "location" ? key + ": " : ""}} {{ element[key+'_x'] }}
-              </span>
+              <span class="key">{{type === "location" ? key + ": " : ""}}</span> <span class="value">{{ element[key+'_x'] }}</span>
+            </span>
           </div>
         </ng-template>
 
@@ -62,13 +55,13 @@
             <div [ngClass]="{'new-data': true}" *ngIf="(element[key+'_y'] !== undefined) && (element[key+'_y'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
               <span class="key">{{type === "location" ? key + ": " : ""}}</span> <span class="value">{{ element[key+'_y'] }}</span>
-            </span>
+              </span>
             </div>
 
             <div [ngClass]="{'old-data': ((element[key+'_x'] !== element[key+'_y']) && (type !== 'location')) || ((element[key+'_y'] !== undefined) && (type === 'location') && (element[key+'_x'] !== element[key+'_y']))}" *ngIf="(element[key+'_x'] !== undefined) && (element[key+'_x'] !== '')">
               <span [ngClass]="{'lab': key === 'lab'}">
               <span class="key">{{type === "location" ? key + ": " : ""}}</span> <span class="value">{{ element[key+'_x'] }}</span>
-            </span>
+              </span>
             </div>
           </div>
         </ng-template>
@@ -77,7 +70,7 @@
         <ng-template #locations let-key="key" let-element="element">
           <div *ngFor="let location of element[key]; let idx = index" class="location-group" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
             <div *ngFor="let key2 of locationColumns">
-              <div [ngTemplateOutlet]="location[key2 + '_x'] === location[key2 +'_y'] ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key2, type: 'location'}">
+              <div [ngTemplateOutlet]="checkEqual(location[key2 + '_x'], location[key2 +'_y']) ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key2, type: 'location'}">
               </div>
             </div>
           </div>
