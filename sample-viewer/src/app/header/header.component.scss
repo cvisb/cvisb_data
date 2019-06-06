@@ -22,6 +22,26 @@
   letter-spacing: 4.3px;
 }
 
+.dev-banner {
+  justify-content: center;
+  padding: 5px 10px;
+  border: 2px solid white;
+  // background: $ebola-color;
+  // background: accent-redder(500);
+  background: accent-redder(A400);
+  // background: accent-redder(A700);
+  color: white;
+  text-transform: none;
+  letter-spacing: 1.25px;
+  font-size: 12px;
+  font-weight: 700;
+
+  & a {
+    color: accent(100);
+    margin-left: 4px;
+  }
+}
+
 img {
   height: 60px;
   margin-top: 5px;
