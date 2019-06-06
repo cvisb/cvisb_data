@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 // import { SelectionModel } from '@angular/cdk/collections';
 // import { FormControl, FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -6,8 +6,10 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { GetSamplesService } from '../../_services/';
-import { Sample, SampleWide, Patient } from '../../_models';
+import { HttpParams } from '@angular/common/http';
+
+import { SamplesDataSource, ApiService, GetSamplesService, RequestParametersService } from '../../_services/';
+import { Sample, SampleWide, Patient, RequestParamArray } from '../../_models';
 import { SampleMetadataComponent } from '../../_dialogs';
 
 @Component({
@@ -20,8 +22,9 @@ export class SampleTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   samplePatientMD: Patient[];
-  loading: boolean;
-  dataSource: MatTableDataSource<any>;
+  // dataSource: MatTableDataSource<any>;
+  dataSource: SamplesDataSource;
+  // loading: boolean;
 
   sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'];
   displayedColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"].concat(this.sample_types);
@@ -36,25 +39,36 @@ export class SampleTableComponent implements OnInit {
 
 
   constructor(
-    private sampleSvc: GetSamplesService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private sampleSvc: GetSamplesService,
+    private apiSvc: ApiService,
+    private requestSvc: RequestParametersService
   ) {
-
-    this.sampleSvc.samplesWideState$.subscribe((sList: Sample[]) => {
-      this.dataSource = new MatTableDataSource(sList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    })
-
-    this.sampleSvc.loadingState$.subscribe((state: boolean) => {
-      this.loading = state;
-    })
+    // this.sampleSvc.loadingState$.subscribe((state: boolean) => {
+    //   this.loading = state;
+    // })
   }
 
 
 
   ngOnInit() {
+    this.dataSource = new SamplesDataSource(this.sampleSvc);
+    this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
+    // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
+  }
+
+  ngAfterViewInit() {
+    // Listener for changes in query params
+    this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
+      console.log("Sample table calling new request to update data")
+      console.log(params)
+      this.loadSamples(params);
+    })
+  }
+
+  loadSamples(params: RequestParamArray) {
+    this.dataSource.loadSamples(params);
   }
 
   showSampleMD(sample): void {
