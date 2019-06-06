@@ -1,4 +1,4 @@
-<div *ngIf="data.length > 0">
+<div [ngClass]='data && data.length > 0 ? "visible": "hidden"'>
 
 <div class="helper-text">
   IDs are expected to be in the following formats:

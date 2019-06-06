@@ -1,7 +1,7 @@
 <div class="stepper-header">
   <h2><span class="stepper-title">Review changes to database</span></h2>
 
-  <div class="helper-text" *ngIf="dataSource && dataSource.data.length > 0">
+  <div class="helper-text" [ngClass]='dataSource && dataSource.data.length > 0 ? "visible": "hidden"'>
     <h2>{{ dataSource.data.length }} samples will be changed: </h2>
     <p>
       Double check any data that you are about to change. Any data that remains unchanged will be shown in black, while <span class="old-data">old data, shown in red,</span> will be replaced by <span class="new-data">new values, shown in green</span>
@@ -19,7 +19,7 @@
 
 </div>
 
-<div class="preview-sample" *ngIf="dataSource && dataSource.data.length > 0; else no_data">
+<div class="preview-sample" [ngClass]='dataSource && dataSource.data.length > 0 ? "visible": "hidden"'>
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
@@ -92,8 +92,8 @@
 <mat-paginator [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons [hidden]="dataSource && dataSource.data.length > 0"></mat-paginator>
 
 
-<ng-template #no_data>
+<ng-container *ngIf="!dataSource || dataSource.data.length === 0">
   <p>
     Nothing will be replaced in the database. Moving on...
   </p>
-</ng-template>
+</ng-container>

@@ -1,4 +1,4 @@
-<div class="preview-sample" *ngIf="dataSource && dataSource.data.length > 0">
+<div class="preview-sample" [ngClass]='dataSource && dataSource.data.length > 0 ? "visible": "hidden"'>
   <table mat-table [dataSource]="dataSource" matSort id="preview_samples">
 
 
