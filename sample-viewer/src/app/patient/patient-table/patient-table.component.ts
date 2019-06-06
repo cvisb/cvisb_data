@@ -6,7 +6,7 @@ import { merge } from "rxjs/";
 // import { pipe } from 'rxjs';
 // import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 
-import { GetPatientsService, PatientsDataSource, RequestParametersService, ApiService } from '../../_services/';
+import { PatientsDataSource, RequestParametersService, ApiService } from '../../_services/';
 import { Patient, PatientArray, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
 
@@ -31,7 +31,6 @@ export class PatientTableComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private requestSvc: RequestParametersService,
-    private patientSvc: GetPatientsService,
     private apiSvc: ApiService,
   ) {
 
