@@ -55,6 +55,10 @@ $old-color: accent-redder(600);
   }
 }
 
+.location-panel {
+  box-shadow: none !important;
+}
+
 .hide-pagination {
   display: none !important;
 }

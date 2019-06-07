@@ -22,13 +22,21 @@
 
       <ng-template #objectArrayData let-element="element" , letkey="key">
         <div *ngFor="let location of element[key]; let idx = index" class="location-group">
+          <mat-expansion-panel class="location-panel">
+            <mat-expansion-panel-header class="metadata-key">
+              <mat-panel-title>
+                {{ location.lab }}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ location.numAliquots === 1 ? location.numAliquots + " aliquot" : location.numAliquots + " aliquots"}}
+              </mat-panel-description>
 
-
-          <div *ngFor="let col of location | getKeys">
-            <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+              <div *ngFor="let col of location | getKeys">
+                <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
               <span class="key">{{ col }}: </span> <span class="value">{{ location[col] }}</span>
-            </span>
-          </div>
+                </span>
+              </div>
+          </mat-expansion-panel>
         </div>
       </ng-template>
 
