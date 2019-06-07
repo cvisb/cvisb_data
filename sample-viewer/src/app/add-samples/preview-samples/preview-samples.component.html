@@ -5,7 +5,7 @@
     <ng-container *ngFor="let key of displayedColumns" [matColumnDef]="key">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="table-header" [ngClass]="{'highlight': highlightCols.includes(key)}">{{ key }}</th>
       <td mat-cell *matCellDef="let element" class="message" [ngClass]="{'highlight': highlightCols.includes(key)}">
-        <ng-container *ngIf="element[key] && element[key] !== ''">
+        <ng-container *ngIf="(element[key] || element[key] === false) && element[key] !== ''">
           <div [ngTemplateOutlet]="isArray(element[key]) ? (isObject(element[key][0]) ? objectArrayData : arrayData) :
           isObject(element[key]) ? objectData : flatData" [ngTemplateOutletContext]="{ element: element, key: key }">
           </div>
@@ -14,10 +14,8 @@
 
       <!-- For 'location', the data is an Object, not a flat string/number/etc. So need to loop over the elements... -->
       <ng-template #flatData let-element="element" , letkey="key">
-        <!-- Ignore _merge values from printing -->
-        <span *ngIf="key !== '_merge'">
-          <!-- For false values, make sure they print in the table -->
-          {{ element[key] === false ? String(element[key]) : element[key] }}
+        <span>
+          {{ element[key] }}
         </span>
       </ng-template>
 
@@ -26,7 +24,7 @@
 
 
           <div *ngFor="let col of location | getKeys">
-            <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+            <span [ngClass]="{'lab': col === 'lab'}">
               <span class="key">{{ col }}: </span> <span class="value">{{ location[col] }}</span>
             </span>
           </div>
@@ -42,7 +40,7 @@
 
       <ng-template #objectData let-element="element" , letkey="key">
         <div *ngFor="let col of element[key] | getKeys">
-          <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+          <span [ngClass]="{'lab': col === 'lab'}">
               <span class="key">{{ col }}: </span><span class="value">{{ element[key][col] }}</span>
           </span>
         </div>
