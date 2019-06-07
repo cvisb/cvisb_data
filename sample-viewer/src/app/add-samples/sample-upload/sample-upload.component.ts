@@ -202,7 +202,7 @@ export class SampleUploadComponent implements OnInit {
 
   // Remove any blank rows
   cleanCSV(data, headers) {
-    return (this.removeEmpties(data, headers))
+    return (this.removeEmpties(data))
   }
 
   removeEmpties(data) {
