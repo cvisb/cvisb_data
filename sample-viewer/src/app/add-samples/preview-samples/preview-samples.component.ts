@@ -34,6 +34,9 @@ export class PreviewSamplesComponent implements OnChanges {
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
 
+    console.log(this.displayedColumns)
+    console.log(this.ignoredColumns)
+
     if(this.ignoredColumns) {
       this.displayedColumns = _.difference(this.displayedColumns, this.ignoredColumns);
     }
