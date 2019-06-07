@@ -222,7 +222,7 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     AllPatientsResolver,
     SamplesResolver,
     HlaResolver,
-    SampleDataSource
+    SamplesDataSource,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EncodeHttpParamsInterceptor,
