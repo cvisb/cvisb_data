@@ -28,7 +28,7 @@ export class DownloadBtnComponent implements OnInit {
 
   dialogRef: MatDialogRef<any>;
 
-  sampleSortCols: string[] = ["creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
+  sampleSortCols: string[] = ["sampleID", "creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
 
   constructor(
     private authSvc: AuthService,
