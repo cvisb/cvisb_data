@@ -6,7 +6,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { HttpParams } from '@angular/common/http';
+// import { HttpParams } from '@angular/common/http';
 
 import { SamplesDataSource, ApiService, GetSamplesService, RequestParametersService } from '../../_services/';
 import { Sample, SampleWide, Patient, RequestParamArray } from '../../_models';
@@ -54,7 +54,7 @@ export class SampleTableComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new SamplesDataSource(this.sampleSvc);
-    this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
+    this.dataSource.loadSamples([]);
     // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
   }
 

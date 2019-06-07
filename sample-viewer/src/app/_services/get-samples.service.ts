@@ -61,7 +61,7 @@ export class GetSamplesService {
   }
 
   // Main function to get the samples + associated patient-level metadata
-  getSamples(qParams?): Observable<any> {
+  getSamples(qParamArray?: RequestParamArray): Observable<any> {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       // samplePatientMD stores the patient metadata (cohort, outcome, etc.)
@@ -76,13 +76,13 @@ export class GetSamplesService {
       return this.getSamplePatientData()
         // (2) Call /sample to get the subset of samples indicated by the qParams
         // Merge to patient metadata properties
-        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParams)),
+        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParamArray)),
           finalize(() => this.loadingSubject.next(false))
         );
     } else {
       // Patient-Sample metadata already exists.
       // Execute the /sample query to get the filtered samples.
-      return this.getNPrepSamples(qParams).pipe(
+      return this.getNPrepSamples(qParamArray).pipe(
         finalize(() => this.loadingSubject.next(false))
       );
     }
@@ -90,7 +90,7 @@ export class GetSamplesService {
 
 
   // Main function to execute the call to /sample to get a list of samples and merge to patient props
-  getNPrepSamples(filterParamArray) {
+  getNPrepSamples(filterParamArray: RequestParamArray) {
     console.log("Calling prep samples")
     let params = this.requestSvc.reduceSampleParams(filterParamArray);
     params = params.set('size', "1000")
