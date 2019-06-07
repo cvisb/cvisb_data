@@ -19,7 +19,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loadingState$ = this.loadingSubject.asObservable();
 
-  // Patient count
+  // Samples count
   private resultCountSubject = new BehaviorSubject<number>(0);
   public resultCountState$ = this.resultCountSubject.asObservable();
 
