@@ -90,7 +90,7 @@ export class DownloadBtnComponent implements OnInit {
           if (counter > 0) dwnld_data += columnDelimiter;
 
           // For null values, return empty string.
-          dwnld_data += item[key] ? item[key] : "";
+          dwnld_data += (item[key] || item[key] === 0 || item[key] === false) ? item[key] : "";
           counter++;
         });
         dwnld_data += lineDelimiter;
