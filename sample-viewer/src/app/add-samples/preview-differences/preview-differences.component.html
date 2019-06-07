@@ -73,10 +73,10 @@
             <mat-expansion-panel class="location-panel" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
               <mat-expansion-panel-header class="metadata-key">
                 <mat-panel-title>
-                  {{ location.lab_y }}
+                  {{ location.lab_y ? location.lab_y : location.lab_x}}
                 </mat-panel-title>
                 <mat-panel-description>
-                  {{ location.numAliquots_y === 1 ? location.numAliquots_y + " aliquot" : location.numAliquots_y + " aliquots"}}
+                  {{ location.numAliquots_y ? (location.numAliquots_y === 1 ? location.numAliquots_y + " aliquot" : location.numAliquots_y + " aliquots") : (location.numAliquots_x === 1 ? location.numAliquots_x + " aliquot" : location.numAliquots_x + " aliquots") }}
                 </mat-panel-description>
               </mat-expansion-panel-header>
 
