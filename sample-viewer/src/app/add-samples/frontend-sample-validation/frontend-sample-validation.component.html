@@ -66,7 +66,18 @@
 
       <div *ngSwitchCase="'create_sampleID'">
         <div class="num-weird" *ngIf="step.numErrors > 0">
-          {{ step.numErrors }} {{step.numErrors > 1 ? "samples are" : "sample is"}} missing a required field to generate its sample ID. Add the missing required fields.
+          <h3 class="helper-msg">
+            {{ step.numErrors }} {{step.numErrors > 1 ? "samples are" : "sample is"}} missing a required field to generate its sample ID.
+          </h3>
+          <p> Make sure that you have a value for each of the required fields:
+            <ng-container *ngFor="let field of required_fields; let idx = index">
+              <span class="emphasis">{{ field }}</span>
+              <span class="data-separator" *ngIf="idx < required_fields.length - 1"></span>
+            </ng-container>
+          </p>
+          <p>
+            Note that if a date is an invalid format, you'll have problems-- fix the date.
+          </p>
         </div>
       </div>
 

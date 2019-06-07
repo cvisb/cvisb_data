@@ -30,8 +30,11 @@ export class FrontendSampleValidationComponent implements OnInit {
   approve_ids: boolean;
   approve_dates: boolean;
   approve_dupes: boolean;
+  required_fields: string[];
 
   constructor(private uploadSvc: SampleUploadService) {
+    this.required_fields = this.uploadSvc.requiredFields;
+
     // Front-end validation states
     uploadSvc.FEvalidationState$.subscribe(state => {
       // Count number of errors
