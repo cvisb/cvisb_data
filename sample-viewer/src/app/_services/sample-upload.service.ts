@@ -345,7 +345,7 @@ export class SampleUploadService {
       } else if (converted < lowerLimit) {
         withinBounds = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
       } else {
-        withinBounds = "";
+        withinBounds = null;
       }
 
       let converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
@@ -353,15 +353,12 @@ export class SampleUploadService {
 
       // binary if the inputted date was okay.
       let date_match = converted_numeric === d;
-      console.log(converted_numeric)
-      console.log(date_match)
 
       date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBounds, date_match: date_match })
     })
 
     // Filter out only the weirdos
-    console.log(date_dict)
-    date_dict = date_dict.filter((d) => !d.date_withinBound || !d.date_match);
+    date_dict = date_dict.filter((d) => d['date outside range'] || !d.date_match);
     console.log(date_dict)
     // Remove the indicator for the weirdos
     date_dict = this.apiSvc.dropCols(date_dict, ["date_match"], false);
