@@ -31,6 +31,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   loadSamples(qParams) {
     console.log('calling samples.dataSource:loadSamples')
+    console.log(qParams)
 
     this.loadingSubject.next(true);
 
