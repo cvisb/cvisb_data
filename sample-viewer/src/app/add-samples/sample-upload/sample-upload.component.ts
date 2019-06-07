@@ -98,8 +98,6 @@ export class SampleUploadComponent implements OnInit {
 
         let ids = data.map(d => d.privatePatientID);
 
-        // console.log(data)
-
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
       }
