@@ -61,6 +61,7 @@ export class Nested2longService {
   }
 
   prep4download(data, cols2unnest, cols2remove = []) {
+    console.log(data)
     let flattened = this.nested2long(data, cols2unnest);
 
     flattened = this.apiSvc.dropCols(flattened, cols2remove, false);
