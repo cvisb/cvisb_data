@@ -16,7 +16,8 @@
       <ng-template #flatData let-element="element" , letkey="key">
         <!-- Ignore _merge values from printing -->
         <span *ngIf="key !== '_merge'">
-          {{ element[key] }}
+          <!-- For false values, make sure they print in the table -->
+          {{ element[key] === false ? String(element[key]) : element[key] }}
         </span>
       </ng-template>
 
