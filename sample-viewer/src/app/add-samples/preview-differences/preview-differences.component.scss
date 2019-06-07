@@ -56,7 +56,8 @@ $old-color: accent-redder(600);
 }
 
 .both {
-  background: lighten(accent(50), 1%);
+  // background: lighten(accent(50), 1%);
+  background: $grey-50;
 }
 
 .left_only {
