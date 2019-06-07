@@ -9,7 +9,7 @@ import { Observable, of, BehaviorSubject } from "rxjs";
 import { GetSamplesService } from './get-samples.service';
 import { catchError, finalize } from "rxjs/operators";
 
-import { Sample, SampleWide } from '../_models';
+import { Sample, SampleWide, RequestParamArray } from '../_models';
 
 export class SamplesDataSource implements DataSource<SampleWide> {
 
@@ -29,13 +29,13 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   }
 
-  loadSamples(qParams) {
+  loadSamples(qParamArray: RequestParamArray) {
     console.log('calling samples.dataSource:loadSamples')
-    console.log(qParams)
+    console.log(qParamArray)
 
     this.loadingSubject.next(true);
 
-    this.sampleSvc.getSamples(qParams).pipe(
+    this.sampleSvc.getSamples(qParamArray).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
