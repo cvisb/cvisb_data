@@ -53,6 +53,12 @@ $old-color: accent-redder(600);
   &.right_only {
     background: lighten(#cfe9d4, 10%);
   }
+  &.both {
+    background: lighten(accent(50), 1%);
+  }
+  &.left_only {
+    background: $grey-50;
+  }
 }
 
 .location-panel {

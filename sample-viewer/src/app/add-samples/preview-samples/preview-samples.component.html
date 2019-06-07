@@ -22,7 +22,7 @@
 
       <ng-template #objectArrayData let-element="element" , letkey="key">
         <div *ngFor="let location of element[key]; let idx = index" class="location-group">
-          <mat-expansion-panel class="location-panel">
+          <mat-expansion-panel class="location-panel location-group">
             <mat-expansion-panel-header class="metadata-key">
               <mat-panel-title>
                 {{ location.lab }}

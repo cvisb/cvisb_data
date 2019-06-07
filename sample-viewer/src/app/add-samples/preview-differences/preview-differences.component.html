@@ -70,7 +70,7 @@
         <!-- LOCATION DATA -->
         <ng-template #locations let-key="key" let-element="element">
           <div *ngFor="let location of element[key]; let idx = index" class="location-group" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
-            <mat-expansion-panel class="location-panel">
+            <mat-expansion-panel class="location-panel" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
               <mat-expansion-panel-header class="metadata-key">
                 <mat-panel-title>
                   {{ location.lab_y }}
