@@ -153,6 +153,7 @@ export class RequestParametersService {
   }
 
   reduceSampleParams(request_params: RequestParamArray): HttpParams {
+    console.log(request_params)
     let reduced = this.reduceParams(request_params);
 
     // default options
@@ -173,7 +174,6 @@ export class RequestParametersService {
   }
 
   reducePatientParams(request_params): HttpParams {
-    console.log(request_params);
     // default options
     let reduced = this.reduceParams(request_params);
 
@@ -187,7 +187,6 @@ export class RequestParametersService {
       .set('elisa', elisa_string)
       .set('sampleQuery', sample_string)
       .set('experimentQuery', expt_string);
-      console.log(http_params)
 
     return (http_params);
   }
@@ -209,6 +208,7 @@ export class RequestParametersService {
   }
 
   reduceParams2string(request_params: RequestParamArray, filterBy): string {
+    console.log(request_params)
     let params = request_params
       .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
 
