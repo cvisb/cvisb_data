@@ -70,10 +70,22 @@
         <!-- LOCATION DATA -->
         <ng-template #locations let-key="key" let-element="element">
           <div *ngFor="let location of element[key]; let idx = index" class="location-group" [ngClass]="{'both': location._merge === 'both', 'right_only': location._merge === 'right_only', 'left_only': location._merge === 'left_only'}">
-            <div *ngFor="let key2 of locationColumns">
-              <div [ngTemplateOutlet]="checkEqual(location[key2 + '_x'], location[key2 +'_y']) ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key2, type: 'location'}">
+            <mat-expansion-panel class="location-panel">
+              <mat-expansion-panel-header class="metadata-key">
+                <mat-panel-title>
+                  {{ location.lab }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ location.numAliquots === 1 ? location.numAliquots + " aliquot" : location.numAliquots + " aliquots"}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+
+              <div *ngFor="let key2 of locationColumns">
+                <div [ngTemplateOutlet]="checkEqual(location[key2 + '_x'], location[key2 +'_y']) ? data_unchanged : data_changed" [ngTemplateOutletContext]="{ element: location, key: key2, type: 'location'}">
+                </div>
               </div>
-            </div>
+            </mat-expansion-panel>
           </div>
 
         </ng-template>
