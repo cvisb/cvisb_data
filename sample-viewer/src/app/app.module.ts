@@ -19,7 +19,7 @@ import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interc
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver, SamplesResolver } from './_services/';
+import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver, SamplesResolver, SamplesDataSource } from './_services/';
 
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -222,6 +222,7 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     AllPatientsResolver,
     SamplesResolver,
     HlaResolver,
+    SampleDataSource
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EncodeHttpParamsInterceptor,
