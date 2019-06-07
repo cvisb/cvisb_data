@@ -276,6 +276,7 @@ export class SampleUploadService {
     } else {
       this.data.forEach((d: any) => {
         d.privatePatientID = d.originalID;
+        d.visitCode = d.originalVisitCode;
       })
     }
   }
