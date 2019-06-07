@@ -98,8 +98,6 @@ export class SampleUploadComponent implements OnInit {
 
         let ids = data.map(d => d.privatePatientID);
 
-        // console.log(data)
-
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
       }
@@ -204,12 +202,10 @@ export class SampleUploadComponent implements OnInit {
 
   // Remove any blank rows
   cleanCSV(data, headers) {
-    return (this.removeEmpties(data, headers))
+    return (this.removeEmpties(data))
   }
 
-  removeEmpties(data, headers) {
-    headers.filter(d => d !== "privatePatientID");
-
+  removeEmpties(data) {
     let filtered = cloneDeep(data);
 
     filtered.forEach(d => delete(d.sampleID));

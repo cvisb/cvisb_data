@@ -27,6 +27,15 @@ export class SampleUploadService {
 
   // List of properties that will be nested together.
   locationCols: string[] = ["lab", "numAliquots", "freezerID", "freezerRack", "freezerBox", "freezerBoxCell"];
+  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
+
+  // Checks and converts these fields into arrays
+  arrayFields: string[] = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
+    "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
+  // delimiters to split strings into arrays for array fields.
+  // Need two separate delimiters: commas are needed for .tsvs, since exported arrays from Angular come in as comma-delimited.
+  // BUT-- .csvs obviously can't handle extra commas, so using / as a csv array separator.
+  arrayDelim: string[] = [",", "/"];
 
   steps = [
     { id: "upload", complete: false, label: "select file", data: null },
@@ -53,13 +62,6 @@ export class SampleUploadService {
     { id: "create_sampleID", complete: false, label: "Creating unique sample ID", numErrors: null, fatal: true },
     // { id: "check_locations", complete: false, label: "Checking location changes", numErrors: null },
   ]
-
-  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
-
-  // Checks and converts these fields into arrays
-  arrayFields = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
-    "freezerBox", "freezerID", "freezerRack", "freezerBoxCell"];
-  arrayDelim = ","
 
 
 
@@ -115,7 +117,7 @@ export class SampleUploadService {
   // No going back from this point! (well, there is, since I made a copy)
   getCleanedData(vars2delete = ['id_check', 'id_okay', 'missing', 'originalID', 'id', 'visitCodeDisagree', 'originalVisitCode',
     // patient metadata properties
-    'patientID', 'cohort', 'outcome', 'country', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
+    'patientID', 'cohort', 'outcome', 'country', 'alternateIdentifier', 'infectionYear', 'dateModified_patient'].concat(this.locationCols)) {
     // turn on loading indicator
     this.loadingSubject.next(true);
 
@@ -139,11 +141,11 @@ export class SampleUploadService {
     // let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
     this.apiSvc.fetchAll('sample', "__all__").pipe(
-      catchError(() => {
-        console.log("FETCH ALL ERR")
-        this.loadingSubject.next(false);
-        return(of([]));
-      }),
+      catchError(
+        e => {
+          this.loadingSubject.next(false);
+          return (of([]))
+        }),
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe((samples) => {
@@ -237,7 +239,7 @@ export class SampleUploadService {
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
-        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim) : null;
+        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim[0]).map(d => d.split(this.arrayDelim[1])).flat() : null;
       })
     })
   }
@@ -274,6 +276,7 @@ export class SampleUploadService {
     } else {
       this.data.forEach((d: any) => {
         d.privatePatientID = d.originalID;
+        d.visitCode = d.originalVisitCode;
       })
     }
   }
@@ -288,8 +291,11 @@ export class SampleUploadService {
       d.numAliquots = +d.numAliquots;
       // clean up "" strings-- if the type is not a string (e.g. bool, date, number)
       d.primarySampleDate = d.primarySampleDate !== "" ? d.primarySampleDate : null;
+      d.dilutionFactor = d.dilutionFactor !== "" ? d.dilutionFactor : null;
+      d.freezingBuffer = d.freezingBuffer !== "" ? d.freezingBuffer : null;
+      d.visitCode = d.visitCode !== "" ? d.visitCode : null;
       // clean AVLinactivated; should be a boolean or null.
-      d['AVLinactivated'] = (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null));
+      d['AVLinactivated'] = d['AVLinactivated'] ? (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null)) : null;
     });
 
     // Convert to arrays, as needed.
@@ -330,31 +336,39 @@ export class SampleUploadService {
       // If so, double check it's within bounds.
       // Necessary b/c new Date("YYYY-mm-dd") has cross-browser weirdness. On Chrome, generates a date which is at 5 pm the day before.
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
+
       // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
 
-
       // Check date is within realisitic bounds
-      let withinBounds: string;
-      if (converted > this.today) {
-        withinBounds = "date is after today";
-      } else if (converted < lowerLimit) {
-        withinBounds = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
-      } else {
-        withinBounds = "";
+      let withinBoundsErr: string;
+      let converted_string: string;
+      let converted_numeric: string;
+
+      if (String(converted) === "Invalid Date") {
+        withinBoundsErr = "date is invalid! Convert to YYYY-MM-DD";
       }
+      else {
+        if (converted > this.today) {
+          withinBoundsErr = "date is after today";
+        } else if (converted < lowerLimit) {
+          withinBoundsErr = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
+        } else {
+          withinBoundsErr = null;
+        }
 
-      let converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
-      let converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
-
+        converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
+        converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
+      }
       // binary if the inputted date was okay.
       let date_match = converted_numeric === d;
 
-      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBounds, date_match: date_match })
+      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBoundsErr, date_match: date_match })
     })
 
     // Filter out only the weirdos
-    date_dict = date_dict.filter((d) => !d.date_withinBound || !d.date_match);
+    date_dict = date_dict.filter((d) => d['date outside range'] || !d.date_match);
+
     // Remove the indicator for the weirdos
     date_dict = this.apiSvc.dropCols(date_dict, ["date_match"], false);
 
@@ -473,10 +487,10 @@ export class SampleUploadService {
           lab: v[0].lab,
           samples: v,
           // array-ize the location properties
-          allFreezers: v.map(d => d.freezerID).flat(),
-          allRacks: v.map(d => d.freezerRack).flat(),
-          allBoxes: v.map(d => d.freezerBox).flat(),
-          allFreezerCells: v.map(d => d.freezerBoxCell).flat(),
+          allFreezers: arrayizeLocations(v, "freezerID"),
+          allRacks: arrayizeLocations(v, "freezerRack"),
+          allBoxes: arrayizeLocations(v, "freezerBox"),
+          allFreezerCells: arrayizeLocations(v, "freezerBoxCell"),
           // count the total number of aliquots.
           totalAliquots: _.sumBy(v, 'numAliquots'),
         }))
@@ -493,6 +507,14 @@ export class SampleUploadService {
       // Remove the duplicates.
       this.removeDupes(d.idx, d);
     })
+
+    // helper function to combine the array values.
+    // should combine values into an array.
+    // HOWEVER-- nulls aren't valid inputs for an array of strings in ES (sigh)
+    // so filtering out null values... people will just have to check and find the locations themselves.
+    function arrayizeLocations(v, varName): string[] {
+      return (v.map(d => d[varName]).flat().filter(d => d));
+    }
 
 
 

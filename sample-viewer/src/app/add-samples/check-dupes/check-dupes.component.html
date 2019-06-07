@@ -1,4 +1,4 @@
-<div *ngIf="data && data.length > 0">
+<div [ngClass]='data && data.length > 0 ? "visible": "hidden"'>
   <div class="duplicate-helper-text">
 
     <p>

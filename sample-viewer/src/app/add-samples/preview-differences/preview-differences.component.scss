@@ -14,16 +14,16 @@ $old-color: accent-redder(600);
 }
 
 .mat-column-sampleID {
-    min-width: 200px;
+  min-width: 200px;
 }
 
 .mat-column-location {
-    min-width: 170px;
+  min-width: 225px;
+  text-align: start !important;
 }
 
-
 .changed-group {
-  margin: 10px 0px;
+  margin: 10px 0;
 }
 
 .lab {
@@ -45,17 +45,33 @@ $old-color: accent-redder(600);
   text-decoration: line-through;
 }
 
-
 .location-group {
   padding: 5px 10px;
   margin: 10px;
   background: $grey-50;
+}
 
-  &.right_only {
-    background:  lighten(#cfe9d4, 10%)
-  }
+.right_only {
+  background: lighten(#cfe9d4, 10%);
+}
+
+.both {
+  background: lighten(accent(50), 1%);
+  // background: $grey-50;
+}
+
+.left_only {
+  background: $grey-50;
+}
+
+.location-panel {
+  box-shadow: none !important;
 }
 
 .hide-pagination {
   display: none !important;
+}
+
+.key {
+  opacity: 0.65;
 }

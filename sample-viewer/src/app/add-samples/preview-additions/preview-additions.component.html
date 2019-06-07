@@ -1,15 +1,18 @@
 <h2><span class="stepper-title">Preview additions to database</span></h2>
 
+<h2 *ngIf="previewData">{{ previewData.length }} new {{ previewData.length === 1 ? "sample" : "samples" }} will be added</h2>
+
 <div *ngIf="previewData && previewData.length > 0; else no_data">
+
   <p>
-    Preview any new samples to be added to the database.
+    Preview any additions to the database.
   </p>
 </div>
 
 <ng-template #no_data>
   <p>
-    No new samples added.  Looks like you're just modifying existing samples's metadata and/or locations.
+    No new samples added. Looks like you're just modifying existing samples's metadata and/or locations.
   </p>
 </ng-template>
 
-<app-preview-samples [data]="previewData"></app-preview-samples>
+<app-preview-samples [data]="previewData" [ignoredColumns]="['_merge', '_id', '_score']"></app-preview-samples>

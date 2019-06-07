@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
@@ -7,12 +7,14 @@ import { SampleUploadService } from '../../_services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SpinnerPopupComponent } from '../../_dialogs';
 
+import { isEqual } from 'lodash';
+
 @Component({
   selector: 'app-preview-differences',
   templateUrl: './preview-differences.component.html',
   styleUrls: ['./preview-differences.component.scss']
 })
-export class PreviewDifferencesComponent implements OnInit {
+export class PreviewDifferencesComponent implements OnChanges {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   locationColumns: string[];
@@ -34,24 +36,33 @@ export class PreviewDifferencesComponent implements OnInit {
 
       if (merged && merged.length > 0) {
         this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
+        this.locationColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
 
         this.dataSource = new MatTableDataSource(merged.filter(d => d._merge === "both"));
         this.dataSource.paginator = this.paginator;
+
+        // custom sorting function, to deal w/ the nested-ness of the data.
+        // sort by default by the *new* value, not the old one.
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            default: return item[property + "_y"];
+          }
+        };
         this.dataSource.sort = this.sort;
+
       } else {
         this.dataSource = new MatTableDataSource();
       }
     })
 
     uploadSvc.loadingState$.subscribe((loading: any) => {
-      console.log(loading)
       if (loading) {
         this.loadingBox = this.dialog.open(SpinnerPopupComponent, {
           width: '300px',
           data: `loading samples...`,
           disableClose: true
         });
-      } else if(this.loadingBox){
+      } else if (this.loadingBox) {
         this.loadingBox.close()
       }
 
@@ -59,7 +70,14 @@ export class PreviewDifferencesComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnChanges() {
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    // console.log(this.dataSource)
+  }
+
+  checkEqual(a, b) {
+    return (isEqual(a, b))
   }
 
   sortingFunc(a) {

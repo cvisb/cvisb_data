@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class PrivacyComponent implements OnInit {
-  updated_date = "2019-01-24";
+  updated_date = "2019-06-05";
 
   constructor(private titleSvc: Title, private route: ActivatedRoute) {
     // set page title
