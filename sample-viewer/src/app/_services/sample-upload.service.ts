@@ -291,7 +291,7 @@ export class SampleUploadService {
       // clean up "" strings-- if the type is not a string (e.g. bool, date, number)
       d.primarySampleDate = d.primarySampleDate !== "" ? d.primarySampleDate : null;
       // clean AVLinactivated; should be a boolean or null.
-      d['AVLinactivated'] = (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null));
+      d['AVLinactivated'] = d['AVLinactivated'] ? (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null)) : null;
     });
 
     // Convert to arrays, as needed.
