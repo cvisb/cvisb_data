@@ -290,6 +290,9 @@ export class SampleUploadService {
       d.numAliquots = +d.numAliquots;
       // clean up "" strings-- if the type is not a string (e.g. bool, date, number)
       d.primarySampleDate = d.primarySampleDate !== "" ? d.primarySampleDate : null;
+      d.dilutionFactor = d.dilutionFactor !== "" ? d.dilutionFactor : null;
+      d.freezingBuffer = d.freezingBuffer !== "" ? d.freezingBuffer : null;
+      d.visitCode = d.visitCode !== "" ? d.visitCode : null;
       // clean AVLinactivated; should be a boolean or null.
       d['AVLinactivated'] = d['AVLinactivated'] ? (d['AVLinactivated'].toUpperCase().trim() === "TRUE" ? true : (d['AVLinactivated'].toUpperCase().trim() === "FALSE" ? false : null)) : null;
     });
@@ -332,34 +335,39 @@ export class SampleUploadService {
       // If so, double check it's within bounds.
       // Necessary b/c new Date("YYYY-mm-dd") has cross-browser weirdness. On Chrome, generates a date which is at 5 pm the day before.
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
-      console.log(d)
-      console.log(correct_format)
+
       // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
 
-      console.log(converted)
       // Check date is within realisitic bounds
-      let withinBounds: string;
-      if (converted > this.today) {
-        withinBounds = "date is after today";
-      } else if (converted < lowerLimit) {
-        withinBounds = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
-      } else {
-        withinBounds = null;
+      let withinBoundsErr: string;
+      let converted_string: string;
+      let converted_numeric: string;
+
+      if (String(converted) === "Invalid Date") {
+        withinBoundsErr = "date is invalid! Convert to YYYY-MM-DD";
       }
+      else {
+        if (converted > this.today) {
+          withinBoundsErr = "date is after today";
+        } else if (converted < lowerLimit) {
+          withinBoundsErr = `date is before ${this.datePipe.transform(lowerLimit, "dd MMMM yyyy")}; are you sure?`;
+        } else {
+          withinBoundsErr = null;
+        }
 
-      let converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
-      let converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
-
+        converted_string = this.datePipe.transform(converted, "dd MMMM yyyy");
+        converted_numeric = this.datePipe.transform(converted, "yyyy-MM-dd");
+      }
       // binary if the inputted date was okay.
       let date_match = converted_numeric === d;
 
-      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBounds, date_match: date_match })
+      date_dict.push({ "original date": d, "modified date": converted_string, new_date: converted_numeric, "date outside range": withinBoundsErr, date_match: date_match })
     })
 
     // Filter out only the weirdos
     date_dict = date_dict.filter((d) => d['date outside range'] || !d.date_match);
-    console.log(date_dict)
+
     // Remove the indicator for the weirdos
     date_dict = this.apiSvc.dropCols(date_dict, ["date_match"], false);
 
