@@ -205,9 +205,7 @@ export class SampleUploadComponent implements OnInit {
     return (this.removeEmpties(data, headers))
   }
 
-  removeEmpties(data, headers) {
-    headers.filter(d => d !== "privatePatientID");
-
+  removeEmpties(data) {
     let filtered = cloneDeep(data);
 
     filtered.forEach(d => delete(d.sampleID));
