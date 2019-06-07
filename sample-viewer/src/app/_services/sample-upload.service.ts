@@ -334,11 +334,10 @@ export class SampleUploadService {
       let correct_format = d.match(/(\d\d\d\d)\-(\d\d)\-(\d\d)/);
       console.log(d)
       console.log(correct_format)
-      console.log(converted)
       // !!! REMEMBER: months in Javascript are base 0.  Because...
       let converted = correct_format ? new Date(correct_format[1], correct_format[2] - 1, correct_format[3]) : new Date(d);
 
-
+      console.log(converted)
       // Check date is within realisitic bounds
       let withinBounds: string;
       if (converted > this.today) {
