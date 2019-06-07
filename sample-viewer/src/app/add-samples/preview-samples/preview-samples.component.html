@@ -14,7 +14,8 @@
 
       <!-- For 'location', the data is an Object, not a flat string/number/etc. So need to loop over the elements... -->
       <ng-template #flatData let-element="element" , letkey="key">
-        <span>
+        <!-- Ignore _merge values from printing -->
+        <span *ngIf="key !== '_merge'">
           {{ element[key] }}
         </span>
       </ng-template>
@@ -24,7 +25,7 @@
 
 
           <div *ngFor="let col of location | getKeys">
-            <span [ngClass]="{'lab': col === 'lab'}">
+            <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
               <span class="key">{{ col }}: </span> <span class="value">{{ location[col] }}</span>
             </span>
           </div>
@@ -40,7 +41,7 @@
 
       <ng-template #objectData let-element="element" , letkey="key">
         <div *ngFor="let col of element[key] | getKeys">
-          <span [ngClass]="{'lab': col === 'lab'}">
+          <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
               <span class="key">{{ col }}: </span><span class="value">{{ element[key][col] }}</span>
           </span>
         </div>
