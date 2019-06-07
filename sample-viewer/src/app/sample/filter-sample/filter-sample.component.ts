@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { GetSamplesService, RequestParametersService, AuthService } from '../../_services/';
 import { AuthState, RequestParam, RequestParamArray, ESFacetTerms } from '../../_models';
 
+import { SamplesDataSource } from '../../_services';
 
 @Component({
   selector: 'app-filter-sample',
@@ -18,6 +19,7 @@ export class FilterSampleComponent implements OnInit {
   patients: string[];
   all_patients: string[];
   sample_count: number;
+  datasource_count: number;
   total_samples: number;
   cohorts: ESFacetTerms[];
   outcomes: ESFacetTerms[];
@@ -28,6 +30,7 @@ export class FilterSampleComponent implements OnInit {
 
   constructor(
     private sampleSvc: GetSamplesService,
+    private sampleSvc2: SamplesDataSource,
     private requestSvc: RequestParametersService,
     private route: ActivatedRoute,
     private authSvc: AuthService
@@ -46,6 +49,10 @@ export class FilterSampleComponent implements OnInit {
           // announce new parameters
           // this.requestSvc.patientParamsSubject.next(paramArray);
         }
+      })
+
+      this.sampleSvc2.resultCountState$.subscribe((count: number) => {
+        this.datasource_count = count;
       })
 
     this.sampleSvc.sampleSummaryState$.subscribe((sObj) => {
