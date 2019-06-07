@@ -15,6 +15,7 @@ export class PreviewSamplesComponent implements OnChanges {
   @Input() highlightCols: string[] = [];
   @Input() hidePagination: boolean = false;
   @Input() displayedColumns: string[] = null;
+  @Input() ignoredColumns: string[] = null;
 
   dataSource: MatTableDataSource<any>;
 
@@ -31,6 +32,10 @@ export class PreviewSamplesComponent implements OnChanges {
       this.displayedColumns = _.uniq(_.flatMap(this.data, Object.keys));
       // sort the columns in a sensible order
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
+    }
+
+    if(this.ignoredColumns) {
+      this.displayedColumns = _.difference(this.displayedColumns, this.ignoredColumns);
     }
 
     if (this.data && this.data.length === 0) {
