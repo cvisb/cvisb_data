@@ -30,12 +30,13 @@
               <mat-panel-description>
                 {{ location.numAliquots === 1 ? location.numAliquots + " aliquot" : location.numAliquots + " aliquots"}}
               </mat-panel-description>
+            </mat-expansion-panel-header>
 
-              <div *ngFor="let col of location | getKeys">
-                <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
+            <div *ngFor="let col of location | getKeys">
+              <span [ngClass]="{'lab': col === 'lab'}" *ngIf="col !== '_merge'">
               <span class="key">{{ col }}: </span> <span class="value">{{ location[col] }}</span>
-                </span>
-              </div>
+              </span>
+            </div>
           </mat-expansion-panel>
         </div>
       </ng-template>
