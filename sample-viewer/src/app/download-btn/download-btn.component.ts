@@ -4,8 +4,12 @@ import { DatePipe } from '@angular/common';
 import { AuthService, GetPatientsService, RequestParametersService, Nested2longService } from '../_services';
 import { AuthState, RequestParamArray } from '../_models';
 
+import { HttpParams } from '@angular/common/http';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SpinnerPopupComponent } from '../_dialogs';
+
+import { uniq } from 'lodash';
 
 @Component({
   selector: 'app-download-btn',
@@ -19,11 +23,12 @@ export class DownloadBtnComponent implements OnInit {
   filename: string;
   auth_stub: string;
   today: string;
-  qParams;
+  qParamArray: RequestParamArray;
+  qParams: HttpParams;
 
-  dialogRef;
+  dialogRef: MatDialogRef<any>;
 
-  sampleSortCols: string[] = ["creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
+  sampleSortCols: string[] = ["sampleID", "creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
 
   constructor(
     private authSvc: AuthService,
@@ -41,8 +46,12 @@ export class DownloadBtnComponent implements OnInit {
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(qParams)
       console.log(this.qParams)
+    })
+
+    requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
+      this.qParamArray = qParams;
+      console.log(qParams)
     })
   }
 
@@ -65,7 +74,7 @@ export class DownloadBtnComponent implements OnInit {
     const lineDelimiter = '\n';
 
     if (this.data && this.data.length > 0) {
-      let colnames = Object.keys(this.data[0]);
+      let colnames = uniq(this.data.map(d => Object.keys(d)).flat());
 
       if (this.filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
@@ -81,7 +90,7 @@ export class DownloadBtnComponent implements OnInit {
           if (counter > 0) dwnld_data += columnDelimiter;
 
           // For null values, return empty string.
-          dwnld_data += item[key] ? item[key] : "";
+          dwnld_data += (item[key] || item[key] === 0 || item[key] === false) ? item[key] : "";
           counter++;
         });
         dwnld_data += lineDelimiter;
@@ -110,6 +119,16 @@ export class DownloadBtnComponent implements OnInit {
         break;
       case ("samples"):
         this.data = this.longSvc.prep4download(this.data, ['location'], ['_score', '_version', '_id']);
+
+        // sort of a hack; since location data is nested in the ES index, it will return *all* samples, regardless of location
+        // If location is selected, filter the data to remove the offending locations.
+        let labs = this.qParamArray.filter(d => d.field === "location.lab");
+
+        if (labs.length === 1) {
+          labs = labs[0].value;
+          this.data = this.data.filter(d => labs.includes(d.lab))
+        }
+
         this.parseData();
         break;
       default:

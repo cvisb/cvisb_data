@@ -1,5 +1,4 @@
-<div class="upload-button">
-  <!-- <div class="upload-button" *ngIf="user.write"> -->
+<div class="upload-button" *ngIf="user.write">
   <!-- Dummy for styling -->
   <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
   <!-- Actual workhorse to upload the data on the client side -->
@@ -44,8 +43,8 @@
 </div>
 
 <!-- TEMPORARY: JUST FOR ME WHILE TESTING -->
-  <div style="margin-top: 25px;" *ngIf="user.email === 'laura.d.hughes@gmail.com'">
-<button type="button" mat-raised-button color="warn" (click)="deletePatients()">DON'T PRESS THIS BUTTON -- clears patient list</button>
+<div style="margin-top: 25px;" *ngIf="user.email === 'laura.d.hughes@gmail.com'">
+  <button type="button" mat-raised-button color="warn" (click)="deletePatients()">DON'T PRESS THIS BUTTON -- clears patient list</button>
 </div>
 
 <div *ngIf="! user.write">

@@ -15,6 +15,7 @@ export class FrontendSampleValidationComponent implements OnInit {
   validation_steps: Object[];
   upload_steps: Object[];
   ready2validate: boolean;
+  ready2review: boolean;
   numErrors: number;
   numVerification: number;
   dataLength: number;
@@ -29,11 +30,13 @@ export class FrontendSampleValidationComponent implements OnInit {
   approve_ids: boolean;
   approve_dates: boolean;
   approve_dupes: boolean;
+  required_fields: string[];
 
   constructor(private uploadSvc: SampleUploadService) {
+    this.required_fields = this.uploadSvc.requiredFields;
+
     // Front-end validation states
     uploadSvc.FEvalidationState$.subscribe(state => {
-      // console.log(state);
       // Count number of errors
       this.numErrors = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && d.fatal).reduce((a: any, b: any) => <any>(a + b)));
       this.numVerification = Number(state.map((d: any) => (d.numErrors > 0) && !d.verified && !d.fatal).reduce((a: any, b: any) => <any>(a + b)));
@@ -53,6 +56,15 @@ export class FrontendSampleValidationComponent implements OnInit {
       this.upload_steps = state;
       // Make sure data is uploaded.
       this.ready2validate = state.filter((d: any) => d.id == "upload")[0]['complete'];
+      this.ready2review = state.filter((d: any) => d.id == "process")[0]['complete'];
+
+      // reset buttons if reload file
+      if (!this.ready2validate) {
+        this.approve_deletions = null;
+        this.approve_ids = null;
+        this.approve_dates = null;
+        this.approve_dupes = null;
+      }
     })
   }
 
@@ -67,6 +79,11 @@ export class FrontendSampleValidationComponent implements OnInit {
       this.uploadSvc.updateValidation(checkpointID, null, null, null, true);
     } else {
       this.uploadSvc.updateValidation(checkpointID, null, null, null, value);
+    }
+
+    // If already ready to review and a value is changed, call the function to get the uploadable data.
+    if (this.ready2review) {
+      this.uploadSvc.getCleanedData();
     }
   }
 

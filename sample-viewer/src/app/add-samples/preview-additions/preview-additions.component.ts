@@ -15,12 +15,10 @@ export class PreviewAdditionsComponent implements OnInit {
   constructor(uploadSvc: SampleUploadService) {
     uploadSvc.uploadSamplesState$.subscribe(merged => {
 
-    this.previewData = merged.filter((d:any) => d._merge === "right_only");
-    console.log('upload samples changed:');
-    console.log(merged);
-  })
+      this.previewData = merged.filter((d: any) => d._merge === "right_only");
+    })
 
-   }
+  }
 
   ngOnInit() {
   }

@@ -1,6 +1,6 @@
 <router-outlet name="datasets"></router-outlet>
 
-<div class="container" id="dataset.identifier">
+<div class="container" id="dataset.identifier" *ngIf="dataset && dataset.identifier">
 
   <div class="dataset-container dataset-page" >
   <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->

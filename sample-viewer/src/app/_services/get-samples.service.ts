@@ -51,17 +51,17 @@ export class GetSamplesService {
     //   }
     // })
 
-    // Listener for changes in query params
-    this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      console.log("Re-getting samples with new parameters:")
-      console.log(params)
-      this.request_params = params;
-      this.getSamples(params);
-    })
+    // // Listener for changes in query params
+    // this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
+    //   console.log("Re-getting samples with new parameters:")
+    //   console.log(params)
+    //   this.request_params = params;
+    //   this.getSamples(params);
+    // })
   }
 
   // Main function to get the samples + associated patient-level metadata
-  getSamples(qParams?) {
+  getSamples(qParamArray?: RequestParamArray): Observable<any> {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       // samplePatientMD stores the patient metadata (cohort, outcome, etc.)
@@ -73,26 +73,24 @@ export class GetSamplesService {
 
       // (1) Call /patient to grab all the patient info for the patients for whom we have samples
       // NOTE: needs to be moved to a resolver? When have URL states...
-      this.getSamplePatientData()
+      return this.getSamplePatientData()
         // (2) Call /sample to get the subset of samples indicated by the qParams
         // Merge to patient metadata properties
-        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParams)),
+        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParamArray)),
           finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe(samples => {
-        });
+        );
     } else {
       // Patient-Sample metadata already exists.
       // Execute the /sample query to get the filtered samples.
-      this.getNPrepSamples(qParams).pipe(
+      return this.getNPrepSamples(qParamArray).pipe(
         finalize(() => this.loadingSubject.next(false))
-      ).subscribe();
+      );
     }
   }
 
 
   // Main function to execute the call to /sample to get a list of samples and merge to patient props
-  getNPrepSamples(filterParamArray) {
+  getNPrepSamples(filterParamArray: RequestParamArray) {
     console.log("Calling prep samples")
     let params = this.requestSvc.reduceSampleParams(filterParamArray);
     params = params.set('size', "1000")
@@ -136,7 +134,7 @@ export class GetSamplesService {
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);
           this.samplesWideSubject.next(this.samples_wide);
-          return (samples)
+          return ({samples: samples, sampleWide: this.samples_wide})
         } else {
           console.log('Error in getting samples')
           this.samplesSubject.next(samples);
@@ -206,7 +204,7 @@ export class GetSamplesService {
 
     // Make sure to remove nulls-- ngSelect can't have nulls as options
     // Should also remove duplicates, since there are multiple samples / patient
-    summary['patients'] = samples.map((d:any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
+    summary['patients'] = samples.map((d: any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
     summary['patients'] = Array.from(new Set(summary['patients']));
 
     console.log(summary)

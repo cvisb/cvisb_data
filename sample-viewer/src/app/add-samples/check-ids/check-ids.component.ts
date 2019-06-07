@@ -25,6 +25,16 @@ export class CheckIdsComponent implements OnChanges {
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.paginator = this.paginator;
 
+    // custom sorting for nested objects
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'id_check.id': return item.id_check.id;
+        case 'id_check.timepoint': return item.id_check.timepoint;
+        case 'id_check.message': return item.id_check.message;
+        default: return item[property];
+      }
+    };
+
     this.dataSource.sort = this.sort;
   }
 
