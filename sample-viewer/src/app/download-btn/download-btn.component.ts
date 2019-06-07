@@ -9,6 +9,8 @@ import { HttpParams } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SpinnerPopupComponent } from '../_dialogs';
 
+import { uniq } from 'lodash';
+
 @Component({
   selector: 'app-download-btn',
   templateUrl: './download-btn.component.html',
@@ -72,7 +74,7 @@ export class DownloadBtnComponent implements OnInit {
     const lineDelimiter = '\n';
 
     if (this.data && this.data.length > 0) {
-      let colnames = Object.keys(this.data[0]);
+      let colnames = uniq(this.data.map(d => Object.keys(d)).flat());
 
       if (this.filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
@@ -117,7 +119,6 @@ export class DownloadBtnComponent implements OnInit {
         break;
       case ("samples"):
         this.data = this.longSvc.prep4download(this.data, ['location'], ['_score', '_version', '_id']);
-        console.log(this.data)
 
         // sort of a hack; since location data is nested in the ES index, it will return *all* samples, regardless of location
         // If location is selected, filter the data to remove the offending locations.
@@ -127,8 +128,6 @@ export class DownloadBtnComponent implements OnInit {
           labs = labs[0].value;
           this.data = this.data.filter(d => labs.includes(d.lab))
         }
-        console.log(this.data)
-
 
         this.parseData();
         break;
