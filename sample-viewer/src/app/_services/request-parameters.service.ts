@@ -276,7 +276,7 @@ export class RequestParametersService {
         return r;
       }
 
-      if (combinations.length > 0) {
+      if (elisaArr.length > 0) {
         let elisaCombos = combinations(...elisaArr);
 
         return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
