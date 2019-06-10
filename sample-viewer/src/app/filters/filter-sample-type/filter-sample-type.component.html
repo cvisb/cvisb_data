@@ -11,7 +11,7 @@
 
 
     <div>
-      <mat-checkbox class="include-used-up" color="primary" [(ngModel)]="include_empty_samples" (ngModelChange)="filterEmptySamples(inclSpent)">
+      <mat-checkbox class="include-used-up" color="primary" [(ngModel)]="include_empty_samples" (ngModelChange)="filterEmptySamples($event)">
         include used up samples
       </mat-checkbox>
     </div>
