@@ -20,35 +20,10 @@ export class FilterElisasComponent implements OnInit {
   timepoints: string[] = ["acute patient enrollment", "survivor enrollment"];
 
   elisaForm = this.fb.group({
-    virus: [[], Validators.required],
-    assay: [[], Validators.required],
-    result: [[], Validators.required],
+    virus: [[]],
+    assay: [[]],
+    result: [[]],
     timepoint: [[]]
-
-
-    // Ebola: this.fb.group({
-    //   IgG_positive: [true],
-    //   IgG_negative: [true],
-    //   IgG_unknown: [true],
-    //   IgM_positive: [true],
-    //   IgM_negative: [true],
-    //   IgM_unknown: [true],
-    //   Ag_positive: [true],
-    //   Ag_negative: [true],
-    //   Ag_unknown: [true],
-    // }),
-    //
-    // Lassa: this.fb.group({
-    //   IgG_positive: [true],
-    //   IgG_negative: [true],
-    //   IgG_unknown: [true],
-    //   IgM_positive: [true],
-    //   IgM_negative: [true],
-    //   IgM_unknown: [true],
-    //   Ag_positive: [true],
-    //   Ag_negative: [true],
-    //   Ag_unknown: [true],
-    // })
   });
 
 
