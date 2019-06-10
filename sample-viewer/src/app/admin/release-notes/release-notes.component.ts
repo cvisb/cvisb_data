@@ -11,7 +11,7 @@ import { ReleaseNote } from '../../_models';
 
 export class ReleaseNotesComponent implements OnInit {
   dataModified: string;
-  dataVersion: number = 1;
+  releaseVersion: string;
   cvisbCatalog: Object;
   releaseNotes: ReleaseNote[];
 
@@ -19,7 +19,7 @@ export class ReleaseNotesComponent implements OnInit {
     this.dataModified = this.dataCatalogSvc.dataModified;
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
     if (this.cvisbCatalog) {
-      this.dataVersion = this.cvisbCatalog['_version'];
+      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
     }
     this.releaseNotes = this.dataCatalogSvc.releaseNotes;
   }

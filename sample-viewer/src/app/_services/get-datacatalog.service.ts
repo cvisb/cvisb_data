@@ -16,7 +16,7 @@ export class GetDatacatalogService {
   releaseNotes: ReleaseNote[] = [
     {
       dateReleased: "2019-06-12",
-      version: 1,
+      version: "0.1.0",
       notes: [
         {
           endpoint: "Data",

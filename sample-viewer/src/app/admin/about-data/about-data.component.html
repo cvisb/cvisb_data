@@ -10,13 +10,13 @@
 
 
   <h4>Data overview</h4>
-  <div class="container release-header current-release">
+  <div class="container release-header current-release" *ngIf="releaseVersion">
     <div class="current-label">
       Current version:
     </div>
 
     <div class="version">
-      CViSB version {{ dataVersion }}
+      CViSB version {{ releaseVersion }}
     </div>
     <div class="updated">
       updated {{ dataModified | date: "d MMMM y" }}
