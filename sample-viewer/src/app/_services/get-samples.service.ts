@@ -59,7 +59,7 @@ export class GetSamplesService {
       this.request_params = params;
 
       let empties = params.filter(d => d.field === "location.numAliquots");
-      this.excludeEmptySamples = (empties.length > 0 && empties[0].value === "[1 TO *]") ? true : false;
+      this.excludeEmptySamples = (empties.length > 0 && empties[0].value[0] === "[1 TO *]") ? true : false;
 
       console.log(this.excludeEmptySamples)
       // this.getSamples(params);

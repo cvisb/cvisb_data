@@ -96,9 +96,9 @@ export class FilterSampleTypeComponent implements OnInit {
 
   filterEmptySamples(value) {
     if (value) {
-      this.requestSvc.updateParams("sample", { field: "location.numAliquots", value: "[0 TO *]" })
+      this.requestSvc.updateParams("sample", { field: "location.numAliquots", value: ["[0 TO *]"] })
     } else {
-      this.requestSvc.updateParams("sample", { field: "location.numAliquots", value: "[1 TO *]" })
+      this.requestSvc.updateParams("sample", { field: "location.numAliquots", value: ["[1 TO *]"] })
     }
 
   }
