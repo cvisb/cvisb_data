@@ -176,6 +176,7 @@ export class RequestParametersService {
   reducePatientParams(request_params): HttpParams {
     // default options
     let reduced = this.reduceParams(request_params);
+    console.log(reduced);
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
@@ -187,6 +188,8 @@ export class RequestParametersService {
       .set('elisa', elisa_string)
       .set('sampleQuery', sample_string)
       .set('experimentQuery', expt_string);
+
+    console.log(http_params);
 
     return (http_params);
   }
@@ -201,7 +204,7 @@ export class RequestParametersService {
       patient_string = this.reduceParams2string(request_params, this.patientProperties);
       sample_string = this.reduceParams2string(request_params, this.sampleProperties);
       expt_string = this.reduceParams2string(request_params, this.exptProperties);
-      elisa_string = this.reduceElisas(request_params.filter(d => d.field === "elisa"));
+      elisa_string = this.reduceElisas(request_params, "elisa");
     }
 
     return ({ patient_string: patient_string, sample_string: sample_string, expt_string: expt_string, elisa: elisa_string })
@@ -225,47 +228,51 @@ export class RequestParametersService {
   // [[elisa.{propertyName}:{value} AND elisa.{propertyName}:{value} ...]] -- one set of ELISAs
   // then combine those [[elisa-nested-group]] with OR, AND, NOT.
 
-  reduceElisas(elisaVars) {
-    let result = "";
+  reduceElisas(request_params: RequestParamArray, elisaVar: string) {
 
-    let pairs = [];
+    let filteredParams = request_params.filter(d => d.field === elisaVar);
 
-    // remove any null values-- don't loop over those.
-    let elisaArr = [];
+    if (filteredParams.length === 1) {
+      let elisaVars = filteredParams[0];
+      // remove any null values-- don't loop over those.
+      let elisaArr = [];
 
-    Object.keys(elisaVars).forEach((key) => {
-      if (elisaVars[key].length > 0) {
-        let val = {}
-        val[key] = elisaVars[key];
-        elisaArr.push(val);
-      }
-    })
-
-    // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
-    function combinations(x?) {
-      var r = [], arg = arguments, max = arg.length - 1;
-      function helper(arr, i) {
-        let key = Object.keys(arg[i])[0];
-        for (var j = 0, l = arg[i][key].length; j < l; j++) {
-          var a = arr.slice(0); // clone arr
-          let obj2return = {};
-
-          obj2return[key] = arg[i][key][j];
-          a.push(obj2return);
-          if (i == max)
-            r.push(a);
-          else
-            helper(a, i + 1);
+      Object.keys(elisaVars).forEach((key) => {
+        if (elisaVars[key].length > 0) {
+          let val = {}
+          val[key] = elisaVars[key];
+          elisaArr.push(val);
         }
+      })
+
+      // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
+      let combinations = function(x?) {
+        var r = [], arg = arguments, max = arg.length - 1;
+        function helper(arr, i) {
+          let key = Object.keys(arg[i])[0];
+          for (var j = 0, l = arg[i][key].length; j < l; j++) {
+            var a = arr.slice(0); // clone arr
+            let obj2return = {};
+
+            obj2return[key] = arg[i][key][j];
+            a.push(obj2return);
+            if (i == max)
+              r.push(a);
+            else
+              helper(a, i + 1);
+          }
+        }
+        helper([], 0);
+        return r;
       }
-      helper([], 0);
-      return r;
+
+
+      let elisaCombos = combinations(...elisaArr);
+
+      return (elisaCombos.join(" OR "));
+    } else {
+      return (null)
     }
-
-
-    let elisaCombos = combinations(... elisaArr);
-
-    return(elisaCombos.join(" OR "));
   }
 
 
