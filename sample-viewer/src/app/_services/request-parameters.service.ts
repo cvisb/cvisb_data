@@ -225,112 +225,92 @@ export class RequestParametersService {
   // [[elisa.{propertyName}:{value} AND elisa.{propertyName}:{value} ...]] -- one set of ELISAs
   // then combine those [[elisa-nested-group]] with OR, AND, NOT.
 
-  reduceElisas(elisaArr) {
+  reduceElisas(elisaVars) {
     let result = "";
-    // let elisa_vals = elisaArr[0];
-    //
-    // let pairs = [];
-    //
-    // Object.keys(elisa_group)
-    //
-    // let elisa_group = [];
-    // elisa_vals.forEach(grp => {
-    //   // remove any null values-- don't loop over those.
-    //   Object.keys(grp).forEach((key) => (grp[key].length === 0) && delete grp[key]);
-    //
-    //   Object.keys(grp).forEach(key => {
-    //     pairs.push(elisa_group.join(" AND "));
-    //     elisa_group = [];
-    //     grp[key].forEach(d => {
-    //       elisa_group.push({ key: key, value: d })
-    //     })
-    //   })
-    //
-    //   let elements = Object.keys(grp)
-    //
-    //   function combinations(grp, keys, size) {
-    //     var result = [];
-    //
-    //     if (size === 0) {
-    //
-    //       result.push([]);
-    //
-    //     } else {
-    //
-    //       combinations(grp, keys, size - 1).forEach(function(previousComb) {
-    //         console.log(previousComb)
-    //         grp[keys].forEach(function(element) {
-    //           result.push([element].concat(previousComb));
-    //         });
-    //       });
-    //     }
 
-        return result;
+    let pairs = [];
+
+    // remove any null values-- don't loop over those.
+    let elisaArr = [];
+
+    Object.keys(elisaVars).forEach((key) => {
+      if (elisaVars[key].length > 0) {
+        let val = {}
+        val[key] = elisaVars[key];
+        elisaArr.push(val);
       }
+    })
 
-      // grp.virus.forEach(virus => {
-      //   elisa_group.push({})
-      //   grp.assay.forEach(assay =>
-      //     elisa_vals.result.forEach(result =>
-      //       elisa_vals.timepoint.forEach(timepoint => {
-      //         let elisa_group = [];
-      //       }
-      //       )
-      //     )
-      //   )
-      // }
-      // )
-    // })
+    // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
+    function combinations(x?) {
+      var r = [], arg = arguments, max = arg.length - 1;
+      function helper(arr, i) {
+        let key = Object.keys(arg[i])[0];
+        for (var j = 0, l = arg[i][key].length; j < l; j++) {
+          var a = arr.slice(0); // clone arr
+          let obj2return = {};
 
-
-
-  //   elisa_vals.virus.map(d => { return ({ field: "elisa.virus", value: d }) })
-  //   elisa_vals.assay.map(d => { return ({ field: "elisa.virus", value: d }) })
-  // }
-
-
-  elisaHandler(param, params) {
-    let elisa_vals = param.value[0];
-    // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
-    if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
-      let elisaparams;
-
-      for (let virus of elisa_vals.virus) {
-        console.log(virus)
-        let pairs = [];
-        pairs.push({ field: "elisa.virus", value: virus });
-        for (let assay of elisa_vals.assay) {
-          pairs.push({ field: "elisa.assayType", value: assay });
-
-          // for(let timepoint of param.timepoint){
-          for (let result of elisa_vals.result) {
-            pairs.push({ field: "elisa.ELISAresult", value: result });
-
-            elisaparams = {
-              pairs: pairs,
-              connector: "AND"
-            };
-          }
+          obj2return[key] = arg[i][key][j];
+          a.push(obj2return);
+          if (i == max)
+            r.push(a);
+          else
+            helper(a, i + 1);
         }
       }
-      console.log(this.connectKeyValues(elisaparams))
-
-
-      params.push(this.connectKeyValues(elisaparams));
+      helper([], 0);
+      return r;
     }
-    return (params)
+
+
+    let elisaCombos = combinations(... elisaArr);
+
+    return(elisaCombos.join(" OR "));
   }
 
-  reduceKeyValues(obj): string {
-    return (`${obj.field}:${obj.value}`);
-  }
 
-  connectKeyValues(obj): string {
-    console.log(obj)
-    let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
-
-    return (`(${pairs.join(` ${obj.connector} `)})`);
-  }
+  // elisaHandler(param, params) {
+  //   let elisa_vals = param.value[0];
+  //   // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
+  //   if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
+  //     let elisaparams;
+  //
+  //     for (let virus of elisa_vals.virus) {
+  //       console.log(virus)
+  //       let pairs = [];
+  //       pairs.push({ field: "elisa.virus", value: virus });
+  //       for (let assay of elisa_vals.assay) {
+  //         pairs.push({ field: "elisa.assayType", value: assay });
+  //
+  //         // for(let timepoint of param.timepoint){
+  //         for (let result of elisa_vals.result) {
+  //           pairs.push({ field: "elisa.ELISAresult", value: result });
+  //
+  //           elisaparams = {
+  //             pairs: pairs,
+  //             connector: "AND"
+  //           };
+  //         }
+  //       }
+  //     }
+  //     console.log(this.connectKeyValues(elisaparams))
+  //
+  //
+  //     params.push(this.connectKeyValues(elisaparams));
+  //   }
+  //   return (params)
+  // }
+  //
+  // reduceKeyValues(obj): string {
+  //   return (`${obj.field}:${obj.value}`);
+  // }
+  //
+  // connectKeyValues(obj): string {
+  //   console.log(obj)
+  //   let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
+  //
+  //   return (`(${pairs.join(` ${obj.connector} `)})`);
+  // }
 
   // params = this.handleELISAResultsLoop(param, params, 'Ebola');
   // params = this.handleELISAResultsLoop(param, params, 'Lassa');
