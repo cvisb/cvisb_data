@@ -53,7 +53,6 @@ export class AppComponent {
 
   // Adapted from https://github.com/angular/angular-cli/issues/4451#issuecomment-384992203
   private setGTagManager() {
-    console.log(environment)
     const s = this.doc.createElement('script');
     s.type = 'text/javascript';
     s.innerHTML = '  (function(i, s, o, g, r, a, m) { ' +
