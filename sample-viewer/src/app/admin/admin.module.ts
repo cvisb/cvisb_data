@@ -14,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FundingComponent } from './funding/funding.component';
 import { AboutDataComponent } from './about-data/about-data.component';
 import { DisclaimerComponent } from './disclaimer/disclaimer.component';
+import { ReleaseNotesComponent } from './release-notes/release-notes.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { DisclaimerComponent } from './disclaimer/disclaimer.component';
     PageNotFoundComponent,
     FundingComponent,
     AboutDataComponent,
-    DisclaimerComponent,],
+    DisclaimerComponent,
+    ReleaseNotesComponent,],
 })
 export class AdminModule { }
