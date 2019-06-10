@@ -27,7 +27,7 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
-  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
+  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID"];
   private sampleProperties: string[] = ["sampleType", "location.lab", "species"];
   private exptProperties: string[] = ["measurementTechnique"];
 
@@ -68,13 +68,14 @@ export class RequestParametersService {
   updateParams(endpoint: string, newParam: RequestParam) {
     console.log('newParam')
     console.log(newParam)
+
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
-        // this.reduceParams(params);
+        this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
         break;
@@ -233,7 +234,8 @@ export class RequestParametersService {
     let filteredParams = request_params.filter(d => d.field === elisaVar);
 
     if (filteredParams.length === 1) {
-      let elisaVars = filteredParams[0];
+      let elisaVars = filteredParams[0].value[0];
+      console.log(elisaVars)
       // remove any null values-- don't loop over those.
       let elisaArr = [];
 
@@ -245,6 +247,8 @@ export class RequestParametersService {
         }
       })
 
+      console.log(elisaArr)
+
       // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
       let combinations = function(x?) {
         var r = [], arg = arguments, max = arg.length - 1;
@@ -252,9 +256,7 @@ export class RequestParametersService {
           let key = Object.keys(arg[i])[0];
           for (var j = 0, l = arg[i][key].length; j < l; j++) {
             var a = arr.slice(0); // clone arr
-            let obj2return = {};
-
-            obj2return[key] = arg[i][key][j];
+            let obj2return = `elisa.${key}:${arg[i][key][j]}`;
             a.push(obj2return);
             if (i == max)
               r.push(a);
@@ -266,10 +268,9 @@ export class RequestParametersService {
         return r;
       }
 
-
       let elisaCombos = combinations(...elisaArr);
 
-      return (elisaCombos.join(" OR "));
+      return (elisaCombos.map(d => d.join(" AND ")).map(d => `(${d})`).join(" OR "));
     } else {
       return (null)
     }

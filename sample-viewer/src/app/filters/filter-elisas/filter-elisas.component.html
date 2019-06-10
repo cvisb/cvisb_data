@@ -13,18 +13,18 @@
     </mat-form-field>
 
     <mat-form-field class="form-selector" id="elisa-assay">
-      <mat-select placeholder="assay" formControlName="assay" multiple>
+      <mat-select placeholder="assay" formControlName="assayType" multiple>
         <mat-select-trigger>
-          {{ elisaForm.get("assay").value ? elisaForm.get("assay").value.join(" or ") : ''}}
+          {{ elisaForm.get("assayType").value ? elisaForm.get("assayType").value.join(" or ") : ''}}
         </mat-select-trigger>
         <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-selector" id="elisa-result">
-      <mat-select placeholder="result" formControlName="result" multiple>
+      <mat-select placeholder="result" formControlName="ELISAresult" multiple>
         <mat-select-trigger>
-          {{ elisaForm.get("result").value ? elisaForm.get("result").value.join(" or ") : ''}}
+          {{ elisaForm.get("ELISAresult").value ? elisaForm.get("ELISAresult").value.join(" or ") : ''}}
         </mat-select-trigger>
         <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
       </mat-select>
