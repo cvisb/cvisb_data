@@ -10,6 +10,7 @@ import * as d3 from 'd3';
 
 import { environment } from "../../environments/environment";
 import { Sample, SampleWide, AuthState, RequestParamArray, Patient, ESFacetTerms } from '../_models/';
+import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { MyHttpClient } from './http-cookies.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -36,12 +37,14 @@ export class GetSamplesService {
   public loadingState$ = this.loadingSubject.asObservable();
 
   samplePatientMD: Patient[] = [];
+  private numSampleTypes: number = 5;
 
 
   constructor(
     public myhttp: MyHttpClient,
     private requestSvc: RequestParametersService,
     private route: ActivatedRoute,
+    private apiSvc: ApiService,
     private authSvc: AuthService) {
 
     // Listener for changes in auth status
@@ -67,7 +70,7 @@ export class GetSamplesService {
   }
 
   // Main function to get the samples + associated patient-level metadata
-  getSamples(qParamArray?: RequestParamArray): Observable<any> {
+  getSamples(qParamArray: RequestParamArray, sortVar, sortDirection, pageIdx, pageSize): Observable<any> {
     console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       // samplePatientMD stores the patient metadata (cohort, outcome, etc.)
@@ -82,13 +85,13 @@ export class GetSamplesService {
       return this.getSamplePatientData()
         // (2) Call /sample to get the subset of samples indicated by the qParams
         // Merge to patient metadata properties
-        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParamArray)),
+        .pipe(flatMap(samplePatientMD => this.getNPrepSamples(qParamArray, sortVar, sortDirection, pageIdx, pageSize)),
           finalize(() => this.loadingSubject.next(false))
         );
     } else {
       // Patient-Sample metadata already exists.
       // Execute the /sample query to get the filtered samples.
-      return this.getNPrepSamples(qParamArray).pipe(
+      return this.getNPrepSamples(qParamArray, sortVar, sortDirection, pageIdx, pageSize).pipe(
         finalize(() => this.loadingSubject.next(false))
       );
     }
@@ -96,10 +99,18 @@ export class GetSamplesService {
 
 
   // Main function to execute the call to /sample to get a list of samples and merge to patient props
-  getNPrepSamples(filterParamArray: RequestParamArray) {
+  getNPrepSamples(filterParamArray: RequestParamArray, sortVar, sortDirection, pageIdx, pageSize) {
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.apiSvc.sortFunc(sortVar)}` : this.apiSvc.sortFunc(sortVar);
+
     console.log("Calling prep samples")
     let params = this.requestSvc.reduceSampleParams(filterParamArray);
-    params = params.set('size', "1000")
+    params = params
+      .append("sort", sortString)
+      .append('size', '1000');
+    // .append('size', pageSize.toString())
+    // .append('from', (pageSize * pageIdx).toString())
 
     console.log('sample params:')
     console.log(params)

@@ -5,6 +5,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { merge } from "rxjs/";
 
 // import { HttpParams } from '@angular/common/http';
 
@@ -22,6 +24,7 @@ export class SampleTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   samplePatientMD: Patient[];
+  params: RequestParamArray;
   // dataSource: MatTableDataSource<any>;
   dataSource: SamplesDataSource;
   // loading: boolean;
@@ -63,12 +66,27 @@ export class SampleTableComponent implements OnInit {
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
       console.log("Sample table calling new request to update data")
       console.log(params)
-      this.loadSamples(params);
+      this.params = params;
+      this.loadSamples();
     })
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadSamples())
+      )
+      .subscribe();
+
   }
 
-  loadSamples(params: RequestParamArray) {
-    this.dataSource.loadSamples(params);
+  loadSamples() {
+    this.dataSource.loadSamples(this.params,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize);
   }
 
   showSampleMD(sample): void {
