@@ -29,19 +29,21 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   }
 
-  loadSamples(qParamArray: RequestParamArray) {
+  loadSamples(qParamArray: RequestParamArray, sortVar, sortDir, pageIdx, pageSize) {
     console.log('calling samples.dataSource:loadSamples')
     console.log(qParamArray)
 
     this.loadingSubject.next(true);
 
-    this.sampleSvc.getSamples(qParamArray).pipe(
+    this.sampleSvc.getSamples(qParamArray, sortVar, sortDir, pageIdx, pageSize).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(sampleList => {
         console.log('sample list from data source:')
         console.log(sampleList)
+
+        let filteredSamples = sampleList.slice(pageIdx*pageSize, (pageIdx+1)*pageSize);
         this.resultCountSubject.next(sampleList.samples.length);
         this.samplesSubject.next(sampleList.sampleWide);
       });
