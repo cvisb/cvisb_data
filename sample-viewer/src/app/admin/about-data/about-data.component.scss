@@ -8,3 +8,23 @@
   font-weight: 300;
   font-size: 1.35em;
 }
+
+.current-label {
+  margin-right: 10px;
+}
+
+.version {
+  font-size: 0.8em;
+  background: #fde9f0;
+  padding: 3px 5px;
+  border: 1px solid #E91E63;
+  margin-right: 15px;
+  border-radius: 4px;
+  font-weight: 400;
+  color: #E91E63;
+}
+
+.release-header {
+  align-items: center;
+  margin-bottom: 5px;
+}

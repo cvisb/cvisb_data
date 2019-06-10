@@ -10,9 +10,20 @@
 
 
   <h4>Data overview</h4>
-  <p>
-    Data was last updated on {{ dataModified | date: "d MMMM y" }}.
-  </p>
+  <div class="container release-header current-release">
+    <div class="current-label">
+      Current version:
+    </div>
+
+    <div class="version">
+      CViSB version {{ dataVersion }}
+    </div>
+    <div class="updated">
+      updated {{ dataModified | date: "d MMMM y" }}
+    </div>
+  </div>
+
+  <a routerLink="/release-notes">View all release notes</a>
 
   <!-- <h4>How the data are compiled</h4>
   <p>

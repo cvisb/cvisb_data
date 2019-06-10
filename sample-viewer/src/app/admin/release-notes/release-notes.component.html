@@ -1,0 +1,40 @@
+<div class="centered about-text">
+  <div class="container main-header">
+    <h1>Release notes</h1>
+
+    <div class="container current-release">
+      <div class="current-label">
+        Current version
+      </div>
+
+      <div class="version">
+        CViSB version {{ dataVersion }}
+      </div>
+      <!-- <div class="updated">
+      updated {{ dataModified | date: "d MMMM y" }}
+    </div> -->
+    </div>
+
+  </div>
+
+  <div class="release-notes" *ngFor="let release of releaseNotes">
+    <div class="container release-header" [ngClass]="{'current-release': release.version === dataVersion}">
+      <div class="version">
+        CViSB version {{ release.version }}
+      </div>
+      <div class="updated">
+        published {{ release.dateReleased | date: "d MMMM y" }}
+      </div>
+    </div>
+
+    <div *ngFor="let notes of release.notes">
+      <h4>{{ notes.endpoint }}</h4>
+      <ul class="release">
+        <li *ngFor="let note of notes.note">
+          {{ note }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
