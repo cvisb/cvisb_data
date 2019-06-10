@@ -256,8 +256,16 @@ export class RequestParametersService {
           let key = Object.keys(arg[i])[0];
           for (var j = 0, l = arg[i][key].length; j < l; j++) {
             var a = arr.slice(0); // clone arr
-            let obj2return = `elisa.${key}:"${arg[i][key][j]}"`;
-            a.push(obj2return);
+            let val = arg[i][key][j];
+            let elisa_string: string;
+
+            if (val === "unknown") {
+              elisa_string = `-_exists_:elisa.${key}`;
+            } else {
+              elisa_string = `elisa.${key}:"${val}"`;
+            }
+
+            a.push(elisa_string);
             if (i == max)
               r.push(a);
             else
