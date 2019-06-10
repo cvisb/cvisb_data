@@ -1,6 +1,6 @@
 export class ReleaseNote {
   dateReleased: string;
-  version: number;
+  version: string;
   notes: Note[];
 }
 

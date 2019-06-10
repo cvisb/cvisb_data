@@ -10,7 +10,14 @@
   font-weight: 400;
 }
 
+.disclaimer {
+  margin: 0.75em 0;
+  color: $grey-400;
+}
+
 .current-release {
+  align-items: center;
+
   &.release-header {
     background: lighten($ebola-lt, 12%);
   }
@@ -28,10 +35,15 @@
 
 .current-label {
   margin-right: 10px;
+  align-items: center;
 }
 
 ul.release {
   margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0px;
 }
 
 h4 {

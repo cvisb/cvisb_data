@@ -9,14 +9,14 @@ import { GetDatacatalogService } from '../../_services';
 
 export class AboutDataComponent implements OnInit {
   dataModified: string;
-  dataVersion: string;
+  releaseVersion: string;
   cvisbCatalog: Object;
 
   constructor(private dataCatalogSvc: GetDatacatalogService) {
     this.dataModified = this.dataCatalogSvc.dataModified;
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
     if (this.cvisbCatalog) {
-      this.dataVersion = this.cvisbCatalog['_version'];
+      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
     }
   }
 
