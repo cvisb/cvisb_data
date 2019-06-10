@@ -21,8 +21,8 @@ export class FilterElisasComponent implements OnInit {
 
   elisaForm = this.fb.group({
     virus: [[]],
-    assay: [[]],
-    result: [[]],
+    assayType: [[]],
+    ELISAresult: [[]],
     timepoint: [[]]
   });
 
