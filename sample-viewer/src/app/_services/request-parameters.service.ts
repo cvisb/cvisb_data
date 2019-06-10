@@ -276,11 +276,16 @@ export class RequestParametersService {
         return r;
       }
 
-      let elisaCombos = combinations(...elisaArr);
+      if (combinations.length > 0) {
+        let elisaCombos = combinations(...elisaArr);
 
-      return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
+        return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
+      } else {
+        // Situation where all the ELISA boxes have been unchecked
+        return (null);
+      }
     } else {
-      return (null)
+      return (null);
     }
   }
 
