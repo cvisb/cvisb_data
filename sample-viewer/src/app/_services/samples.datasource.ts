@@ -29,7 +29,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   }
 
-  loadSamples(qParamArray: RequestParamArray, sortVar, sortDir, pageIdx, pageSize) {
+  loadSamples(qParamArray: RequestParamArray, sortVar: string, sortDir: string, pageIdx: number, pageSize: number) {
     console.log('calling samples.dataSource:loadSamples')
     console.log(qParamArray)
 
