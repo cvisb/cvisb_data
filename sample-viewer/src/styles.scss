@@ -170,6 +170,11 @@ a {
   content: "\00a0 \2014";
 }
 
+.filter-wide-container {
+  max-width: 525px;
+}
+
+
 .patient-type {
   display: inline-block;
   padding-right: 0.85em;
