@@ -256,7 +256,7 @@ export class RequestParametersService {
           let key = Object.keys(arg[i])[0];
           for (var j = 0, l = arg[i][key].length; j < l; j++) {
             var a = arr.slice(0); // clone arr
-            let obj2return = `elisa.${key}:${arg[i][key][j]}`;
+            let obj2return = `elisa.${key}:"${arg[i][key][j]}"`;
             a.push(obj2return);
             if (i == max)
               r.push(a);
@@ -270,7 +270,7 @@ export class RequestParametersService {
 
       let elisaCombos = combinations(...elisaArr);
 
-      return (elisaCombos.map(d => d.join(" AND ")).map(d => `(${d})`).join(" OR "));
+      return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
     } else {
       return (null)
     }
