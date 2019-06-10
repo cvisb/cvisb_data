@@ -17,7 +17,7 @@ export class FilterElisasComponent implements OnInit {
   viruses: string[] = ["Ebola", "Lassa"];
   assays: string[] = ["IgG", "IgM", "Ag"];
   results: string[] = ["positive", "negative", "unknown"];
-  timepoints: string[] = ["acute patient enrollment", "survivor enrollment"];
+  timepoints: string[] = ["patient admission", "survivor enrollment"];
 
   elisaForm = this.fb.group({
     virus: [[]],
