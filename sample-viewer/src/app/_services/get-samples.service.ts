@@ -20,6 +20,7 @@ import { RequestParametersService } from './request-parameters.service';
 
 export class GetSamplesService {
   request_params: RequestParamArray;
+  excludeEmptySamples: boolean;
 
   // Event listeners to pass data.
   private samples_wide: SampleWide[] = [];
@@ -51,13 +52,18 @@ export class GetSamplesService {
     //   }
     // })
 
-    // // Listener for changes in query params
-    // this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-    //   console.log("Re-getting samples with new parameters:")
-    //   console.log(params)
-    //   this.request_params = params;
-    //   this.getSamples(params);
-    // })
+    // Listener for changes in query params
+    this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
+      // console.log("Re-getting samples with new parameters:")
+      // console.log(params)
+      this.request_params = params;
+
+      let empties = params.filter(d => d.field === "location.numAliquots");
+      this.excludeEmptySamples = (empties.length > 0 && empties[0].value === "[1 TO *]") ? true : false;
+
+      console.log(this.excludeEmptySamples)
+      // this.getSamples(params);
+    })
   }
 
   // Main function to get the samples + associated patient-level metadata
@@ -108,9 +114,16 @@ export class GetSamplesService {
         let samples = data['body']['hits'];
         console.log(data)
         if (samples) {
+
           samples.forEach(d => {
             // Merge in the patient properties associated with that sample
             let filtered = this.samplePatientMD.filter(patient => patient.alternateIdentifier.includes(d.privatePatientID));
+
+            // filter out used up samples
+            // has to be done AFTER the fact, since
+            if (this.excludeEmptySamples) {
+              d.location = d.location.filter(d => d.numAliquots > 0);
+            }
 
             if (filtered.length === 1) {
               d['patientID'] = filtered[0].patientID;
@@ -134,7 +147,7 @@ export class GetSamplesService {
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);
           this.samplesWideSubject.next(this.samples_wide);
-          return ({samples: samples, sampleWide: this.samples_wide})
+          return ({ samples: samples, sampleWide: this.samples_wide })
         } else {
           console.log('Error in getting samples')
           this.samplesSubject.next(samples);
