@@ -28,6 +28,7 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data)
   }
 
 
