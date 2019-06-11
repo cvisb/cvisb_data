@@ -442,35 +442,15 @@ export class ApiService {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
 
-    // works, but need to array-ize the results, transfer errors
-    // return miniDatasets.reduce((acc, curr) => acc.pipe(
-    //   mergeMap(_ => this.put(endpoint, curr)),
-    //   tap(value => console.log(value)),
-    // ), of(undefined));
-
     return miniDatasets.reduce((acc, curr) => acc.pipe(
       mergeMap(_ => this.put(endpoint, curr)
         .pipe(
           map(single => {
-            // pct_done = pct_done + (curr.length / newData.length) * 100;
-            // this.uploadProgressSubject.next(pct_done);
-            // console.log(pct_done)
-            // console.log(results)
-            // results.push(single);
             return (single);
           }),
           catchError(e => {
-            // pct_done = pct_done + (curr.length / newData.length) * 100;
-            // this.uploadProgressSubject.next(pct_done);
-            // console.log(results)
-            // results.push(e);
             return of(e);
           }),
-        // finalize(() => {
-        //   console.log("FINALIZED inner")
-        //   console.log(results)
-        //   return (results)
-        // })
       )
       ),
       tap(value => {
@@ -478,28 +458,12 @@ export class ApiService {
         pct_done = pct_done + (curr.length / newData.length) * 100;
         this.uploadProgressSubject.next(pct_done);
         results.push(value);
-        console.log(results)
-        // return(results)
       }),
       reduce((a, i) => {
-        console.log(a)
-        console.log(i)
-        console.log(results)
-        return(results)
-        // return ([...a, i])
+        // return the saved results
+        return (results)
       }, []),
-      // finalize(() => {
-      //   console.log("FINALIZED")
-      //   console.log(results)
-      //   return (results)
-      // })
     ), of(undefined));
-
-    // console.log('exit')
-    // console.log(results)
-    // console.log(singleObservables)
-
-    // return (of(results));
 
     // WORKS BUT NOT SEQUENTIAL.
     // let singleObservables = from(miniDatasets).pipe(
