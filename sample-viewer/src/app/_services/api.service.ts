@@ -443,53 +443,36 @@ export class ApiService {
     }
     console.log(miniDatasets.length)
 
-    // return miniDatasets.reduce((acc, curr) => acc.pipe(
-    //   mergeMap(_ => this.put(endpoint, curr).pipe(tagError("B"))),
-    //   tap(value => console.log(value)),
-    // ), of(undefined));
+    return miniDatasets.reduce((acc, curr) => acc.pipe(
+      mergeMap(_ => this.put(endpoint, curr)),
+      tap(value => console.log(value)),
+    ), of(undefined));
 
-    // WORKS but doesn't catch errors.
-    // return from(miniDatasets).pipe(
-    //   mergeMap(data => {
-    //     pct_done = pct_done + (data.length / newData.length) * 100;
-    //     this.uploadProgressSubject.next(pct_done);
-    //     return (this.put(endpoint, data))
-    //   }),
-    //   catchError(e => {
+
+// WORKS BUT NOT SEQUENTIAL.
+    // let singleObservables = from(miniDatasets).pipe(
+    //   mergeMap((data: any[]) => {
+    //     return this.put(endpoint, data)
+    //       .pipe(
+    //         map(single => {
+    //           pct_done = pct_done + (data.length / newData.length) * 100;
+    //           this.uploadProgressSubject.next(pct_done);
+    //           console.log(pct_done)
+    //           return (single);
+    //         }),
+    //         catchError(e => {
     //           pct_done = pct_done + (data.length / newData.length) * 100;
     //           this.uploadProgressSubject.next(pct_done);
     //           return of(e);
-    //         }),
-    //   // Unlike `scan`, `reduce` only emits upon "completion".
-    //   // Here, "completion" is implicit - it is after the last
-    //   // element of `from(props)` has been processed.
-    //   // snippet from https://stackoverflow.com/questions/55912547/how-to-combine-mergemap-observables-calls-and-return-just-one-value-for-the-whol
-    //   reduce((a, i) => [...a, i], []),
+    //         })
+    //       )
+    //   }),
+    //    reduce((a, i) => [...a, i], []),
     // );
-
-    let singleObservables = from(miniDatasets).pipe(
-      mergeMap((data: any[]) => {
-        return this.put(endpoint, data)
-          .pipe(
-            map(single => {
-              pct_done = pct_done + (data.length / newData.length) * 100;
-              this.uploadProgressSubject.next(pct_done);
-              console.log(pct_done)
-              return (single);
-            }),
-            catchError(e => {
-              pct_done = pct_done + (data.length / newData.length) * 100;
-              this.uploadProgressSubject.next(pct_done);
-              return of(e);
-            })
-          )
-      }),
-       reduce((a, i) => [...a, i], [])
-    );
-
-    console.log(singleObservables)
-
-    return (singleObservables);
+    //
+    // console.log(singleObservables)
+    //
+    // return (singleObservables);
 
     // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
     // let singleObservables = miniDatasets.map((data: any[]) => {
