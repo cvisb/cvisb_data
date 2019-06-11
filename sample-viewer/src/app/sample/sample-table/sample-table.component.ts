@@ -57,7 +57,7 @@ export class SampleTableComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new SamplesDataSource(this.sampleSvc);
-    this.dataSource.loadSamples([], null, null, 0, 10);
+    this.dataSource.loadSamples([], "", null, 0, 10);
     // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
   }
 
