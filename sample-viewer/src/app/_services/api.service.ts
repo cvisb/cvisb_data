@@ -90,7 +90,8 @@ export class ApiService {
 
 
   getMultipleRequests(endpoint, qParamArray, pageNum: number = 0,
-    pageSize: number = 25, sortVar: string = "", sortDirection?: string): any {
+    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<any> {
+      console.log(qParamArray)
     let batchOfRequests = qParamArray.map(qParams =>
       this.getPaginated(endpoint, qParams, pageNum, pageSize, sortVar, sortDirection)
         .pipe(
@@ -98,13 +99,15 @@ export class ApiService {
         )
     );
 
-    forkJoin(...batchOfRequests).subscribe((myResponsesArray: any[]) => {
-      myResponsesArray.forEach((returnedData, index) => {
-        console.log(index);
-        console.log(returnedData);
-      });
-      return(myResponsesArray)
-    });
+    return(forkJoin(...batchOfRequests));
+
+    // .subscribe((myResponsesArray: any[]) => {
+    //   myResponsesArray.forEach((returnedData, index) => {
+    //     console.log(index);
+    //     console.log(returnedData);
+    //   });
+    //   return(myResponsesArray)
+    // });
   }
 
 
