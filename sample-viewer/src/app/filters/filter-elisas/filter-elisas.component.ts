@@ -38,6 +38,12 @@ export class FilterElisasComponent implements OnInit {
   ngOnInit() {
   }
 
+// Get method to grab the formArray within formGroup
+// https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
+  get elisaArray() {
+    return this.elisaForm.get('elisaGroups') as FormArray;;
+  }
+
   createGroup(): FormGroup {
     return this.fb.group({
       virus: [[]],
@@ -49,12 +55,12 @@ export class FilterElisasComponent implements OnInit {
   }
 
   addELISA() {
-    this.elisaGrps = this.elisaForm.get('elisaGroups') as FormArray;
+    this.elisaGrps = this.elisaArray;
     this.elisaGrps.push(this.createGroup());
   }
 
   deleteELISA($event, idx) {
-    this.elisaGrps = this.elisaForm.get('elisaGroups') as FormArray;
+    this.elisaGrps = this.elisaArray;
     // Remove the elisa group from the array
     this.elisaGrps.removeAt(idx);
   }
