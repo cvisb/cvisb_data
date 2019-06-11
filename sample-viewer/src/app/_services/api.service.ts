@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap, mergeMap } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -409,6 +409,7 @@ export class ApiService {
 
 
   put(endpoint: string, newData: any): Observable<any> {
+    console.log("putting")
     if (newData) {
       // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -424,7 +425,7 @@ export class ApiService {
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
-  putPiecewise(endpoint: string, newData: any, size: number = 25): any {
+  putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
 
@@ -434,24 +435,50 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
+    console.log(miniDatasets.length)
 
-    let singleObservables = miniDatasets.map((data: any[]) => {
-      return this.put(endpoint, data)
-        .pipe(
-          map(single => {
-            pct_done = pct_done + (data.length / newData.length) * 100;
-            this.uploadProgressSubject.next(pct_done);
-            return (single);
-          }),
-          catchError(e => {
-            pct_done = pct_done + (data.length / newData.length) * 100;
-            this.uploadProgressSubject.next(pct_done);
-            return of(e);
-          })
-        )
-    });
+    return miniDatasets.reduce((acc, curr) => acc.pipe(
+      mergeMap(_ => this.put(endpoint, curr)),
+      tap(value => console.log(value)),
+    ), of(undefined));
 
-    return (singleObservables);
+    // let singleObservables = miniDatasets.map((data: any[]) => {
+    //   return this.put(endpoint, data)
+    //     .pipe(
+    //       map(single => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return (single);
+    //       }),
+    //       catchError(e => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return of(e);
+    //       })
+    //     )
+    // });
+
+    // return (singleObservables);
+
+
+    // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
+    // let singleObservables = miniDatasets.map((data: any[]) => {
+    //   return this.put(endpoint, data)
+    //     .pipe(
+    //       map(single => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return (single);
+    //       }),
+    //       catchError(e => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return of(e);
+    //       })
+    //     )
+    // });
+    //
+    // return (singleObservables);
   }
 
   // Function to convert to a json object to be inserted by ES
