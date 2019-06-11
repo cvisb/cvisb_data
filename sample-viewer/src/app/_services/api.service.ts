@@ -427,10 +427,10 @@ export class ApiService {
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
 
-  const tagError = tag => catchError(error => {
-  error.tag = tag;
-  throw error;
-});
+    const tagError = tag => catchError(error => {
+      error.tag = tag;
+      throw error;
+    });
 
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
@@ -443,34 +443,21 @@ export class ApiService {
     }
     console.log(miniDatasets.length)
 
-    return miniDatasets.reduce((acc, curr) => acc.pipe(
-      mergeMap(_ => this.put(endpoint, curr).pipe(tagError("B"))),
-      tap(value => console.log(value)),
-    ), of(undefined));
+    // return miniDatasets.reduce((acc, curr) => acc.pipe(
+    //   mergeMap(_ => this.put(endpoint, curr).pipe(tagError("B"))),
+    //   tap(value => console.log(value)),
+    // ), of(undefined));
 
 
     return from(miniDatasets).pipe(
-      mergeMap(data => this.put(endpoint, data).pipe(tagError("B")))
+      mergeMap(data => {
+        pct_done = pct_done + (data.length / newData.length) * 100;
+        this.uploadProgressSubject.next(pct_done);
+        return (this.put(endpoint, data).pipe(tagError("B")))
+      })
     );
 
 
-    // let singleObservables = miniDatasets.map((data: any[]) => {
-    //   return this.put(endpoint, data)
-    //     .pipe(
-    //       map(single => {
-    //         pct_done = pct_done + (data.length / newData.length) * 100;
-    //         this.uploadProgressSubject.next(pct_done);
-    //         return (single);
-    //       }),
-    //       catchError(e => {
-    //         pct_done = pct_done + (data.length / newData.length) * 100;
-    //         this.uploadProgressSubject.next(pct_done);
-    //         return of(e);
-    //       })
-    //     )
-    // });
-
-    // return (singleObservables);
 
 
     // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
