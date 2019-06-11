@@ -484,7 +484,9 @@ export class ApiService {
       reduce((a, i) => {
         console.log(a)
         console.log(i)
-        return ([...a, i])
+        console.log(results)
+        return(results)
+        // return ([...a, i])
       }, []),
       // finalize(() => {
       //   console.log("FINALIZED")
