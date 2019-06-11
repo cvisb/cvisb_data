@@ -19,6 +19,10 @@ th {
   color: $grey-400;
 }
 
+.elisa-group {
+  align-items: center;
+}
+
 .virus-name {
   font-size: 0.85em;
   text-align: center;
@@ -53,4 +57,18 @@ th {
   & mat-select-trigger {
     font-size: 0.8em;
   }
+}
+
+.and-or-container {
+  justify-content: center;
+}
+
+ #elisa-connector {
+  width: 75px;
+}
+
+/deep/  .mat-form-field-appearance-fill .mat-form-field-flex {
+ background: lighten($cvisb-bright, 47%);
+ border-radius: 4px 4px 0 0;
+ padding: 0 0.50em 0 0.75em !important;
 }
