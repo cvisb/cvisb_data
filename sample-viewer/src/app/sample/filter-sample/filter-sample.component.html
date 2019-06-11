@@ -26,7 +26,7 @@
     <app-filter-sample-timepoints [endpoint]="'sample'"></app-filter-sample-timepoints>
   </div>
 
-   <div class="filter-item filter-patients">
+  <div class="filter-item filter-patients">
     <app-filter-patient-id [all_patients]="patients" [patients]="patients" endpoint="sample"></app-filter-patient-id>
   </div>
 
@@ -34,17 +34,20 @@
     <app-filter-patient-type [viruses]="cohorts" [outcomes]="outcomes" [all_cohorts]='["Ebola", "Lassa", "Unknown"]' [all_outcomes]='["survivor", "contact", "unknown", "dead", "control"]' endpoint="sample"></app-filter-patient-type>
   </div>
 
-  <!-- <div class="filter-item filter-elisas">
-    <app-filter-elisas endpoint='sample'></app-filter-elisas>
-  </div> -->
+  <div class="filter-wide-container container-column">
+    <div class="filter-item filter-elisas">
+      <app-filter-elisas endpoint="sample"></app-filter-elisas>
+    </div>
+
+    <div class="filter-item filter-expts">
+      <app-filter-experiment endpoint="sample"></app-filter-experiment>
+    </div>
+  </div>
 
   <div class="filter-item filter-dates">
     <app-filter-sample-year [data]="years" [yearDomain]="[2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]" endpoint="sample"></app-filter-sample-year>
   </div>
 
-  <div class="filter-item filter-expts">
-    <app-filter-experiment endpoint="sample"></app-filter-experiment>
-  </div>
 
   <div class="filter-item filter-ctry">
     <app-filter-location [countries]="countries" endpoint="sample" [all_countries]="countries"></app-filter-location>

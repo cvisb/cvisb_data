@@ -27,8 +27,8 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
-  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID", "elisa"];
-  private sampleProperties: string[] = ["sampleType", "location.lab", "species"];
+  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID"];
+  private sampleProperties: string[] = ["sampleType", "location.lab", "species", "location.numAliquots"];
   private exptProperties: string[] = ["measurementTechnique"];
 
   constructor(
@@ -68,12 +68,14 @@ export class RequestParametersService {
   updateParams(endpoint: string, newParam: RequestParam) {
     console.log('newParam')
     console.log(newParam)
+
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
+        // console.log('reducing params')
         // this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
@@ -82,6 +84,7 @@ export class RequestParametersService {
       case 'sample': {
         let params = this.checkExists(this.sampleSearchParams, newParam);
         // console.log(params)
+        // this.reduceParams(params);
 
         this.sampleParamsSubject.next(params);
         break;
@@ -154,7 +157,7 @@ export class RequestParametersService {
 
   reduceSampleParams(request_params: RequestParamArray): HttpParams {
     console.log(request_params)
-    let reduced = this.reduceParams(request_params);
+    let reduced = this.reduceParams(request_params, 'sample');
 
     // default options
     // Note: * will only return those samples who are in the patient registry.  "" will return everything
@@ -175,12 +178,38 @@ export class RequestParametersService {
 
   reducePatientParams(request_params): HttpParams {
     // default options
-    let reduced = this.reduceParams(request_params);
+    let reduced = this.reduceParams(request_params, 'patient');
+    console.log(reduced);
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
     let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
     let elisa_string: string = reduced.elisa ? reduced.elisa : "";
+
+    let queries = [{ esHandle: "sampleQuery", value: sample_string },
+    { esHandle: "experimentQuery", value: expt_string },
+    { esHandle: "elisa", value: elisa_string }]
+    // let totalQueries = +[sample_string, expt_string, elisa_string].reduce((prev, curr) => (curr !== "") + prev);
+    // console.log("totalQueries: " + totalQueries);
+
+    let http_params_grp: HttpParams[] = [];
+    queries.forEach(d => {
+      if (d.value !== "") {
+        http_params_grp.push(
+          new HttpParams()
+            .set('q', patient_string)
+            .set(d['esHandle'], d['value'])
+        )
+      }
+    });
+
+    // For initial case / only patientQuery params.
+    if (http_params_grp.length == 0) {
+      http_params_grp.push(
+        new HttpParams()
+          .set('q', patient_string)
+      )
+    }
 
     let http_params = new HttpParams()
       .set('q', patient_string)
@@ -188,30 +217,42 @@ export class RequestParametersService {
       .set('sampleQuery', sample_string)
       .set('experimentQuery', expt_string);
 
+    // console.log(http_params);
+    // console.log("!COMBINED &{endpoint}Query!")
+    // console.log(http_params_grp);
+
     return (http_params);
   }
 
-  reduceParams(request_params: RequestParamArray) {
+  reduceParams(request_params: RequestParamArray, qEndpoint?: string) {
     let patient_string: string;
     let sample_string: string;
     let expt_string: string;
     let elisa_string: string;
 
     if (request_params) {
-      patient_string = this.reduceParams2string(request_params, this.patientProperties);
-      sample_string = this.reduceParams2string(request_params, this.sampleProperties);
-      expt_string = this.reduceParams2string(request_params, this.exptProperties);
-      elisa_string = this.reduceElisas(request_params.filter(d => d.field === "elisa"));
+      patient_string = this.reduceParams2string(request_params, this.patientProperties, qEndpoint === "patient");
+      sample_string = this.reduceParams2string(request_params, this.sampleProperties, qEndpoint === "sample");
+      expt_string = this.reduceParams2string(request_params, this.exptProperties, qEndpoint === "experiment");
+      elisa_string = this.reduceElisas(request_params, "elisa");
     }
 
     return ({ patient_string: patient_string, sample_string: sample_string, expt_string: expt_string, elisa: elisa_string })
   }
 
-  reduceParams2string(request_params: RequestParamArray, filterBy): string {
+  reduceParams2string(request_params: RequestParamArray, filterBy, qQuery?: boolean): string {
     console.log(request_params)
-    let params = request_params
-      .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
 
+    let params: RequestParamArray;
+
+    if (qQuery) {
+      // For search bar, make sure the d.field: null is passed to the q-string.
+      params = request_params
+        .filter(d => filterBy.includes(d.field) || !d.field).map(param => this.reduceHandler(param));
+    } else {
+      params = request_params
+        .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
+    }
     return (params.length > 0 ? params.join(" AND ") : null);
   }
 
@@ -225,112 +266,136 @@ export class RequestParametersService {
   // [[elisa.{propertyName}:{value} AND elisa.{propertyName}:{value} ...]] -- one set of ELISAs
   // then combine those [[elisa-nested-group]] with OR, AND, NOT.
 
-  reduceElisas(elisaArr) {
-    let result = "";
-    // let elisa_vals = elisaArr[0];
-    //
-    // let pairs = [];
-    //
-    // Object.keys(elisa_group)
-    //
-    // let elisa_group = [];
-    // elisa_vals.forEach(grp => {
-    //   // remove any null values-- don't loop over those.
-    //   Object.keys(grp).forEach((key) => (grp[key].length === 0) && delete grp[key]);
-    //
-    //   Object.keys(grp).forEach(key => {
-    //     pairs.push(elisa_group.join(" AND "));
-    //     elisa_group = [];
-    //     grp[key].forEach(d => {
-    //       elisa_group.push({ key: key, value: d })
-    //     })
-    //   })
-    //
-    //   let elements = Object.keys(grp)
-    //
-    //   function combinations(grp, keys, size) {
-    //     var result = [];
-    //
-    //     if (size === 0) {
-    //
-    //       result.push([]);
-    //
-    //     } else {
-    //
-    //       combinations(grp, keys, size - 1).forEach(function(previousComb) {
-    //         console.log(previousComb)
-    //         grp[keys].forEach(function(element) {
-    //           result.push([element].concat(previousComb));
-    //         });
-    //       });
-    //     }
-
-        return result;
-      }
-
-      // grp.virus.forEach(virus => {
-      //   elisa_group.push({})
-      //   grp.assay.forEach(assay =>
-      //     elisa_vals.result.forEach(result =>
-      //       elisa_vals.timepoint.forEach(timepoint => {
-      //         let elisa_group = [];
-      //       }
-      //       )
-      //     )
-      //   )
-      // }
-      // )
-    // })
+  reduceElisas(request_params: RequestParamArray, elisaVar: string) {
 
 
 
-  //   elisa_vals.virus.map(d => { return ({ field: "elisa.virus", value: d }) })
-  //   elisa_vals.assay.map(d => { return ({ field: "elisa.virus", value: d }) })
-  // }
+    let filteredParams = request_params.filter(d => d.field === elisaVar);
+
+    if (filteredParams.length === 1) {
+      let elisaVars = filteredParams[0].value;
+      console.log(elisaVars)
+
+      let elisaStrings: string[] = [];
+
+      elisaVars.forEach(elisaGrp => {
+        elisaStrings.push(this.reduceElisaGroup(elisaGrp))
+      })
 
 
-  elisaHandler(param, params) {
-    let elisa_vals = param.value[0];
-    // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
-    if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
-      let elisaparams;
+      // connect together different groups of ELISA conditions
+      // (1) encapsulate groups in parens
+      // (2) connected by elisaVars[i+1].connector -- connects i and i+1
+      // (3) filter out null strings
+      elisaStrings = elisaStrings.map((d, i) => {
+        if (d && elisaStrings[i + 1]) {
+          return (`(${d}) ${elisaVars[i + 1].connector} `)
+        } else if (d) {
+          return (`(${d})`)
+        } else {
+          return (null)
+        }
+      });
 
-      for (let virus of elisa_vals.virus) {
-        console.log(virus)
-        let pairs = [];
-        pairs.push({ field: "elisa.virus", value: virus });
-        for (let assay of elisa_vals.assay) {
-          pairs.push({ field: "elisa.assayType", value: assay });
+      return (elisaStrings.join(""))
 
-          // for(let timepoint of param.timepoint){
-          for (let result of elisa_vals.result) {
-            pairs.push({ field: "elisa.ELISAresult", value: result });
+    } else {
+      return (null);
+    }
+  }
 
-            elisaparams = {
-              pairs: pairs,
-              connector: "AND"
-            };
+  reduceElisaGroup(elisaGroup, connectorVar = "connector") {
+    // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
+    let combinations = function(x?) {
+      var r = [], arg = arguments, max = arg.length - 1;
+      function helper(arr, i) {
+        let key = Object.keys(arg[i])[0];
+        for (var j = 0, l = arg[i][key].length; j < l; j++) {
+          var a = arr.slice(0); // clone arr
+          let val = arg[i][key][j];
+          let elisa_string: string;
+
+          if (val === "unknown") {
+            elisa_string = `-_exists_:elisa.${key}`;
+          } else {
+            elisa_string = `elisa.${key}:"${val}"`;
           }
+
+          a.push(elisa_string);
+          if (i == max)
+            r.push(a);
+          else
+            helper(a, i + 1);
         }
       }
-      console.log(this.connectKeyValues(elisaparams))
-
-
-      params.push(this.connectKeyValues(elisaparams));
+      helper([], 0);
+      return r;
     }
-    return (params)
+
+    // remove any null values-- don't loop over those.
+    let elisaArr = [];
+
+    Object.keys(elisaGroup).forEach((key) => {
+      if (elisaGroup[key].length > 0 && key !== connectorVar) {
+        let val = {}
+        val[key] = elisaGroup[key];
+        elisaArr.push(val);
+      }
+    })
+
+    if (elisaArr.length > 0) {
+      let elisaCombos = combinations(...elisaArr);
+
+      return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
+    } else {
+      // Situation where all the ELISA boxes have been unchecked
+      return (null);
+    }
   }
 
-  reduceKeyValues(obj): string {
-    return (`${obj.field}:${obj.value}`);
-  }
 
-  connectKeyValues(obj): string {
-    console.log(obj)
-    let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
-
-    return (`(${pairs.join(` ${obj.connector} `)})`);
-  }
+  // elisaHandler(param, params) {
+  //   let elisa_vals = param.value[0];
+  //   // Verify that the three required properties -- virus, assay, and result -- all are there before combining (?)
+  //   if (elisa_vals.virus.length > 0 && elisa_vals.assay.length > 0 && elisa_vals.result.length > 0) {
+  //     let elisaparams;
+  //
+  //     for (let virus of elisa_vals.virus) {
+  //       console.log(virus)
+  //       let pairs = [];
+  //       pairs.push({ field: "elisa.virus", value: virus });
+  //       for (let assay of elisa_vals.assay) {
+  //         pairs.push({ field: "elisa.assayType", value: assay });
+  //
+  //         // for(let timepoint of param.timepoint){
+  //         for (let result of elisa_vals.result) {
+  //           pairs.push({ field: "elisa.ELISAresult", value: result });
+  //
+  //           elisaparams = {
+  //             pairs: pairs,
+  //             connector: "AND"
+  //           };
+  //         }
+  //       }
+  //     }
+  //     console.log(this.connectKeyValues(elisaparams))
+  //
+  //
+  //     params.push(this.connectKeyValues(elisaparams));
+  //   }
+  //   return (params)
+  // }
+  //
+  // reduceKeyValues(obj): string {
+  //   return (`${obj.field}:${obj.value}`);
+  // }
+  //
+  // connectKeyValues(obj): string {
+  //   console.log(obj)
+  //   let pairs = obj.pairs.map(pair => this.reduceKeyValues(pair));
+  //
+  //   return (`(${pairs.join(` ${obj.connector} `)})`);
+  // }
 
   // params = this.handleELISAResultsLoop(param, params, 'Ebola');
   // params = this.handleELISAResultsLoop(param, params, 'Lassa');

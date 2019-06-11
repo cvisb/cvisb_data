@@ -1,7 +1,7 @@
 <div class="filter-sample-type container-column">
   <h4 class="filter-label">sample type</h4>
 
-  <div class="container">
+  <div class="container-column">
 
     <form [formGroup]="myForm">
       <div *ngFor="let type of sample_types">
@@ -10,11 +10,47 @@
     </form>
 
 
-    <!-- <div>
-      <mat-checkbox class="lab-name" color="primary">
+    <div class="include-used-up">
+      <mat-checkbox color="primary" [(ngModel)]="include_empty_samples" (ngModelChange)="filterEmptySamples($event)">
         include used up samples
       </mat-checkbox>
-    </div> -->
+    </div>
+
+
+    <!-- <div id="interest">
+
+    <div class="interest-list">
+
+        <form [formGroup]="interestFormGroup" *ngIf="interestFormGroup">
+
+            <div *ngFor="let interest of interests; let i = index" >
+                <mat-checkbox class="example-margin"
+                (change)="onChange($event)" [value]="interest">{{interest}}</mat-checkbox>
+            </div>
+
+        </form>
+
+    </div>
+
+</div> -->
+
+    <!-- <div id="interest">
+
+    <div class="interest-list">
+
+        <form [formGroup]="arr">
+
+            <div *ngFor="let interest of ['Nancy', 'Drew', 'books']; let i = index" >
+                <mat-checkbox class="example-margin"
+                (change)="onChange($event)" [value]="interest">{{interest}}</mat-checkbox>
+            </div>
+
+        </form>
+
+    </div>
+
+</div> -->
+
 
   </div>
 </div>

@@ -58,7 +58,7 @@
 
   <!-- Patient ID -->
   <ng-container matColumnDef="patientID">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>public patient id</mat-header-cell>
     <mat-cell *matCellDef="let element" class="patient-id">
       <a [routerLink]="['/patient', element.patientID]">
       {{ element.patientID }}
@@ -79,14 +79,14 @@
   <!-- Patient cohort -->
 
   <ng-container matColumnDef="cohort">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+    <th mat-header-cell *matHeaderCellDef>cohort</th>
     <td mat-cell *matCellDef="let element">
       <span class="cohort" [ngClass]="element.cohort" *ngIf="element.cohort">{{ element.cohort }}</span>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="outcome">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+    <th mat-header-cell *matHeaderCellDef>outcome</th>
     <td mat-cell *matCellDef="let element">
       <span class="outcome" [ngClass]="[element.outcome, element.cohort]" *ngIf="element.outcome && element.cohort">{{ element.outcome }}</span>
     </td>
@@ -117,23 +117,23 @@
 
             <!-- Loop over the sample groups. -->
             <div class="sample-group" *ngFor="let sample of element[sampleType]">
+              <ng-container *ngIf="sample.location.length > 0">
+                <!-- SampleID  -->
+                <div class="flex-container sample-id" class="sample-label" matTooltip="view sample metadata" (click)="showSampleMD(sample)">
+                  {{ sample.sampleID }}
+                </div>
 
-              <!-- SampleID  -->
-              <div class="flex-container sample-id" class="sample-label" matTooltip="view sample metadata" (click)="showSampleMD(sample)">
-                {{ sample.sampleID }}
-              </div>
+                <!-- Loop over the sample locations -->
+                <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(location)">
+                  <h4 matTooltip="view location metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
+                  <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
 
-              <!-- Loop over the sample locations -->
-              <div *ngFor="let location of sample.location; let i=index" class="sample-location-groups" (click)="showSampleMD(location)">
-                <h4 matTooltip="view location metadata" class="sample-location">{{location.lab }}: {{location.numAliquots}}</h4>
-                <!-- <input matInput type="text" name="aliquots" class="edit-aliquots" [disabled]="! editable" [ngClass]="editable ? 'active' : 'inactive'" [value]="numAliquots"> -->
-
-                <!-- <mat-select [(value)]="location" class="location"
+                  <!-- <mat-select [(value)]="location" class="location"
                 [ngClass]="editable ? 'active' : 'inactive'" [disabled]="! editable">
                   <mat-option *ngFor="let lab of labs" [value]="lab.id">{{ location.lab }}</mat-option>
                 </mat-select> -->
 
-                <!-- <div class="edit-btn-grp">
+                  <!-- <div class="edit-btn-grp">
                   <button class="small-icon edit-location edit" (click)="switchEditable()" type="button">
               <mat-icon aria-label="Edit">edit</mat-icon>
               </button>
@@ -146,7 +146,8 @@
               <mat-icon aria-label="Delete" matTooltip="delete aliquot">delete_outline</mat-icon>
               </button>
                 </div> -->
-              </div>
+                </div>
+              </ng-container>
               <!-- END OF LOCATION LOOP -->
 
             </div>
@@ -214,5 +215,5 @@
 </mat-table>
 <!-- </form> -->
 <!-- PAGINATION -->
-<mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 25, 50, 100]">
+<mat-paginator [length]="dataSource.resultCountState$ | async" [pageSize]="10" showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 50, 100]">
 </mat-paginator>
