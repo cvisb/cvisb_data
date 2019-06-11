@@ -449,7 +449,7 @@ export class ApiService {
       tap(value => console.log(value)),
     ), of(undefined));
 
-    miniDatasets.reduce((acc, curr) => acc.pipe(
+    let singleObservables = miniDatasets.reduce((acc, curr) => acc.pipe(
       mergeMap(_ => {
         return this.put(endpoint, curr)
           .pipe(
@@ -470,9 +470,13 @@ export class ApiService {
         console.log(value)
         results.push(value);
       }),
+         reduce((a, i) => [...a, i], []),
     ), of(undefined));
 
-    return (of(results));
+    console.log(results)
+    console.log(singleObservables)
+
+    // return (of(results));
 
     // WORKS BUT NOT SEQUENTIAL.
     // let singleObservables = from(miniDatasets).pipe(
@@ -516,7 +520,7 @@ export class ApiService {
     //     )
     // });
     //
-    // return (singleObservables);
+    return (singleObservables);
   }
 
   // Function to convert to a json object to be inserted by ES
