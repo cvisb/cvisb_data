@@ -443,13 +443,38 @@ export class ApiService {
     }
     console.log(miniDatasets.length)
 
+    // works, but need to array-ize the results, transfer errors
     return miniDatasets.reduce((acc, curr) => acc.pipe(
       mergeMap(_ => this.put(endpoint, curr)),
       tap(value => console.log(value)),
     ), of(undefined));
 
+    miniDatasets.reduce((acc, curr) => acc.pipe(
+      mergeMap(_ => {
+        return this.put(endpoint, curr)
+          .pipe(
+            map(single => {
+              pct_done = pct_done + (curr.length / newData.length) * 100;
+              this.uploadProgressSubject.next(pct_done);
+              console.log(pct_done)
+              return (single);
+            }),
+            catchError(e => {
+              pct_done = pct_done + (curr.length / newData.length) * 100;
+              this.uploadProgressSubject.next(pct_done);
+              return of(e);
+            })
+          )
+      }),
+      tap(value => {
+        console.log(value)
+        results.push(value);
+      }),
+    ), of(undefined));
 
-// WORKS BUT NOT SEQUENTIAL.
+    return (of(results));
+
+    // WORKS BUT NOT SEQUENTIAL.
     // let singleObservables = from(miniDatasets).pipe(
     //   mergeMap((data: any[]) => {
     //     return this.put(endpoint, data)
