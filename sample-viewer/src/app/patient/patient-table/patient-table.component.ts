@@ -40,7 +40,7 @@ export class PatientTableComponent implements OnInit {
 
   ngOnInit() {
     this.patientSource = new PatientsDataSource(this.apiSvc);
-    this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
+    this.patientSource.loadPatients([new HttpParams().set("q", "__all__")], 0, 10, "", null);
   }
 
 
@@ -60,7 +60,7 @@ export class PatientTableComponent implements OnInit {
       // console.log(qParams)
 
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      // console.log(this.qParams);
+      console.log(this.qParams);
       this.loadPatientPage();
     })
 
