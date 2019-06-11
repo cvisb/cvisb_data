@@ -23,7 +23,7 @@ export class PatientSummary {
     this.patientIDs = facet_obj["patientID.keyword"].terms.map(d => d.term);
     this.patientTypes = facet_obj["cohort.keyword"].terms;
     this.patientOutcomes = facet_obj["outcome.keyword"].terms;
-    // this.patientYears = facet_obj["infectionYear"].terms;
+    this.patientYears = facet_obj["infectionYear"].terms;
     this.patientCountries = facet_obj["country.identifier.keyword"].terms;
 
     // Check for null values.
@@ -35,9 +35,9 @@ export class PatientSummary {
       this.patientOutcomes.push(new UnknownCount(this.total - facet_obj["outcome.keyword"].total));
     }
 
-    // if (facet_obj["infectionYear"].total < this.total) {
-    //   this.patientYears.push(new UnknownCount(this.total - facet_obj["infectionYear"].total));
-    // }
+    if (facet_obj["infectionYear"].total < this.total) {
+      this.patientYears.push(new UnknownCount(this.total - facet_obj["infectionYear"].total));
+    }
 
     if (facet_obj["country.identifier.keyword"].total < this.total) {
       this.patientCountries.push(new UnknownCount(this.total - facet_obj["country.identifier.keyword"].total));
