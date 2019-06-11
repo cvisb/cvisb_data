@@ -17,7 +17,7 @@ import { HttpParams } from '@angular/common/http';
 export class PatientTableComponent implements OnInit {
   patientSource: PatientsDataSource;
   selectedLength: number;
-  qString: HttpParams;
+  qParams: HttpParams[];
 
   displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -59,8 +59,8 @@ export class PatientTableComponent implements OnInit {
       // console.log("qParams heard in patient-table")
       // console.log(qParams)
 
-      this.qString = this.requestSvc.reducePatientParams(qParams);
-      // console.log(this.qString);
+      this.qParams = this.requestSvc.reducePatientParams(qParams);
+      // console.log(this.qParams);
       this.loadPatientPage();
     })
 
@@ -71,7 +71,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   loadPatientPage() {
-    this.patientSource.loadPatients(this.qString, this.paginator.pageIndex, this.paginator.pageSize,
+    this.patientSource.loadPatients(this.qParams, this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
   }
 
