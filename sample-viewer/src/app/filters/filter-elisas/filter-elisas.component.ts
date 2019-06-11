@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import { RequestParametersService } from '../../_services';
 
@@ -23,6 +23,8 @@ export class FilterElisasComponent implements OnInit {
     elisaGroups: this.fb.array([this.createGroup()])
   });
 
+  elisaGrps: FormArray;
+
   // expanded from https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
   // and https://medium.com/aubergine-solutions/add-push-and-remove-form-fields-dynamically-to-formarray-with-reactive-forms-in-angular-acf61b4a2afe
   constructor(
@@ -36,7 +38,6 @@ export class FilterElisasComponent implements OnInit {
   ngOnInit() {
   }
 
-
   createGroup(): FormGroup {
     return this.fb.group({
       virus: [[]],
@@ -48,17 +49,15 @@ export class FilterElisasComponent implements OnInit {
   }
 
   addELISA() {
-    this.elisaGroups = this.elisaForm.get('elisaGroups') as FormArray;
-    this.elisaGroups.push(this.createGroup());
+    this.elisaGrps = this.elisaForm.get('elisaGroups') as FormArray;
+    this.elisaGrps.push(this.createGroup());
   }
 
   deleteELISA($event, idx) {
-    this.elisaGroups = this.elisaForm.get('elisaGroups') as FormArray;
+    this.elisaGrps = this.elisaForm.get('elisaGroups') as FormArray;
     // Remove the elisa group from the array
-    this.elisaGroups.removeAt(idx);
+    this.elisaGrps.removeAt(idx);
   }
 
-  ngOnInit() {
-  }
 
 }
