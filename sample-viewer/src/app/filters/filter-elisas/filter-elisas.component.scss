@@ -68,7 +68,7 @@ th {
 }
 
 /deep/ .mat-form-field-appearance-fill .mat-form-field-flex {
-  background: lighten($cvisb-bright, 47%);
+  background: lighten($cvisb-bright, 47%) !important;
   border-radius: 4px 4px 0 0;
   padding: 0 0.50em 0 0.75em !important;
 }
