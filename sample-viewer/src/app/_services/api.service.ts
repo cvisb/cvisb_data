@@ -448,45 +448,46 @@ export class ApiService {
     //   tap(value => console.log(value)),
     // ), of(undefined));
 
-
-    return from(miniDatasets).pipe(
-      mergeMap(data => {
-        pct_done = pct_done + (data.length / newData.length) * 100;
-        this.uploadProgressSubject.next(pct_done);
-        return (this.put(endpoint, data).pipe(tagError("B")))
-      }),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (new Observable<any>(e))
-      }),
-      // Unlike `scan`, `reduce` only emits upon "completion".
-      // Here, "completion" is implicit - it is after the last
-      // element of `from(props)` has been processed.
-      // snippet from https://stackoverflow.com/questions/55912547/how-to-combine-mergemap-observables-calls-and-return-just-one-value-for-the-whol
-      reduce((a, i) => [...a, i], []),
-    );
-
-
-    // const source = properties.pipe(
-    //   // `mergeMap` here flattens the output value to the combined inner output values
-    //   mergeMap(props =>
-    //     // Each item inside the argument should be piped as separate values
-    //     from(props).pipe(
-    //       // `mergeMap` here flattens the output value to `{ key, value }`
-    //       mergeMap(key =>
-    //         of('test').pipe(
-    //           map(value => ({ key, value })),
-    //         ),
-    //       ),
-    //       // Unlike `scan`, `reduce` only emits upon "completion".
-    //       // Here, "completion" is implicit - it is after the last
-    //       // element of `from(props)` has been processed.
-    //       reduce((a, i) => [...a, i], []),
-    //     )
-    //   ),
+    // WORKS but doesn't catch errors.
+    // return from(miniDatasets).pipe(
+    //   mergeMap(data => {
+    //     pct_done = pct_done + (data.length / newData.length) * 100;
+    //     this.uploadProgressSubject.next(pct_done);
+    //     return (this.put(endpoint, data))
+    //   }),
+    //   catchError(e => {
+    //           pct_done = pct_done + (data.length / newData.length) * 100;
+    //           this.uploadProgressSubject.next(pct_done);
+    //           return of(e);
+    //         }),
+    //   // Unlike `scan`, `reduce` only emits upon "completion".
+    //   // Here, "completion" is implicit - it is after the last
+    //   // element of `from(props)` has been processed.
+    //   // snippet from https://stackoverflow.com/questions/55912547/how-to-combine-mergemap-observables-calls-and-return-just-one-value-for-the-whol
+    //   reduce((a, i) => [...a, i], []),
     // );
 
+    let singleObservables = from(miniDatasets).pipe(
+      mergeMap((data: any[]) => {
+        return this.put(endpoint, data)
+          .pipe(
+            map(single => {
+              pct_done = pct_done + (data.length / newData.length) * 100;
+              this.uploadProgressSubject.next(pct_done);
+              return (single);
+            }),
+            catchError(e => {
+              pct_done = pct_done + (data.length / newData.length) * 100;
+              this.uploadProgressSubject.next(pct_done);
+              return of(e);
+            })
+          )
+      })
+    );
+
+    console.log(singleObservables)
+
+    return (singleObservables);
 
     // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
     // let singleObservables = miniDatasets.map((data: any[]) => {
