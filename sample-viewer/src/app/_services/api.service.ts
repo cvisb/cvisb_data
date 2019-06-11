@@ -409,7 +409,7 @@ export class ApiService {
 
 
   put(endpoint: string, newData: any): Observable<any> {
-    console.log("putting")
+    // console.log("putting")
     if (newData) {
       // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -454,7 +454,7 @@ export class ApiService {
       )
       ),
       tap(value => {
-        console.log(value)
+        // console.log(value)
         pct_done = pct_done + (curr.length / newData.length) * 100;
         this.uploadProgressSubject.next(pct_done);
         results.push(value);
