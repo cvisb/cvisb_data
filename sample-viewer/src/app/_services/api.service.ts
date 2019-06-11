@@ -75,6 +75,14 @@ export class ApiService {
       return ("country.name.keyword");
     }
 
+    // custom: locations of sample types
+    if (["blood_purple-EDTA", "blood_blue-citrate", "blood_mixed", "blood_unknown",
+      "urine", "feces", "organs", "tissue", "plasma", "serum", "plasma_or_serum",
+      "buffy_coat", "PBMC", "frozenPBMC-DNA", "frozenPBMC-RNA", "viralRNA",
+      "totalRNA", "DNA"].includes(sortVar)) {
+      return ("location.numAliquots");
+    }
+
     // Default: string
     // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
     return (`${sortVar}.keyword`);
