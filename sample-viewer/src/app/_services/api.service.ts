@@ -89,17 +89,16 @@ export class ApiService {
   }
 
 
-  getMultipleRequests(endpoint, qParamArray, pageNum: number = 0,
-    pageSize: number = 25, sortVar: string = "", sortDirection?: string): Observable<any> {
-      console.log(qParamArray)
+  getMultipleRequests(endpoint, qParamArray, sortVar: string = "", sortDirection?: string): Observable<any> {
+    console.log(qParamArray)
     let batchOfRequests = qParamArray.map(qParams =>
-      this.getPaginated(endpoint, qParams, pageNum, pageSize, sortVar, sortDirection)
+      this.getSorted(endpoint, qParams, sortVar, sortDirection)
         .pipe(
           catchError((err) => of(err))
         )
     );
 
-    return(forkJoin(...batchOfRequests));
+    return (forkJoin(...batchOfRequests));
 
     // .subscribe((myResponsesArray: any[]) => {
     //   myResponsesArray.forEach((returnedData, index) => {
@@ -108,6 +107,41 @@ export class ApiService {
     //   });
     //   return(myResponsesArray)
     // });
+  }
+
+  getSorted(endpoint, qParams, sortVar: string = "", sortDirection?: string, sizeLimit: number = 1000, startIdx: number = 0): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    console.log(qParams.toString());
+
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
+
+    let params = qParams
+      .append('from', startIdx.toString())
+      .append('size', sizeLimit.toString())
+      .append("sort", sortString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
   }
 
 
