@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { RequestParametersService } from '../../_services';
 
@@ -10,7 +10,7 @@ import { RequestParametersService } from '../../_services';
 
 export class FilterSearchComponent implements OnInit {
   @Input() endpoint: string;
-  query: string;
+  @Input() query: string;
 
   constructor(private requestSvc: RequestParametersService) { }
 
@@ -20,8 +20,14 @@ export class FilterSearchComponent implements OnInit {
   submitQuery() {
     console.log('submitting query')
     console.log(this.query)
-    this.requestSvc.updateParams(this.endpoint, { field: null, value: this.query })
-
+    this.requestSvc.updateParams(this.endpoint, { field: null, value: `"${this.query}"` })
   }
+
+  //   @Output() sharedVarChange = new EventEmitter();
+  //   change(newValue) {
+  //     console.log('newvalue', newValue)
+  //     this.query = newValue;
+  //     this.sharedVarChange.emit(newValue);
+  //   }
 
 }
