@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
-import { map, catchError, tap, mergeMap } from "rxjs/operators";
+import { map, catchError, tap, mergeMap, reduce } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -454,10 +454,32 @@ export class ApiService {
         pct_done = pct_done + (data.length / newData.length) * 100;
         this.uploadProgressSubject.next(pct_done);
         return (this.put(endpoint, data).pipe(tagError("B")))
-      })
+      }),
+      // Unlike `scan`, `reduce` only emits upon "completion".
+      // Here, "completion" is implicit - it is after the last
+      // element of `from(props)` has been processed.
+      reduce((a, i) => [...a, i], []),
     );
 
 
+    // const source = properties.pipe(
+    //   // `mergeMap` here flattens the output value to the combined inner output values
+    //   mergeMap(props =>
+    //     // Each item inside the argument should be piped as separate values
+    //     from(props).pipe(
+    //       // `mergeMap` here flattens the output value to `{ key, value }`
+    //       mergeMap(key =>
+    //         of('test').pipe(
+    //           map(value => ({ key, value })),
+    //         ),
+    //       ),
+    //       // Unlike `scan`, `reduce` only emits upon "completion".
+    //       // Here, "completion" is implicit - it is after the last
+    //       // element of `from(props)` has been processed.
+    //       reduce((a, i) => [...a, i], []),
+    //     )
+    //   ),
+    // );
 
 
     // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
