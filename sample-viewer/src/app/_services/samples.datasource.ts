@@ -30,6 +30,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   }
 
   loadSamples(qParamArray: RequestParamArray, sortVar: string, sortDir: string, pageIdx: number, pageSize: number) {
+    console.log(sortVar)
     console.log('calling samples.dataSource:loadSamples')
     console.log(qParamArray)
 
@@ -42,10 +43,11 @@ export class SamplesDataSource implements DataSource<SampleWide> {
       .subscribe(sampleList => {
         console.log('sample list from data source:')
         console.log(sampleList)
-
-        let filteredSamples = sampleList.slice(pageIdx*pageSize, (pageIdx+1)*pageSize);
-        this.resultCountSubject.next(sampleList.samples.length);
-        this.samplesSubject.next(sampleList.sampleWide);
+        if (sampleList.sampleWide) {
+          let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
+          this.resultCountSubject.next(sampleList.samples.length);
+          this.samplesSubject.next(filteredSamples);
+        }
       });
 
   }
