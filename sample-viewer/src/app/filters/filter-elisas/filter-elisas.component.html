@@ -4,7 +4,7 @@
   <form [formGroup]="elisaForm">
     <div formArrayName="elisaGroups">
 
-      <div *ngFor="let group of elisaForm.get('elisaGroups').controls; let i = index;">
+      <div *ngFor="let group of elisaArray.controls; let i = index;">
         <div [formGroupName]="i">
 
           <div class="container and-or-container">
