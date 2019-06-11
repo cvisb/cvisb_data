@@ -441,7 +441,6 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
-    console.log(miniDatasets.length + " number of chunks to upload")
 
     // works, but need to array-ize the results, transfer errors
     // return miniDatasets.reduce((acc, curr) => acc.pipe(
@@ -475,7 +474,6 @@ export class ApiService {
           )
       ),
       tap(value => {
-        console.log('tap!')
         console.log(value)
         pct_done = pct_done + (curr.length / newData.length) * 100;
         this.uploadProgressSubject.next(pct_done);
@@ -483,12 +481,12 @@ export class ApiService {
         console.log(results)
         return(results)
       }),
-      reduce((a, i) => [...a, i], []),
-      // finalize(() => {
-      //   console.log("FINALIZED")
-      //   console.log(results)
-      //   return (results)
-      // })
+      // reduce((a, i) => [...a, i], []),
+      finalize(() => {
+        console.log("FINALIZED")
+        console.log(results)
+        return (results)
+      })
     ), of(undefined));
 
     console.log('exit')
@@ -539,7 +537,7 @@ export class ApiService {
     //     )
     // });
     //
-    return (singleObservables);
+    return (of(results));
   }
 
   // Function to convert to a json object to be inserted by ES
