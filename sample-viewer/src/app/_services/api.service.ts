@@ -448,7 +448,7 @@ export class ApiService {
     //   tap(value => console.log(value)),
     // ), of(undefined));
 
-    let singleObservables = miniDatasets.reduce((acc, curr) => acc.pipe(
+    return miniDatasets.reduce((acc, curr) => acc.pipe(
       mergeMap(_ => this.put(endpoint, curr)
           .pipe(
             map(single => {
@@ -479,7 +479,7 @@ export class ApiService {
         this.uploadProgressSubject.next(pct_done);
         results.push(value);
         console.log(results)
-        return(results)
+        // return(results)
       }),
       // reduce((a, i) => [...a, i], []),
       finalize(() => {
@@ -489,9 +489,9 @@ export class ApiService {
       })
     ), of(undefined));
 
-    console.log('exit')
-    console.log(results)
-    console.log(singleObservables)
+    // console.log('exit')
+    // console.log(results)
+    // console.log(singleObservables)
 
     // return (of(results));
 
@@ -537,7 +537,7 @@ export class ApiService {
     //     )
     // });
     //
-    return (of(results));
+    // return (of(results));
   }
 
   // Function to convert to a json object to be inserted by ES
