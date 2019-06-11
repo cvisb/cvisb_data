@@ -481,12 +481,12 @@ export class ApiService {
         console.log(results)
         // return(results)
       }),
-      // reduce((a, i) => [...a, i], []),
-      finalize(() => {
-        console.log("FINALIZED")
-        console.log(results)
-        return (results)
-      })
+      reduce((a, i) => [...a, i], []),
+      // finalize(() => {
+      //   console.log("FINALIZED")
+      //   console.log(results)
+      //   return (results)
+      // })
     ), of(undefined));
 
     // console.log('exit')
