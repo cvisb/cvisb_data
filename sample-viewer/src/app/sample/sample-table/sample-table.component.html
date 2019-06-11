@@ -58,7 +58,7 @@
 
   <!-- Patient ID -->
   <ng-container matColumnDef="patientID">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>public patient id</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>public patient id</mat-header-cell>
     <mat-cell *matCellDef="let element" class="patient-id">
       <a [routerLink]="['/patient', element.patientID]">
       {{ element.patientID }}
@@ -79,14 +79,14 @@
   <!-- Patient cohort -->
 
   <ng-container matColumnDef="cohort">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
+    <th mat-header-cell *matHeaderCellDef>cohort</th>
     <td mat-cell *matCellDef="let element">
       <span class="cohort" [ngClass]="element.cohort" *ngIf="element.cohort">{{ element.cohort }}</span>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="outcome">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
+    <th mat-header-cell *matHeaderCellDef>outcome</th>
     <td mat-cell *matCellDef="let element">
       <span class="outcome" [ngClass]="[element.outcome, element.cohort]" *ngIf="element.outcome && element.cohort">{{ element.outcome }}</span>
     </td>
@@ -215,5 +215,5 @@
 </mat-table>
 <!-- </form> -->
 <!-- PAGINATION -->
-<mat-paginator #paginator [pageSize]="25" [pageSizeOptions]="[5, 25, 50, 100]">
+<mat-paginator [length]="dataSource.resultCountState$ | async" [pageSize]="10" showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 50, 100]">
 </mat-paginator>

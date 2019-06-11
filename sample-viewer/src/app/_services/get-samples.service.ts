@@ -100,6 +100,10 @@ export class GetSamplesService {
 
   // Main function to execute the call to /sample to get a list of samples and merge to patient props
   getNPrepSamples(filterParamArray: RequestParamArray, sortVar, sortDirection, pageIdx, pageSize) {
+    if (!sortVar) {
+      // Check for if mat sort hasn't been initialized.
+      sortVar = "";
+    }
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.apiSvc.sortFunc(sortVar)}` : this.apiSvc.sortFunc(sortVar);
