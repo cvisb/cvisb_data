@@ -387,7 +387,7 @@ export class ApiService {
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
-  putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any>[] {
+  putPiecewise(endpoint: string, newData: any, size: number = 25): any {
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
 
