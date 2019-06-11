@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-add-data',
@@ -7,7 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddDataComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+    private titleSvc: Title) {
+
+    route.data.subscribe(params => {
+      // change the title of the page
+      titleSvc.setTitle(params.title);
+    });
+  }
 
   ngOnInit() {
   }
