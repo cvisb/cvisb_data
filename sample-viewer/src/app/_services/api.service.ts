@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce } from "rxjs/operators";
+import { map, catchError, tap, mergeMap, reduce, finalize } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -470,9 +470,15 @@ export class ApiService {
         console.log(value)
         results.push(value);
       }),
-         reduce((a, i) => [...a, i], []),
+      reduce((a, i) => [...a, i], []),
+      finalize(() => {
+        console.log("FINALIZED")
+        console.log(results)
+        return (results)
+      })
     ), of(undefined));
 
+    console.log('exit')
     console.log(results)
     console.log(singleObservables)
 
