@@ -474,6 +474,7 @@ export class ApiService {
             map(single => {
               pct_done = pct_done + (data.length / newData.length) * 100;
               this.uploadProgressSubject.next(pct_done);
+              console.log(pct_done)
               return (single);
             }),
             catchError(e => {
@@ -482,7 +483,8 @@ export class ApiService {
               return of(e);
             })
           )
-      })
+      }),
+       reduce((a, i) => [...a, i], [])
     );
 
     console.log(singleObservables)
