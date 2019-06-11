@@ -55,11 +55,11 @@
 
             <!-- BUTTONS TO ADD OR REMOVE A FILTER GROUP -->
             <ng-container>
-              <button mat-icon-button color="primary" (click)="addELISA()" *ngIf='group.get("virus").value.length > 0 || group.get("assayType").value.length > 0 || group.get("ELISAresult").value.length > 0  || group.get("timepoint").value.length > 0'>
+              <button mat-icon-button color="primary" (click)="addELISA()" matTooltip="add ELISA result" *ngIf='group.get("virus").value.length > 0 || group.get("assayType").value.length > 0 || group.get("ELISAresult").value.length > 0  || group.get("timepoint").value.length > 0'>
               <mat-icon aria-label="Add additional ELISA filter">add_box</mat-icon>
             </button>
 
-              <button mat-icon-button color="warn" (click)="deleteELISA($event, i)" *ngIf="i > 0">
+              <button mat-icon-button color="warn" (click)="deleteELISA($event, i)" *ngIf="i > 0" matTooltip="delete ELISA result">
               <mat-icon aria-label="Remove ELISA filter">delete_outline</mat-icon>
             </button>
             </ng-container>
