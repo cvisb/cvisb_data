@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
 import { map, catchError, tap, mergeMap } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
@@ -444,9 +444,15 @@ export class ApiService {
     console.log(miniDatasets.length)
 
     return miniDatasets.reduce((acc, curr) => acc.pipe(
-      mergeMap(_ => this.put(endpoint, curr).pipe(tagError("B"))))
-    //   tap(value => console.log(value)),
-    // ), of(undefined));
+      mergeMap(_ => this.put(endpoint, curr).pipe(tagError("B"))),
+      tap(value => console.log(value)),
+    ), of(undefined));
+
+
+    return from(miniDatasets).pipe(
+      mergeMap(data => this.put(endpoint, data).pipe(tagError("B")))
+    );
+
 
     // let singleObservables = miniDatasets.map((data: any[]) => {
     //   return this.put(endpoint, data)
