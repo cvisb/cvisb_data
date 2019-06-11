@@ -191,16 +191,23 @@ export class RequestParametersService {
     // console.log("totalQueries: " + totalQueries);
 
     let http_params_grp: HttpParams[] = [];
-    queries.forEach(d => {
-      if (d.value !== "") {
-        http_params_grp.push(
-          new HttpParams()
-            .set('q', patient_string)
-            .set(d['esHandle'], d['value'])
-        )
-      }
+
+    if (queries.length > 0) {
+      queries.forEach(d => {
+        if (d.value !== "") {
+          http_params_grp.push(
+            new HttpParams()
+              .set('q', patient_string)
+              .set(d['esHandle'], d['value'])
+          )
+        }
+      });
+    } else {
+      http_params_grp.push(
+        new HttpParams()
+          .set('q', patient_string)
+      )
     }
-    );
 
     let http_params = new HttpParams()
       .set('q', patient_string)
