@@ -46,7 +46,7 @@ export class DownloadBtnComponent implements OnInit {
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(this.qParams)
+      // console.log(this.qParams)
     })
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {

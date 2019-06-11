@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Organization } from '../_models';
 
+import { GetDatacatalogService } from '../_services';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -48,11 +50,13 @@ export class FooterComponent implements OnInit {
     { name: "instagram", icon: "fa-instagram", url: "https://www.instagram.com/cvisb" }
   ];
 
-  dataUpdated: string = "2019-01-24";
+  dataModified: string;
   currentYear: number;
 
 
-  constructor() { }
+  constructor(private dataCatalogSvc: GetDatacatalogService) {
+    this.dataModified = this.dataCatalogSvc.dataModified;
+  }
 
   ngOnInit() {
     let today = new Date();

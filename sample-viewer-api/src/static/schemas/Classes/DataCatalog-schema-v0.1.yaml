@@ -274,6 +274,20 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:releaseVersion
+  "@type":               rdf:Property
+  rdfs:comment:          Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH
+  rdfs:label:            releaseVersion
+  schema:domainIncludes:
+    - "@id":             cvisb:DataCatalog
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:schemaVersion
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 - "@id":                 cvisb:schemaVersion
   "@type":               rdf:Property
   rdfs:comment:          Version of DataCatalog schema

@@ -109,6 +109,7 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data)
     this.createPlot();
   }
 

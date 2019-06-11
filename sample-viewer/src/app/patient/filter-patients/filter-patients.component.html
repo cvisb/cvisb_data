@@ -23,21 +23,23 @@
     <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" [all_cohorts]="all_cohorts" [all_outcomes]="all_outcomes" endpoint="patient"></app-filter-patient-type>
   </div>
 
-  <!-- <div class="filter-item filter-elisas">
-    <app-filter-elisas endpoint='patient'></app-filter-elisas>
-  </div> -->
+  <div class="filter-wide-container container-column">
+    <div class="filter-item filter-elisas">
+      <app-filter-elisas endpoint="patient"></app-filter-elisas>
+    </div>
 
-  <!-- <div class="filter-item filter-dates">
+    <div class="filter-item filter-expts">
+      <app-filter-experiment endpoint="patient"></app-filter-experiment>
+    </div>
+  </div>
+
+  <div class="filter-item filter-dates">
     <app-filter-sample-year [data]="patientSummary.patientYears" [yearDomain]="all_years" endpoint="patient"></app-filter-sample-year>
-  </div> -->
+  </div>
 
 
   <div class="filter-item filter-timepoints">
     <app-filter-sample-timepoints endpoint="patient"></app-filter-sample-timepoints>
-  </div>
-
-  <div class="filter-item filter-expts">
-    <app-filter-experiment endpoint="patient"></app-filter-experiment>
   </div>
 
   <div class="filter-item filter-ctry">

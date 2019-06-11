@@ -10,11 +10,25 @@
 
 
   <h4>Data overview</h4>
-  <p>
-    Data was last updated on {{ dateModified | date: "d MMMM y" }}.
-  </p>
+  <div class="container release-header current-release" *ngIf="releaseVersion">
+    <div class="current-label">
+      Current version:
+    </div>
 
-  <!-- <h4>How the data are compiled</h4> -->
+    <div class="version">
+      CViSB version {{ releaseVersion }}
+    </div>
+    <div class="updated">
+      updated {{ dataModified | date: "d MMMM y" }}
+    </div>
+  </div>
+
+  <a routerLink="/release-notes">View all release notes</a>
+
+  <!-- <h4>How the data are compiled</h4>
+  <p>
+    The majority of our data is provided to CViSB through a partnershup with the Kenema Government hospital in Sierra Leone.
+  </p> -->
 
   <h4><a routerLink="/schema">Schema</a></h4>
   <p>

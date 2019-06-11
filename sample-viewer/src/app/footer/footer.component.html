@@ -55,7 +55,7 @@
         </div>
 
         <div class="updated">
-          data updated: {{ dataUpdated | date: "d MMMM yyyy" }}
+          data updated: {{ dataModified ? (dataModified | date: "d MMMM yyyy") : "unknown" }}
         </div>
 
       </div>

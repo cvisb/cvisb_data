@@ -24,3 +24,4 @@ export * from './merge.service';
 export * from './nested2long.service';
 export * from './filter-timepoints.service';
 export * from './get-experiments.service';
+export * from './get-datacatalog.service';

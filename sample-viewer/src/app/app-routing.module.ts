@@ -14,6 +14,7 @@ import { DatasetComponent } from './dataset/dataset.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
 import { SchemaComponent } from './schema/schema.component';
 import { UploadComponent } from './upload/upload.component';
+import { ReleaseNotesComponent } from './admin/release-notes/release-notes.component';
 
 // --- Dataset pages ---
 // import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
@@ -55,7 +56,7 @@ const appRoutes: Routes = [
     }
   },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  { canActivate: [AuthGuard], path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // {
   //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
   //   resolve: {
@@ -63,8 +64,7 @@ const appRoutes: Routes = [
   //     hlaSummary: HlaResolver
   //   }, data: { title: 'Dataset | CViSB' }
   // },
-  {
-    canActivate: [AuthGuard], path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
+  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
       datasetData: DatasetResolver,
       hlaSummary: HlaResolver
     }, data: { title: 'Dataset | CViSB' }
@@ -82,6 +82,7 @@ const appRoutes: Routes = [
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
   { path: 'about', component: AboutComponent, pathMatch: 'full', data: { title: 'About | CViSB Data' } },
   { path: 'citation', component: CitationComponent, pathMatch: 'full', data: { title: 'Citing CViSB Data' } },
+  { path: 'release-notes', component: ReleaseNotesComponent, pathMatch: 'full', data: { title: 'CViSB Data Releases' } },
   { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
   { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
   { path: 'home', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },

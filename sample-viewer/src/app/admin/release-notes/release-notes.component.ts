@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+
 import { GetDatacatalogService } from '../../_services';
+import { ReleaseNote } from '../../_models';
 
 @Component({
-  selector: 'app-about-data',
-  templateUrl: './about-data.component.html',
-  styleUrls: ['./about-data.component.scss']
+  selector: 'app-release-notes',
+  templateUrl: './release-notes.component.html',
+  styleUrls: ['./release-notes.component.scss']
 })
 
-export class AboutDataComponent implements OnInit {
+export class ReleaseNotesComponent implements OnInit {
   dataModified: string;
   releaseVersion: string;
   cvisbCatalog: Object;
+  releaseNotes: ReleaseNote[];
 
   constructor(private dataCatalogSvc: GetDatacatalogService) {
     this.dataModified = this.dataCatalogSvc.dataModified;
@@ -18,6 +21,7 @@ export class AboutDataComponent implements OnInit {
     if (this.cvisbCatalog) {
       this.releaseVersion = this.cvisbCatalog['releaseVersion'];
     }
+    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
   }
 
   ngOnInit() {

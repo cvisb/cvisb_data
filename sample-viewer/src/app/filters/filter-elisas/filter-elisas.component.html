@@ -1,48 +1,121 @@
 <div class="filter filter-expts container-column">
   <h4 class="filter-label">ELISA result</h4>
 
-  <form [formGroup]="elisaForm" >
+  <form [formGroup]="elisaForm">
+    <div formArrayName="elisaGroups">
 
-    <mat-form-field class="form-selector" id="elisa-virus">
-      <mat-select placeholder="virus" formControlName="virus" multiple>
-        <mat-select-trigger>
-          {{ elisaForm.get("virus").value ? elisaForm.get("virus").value.join(" or ") : ''}}
-        </mat-select-trigger>
-        <mat-option *ngFor="let virus of viruses" [value]="virus">{{ virus }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <div *ngFor="let group of elisaArray.controls; let i = index;">
+        <div [formGroupName]="i">
 
-    <mat-form-field class="form-selector" id="elisa-assay">
-      <mat-select placeholder="assay" formControlName="assay" multiple>
-        <mat-select-trigger>
-          {{ elisaForm.get("assay").value ? elisaForm.get("assay").value.join(" or ") : ''}}
-        </mat-select-trigger>
-        <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+          <div class="container and-or-container">
+            <mat-form-field class="form-selector" id="elisa-connector" *ngIf="i > 0" appearance="fill">
+              <mat-select placeholder="and / or" formControlName="connector">
+                <mat-option value="and">and</mat-option>
+                <mat-option value="or">or</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-    <mat-form-field class="form-selector" id="elisa-result">
-      <mat-select placeholder="result" formControlName="result" multiple>
-        <mat-select-trigger>
-          {{ elisaForm.get("result").value ? elisaForm.get("result").value.join(" or ") : ''}}
-        </mat-select-trigger>
-        <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+          <div class="container elisa-group">
+            <mat-form-field class="form-selector" id="elisa-virus" matTooltipPosition="right" [matTooltip]='group.get("virus").value ? group.get("virus").value.join(" or ") : ""'>
+              <mat-select placeholder="virus" formControlName="virus" multiple>
+                <mat-select-trigger>
+                  {{ group.get("virus").value ? group.get("virus").value.join(" or ") : "" }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let virus of viruses" [value]="virus">{{ virus }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-    <mat-form-field class="form-selector" id="elisa-timepoint">
-      <mat-select placeholder="timepoint" formControlName="timepoint" multiple>
-        <mat-select-trigger>
-          {{ elisaForm.get("timepoint").value ? elisaForm.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute") : ''}}
-        </mat-select-trigger>
-        <mat-option *ngFor="let timepoint of timepoints" [value]="timepoint">{{ timepoint }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+            <mat-form-field class="form-selector" id="elisa-assay" matTooltipPosition="right" [matTooltip]='group.get("assayType").value ? group.get("assayType").value.join(" or " ) : ""'>
+              <mat-select placeholder="assay" formControlName="assayType" multiple>
+                <mat-select-trigger>
+                  {{ group.get("assayType").value ? group.get("assayType").value.join(" or " ) : "" }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-selector" id="elisa-result" matTooltipPosition="right" [matTooltip]='group.get("ELISAresult").value ? group.get("ELISAresult").value.join(" or " ) : ""'>
+              <mat-select placeholder="result" formControlName="ELISAresult" multiple>
+                <mat-select-trigger>
+                  {{ group.get("ELISAresult").value ? group.get("ELISAresult").value.join(" or " ) : "" }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-selector" id="elisa-timepoint" [matTooltip]='group.get("timepoint").value ? group.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute" ) : ""' matTooltipPosition="right">
+              <mat-select placeholder="timepoint" formControlName="timepoint" multiple>
+                <mat-select-trigger>
+                  {{ group.get("timepoint").value ? group.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute" ) : "" }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let timepoint of timepoints" [value]="timepoint">{{ timepoint }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- BUTTONS TO ADD OR REMOVE A FILTER GROUP -->
+            <ng-container>
+              <button mat-icon-button color="primary" (click)="addELISA()" matTooltip="add ELISA result" *ngIf='group.get("virus").value.length > 0 || group.get("assayType").value.length > 0 || group.get("ELISAresult").value.length > 0  || group.get("timepoint").value.length > 0'>
+              <mat-icon aria-label="Add additional ELISA filter">add_box</mat-icon>
+            </button>
+
+              <button mat-icon-button color="warn" (click)="deleteELISA($event, i)" *ngIf="i > 0" matTooltip="delete ELISA result">
+              <mat-icon aria-label="Remove ELISA filter">delete_outline</mat-icon>
+            </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </form>
 
 
-  <!-- <form [formGroup]="elisaForm">
+
+  <!-- <form [formGroup]="group" >
+
+      <mat-form-field class="form-selector" id="elisa-virus">
+        <mat-select placeholder="virus" formControlName="virus" multiple>
+          <mat-select-trigger>
+            {{ group.get("virus").value ? group.get("virus").value.join(" or ") : ''}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let virus of viruses" [value]="virus">{{ virus }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-selector" id="elisa-assay">
+        <mat-select placeholder="assay" formControlName="assay" multiple>
+          <mat-select-trigger>
+            {{ group.get("assay").value ? group.get("assay").value.join(" or ") : ''}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let assay of assays" [value]="assay">{{ assay }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-selector" id="elisa-result">
+        <mat-select placeholder="result" formControlName="result" multiple>
+          <mat-select-trigger>
+            {{ group.get("result").value ? group.get("result").value.join(" or ") : ''}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let result of results" [value]="result">{{ result }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-selector" id="elisa-timepoint">
+        <mat-select placeholder="timepoint" formControlName="timepoint" multiple>
+          <mat-select-trigger>
+            {{ group.get("timepoint").value ? group.get("timepoint").value.join(" or ").replace("survivor enrollment", "survivor").replace("acute patient enrollment", "acute") : ''}}
+          </mat-select-trigger>
+          <mat-option *ngFor="let timepoint of timepoints" [value]="timepoint">{{ timepoint }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+    </form>
+
+          <button mat-raised-button color="primary">Add condition</button> -->
+
+  <!-- <form [formGroup]="group">
     <ng-container *ngFor="let virus of ['Lassa', 'Ebola']">
       <table [formGroupName]="virus">
         <tr>

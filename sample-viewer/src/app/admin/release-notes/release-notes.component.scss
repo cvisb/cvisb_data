@@ -1,0 +1,74 @@
+@import "../../../sass/variables.scss";
+
+.version {
+  font-size: 0.8em;
+  background: $grey-100;
+  padding: 3px 5px;
+  border: 1px solid $grey-400;
+  margin-right: 15px;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+.disclaimer {
+  margin: 0.75em 0;
+  color: $grey-400;
+}
+
+.current-release {
+  align-items: center;
+
+  &.release-header {
+    background: lighten($ebola-lt, 12%);
+  }
+
+  & .version {
+    color: $ebola-dk;
+    border-color: $ebola-dk;
+    background: lighten($ebola-lt, 8%);
+  }
+
+  & .updated {
+    color: $ebola-color;
+  }
+}
+
+.current-label {
+  margin-right: 10px;
+  align-items: center;
+}
+
+ul.release {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0px;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.main-header {
+  justify-content: space-between;
+  align-items: baseline;
+
+  & .version {}
+}
+
+.release-header {
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 5px 10px 5px 5px;
+  justify-content: space-between;
+  background: lighten($grey-50, 1%);
+
+  & .updated {
+    color: $grey-600;
+  }
+}
+
+.release-notes {
+  margin-bottom: 25px;
+}

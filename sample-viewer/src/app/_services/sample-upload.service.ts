@@ -27,7 +27,7 @@ export class SampleUploadService {
 
   // List of properties that will be nested together.
   locationCols: string[] = ["lab", "numAliquots", "freezerID", "freezerRack", "freezerBox", "freezerBoxCell"];
-  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
+  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 
   // Checks and converts these fields into arrays
   arrayFields: string[] = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",

@@ -4,8 +4,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of } from 'rxjs';
-import { map, catchError } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
+import { map, catchError, tap, mergeMap, reduce, finalize } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -75,9 +75,73 @@ export class ApiService {
       return ("country.name.keyword");
     }
 
+    // custom: locations of sample types
+    if (["blood_purple-EDTA", "blood_blue-citrate", "blood_mixed", "blood_unknown",
+      "urine", "feces", "organs", "tissue", "plasma", "serum", "plasma_or_serum",
+      "buffy_coat", "PBMC", "frozenPBMC-DNA", "frozenPBMC-RNA", "viralRNA",
+      "totalRNA", "DNA"].includes(sortVar)) {
+      return ("location.numAliquots");
+    }
+
     // Default: string
     // Since any variable which is a string has to be sorted by keyword, doing a bit of transformation:
     return (`${sortVar}.keyword`);
+  }
+
+
+  getMultipleRequests(endpoint, qParamArray, sortVar: string = "", sortDirection?: string): Observable<any> {
+    console.log(qParamArray)
+    let batchOfRequests = qParamArray.map(qParams =>
+      this.getSorted(endpoint, qParams, sortVar, sortDirection)
+        .pipe(
+          catchError((err) => of(err))
+        )
+    );
+
+    return (forkJoin(...batchOfRequests));
+
+    // .subscribe((myResponsesArray: any[]) => {
+    //   myResponsesArray.forEach((returnedData, index) => {
+    //     console.log(index);
+    //     console.log(returnedData);
+    //   });
+    //   return(myResponsesArray)
+    // });
+  }
+
+  getSorted(endpoint, qParams, sortVar: string = "", sortDirection?: string, sizeLimit: number = 1000, startIdx: number = 0): Observable<any[]> {
+
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: { q: qParams.toString() },
+    //     queryParamsHandling: "merge", // remove to replace all query params by provided
+    //   });
+
+    console.log(qParams.toString());
+
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
+
+    let params = qParams
+      .append('from', startIdx.toString())
+      .append('size', sizeLimit.toString())
+      .append("sort", sortString);
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(res => {
+        console.log(res);
+        return (res["body"])
+      }
+      )
+    );
   }
 
 
@@ -345,6 +409,7 @@ export class ApiService {
 
 
   put(endpoint: string, newData: any): Observable<any> {
+    console.log("putting")
     if (newData) {
       // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -361,6 +426,12 @@ export class ApiService {
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
+
+    const tagError = tag => catchError(error => {
+      error.tag = tag;
+      throw error;
+    });
+
     let numChunks = Math.ceil(newData.length / size);
     let pct_done = 0;
 
@@ -371,23 +442,72 @@ export class ApiService {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
 
-    let singleObservables = miniDatasets.map((data: any[]) => {
-      return this.put(endpoint, data)
+    return miniDatasets.reduce((acc, curr) => acc.pipe(
+      mergeMap(_ => this.put(endpoint, curr)
         .pipe(
           map(single => {
-            pct_done = pct_done + (data.length / newData.length) * 100;
-            this.uploadProgressSubject.next(pct_done);
             return (single);
           }),
           catchError(e => {
-            pct_done = pct_done + (data.length / newData.length) * 100;
-            this.uploadProgressSubject.next(pct_done);
             return of(e);
-          })
-        )
-    });
+          }),
+      )
+      ),
+      tap(value => {
+        console.log(value)
+        pct_done = pct_done + (curr.length / newData.length) * 100;
+        this.uploadProgressSubject.next(pct_done);
+        results.push(value);
+      }),
+      reduce((a, i) => {
+        // return the saved results
+        return (results)
+      }, []),
+    ), of(undefined));
 
-    return forkJoin(singleObservables);
+    // WORKS BUT NOT SEQUENTIAL.
+    // let singleObservables = from(miniDatasets).pipe(
+    //   mergeMap((data: any[]) => {
+    //     return this.put(endpoint, data)
+    //       .pipe(
+    //         map(single => {
+    //           pct_done = pct_done + (data.length / newData.length) * 100;
+    //           this.uploadProgressSubject.next(pct_done);
+    //           console.log(pct_done)
+    //           return (single);
+    //         }),
+    //         catchError(e => {
+    //           pct_done = pct_done + (data.length / newData.length) * 100;
+    //           this.uploadProgressSubject.next(pct_done);
+    //           return of(e);
+    //         })
+    //       )
+    //   }),
+    //    reduce((a, i) => [...a, i], []),
+    // );
+    //
+    // console.log(singleObservables)
+    //
+    // return (singleObservables);
+
+    // CHUNKIFIED BUT SYNCHRONOUS CALLS TO BACKEND
+    // let singleObservables = miniDatasets.map((data: any[]) => {
+    //   return this.put(endpoint, data)
+    //     .pipe(
+    //       map(single => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return (single);
+    //       }),
+    //       catchError(e => {
+    //         pct_done = pct_done + (data.length / newData.length) * 100;
+    //         this.uploadProgressSubject.next(pct_done);
+    //         return of(e);
+    //       })
+    //     )
+    // });
+    //
+    // return (of(results));
   }
 
   // Function to convert to a json object to be inserted by ES
