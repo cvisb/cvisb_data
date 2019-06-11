@@ -75,7 +75,8 @@ export class RequestParametersService {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
         // console.log(params)
-        this.reduceParams(params);
+        // console.log('reducing params')
+        // this.reduceParams(params);
 
         this.patientParamsSubject.next(params);
         break;
@@ -258,60 +259,87 @@ export class RequestParametersService {
 
   reduceElisas(request_params: RequestParamArray, elisaVar: string) {
 
+
+
     let filteredParams = request_params.filter(d => d.field === elisaVar);
 
     if (filteredParams.length === 1) {
-      let elisaVars = filteredParams[0].value[0];
+      let elisaVars = filteredParams[0].value;
       console.log(elisaVars)
-      // remove any null values-- don't loop over those.
-      let elisaArr = [];
 
-      Object.keys(elisaVars).forEach((key) => {
-        if (elisaVars[key].length > 0) {
-          let val = {}
-          val[key] = elisaVars[key];
-          elisaArr.push(val);
-        }
+      let elisaStrings: string[] = [];
+
+      elisaVars.forEach(elisaGrp => {
+        elisaStrings.push(this.reduceElisaGroup(elisaGrp))
       })
 
-      console.log(elisaArr)
 
-      // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
-      let combinations = function(x?) {
-        var r = [], arg = arguments, max = arg.length - 1;
-        function helper(arr, i) {
-          let key = Object.keys(arg[i])[0];
-          for (var j = 0, l = arg[i][key].length; j < l; j++) {
-            var a = arr.slice(0); // clone arr
-            let val = arg[i][key][j];
-            let elisa_string: string;
-
-            if (val === "unknown") {
-              elisa_string = `-_exists_:elisa.${key}`;
-            } else {
-              elisa_string = `elisa.${key}:"${val}"`;
-            }
-
-            a.push(elisa_string);
-            if (i == max)
-              r.push(a);
-            else
-              helper(a, i + 1);
-          }
+      // connect together different groups of ELISA conditions
+      // (1) encapsulate groups in parens
+      // (2) connected by elisaVars[i+1].connector -- connects i and i+1
+      // (3) filter out null strings
+      elisaStrings = elisaStrings.map((d, i) => {
+        if (d && elisaStrings[i + 1]) {
+          return (`(${d}) ${elisaVars[i + 1].connector} `)
+        } else if (d) {
+          return (`(${d})`)
+        } else {
+          return (null)
         }
-        helper([], 0);
-        return r;
-      }
+      });
 
-      if (elisaArr.length > 0) {
-        let elisaCombos = combinations(...elisaArr);
+      return (elisaStrings.join(""))
 
-        return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
-      } else {
-        // Situation where all the ELISA boxes have been unchecked
-        return (null);
-      }
     } else {
+      return (null);
+    }
+  }
+
+  reduceElisaGroup(elisaGroup, connectorVar = "connector") {
+    // Adapted from https://stackoverflow.com/questions/15298912/javascript-generating-combinations-from-n-arrays-with-m-elements
+    let combinations = function(x?) {
+      var r = [], arg = arguments, max = arg.length - 1;
+      function helper(arr, i) {
+        let key = Object.keys(arg[i])[0];
+        for (var j = 0, l = arg[i][key].length; j < l; j++) {
+          var a = arr.slice(0); // clone arr
+          let val = arg[i][key][j];
+          let elisa_string: string;
+
+          if (val === "unknown") {
+            elisa_string = `-_exists_:elisa.${key}`;
+          } else {
+            elisa_string = `elisa.${key}:"${val}"`;
+          }
+
+          a.push(elisa_string);
+          if (i == max)
+            r.push(a);
+          else
+            helper(a, i + 1);
+        }
+      }
+      helper([], 0);
+      return r;
+    }
+
+    // remove any null values-- don't loop over those.
+    let elisaArr = [];
+
+    Object.keys(elisaGroup).forEach((key) => {
+      if (elisaGroup[key].length > 0 && key !== connectorVar) {
+        let val = {}
+        val[key] = elisaGroup[key];
+        elisaArr.push(val);
+      }
+    })
+
+    if (elisaArr.length > 0) {
+      let elisaCombos = combinations(...elisaArr);
+
+      return (elisaCombos.map(d => d.join(" AND ")).map(d => `[[${d}]]`).join(" OR "));
+    } else {
+      // Situation where all the ELISA boxes have been unchecked
       return (null);
     }
   }
