@@ -190,7 +190,7 @@ export class RequestParametersService {
     // let totalQueries = +[sample_string, expt_string, elisa_string].reduce((prev, curr) => (curr !== "") + prev);
     // console.log("totalQueries: " + totalQueries);
 
-    let http_params_grp: HttpParams[];
+    let http_params_grp: HttpParams[] = [];
     queries.forEach(d => {
       if (d.value !== "") {
         http_params_grp.push(
