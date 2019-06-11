@@ -7,6 +7,8 @@ import { catchError, finalize } from "rxjs/operators";
 
 import { Patient } from '../_models';
 
+import { intersectionWith, isEqual } from 'lodash';
+
 
 export class PatientsDataSource implements DataSource<Patient> {
 
@@ -36,9 +38,12 @@ export class PatientsDataSource implements DataSource<Patient> {
       .subscribe(patientArray => {
         console.log(patientArray);
 
-        let patientList = patientArray[0];
-        this.resultCountSubject.next(patientList['total'])
-        this.patientsSubject.next(patientList['hits'])
+        let patientList = intersectionWith(... patientArray.map(d => d['hits']), isEqual);
+        console.log(patientList)
+        // this.resultCountSubject.next(patientList['total'])
+        // this.patientsSubject.next(patientList['hits'])
+        this.resultCountSubject.next(patientList.length)
+        this.patientsSubject.next(patientList)
       });
     // this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
     //   catchError(() => of([])),
