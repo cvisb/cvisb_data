@@ -84,6 +84,7 @@ export class RequestParametersService {
       case 'sample': {
         let params = this.checkExists(this.sampleSearchParams, newParam);
         // console.log(params)
+        // this.reduceParams(params);
 
         this.sampleParamsSubject.next(params);
         break;
@@ -156,7 +157,7 @@ export class RequestParametersService {
 
   reduceSampleParams(request_params: RequestParamArray): HttpParams {
     console.log(request_params)
-    let reduced = this.reduceParams(request_params);
+    let reduced = this.reduceParams(request_params, 'sample');
 
     // default options
     // Note: * will only return those samples who are in the patient registry.  "" will return everything
@@ -177,7 +178,7 @@ export class RequestParametersService {
 
   reducePatientParams(request_params): HttpParams[] {
     // default options
-    let reduced = this.reduceParams(request_params);
+    let reduced = this.reduceParams(request_params, 'patient');
     console.log(reduced);
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
@@ -223,27 +224,35 @@ export class RequestParametersService {
     return (http_params_grp);
   }
 
-  reduceParams(request_params: RequestParamArray) {
+  reduceParams(request_params: RequestParamArray, qEndpoint?: string) {
     let patient_string: string;
     let sample_string: string;
     let expt_string: string;
     let elisa_string: string;
 
     if (request_params) {
-      patient_string = this.reduceParams2string(request_params, this.patientProperties);
-      sample_string = this.reduceParams2string(request_params, this.sampleProperties);
-      expt_string = this.reduceParams2string(request_params, this.exptProperties);
+      patient_string = this.reduceParams2string(request_params, this.patientProperties, qEndpoint === "patient");
+      sample_string = this.reduceParams2string(request_params, this.sampleProperties, qEndpoint === "sample");
+      expt_string = this.reduceParams2string(request_params, this.exptProperties, qEndpoint === "experiment");
       elisa_string = this.reduceElisas(request_params, "elisa");
     }
 
     return ({ patient_string: patient_string, sample_string: sample_string, expt_string: expt_string, elisa: elisa_string })
   }
 
-  reduceParams2string(request_params: RequestParamArray, filterBy): string {
+  reduceParams2string(request_params: RequestParamArray, filterBy, qQuery?: boolean): string {
     console.log(request_params)
-    let params = request_params
-      .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
 
+    let params: RequestParamArray;
+
+    if (qQuery) {
+      // For search bar, make sure the d.field: null is passed to the q-string.
+      params = request_params
+        .filter(d => filterBy.includes(d.field) || !d.field).map(param => this.reduceHandler(param));
+    } else {
+      params = request_params
+        .filter(d => filterBy.includes(d.field)).map(param => this.reduceHandler(param));
+    }
     return (params.length > 0 ? params.join(" AND ") : null);
   }
 
