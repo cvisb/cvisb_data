@@ -453,25 +453,25 @@ export class ApiService {
       mergeMap(_ => this.put(endpoint, curr)
           .pipe(
             map(single => {
-              pct_done = pct_done + (curr.length / newData.length) * 100;
-              this.uploadProgressSubject.next(pct_done);
-              console.log(pct_done)
-              console.log(results)
-              results.push(single);
+              // pct_done = pct_done + (curr.length / newData.length) * 100;
+              // this.uploadProgressSubject.next(pct_done);
+              // console.log(pct_done)
+              // console.log(results)
+              // results.push(single);
               return (single);
             }),
             catchError(e => {
-              pct_done = pct_done + (curr.length / newData.length) * 100;
-              this.uploadProgressSubject.next(pct_done);
-              console.log(results)
-              results.push(e);
+              // pct_done = pct_done + (curr.length / newData.length) * 100;
+              // this.uploadProgressSubject.next(pct_done);
+              // console.log(results)
+              // results.push(e);
               return of(e);
             }),
-            finalize(() => {
-              console.log("FINALIZED inner")
-              console.log(results)
-              return (results)
-            })
+            // finalize(() => {
+            //   console.log("FINALIZED inner")
+            //   console.log(results)
+            //   return (results)
+            // })
           )
       ),
       tap(value => {
@@ -484,11 +484,11 @@ export class ApiService {
         return(results)
       }),
       reduce((a, i) => [...a, i], []),
-      finalize(() => {
-        console.log("FINALIZED")
-        console.log(results)
-        return (results)
-      })
+      // finalize(() => {
+      //   console.log("FINALIZED")
+      //   console.log(results)
+      //   return (results)
+      // })
     ), of(undefined));
 
     console.log('exit')
