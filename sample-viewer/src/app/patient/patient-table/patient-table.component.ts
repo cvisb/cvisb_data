@@ -17,7 +17,7 @@ import { HttpParams } from '@angular/common/http';
 export class PatientTableComponent implements OnInit {
   patientSource: PatientsDataSource;
   selectedLength: number;
-  qParams: HttpParams[];
+  qParams: HttpParams;
 
   displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
@@ -40,7 +40,7 @@ export class PatientTableComponent implements OnInit {
 
   ngOnInit() {
     this.patientSource = new PatientsDataSource(this.apiSvc);
-    this.patientSource.loadPatients([new HttpParams().set("q", "__all__")], 0, 10, "", null);
+    this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
 
 

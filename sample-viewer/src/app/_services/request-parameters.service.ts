@@ -176,7 +176,7 @@ export class RequestParametersService {
     return (http_params);
   }
 
-  reducePatientParams(request_params): HttpParams[] {
+  reducePatientParams(request_params): HttpParams {
     // default options
     let reduced = this.reduceParams(request_params, 'patient');
     console.log(reduced);
@@ -217,11 +217,11 @@ export class RequestParametersService {
       .set('sampleQuery', sample_string)
       .set('experimentQuery', expt_string);
 
-    console.log(http_params);
-    console.log("!COMBINED &{endpoint}Query!")
-    console.log(http_params_grp);
+    // console.log(http_params);
+    // console.log("!COMBINED &{endpoint}Query!")
+    // console.log(http_params_grp);
 
-    return (http_params_grp);
+    return (http_params);
   }
 
   reduceParams(request_params: RequestParamArray, qEndpoint?: string) {
