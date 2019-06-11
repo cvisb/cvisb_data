@@ -455,9 +455,15 @@ export class ApiService {
         this.uploadProgressSubject.next(pct_done);
         return (this.put(endpoint, data).pipe(tagError("B")))
       }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>(e))
+      }),
       // Unlike `scan`, `reduce` only emits upon "completion".
       // Here, "completion" is implicit - it is after the last
       // element of `from(props)` has been processed.
+      // snippet from https://stackoverflow.com/questions/55912547/how-to-combine-mergemap-observables-calls-and-return-just-one-value-for-the-whol
       reduce((a, i) => [...a, i], []),
     );
 
