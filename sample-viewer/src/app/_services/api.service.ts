@@ -441,7 +441,7 @@ export class ApiService {
     for (let i = 0; i < numChunks; i++) {
       miniDatasets.push(newData.slice(i * size, (i + 1) * size));
     }
-    console.log(miniDatasets.length)
+    console.log(miniDatasets.length + " number of chunks to upload")
 
     // works, but need to array-ize the results, transfer errors
     return miniDatasets.reduce((acc, curr) => acc.pipe(
