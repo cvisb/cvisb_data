@@ -184,6 +184,24 @@ export class RequestParametersService {
     let expt_string: string = reduced.expt_string ? reduced.expt_string : "";
     let elisa_string: string = reduced.elisa ? reduced.elisa : "";
 
+    let queries = [{ esHandle: "sampleQuery", value: sample_string },
+    { esHandle: "experimentQuery", value: expt_string },
+    { esHandle: "elisa", value: elisa_string }]
+    // let totalQueries = +[sample_string, expt_string, elisa_string].reduce((prev, curr) => (curr !== "") + prev);
+    // console.log("totalQueries: " + totalQueries);
+
+    let http_params_grp: HttpParams[];
+    queries.forEach(d => {
+      if (d.value !== "") {
+        http_params_grp.push(
+          new HttpParams()
+            .set('q', patient_string)
+            .set(d['esHandle'], d['value'])
+        )
+      }
+    }
+    );
+
     let http_params = new HttpParams()
       .set('q', patient_string)
       .set('elisa', elisa_string)
@@ -191,6 +209,8 @@ export class RequestParametersService {
       .set('experimentQuery', expt_string);
 
     console.log(http_params);
+    console.log("!COMBINED &{endpoint}Query!")
+    console.log(http_params_grp);
 
     return (http_params);
   }
