@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     }
   },
   // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  { canActivate: [AuthGuard], path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // {
   //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
   //   resolve: {
@@ -64,8 +64,7 @@ const appRoutes: Routes = [
   //     hlaSummary: HlaResolver
   //   }, data: { title: 'Dataset | CViSB' }
   // },
-  {
-    canActivate: [AuthGuard], path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
+  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
       datasetData: DatasetResolver,
       hlaSummary: HlaResolver
     }, data: { title: 'Dataset | CViSB' }
