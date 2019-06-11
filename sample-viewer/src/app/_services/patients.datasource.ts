@@ -33,8 +33,10 @@ export class PatientsDataSource implements DataSource<Patient> {
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
-      .subscribe(patientList => {
-        console.log(patientList)
+      .subscribe(patientArray => {
+        console.log(patientArray);
+
+        let patientList = patientArray[0];
         this.resultCountSubject.next(patientList['total'])
         this.patientsSubject.next(patientList['hits'])
       });
