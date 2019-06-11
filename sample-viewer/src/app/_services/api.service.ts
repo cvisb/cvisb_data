@@ -89,6 +89,25 @@ export class ApiService {
   }
 
 
+  getMultipleRequests(endpoint, qParamArray, pageNum: number = 0,
+    pageSize: number = 25, sortVar: string = "", sortDirection?: string): any {
+    let batchOfRequests = qParamArray.map(qParams =>
+      this.getPaginated(endpoint, qParams, pageNum, pageSize, sortVar, sortDirection)
+        .pipe(
+          catchError((err) => of(err))
+        )
+    );
+
+    forkJoin(...batchOfRequests).subscribe((myResponsesArray: any[]) => {
+      myResponsesArray.forEach((returnedData, index) => {
+        console.log(index);
+        console.log(returnedData);
+      });
+      return(myResponsesArray)
+    });
+  }
+
+
   // based on https://blog.angular-university.io/angular-material-data-table/
   // ex: https://dev.cvisb.org/api/patient/query?q=__all__&size=20&sort=cohort.keyword&sort=age&from=40
   getPaginated(endpoint, qParams, pageNum: number = 0,
@@ -395,7 +414,7 @@ export class ApiService {
         )
     });
 
-    return forkJoin(singleObservables);
+    return (singleObservables);
   }
 
   // Function to convert to a json object to be inserted by ES

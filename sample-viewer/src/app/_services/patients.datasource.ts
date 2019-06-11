@@ -29,14 +29,23 @@ export class PatientsDataSource implements DataSource<Patient> {
 
     this.loadingSubject.next(true);
 
-    this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    this.apiSvc.getMultipleRequests('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(patientList => {
+        console.log(patientsList)
         this.resultCountSubject.next(patientList['total'])
         this.patientsSubject.next(patientList['hits'])
       });
+    // this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    //   catchError(() => of([])),
+    //   finalize(() => this.loadingSubject.next(false))
+    // )
+    //   .subscribe(patientList => {
+    //     this.resultCountSubject.next(patientList['total'])
+    //     this.patientsSubject.next(patientList['hits'])
+    //   });
 
   }
 

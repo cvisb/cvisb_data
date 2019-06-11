@@ -174,7 +174,7 @@ export class RequestParametersService {
     return (http_params);
   }
 
-  reducePatientParams(request_params): HttpParams {
+  reducePatientParams(request_params): HttpParams[] {
     // default options
     let reduced = this.reduceParams(request_params);
     console.log(reduced);
@@ -212,7 +212,7 @@ export class RequestParametersService {
     console.log("!COMBINED &{endpoint}Query!")
     console.log(http_params_grp);
 
-    return (http_params);
+    return (http_params_grp);
   }
 
   reduceParams(request_params: RequestParamArray) {
