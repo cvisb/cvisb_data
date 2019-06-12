@@ -627,6 +627,8 @@ export class ApiService {
 
 // generic sorting function to reorder an array by another array
 sortByArray(arr: string[], sortOrderArr: string[]): string[] {
+console.log(arr)
+console.log(sortOrderArr)
   let sortingFunc = function(a, sortOrderArr) {
     let idx = this.sortOrderArr.indexOf(a);
     // if not found, return dummy so sorts at the end
