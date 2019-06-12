@@ -29,8 +29,8 @@ export class SampleTableComponent implements OnInit {
   dataSource: SamplesDataSource;
   // loading: boolean;
 
-  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'];
-  displayedColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"].concat(this.sample_types);
+  // sample_types: string[];
+  // displayedColumns: string[];
   // selection = new SelectionModel<any>(true, []);
   // editable: boolean = false;
   // locationForms = this.fb.group({

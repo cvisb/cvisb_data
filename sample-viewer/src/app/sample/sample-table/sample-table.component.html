@@ -99,7 +99,7 @@
   </ng-container>
 
   <!-- Splay out the sample types wide -->
-  <ng-container *ngFor="let sampleType of sample_types; let i=index">
+  <ng-container *ngFor="let sampleType of (dataSource.sampleTypes$ | async); let i=index">
     <ng-container matColumnDef="{{ sampleType }}">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         <!-- <mat-checkbox (change)="$event ? masterToggle() : null" matTooltip="select all to edit" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -209,7 +209,7 @@
   </ng-container>
 
   <!-- GENERATE TABLE -->
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-header-row *matHeaderRowDef="dataSource.displayedColumns$ | async"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
 
 </mat-table>
