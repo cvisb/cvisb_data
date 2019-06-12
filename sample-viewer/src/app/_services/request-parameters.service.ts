@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash';
 
 // models
 import { RequestParamArray, RequestParam } from '../_models';
+import { SchemaDefs } from '../../assets/schema-defs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,9 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
-  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID"];
-  private sampleProperties: string[] = ["sampleType", "location.lab", "species", "location.numAliquots", "sampleGroup"];
-  private exptProperties: string[] = ["measurementTechnique"];
+  private patientProperties: string[] = SchemaDefs.patientProperties;
+  private sampleProperties: string[] = SchemaDefs.patientProperties;
+  private exptProperties: string[] = SchemaDefs.exptProperties;
 
   constructor(
   ) {
