@@ -7,6 +7,7 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 // import { ApiService } from "./api.service";
 import { GetSamplesService } from './get-samples.service';
+import { ApiService } from './api.service';
 import { catchError, finalize } from "rxjs/operators";
 
 import { Sample, SampleWide, RequestParamArray } from '../_models';
@@ -17,7 +18,8 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   private samplesSubject = new BehaviorSubject<SampleWide[]>([]);
 
   // All column names
-  private staticColumns: string[] = ["patientID", "privatePatientID", "alternateIdentifier", "visitCode", "cohort", "outcome"];
+  private staticColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"];
+  private staticColumns2Ignore: string[] = ["alternateIdentifier"]; // columns to *exclude* from display in table
   private displayedColumnsSubject = new BehaviorSubject<string[]>([]);
   public displayedColumns$ = this.displayedColumnsSubject.asObservable();
 
@@ -35,6 +37,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   constructor(
     private sampleSvc: GetSamplesService,
+    private apiSvc: ApiService
   ) {
 
   }
@@ -60,8 +63,13 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
           // get the column names to display in the table
           let cols = uniq(sampleList.sampleWide.flatMap(d => Object.keys(d)));
+          // remove any columns we want to ignore
+          cols = difference(cols, this.staticColumns2Ignore);
+          // sort columns in particular order
+          cols = this.apiSvc.sortByArray(cols, this.staticColumns);
           console.log(cols);
           let sampleCols = difference(cols, this.staticColumns);
+
           console.log(sampleCols)
           this.displayedColumnsSubject.next(cols);
           this.sampleTypeSubject.next(sampleCols);
