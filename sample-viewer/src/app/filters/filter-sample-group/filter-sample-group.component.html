@@ -1,0 +1,11 @@
+<div class="patient-id-filter container-column">
+  <h4 class="filter-label">sample source</h4>
+
+<form [formGroup]="sampleGroupChecks" class="container-column">
+  <mat-checkbox color="primary" formControlName="acute">
+    acute hospital visit
+  </mat-checkbox>
+  <mat-checkbox color="primary" formControlName="survivor">
+    survivor/contact follow-up visit
+  </mat-checkbox>
+</form>

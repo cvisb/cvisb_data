@@ -14,3 +14,4 @@ export * from './filter-sample-type/filter-sample-type.component';
 export * from './filter-organization/filter-organization.component';
 export * from './filter-species/filter-species.component';
 export * from './filter-sample-timepoints/filter-sample-timepoints.component';
+export * from './filter-sample-group/filter-sample-group.component';
