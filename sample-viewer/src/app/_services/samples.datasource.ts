@@ -17,7 +17,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   private samplesSubject = new BehaviorSubject<SampleWide[]>([]);
 
   // All column names
-  private staticColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"];
+  private staticColumns: string[] = ["patientID", "privatePatientID", "alternateIdentifier", "visitCode", "cohort", "outcome"];
   private displayedColumnsSubject = new BehaviorSubject<string[]>([]);
   public displayedColumns$ = this.displayedColumnsSubject.asObservable();
 
