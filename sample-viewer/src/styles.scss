@@ -154,12 +154,13 @@ a {
 }
 
 .filter-sublabel {
-  display: inline-block;
+  display: flex;
   margin: 0;
-  // color: $cvisb-dark;
-  color: $cvisb-bright;
   font-size: 0.8em;
   font-weight: 300;
+  justify-content: center;
+  margin-top: 5px;
+  color: $cvisb-bright;
 }
 
 .filter-sublabel::before {
@@ -173,7 +174,6 @@ a {
 .filter-wide-container {
   max-width: 605px;
 }
-
 
 .patient-type {
   display: inline-block;
@@ -513,6 +513,7 @@ button.stepper-button {
   margin-bottom: 35px;
 }
 // EXPERIMENT ICONS
+
 .expt-type {
   display: inline-block;
   margin: 0.5em 1.5em 0.5em 0;
