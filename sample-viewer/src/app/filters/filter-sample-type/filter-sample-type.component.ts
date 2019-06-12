@@ -13,7 +13,26 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class FilterSampleTypeComponent implements OnInit {
-  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'].sort();
+  sample_types: string[] = [
+  //   "blood_purple-EDTA",
+  // "blood_blue-citrate",
+  // "blood_mixed",
+  // "blood_unknown",
+  // "urine",
+  // "feces",
+  // "organs",
+  // "tissue",
+  "plasma",
+  // "serum",
+  // "plasma_or_serum",
+  // "buffy_coat",
+  "PBMC",
+  "frozenPBMC-DNA",
+  "frozenPBMC-RNA",
+  "viralRNA",
+  "totalRNA",
+  "DNA"].sort();
+
 
   myForm: FormGroup;
 
@@ -27,21 +46,10 @@ export class FilterSampleTypeComponent implements OnInit {
     //   this.requestSvc.sampleParamsState$.subscribe(params => {
     //     console.log(params)
     //     console.log(this.interestFormGroup)
-    //
-    //
     //   })
   }
 
   ngOnInit() {
-
-    //   const arr = new FormArray([
-    //     new FormControl(),
-    //     new FormControl()
-    //   ]);
-    //
-    //   arr.setValue(['Nancy', 'Drew']);
-    //   arr.patchValue(['Nancy', 'Drew']);
-    //
     this.myForm = this.formBuilder.group({
       samples: this.formBuilder.array([])
     });

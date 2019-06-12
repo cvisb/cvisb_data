@@ -27,7 +27,7 @@ export class SampleUploadService {
 
   // List of properties that will be nested together.
   locationCols: string[] = ["lab", "numAliquots", "freezerID", "freezerRack", "freezerBox", "freezerBoxCell"];
-  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "isolationDate", "lab", "numAliquots"];
+  requiredFields = ["sampleLabel", "privatePatientID", "sampleType", "sampleGroup", "isolationDate", "lab", "numAliquots"];
 
   // Checks and converts these fields into arrays
   arrayFields: string[] = ["sourceSampleID", "sourceSampleType", "protocolVersion", "protocolURL", "alternateIdentifier",
@@ -289,6 +289,8 @@ export class SampleUploadService {
     this.data.forEach((d: any) => {
       d.missing = [];
       d.numAliquots = +d.numAliquots;
+      // clean up case of
+      d.sampleGroup = (d.sampleGroup && d.sampleGroup !== "") ? d.sampleGroup.toLowerCase() : null;
       // clean up "" strings-- if the type is not a string (e.g. bool, date, number)
       d.primarySampleDate = d.primarySampleDate !== "" ? d.primarySampleDate : null;
       d.dilutionFactor = d.dilutionFactor !== "" ? d.dilutionFactor : null;

@@ -409,7 +409,7 @@ export class ApiService {
 
 
   put(endpoint: string, newData: any): Observable<any> {
-    console.log("putting")
+    // console.log("putting")
     if (newData) {
       // console.log('adding new data')
       return this.myhttp.put<any[]>(`${environment.api_url}/api/${endpoint}`,
@@ -454,7 +454,7 @@ export class ApiService {
       )
       ),
       tap(value => {
-        console.log(value)
+        // console.log(value)
         pct_done = pct_done + (curr.length / newData.length) * 100;
         this.uploadProgressSubject.next(pct_done);
         results.push(value);
@@ -539,7 +539,7 @@ export class ApiService {
         errorObj = this.tidyBackendErrors(errorObj)
       }
     } else {
-      uploadResponse = `Success! ${updatedCount} ${dataType} updated`;
+      uploadResponse = `Success! ${updatedCount} ${dataType} added or updated`;
     }
 
     return ({ uploadResponse: uploadResponse, errorMsg: errorMsg, errorObj: errorObj })
@@ -625,5 +625,17 @@ export class ApiService {
     return (filtered)
   }
 
+  // generic sorting function to reorder an array by another array
+  sortByArray(arr: string[], sortOrderArr: string[]): string[] {
+    let sortingFunc = function(a, sortOrderArr) {
+      let idx = sortOrderArr.indexOf(a);
+      // if not found, return dummy so sorts at the end
+      if (idx < 0) {
+        return (1000);
+      }
+      return (idx);
+    }
 
+    return (arr.sort((a, b) => sortingFunc(a, sortOrderArr) - sortingFunc(b, sortOrderArr)))
+  }
 }

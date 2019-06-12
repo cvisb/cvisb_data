@@ -36,6 +36,7 @@ export class SubmitSamplesComponent implements OnInit {
   }
 
   submitData() {
+    this.uploadProgress = 0.01;
     if (this.data.length > 0) {
       this.uploadResponse = "Attempting to submit data to database. Be patient-- this can take a few minutes.";
 

@@ -58,6 +58,7 @@ cvisb:DataCatalog,rdf:Property,temporalCoverage,"The temporalCoverage of a DataC
 cvisb:DataCatalog,rdf:Property,spatialCoverage,"The spatialCoverage of a CreativeWork indicates the place(s) which are the focus of the content. It is a subproperty of contentLocation intended primarily for more technical and detailed materials. For example with a DataCatalog, it indicates areas that the DataCatalog describes: a DataCatalog of New York weather would have spatialCoverage which was the place: the state of New York.",False,recommended,many,,,,,schema:spatialCoverage
 cvisb:DataCatalog,rdf:Property,publisher,"Publisher of this DataCatalog, usually the host organization",False,recommended,many,,,,,schema:publisher
 cvisb:DataCatalog,rdf:Property,_version,"Version of DataCatalog, auto-assigned by CViSB database",False,recommended,one,,,,,schema:version
+cvisb:DataCatalog,rdf:Property,releaseVersion,"Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH",False,required,one,,,,,schema:schemaVersion
 cvisb:DataCatalog,rdf:Property,schemaVersion,Version of DataCatalog schema,False,recommended,one,,,,,schema:schemaVersion
 cvisb:DataCatalog,rdf:Property,funder,A person or organization that supports (sponsors) the collection of this dataset through some kind of financial contribution,False,recommended,many,,,,,schema:funder
 ,rdfs:Class,DataDownload,A schema describing DataDownload in the Center for Viral Systems Biology,,,,,,,schema:DataDownload,
@@ -212,7 +213,7 @@ cvisb:Patient,rdf:Property,Country,Country where Patient lives / was treated,Fal
 cvisb:Patient,rdf:Property,homeLocation,"A contact location for a person's residence. Should include country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village + displaced GPS coordinates (optional)",True,recommended,many,,,,,schema:homeLocation
 cvisb:Patient,rdf:Property,admittedLassaWard,Whether the patient was admitted to the Lassa isolation ward at KGH.,False,optional,one,,,,,
 cvisb:Patient,rdf:Property,admitDate,Date of admission or first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.,True,optional,one,,,,,
-cvisb:Patient,rdf:Property,infectionDate,"Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.",False,optional,one,,,,,
+cvisb:Patient,rdf:Property,infectionYear,"Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.",False,optional,one,,,,,
 cvisb:Patient,rdf:Property,infectionDate,"Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.",True,optional,one,,,,,
 cvisb:Patient,rdf:Property,evalDate,Date of first evaluation within the hospital,True,optional,one,,,,,
 cvisb:Patient,rdf:Property,survivorEnrollmentDate,Date of enrollment of the survivor or contact in the KGH survivor study,True,optional,one,,,,,
@@ -310,7 +311,7 @@ cvisb:Sample,rdf:Property,isolationDate,"Date of sample creation/collection (NOT
 cvisb:Sample,rdf:Property,sampleGroup,"Sample group type: whether it comes from the *acute* phase while the patient treated in the hospital, or from the *survivor* study where survivors and contacts of the survivors are sampled after the infection.",,recommended,one,"['acute', 'survivor', None]",,,,
 cvisb:Sample,rdf:Property,sampleType,"Sample type. Primary types: ""blood_purple-EDTA"", ""blood_blue-citrate"", ""blood_mixed"", ""blood_unknown"", ""urine"", ""feces"", ""organs"", ""tissue""; Derived types: ""plasma"", ""serum"", ""buffy coat"", ""PBMC"", ""frozenPBMC-DNA"", ""frozenPBMC-RNA"", ""viralRNA"", ""totalRNA"", ""DNA""",False,required,one,"['blood_purple-EDTA', 'blood_blue-citrate', 'blood_mixed', 'blood_unknown', 'urine', 'feces', 'organs', 'tissue', 'plasma', 'serum', 'plasma_or_serum', 'buffy_coat', 'PBMC', 'frozenPBMC-DNA', 'frozenPBMC-RNA', 'viralRNA', 'totalRNA', 'DNA']",,,,
 cvisb:Sample,rdf:Property,derivedIndex,"Integer expressing how far derived the sample is from the primary sample.  Primary sample (e.g. blood draw) has a derivedIndex=0; PBMC=1, ...",False,recommended,one,,,,,
-cvisb:Sample,rdf:Property,sampleType,Source of sample (human or rat),False,recommended,one,"['human', 'rat', 'monkey', None]",,,,
+cvisb:Sample,rdf:Property,species,Source of sample (human or rat),False,recommended,one,"['human', 'rat', 'monkey', None]",,,,
 cvisb:Sample,rdf:Property,protocolVersion,Protocol version to isolate sample; either file name and/or version,False,optional,many,,,,,
 cvisb:Sample,rdf:Property,protocolURL,Link to protocol used to isolate sample,False,optional,many,,,,,
 cvisb:Sample,rdf:Property,freezingBuffer,What buffer was used to freeze the sample in; relevant for PBMC samples,False,optional,one,,,,,
@@ -323,10 +324,10 @@ cvisb:Sample,rdf:Property,_version,"Version number of sample, auto-assigned by C
 ,rdfs:Class,SampleLocation,A schema describing a the location of a sample in the Center for Viral Systems Biology,,,,,,,schema:Place,
 cvisb:SampleLocation,rdf:Property,lab,Current location of sample,True,required,one,"['KGH', 'TSRI-Andersen', 'MGH-Alter', 'TSRI-Briney', 'TSRI-Sullivan', 'Tulane-Schieffelin', 'Tulane-Garry']",,,,
 cvisb:SampleLocation,rdf:Property,numAliquots,"Number of aliquots for a particular sampleID at a particular lab location. If sample has been used up, numAliquots = 0",True,required,one,,,,,
-cvisb:SampleLocation,rdf:Property,freezerID,Freezer in which the sample is located within the lab.,True,optional,one,,,,,
-cvisb:SampleLocation,rdf:Property,freezerRack,Rack in the freezer in which the sample is located within the lab.,True,optional,one,,,,,
-cvisb:SampleLocation,rdf:Property,freezerBox,Box in the rack/freezer in which the sample is located within the lab.,True,optional,one,,,,,
-cvisb:SampleLocation,rdf:Property,freezerBoxCell,"Cell within the freezer box in which the sample is located within the lab, for example ""C12"".",True,optional,one,,,,,
+cvisb:SampleLocation,rdf:Property,freezerID,Freezer in which the sample is located within the lab.,True,optional,many,,,,,
+cvisb:SampleLocation,rdf:Property,freezerRack,Rack in the freezer in which the sample is located within the lab.,True,optional,many,,,,,
+cvisb:SampleLocation,rdf:Property,freezerBox,Box in the rack/freezer in which the sample is located within the lab.,True,optional,many,,,,,
+cvisb:SampleLocation,rdf:Property,freezerBoxCell,"Cell within the freezer box in which the sample is located within the lab, for example ""C12"".",True,optional,many,,,,,
 cvisb:SampleLocation,rdf:Property,dateModified,Date of last update (YYYY-MM-DD),True,required,one,,,,,schema:dateModified
 cvisb:SampleLocation,rdf:Property,updatedBy,Person who updated the sample location,True,required,one,,,,,
 ,rdfs:Class,ScholarlyArticle,A schema describing a ScholarlyArticle (a.k.a a paper) in the Center for Viral Systems Biology,,,,,,,schema:ScholarlyArticle,schema:ScholarlyArticle

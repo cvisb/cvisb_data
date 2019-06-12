@@ -7,13 +7,25 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 // import { ApiService } from "./api.service";
 import { GetSamplesService } from './get-samples.service';
+import { ApiService } from './api.service';
 import { catchError, finalize } from "rxjs/operators";
 
 import { Sample, SampleWide, RequestParamArray } from '../_models';
 
-export class SamplesDataSource implements DataSource<SampleWide> {
+import { uniq, difference } from 'lodash';
 
+export class SamplesDataSource implements DataSource<SampleWide> {
   private samplesSubject = new BehaviorSubject<SampleWide[]>([]);
+
+  // All column names
+  private staticColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"];
+  private staticColumns2Ignore: string[] = ["alternateIdentifier"]; // columns to *exclude* from display in table
+  private displayedColumnsSubject = new BehaviorSubject<string[]>([]);
+  public displayedColumns$ = this.displayedColumnsSubject.asObservable();
+
+  // Samples column names
+  private sampleTypeSubject = new BehaviorSubject<string[]>([]);
+  public sampleTypes$ = this.sampleTypeSubject.asObservable();
 
   // Loading spinner
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -25,14 +37,13 @@ export class SamplesDataSource implements DataSource<SampleWide> {
 
   constructor(
     private sampleSvc: GetSamplesService,
+    private apiSvc: ApiService
   ) {
 
   }
 
   loadSamples(qParamArray: RequestParamArray, sortVar: string, sortDir: string, pageIdx: number, pageSize: number) {
-    console.log(sortVar)
     console.log('calling samples.dataSource:loadSamples')
-    console.log(qParamArray)
 
     this.loadingSubject.next(true);
 
@@ -47,6 +58,17 @@ export class SamplesDataSource implements DataSource<SampleWide> {
           let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
           this.resultCountSubject.next(sampleList.samples.length);
           this.samplesSubject.next(filteredSamples);
+
+          // get the column names to display in the table
+          let cols = uniq(sampleList.sampleWide.flatMap(d => Object.keys(d)));
+          // remove any columns we want to ignore
+          cols = difference(cols, this.staticColumns2Ignore);
+          // sort columns in particular order
+          cols = this.apiSvc.sortByArray(cols, this.staticColumns);
+          let sampleCols = difference(cols, this.staticColumns);
+
+          this.displayedColumnsSubject.next(cols);
+          this.sampleTypeSubject.next(sampleCols);
         }
       });
 
