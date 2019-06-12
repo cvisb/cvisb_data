@@ -67,6 +67,15 @@
     <!-- <mat-cell *matCellDef="let element" class="patient-id"> {{ samplePatientMD | filterByAltID: element.privatePatientID:"patientID" }} </mat-cell> -->
   </ng-container>
 
+  <ng-container matColumnDef="alternateIdentifier">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>alternate ids</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="patient-id emphasis">
+      <a [routerLink]="['/patient', element.patientID]">
+            {{ element.alternateIdentifier }}
+          </a>
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="privatePatientID">
     <mat-header-cell *matHeaderCellDef mat-sort-header>private patient id</mat-header-cell>
     <mat-cell *matCellDef="let element" class="patient-id emphasis">
