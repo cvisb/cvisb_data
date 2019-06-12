@@ -539,7 +539,7 @@ export class ApiService {
         errorObj = this.tidyBackendErrors(errorObj)
       }
     } else {
-      uploadResponse = `Success! ${updatedCount} ${dataType} updated`;
+      uploadResponse = `Success! ${updatedCount} ${dataType} added or updated`;
     }
 
     return ({ uploadResponse: uploadResponse, errorMsg: errorMsg, errorObj: errorObj })
