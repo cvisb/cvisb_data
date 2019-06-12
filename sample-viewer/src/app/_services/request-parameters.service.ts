@@ -28,7 +28,7 @@ export class RequestParametersService {
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
   private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID"];
-  private sampleProperties: string[] = ["sampleType", "location.lab", "species", "location.numAliquots"];
+  private sampleProperties: string[] = ["sampleType", "location.lab", "species", "location.numAliquots", "sampleGroup"];
   private exptProperties: string[] = ["measurementTechnique"];
 
   constructor(
