@@ -210,7 +210,7 @@
 
   <!-- GENERATE TABLE -->
   <mat-header-row *matHeaderRowDef="dataSource.displayedColumns$ | async"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+  <mat-row *matRowDef="let row; columns: (dataSource.displayedColumns$ | async);" (click)="selection.toggle(row)"></mat-row>
 
 </mat-table>
 <!-- </form> -->
