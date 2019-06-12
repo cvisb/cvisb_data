@@ -5,7 +5,7 @@
     <b>{{ this.data.length }} {{ (this.data.length > 1) || (this.data.length === 0) ? "samples" : "sample"}}</b> will be uploaded.
   </div>
 
-  <button mat-raised-button color="warn" class="submit-btn" type="submit" (click)="submitData()">Submit to database</button>
+  <button mat-raised-button color="warn" class="submit-btn" type="submit" (click)="submitData()" [disabled]="uploadProgress > 0">Submit to database</button>
 
 </div>
 
