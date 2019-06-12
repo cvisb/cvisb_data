@@ -66,7 +66,12 @@ export class SamplesDataSource implements DataSource<SampleWide> {
           // remove any columns we want to ignore
           cols = difference(cols, this.staticColumns2Ignore);
           // sort columns in particular order
-          cols = this.apiSvc.sortByArray(cols, this.staticColumns);
+          console.log(this.staticColumns)
+          if (this.staticColumns) {
+            cols = this.apiSvc.sortByArray(cols, this.staticColumns);
+          } else {
+            console.log("can't sort")
+          }
           console.log(cols);
           let sampleCols = difference(cols, this.staticColumns);
 
