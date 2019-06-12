@@ -157,8 +157,9 @@ export class RequestParametersService {
   }
 
   reduceSampleParams(request_params: RequestParamArray): HttpParams {
-    console.log(request_params)
+    console.log(this.sampleProperties)
     let reduced = this.reduceParams(request_params, 'sample');
+    console.log(reduced)
 
     // default options
     // Note: * will only return those samples who are in the patient registry.  "" will return everything
@@ -243,6 +244,8 @@ export class RequestParametersService {
 
   reduceParams2string(request_params: RequestParamArray, filterBy, qQuery?: boolean): string {
     console.log(request_params)
+
+    console.log(request_params.filter(d => filterBy.includes(d.field) || !d.field))
 
     let params: RequestParamArray;
 
