@@ -625,21 +625,17 @@ export class ApiService {
     return (filtered)
   }
 
-// generic sorting function to reorder an array by another array
-sortByArray(arr: string[], sortOrderArr: string[]): string[] {
-console.log(arr)
-console.log(sortOrderArr)
-  let sortingFunc = function(a, sortOrderArr) {
-    let idx = this.sortOrderArr.indexOf(a);
-    // if not found, return dummy so sorts at the end
-    if (idx < 0) {
-      return (1000);
+  // generic sorting function to reorder an array by another array
+  sortByArray(arr: string[], sortOrderArr: string[]): string[] {
+    let sortingFunc = function(a, sortOrderArr) {
+      let idx = sortOrderArr.indexOf(a);
+      // if not found, return dummy so sorts at the end
+      if (idx < 0) {
+        return (1000);
+      }
+      return (idx);
     }
-    return (idx);
+
+    return (arr.sort((a, b) => sortingFunc(a, sortOrderArr) - sortingFunc(b, sortOrderArr)))
   }
-
-  return (arr.sort((a, b) => sortingFunc(a, sortOrderArr) - sortingFunc(b, sortOrderArr)))
-}
-
-
 }
