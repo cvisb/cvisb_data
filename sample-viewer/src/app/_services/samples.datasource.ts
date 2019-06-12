@@ -11,9 +11,19 @@ import { catchError, finalize } from "rxjs/operators";
 
 import { Sample, SampleWide, RequestParamArray } from '../_models';
 
-export class SamplesDataSource implements DataSource<SampleWide> {
+import { uniq, difference } from 'lodash';
 
+export class SamplesDataSource implements DataSource<SampleWide> {
   private samplesSubject = new BehaviorSubject<SampleWide[]>([]);
+
+  // All column names
+  private staticColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"];
+  private displayedColumnsSubject = new BehaviorSubject<string[]>([]);
+  public displayedColumns$ = this.displayedColumnsSubject.asObservable();
+
+  // Samples column names
+  private sampleTypeSubject = new BehaviorSubject<string[]>([]);
+  public sampleTypes$ = this.sampleTypeSubject.asObservable();
 
   // Loading spinner
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -47,6 +57,14 @@ export class SamplesDataSource implements DataSource<SampleWide> {
           let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
           this.resultCountSubject.next(sampleList.samples.length);
           this.samplesSubject.next(filteredSamples);
+
+          // get the column names to display in the table
+          let cols = uniq(sampleList.sampleWide.flatMap(d => Object.keys(d)));
+          console.log(cols);
+          let sampleCols = difference(cols, this.staticColumns);
+          console.log(sampleCols)
+          this.displayedColumnsSubject.next(cols);
+          this.sampleTypeSubject.next(sampleCols);
         }
       });
 
