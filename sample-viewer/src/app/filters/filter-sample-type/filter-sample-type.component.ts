@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 
-import { RequestParametersService, ApiService, SamplesDataSource, GetSamplesService } from '../../_services';
+
+import { RequestParametersService } from '../../_services';
 
 
 @Component({
@@ -12,8 +13,26 @@ import { RequestParametersService, ApiService, SamplesDataSource, GetSamplesServ
 })
 
 export class FilterSampleTypeComponent implements OnInit {
-  sample_types: string[];
-  //  = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'].sort();
+  sample_types: string[] = [
+  //   "blood_purple-EDTA",
+  // "blood_blue-citrate",
+  // "blood_mixed",
+  // "blood_unknown",
+  // "urine",
+  // "feces",
+  // "organs",
+  // "tissue",
+  "plasma",
+  // "serum",
+  // "plasma_or_serum",
+  // "buffy_coat",
+  "PBMC",
+  "frozenPBMC-DNA",
+  "frozenPBMC-RNA",
+  "viralRNA",
+  "totalRNA",
+  "DNA"].sort();
+
 
   myForm: FormGroup;
 
@@ -22,14 +41,7 @@ export class FilterSampleTypeComponent implements OnInit {
   selected: any;
   include_empty_samples: boolean = true;
 
-  dataSource: SamplesDataSource;
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private requestSvc: RequestParametersService,
-    private apiSvc: ApiService,
-    private sampleSvc: GetSamplesService,
-  ) {
+  constructor(private formBuilder: FormBuilder, private requestSvc: RequestParametersService) {
     //
     //   this.requestSvc.sampleParamsState$.subscribe(params => {
     //     console.log(params)
@@ -38,15 +50,6 @@ export class FilterSampleTypeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
-
-    this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
-    this.dataSource.sampleTypes$.subscribe(types => {
-    console.log(types)
-      this.sample_types = types.sort();
-    })
-
-
     this.myForm = this.formBuilder.group({
       samples: this.formBuilder.array([])
     });
