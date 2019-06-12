@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 
-
-import { RequestParametersService } from '../../_services';
+import { RequestParametersService, ApiService, SamplesDataSource, GetSamplesService } from '../../_services';
 
 
 @Component({
@@ -13,7 +12,8 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class FilterSampleTypeComponent implements OnInit {
-  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'].sort();
+  sample_types: string[];
+  //  = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'].sort();
 
   myForm: FormGroup;
 
@@ -22,26 +22,27 @@ export class FilterSampleTypeComponent implements OnInit {
   selected: any;
   include_empty_samples: boolean = true;
 
-  constructor(private formBuilder: FormBuilder, private requestSvc: RequestParametersService) {
+  dataSource: SamplesDataSource;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private requestSvc: RequestParametersService,
+    private apiSvc: ApiService,
+    private sampleSvc: GetSamplesService
+  ) {
     //
     //   this.requestSvc.sampleParamsState$.subscribe(params => {
     //     console.log(params)
     //     console.log(this.interestFormGroup)
-    //
-    //
     //   })
   }
 
   ngOnInit() {
+    this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
+    this.dataSource.sampleTypes$.subscribe(types => {
+      this.sample_types = types.sort();
+    })
 
-    //   const arr = new FormArray([
-    //     new FormControl(),
-    //     new FormControl()
-    //   ]);
-    //
-    //   arr.setValue(['Nancy', 'Drew']);
-    //   arr.patchValue(['Nancy', 'Drew']);
-    //
     this.myForm = this.formBuilder.group({
       samples: this.formBuilder.array([])
     });
