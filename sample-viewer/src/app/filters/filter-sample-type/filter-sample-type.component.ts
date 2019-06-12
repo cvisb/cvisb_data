@@ -28,7 +28,8 @@ export class FilterSampleTypeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private requestSvc: RequestParametersService,
     private apiSvc: ApiService,
-    private sampleSvc: GetSamplesService
+    private sampleSvc: GetSamplesService,
+    private sampleDS: SamplesDataSource
   ) {
     //
     //   this.requestSvc.sampleParamsState$.subscribe(params => {
@@ -38,11 +39,19 @@ export class FilterSampleTypeComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
+
     this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
     this.dataSource.sampleTypes$.subscribe(types => {
+    console.log(types)
       this.sample_types = types.sort();
     })
 
+    this.sampleDS.sampleTypes$.subscribe(types => {
+    console.log(types)
+      this.sample_types = types.sort();
+    })
+    
     this.myForm = this.formBuilder.group({
       samples: this.formBuilder.array([])
     });
