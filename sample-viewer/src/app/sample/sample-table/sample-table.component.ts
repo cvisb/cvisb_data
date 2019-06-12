@@ -29,8 +29,8 @@ export class SampleTableComponent implements OnInit {
   dataSource: SamplesDataSource;
   // loading: boolean;
 
-  sample_types: string[] = ['frozenPBMC-DNA', 'frozenPBMC-RNA', 'plasma', 'PBMC'];
-  displayedColumns: string[] = ["patientID", "privatePatientID", "visitCode", "cohort", "outcome"].concat(this.sample_types);
+  // sample_types: string[];
+  // displayedColumns: string[];
   // selection = new SelectionModel<any>(true, []);
   // editable: boolean = false;
   // locationForms = this.fb.group({
@@ -56,7 +56,7 @@ export class SampleTableComponent implements OnInit {
 
 
   ngOnInit() {
-    this.dataSource = new SamplesDataSource(this.sampleSvc);
+    this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
     this.dataSource.loadSamples([], "", null, 0, 10);
     // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
   }

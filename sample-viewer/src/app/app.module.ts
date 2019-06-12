@@ -66,7 +66,7 @@ import {
   FilterLocationComponent, FilterPatientIdComponent, FilterPatientTypeComponent,
   FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
   FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
-  FilterSampleTimepointsComponent, FilterableHistogramComponent
+  FilterSampleTimepointsComponent, FilterableHistogramComponent, FilterSampleGroupComponent
 } from './filters';
 
 // Patient page components
@@ -123,6 +123,14 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     FilterPatientIdComponent,
     FilterPatientTypeComponent,
     FilterSampleYearComponent,
+    FilterSampleGroupComponent,
+    FilterLabComponent,
+    FilterSampleComponent,
+    FilterSampleTypeComponent,
+    FilterSpeciesComponent,
+    FilterSampleTimepointsComponent,
+    FilterOrganizationComponent,
+    FilterableHistogramComponent,
     MiniBarplotComponent,
     MiniDonutComponent,
     FilterSearchComponent,
@@ -164,12 +172,6 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     PreviewSamplesComponent,
     FrontendSampleValidationComponent,
     PreviewDifferencesComponent,
-    FilterLabComponent,
-    FilterSampleComponent,
-    FilterSampleTypeComponent,
-    FilterSpeciesComponent,
-    FilterSampleTimepointsComponent,
-    FilterOrganizationComponent,
 
     AddPatientsComponent,
     PatientUploadComponent,
@@ -182,7 +184,6 @@ import { PatientFilesComponent } from './patient-page/patient-files/patient-file
     CheckDupesComponent,
     PreviewAdditionsComponent,
     CombineDupesComponent,
-    FilterableHistogramComponent,
     PatientTimepointsComponent,
     PatientCitationsComponent,
     SampleTableComponent,

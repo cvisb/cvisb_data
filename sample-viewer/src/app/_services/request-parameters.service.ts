@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash';
 
 // models
 import { RequestParamArray, RequestParam } from '../_models';
+import { SchemaDefs } from '../../assets/schema-defs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,9 @@ export class RequestParametersService {
   public sampleParamsSubject: BehaviorSubject<RequestParamArray> = new BehaviorSubject<RequestParamArray>([]);
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
-  private patientProperties: string[] = ["alternateIdentifier", "patientID", "cohort", "outcome", "infectionYear", "country.identifier", "gID", "sID"];
-  private sampleProperties: string[] = ["sampleType", "location.lab", "species", "location.numAliquots"];
-  private exptProperties: string[] = ["measurementTechnique"];
+  private patientProperties: string[] = SchemaDefs.patientProperties;
+  private sampleProperties: string[] = SchemaDefs.sampleProperties;
+  private exptProperties: string[] = SchemaDefs.exptProperties;
 
   constructor(
   ) {
@@ -156,7 +157,6 @@ export class RequestParametersService {
   }
 
   reduceSampleParams(request_params: RequestParamArray): HttpParams {
-    console.log(request_params)
     let reduced = this.reduceParams(request_params, 'sample');
 
     // default options
@@ -241,8 +241,6 @@ export class RequestParametersService {
   }
 
   reduceParams2string(request_params: RequestParamArray, filterBy, qQuery?: boolean): string {
-    console.log(request_params)
-
     let params: RequestParamArray;
 
     if (qQuery) {
