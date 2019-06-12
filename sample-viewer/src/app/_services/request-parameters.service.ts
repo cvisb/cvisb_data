@@ -29,7 +29,7 @@ export class RequestParametersService {
   public sampleParamsState$ = this.sampleParamsSubject.asObservable();
 
   private patientProperties: string[] = SchemaDefs.patientProperties;
-  private sampleProperties: string[] = SchemaDefs.patientProperties;
+  private sampleProperties: string[] = SchemaDefs.sampleProperties;
   private exptProperties: string[] = SchemaDefs.exptProperties;
 
   constructor(
