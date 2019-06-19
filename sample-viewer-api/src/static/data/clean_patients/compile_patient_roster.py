@@ -57,6 +57,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     merged = merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified)
 
     merged.to_csv(output_patients + "_ALL.csv", index = False)
+    merged.to_json(output_patients + "_ALL.json", orient="records")
 
     # --- export data ---
     # remove any patient IDs that are NA-- no identifier to use!
