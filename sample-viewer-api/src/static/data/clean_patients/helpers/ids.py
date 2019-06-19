@@ -35,7 +35,7 @@ def num2GID(id):
 
 
 def splitGID(id):
-    if(id == id):
+    if((id == id) & (id != "") & (id != " ")):
         id_arr = str(id).split("/")
         ids = [num2GID(id) for id in id_arr]
         return(ids)
