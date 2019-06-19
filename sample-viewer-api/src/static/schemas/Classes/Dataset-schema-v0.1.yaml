@@ -341,6 +341,18 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:distribution
+  "@type":               rdf:Property
+  rdfs:comment:          DataDownload objects, which contain the URL link to download the raw, analyzed, and summary data associated with the dataset as well as associated metadata for the file.
+  rdfs:label:            distribution
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    - "@id":             cvisb:DataDownload
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
 # Code location
 - "@id":                 cvisb:sourceCode
   "@type":               rdf:Property
