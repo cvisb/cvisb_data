@@ -11,7 +11,7 @@
 
 
     <div class="card" *ngFor="let card of cards">
-      <a [routerLink]="card.path">
+      <a [routerLink]="['../', card.path]">
         <h4 class="card-title">
         {{ card.label }}
         </h4>
