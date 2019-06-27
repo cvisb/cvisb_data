@@ -46,8 +46,8 @@ export class FileListComponent implements OnInit {
 
     this.apiSvc.getPaginated("datadownload", new HttpParams().set("q", `measurementTechnique:${this.measurementTechnique}`)).subscribe(files => {
       console.log(files);
-      this.downloads = files;
-      this.dataSource = new MatTableDataSource(files);
+      this.downloads = files['hits'];
+      this.dataSource = new MatTableDataSource(this.downloads);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
