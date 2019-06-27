@@ -7,8 +7,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">File</th>
       <td mat-cell *matCellDef="let element">
-        <a [matTooltip]="'view metadata for ' + element.name">{{element.name}}</a>
-        <!-- <a (click)="selectFile($event, element)">{{element.name}}</a> -->
+        <a [href]="element.contentUrl" (click)="selectFile($event, element)" [matTooltip]="'view metadata for ' + element.name">{{element.name}}</a>
       </td>
     </ng-container>
 
@@ -34,7 +33,7 @@
     <ng-container matColumnDef="download">
       <th mat-header-cell *matHeaderCellDef>Download</th>
       <td mat-cell *matCellDef="let element">
-        <a href="" target="_blank" rel="noreferrer">
+        <a [href]="element.contentUrl" (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
           <button class="small-icon download-btn" type="button" aria-label="download" [matTooltip]="'download ' + element.name">
           <mat-icon aria-label="download">cloud_download</mat-icon>
         </button>
