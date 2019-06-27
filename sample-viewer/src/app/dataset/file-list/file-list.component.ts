@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
+import { HttpParams } from '@angular/common/http';
+
 import { getDatasetsService, FileMetadataService, ApiService } from '../../_services';
 
 @Component({
@@ -12,6 +14,7 @@ import { getDatasetsService, FileMetadataService, ApiService } from '../../_serv
 
 export class FileListComponent implements OnInit {
   @Input() datasetID: string;
+  measurementTechnique: string;
   downloads: any[];
   file_list: MatTableDataSource<any>;
   anything_selected: boolean;
@@ -25,8 +28,10 @@ export class FileListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
   dataSource: MatTableDataSource<any>;
 
+  id2MeasurementTechnique: Object = {'hla': 'HLA sequencing', 'viralseq': 'viral sequencing'};
+
   constructor(
-    private apiSv: ApiService,
+    private apiSvc: ApiService,
     private datasetSvc: getDatasetsService,
     private mdSvc: FileMetadataService) {
     mdSvc.fileClicked$.subscribe(status => {
@@ -36,10 +41,17 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.apiSvc.
-    this.dataSource = new MatTableDataSource();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
+    console.log(this.measurementTechnique);
+
+    this.apiSvc.getPaginated("datadownload", new HttpParams().set("q", `measurementTechnique:${this.measurementTechnique}`)).subscribe(files => {
+      console.log(files);
+      this.downloads = files;
+      this.dataSource = new MatTableDataSource(files);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
+
   }
 
   selectFile($event: Event, selected: any) {
