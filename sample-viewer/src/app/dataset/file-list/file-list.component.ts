@@ -58,22 +58,22 @@ export class FileListComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();  // <- that will stop propagation on lower layers
     //
-    // this.metadata = selected;
-    this.mdSvc.sendMetadata(selected, "DataDownload");
-    this.mdSvc.clickFile(true);
-
-    let file_name = selected['name'];
+    // // this.metadata = selected;
+    // this.mdSvc.sendMetadata(selected, "DataDownload");
+    // this.mdSvc.clickFile(true);
     //
-    // Reset other files
-    // this.dataSource.data = this.datasetSvc.clearSelected(this.dataSource.data);
-    //
-    // Activate selected file
-    // for (let i = 0; i < this.dataSource.data.length; i++) {
-    //   let selIdx = this.dataSource.data.findIndex(d => d.name === file_name);
-    //   if (selIdx > -1) {
-    //     this.dataSource.data[selIdx]['selected'] = true;
-    //   }
-    // }
+    // let file_name = selected['name'];
+    // //
+    // // Reset other files
+    // // this.dataSource.data = this.datasetSvc.clearSelected(this.dataSource.data);
+    // //
+    // // Activate selected file
+    // // for (let i = 0; i < this.dataSource.data.length; i++) {
+    // //   let selIdx = this.dataSource.data.findIndex(d => d.name === file_name);
+    // //   if (selIdx > -1) {
+    // //     this.dataSource.data[selIdx]['selected'] = true;
+    // //   }
+    // // }
   }
 
 
