@@ -48,6 +48,12 @@ export class RequestParametersService {
       this.sampleSearchParams = params;
     })
 
+    // Remove ELISAs from patientProperties -- it's its own special case that gets handled separately
+    let elisa_idx = this.patientProperties.indexOf("elisa");
+    if (elisa_idx > -1) {
+      this.patientProperties.splice(elisa_idx, 1);
+    }
+
   }
 
   // --- Communal function to add in missing data to the data ---
