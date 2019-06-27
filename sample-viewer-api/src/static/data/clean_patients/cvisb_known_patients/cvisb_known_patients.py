@@ -24,13 +24,14 @@
 # 6) Brian's roster of patients
 # 7) Matthias's wishlist before Jan 2019 trip-- things he knows about that he wants more info about
 # 8) Karthik's list of preveiously virally sequenced lassa patients (from Broad)
+# 9) Dylan's list of acute Ebola cohort from the Broad.
 
 import pandas as pd
 import os as os
 import re
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
 
-output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_20190510_PRIVATE"
+output_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_20190619_PRIVATE"
 
 # [1] HLA data
 import cvisb_known_patients.getHLApatients as hla
@@ -70,10 +71,16 @@ df9 = viralseq
 from cvisb_known_patients.getSamplesMay2019 import samples
 df10 = samples
 
+# [8] Broad's list of Ebola patients
+from cvisb_known_patients.getBroadEbola import ebv
+
+ebv.head()
+df11 = ebv[['patientID', 'cohort', 'outcome', 'source']]
+
 # [LAST] Merge together all the patients, and export for John ----------------------------------------------------------------------------------------------------
 # df = pd.merge(df1, df2, how="outer", on=["patientID", "cohort", "outcome"], indicator=True)
 
-df = pd.concat([df1, df2, df3, df4, df5, df6, df7, df8, df9, df10])
+df = pd.concat([df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11])
 # df.country = df.country.apply(lambda x: hla.cleanCountry(x))
 
 df.cohort.value_counts()

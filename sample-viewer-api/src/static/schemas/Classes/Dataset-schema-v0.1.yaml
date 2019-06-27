@@ -106,7 +106,7 @@
   schema:sameAs:
     "@id":               schema:variableMeasured
   owl:cardinality:       many
-  marginality:           optional
+  marginality:           recommended
   authenticated:         false
 
 # URL
@@ -341,6 +341,18 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:distribution
+  "@type":               rdf:Property
+  rdfs:comment:          DataDownload objects, which contain the URL link to download the raw, analyzed, and summary data associated with the dataset as well as associated metadata for the file.
+  rdfs:label:            distribution
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    - "@id":             cvisb:DataDownload
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
 # Code location
 - "@id":                 cvisb:sourceCode
   "@type":               rdf:Property
@@ -357,12 +369,12 @@
 # Publications
 - "@id":                 cvisb:publication
   "@type":               rdf:Property
-  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:comment:          Citation string (not an object) for the journal article or other publication associated with the dataset
   rdfs:label:            publication
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    - "@id":             cvisb:ScholarlyArticle
+    - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:publication
   owl:cardinality:       many
@@ -371,12 +383,12 @@
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
-  rdfs:comment:          Citation string (not an object) for the journal article or other publication associated with the dataset
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
   rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:ScholarlyArticle
   schema:sameAs:
     "@id":               schema:citation
   owl:cardinality:       many

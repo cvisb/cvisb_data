@@ -9,16 +9,23 @@ def createDict(df, index_col, cols2include = "all", dropdupes = False):
     """
     if(cols2include == "all"):
         cols2include = df.columns
+        cols2include.append("index_col")
     else:
         cols2include = cols2include.copy()
         cols2include.append(index_col)
+        cols2include.append("index_col")
         cols2include = np.unique(cols2include)
+
+    # create a copy of the index column 
+    df['index_col'] = df.loc[:,index_col].copy()
+
+    # Select only what you need
     df = df[cols2include]
 
     if(df[index_col].apply(lambda x: isinstance(x, list)).any()):
-        df = explode(df, index_col)
+        df = explode(df, "index_col")
 
-    df.rename(index=str, columns = {index_col: "ID"}, inplace = True)
+    df.rename(index=str, columns = {"index_col": "ID"}, inplace = True)
 
     if(dropdupes):
         df_orig = len(df)
