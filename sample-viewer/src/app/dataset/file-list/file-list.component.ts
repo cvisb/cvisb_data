@@ -55,7 +55,7 @@ export class FileListComponent implements OnInit {
   }
 
   selectFile($event: Event, selected: any) {
-    // $event.preventDefault();
+    $event.preventDefault();
     // $event.stopPropagation();  // <- that will stop propagation on lower layers
     //
     // // this.metadata = selected;
