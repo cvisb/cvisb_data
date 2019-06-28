@@ -21,7 +21,7 @@ export class DatasetPageComponent implements OnInit {
     private meta: Meta,
     private titleSvc: Title,
     private datasetSvc: getDatasetsService,
-    private mdSvc: FileMetadataService,
+    // private mdSvc: FileMetadataService,
   ) {
 
     // Pull out the file ID
@@ -60,12 +60,12 @@ export class DatasetPageComponent implements OnInit {
   }
 
 
-  selectDataset($event: Event, selected: any) {
-    $event.preventDefault();
-    $event.stopPropagation();  // <- that will stop propagation on lower layers
-
-    this.mdSvc.sendMetadata(selected, 'Dataset');
-    this.mdSvc.clickFile(true);
-  }
+  // selectDataset($event: Event, selected: any) {
+  //   $event.preventDefault();
+  //   $event.stopPropagation();  // <- that will stop propagation on lower layers
+  //
+  //   this.mdSvc.sendMetadata(selected, 'Dataset');
+  //   this.mdSvc.clickFile(true);
+  // }
 
 }

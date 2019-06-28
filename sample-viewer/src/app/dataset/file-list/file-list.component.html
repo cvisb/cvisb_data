@@ -43,8 +43,7 @@
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"
-    [ngClass]="anything_selected ? (row === selectedRow ? 'active' : 'inactive') : 'active'"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="anything_selected ? (row === selectedRow ? 'active' : 'inactive') : 'active'"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
