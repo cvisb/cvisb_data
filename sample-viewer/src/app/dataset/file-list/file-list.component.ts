@@ -56,7 +56,9 @@ export class FileListComponent implements OnInit {
     let params = new HttpParams()
       .set("q", `measurementTechnique:${this.measurementTechnique}`);
 
-    params = this.patientID ? params.append("patientID", this.patientID) : params;
+    if(this.patientID) {
+      params = params.append("patientID", this.patientID);
+    }
 
     this.apiSvc.getPaginated("datadownload", params).subscribe(files => {
       this.downloads = files['hits'];
