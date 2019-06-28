@@ -14,6 +14,7 @@ import { getDatasetsService, FileMetadataService, ApiService } from '../../_serv
 
 export class FileListComponent implements OnInit {
   @Input() datasetID: string;
+  @Input() patientID: string;
   measurementTechnique: string;
   downloads: any[];
   file_list: MatTableDataSource<any>;
@@ -28,7 +29,15 @@ export class FileListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
   dataSource: MatTableDataSource<any>;
 
-  id2MeasurementTechnique: Object = {'hla': 'HLA sequencing', 'viralseq': 'viral sequencing'};
+  id2MeasurementTechnique: Object = {
+    'hla': 'HLA sequencing',
+    'viralseq': 'viral sequencing',
+    'systemsserology': 'Systems Serology',
+    'metagenomeseq': 'metagenome sequencing',
+    'bcr': 'BCR sequencing',
+    'tcr': 'TCR sequencing',
+    'metabolomics': "metabolomics"
+  };
 
   constructor(
     private apiSvc: ApiService,
@@ -44,7 +53,12 @@ export class FileListComponent implements OnInit {
   ngOnInit() {
     this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
 
-    this.apiSvc.getPaginated("datadownload", new HttpParams().set("q", `measurementTechnique:${this.measurementTechnique}`)).subscribe(files => {
+    let params = new HttpParams()
+      .set("q", `measurementTechnique:${this.measurementTechnique}`);
+
+    params = this.patientID ? params.append("patientID", this.patientID) : params;
+
+    this.apiSvc.getPaginated("datadownload", params).subscribe(files => {
       this.downloads = files['hits'];
       this.dataSource = new MatTableDataSource(this.downloads);
       this.dataSource.paginator = this.paginator;

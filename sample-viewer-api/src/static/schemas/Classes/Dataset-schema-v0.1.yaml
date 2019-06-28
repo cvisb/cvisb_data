@@ -90,7 +90,7 @@
                            - BCR sequencing
                            - TCR sequencing
                            - Systems Serology
-                           - Metabolomics
+                           - metabolomics
                            - other
   authenticated:         false
 
@@ -153,6 +153,14 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+  schema:Enumeration:
+                           - hla
+                           - viralseq
+                           - metagenomeseq
+                           - bcr
+                           - tcr
+                           - systemsserology
+                           - metabolomics
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property
