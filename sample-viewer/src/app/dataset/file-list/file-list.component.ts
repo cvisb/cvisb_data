@@ -3,8 +3,10 @@ import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { HttpParams } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { merge } from "rxjs/";
 
-import { getDatasetsService, FileMetadataService, ApiService } from '../../_services';
+import { getDatasetsService, FileMetadataService, ApiService, DownloadsDataSource } from '../../_services';
 
 @Component({
   selector: 'app-file-list',
@@ -15,19 +17,18 @@ import { getDatasetsService, FileMetadataService, ApiService } from '../../_serv
 export class FileListComponent implements OnInit {
   @Input() datasetID: string;
   @Input() patientID: string;
-  measurementTechnique: string;
-  downloads: any[];
-  file_list: MatTableDataSource<any>;
-  anything_selected: boolean;
-
-  selectedRow;
 
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  measurementTechnique: string;
+  downloads: any[];
+  anything_selected: boolean;
+  qParams: HttpParams;
+  selectedRow;
   displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
-  dataSource: MatTableDataSource<any>;
+  dataSource: DownloadsDataSource;
 
   id2MeasurementTechnique: Object = {
     'hla': 'HLA sequencing',
@@ -53,20 +54,31 @@ export class FileListComponent implements OnInit {
   ngOnInit() {
     this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
 
-    let params = new HttpParams()
-      .set("q", `measurementTechnique:${this.measurementTechnique}`);
+    this.qParams = new HttpParams()
+      .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
 
-    if(this.patientID) {
-      params = params.append("patientID", this.patientID);
+    if (this.patientID) {
+      this.qParams.append("patientID", `"${this.patientID}"`);
     }
 
-    this.apiSvc.getPaginated("datadownload", params).subscribe(files => {
-      this.downloads = files['hits'];
-      this.dataSource = new MatTableDataSource(this.downloads);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+    this.dataSource = new DownloadsDataSource(this.apiSvc);
+    this.dataSource.loadDownloads(this.qParams, 0, 10, "", null);
+  }
 
+  ngAfterViewInit() {
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadDownloadList())
+      )
+      .subscribe();
+  }
+
+  loadDownloadList() {
+    this.dataSource.loadDownloads(this.qParams, this.paginator.pageIndex, this.paginator.pageSize,
+      this.sort.active, this.sort.direction);
   }
 
   selectFile($event: Event, selected: any) {
