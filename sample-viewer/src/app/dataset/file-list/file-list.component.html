@@ -1,6 +1,6 @@
 <!-- DATA FILE LOOP -->
 <!-- <div class="data-download" *ngFor="let file of dataSource.data.slice(0,1)" [ngClass]="anything_selected ? (file.selected ? 'active' : 'inactive') : 'active'"> -->
-<div class="file-lists" *ngIf="dataSource && dataSource.data.length > 0">
+<div class="file-lists" *ngIf="dataSource">
 
   <div class="spinner-container container" *ngIf="dataSource.loadingState$ | async">
     <mat-spinner></mat-spinner>
@@ -52,5 +52,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="anything_selected ? (row === selectedRow ? 'active' : 'inactive') : 'active'"></tr>
   </table>
 
-  <mat-paginator [length]="dataSource?.data.length" [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  <!-- <mat-paginator [length]="downloads?.downloadLength" [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator> -->
 </div>
