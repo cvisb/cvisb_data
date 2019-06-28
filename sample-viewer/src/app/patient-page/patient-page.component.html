@@ -77,7 +77,7 @@
         </div>
 
         <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-        <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles"></app-patient-viral-seq>
+        <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
 
         <app-patient-serology [patient]="patient"></app-patient-serology>
       </div>

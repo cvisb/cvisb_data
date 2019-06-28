@@ -15,6 +15,7 @@ export class PatientViralSeqComponent implements OnChanges {
   maxStars: number = 5;
   @Input() sequences: ViralSeqObj[];
   @Input() files: any[];
+  @Input() patientID: string;
 
   constructor(
     private snackBar: MatSnackBar) { }

@@ -25,6 +25,10 @@
         </div>
 
         <app-format-citation [citations]="seq.publication" class="citation"></app-format-citation>
+
+        <div class="updated">
+          updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+        </div>
       </div>
 
 
@@ -59,6 +63,11 @@
         </p>
       </div>
     </ng-container>
+  </div>
+
+  <div class="viralseq-files">
+    <h5 class="patient-data">files</h5>
+    <app-file-list datasetID="viralseq" [patientID]="patientID"></app-file-list>
   </div>
 </ng-container>
 
