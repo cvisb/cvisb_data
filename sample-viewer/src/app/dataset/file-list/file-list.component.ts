@@ -54,11 +54,13 @@ export class FileListComponent implements OnInit {
   ngOnInit() {
     this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
 
-    this.qParams = new HttpParams()
-      .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
-
     if (this.patientID) {
-      this.qParams = this.qParams.append("patientID", `"${this.patientID}"`);
+      this.qParams = new HttpParams()
+        .set("q", `measurementTechnique:"${this.measurementTechnique}"`)
+        .set("patientID", `"${this.patientID}"`);
+    } else {
+      this.qParams = new HttpParams()
+        .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);
