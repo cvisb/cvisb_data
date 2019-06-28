@@ -58,7 +58,7 @@ export class FileListComponent implements OnInit {
       .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
 
     if (this.patientID) {
-      this.qParams.append("patientID", `"${this.patientID}"`);
+      this.qParams = this.qParams.append("patientID", `"${this.patientID}"`);
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);

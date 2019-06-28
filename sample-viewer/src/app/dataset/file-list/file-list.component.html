@@ -39,7 +39,8 @@
     <ng-container matColumnDef="download">
       <th mat-header-cell *matHeaderCellDef>Download</th>
       <td mat-cell *matCellDef="let element">
-        <a [href]="element.contentUrl" (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
+        <a [href]="element.contentUrl" *ngIf="element.contentUrl && element.contentUrl !== ''"
+        (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
           <button class="small-icon download-btn" type="button" aria-label="download" [matTooltip]="'download ' + element.name">
           <mat-icon aria-label="download">cloud_download</mat-icon>
         </button>
