@@ -62,7 +62,7 @@ export class FileListComponent implements OnInit {
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);
-    this.dataSource.loadDownloads(this.qParams, 0, 10, "", null);
+    this.dataSource.loadDownloads(this.qParams, 0, 5, "additionalType", "desc");
   }
 
   ngAfterViewInit() {
