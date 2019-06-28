@@ -1,6 +1,6 @@
 <!-- DATA FILE LOOP -->
 <!-- <div class="data-download" *ngFor="let file of dataSource.data.slice(0,1)" [ngClass]="anything_selected ? (file.selected ? 'active' : 'inactive') : 'active'"> -->
-<div class="file-lists" *ngIf="dataSource">
+<div class="file-lists" *ngIf="dataSource && (dataSource.resultCountState$ | async) > 0">
 
   <div class="spinner-container container" *ngIf="dataSource.loadingState$ | async">
     <mat-spinner></mat-spinner>
