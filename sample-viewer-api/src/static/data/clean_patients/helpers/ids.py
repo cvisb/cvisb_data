@@ -2,6 +2,7 @@ import re
 import pandas as pd
 # from . import updateError
 
+
 def num2GID(id):
     id = str(id).upper().strip()
 
@@ -96,6 +97,10 @@ def checkIDtype(id):
     if(g4timepoint):
         return("acute", g4timepoint[1] + "-" + g4timepoint[2])
 
+    g4timepointunhyphen = re.search("^(G)(\d\d\d\d)(\d)$", id)
+    if(g4timepointunhyphen):
+        return("acute", g4timepointunhyphen[1] + "-" + g4timepointunhyphen[2])
+
     g4timepoint2 = re.search("^(G)(\d\d\d\d)\-(\d)$", id)
     if(g4timepoint2):
         return("acute", g4timepoint2[1] + "-" + g4timepoint2[2])
@@ -139,7 +144,6 @@ def checkIDtype(id):
     return("unknown", None)
 
 
-
 def interpretID(id):
     """
     Check first if the ID is of a known, reasonably safe pattern.
@@ -160,6 +164,10 @@ def interpretID(id):
             if(int(weirdC[4]) > 3):
                 return(weirdC[1] + "-" + weirdC[3] + "-" + weirdC[2])
             return(weirdC[1] + "-" + weirdC[3] + "-" + weirdC[4])
+        weirderC = re.match("^(C)([0-4])(\-[0-9][0-9][0-9])$", id)
+        if weirderC:
+            # Contact numbers should only go from 1-3; if the "household number" is > 3, it's likely that's really the visit code.
+            return(weirderC[1] + weirderC[3] + "-" + weirderC[2])
         # S-timepoint: assuming S-xxx-3 == S-xxx at visit 3.
         sTimepoint = re.match("^(S)(\-[0-9][0-9][0-9])\-([0-9])$", id)
         if sTimepoint:
@@ -178,6 +186,7 @@ def interpretID(id):
 
         return(id)
 
+
 def getPrivateContactGroup(id):
     """
     Input IDs should be in a good format, so just pull out the three digits that relate to the contactGroup
@@ -188,6 +197,7 @@ def getPrivateContactGroup(id):
     c3 = re.search("^(C\-)(\d\d\d)\-(\d)$", id)
     if(c3):
         return(c3[2])
+
 
 def assignOutcome(id):
     """
@@ -229,7 +239,6 @@ def makePublicPatientID(row, publicID_col='study specific number'):
             return("C-" + row[publicID_col])
         else:
             return(row[publicID_col])
-
 
 
 def arr2str(arr, delim="/"):
