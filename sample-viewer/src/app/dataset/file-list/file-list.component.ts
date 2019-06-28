@@ -65,15 +65,16 @@ export class FileListComponent implements OnInit {
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);
     this.dataSource.loadDownloads(this.qParams, 0, 5, "additionalType", "desc");
-  }
 
-  ngAfterViewInit() {
     // set initial conditions
     this.sort.sort(<MatSortable>{
       id: 'additionalType',
       start: 'desc'
     }
     );
+  }
+
+  ngAfterViewInit() {
     // this.sort.active = "additionalType";
     // this.sort.direction = "desc";
 
