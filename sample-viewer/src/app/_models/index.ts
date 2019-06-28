@@ -1,5 +1,6 @@
 export * from './patient';
 export * from './sample';
+export * from './data-download';
 export * from './lab';
 export * from './organization';
 export * from './cohort-select-options';
