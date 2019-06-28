@@ -51,6 +51,147 @@ def log_msg(outfile, msg, verbose):
     if verbose:
         print(msg)
 
+def process_file(entity, entity_dict, error_file, _out_directory, args, namespace):
+    depth = len(namespace.split('.')) - 1
+    log_msg(error_file, "\t"*depth + "*"*80+'\n' + "\t"*depth + "Starting file {f}\n\n".format(f=entity_dict[entity]['file']), args.verbose)
+    file_name = os.path.split(entity_dict[entity]['file'])[1]
+    modified_file_name = '.'.join(file_name.split('.')[:-1]) + '_modified.yaml'
+
+    # should potentially move this until later...
+
+    _ret = {
+        "$schema": SCHEMA_VERSION,
+        "type": "object",
+        "required": [],
+        "properties": {}
+    }
+
+    unauthorized_leaves = set()
+
+    for _obj in entity_dict[entity]['items']:
+        try:
+            _id = _obj['@id'].split(':')[1]
+        except:
+            _id = _obj['@id']
+
+        _required = False
+        if 'marginality' in _obj and _obj['marginality'].lower() == 'required':
+            _required = True
+
+        _many = False
+        if 'owl:cardinality' in _obj and (_obj['owl:cardinality'].lower() == 'many' or _obj['owl:cardinality'].lower() == 'multiple'):
+            _many = True
+
+        _authenticated = False
+        if 'authenticated' in _obj and _obj['authenticated']:
+            _authenticated = True
+
+        if 'schema:rangeIncludes' not in _obj:
+            log_msg(error_file, "\t"*depth + "Missing rangeIncludes in field {f}, skipping...\n".format(f=_id), args.verbose)
+            continue
+
+        _sub_schema = {'oneOf': []}
+
+        if isinstance(_obj['schema:rangeIncludes'], dict):
+            _obj['schema:rangeIncludes'] = [_obj['schema:rangeIncludes']]
+
+        for _type in _obj['schema:rangeIncludes']:
+            if _type['@id'] in SCHEMA_ROOT_TYPE_MAP:
+                if _id not in SKIPPED_KEYS and not _authenticated:
+                    public_field = '.'.join(namespace.split('.') + [_id]) if namespace else _id
+                    unauthorized_leaves.add(public_field)
+                _sub_schema['oneOf'].append(SCHEMA_ROOT_TYPE_MAP[_type['@id']])
+            elif _type['@id'].startswith('cvisb:'):
+                if _id not in SKIPPED_KEYS:
+                    new_namespace = '.'.join(namespace.split('.') + [_id]) if namespace else _id
+                    unauthorized_leaves = unauthorized_leaves.union(
+                        process_file(entity=_type['@id'].split(':')[1], entity_dict=entity_dict, error_file=error_file,
+                                    _out_directory=_out_directory, args=args, namespace=new_namespace)
+                    )
+                if args.dev:
+                    _sub_schema['oneOf'].append({'$ref': DEV_SCHEMA_SERVER + '/{i}.json'.format(i=_type['@id'].split(':')[1])})
+                else:
+                    _sub_schema['oneOf'].append({'$ref': SCHEMA_SERVER + '/{i}.json'.format(i=_type['@id'].split(':')[1])})
+            else:
+                log_msg(error_file, "\t"*depth + 'Unknown type "{t}" in {i}\n'.format(t=_type['@id'], i=_id), args.verbose)
+
+        _sub_schema['oneOf'] = [json.loads(x) for x in list(set([json.dumps(y, sort_keys=True) for y in _sub_schema['oneOf']]))]
+
+        if _many and _sub_schema['oneOf']:
+            _sub_schema = {'type': 'array', 'items': _sub_schema['oneOf']}
+
+        if _required:
+            _ret['required'].append(_id)
+        elif 'oneOf' in _sub_schema:
+            _sub_schema['oneOf'].append({"type": "null"})
+        else:
+            _sub_schema = {'oneOf': [{"type": "null"}, _sub_schema]}
+
+        if ('oneOf' in _sub_schema) and len(_sub_schema['oneOf']) == 1:
+            _sub_schema = _sub_schema['oneOf'][0]
+
+        if 'schema:Enumeration' in _obj:
+            _sub_schema['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
+
+        _ret['properties'][_id] = _sub_schema
+
+
+    if len(_ret['required']) == 0:
+        _ret.pop('required')
+
+    if '@graph' in entity_dict[entity]['yaml_json']:
+        entity_dict[entity]['yaml_json']['@graph'][0]['validation'] = _ret
+    else:
+        entity_dict[entity]['yaml_json'][0]['validation'] = _ret
+
+    if not entity_dict[entity]['processed']:
+        log_msg(error_file, "\t"*depth + 'Writing "{}" to file...\n'.format(os.path.join(_out_directory, modified_file_name)), args.verbose)
+        with open(os.path.join(_out_directory, modified_file_name), 'w') as outfile:
+            yaml.dump(entity_dict[entity]['yaml_json'], outfile, default_flow_style=False)
+    entity_dict[entity]['processed'] = True
+
+    log_msg(error_file, "\t"*depth + "*"*80 + '\n\n', args.verbose)
+
+    return unauthorized_leaves
+
+def preprocess_directory(d, error_file, verbose=False):
+    r = {}
+    log_msg(error_file, "*"*80 + "\nPreprocessing directory '{d}'...\n".format(d=d), verbose=verbose)
+    for _file in glob.glob(os.path.join(d, '*.yaml')):
+        try:
+            with open(_file, 'r') as yaml_inp:
+                yaml_json = yaml.safe_load(yaml_inp.read())
+        except yaml.YAMLError as exc:
+            continue
+
+        if isinstance(yaml_json, list):
+            if '@id' not in yaml_json[0]:
+                log_msg(error_file, "Unrecognized structure for file '{f}'.  '@id' attribute required to be in the first element of lists.".format(f=_file), verbose)
+                continue
+            _entity = yaml_json[0]['@id'].split(':')[1]
+            _is_root = (('root_entity' in yaml_json[0]) and (yaml_json[0]['root_entity']))
+            _items = yaml_json[1:]
+        elif isinstance(yaml_json, dict) and '@graph' in yaml_json and isinstance(yaml_json['@graph'], list):
+            if '@id' not in yaml_json['@graph'][0]:
+                log_msg(error_file, "Unrecognized structure for file '{f}'.  '@id' attribute required to be in the first element of @graph field for dicts.".format(f=_file), verbose)
+                continue
+            _entity = yaml_json['@graph'][0]['@id'].split(':')[1]
+            _is_root = (('root_entity' in yaml_json['@graph'][0]) and (yaml_json['@graph'][0]['root_entity']))
+            _items = yaml_json['@graph'][1:]
+        else:
+            log_msg(error_file, "Unrecognized yaml structure for file '{f}'.".format(f=_file), verbose)
+            continue
+        
+        r[_entity] = {
+            'file': _file,
+            'is_root': _is_root,
+            'items': _items,
+            'yaml_json': yaml_json,
+            'processed': False
+        }
+    log_msg(error_file, "Finished preprocessing...\n" + "*"*80 + "\n", verbose=verbose)
+    return r
+
 def main(args):
     if os.path.exists(os.path.abspath(args.output_schema_dir)) and os.path.isdir(os.path.abspath(args.output_schema_dir)):
         _out_directory = os.path.abspath(args.output_schema_dir)
@@ -68,133 +209,13 @@ def main(args):
     setup_yaml()
 
     with open(_error_out, 'w') as error_file:
-        files_list = list(glob.glob(os.path.join(_directory, '*.yaml')))
+        preprocess_dict = preprocess_directory(d=_directory, error_file=error_file, verbose=args.verbose)
 
-        for _file in files_list:
-            log_msg(error_file, "*"*80+'\nStarting file {f}\n\n'.format(f=_file), args.verbose)
-            file_name = os.path.split(_file)[1]
-            modified_file_name = '.'.join(file_name.split('.')[:-1]) + '_modified.yaml'
-            try:
-                with open(_file, 'r') as yaml_inp:
-                    yaml_json = yaml.safe_load(yaml_inp.read())
-            except yaml.YAMLError as exc:
-                log_msg(error_file, "File {f} failed loading with error {e}....  Skipping conversion...\n\n".format(f=_file, e=exc),
-                        args.verbose)
-                log_msg(error_file, "*"*80 + '\n\n', args.verbose)
-                continue
-
-            if not ((isinstance(yaml_json, list)) or ('@graph' in yaml_json and isinstance(yaml_json['@graph'], list))):
-                log_msg(error_file, "Unrecognized yaml structure for {f}.  File must be a list of items at the document root or under @graph key with the root item first to use conversion utility.  Skipping file conversion\n\n".format(f=_file), args.verbose)
-                log_msa(error_file, "*"*80 + '\n\n', args.verbose)
-                continue
-
-            _ret = {
-                "$schema": SCHEMA_VERSION,
-                "type": "object",
-                "required": [],
-                "properties": {}
-            }
-
-            authorized_leaves = set()
-            unauthorized_leaves = set()
-            no_authorization = False
-
-            if '@graph' in yaml_json:
-                _items = yaml_json['@graph'][1:]
-                if 'root_entity' not in yaml_json['@graph'][0] or not yaml_json['@graph'][0]['root_entity']:
-                    no_authorization = True
-            else:
-                _items = yaml_json[1:]
-                if 'root_entity' not in yaml_json[0] or not yaml_json[0]['root_entity']:
-                    no_authorization = True
-
-            for _obj in _items:
-                try:
-                    _id = _obj['@id'].split(':')[1]
-                except:
-                    _id = _obj['@id']
-
-                _required = False
-                if 'marginality' in _obj and _obj['marginality'].lower() == 'required':
-                    _required = True
-
-                _many = False
-                if 'owl:cardinality' in _obj and (_obj['owl:cardinality'].lower() == 'many' or _obj['owl:cardinality'].lower() == 'multiple'):
-                    _many = True
-
-                _authenticated = False
-                if 'authenticated' in _obj and _obj['authenticated']:
-                    _authenticated = True
-
-                if 'schema:rangeIncludes' not in _obj:
-                    log_msg(error_file, "Missing rangeIncludes in field {f}, skipping...\n".format(f=_id), args.verbose)
-                    continue
-
-                _sub_schema = {'oneOf': []}
-
-                if isinstance(_obj['schema:rangeIncludes'], dict):
-                    _obj['schema:rangeIncludes'] = [_obj['schema:rangeIncludes']]
-
-                for _type in _obj['schema:rangeIncludes']:
-                    if _type['@id'] in SCHEMA_ROOT_TYPE_MAP:
-                        if _id not in SKIPPED_KEYS:
-                            if _authenticated:
-                                authorized_leaves.add(_id)
-                            else:
-                                unauthorized_leaves.add(_id)
-                        _sub_schema['oneOf'].append(SCHEMA_ROOT_TYPE_MAP[_type['@id']])
-                    elif _type['@id'].startswith('cvisb:'):
-                        if _id not in SKIPPED_KEYS:
-                            if _authenticated:
-                                authorized_leaves.add('{}.*'.format(_id))
-                            else:
-                                unauthorized_leaves.add('{}.*'.format(_id))
-                        if args.dev:
-                            _sub_schema['oneOf'].append({'$ref': DEV_SCHEMA_SERVER + '/{i}.json'.format(i=_type['@id'].split(':')[1])})
-                        else:
-                            _sub_schema['oneOf'].append({'$ref': SCHEMA_SERVER + '/{i}.json'.format(i=_type['@id'].split(':')[1])})
-                    else:
-                        log_msg(error_file, 'Unknown type "{t}" in {i}\n'.format(t=_type['@id'], i=_id), args.verbose)
-
-                _sub_schema['oneOf'] = [json.loads(x) for x in list(set([json.dumps(y, sort_keys=True) for y in _sub_schema['oneOf']]))]
-
-                if _many and _sub_schema['oneOf']:
-                    _sub_schema = {'type': 'array', 'items': _sub_schema['oneOf']}
-
-                if _required:
-                    _ret['required'].append(_id)
-                elif 'oneOf' in _sub_schema:
-                    _sub_schema['oneOf'].append({"type": "null"})
-                else:
-                    _sub_schema = {'oneOf': [{"type": "null"}, _sub_schema]}
-
-                if ('oneOf' in _sub_schema) and len(_sub_schema['oneOf']) == 1:
-                    _sub_schema = _sub_schema['oneOf'][0]
-
-                if 'schema:Enumeration' in _obj:
-                    _sub_schema['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
-
-                _ret['properties'][_id] = _sub_schema
-
-
-            if len(_ret['required']) == 0:
-                _ret.pop('required')
-
-            if '@graph' in yaml_json:
-                yaml_json['@graph'][0]['validation'] = _ret
-            else:
-                yaml_json[0]['validation'] = _ret
-
-            log_msg(error_file, 'Writing "{}" to file...\n'.format(os.path.join(_out_directory, modified_file_name)), args.verbose)
-
-            if not no_authorization:
-                with open(_auth_out, 'a') as auth_outfile:
-                    log_msg(auth_outfile, "*"*80 + '\n{f}\n\nauthorized_keys: {ak}\n\nunauthorized_keys: {uk}\n'.format(f=_file, ak=list(authorized_leaves), uk=list(unauthorized_leaves)) + '*'*80 + '\n\n', args.verbose)
-
-            with open(os.path.join(_out_directory, modified_file_name), 'w') as outfile:
-                yaml.dump(yaml_json, outfile, default_flow_style=False)
-
-            log_msg(error_file, "*"*80 + '\n\n', args.verbose)
+        for entity, entity_dict in preprocess_dict.items():
+            if entity_dict['is_root']:
+                unauthorized_fields = process_file(entity=entity, entity_dict=preprocess_dict, error_file=error_file, _out_directory=_out_directory, args=args, namespace='')
+                with open(_auth_out, 'a') as authfile:
+                    authfile.write("*"*80 + "\nPublic fields for '{e}' entity: '{f}'\n".format(e=entity, f=list(unauthorized_fields)) + "*"*80 + '\n\n')
 
 if __name__ == '__main__':
     main(parser.parse_args())
