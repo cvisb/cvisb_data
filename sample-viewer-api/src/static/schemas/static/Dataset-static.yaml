@@ -25,11 +25,7 @@
     description:                        "Funding for the Center for Viral Systems Biology is provided by National Institute of Allergy & Infectious Diseases (National Institutes for Health) award U19AI135995"
     url:                                "https://taggs.hhs.gov/Detail/AwardDetail?arg_AwardNum=U19AI135995&arg_ProgOfficeCode=104"
     award:                              "U19AI135995"
-    parentOrganization:
-      "@type":                          "Organization"
-      name:                             "National Institutes for Health"
-      alternateName:                    "NIH"
-      url:                              "https://www.nih.gov/"
+    parentOrganization:                 "National Institutes for Health"
 
 # --- HLA-specific dataset properties ---
 - HLA:
