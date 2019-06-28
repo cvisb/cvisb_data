@@ -65,7 +65,7 @@ export class ApiService {
   // string variables need to be {string}.keyword
   // and there's a few special cases for nested variables
   sortFunc(sortVar): string {
-    let numericVars = ["age"];
+    let numericVars = ["age", "dateModified"];
     if (numericVars.includes(sortVar) || !sortVar) {
       return (sortVar);
     }

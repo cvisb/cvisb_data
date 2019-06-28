@@ -18,9 +18,9 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loadingState$ = this.loadingSubject.asObservable();
 
-  // Patient count
-  // private resultCountSubject = new BehaviorSubject<number>(0);
-  // public resultCountState$ = this.resultCountSubject.asObservable();
+  // Result count
+  private resultCountSubject = new BehaviorSubject<number>(0);
+  public resultCountState$ = this.resultCountSubject.asObservable();
 
   constructor(private apiSvc: ApiService) {
 
@@ -34,7 +34,7 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(files => {
-        // this.resultCountSubject.next(patientList['total'])
+        this.resultCountSubject.next(files['total'])
         this.downloadsSubject.next(files['hits'])
       });
 
