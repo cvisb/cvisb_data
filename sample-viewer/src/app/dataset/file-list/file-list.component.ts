@@ -68,6 +68,10 @@ export class FileListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    // set initial conditions
+    this.sort.active = "additionalType";
+    this.sort.direction = "desc";
+    
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
