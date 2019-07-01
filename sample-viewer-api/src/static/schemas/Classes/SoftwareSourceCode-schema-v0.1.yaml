@@ -172,6 +172,20 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:version
+  "@type":               rdf:Property
+  rdfs:comment:          Software version
+  rdfs:label:            version
+  schema:domainIncludes:
+    - "@id":             cvisb:SoftwareSourceCode
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 # license
 - "@id":                 cvisb:license
   "@type":               rdf:Property
