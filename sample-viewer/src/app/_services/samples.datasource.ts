@@ -56,7 +56,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
         console.log(sampleList)
         if (sampleList.sampleWide) {
           let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
-          this.resultCountSubject.next(sampleList.samples.length);
+          this.resultCountSubject.next(sampleList.sampleWide.length);
           this.samplesSubject.next(filteredSamples);
 
           // get the column names to display in the table
