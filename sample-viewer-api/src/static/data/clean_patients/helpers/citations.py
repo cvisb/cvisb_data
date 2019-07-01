@@ -26,7 +26,7 @@ cvisb = {
     }
 }
 
-cvisb = {
+broad = {
     "url": "https://www.broadinstitute.org/",
     "name": "Broad Institute"
 }
