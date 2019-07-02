@@ -294,7 +294,7 @@
     - "@id":             cvisb:Data
     - "@id":             cvisb:Accelerometry
     - "@id":             cvisb:BodyTemperature
-    - "@id":             cvisb:DiastolicPRessure
+    - "@id":             cvisb:DiastolicPressure
     - "@id":             cvisb:ECGPoint
     - "@id":             cvisb:HeartRate
     - "@id":             cvisb:HLAData
