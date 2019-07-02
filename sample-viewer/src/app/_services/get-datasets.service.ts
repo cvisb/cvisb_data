@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -53,31 +53,79 @@ export class getDatasetsService {
     // })
   }
 
+  /*
+  getDataset performs two operations:
+  1. gets all DataDownloads for a particular dataset
+  2. gets the Dataset metadata information for that dataset.
+  ... and adds DataDownloads to Dataset in the `distribution parameter`
+   */
+
   getDataset(id: string, idVar: string = 'identifier') {
-    return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
+    return this.myhttp.get<any[]>(environment.api_url + "/api/datadownload/query", {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
       params: new HttpParams()
-        .set('q', `${idVar}:${id}`)
+        .set('q', `includedInDataset:${id}`)
     }).pipe(
-      map(data => {
-        if (data['body']['total'] === 1) {
-          // One result found, as expected.
-          let datasets = data['body']['hits'];
-          return (datasets[0])
-        } else {
-          console.log("More than one dataset returned. Check if your ID is unique!")
-          console.log(data);
-        }
-      }),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (new Observable<any>())
-      })
+      mergeMap(downloads => this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: new HttpParams()
+          .set('q', `includedInDataset:${id}`)
+      }).pipe(
+        map(data => {
+          console.log('internals of /dataset calls')
+          console.log(data)
+          console.log(downloads);
+          if (data['body']['total'] === 1) {
+            // One result found, as expected.
+            let datasets = data['body']['hits'][0];
+
+            datasets['distribution'] = downloads['body']['hits'];
+            console.log(datasets)
+            return (datasets)
+          } else {
+            console.log("More than one dataset returned. Check if your ID is unique!")
+            console.log(data);
+          }
+        }),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        })
+      )
+      )
     )
   }
+
+
+  //   return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
+  //     observe: 'response',
+  //     headers: new HttpHeaders()
+  //       .set('Accept', 'application/json'),
+  //     params: new HttpParams()
+  //       .set('q', `${idVar}:${id}`)
+  //   }).pipe(
+  //     map(data => {
+  //       if (data['body']['total'] === 1) {
+  //         // One result found, as expected.
+  //         let datasets = data['body']['hits'];
+  //         return (datasets[0])
+  //       } else {
+  //         console.log("More than one dataset returned. Check if your ID is unique!")
+  //         console.log(data);
+  //       }
+  //     }),
+  //     catchError(e => {
+  //       console.log(e)
+  //       throwError(e);
+  //       return (new Observable<any>())
+  //     })
+  //   )
+  // }
 
 
   getSchema(dsid: string) {
