@@ -7,6 +7,15 @@
   line-height: 1.1em;
   margin-bottom: 10px;
   color: $grey-400;
+
+  & a {
+    color: $grey-400;
+    cursor: pointer;
+
+    & :hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .patient-type-filter .filter-label {

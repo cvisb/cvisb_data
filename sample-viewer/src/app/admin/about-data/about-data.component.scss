@@ -2,6 +2,12 @@
 
 .emphasis {
   color: $ebola-md;
+  font-weight: 400;
+}
+
+.emphasis-light {
+  color: $grey-800;
+  font-weight: 400;
 }
 
 .emphasis-title {
@@ -27,4 +33,21 @@
 .release-header {
   align-items: center;
   margin-bottom: 5px;
+}
+
+.variable-description {
+  & h5 {
+    margin: 0;
+  }
+  margin-left: 40px;
+}
+
+#outcome {
+  & p {
+    margin-bottom: 4px;
+  }
+  & ul {
+    margin-top: 0;
+    margin-bottom: 0; 
+  }
 }
