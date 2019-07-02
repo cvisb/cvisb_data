@@ -11,6 +11,7 @@
   & a {
     color: $grey-400;
     cursor: pointer;
+    text-decoration: none;
 
     & :hover {
       text-decoration: underline;
