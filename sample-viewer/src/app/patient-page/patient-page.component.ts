@@ -50,7 +50,7 @@ export class PatientPageComponent implements OnInit {
 
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
 
-        this.publications = expts['hits'].map(d => d.publication).filter(d => d).flat();
+        this.publications = expts['hits'].map(d => d.citation).filter(d => d).flat();
       })
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {

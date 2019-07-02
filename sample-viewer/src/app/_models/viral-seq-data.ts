@@ -2,7 +2,7 @@ import { Citation } from './citation';
 
 export class ViralSeqObj {
   publisher: Object;
-  publication: Citation[];
+  citation: Citation[];
   cvisb_data: boolean;
   data: ViralSeqData;
 }

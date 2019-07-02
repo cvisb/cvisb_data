@@ -24,7 +24,7 @@
           </ng-template>
         </div>
 
-        <app-format-citation [citations]="seq.publication" class="citation"></app-format-citation>
+        <app-format-citation [citations]="seq.citation" class="citation"></app-format-citation>
 
         <div class="updated">
           updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
