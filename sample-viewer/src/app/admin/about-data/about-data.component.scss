@@ -38,6 +38,7 @@
 .variable-description {
   & h5 {
     margin: 0;
+    text-transform: uppercase;
   }
   margin-left: 40px;
 }
@@ -48,6 +49,6 @@
   }
   & ul {
     margin-top: 0;
-    margin-bottom: 0; 
+    margin-bottom: 0;
   }
 }
