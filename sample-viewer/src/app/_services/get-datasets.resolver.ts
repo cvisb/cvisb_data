@@ -12,16 +12,16 @@ import { getDatasetsService } from './get-datasets.service';
 
 @Injectable()
 export class DatasetResolver implements Resolve<any> {
-  constructor(private datasetSvc: getDatasetsService) {}
+  constructor(private datasetSvc: getDatasetsService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.paramMap.get('dsid') ? route.paramMap.get('dsid') : route.url[1].path;
     // return this.datasetSvc.getDataset(route.paramMap.get('dsid'));
-    let dataset = this.datasetSvc.getDataset(dsid);
-    return dataset.pipe(map(ds => {
-      console.log("dataset in activated route")
-      console.log(ds)
-      return(ds)  
-    }));
+    return this.datasetSvc.getDataset(dsid)
+      .pipe(map(ds => {
+        console.log("dataset in activated route")
+        console.log(ds)
+        return (ds)
+      }));
   }
 }
