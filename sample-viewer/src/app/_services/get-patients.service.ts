@@ -94,38 +94,51 @@ export class GetPatientsService {
    */
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
 
-    return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection)
-      .pipe(
-        mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
-          observe: 'response',
-          headers: new HttpHeaders()
-            .set('Accept', 'application/json'),
-          params: new HttpParams()
-            .set("q", "__all__")
-            .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-            .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
-        }).pipe(
-          map(expts => {
-            console.log('inner call!')
-            let patients = patientResults['hits'];
+    // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
+    // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
+    let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
-            patients.forEach(patient => {
-              let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-              patient['availableData'] = patientExpts;
-            })
-            console.log(patients)
-            console.log(expts)
+    let params = qParams
+      .append('size', pageSize.toString())
+      .append('from', (pageSize * pageNum).toString())
+      .append("sort", sortString);
 
-            return ({ hits: patients, total: patientResults['total'] });
-          }),
-          catchError(e => {
-            console.log(e)
-            throwError(e);
-            return (new Observable<any>())
+    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: new HttpParams()
+          .set("q", "__all__")
+          .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
+          .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+      }).pipe(
+        map(expts => {
+          console.log('inner call!')
+          let patients = patientResults['body']['hits'];
+
+          patients.forEach(patient => {
+            let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+            patient['availableData'] = patientExpts;
           })
-        )
-        )
+          console.log(patients)
+          console.log(expts)
+
+          return ({ hits: patients, total: patientResults['body']['total'] });
+        }),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        })
       )
+      )
+    )
 
 
 
