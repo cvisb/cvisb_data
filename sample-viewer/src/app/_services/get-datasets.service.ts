@@ -73,7 +73,7 @@ export class getDatasetsService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json'),
         params: new HttpParams()
-          .set('q', `includedInDataset:${id}`)
+          .set('q', `${idVar}:${id}`)
       }).pipe(
         map(data => {
           console.log('internals of /dataset calls')
