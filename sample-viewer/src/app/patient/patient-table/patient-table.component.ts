@@ -4,7 +4,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
-import { PatientsDataSource, RequestParametersService, ApiService } from '../../_services/';
+import { PatientsDataSource, RequestParametersService, ApiService, GetPatientsService } from '../../_services/';
 import { Patient, PatientArray, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
 
@@ -30,6 +30,7 @@ export class PatientTableComponent implements OnInit {
     private route: ActivatedRoute,
     private requestSvc: RequestParametersService,
     private apiSvc: ApiService,
+    private patientSvc: GetPatientsService
   ) {
 
 
@@ -39,7 +40,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.patientSource = new PatientsDataSource(this.apiSvc);
+    this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
 
