@@ -107,7 +107,7 @@ export class GetPatientsService {
         }).pipe(
           map(expts => {
             console.log('inner call!')
-            let patients = patientResults['body']['hits'];
+            let patients = patientResults['hits'];
 
             patients.forEach(patient => {
               let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
@@ -116,7 +116,7 @@ export class GetPatientsService {
             console.log(patients)
             console.log(expts)
 
-            return ({ hits: patients, total: patientResults['body']['total'] });
+            return ({ hits: patients, total: patientResults['total'] });
           }),
           catchError(e => {
             console.log(e)
