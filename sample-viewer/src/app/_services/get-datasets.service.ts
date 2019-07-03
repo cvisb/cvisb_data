@@ -78,17 +78,22 @@ export class getDatasetsService {
         map(data => {
           if (data['body']['total'] === 1) {
             // One result found, as expected.
-            let datasets = data['body']['hits'][0];
+            let dataset = data['body']['hits'][0];
 
             let files = downloads['body']['hits'];
+
             // remove ES _id from files:
             files.forEach(d => {
               delete d._id;
               delete d._score;
             })
 
-            datasets['distribution'] = files;
-            return (datasets)
+            delete dataset._id;
+            delete dataset._score;
+
+            // save DataDownloads to 'distribution' within dataset
+            dataset['distribution'] = files;
+            return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
             console.log(data);
