@@ -122,7 +122,7 @@ export class GetPatientsService {
           console.log(patients)
           console.log(expts)
 
-          return patients;
+          return (new Observable<any>(patients));
         }),
         catchError(e => {
           console.log(e)
