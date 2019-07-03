@@ -40,19 +40,19 @@ export class DatasetPageComponent implements OnInit {
     // this.datasets = datasetSvc.getDatasets();
     // TODO: check if more than one dataset.
     // this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
-    // datasetSvc.getDataset(this.dsid).subscribe((dataset) => {
-    //   console.log('dataset from API: ' + dataset.name)
-    //   // console.log(dataset)
-    //   this.dataset = dataset;
-    //
-    //   if (dataset) {
-    //     // Set page name
-    //     this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
-    //   }
-    //
-    //   this.schema_dataset = dataset;
-    //   console.log(this.schema_dataset);
-    // })
+    datasetSvc.getDataset(this.dsid).subscribe((dataset) => {
+      console.log('dataset from API: ' + dataset.name)
+      console.log(dataset)
+      this.dataset = dataset;
+
+      if (dataset) {
+        // Set page name
+        this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
+      }
+
+      // this.schema_dataset = dataset;
+      // console.log(this.schema_dataset);
+    })
 
     // TEMP: shim to remove non-schema.org offensive fields
     // this.schema_dataset = datasetSvc.getSchema(this.dsid);
