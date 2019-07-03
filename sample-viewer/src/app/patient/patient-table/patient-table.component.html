@@ -106,9 +106,10 @@
       <th mat-header-cell *matHeaderCellDef>available data</th>
       <td mat-cell *matCellDef="let element">
         <div class="expt-type mat-shadow" *ngFor="let expt of element.availableData" [matTooltip]="expt" matTooltipPosition="above" [ngClass]="expt.identifier">
-          <a [routerLink]="['/patient', element.patientID]" [fragment]="expt.name | stripWhitespace">
+          {{expt}}
+          <!-- <a [routerLink]="['/patient', element.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
-          </a>
+          </a> -->
         </div>
 
       </td>
