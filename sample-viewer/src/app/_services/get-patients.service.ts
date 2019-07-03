@@ -94,42 +94,38 @@ export class GetPatientsService {
    */
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
 
-    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: qParams
-    }).pipe(
-      mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set("q", "__all__")
-          .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-          .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
-      }).pipe(
-        map(expts => {
-          console.log('inner call!')
-          let patients = patientResults['body']['hits'];
+    return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection)
+      .pipe(
+        mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
+          observe: 'response',
+          headers: new HttpHeaders()
+            .set('Accept', 'application/json'),
+          params: new HttpParams()
+            .set("q", "__all__")
+            .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
+            .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+        }).pipe(
+          map(expts => {
+            console.log('inner call!')
+            let patients = patientResults['body']['hits'];
 
-          patients.forEach(patient => {
-            let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-            patient['availableData'] = patientExpts;
+            patients.forEach(patient => {
+              let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+              patient['availableData'] = patientExpts;
+            })
+            console.log(patients)
+            console.log(expts)
+
+            return ({ hits: patients, total: patientResults['body']['total'] });
+          }),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (new Observable<any>())
           })
-          console.log(patients)
-          console.log(expts)
-
-          return ({hits: patients, total: patientResults['body']['total']});
-        }),
-        catchError(e => {
-          console.log(e)
-          throwError(e);
-          return (new Observable<any>())
-        })
+        )
+        )
       )
-      )
-    )
 
 
 
