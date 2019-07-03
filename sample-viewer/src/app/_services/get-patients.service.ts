@@ -92,7 +92,7 @@ export class GetPatientsService {
   2) Use those patientIDs to query /experiment
   3) Merge the two results together.
    */
-  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
+  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string) {
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
