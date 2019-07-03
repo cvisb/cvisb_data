@@ -106,7 +106,7 @@ export class GetPatientsService {
           .set('Accept', 'application/json'),
         params: new HttpParams()
           .set("q", "__all__")
-          .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
+          .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
           .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
       }).pipe(
         map(data => {
