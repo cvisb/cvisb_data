@@ -77,8 +77,6 @@ export class getDatasetsService {
       }).pipe(
         map(data => {
           console.log('internals of /dataset calls')
-          console.log(data)
-          console.log(downloads);
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let datasets = data['body']['hits'][0];

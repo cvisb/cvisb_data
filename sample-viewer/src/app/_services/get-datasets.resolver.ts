@@ -15,9 +15,9 @@ export class DatasetResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.paramMap.get('dsid') ? route.paramMap.get('dsid') : route.url[1].path;
-    console.log(dsid)
     // return this.datasetSvc.getDataset(route.paramMap.get('dsid'));
     let dataset = this.datasetSvc.getDataset(dsid);
+    console.log("dataset in activated route")
     console.log(dataset)
     return dataset;
   }
