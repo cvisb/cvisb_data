@@ -109,11 +109,20 @@ export class GetPatientsService {
           .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
           .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
       }).pipe(
-        map(data => {
+        map(expts => {
           console.log('inner call!')
-          console.log(data)
-          console.log(patientResults)
-          return patientResults['body']['total'];
+          let patients = patientResults['body']['hits'];
+
+          patients.forEach(patient => {
+            let patientExpts = expts["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+            console.log(patientExpts);
+            patient['availableData'] = patientExpts;
+          })
+
+          console.log(patients)
+          console.log(expts)
+
+          return patients;
         }),
         catchError(e => {
           console.log(e)
@@ -127,62 +136,62 @@ export class GetPatientsService {
 
 
     // QUERY 1: get patients
-    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: qParams.append("size", "10")
-    }).pipe(
-      // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
-      mergeMap(patientResults =>
-        // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-        // QUERY 2: get expts associated with those patients
-        this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-          observe: 'response',
-          headers: new HttpHeaders()
-            .set('Accept', 'application/json'),
-          params: new HttpParams()
-            .set("q", "__all__")
-            .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
-            .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
-        })
-
-          // mergeMap(patientResults => {
-          //   let patients = patientResults['body']['hits'];
-          //   // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-          //   // QUERY 2: get expts associated with those patients
-          //   let patientIDs = patients.map(d => d.patientID);
-          //   console.log(patientIDs);
-          //
-          //   let exptParams = new HttpParams()
-          //     .set("q", "__all__")
-          //     .set("patientID", `"${patientIDs.join('","')}"`)
-          //     .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)");
-          //
-          //   return this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-          //     observe: 'response',
-          //     headers: new HttpHeaders()
-          //       .set('Accept', 'application/json'),
-          //     params: exptParams
-          //   })
-          .pipe(
-            map(expts => {
-              let patients = patientResults['body']['hits'];
-
-              patients.forEach(patient => {
-                let patientExpts = expts["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-                console.log(patientExpts);
-                patient['availableData'] = patientExpts;
-              })
-
-              console.log(patients)
-              console.log(expts)
-
-              return patients;
-            })
-          )
-      )
-    )
+    // return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
+    //   observe: 'response',
+    //   headers: new HttpHeaders()
+    //     .set('Accept', 'application/json'),
+    //   params: qParams.append("size", "10")
+    // }).pipe(
+    //   // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    //   mergeMap(patientResults =>
+    //     // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
+    //     // QUERY 2: get expts associated with those patients
+    //     this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
+    //       observe: 'response',
+    //       headers: new HttpHeaders()
+    //         .set('Accept', 'application/json'),
+    //       params: new HttpParams()
+    //         .set("q", "__all__")
+    //         .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
+    //         .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+    //     })
+    //
+    //       // mergeMap(patientResults => {
+    //       //   let patients = patientResults['body']['hits'];
+    //       //   // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
+    //       //   // QUERY 2: get expts associated with those patients
+    //       //   let patientIDs = patients.map(d => d.patientID);
+    //       //   console.log(patientIDs);
+    //       //
+    //       //   let exptParams = new HttpParams()
+    //       //     .set("q", "__all__")
+    //       //     .set("patientID", `"${patientIDs.join('","')}"`)
+    //       //     .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)");
+    //       //
+    //       //   return this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
+    //       //     observe: 'response',
+    //       //     headers: new HttpHeaders()
+    //       //       .set('Accept', 'application/json'),
+    //       //     params: exptParams
+    //       //   })
+    //       .pipe(
+    //         map(expts => {
+    //           let patients = patientResults['body']['hits'];
+    //
+    //           patients.forEach(patient => {
+    //             let patientExpts = expts["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+    //             console.log(patientExpts);
+    //             patient['availableData'] = patientExpts;
+    //           })
+    //
+    //           console.log(patients)
+    //           console.log(expts)
+    //
+    //           return patients;
+    //         })
+    //       )
+    //   )
+    // )
   }
 
 
