@@ -115,14 +115,12 @@ export class GetPatientsService {
 
           patients.forEach(patient => {
             let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-            console.log(patientExpts);
             patient['availableData'] = patientExpts;
           })
-
           console.log(patients)
           console.log(expts)
 
-          return (new Observable<any>(patients));
+          return ({hits: patients, total: patientResults['body']['total']});
         }),
         catchError(e => {
           console.log(e)

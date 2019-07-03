@@ -60,6 +60,7 @@ export class PatientsDataSource implements DataSource<Patient> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(patientList => {
+        console.log(patientList)
         this.resultCountSubject.next(patientList['total'])
         this.patientsSubject.next(patientList['hits'])
       });
