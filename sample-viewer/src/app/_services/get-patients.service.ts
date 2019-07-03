@@ -93,14 +93,47 @@ export class GetPatientsService {
   3) Merge the two results together.
    */
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
+
+    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: qParams
+    }).pipe(
+      mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: new HttpParams()
+          .set("q", "__all__")
+          .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
+          .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+      }).pipe(
+        map(data => {
+          console.log('inner call!')
+          console.log(data)
+          console.log(patientResults)
+          return patientResults['body']['total'];
+        }),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        })
+      )
+      )
+    )
+
+
+
     // QUERY 1: get patients
-        return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-          observe: 'response',
-          headers: new HttpHeaders()
-            .set('Accept', 'application/json'),
-          params: qParams.append("size", "10")
-        }).pipe(
-    // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: qParams.append("size", "10")
+    }).pipe(
+      // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
       mergeMap(patientResults =>
         // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
         // QUERY 2: get expts associated with those patients
