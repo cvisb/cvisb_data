@@ -81,7 +81,14 @@ export class getDatasetsService {
             // One result found, as expected.
             let datasets = data['body']['hits'][0];
 
-            datasets['distribution'] = downloads['body']['hits'];
+            let files = downloads['body']['hits'];
+            // remove ES _id from files:
+            files.forEach(d => {
+              delete d._id;
+              delete d._score;
+            })
+
+            datasets['distribution'] = files;
             console.log(datasets)
             return (datasets)
           } else {
