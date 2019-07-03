@@ -15,7 +15,7 @@ export class DatasetPageComponent implements OnInit {
   private dsid: string; // file ID
   private datasets: any[];
   dataset: any;
-  schema_dataset: any;
+  // schema_dataset: any;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
@@ -28,10 +28,12 @@ export class DatasetPageComponent implements OnInit {
     route.params.subscribe(params => {
       this.dsid = params['dsid'];
       console.log(params);
-      this.schema_dataset = params['datasetData'];
+      this.dataset = params['datasetData'];
 
       // Set page name
+      if(params['datasetData']['name']) {
       this.titleSvc.setTitle(`${params['datasetData']['name']} ${this.route.snapshot.data.title}`)
+    }
     });
 
     // Hit API to get data
