@@ -31,9 +31,9 @@ export class DatasetPageComponent implements OnInit {
       this.dataset = params['datasetData'];
 
       // Set page name
-      if(params['datasetData']['name']) {
-      this.titleSvc.setTitle(`${params['datasetData']['name']} ${this.route.snapshot.data.title}`)
-    }
+      if (params['datasetData'] && params['datasetData']['name']) {
+        this.titleSvc.setTitle(`${params['datasetData']['name']} ${this.route.snapshot.data.title}`)
+      }
     });
 
     // Hit API to get data
