@@ -23,54 +23,15 @@ export class DatasetPageComponent implements OnInit {
     private datasetSvc: getDatasetsService,
     // private mdSvc: FileMetadataService,
   ) {
-
-    // Pull out the file ID
-    // route.params.subscribe(params => {
-    //   this.dsid = params['dsid'];
-    //   this.dataset = params['datasetData'];
-    //
-    //   // Set page name
-    //   if (params['datasetData'] && params['datasetData']['name']) {
-    //     this.titleSvc.setTitle(`${params['datasetData']['name']} ${this.route.snapshot.data.title}`)
-    //   }
-    // });
-
-    // Hit API to get data
-    // this.datasets = datasetSvc.getDatasets();
-    // TODO: check if more than one dataset.
-    // this.dataset = this.datasets.filter((d: any) => d.identifier === this.dsid)[0];
-    // datasetSvc.getDataset(this.dsid).subscribe((dataset) => {
-    //   console.log('dataset from API: ' + dataset.name)
-    //   console.log(dataset)
-    //   this.dataset = dataset;
-    //
-    //   if (dataset) {
-    //     // Set page name
-    //     this.titleSvc.setTitle(`${this.dataset['name']} ${this.route.snapshot.data.title}`)
-    //   }
-    //
-    //   // this.schema_dataset = dataset;
-    //   // console.log(this.schema_dataset);
-    // })
-
-    // TEMP: shim to remove non-schema.org offensive fields
-    // this.schema_dataset = datasetSvc.getSchema(this.dsid);
-    // console.log(this.schema_dataset);
-    // this.schema_dataset = dataset;
-
   }
 
   ngOnInit() {
     console.log(this.route.snapshot.data)
-
     // fetch dataset data from resolver.
     this.dataset = this.route.snapshot.data['datasetData'];
 
     // Set page name
-    // if (params['datasetData'] && params['datasetData']['name']) {
     this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
-    // }
-    // });
   }
 
 

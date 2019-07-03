@@ -76,7 +76,6 @@ export class getDatasetsService {
           .set('q', `${idVar}:${id}`)
       }).pipe(
         map(data => {
-          console.log('internals of /dataset calls')
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let datasets = data['body']['hits'][0];
@@ -89,7 +88,6 @@ export class getDatasetsService {
             })
 
             datasets['distribution'] = files;
-            console.log(datasets)
             return (datasets)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
