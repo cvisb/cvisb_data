@@ -62,6 +62,7 @@ export class DatasetPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.route.snapshot.data)
   }
 
 
