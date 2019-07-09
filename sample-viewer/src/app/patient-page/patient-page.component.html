@@ -72,7 +72,7 @@
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <!-- icons of available experiments -->
-        <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt" matTooltipPosition="above">
+        <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
           <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'" ></svg-icon>
           </a>
