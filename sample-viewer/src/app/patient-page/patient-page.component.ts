@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { ExperimentObjectPipe } from '../_pipes';
   templateUrl: './patient-page.component.html',
   styleUrls: ['./patient-page.component.scss']
 })
-export class PatientPageComponent implements AfterViewInit {
+export class PatientPageComponent implements OnInit {
   patientID: string;
   patient: Patient;
   viralSeq: ViralSeqObj[];
@@ -64,7 +64,7 @@ export class PatientPageComponent implements AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
