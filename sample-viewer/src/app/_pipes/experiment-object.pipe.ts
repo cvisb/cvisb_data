@@ -5,13 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ExperimentObjectPipe implements PipeTransform {
   exptDict: Object[] = [
-    { "name": "HLA sequencing", "identifier": "hla" },
-    { "name": "viral sequencing", "identifier": "viralseq" },
-    { "name": "metagenome sequencing", "identifier": "metagenomeseq" },
-    { "name": "BCR sequencing", "identifier": "bcr" },
-    { "name": "TCR sequencing", "identifier": "tcr" },
-    { "name": "Systems Serology", "identifier": "systemsserology" },
-    { "name": "metabolomics", "identifier": "metabolomics" }
+    { "name": "HLA sequencing", "identifier": "hla", "link": "HLA-sequencing" },
+    { "name": "viral sequencing", "identifier": "viralseq", "link": "HLA-sequencing" },
+    { "name": "metagenome sequencing", "identifier": "metagenomeseq", "link": "metagenome-sequencing" },
+    { "name": "BCR sequencing", "identifier": "bcr", "link": "BCR-sequencing" },
+    { "name": "TCR sequencing", "identifier": "tcr", "link": "TCR-sequencing" },
+    { "name": "Systems Serology", "identifier": "systemsserology", "link": "Systems-Serology" },
+    { "name": "metabolomics", "identifier": "metabolomics", "link": "metabolomics" }
   ];
 
   transform(value: string, var2Search: string = "name"): any {

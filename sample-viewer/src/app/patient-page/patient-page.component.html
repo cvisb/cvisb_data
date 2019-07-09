@@ -72,8 +72,10 @@
       <div class="patient-data">
         <h4 class="patient" id="data">Data</h4>
         <!-- icons of available experiments -->
-        <div class="expt-type mat-shadow" [ngClass]="expt.key" *ngFor="let expt of exptTypes">
-          <svg-icon [icon]="expt.key" ></svg-icon>
+        <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt" matTooltipPosition="above">
+          <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
+            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'" ></svg-icon>
+          </a>
         </div>
 
         <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
