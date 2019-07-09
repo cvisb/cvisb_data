@@ -70,6 +70,7 @@ export class PatientPageComponent implements OnInit {
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
     console.log('on init')
+    console.log(document.querySelector("#" + anchor_tag))
       this.anchorSvc.clickAnchor(anchor_tag);
     })
   }
@@ -79,6 +80,7 @@ export class PatientPageComponent implements OnInit {
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
     console.log('after view init')
+    console.log(document.querySelector("#" + anchor_tag))
       this.anchorSvc.clickAnchor(anchor_tag);
     })
   }
