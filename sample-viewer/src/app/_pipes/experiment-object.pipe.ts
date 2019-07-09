@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ExperimentObjectPipe implements PipeTransform {
   exptDict: Object[] = [
     { "name": "HLA sequencing", "identifier": "hla", "link": "HLA-sequencing" },
-    { "name": "viral sequencing", "identifier": "viralseq", "link": "HLA-sequencing" },
+    { "name": "viral sequencing", "identifier": "viralseq", "link": "viral-sequencing" },
     { "name": "metagenome sequencing", "identifier": "metagenomeseq", "link": "metagenome-sequencing" },
     { "name": "BCR sequencing", "identifier": "bcr", "link": "BCR-sequencing" },
     { "name": "TCR sequencing", "identifier": "tcr", "link": "TCR-sequencing" },
