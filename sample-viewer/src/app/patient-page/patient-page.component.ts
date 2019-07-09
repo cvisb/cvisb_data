@@ -72,4 +72,13 @@ export class PatientPageComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+      console.log('after view init')
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
+  }
+
 }
