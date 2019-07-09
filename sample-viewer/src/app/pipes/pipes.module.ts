@@ -6,6 +6,7 @@ import { FilterLocusPipe } from '../_pipes/filter-locus.pipe';
 import { GetKeysPipe } from '../_pipes/get-keys.pipe';
 import { DateRangePipe } from '../_pipes/date-range.pipe';
 import { FilterByAltIDPipe } from '../_pipes/filter-by-alt-id.pipe';
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 // import { StripWhitespacePipe, SloppyMarkdownPipe } from '../_pipes';
 
 @NgModule({
@@ -13,13 +14,14 @@ import { FilterByAltIDPipe } from '../_pipes/filter-by-alt-id.pipe';
     CommonModule
   ],
   declarations: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe
   ],
   providers: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe
   ],
   exports: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe
   ]
 })
+
 export class PipesModule { }
