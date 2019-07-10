@@ -228,7 +228,7 @@
 - "@id":                 cvisb:species
   "@type":               rdf:Property
   rdfs:comment:          Source of sample (human or rat)
-  rdfs:label:            sampleType
+  rdfs:label:            species
   schema:domainIncludes:
     - "@id":             cvisb:Sample
   schema:rangeIncludes:

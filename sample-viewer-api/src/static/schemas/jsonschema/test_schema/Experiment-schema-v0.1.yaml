@@ -292,6 +292,21 @@
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             cvisb:Data
+    - "@id":             cvisb:Accelerometry
+    - "@id":             cvisb:BodyTemperature
+    - "@id":             cvisb:DiastolicPressure
+    - "@id":             cvisb:ECGPoint
+    - "@id":             cvisb:HeartRate
+    - "@id":             cvisb:HLAData
+    - "@id":             cvisb:MeanArterialPressure
+    - "@id":             cvisb:OxygenSaturation
+    - "@id":             cvisb:PiccoloData
+    - "@id":             cvisb:RespiratoryRate
+    - "@id":             cvisb:SkinTemperature
+    - "@id":             cvisb:SNPData
+    - "@id":             cvisb:SystolicPressure
+    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:Vitals
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
