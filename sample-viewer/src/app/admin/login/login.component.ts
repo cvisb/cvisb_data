@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 
 import { AuthService } from '../../_services';
 import { AuthState } from '../../_models';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -45,6 +46,7 @@ export class LoginComponent {
 
 
   login() {
+    console.log(environment)
     this.message = 'Trying to log in ...';
 
     this.authSvc.login();
