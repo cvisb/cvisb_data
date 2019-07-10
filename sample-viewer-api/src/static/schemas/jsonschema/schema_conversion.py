@@ -102,7 +102,7 @@ def process_file(entity, entity_dict, error_file, _out_directory, args, namespac
                     unauthorized_leaves.add(public_field)
                 _sub_schema['oneOf'].append(SCHEMA_ROOT_TYPE_MAP[_type['@id']])
             elif _type['@id'].startswith('cvisb:'):
-                if _id not in SKIPPED_KEYS:
+                if _id not in SKIPPED_KEYS and not _authenticated:
                     new_namespace = '.'.join(namespace.split('.') + [_id]) if namespace else _id
                     unauthorized_leaves = unauthorized_leaves.union(
                         process_file(entity=_type['@id'].split(':')[1], entity_dict=entity_dict, error_file=error_file,
