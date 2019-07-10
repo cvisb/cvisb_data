@@ -7,14 +7,14 @@
 </nav>
 
 <ng-template #link_string let-link="link">
-  <a class="link" [routerLink]="['../', patientID]" [fragment]="link | stripWhitespace" (click)="onAnchorClick(link)">{{link}}</a>
+  <a class="link" [routerLink]="['../', patientID]" [fragment]="link | stripWhitespace" (click)="onAnchorClick(link)">{{ link }}</a>
 </ng-template>
 
 <ng-template #link_obj let-link="link">
   <a class="link" [routerLink]="['../', patientID]" [fragment]="link.key  | stripWhitespace" (click)="onAnchorClick(link.key)">{{link.key}}</a>
   <ul class="level1">
     <li *ngFor = "let sublink of link.values" class="link">
-      <a [routerLink]="['../', patientID]" [fragment]="sublink | stripWhitespace" (click)="onAnchorClick(sublink)">{{sublink}}</a>
+      <a [routerLink]="['../', patientID]" [fragment]="sublink | stripWhitespace" (click)="onAnchorClick(sublink)">{{ sublink | titlecase }}</a>
     </li>
   </ul>
 </ng-template>

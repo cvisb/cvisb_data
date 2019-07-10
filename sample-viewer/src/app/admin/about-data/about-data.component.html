@@ -25,20 +25,57 @@
 
   <a routerLink="/release-notes">View all release notes</a>
 
-  <!-- <h4>How the data are compiled</h4>
+  <h4>Where do our data come from?</h4>
   <p>
-    The majority of our data is provided to CViSB through a partnershup with the Kenema Government hospital in Sierra Leone.
-  </p> -->
+    The majority of our data is provided to CViSB through a partnershup with the Kenema Government hospital (KGH) in Sierra Leone. KGH is home to Sierra Leone's only Lassa fever isolation ward, which was used during the 2014-2016 West African Ebola outbreak
+    to treat Ebola as well. Read more about the
+    <a href="https://www.nature.com/news/infectious-disease-ebola-s-lost-ward-1.15990" rel="noreferrer" target="_blank">
+      isolation ward in the height of the Ebola outbreak
+    </a>.
+  </p>
 
   <h4><a routerLink="/schema">Schema</a></h4>
   <p>
     Building off of <a href="http://www.schema.org" rel="noreferrer" target="_blank">schema.org</a>'s data models, we created schema to organize and standardize our patient, sample, dataset, experiment, and other related data.
   </p>
 
-  <h4>Data dictionaries</h4>
-  <p>
-    ... will be coming soon. In the meantime, peruse our <a routerLink="/schema">schema</a>, which contain information about how we define variables in our datasets.
-  </p>
+  <div class="data-dictionary">
+    <h4>Data dictionaries</h4>
+    <p>
+      ... will be coming soon. In the meantime, peruse our <a routerLink="/schema">schema</a>, which contain information about how we define variables in our datasets.
+    </p>
+
+    <div class="variable-description" id="cohort">
+      <h5>Cohort definition</h5>
+      <p>
+        Patients are grouped into four cohorts: <span class="emphasis-light">Ebola</span>, <span class="emphasis-light">Lassa</span>, <span class="emphasis-light">Control</span>, or Unknown. <span class="emphasis">People in the Ebola or Lassa group are not necessarily infected with the virus.</span>        Rather, they are either patients suspected of infection (pending diagnostic confirmation), or contacts of these patients who have suspected exposure to the virus. For specific analyses, you will need to decide how to define the cohort.
+      </p>
+    </div>
+
+    <div class="variable-description" id="outcome">
+      <h5>Outcome definition</h5>
+      <p>
+        Patients are grouped into five outcomes: <span class="emphasis-light">survivor</span>, <span class="emphasis-light">dead</span>, <span class="emphasis-light">contact</span>, <span class="emphasis-light">control</span>, or unknown.
+      </p>
+      <ul>
+        <li>
+          <span class="emphasis-light">Survivors</span> are patients who were alive at least 10 days after presenting at a treatment center.
+        </li>
+        <li>
+          <span class="emphasis-light">Dead</span> are patients who have a confirmed death related to the virus.
+        </li>
+        <li>
+          <span class="emphasis-light">Contacts</span> are people who have been exposed to a patient infected with a virus.
+        </li>
+        <li>
+          <span class="emphasis-light">Controls</span> are healthy people who show no symptoms of infection.
+        </li>
+        <li>
+          <span class="emphasis-light">Unknowns</span> are people whose status is not known 10 or more days after presentation.
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <h4>Limitations</h4>
   <app-disclaimer></app-disclaimer>

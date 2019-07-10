@@ -20,7 +20,7 @@ export class HlaSummaryComponent implements OnInit {
   constructor(private hlaSvc: GetHlaDataService,
    @Inject(PLATFORM_ID) private platformId: Object) {
 
-    hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
+    this.hlaSvc.patientTypeState$.subscribe((types: D3Nested[]) => {
       this.patientTypes = types;
     })
 

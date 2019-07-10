@@ -55,5 +55,5 @@ export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outc
                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',
                'elisa', 'dateModified']
 
-dict_cols = ["patientID", "gID", "sID", "cohort", "outcome",
+dict_cols = ["patientID", "gID", "sID", "cohort", "outcome", "alternateIdentifier",
              "age", "gender", "countryName", "elisa", "issue"]

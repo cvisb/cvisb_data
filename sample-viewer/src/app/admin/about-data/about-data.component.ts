@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GetDatacatalogService } from '../../_services';
+import { GetDatacatalogService, AnchorService } from '../../_services';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-about-data',
@@ -12,7 +14,12 @@ export class AboutDataComponent implements OnInit {
   releaseVersion: string;
   cvisbCatalog: Object;
 
-  constructor(private dataCatalogSvc: GetDatacatalogService) {
+  constructor(private dataCatalogSvc: GetDatacatalogService,
+    private route: ActivatedRoute,
+    private anchorSvc: AnchorService
+  ) {
+
+    // get static data catalog params
     this.dataModified = this.dataCatalogSvc.dataModified;
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
     if (this.cvisbCatalog) {
@@ -21,6 +28,10 @@ export class AboutDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    // # anchor tag handling
+    this.route.fragment.subscribe((anchor_tag) => {
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
   }
 
 }

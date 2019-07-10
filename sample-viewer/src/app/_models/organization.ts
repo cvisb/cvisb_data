@@ -3,7 +3,7 @@ export class Organization {
   public alternateName?: string;
   public address?: PostalAddress;
   public contactPoint?: ContactPoint;
-  public parentOrganization?: Organization;
+  public parentOrganization?: string;
   public url: string;
   public "@context"?: string;
   public "@type"?: string;
@@ -13,7 +13,7 @@ export class Organization {
     alternateName: string = null,
     address: PostalAddress = null,
     contactPoint: ContactPoint = null,
-    parentOrganization: Organization = null,
+    parentOrganization: string = null,
     url: string = null,
     context: string = null,
     type: string = null

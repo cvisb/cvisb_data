@@ -1,3 +1,24 @@
+@import '../../../sass/variables.scss';
+
+.disclaimer {
+  font-style: italic;
+  font-size: 0.8em;
+  width: 215px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  color: $grey-400;
+
+  & a {
+    color: $grey-400;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 .patient-type-filter .filter-label {
   margin-bottom: 0;
 }

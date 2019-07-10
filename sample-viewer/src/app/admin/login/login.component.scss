@@ -1,0 +1,6 @@
+@import '../../../sass/material-theme.scss'; // custom variables, usually colors
+
+.dev-warning {
+  color: accent-redder(A400);
+  font-weight: 400;
+}

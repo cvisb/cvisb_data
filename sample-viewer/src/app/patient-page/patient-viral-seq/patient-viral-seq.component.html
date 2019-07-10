@@ -1,4 +1,4 @@
-<h4 class="patient-data" id="Viral-Sequencing">Viral Sequencing</h4>
+<h4 class="patient-data">Viral Sequencing</h4>
 
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
   <div class="sequence-group" *ngFor="let seq of sequences">
@@ -24,7 +24,11 @@
           </ng-template>
         </div>
 
-        <app-format-citation [citations]="seq.publication" class="citation"></app-format-citation>
+        <app-format-citation [citations]="seq.citation" class="citation"></app-format-citation>
+
+        <div class="updated">
+          updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+        </div>
       </div>
 
 
@@ -59,6 +63,11 @@
         </p>
       </div>
     </ng-container>
+  </div>
+
+  <div class="viralseq-files">
+    <h5 class="patient-data">files</h5>
+    <app-file-list datasetID="viralseq" [patientID]="patientID"></app-file-list>
   </div>
 </ng-container>
 

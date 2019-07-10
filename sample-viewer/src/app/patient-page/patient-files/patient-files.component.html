@@ -1,8 +1,0 @@
-<div class="data-download" *ngIf="datadownload">
-
-<a>
-<!-- <a [href]="datadownload.contentUrl" rel="noreferrer" target="_blank"> -->
-  {{datadownload.name}}
-  <span class="file-type" [ngClass]="datadownload['additionalType'] | stripWhitespace">{{datadownload.additionalType}}</span>
-  </a>
-</div>

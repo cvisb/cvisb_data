@@ -37,11 +37,7 @@ export class FooterComponent implements OnInit {
       email: "info@cvisb.org",
       url: "https://cvisb.org/"
     },
-    parentOrganization: {
-      "@type": "Organization",
-      name: "Scripps Research",
-      url: "https://www.scripps.edu/"
-    }
+    parentOrganization: "Scripps Research"
   }
 
   social_links: Object[] = [

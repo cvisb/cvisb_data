@@ -13,6 +13,7 @@ import csv
 #import logging
 import yaml
 import copy
+from datetime import datetime as dt
 
 
 class UserAuth(object):
@@ -170,9 +171,21 @@ class EntityHandler(UserAuth, BiothingHandler):
         if error_list:
             self.return_json({"success": False, "error": "{} documents inserted correctly, {} documents encountered errors in insertion".format(insertion_count, len(error_list)), "error_list": error_list}, status_code=400)
             return
-        self.return_json({"success": True, "message": "{} documents updated".format(insertion_count)})
+        # Get data catalog to update date
+        data_catalog_res = self.web_settings.es_client.search(index="datacatalog_metadata_current", doc_type="datacatalog", body={"query": {"match": {"identifier": "https://data.cvisb.org/"}}})
+        catalog_update_msg = "DateModified updated in data catalog"
+        if data_catalog_res["hits"]["total"] != 1:
+            catalog_update_msg = "Update of dateModified in data catalog failed due to {} docs matching identifier: \"https://data.cvisb.org/\"".format(data_catalog_res["hits"]["total"])
+        else:
+            data_catalog = data_catalog_res["hits"]["hits"][0]
+            update_doc = {
+                "doc": {
+                    "dateModified": dt.now().strftime("%Y-%m-%d")
+                }
+            }
+            self.web_settings.es_client.update(index="datacatalog_metadata_current", doc_type="datacatalog", id=data_catalog["_id"],body=update_doc)
+        self.return_json({"success": True, "message": "{n} documents updated. {ctlg_updt_msg}".format(n=insertion_count, ctlg_updt_msg=catalog_update_msg)})
         return
-
 
     def delete(self, entity=None, _id=None):
         if not entity_check(self, entity):

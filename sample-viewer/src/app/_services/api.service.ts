@@ -65,7 +65,7 @@ export class ApiService {
   // string variables need to be {string}.keyword
   // and there's a few special cases for nested variables
   sortFunc(sortVar): string {
-    let numericVars = ["age"];
+    let numericVars = ["age", "dateModified"];
     if (numericVars.includes(sortVar) || !sortVar) {
       return (sortVar);
     }
@@ -158,7 +158,7 @@ export class ApiService {
     //     queryParamsHandling: "merge", // remove to replace all query params by provided
     //   });
 
-    console.log(qParams.toString());
+    // console.log(qParams.toString());
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts

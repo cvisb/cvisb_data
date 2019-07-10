@@ -6,19 +6,22 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { getDatasetsService } from './get-datasets.service';
 
 @Injectable()
 export class DatasetResolver implements Resolve<any> {
-  constructor(private datasetSvc: getDatasetsService) {}
+  constructor(private datasetSvc: getDatasetsService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.paramMap.get('dsid') ? route.paramMap.get('dsid') : route.url[1].path;
-    console.log(dsid)
     // return this.datasetSvc.getDataset(route.paramMap.get('dsid'));
-    let dataset = this.datasetSvc.getDataset(dsid);
-    console.log(dataset)
-    return dataset;
+    return this.datasetSvc.getDataset(dsid);
+    // .pipe(map(ds => {
+    //   console.log("dataset in activated route")
+    //   console.log(ds)
+    //   return (ds)
+    // }));
   }
 }

@@ -25,9 +25,7 @@ p {
 .spinner-container {
   justify-content: space-around;
 }
-
 // --- Column widths ---
-
 .mat-cell,
 .mat-header-cell {
   padding: 0 10px;
@@ -37,7 +35,7 @@ p {
 .mat-header-cell {
   &.mat-column-cohort {
     padding-right: 0;
-    text-align: end;
+    // text-align: end;
     border-bottom: none;
     flex: 0 0 75px;
   }
@@ -49,6 +47,10 @@ p {
     // display: flex;
     // justify-content: flex-end;
   }
+}
+
+.mat-cell.mat-column-cohort {
+  text-align: end;
 }
 
 .mat-column-patientID,

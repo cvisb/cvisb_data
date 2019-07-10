@@ -1,20 +1,18 @@
 <div class="hla-container patient-data-container">
-  <h4 class="patient-data" id="HLA">HLA</h4>
+  <h4 class="patient-data">HLA Sequencing</h4>
 
   <ng-container *ngIf="genotype; else nodata">
-    <div class="updated">
-      updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-    </div>
-
     <div class="hla-files">
       <h5 class="patient-data">files</h5>
-      <div *ngFor="let file of files">
-        <app-patient-files [datadownload]="file"></app-patient-files>
-      </div>
+      <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
     </div>
 
     <div class="hla-genotype">
       <h5 class="patient-data">data</h5>
+
+      <div class="updated">
+        updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+      </div>
 
       <div class="hla-data">
         <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
@@ -31,7 +29,6 @@
               </div>
             </div>
 
-            <!-- <app-allele-hist [data]="locus.values"></app-allele-hist> -->
           </div>
         </div>
       </div>

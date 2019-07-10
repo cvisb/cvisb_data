@@ -201,7 +201,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
-                         - control
+                         - Control
                          - Unknown
   authenticated:         false
 

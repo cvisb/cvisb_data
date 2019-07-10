@@ -4,17 +4,20 @@ import { Title } from '@angular/platform-browser';
 
 import { AuthService } from '../../_services';
 import { AuthState } from '../../_models';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent {
 
   message: string;
   page: string;
   loggedIn: boolean;
+  prodEnvironment: boolean;
   user: Object;
 
   constructor(
@@ -22,7 +25,7 @@ export class LoginComponent {
     private titleSvc: Title,
     private route: ActivatedRoute,
     public router: Router) {
-
+    this.prodEnvironment = environment.production;
 
     this.authSvc.redirectUrlState$.subscribe((url: string) => {
       this.page = url;

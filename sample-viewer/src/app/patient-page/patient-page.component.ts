@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute } from '@angular/router';
 
-import { GetPatientsService, ApiService } from '../_services/';
+import { GetPatientsService, ApiService, AnchorService } from '../_services/';
 import { Patient, ViralSeqObj } from '../_models';
+import { ExperimentObjectPipe } from '../_pipes';
 
 @Component({
   selector: 'app-patient-page',
@@ -14,15 +15,12 @@ import { Patient, ViralSeqObj } from '../_models';
 export class PatientPageComponent implements OnInit {
   patientID: string;
   patient: Patient;
-  fragment: string;
   viralSeq: ViralSeqObj[];
   viralFiles: Object[];
   HLA: any[];
   HLAFiles: any[];
   publications: any[];
-  allExpts = [
-    { key: "hla", name: "HLA sequencing", link: "HLA" },
-    { key: "viralseq", name: "viral sequencing", link: "Viral-Sequencing" },];
+  allExpts: Object[];
   exptTypes: Object[];
 
 
@@ -30,7 +28,9 @@ export class PatientPageComponent implements OnInit {
     private titleSvc: Title,
     private route: ActivatedRoute,
     private patientSvc: GetPatientsService,
-    private apiSvc: ApiService
+    private apiSvc: ApiService,
+    private anchorSvc: AnchorService,
+    private exptObjPipe: ExperimentObjectPipe
   ) {
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
@@ -42,15 +42,16 @@ export class PatientPageComponent implements OnInit {
       });
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
+        this.allExpts = this.exptObjPipe.exptDict;
         console.log(expts);
         let exptData = expts['hits'].map(d => d.measurementTechnique);
-        this.exptTypes = this.allExpts.filter(d => exptData.includes(d.name));
+        this.exptTypes = this.allExpts.filter(d => exptData.includes(d['name']));
 
         this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
 
-        this.publications = expts['hits'].map(d => d.publication).filter(d => d).flat();
+        this.publications = expts['hits'].map(d => d.citation).filter(d => d).flat();
       })
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
@@ -61,17 +62,27 @@ export class PatientPageComponent implements OnInit {
       })
     })
 
-    // For anchor jumping
-    this.route.fragment.subscribe(fragment => {
-      this.fragment = fragment;
-    })
   }
 
   ngOnInit() {
-    let anchor_div = document.querySelector("#" + this.fragment);
-    if (anchor_div) {
-      anchor_div.scrollIntoView();
-    }
+    console.log(document)
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+    console.log('on init')
+    console.log(document.querySelector("#" + anchor_tag))
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
+  }
+
+  ngAfterViewInit() {
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+    console.log('after view init')
+    console.log(document.querySelector("#" + anchor_tag))
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
   }
 
 }

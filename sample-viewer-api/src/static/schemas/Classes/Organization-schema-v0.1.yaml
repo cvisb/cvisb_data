@@ -134,7 +134,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Organization
   schema:rangeIncludes:
-    - "@id":             cvisb:Organization
+    - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:parentOrganization
   owl:cardinality:       one

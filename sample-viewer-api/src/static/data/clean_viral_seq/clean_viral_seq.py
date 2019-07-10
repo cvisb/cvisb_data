@@ -13,7 +13,7 @@ import helpers
 today = datetime.today().strftime('%Y-%m-%d')
 
 exptCols = ['privatePatientID', 'experimentID', 'GenBank_ID',
-            'measurementTechnique', 'publisher', 'publication', 'data', 'dateModified', 'cvisb_data']
+            'measurementTechnique', 'publisher', 'citation', 'data', 'dateModified', 'cvisb_data']
 
 def getPublisher(row, varName="cvisb_data"):
     # Check binary if CVISB_data
@@ -49,6 +49,23 @@ ids = pd.read_json(id_dict)
 ids.reset_index(inplace=True)
 ids.rename(columns={'index': 'ID'}, inplace=True)
 
+hla = pd.read_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/hla_test.json")
+
+hla.head()
+
+hla['KGH_id'] = hla.privatePatientID.apply(
+    helpers.checkIDstructure).apply(lambda x: not x)
+
+hla = pd.merge(hla, ids, how="left", indicator=True,
+                   right_on="ID", left_on="privatePatientID")
+x=hla[hla.KGH_id & (hla.issue != hla.issue) & (hla._merge == "both")]
+x[x.duplicated(subset="patientID", keep=False)].sort_values('patientID')[['privatePatientID', 'patientID']]
+
+
+merged = pd.merge(hla.drop('_merge', axis = 1), expts.drop('_merge', axis=1), on="privatePatientID", indicator=True)
+merged.loc[merged.issue_x != merged.issue_x, 'privatePatientID']
+
+
 # Import data  ----------------------------------------------------------------------------------------------------
 ebv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_02262019.csv"
 lsv_file = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/survival_dataset_lasv_04112019.csv"
@@ -70,7 +87,7 @@ ebv['measurementTechnique'] = "viral sequencing"
 ebv['dateModified'] = today
 ebv['cvisb_data'] = False
 ebv['publisher'] = ebv.apply(getPublisher, axis=1)
-ebv['publication'] = ebv.publisher.apply(helpers.getCitation)
+ebv['citation'] = ebv.publisher.apply(helpers.getCitation)
 
 # Read in Ebola sequence data
 ebv_seq = list(SeqIO.parse(
@@ -116,7 +133,7 @@ lsv['GenBank_ID'] = lsv.ncbi_accession
 lsv['measurementTechnique'] = "viral sequencing"
 lsv['dateModified'] = today
 lsv['publisher'] = lsv.apply(getPublisher, axis=1)
-lsv['publication'] = lsv.Source_PMID.apply(helpers.getCitation)
+lsv['citation'] = lsv.Source_PMID.apply(helpers.getCitation)
 lsv.iloc[3]
 # Import DNA sequences
 lsv_seq = list(SeqIO.parse(
@@ -147,7 +164,15 @@ sum((lsv.countryName_x != lsv.countryName_y) &
 
 # [Merge and export: experimental data]  ----------------------------------------------------------------------------------------------------
 expts = pd.concat([ebv[exptCols], lsv[exptCols]])
+expts = pd.concat([ebv, lsv])
+
+
+expts.loc[(expts._merge=="left_only") & expts.KGH_id, ['privatePatientID']]
+expts[expts._merge=="both"].issue.value_counts()
+
+expts.privatePatientID.to_csv("test.csv", index=False)
+
 ebv[ebv._merge == "both"]
 expts['data'] = expts.data.apply(helpers.listify)
-expts['publication'] = expts.publication.apply(helpers.listify)
+expts['citation'] = expts.citation.apply(helpers.listify)
 expts.to_json(f"{expt_dir}viral_seq_{today}.json", orient="records")

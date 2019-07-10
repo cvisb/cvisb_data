@@ -1,14 +1,18 @@
 <!-- DATA FILE LOOP -->
-<!-- <div class="data-download" *ngFor="let file of dataSource.data.slice(0,1)" [ngClass]="anything_selected ? (file.selected ? 'active' : 'inactive') : 'active'"> -->
-<div class="file-lists">
+<div class="file-lists" *ngIf="dataSource">
+
+  <div class="spinner-container container" *ngIf="dataSource.loadingState$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
   <table mat-table [dataSource]="dataSource" class="data-download" matSort [id]="datasetID | stripWhitespace">
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">File</th>
       <td mat-cell *matCellDef="let element">
-        <a [matTooltip]="'view metadata for ' + element.name">{{element.name}}</a>
-        <!-- <a (click)="selectFile($event, element)">{{element.name}}</a> -->
+        <a [href]="element.contentUrl" (click)="selectFile($event, element)" target="_blank" rel="noreferrer"
+        [matTooltip]="'download ' + element.name">{{element.name}}</a>
       </td>
     </ng-container>
 
@@ -34,7 +38,8 @@
     <ng-container matColumnDef="download">
       <th mat-header-cell *matHeaderCellDef>Download</th>
       <td mat-cell *matCellDef="let element">
-        <a href="" target="_blank" rel="noreferrer">
+        <a [href]="element.contentUrl" *ngIf="element.contentUrl && element.contentUrl !== ''"
+        (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
           <button class="small-icon download-btn" type="button" aria-label="download" [matTooltip]="'download ' + element.name">
           <mat-icon aria-label="download">cloud_download</mat-icon>
         </button>
@@ -44,9 +49,8 @@
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"
-    [ngClass]="anything_selected ? (row === selectedRow ? 'active' : 'inactive') : 'active'"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="anything_selected ? (row === selectedRow ? 'active' : 'inactive') : 'active'"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource.resultCountState$ | async" [pageSizeOptions]="[5, 10, 20, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
 </div>

@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StripWhitespacePipe implements PipeTransform {
 
   transform(value: string, replacement: string = '-'): string {
-    return value.replace(/\s/g, replacement);
+    if (value) {
+      return value.replace(/\s/g, replacement);
+    }
   }
 
 }
