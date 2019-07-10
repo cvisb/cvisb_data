@@ -11,11 +11,13 @@ import { environment } from '../../../environments/environment';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent {
 
   message: string;
   page: string;
   loggedIn: boolean;
+  prodEnvironment: boolean;
   user: Object;
 
   constructor(
@@ -23,7 +25,7 @@ export class LoginComponent {
     private titleSvc: Title,
     private route: ActivatedRoute,
     public router: Router) {
-
+    this.prodEnvironment = environment.production;
 
     this.authSvc.redirectUrlState$.subscribe((url: string) => {
       this.page = url;
@@ -46,7 +48,6 @@ export class LoginComponent {
 
 
   login() {
-    console.log(environment)
     this.message = 'Trying to log in ...';
 
     this.authSvc.login();

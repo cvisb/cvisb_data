@@ -11,13 +11,13 @@
 <ng-template #gotologin>
   <h2>Login to continue</h2>
 
-  <p *ngIf="environment && environment.production === false">
+  <p *ngIf="prodEnvironment === false">
     <span class="dev-warning">Access to the development server is restricted to the CViSB dev team.</span>
      Please visit <a href="https://data.cvisb.org/home">data.cvisb.org</a> to view the most recent data.
   </p>
 
 
-  <p *ngIf="environment && environment.production === true">
+  <p *ngIf="prodEnvironment === true">
     Access to {{ page === "/" ? "parts of this site": page }} is restricted to CViSB users. Please login.
   </p>
 
