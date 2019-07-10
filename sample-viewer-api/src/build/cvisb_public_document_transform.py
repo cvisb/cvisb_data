@@ -9,6 +9,7 @@ def get_id_mapping(client, index='patient_metadata_current', doc_type='patient')
     for doc in scan(client=client, index=index, doc_type=doc_type, query={"query": {"match_all": {}}}, _source=["patientID", "alternateIdentifier"]):
         for _id in doc['_source'].get('alternateIdentifier', []):
             r[_id] = doc['_source']['patientID']
+    return r
 
 def prune_doc(d, public_fields, path=''):
     _items = list(d.items())
