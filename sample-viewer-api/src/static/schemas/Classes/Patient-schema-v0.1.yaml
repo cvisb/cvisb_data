@@ -383,6 +383,19 @@
   authenticated:         false
 
 
+# occupation
+- "@id":                 cvisb:occupation
+  "@type":               rdf:Property
+  rdfs:comment:          Occupation of patient
+  rdfs:label:            occupation
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 # gender
 - "@id":                 cvisb:gender
   "@type":               rdf:Property
