@@ -144,7 +144,7 @@
 - "@id":                 cvisb:updateNotes
   "@type":               rdf:Property
   rdfs:comment:          A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.
-  rdfs:label:            updatedBy
+  rdfs:label:            updateNotes
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
