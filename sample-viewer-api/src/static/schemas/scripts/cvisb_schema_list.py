@@ -15,7 +15,7 @@ from datetime import datetime
 
 today = datetime.today().strftime('%Y-%m-%d')
 export_file = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/cvisb_variables_{today}.csv"
-export_cols = ['Class', '@type', 'variable', 'description', 'authenticated', 'marginality', 'cardinality', 'enumeration', 'minimum', 'maximum', 'derived_from', 'schema:sameAs']
+export_cols = ['Class', '@type', 'variable', 'description', 'authenticated', 'marginality', 'cardinality', 'type', 'enumeration', 'minimum', 'maximum', 'derived_from', 'schema:sameAs']
 
 # Find all files containing schema
 os.chdir('/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes')
