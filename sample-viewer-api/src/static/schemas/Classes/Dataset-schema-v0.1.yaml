@@ -91,6 +91,8 @@
                            - TCR sequencing
                            - Systems Serology
                            - metabolomics
+                           - blood chemistry
+                           - vitals
                            - other
   authenticated:         false
 
