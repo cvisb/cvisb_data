@@ -269,8 +269,20 @@
 
 - "@id":                 cvisb:admitDate
   "@type":               rdf:Property
-  rdfs:comment:          Date of admission or first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.
+  rdfs:comment:          Date of admission in the hospital. Note that not all patients who are evaluated are admitted for further care.
   rdfs:label:            admitDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:evalDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.
+  rdfs:label:            evalDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
@@ -533,7 +545,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:LassaExposed
   "@type":               rdf:Property
