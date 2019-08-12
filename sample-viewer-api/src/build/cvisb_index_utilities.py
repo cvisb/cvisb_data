@@ -4,6 +4,16 @@ from elasticsearch import Elasticsearch
 from elasticsearch import NotFoundError
 import uuid
 
+def delete_public_indices(*es_args, **es_kwargs):
+    es = Elasticsearch(*es_args, **es_kwargs)
+    public_indices = es.indices.get_alias("*_public_current")
+    indices = list(public_indices.keys())
+    if len(indices) == 0:
+        print("No public indices with suffix _public_current found!")
+    else: 
+        res = es.indices.delete(index = indices)    
+        print("The following indices were deleted\n{}:".format("\n".join(indices)))
+
 def yield_transfer_actions(client, doc_type, source_index, target_index, query={"query": {"match_all":{}}},  document_transform_function=None):
     """ Transfer data from source_index to target_index. """
     for doc in scan(client=client, doc_type=doc_type, index=source_index, query=query):
