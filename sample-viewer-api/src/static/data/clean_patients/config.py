@@ -15,7 +15,8 @@ from datetime import datetime
 input_lassaAcute_ids = "../input_data/patient_rosters/acuteLassa_IDdict_v1_2019-03-27_PRIVATE.xlsx"
 
 # acute Lassa data, containing demographics, ELISA results, etc. for suspected Lassa cases at KGH
-input_lassaAcute = "../input_data/patient_rosters/acuteLassa_metadata_v1_2019-03-27_PRIVATE.csv"
+input_lassaAcute = "../input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12_PRIVATE.csv"
+# input_lassaAcute = "../input_data/patient_rosters/acuteLassa_metadata_v1_2019-03-27_PRIVATE.csv"
 
 # survivor patient roster, containing public patient IDs ("study specific numbers")
 input_survivor_ids = "../input_data/patient_rosters/survivor_IDdict_v2_2019-03-06_PRIVATE.xlsx"
@@ -50,7 +51,7 @@ output_lassaAcuteWeirdos_ids = f"{inconsistencies_dir}/lassaAcuteIDs_inconsisten
 # [ Columns to export ] -----------------------------------------------------------------------------------
 # sans dates, temporarily
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
-               'age', 'gender', 'country', 'homeLocation',
+               'age', 'gender', 'country', 'homeLocation', 'occupation', 'pregnant',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',
                'elisa', 'dateModified']

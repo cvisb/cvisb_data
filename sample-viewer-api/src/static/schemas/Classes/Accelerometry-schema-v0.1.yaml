@@ -72,3 +72,20 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+
+
+
+- "@id":                 cvisb:collectionInstrument
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor
+  rdfs:label:            collectionInstrument
+  schema:domainIncludes:
+    - "@id":             cvisb:Accelerometry
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                        - PhysIQ
+                        - conventional
