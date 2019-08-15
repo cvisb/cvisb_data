@@ -7,7 +7,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 })
 export class HlaService {
 
-  // color pallette function for alleles
+  // color palette function for alleles
   locusColors =  d3.scaleOrdinal()
     .domain(['A', 'B', 'C', 'DRB4', 'DRB3', 'DRB5', 'DQB1', 'DRB1', 'DQA1', 'DPB1', 'DPA1'])
     .range(['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff9600', '#ffca33', '#a65628', '#f781bf', '#999999', '#35978f', '#f46d43']);
