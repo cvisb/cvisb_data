@@ -89,4 +89,4 @@
     - "@id":                 cvisb:Date
   owl:cardinality:           one
   marginality:               recommended
-  authenticated:             true
+  authenticated:             false

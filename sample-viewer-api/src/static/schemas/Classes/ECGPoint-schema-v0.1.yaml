@@ -35,7 +35,7 @@
     - "@id":             schema:DateTime
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:voltage
   "@type":               rdf:Property
@@ -47,7 +47,7 @@
     - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:collectionInstrument
   "@type":               rdf:Property
@@ -59,7 +59,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
   schema:Enumeration:
                         - PhysIQ
                         - conventional

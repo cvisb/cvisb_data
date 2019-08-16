@@ -37,7 +37,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:daysSinceAdmit
   "@type":               rdf:Property
@@ -49,7 +49,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:piccolo
   "@type":               rdf:Property
@@ -61,4 +61,4 @@
     - "@id":             cvisb:Symptom
   owl:cardinality:       many
   marginality:           required
-  authenticated:         false
+  authenticated:         true

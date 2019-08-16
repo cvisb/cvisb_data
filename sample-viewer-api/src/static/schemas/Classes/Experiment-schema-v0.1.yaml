@@ -173,6 +173,18 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:samplingDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of sample collection used for the the experiment.
+  rdfs:label:            samplingDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property

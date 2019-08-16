@@ -232,7 +232,7 @@
   # geo
 - "@id":                 cvisb:spatialCoverage
   "@type":               rdf:Property
-  rdfs:comment:            "The spatialCoverage of a CreativeWork indicates the place(s) which are the focus of the content. It is a subproperty of contentLocation intended primarily for more technical and detailed materials. For example with a DataCatalog, it indicates areas that the DataCatalog describes: a DataCatalog of New York weather would have spatialCoverage which was the place: the state of New York."
+  rdfs:comment:          "Countries from which patients in the DataCatalog come"
   rdfs:label:            spatialCoverage
   schema:domainIncludes:
     - "@id":             cvisb:DataCatalog

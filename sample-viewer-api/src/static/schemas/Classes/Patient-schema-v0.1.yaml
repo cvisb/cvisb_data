@@ -34,7 +34,7 @@
 # identifier
 - "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          Unique, public ID for patient
+  rdfs:comment:          Unique, public study ID for patient
   rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -83,21 +83,58 @@
   marginality:           optional
   authenticated:         true
 
-# sameAs:                handle into the public alternate identifier(s) that also represent the patient.
-# Used to connect S- and G-numbers together.
-- "@id":                 cvisb:sameAs
+- "@id":                 cvisb:hasPatientData
   "@type":               rdf:Property
-  rdfs:comment:          Alternative public ID(s) used for patient. Used to relate acute patients (G-numbers) to their ID in survivor study
-  rdfs:label:            sameAs
+  rdfs:comment:          Whether CViSB has data, metadata, and/or samples from the acute phase of infection of the patient.
+  rdfs:label:            hasPatientData
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+
+- "@id":                 cvisb:sID
+  "@type":               rdf:Property
+  rdfs:comment:          "Internal survivor ID used to refer to the patients during follow-up visits. Can include either survivors (S-numbers) or contacts (C-numbers)"
+  rdfs:label:            sID
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               "schema:sameAs"
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
+
+- "@id":                 cvisb:hasSurvivorData
+  "@type":               rdf:Property
+  rdfs:comment:          Whether CViSB has data, metadata, and/or samples from follow-up visits after the patient has survived the acute infection phase.
+  rdfs:label:            hasSurvivorData
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+# # sameAs:                handle into the public alternate identifier(s) that also represent the patient.
+# # Used to connect S- and G-numbers together.
+# - "@id":                 cvisb:sameAs
+#   "@type":               rdf:Property
+#   rdfs:comment:          Alternative public ID(s) used for patient. Used to relate acute patients (G-numbers) to their ID in survivor study
+#   rdfs:label:            sameAs
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Patient
+#   schema:rangeIncludes:
+#     - "@id":             schema:Text
+#   schema:sameAs:
+#     "@id":               "schema:sameAs"
+#   owl:cardinality:       many
+#   marginality:           optional
+#   authenticated:         false
 
 # household identifier
 - "@id":                 cvisb:contactGroupIdentifier
@@ -110,7 +147,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 # date modified
 - "@id":                 cvisb:dateModified
@@ -227,7 +264,7 @@
 # geographic location (country)
 - "@id":                 cvisb:country
   "@type":               rdf:Property
-  rdfs:comment:          Country where Patient lives / was treated
+  rdfs:comment:          Country where Patient lives
   rdfs:label:            Country
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -239,10 +276,33 @@
   marginality:           required
   authenticated:         false
 
-# household location
+- "@id":                 cvisb:admin2
+  "@type":               rdf:Property
+  rdfs:comment:          "Administrative unit 2 for where the Patient lives. Each country has their own specific name for admin 2- Sierra Leone: district, Liberia: district, Guinea: prefecture, Nigeria: local government area"
+  rdfs:label:            admin2
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:AdministrativeArea
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:admin3
+  "@type":               rdf:Property
+  rdfs:comment:          "Administrative unit 3 for where the Patient lives. Each country has their own specific name for admin 3- Sierra Leone: chiefdom, Liberia: clan, Guinea: sub-prefecture, Nigeria: wards"
+  rdfs:label:            admin3
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:AdministrativeArea
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:homeLocation
   "@type":               rdf:Property
-  rdfs:comment:          A contact location for a person's residence. Should include country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village + displaced GPS coordinates (optional)
+  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
   rdfs:label:            homeLocation
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -265,7 +325,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:admitDate
   "@type":               rdf:Property
@@ -379,7 +439,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 # time in the hospital
 - "@id":                 cvisb:daysInHospital
@@ -392,7 +452,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 
 # occupation
@@ -439,7 +499,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:relatedToPrivate
   "@type":               rdf:Property
@@ -521,7 +581,7 @@
     - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:weight
   "@type":               rdf:Property
@@ -533,7 +593,7 @@
     - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:pregnant
   "@type":               rdf:Property
@@ -557,7 +617,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 
 - "@id":                 cvisb:LassaHHDeaths
@@ -570,7 +630,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 
 # ELISAs
@@ -597,7 +657,7 @@
     - "@id":             cvisb:RDT
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 # RT-PCR
 - "@id":                 cvisb:rtpcr
@@ -610,7 +670,7 @@
     - "@id":             cvisb:RTPCR
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 # Symptoms
 - "@id":                 cvisb:symptoms
@@ -623,7 +683,7 @@
     - "@id":             cvisb:SymptomList
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:comaScore
   "@type":               rdf:Property
@@ -635,7 +695,7 @@
     - "@id":             cvisb:ComaScore
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:medications
   "@type":               rdf:Property
@@ -647,7 +707,7 @@
     - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 # Piccolo blood chemistry data
 - "@id":                 cvisb:piccolo
@@ -660,4 +720,4 @@
     - "@id":             cvisb:PiccoloMeasurement
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true

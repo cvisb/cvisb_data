@@ -32,19 +32,41 @@
     "@id":               schema:Place
 
 # geo
-- "@id":                 cvisb:geo
+# - "@id":                 cvisb:geo
+#   "@type":               rdf:Property
+#   rdfs:comment:          Geocoordinates of the place
+#   rdfs:label:            geo
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Place
+#   schema:rangeIncludes:
+#     - "@id":             schema:GeoCoordinates
+#     - "@id":             schema:GeoShape
+#   schema:sameAs:
+#     "@id":               schema:geo
+#   owl:cardinality:       one
+#   marginality:           optional
+
+- "@id":                 cvisb:latitude
   "@type":               rdf:Property
-  rdfs:comment:          Geocoordinates of the place
-  rdfs:label:            geo
+  rdfs:comment:          Latitude of the place. For administrative units, will be the coordinate of the polygon centroid.
+  rdfs:label:            latitude
   schema:domainIncludes:
     - "@id":             cvisb:Place
   schema:rangeIncludes:
-    - "@id":             schema:GeoCoordinates
-    - "@id":             schema:GeoShape
-  schema:sameAs:
-    "@id":               schema:geo
+    - "@id":             schema:Number
   owl:cardinality:       one
-  marginality:           optional
+  marginality:           recommended
+
+- "@id":                 cvisb:longitude
+  "@type":               rdf:Property
+  rdfs:comment:          Longitude of the place. For administrative units, will be the coordinate of the polygon centroid.
+  rdfs:label:            longitude
+  schema:domainIncludes:
+    - "@id":             cvisb:Place
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  owl:cardinality:       one
+  marginality:           recommended
 
 # larger geographic context
 - "@id":                 cvisb:containedInPlace

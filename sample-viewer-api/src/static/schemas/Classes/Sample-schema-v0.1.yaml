@@ -108,18 +108,18 @@
   authenticated:         true
 
 # patient ID
-- "@id":                 cvisb:patientID
-  "@type":               rdf:Property
-  rdfs:comment:          Unique public patient id. Will be added into the database via join
-  rdfs:label:            patientID
-  schema:domainIncludes:
-    - "@id":             cvisb:Sample
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
+# - "@id":                 cvisb:patientID
+#   "@type":               rdf:Property
+#   rdfs:comment:          Unique public patient id. Will be added into the database via join
+#   rdfs:label:            patientID
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Sample
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       one
+#   marginality:           recommended
+#   authenticated:         false
 
 - "@id":                 cvisb:privatePatientID
   "@type":               rdf:Property
@@ -173,6 +173,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                         - acute
                         - survivor

@@ -39,7 +39,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:muscle_pain
   "@type":               rdf:Property
@@ -51,7 +51,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:abdominal_pain
   "@type":               rdf:Property
@@ -63,7 +63,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:back_pain
   "@type":               rdf:Property
@@ -75,7 +75,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:side_pain
   "@type":               rdf:Property
@@ -87,7 +87,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:retrosternal_pain
   "@type":               rdf:Property
@@ -99,7 +99,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:eye_pain
   "@type":               rdf:Property
@@ -111,7 +111,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:other_pain
   "@type":               rdf:Property
@@ -123,7 +123,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:hearing_loss
   "@type":               rdf:Property
@@ -135,7 +135,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:ringing_in_ears
   "@type":               rdf:Property
@@ -147,7 +147,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:dry_eyes
   "@type":               rdf:Property
@@ -159,7 +159,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:burning_eyes
   "@type":               rdf:Property
@@ -171,7 +171,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:vision_loss
   "@type":               rdf:Property
@@ -183,7 +183,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:blurry_vision
   "@type":               rdf:Property
@@ -195,7 +195,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:light_sensitivity
   "@type":               rdf:Property
@@ -207,7 +207,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 
 - "@id":                 cvisb:eye_foreign_body_sensation
@@ -220,7 +220,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_gums
   "@type":               rdf:Property
@@ -232,7 +232,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_nose
   "@type":               rdf:Property
@@ -244,7 +244,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_stools
   "@type":               rdf:Property
@@ -256,7 +256,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_vomit
   "@type":               rdf:Property
@@ -268,7 +268,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_injection
   "@type":               rdf:Property
@@ -280,7 +280,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_hematoma
   "@type":               rdf:Property
@@ -292,7 +292,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_sputum
   "@type":               rdf:Property
@@ -304,7 +304,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_urine
   "@type":               rdf:Property
@@ -316,7 +316,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_vaginal
   "@type":               rdf:Property
@@ -328,7 +328,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_other
   "@type":               rdf:Property
@@ -340,7 +340,7 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bleeding_none
   "@type":               rdf:Property
@@ -352,7 +352,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:fever
   "@type":               rdf:Property
@@ -364,7 +364,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:conjunctivitis
   "@type":               rdf:Property
@@ -376,7 +376,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:facialSwelling
   "@type":               rdf:Property
@@ -388,7 +388,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:jointSwelling
   "@type":               rdf:Property
@@ -400,7 +400,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:lymphadenopathy
   "@type":               rdf:Property
@@ -412,7 +412,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:shortnessBreath
   "@type":               rdf:Property
@@ -424,7 +424,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:rales
   "@type":               rdf:Property
@@ -436,7 +436,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:crepitations
   "@type":               rdf:Property
@@ -448,7 +448,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:abdominalTenderness
   "@type":               rdf:Property
@@ -460,7 +460,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:hepatomegaly
   "@type":               rdf:Property
@@ -472,7 +472,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:splenomegaly
   "@type":               rdf:Property
@@ -484,7 +484,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:RUQtenderness
   "@type":               rdf:Property
@@ -496,7 +496,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:disorientation
   "@type":               rdf:Property
@@ -508,7 +508,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:tremors
   "@type":               rdf:Property
@@ -520,7 +520,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:seizures
   "@type":               rdf:Property
@@ -532,7 +532,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:hiccups
   "@type":               rdf:Property
@@ -544,7 +544,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 
 - "@id":                 cvisb:edema
@@ -557,7 +557,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:inflammation
   "@type":               rdf:Property
@@ -569,7 +569,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:rash
   "@type":               rdf:Property
@@ -581,7 +581,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:headache
   "@type":               rdf:Property
@@ -593,7 +593,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:soreThroat
   "@type":               rdf:Property
@@ -605,7 +605,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:vomit
   "@type":               rdf:Property
@@ -617,7 +617,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:decreasedUrination
   "@type":               rdf:Property
@@ -629,7 +629,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:cough
   "@type":               rdf:Property
@@ -641,7 +641,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:diarrhea
   "@type":               rdf:Property
@@ -653,7 +653,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:malaise
   "@type":               rdf:Property
@@ -665,7 +665,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:appetiteLoss
   "@type":               rdf:Property
@@ -677,7 +677,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:weakness
   "@type":               rdf:Property
@@ -689,7 +689,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:dizziness
   "@type":               rdf:Property
@@ -701,7 +701,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:convulsions
   "@type":               rdf:Property
@@ -713,7 +713,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:confusion
   "@type":               rdf:Property
@@ -725,7 +725,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:jaundice
   "@type":               rdf:Property
@@ -737,7 +737,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:dyspnea
   "@type":               rdf:Property
@@ -749,7 +749,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:noSymptoms
   "@type":               rdf:Property
@@ -761,7 +761,7 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:otherSymptoms
   "@type":               rdf:Property
@@ -773,4 +773,4 @@
     - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
