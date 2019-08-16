@@ -167,6 +167,7 @@
   schema:Enumeration:
                         - SRA
                         - AWS
+                        - GitHub
                         - null
   authenticated:         false
 
