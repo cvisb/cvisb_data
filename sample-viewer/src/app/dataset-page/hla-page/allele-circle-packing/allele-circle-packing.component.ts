@@ -207,7 +207,7 @@ export class AlleleCirclePackingComponent implements OnInit {
       .data(root.descendants())
       .enter().append("g")
       .attr("transform", function(d: any) { return "translate(" + d.x + "," + d.y + ")"; })
-      .attr("class", function(d) { return "tooltip" + (!d.children ? " tooltip--leaf" : d.depth ? " tooltip--locus" : " tooltip--root"); })
+      .attr("class", function(d) { return "tooltip-cirle-packing" + (!d.children ? " tooltip--leaf" : d.depth ? " tooltip--locus" : " tooltip--root"); })
       .attr("id", (d: any) => d.data.name)
       .each((d: any) => d.node = this);
 
