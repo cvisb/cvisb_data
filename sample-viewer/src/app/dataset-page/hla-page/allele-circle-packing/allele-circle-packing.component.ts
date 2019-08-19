@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
+import { mix, hex } from 'chroma-js';
 
 import { HlaService } from '../../../_services/';
 
@@ -19,12 +20,11 @@ export class AlleleCirclePackingComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private margin: any = { circleText: 1.05 };
+  private margin: any = { right: 75, bottom: 25 };
   private width: number = 600;
   private height: number;
 
   // --- Selectors ---
-  private chart: any;
 
   // --- Scales/Axes ---
   private colorScale: any;
@@ -68,6 +68,11 @@ export class AlleleCirclePackingComponent implements OnInit {
         d3.selectAll(".node--leaf")
           .classed("allele-masked", (d: any) => d.data.name !== allele)
           .classed("allele-enabled", (d: any) => d.data.name === allele);
+
+        d3.selectAll(".node--leaf circle.circle-stroke")
+          .classed("allele-masked", (d: any) => d.data.name !== allele)
+          .classed("allele-enabled", (d: any) => d.data.name === allele);
+
       } else {
         d3.selectAll(".node--leaf")
           .classed("allele-masked", false)
@@ -129,10 +134,9 @@ export class AlleleCirclePackingComponent implements OnInit {
     let svg = d3.select(this.element)
       .append('svg')
       .attr("id", "allele-circle-packing")
-      .attr('width', this.width * this.scale)
-      .attr('height', this.height * this.scale)
-      .attr('viewBox', `0 0 ${this.width * this.scale} ${this.width * this.scale}`)
-      .on("click", () => console.log(d3.event));
+      .attr('width', this.width * this.scale + this.margin.right)
+      .attr('height', this.height * this.scale + this.margin.bottom)
+      .attr('viewBox', `0 0 ${this.width * this.scale + this.margin.right} ${this.width * this.scale + this.margin.bottom}`)
 
     svg.append("defs")
       .append("marker")
@@ -147,11 +151,9 @@ export class AlleleCirclePackingComponent implements OnInit {
       .attr("d", "M2,2 L10,6 L2,10 L6,6 L2,2")
       .attr("class", "arrowHead");
 
-    let margin = 20,
-      diameter = +svg.attr("this.width"),
-      g = svg.append("g")
-        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")")
-        .attr("transform", `scale(${this.scale})`);
+    let g = svg.append("g")
+      .attr("transform", "translate(" + this.width / 2 + "," + this.width / 2 + ")")
+      .attr("transform", `scale(${this.scale})`);
 
     // Grab color scale from common source: consistent between different HLA sources.
     this.colorScale = this.hlaSvc.locusColors;
@@ -172,12 +174,6 @@ export class AlleleCirclePackingComponent implements OnInit {
 
     pack(root);
     let nodes = pack(root).descendants();
-
-    // div for tooltips
-    let ttips = d3.select("body").append("div")
-      .attr("class", "circlepacking-tooltip")
-      .style("display", "none")
-      .style("opacity", 0);
 
     function clearTtips(hlaSvc) {
       return function(d) {
@@ -206,10 +202,28 @@ export class AlleleCirclePackingComponent implements OnInit {
       .attr("id", (d: any) => d.data.name)
       .each((d: any) => d.node = this);
 
+    let node_ttips = svg
+      .selectAll(".tooltip")
+      .data(root.descendants())
+      .enter().append("g")
+      .attr("transform", function(d: any) { return "translate(" + d.x + "," + d.y + ")"; })
+      .attr("class", function(d) { return "tooltip" + (!d.children ? " tooltip--leaf" : d.depth ? " tooltip--locus" : " tooltip--root"); })
+      .attr("id", (d: any) => d.data.name)
+      .each((d: any) => d.node = this);
+
 
 
     // Append circles
+    let stroke_ttip = node.append("circle")
+      .attr("class", "circle-stroke")
+      .attr("r", function(d: any) { return d.r + 4; })
+      .style("fill", "none")
+      .style("stroke", (d: any) => <string>this.colorScale(d.data.locus))
+      .attr("id", function(d: any) { return "stroke-" + d.data.name.replace("*", "-").replace("@", "--"); })
+      .style("opacity", 0);
+
     node.append("circle")
+      .attr("class", "circle-fill")
       .attr("id", function(d: any) { return "node-" + d.data.name; })
       .attr("r", function(d: any) { return d.r; })
       .style("fill", (d: any) => <string>this.colorScale(d.data.locus))
@@ -219,9 +233,10 @@ export class AlleleCirclePackingComponent implements OnInit {
       .classed("highlight", (d: any) => this.genotype.includes(d.data.name));
 
 
+
     node.selectAll("circle")
-      .on("mouseover", hovered(true, ttips, this.scale, this.hlaSvc))
-      .on("mouseout", hovered(false, ttips, this.scale, this.hlaSvc));
+      .on("mouseover", hovered(true, stroke_ttip, this.scale, this.hlaSvc))
+      .on("mouseout", hovered(false, stroke_ttip, this.scale, this.hlaSvc));
 
 
     // Label locus; used only on unique alleles graph.
@@ -329,6 +344,85 @@ export class AlleleCirclePackingComponent implements OnInit {
       .attr("d", "M560 550 C 565 530, 550 504, 535 504")
       .attr("marker-end", "url(#arrow)");
 
+
+    let tooltips_group = node_ttips.append("g")
+      .attr("class", "tooltip-group")
+      .attr("id", function(d: any) { return "tooltip-" + d.data.name.replace("*", "-").replace("@", "--"); })
+      .style("display", "none");
+    // .style("opacity", 0);
+
+    // Tooltip paths
+    tooltips_group
+      .append("path")
+      .style("stroke", (d: any) => <string>this.colorScale(d.data.locus))
+      .style("fill", "none")
+      .style("stroke-width", "1")
+      .attr("d", (d: any) => `M${4}, ${d.r + 4} L${8},${d.r + 16}`)
+
+    tooltips_group
+      .append("rect")
+      .style("stroke", "none")
+      .style("fill", (d: any) => d.depth === 1 ? mix(this.colorScale(d.data.locus), "white", 0.6).hex() : "white")
+      // .style("stroke", (d: any) => <string>this.colorScale(d.data.locus))
+      .style("fill-opacity", "0.9")
+      .attr("x", (d: any) => `${8}`)
+      .attr("y", (d: any) => `${d.r + 16}`)
+      .attr("width", 125)
+      .attr("height", "3.5em")
+
+    tooltips_group
+      .append("path")
+      .attr("class", "tooltip-rect--border")
+      .style("stroke", (d: any) => <string>this.colorScale(d.data.locus))
+      .style("stroke-width", "4")
+      .style("fill", "none")
+      .attr("d", (d: any) => `M${8}, ${d.r + 16}L${133},${d.r + 16}`)
+
+    let tooltips_text = tooltips_group
+      .append("text")
+      .attr("class", "tooltip-allele")
+      .attr("id", function(d: any) { return "text-" + d.data.name.replace("*", "-").replace("@", "--"); })
+      .attr("y", (d: any) => `${d.r + 16}`);
+
+    tooltips_text
+      .append("tspan")
+      .attr("class", "allele-label")
+      .style("fill", (d: any) => <string>this.colorScale(d.data.locus))
+      .attr("x", 12)
+      .attr("dy", 4)
+      .text((d: any) => d.depth === 1 ? d.data.name + " locus" : d.data.name);
+
+    tooltips_text
+      .append("tspan")
+      .attr("class", "allele-frequency")
+      .attr("x", 12)
+      .attr("dy", "2em")
+      .text((d: any) => d.data.freq ? d3.format(".1%")(d.data.freq) : `${d.data.children.length} unique alleles`);
+
+    tooltips_text
+      .append("tspan")
+      .attr("class", "locus-novel")
+      .attr("x", 12)
+      .attr("dy", "1em")
+      .text((d: any) => d.data.freq ? null : `${d.data.children.filter(x => x.novel).length} novel alleles`);
+
+    tooltips_text
+      .append("tspan")
+      .attr("class", "allele-novel")
+      .attr("x", "12")
+      .attr("dy", "1em")
+      .text((d: any) => d.data.novel ? "novel" : "");
+
+    // dynamically adjust the width of the rect
+    tooltips_group.selectAll('rect')
+      .attr("width", (d: any) => `${(document.getElementById("text-" + d.data.name.replace("*", "-").replace("@", "--")) as any).getBBox().width + 10}`)
+      .attr("height", (d: any) => `${(document.getElementById("text-" + d.data.name.replace("*", "-").replace("@", "--")) as any).getBBox().height + 5}`);
+
+    tooltips_group.selectAll('.tooltip-rect--border')
+      .attr("d", (d: any) => `M${8}, ${d.r + 16}L${(document.getElementById("text-" + d.data.name.replace("*", "-").replace("@", "--")) as any).getBBox().width + 18},${d.r + 16}`);
+
+
+
     // --- Tooltip mouseover function ---
     function hovered(hover, div, scale, hlaSvc) {
       return function(d) {
@@ -343,79 +437,47 @@ export class AlleleCirclePackingComponent implements OnInit {
           }
           // only show tooltips if the circle packing is full-sized
           if (scale === 1) {
+            let tooltip_selector = `#stroke-${d.data.name.replace("*", "-").replace("@", "--")}`;
+            let text_selector = `#tooltip-${d.data.name.replace("*", "-").replace("@", "--")}`;
 
-            div.transition()
+            // Make sure everything is off.
+            d3.selectAll(".tooltip-group")
+              .transition()
+              .duration(0)
+              .style("display", "none");
+
+            d3.selectAll(".circle-stroke")
+              .transition()
+              .duration(0)
+              .style("opacity", 0);
+
+            // Turn on the selected one
+            d3.selectAll(tooltip_selector)
+              .transition()
+              .duration(0)
+              .style("opacity", 1)
+
+            d3.selectAll(text_selector)
+              .transition()
               .duration(0)
               .style("display", "inline-block")
-              .style("opacity", 0.9);
-
-            let html_payload = d.parent.parent ?
-              // Allele frequency
-              `<div class="title--allele">${d.data.name}</div>
-          <div class="label--freq">${d3.format(".1%")(d.data.freq)}</div>
-          ${d.data.novel ? '<div class="div--novel"><span class="label--novel">novel</span></div>' : ''}` :
-
-              // Locus stats
-              `<div class="title--locus">${d.data.name} locus</div>
-          <div class="label--freq">${d.children.length} unique alleles</div>`;
-
-            div.html(html_payload)
-              .style("left", (d3.event.pageX + 15) + "px")
-              .style("top", (d3.event.pageY - 28) + "px");
           }
         } else {
-          div.transition()
+          d3.selectAll(".tooltip-group")
+            .transition()
             .duration(0)
-            .style("display", 'none')
+            .style("display", "none");
+
+          d3.selectAll(".circle-stroke")
+            .transition()
+            .duration(0)
             .style("opacity", 0);
+
           hlaSvc.selectedLocusSubject.next(null);
           hlaSvc.selectedAlleleSubject.next(null);
         }
       };
     }
-
-
-
-
-
-    //   var circle = g.selectAll("circle")
-    // .data(nodes)
-    // .enter().append("circle")
-    //   .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-    //   .style("fill", function(d) { return d.children ? this.colorScale(d.depth) : null; })
-    // .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
-
-    // var pack = d3.pack()
-    //   .size([400, 400])
-    //   .padding(2);
-    //
-    // let root = d3.hierarchy(root)
-    //   .sum(function(d) { return d.size; })
-    //   // .sort(function(a, b) { return b.value - a.value; });
-    //
-    // var focus = root,
-    //   nodes = pack(root).descendants(),
-    //   view;
-    //
-    //   console.log(nodes)
-    //
-    // var circle = g.selectAll("circle")
-    //   .data(nodes)
-    //   .enter().append("circle")
-    //   .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-    //   .style("fill", function(d) { return d.children ? 'blue' : 'lavender'; })
-    // // .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
-    //
-    // var text = g.selectAll("text")
-    //   .data(nodes)
-    //   .enter().append("text")
-    //   .attr("class", "label")
-    //   .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
-    //   .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-    //   .text(function(d) { return d.data.name; });
-    //
-    // var node = g.selectAll("circle,text");
-
   }
 
 }
