@@ -21,8 +21,11 @@
 
     <div class="sidebar">
       <div class="item-group">
+        <div class="plot-title">
+          Number of <b>Unique</b> Alleles
+        </div>
         <div class="item bar-graph">
-          <app-allele-bar [data]="alleleCount" title="Number of *Unique* Alleles"></app-allele-bar>
+          <app-allele-bar [data]="alleleCount"></app-allele-bar>
         </div>
         <div class="item">
           <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="unique-alleles"></app-allele-circle-packing>
@@ -30,8 +33,15 @@
       </div>
 
       <div class="item-group">
+        <div class="plot-title">
+          Number of <b>Novel</b> Alleles
+          <div class="subtitle">
+            Relative to the <a href="https://www.ebi.ac.uk/ipd/imgt/hla/" rel="noreferrer" target="_blank">IPD-IMGT/HLA Database</a>
+          </div>
+        </div>
+
         <div class="item bar-graph">
-          <app-allele-bar [data]="novelAlleles" title="Number of *Novel* Alleles" subtitle="Relative to the [IPD-IMGT/HLA Database](https://www.ebi.ac.uk/ipd/imgt/hla/)"></app-allele-bar>
+          <app-allele-bar [data]="novelAlleles"></app-allele-bar>
         </div>
         <div class="item">
           <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="novel-alleles"></app-allele-circle-packing>
