@@ -18,6 +18,8 @@ export class Patient {
   availableData?: Object[];
   relatedTo?: string[];
   elisa?: Object[];
+  pregnant: boolean;
+  occupation: string;
   symptoms?: Object[];
   exposureType?: string;
   _version?: number;
