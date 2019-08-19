@@ -4,9 +4,9 @@
   <div class="container left-container">
     <div class="patient-count-container">
       <span class="patient-count summary-item">
-  <div class="num-patients">{{ patientCount }}</div>
-   <div class="annot--patients">patients sequenced:</div>
- </span>
+        <div class="num-patients">{{ patientCount }}</div>
+        <div class="annot--patients">patients sequenced:</div>
+      </span>
 
       <app-filter-patient-type [viruses]="patientTypes" [outcomes]="patientOutcomes" [all_outcomes]="[]" [all_cohorts]="[]" endpoint="none" class="summary-item"></app-filter-patient-type>
     </div>
@@ -20,19 +20,23 @@
     </div>
 
     <div class="sidebar">
-      <div class="item-group">
+
+      <div class="container-column">
         <div class="plot-title">
           Number of <b>Unique</b> Alleles
         </div>
-        <div class="item bar-graph">
-          <app-allele-bar [data]="alleleCount"></app-allele-bar>
-        </div>
-        <div class="item">
-          <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="unique-alleles"></app-allele-circle-packing>
+
+        <div class="item-group">
+          <div class="item bar-graph">
+            <app-allele-bar [data]="alleleCount"></app-allele-bar>
+          </div>
+          <div class="item">
+            <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="unique-alleles"></app-allele-circle-packing>
+          </div>
         </div>
       </div>
 
-      <div class="item-group">
+      <div class="container-column">
         <div class="plot-title">
           Number of <b>Novel</b> Alleles
           <div class="subtitle">
@@ -40,13 +44,16 @@
           </div>
         </div>
 
-        <div class="item bar-graph">
-          <app-allele-bar [data]="novelAlleles"></app-allele-bar>
-        </div>
-        <div class="item">
-          <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="novel-alleles"></app-allele-circle-packing>
+        <div class="item-group">
+          <div class="item bar-graph">
+            <app-allele-bar [data]="novelAlleles"></app-allele-bar>
+          </div>
+          <div class="item">
+            <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="novel-alleles"></app-allele-circle-packing>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
