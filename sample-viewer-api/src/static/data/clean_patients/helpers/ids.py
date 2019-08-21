@@ -141,6 +141,33 @@ def checkIDtype(id):
     if(cnormal):
         return("contact", cnormal[1] + cnormal[2] + cnormal[3])
 
+# Requires some interpretation.
+    weirdC = re.match("^(C)([0-9])\-([0-9][0-9][0-9])\-([0-9])$", id)
+    if weirdC:
+        # Contact numbers should only go from 1-3; if the "household number" is > 3, it's likely that's really the visit code.
+        if(int(weirdC[4]) > 3):
+            return(weirdC[1] + "-" + weirdC[3] + "-" + weirdC[2])
+        return("contact", weirdC[1] + "-" + weirdC[3] + "-" + weirdC[4])
+    weirderC = re.match("^(C)([0-4])(\-[0-9][0-9][0-9])$", id)
+    if weirderC:
+        # Contact numbers should only go from 1-3; if the "household number" is > 3, it's likely that's really the visit code.
+        return("contact", weirderC[1] + weirderC[3] + "-" + weirderC[2])
+    # S-timepoint: assuming S-xxx-3 == S-xxx at visit 3.
+    sTimepoint = re.match("^(S)(\-[0-9][0-9][0-9])\-([0-9])$", id)
+    if sTimepoint:
+        return("survivor", sTimepoint[1] + sTimepoint[2])
+    # 3-digit SID: S-0xxx-3 --> S-xxx at visit 3
+    sTimepoint2 = re.match("^(S\-)0([0-9][0-9][0-9])\-([0-9])$", id)
+    if sTimepoint2:
+        return("survivor", sTimepoint2[1] + sTimepoint2[2])
+    # S-timepoint in diff format: assuming S2-xxx == S-xxx at visit 2
+    weirdS = re.match("^(S)([0-9])(\-[0-9][0-9][0-9])$", id)
+    if weirdS:
+        return("survivor", weirdS[1] + weirdS[3])
+    nohyphen = re.match("^(S)([0-9][0-9][0-9])$", id)
+    if nohyphen:
+        return("survivor", nohyphen[1] + "-" + nohyphen[2])
+
     return("unknown", None)
 
 
@@ -186,6 +213,7 @@ def interpretID(id):
 
         return(id)
 
+interpretID("C-1-4")
 
 def getPrivateContactGroup(id):
     """
