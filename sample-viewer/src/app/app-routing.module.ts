@@ -87,6 +87,7 @@ const appRoutes: Routes = [
   { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
   { path: 'home', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },
   { path: 'sitemap.xml', pathMatch: 'full', redirectTo: "../assets/sitemap.xml" },
+  { path: 'robots.txt', pathMatch: 'full', redirectTo: "../assets/robots.txt" },
   { path: '**', component: PageNotFoundComponent }
 ];
 
