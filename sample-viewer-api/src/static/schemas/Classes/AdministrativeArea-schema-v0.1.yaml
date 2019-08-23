@@ -98,6 +98,9 @@
                           - district
                           - chiefdom
                           - village
+                          - prefecture
+                          - sub-prefecture
+                          - clan
 # Nigeria, as per UN-OCHA, cross-referenced w/ Wiki: https://data.humdata.org/dataset/nga-administrative-boundaries
                           - Federal Capital Territory
                           - state
