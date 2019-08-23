@@ -95,7 +95,7 @@
 # publication date
 - "@id":                 cvisb:datePublished
   "@type":               rdf:Property
-  rdfs:comment:          Journal name for publication
+  rdfs:comment:          Date when the ScholarlyArticle was published
   rdfs:label:            datePublished
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle

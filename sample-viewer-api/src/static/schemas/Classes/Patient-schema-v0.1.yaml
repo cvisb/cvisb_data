@@ -71,18 +71,6 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:sID
-  "@type":               rdf:Property
-  rdfs:comment:          "Internal survivor ID used to refer to the patients during follow-up visits. Can include either survivors (S-numbers) or contacts (C-numbers)"
-  rdfs:label:            sID
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         true
-
 - "@id":                 cvisb:hasPatientData
   "@type":               rdf:Property
   rdfs:comment:          Whether CViSB has data, metadata, and/or samples from the acute phase of infection of the patient.
@@ -352,6 +340,19 @@
   authenticated:         true
 
 # Approximate year of infection
+- "@id":                 cvisb:presentationWeek
+  "@type":               rdf:Property
+  rdfs:comment:          "Week of presentation or first sample collection for the patient. Note that this date range could come from the date the patient was admitted to a health care facility, was evaluated, and/or a sample was collected and analyzed for them. This *may* be the week at which the patient was being treated in the acute phase of infection, or the date of first collection for a contact of an acutely ill patient, or it may be the date of a survivor follow-up visit where no data on their acute phase of illness is available."
+  rdfs:label:            presentationWeek
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:DateRange
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+# Approximate year of infection
 - "@id":                 cvisb:infectionYear
   "@type":               rdf:Property
   rdfs:comment:          Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.
@@ -377,18 +378,6 @@
   marginality:           optional
   authenticated:         true
 
-# Date of first evaluation
-- "@id":                 cvisb:evalDate
-  "@type":               rdf:Property
-  rdfs:comment:          Date of first evaluation within the hospital
-  rdfs:label:            evalDate
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             schema:Date
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         true
 
 # Date of survivor enrollment, evaluation
 - "@id":                 cvisb:survivorEnrollmentDate
@@ -420,6 +409,18 @@
   "@type":               rdf:Property
   rdfs:comment:          Date of discharge from the hospital
   rdfs:label:            dischargeDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:deathDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of death
+  rdfs:label:            deathDate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:

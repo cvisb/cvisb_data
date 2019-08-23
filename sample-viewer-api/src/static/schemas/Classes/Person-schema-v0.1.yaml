@@ -46,7 +46,7 @@
     "@id":               schema:Person
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
 - "@id":                 cvisb:additionalName
   "@type":               rdf:Property
