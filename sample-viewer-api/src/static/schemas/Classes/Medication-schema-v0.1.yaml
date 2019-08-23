@@ -73,7 +73,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Medication
   schema:rangeIncludes:
-    - "@id":             schema:DateTime
+    - "@id":             schema:Time
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         true
