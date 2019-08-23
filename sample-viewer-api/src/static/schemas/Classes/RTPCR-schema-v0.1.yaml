@@ -69,7 +69,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:RTPCR
   schema:rangeIncludes:
-    - "@id":             schema:Number
+    - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         true
@@ -81,7 +81,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:RTPCR
   schema:rangeIncludes:
-    - "@id":             schema:Number
+    - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         true

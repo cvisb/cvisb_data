@@ -378,10 +378,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:facialSwelling
+- "@id":                 cvisb:facial_swelling
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports facial or neck swelling
-  rdfs:label:            facialSwelling
+  rdfs:label:            facial_swelling
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -390,10 +390,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:jointSwelling
+- "@id":                 cvisb:joint_swelling
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports joint swelling
-  rdfs:label:            jointSwelling
+  rdfs:label:            joint_swelling
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -414,10 +414,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:shortnessBreath
+- "@id":                 cvisb:shortness_breath
   "@type":               rdf:Property
   rdfs:comment:          If the patient is observed to have shortness of breath
-  rdfs:label:            shortnessBreath
+  rdfs:label:            shortness_breath
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -450,10 +450,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:abdominalTenderness
+- "@id":                 cvisb:abdominal_tenderness
   "@type":               rdf:Property
   rdfs:comment:          If the patient is observed to have abdominal tenderness
-  rdfs:label:            abdominalTenderness
+  rdfs:label:            abdominal_tenderness
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -595,10 +595,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:soreThroat
+- "@id":                 cvisb:sore_throat
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports a sore throat
-  rdfs:label:            soreThroat
+  rdfs:label:            sore_throat
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -619,10 +619,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:decreasedUrination
+- "@id":                 cvisb:decreased_urination
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports decreased urination
-  rdfs:label:            decreasedUrination
+  rdfs:label:            decreased_urination
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -667,10 +667,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:appetiteLoss
+- "@id":                 cvisb:appetite_loss
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports loss of appetite
-  rdfs:label:            appetiteLoss
+  rdfs:label:            appetite_loss
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -751,10 +751,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:noSymptoms
+- "@id":                 cvisb:no_symptoms
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports no symptoms
-  rdfs:label:            noSymptoms
+  rdfs:label:            no_symptoms
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
@@ -763,10 +763,10 @@
   marginality:           optional
   authenticated:         true
 
-- "@id":                 cvisb:otherSymptoms
+- "@id":                 cvisb:other_symptoms
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports other symptoms
-  rdfs:label:            otherSymptoms
+  rdfs:label:            other_symptoms
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
