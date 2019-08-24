@@ -1,0 +1,26 @@
+{
+  "name": "file1",
+  "description": "fake file",
+  "includedInDataset": "hla",
+  "identifier": "uniqueid",
+  "@id": "doi",
+  "isBasedOn": ["file2"],
+  "_version": 5,
+  "contentUrl": "www.google.com",
+  "contentUrlRepository": "GitHub",
+  "contentUrlIdentifier": "ghid",
+  publication
+  "sameAs": "www.google.com",
+  "additionalType": "raw data",
+  "keywords": ["blah"],
+  "measurementTechnique": "HLA sequencing",
+  "encodingFormat": "text/csv",
+  "dateCreated": "2019-01-01",
+  "datePublished": "2019-01-01",
+  "dateModified": "2019-01-01",
+  "updatedBy": "LDH",
+  author
+  publisher
+  sourceCode
+  "experimentIDs": ["randomExpt1"]
+}

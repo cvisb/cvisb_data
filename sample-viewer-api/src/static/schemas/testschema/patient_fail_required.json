@@ -1,0 +1,99 @@
+{
+  "alternateIdentifier": ["alt1", "patient_success"],
+  "gID": ["G-0000"],
+  "sID": "S-000",
+  "hasSurvivorData": false,
+  "hasPatientData": false,
+  "contactGroupIdentifier": "000000",
+  "updatedBy": "LDH",
+  "updateNotes": [{
+    "updatedBy": "LDH",
+    "dateModified": "2019-01-01",
+    "updatedVariables": ["all"]
+  }],
+  "_source": "made up",
+  "_version": 1,
+  "admin2": {
+    "alternateName": "Ken",
+    "administrativeUnit": 2,
+    "identifier": "SL001"
+  },
+  "admin3": {
+    "alternateName": "L/B",
+    "administrativeUnit": 3,
+    "identifier": "SL00101"
+  },
+  "homeLocation": {
+    "alternateName": "L/B",
+    "administrativeUnit": null,
+    "identifier": "SL00101"
+  },
+  "admittedLassaWard": false,
+  "admitDate": "2019-01-01",
+  "evalDate": "2019-01-01",
+  "presentationWeek": {
+    "lte": "2019-01-07",
+    "gte": "2019-01-01"
+  },
+  "infectionYear": 2019,
+  "infectionDate": {
+    "lte": "2019-01-01",
+    "gte": "2019-01-01"
+  },
+  "survivorEnrollmentDate": "2019-01-01",
+  "dischargeDate": "2019-01-01",
+  "deathDate": "2019-01-01",
+  "daysOnset": 0,
+  "daysInHospital": 1,
+  "occupation": "farmer",
+  "gender": "Female",
+  "relatedTo": ["C-000001", "C-000002"],
+  "relatedToPrivate": ["C-000-1", "C-000-2"],
+  "exposureType": "contact with infected person",
+  "contactSurvivorRelationship": null,
+  "ethnicity": "Other",
+  "age": 41,
+  "height": 1.6,
+  "weight": 49,
+  "pregnant": false,
+  "LassaExposed": true,
+  "LassaHHDeaths": false,
+  "elisa": [{
+    "ELISAresult": "negative",
+    "timepoint": "patient admission"
+  }, {
+    "ELISAresult": null,
+    "timepoint": "patient admission"
+  }, {
+    "ELISAresult": "negative",
+    "timepoint": "patient admission"
+  }],
+  "rapidDiagostics": [{}],
+  "rtpcr": [{
+    "RTPCRvalue": 10,
+    "viralLoad": 5
+  }],
+  "symptoms": [{
+    "daysSinceAdmit": 0
+  }],
+  "comaScore": [{
+    "daysSinceAdmit": 0,
+    "glasgowComaScore": 15,
+    "eyeOpening": 4,
+    "verbalResponse": 5,
+    "motorResponse": 6
+  }],
+  "medications": [{
+    "daysSinceAdmit": 0,
+    "dateAdministered": "2019-01-01",
+    "timeAdministered": "13:20:00-05:00",
+    "doseNumeric": 100,
+    "doseUnits": "mg",
+    "doseFrequency": "daily",
+    "doseDuration": "7 days",
+    "drugRoute": "oral"
+  }],
+  "piccolo": [{
+    "daysSinceAdmit": 0
+  }]
+}

@@ -93,7 +93,6 @@
   }],
   "rapidDiagostics": [{
     "virus": "Lassa",
-    "assayType": "IgM",
     "RDTresult": "negative",
   }],
   "rtpcr": [{

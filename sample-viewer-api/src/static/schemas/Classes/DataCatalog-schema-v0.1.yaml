@@ -282,8 +282,6 @@
     - "@id":             cvisb:DataCatalog
   schema:rangeIncludes:
     - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               schema:schemaVersion
   owl:cardinality:       one
   marginality:           required
   authenticated:         false

@@ -164,7 +164,7 @@
 
 - "@id":                 cvisb:samplingDate
   "@type":               rdf:Property
-  rdfs:comment:          Date of sample collection used for the the experiment.
+  rdfs:comment:          Date of sample collection used for the the experiment.  Should refer to the initial time the sample was collected from the patient.
   rdfs:label:            samplingDate
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
@@ -173,7 +173,7 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
-  
+
 # sample type:           from an acute or survivor patient.
 - "@id":                 cvisb:sampleGroup
   "@type":               rdf:Property

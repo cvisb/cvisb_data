@@ -1,0 +1,29 @@
+{
+  "name": "data catalog",
+  "alternateName": ["randomcatalog"],
+  "description": "random data catalog",
+  "url": "www.google.com",
+  "dataset": ["fakeDataset"],
+  "identifier": "catalog",
+  "@id": "catalogdoi",
+  "sameAs": ["www.google.com"],
+  "keywords": ["Ebola", "Lassa"],
+  "datePublished": "2019-01-01",
+  "dateModified": "2019-01-01",
+  "updatedBy": "LDH",
+  "temporalCoverage": {
+    "lte": "2019-12-31",
+    "gte": "2019-01-01"
+  },
+  "spatialCoverage": [  {
+      "@type": "Country",
+      "name": "Sierra Leone",
+      "identifier": "SL",
+      "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
+    }],
+    publisher
+    "_version": 6,
+    "releaseVersion": "0.1.1",
+    "schemaVersion": "0.0.1",
+    funder
+}

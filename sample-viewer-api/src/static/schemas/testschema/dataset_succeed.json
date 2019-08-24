@@ -1,0 +1,37 @@
+{
+  "name": "fakeDataset",
+  "description": "a fake dataset for testing purposes",
+  "measurementTechnique": "HLA sequencing",
+  "variableMeasured": ["HLA genotype"],
+  "url": "www.google.com",
+  "includedInDataCatalog": ["www.google.com"],
+  "identifier": "hla",
+  "@id": "id",
+  "sameAs": "www.google.com",
+  "keywords": ["science"],
+  "datePublished": "2019-01-01",
+  "dateModified": "2019-01-01",
+  "updatedBy": "LDH",
+  "temporalCoverage": {
+    "lte": "2019-12-31",
+    "gte": "2019-01-01"
+  },
+  "spatialCoverage": [  {
+      "@type": "Country",
+      "name": "Sierra Leone",
+      "identifier": "SL",
+      "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
+    }],
+    "author"
+    "publisher"
+    "_version": 1,
+    "schemaVersion": "0.1.1",
+    "dataDownloadIDs": ["file1", "file2"],
+    "distribution"
+    "sourceCode":
+    "publication": "KGA et al. Cell 2015",
+    "citation"
+    "funder"
+    "license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+
+}
