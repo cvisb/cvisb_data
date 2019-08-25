@@ -1,31 +1,30 @@
 {
-  "name": "data catalog",
-  "alternateName": ["randomcatalog"],
-  "description": "random data catalog",
-  "url": "www.google.com",
-  "dataset": ["fakeDataset"],
-  "identifier": "catalog",
-  "@id": "catalogdoi",
-  "sameAs": ["www.google.com"],
-  "keywords": ["Ebola", "Lassa"],
+  "name": "file1",
+  "description": "fake file",
+  "includedInDataset": "hla",
+  "identifier": "uniqueid",
+  "@id": "doi",
+  "isBasedOn": "file2",
+  "_version": "5",
+  "contentUrl": "www.google.com",
+  "contentUrlRepository": "GitHub",
+  "contentUrlIdentifier": "ghid",
+  "citation": ["KGA Cell 2015"],
+  "sameAs": "www.google.com",
+  "additionalType": "raw data",
+  "keywords": "blah",
+  "measurementTechnique": "HLA sequencing",
+  "encodingFormat": "text/csv",
+  "dateCreated": "2019-01-01",
   "datePublished": "2019-01-01",
   "dateModified": "2019-01-01",
   "updatedBy": "LDH",
-  "temporalCoverage": {
-    "lte": "2019-12-31",
-    "gte": "2019-01-01"
-  },
-  "spatialCoverage": [{
-    "@type": "Country",
-    "name": "Sierra Leone",
-    "identifier": "SL",
-    "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
-  }],
+  "author": ["KGA"],
   "publisher": [{
     "@type": "Organization",
     "url": "https://cvisb.org/",
     "name": "Center for Viral Systems Biology",
-    "alternateName": ["CViSB"],
+    "alternateName": "CViSB",
     "description": "What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections? The mission of the Center for Viral Systems Biology (CViSB; pronounced “SEE-VIZ-bee”) is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease. We hope that via this research we will be able to provide a deep system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies.
 
     We will achieve these goals by applying several‘ omics’ technologies,
@@ -58,18 +57,6 @@
       "email": "info@cvisb.org"
     }
   }],
-  "_version": 6,
-  "releaseVersion": "0.1.1",
-  "schemaVersion": "0.0.1",
-  "funding": [{
-    "identifier": "U19AI135995",
-    "funder": {
-      "@type": "Organization",
-      "name": "National Institute of Allergy & Infectious Diseases",
-      "alternateName": ["NIAID"],
-      "description": "Funding for the Center for Viral Systems Biology is provided by National Institute of Allergy & Infectious Diseases (National Institutes for Health) award U19AI135995",
-      "url": "https://taggs.hhs.gov/Detail/AwardDetail?arg_AwardNum=U19AI135995&arg_ProgOfficeCode=104",
-      "parentOrganization": "National Institutes for Health"
-    }
-  }],
+  "sourceCode": ["https://github.com/andersen-lab/lassa-ebola-hla"],
+  "experimentIDs": "randomExpt1"
 }

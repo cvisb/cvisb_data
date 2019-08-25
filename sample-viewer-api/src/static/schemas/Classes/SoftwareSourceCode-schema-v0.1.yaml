@@ -4,20 +4,20 @@
 
 ---
 # "@context":
-#   dct:                   "http://purl.org/dc/terms/"
-#   owl:                   "http://www.w3.org/2002/07/owl#"
-#   rdf:                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-#   rdfa:                  "http://www.w3.org/ns/rdfa#"
-#   rdfs:                  "http://www.w3.org/2000/01/rdf-schema#"
-#   schema:                "http://schema.org/"
-#   health:                "https://health-lifesci.schema.org/"
-#   xsd:                   "http://www.w3.org/2001/XMLSchema#"
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
 #
-#   # bsc:                 "http://bioschemas.org/"
-#   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "https://data.cvisb.org/jsonschema/"
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "https://data.cvisb.org/jsonschema/SoftwareSourceCode/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/SoftwareSourceCode/0.1"
 
 # "@graph":
 - "@id":                 cvisb:SoftwareSourceCode
@@ -102,8 +102,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:SoftwareSourceCode
   schema:rangeIncludes:
-    # - "@id":             xsd:string
-    # - "@id":             schema:Text
     - "@id":             schema:URL
   schema:sameAs:
     "@id":               schema:codeRepository
@@ -144,28 +142,14 @@
   authenticated:         false
 
 # Publications
-- "@id":                 cvisb:publication
-  "@type":               rdf:Property
-  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
-  rdfs:label:            publication
-  schema:domainIncludes:
-    - "@id":             cvisb:SoftwareSourceCode
-  schema:rangeIncludes:
-    - "@id":             cvisb:ScholarlyArticle
-  schema:sameAs:
-    "@id":               schema:publication
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
-  rdfs:comment:          Citation string (not an object) for the journal article or other publication associated with the dataset
+  rdfs:comment:          Citation object for the journal article or other publication associated with the dataset
   rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:SoftwareSourceCode
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             cvisb:ScholarlyArticle
   schema:sameAs:
     "@id":               schema:citation
   owl:cardinality:       many

@@ -110,22 +110,6 @@
   owl:cardinality:       one
   marginality:           optional
 
-# award
-- "@id":                 cvisb:award
-  "@type":               rdf:Property
-  rdfs:comment:          Award won for this Organization. Typically, grant/award that is used to support the organization.
-  rdfs:label:            award
-  schema:domainIncludes:
-    - "@id":             cvisb:Organization
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               schema:award
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
 # parent organization
 - "@id":                 cvisb:parentOrganization
   "@type":               rdf:Property

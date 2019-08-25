@@ -1,0 +1,70 @@
+{
+  "name": "fakeDataset",
+  "description": "a fake dataset for testing purposes",
+  "measurementTechnique": "HLA sequencing",
+  "variableMeasured": "HLA genotype",
+  "url": "www.google.com",
+  "includedInDataCatalog": "www.google.com",
+  "identifier": "hla",
+  "@id": "id",
+  "sameAs": "www.google.com",
+  "keywords": "science",
+  "datePublished": "2019-01-01",
+  "dateModified": "Jan 1 2019",
+  "updatedBy": "LDH",
+  "temporalCoverage": "2019-01-01",
+  "spatialCoverage": ["SL"],
+  "author": ["Andersen lab"],
+  "publisher": ["CViSB"],
+  "_version": "1",
+  "schemaVersion": 1,
+  "dataDownloadIDs": "file1",
+  "sourceCode": [{
+    "@type": "SoftwareSourceCode",
+    "name": "HLA Genotype sequencing analysis code",
+    "description": "HLA Genotype sequencing analysis code",
+    "version": "https://github.com/andersen-lab/lassa-ebola-hla/commit/ac6d7cf7cb756deac17c4d5c80d96cffcdd866be",
+    "datePublished": "2018-09-12",
+    "dateModified": "2018-09-12",
+    "programmingLanguage": "Python",
+    "identifier": "<doi>",
+    "@id": "<doi>",
+    "codeRepository": "https://github.com/andersen-lab/lassa-ebola-hla",
+    "citation": null,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "author": [{
+      "@type": "Organization",
+      "url": "https://andersen-lab.com/",
+      "name": "Kristian Andersen laboratory",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "technical support",
+        "url": "https://andersen-lab.com/",
+        "email": "data@andersen-lab.com"
+      }
+    }]
+  }],
+  "citation": [{
+    "identifier": "pmid:26276630",
+    "name": "Clinical Sequencing Uncovers Origins and Evolution of Lassa Virus",
+    "author": ["KGA"],
+    "journalName": "Cell",
+    "journalNameAbbrev": "Cell",
+    "issn": "0092-8674",
+    "datePublished": "2015-08-13",
+    "pageStart": 738,
+    "pageEnd": 750,
+    "volumeNumber": 162,
+    "issueNumber": 4,
+    "PMID": "26276630",
+    "PMCID": "PMC4537774",
+    "DOI": "10.1016\/j.cell.2015.07.020",
+    "type": "article-journal",
+    "url": "https:\/\/www.ncbi.nlm.nih.gov\/pubmed\/?term=26276630"
+  }],
+  "funding": [{
+    "identifier": "U19AI135995",
+    "funder": "NIAID"
+  }],
+  "license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+}

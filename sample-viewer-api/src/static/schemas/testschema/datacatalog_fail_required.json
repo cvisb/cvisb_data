@@ -1,15 +1,11 @@
 {
-  "name": "data catalog",
   "alternateName": ["randomcatalog"],
-  "description": "random data catalog",
   "url": "www.google.com",
-  "dataset": ["fakeDataset"],
   "identifier": "catalog",
   "@id": "catalogdoi",
   "sameAs": ["www.google.com"],
   "keywords": ["Ebola", "Lassa"],
   "datePublished": "2019-01-01",
-  "dateModified": "2019-01-01",
   "updatedBy": "LDH",
   "temporalCoverage": {
     "lte": "2019-12-31",
@@ -59,7 +55,6 @@
     }
   }],
   "_version": 6,
-  "releaseVersion": "0.1.1",
   "schemaVersion": "0.0.1",
   "funding": [{
     "identifier": "U19AI135995",

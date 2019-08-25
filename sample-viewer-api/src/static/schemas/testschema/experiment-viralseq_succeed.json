@@ -1,68 +1,19 @@
 {
-  "name": "file1",
-  "description": "fake file",
-  "includedInDataset": "hla",
-  "identifier": "uniqueid",
-  "@id": "doi",
-  "isBasedOn": ["file2"],
-  "_version": 5,
-  "contentUrl": "www.google.com",
-  "contentUrlRepository": "GitHub",
-  "contentUrlIdentifier": "ghid",
-  "citation": [{
-    "identifier": "pmid:26276630",
-    "name": "Clinical Sequencing Uncovers Origins and Evolution of Lassa Virus",
-    "author": [{
-      "familyName": "Andersen",
-      "additionalName": "G",
-      "givenName": "Kristian G",
-      "name": "Kristian G Andersen"
-    }, {
-      "familyName": "Garry",
-      "additionalName": "F",
-      "givenName": "Robert F",
-      "name": "Robert F Garry"
-    }, {
-      "familyName": "Sabeti",
-      "name": "Pardis C. Sabeti",
-      "additionalName": "C",
-      "givenName": "Pardis C"
-    }],
-    "journalName": "Cell",
-    "journalNameAbbrev": "Cell",
-    "issn": "0092-8674",
-    "datePublished": "2015-08-13",
-    "pageStart": "738",
-    "pageEnd": "750",
-    "volumeNumber": "162",
-    "issueNumber": "4",
-    "PMID": "26276630",
-    "PMCID": "PMC4537774",
-    "DOI": "10.1016\/j.cell.2015.07.020",
-    "type": "article-journal",
-    "url": "https:\/\/www.ncbi.nlm.nih.gov\/pubmed\/?term=26276630"
-  }],
-  "sameAs": ["www.google.com"],
-  "additionalType": "raw data",
-  "keywords": ["blah"],
+  "experimentID": "randomExpt1",
+  "batchID": ["batch1"],
+  "sampleID": "fakeSample1-PBMC-2019-01-02",
+  "patientID": "G-19-0000000",
+  "privatePatientID": "G-0000",
+  "SRA_ID": "sraid",
+  "GenBank_ID": "genbankid",
+  "name": "experiment 1",
+  "description": "a random experiment",
+  "experimentDate": "2019-01-01",
   "measurementTechnique": "HLA sequencing",
-  "encodingFormat": "text/csv",
-  "dateCreated": "2019-01-01",
-  "datePublished": "2019-01-01",
   "dateModified": "2019-01-01",
   "updatedBy": "LDH",
-  "author": [{
-    "@type": "Organization",
-    "url": "https://andersen-lab.com/",
-    "name": "Kristian Andersen laboratory",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "technical support",
-      "url": "https://andersen-lab.com/",
-      "email": "data@andersen-lab.com"
-    }
-  }],
-  "publisher": [{
+  "_version": 3,
+  "publisher": {
     "@type": "Organization",
     "url": "https://cvisb.org/",
     "name": "Center for Viral Systems Biology",
@@ -98,8 +49,41 @@
       "url": "https://cvisb.org/",
       "email": "info@cvisb.org"
     }
+  },
+  "citation": [{
+    "identifier": "pmid:26276630",
+    "name": "Clinical Sequencing Uncovers Origins and Evolution of Lassa Virus",
+    "author": [{
+      "familyName": "Andersen",
+      "additionalName": "G",
+      "givenName": "Kristian G",
+      "name": "Kristian G Andersen"
+    }, {
+      "familyName": "Garry",
+      "additionalName": "F",
+      "givenName": "Robert F",
+      "name": "Robert F Garry"
+    }, {
+      "familyName": "Sabeti",
+      "name": "Pardis C. Sabeti",
+      "additionalName": "C",
+      "givenName": "Pardis C"
+    }],
+    "journalName": "Cell",
+    "journalNameAbbrev": "Cell",
+    "issn": "0092-8674",
+    "datePublished": "2015-08-13",
+    "pageStart": "738",
+    "pageEnd": "750",
+    "volumeNumber": "162",
+    "issueNumber": "4",
+    "PMID": "26276630",
+    "PMCID": "PMC4537774",
+    "DOI": "10.1016\/j.cell.2015.07.020",
+    "type": "article-journal",
+    "url": "https:\/\/www.ncbi.nlm.nih.gov\/pubmed\/?term=26276630"
   }],
-  "sourceCode": [{
+  "analysisCode": [{
     "@type": "SoftwareSourceCode",
     "name": "HLA Genotype sequencing analysis code",
     "description": "HLA Genotype sequencing analysis code",
@@ -110,6 +94,7 @@
     "identifier": "<doi>",
     "@id": "<doi>",
     "codeRepository": "https://github.com/andersen-lab/lassa-ebola-hla",
+    "publication": null,
     "citation": null,
     "license": "https://creativecommons.org/licenses/by/4.0/",
     "author": [{
@@ -124,5 +109,19 @@
       }
     }]
   }],
-  "experimentIDs": ["randomExpt1"]
+  "data": [{
+    "virus": "Lassa",
+    "referenceSeq": "reference1",
+    "isReferenceSeq": false,
+    "DNAsequence": "AAAAAA",
+    "AAsequence": "ADSAWP",
+    "SNP": [{
+      "SNP": "Q9H",
+      "SNPdetected": false,
+      "SNPlocation": 9,
+      "originalAA": "Q",
+      "mutatedAA": "H"
+    }]
+
+  }]
 }

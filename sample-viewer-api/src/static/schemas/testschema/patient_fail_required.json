@@ -92,8 +92,5 @@
     "doseFrequency": "daily",
     "doseDuration": "7 days",
     "drugRoute": "oral"
-  }],
-  "piccolo": [{
-    "daysSinceAdmit": 0
   }]
 }

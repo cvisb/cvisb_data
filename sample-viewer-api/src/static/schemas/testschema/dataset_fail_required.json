@@ -1,16 +1,11 @@
 {
-  "name": "fakeDataset",
-  "description": "a fake dataset for testing purposes",
-  "measurementTechnique": "HLA sequencing",
   "variableMeasured": ["HLA genotype"],
   "url": "www.google.com",
   "includedInDataCatalog": ["www.google.com"],
-  "identifier": "hla",
   "@id": "id",
   "sameAs": ["www.google.com"],
   "keywords": ["science"],
   "datePublished": "2019-01-01",
-  "dateModified": "2019-01-01",
   "updatedBy": "LDH",
   "temporalCoverage": {
     "lte": "2019-12-31",
@@ -21,17 +16,6 @@
     "name": "Sierra Leone",
     "identifier": "SL",
     "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
-  }],
-  "author": [{
-    "@type": "Organization",
-    "url": "https://andersen-lab.com/",
-    "name": "Kristian Andersen laboratory",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "technical support",
-      "url": "https://andersen-lab.com/",
-      "email": "data@andersen-lab.com"
-    }
   }],
   "publisher": [{
     "@type": "Organization",
@@ -72,7 +56,6 @@
   }],
   "_version": 1,
   "schemaVersion": "0.1.1",
-  "dataDownloadIDs": ["file1", "file2"],
   "distribution": [{
     "name": "file1",
     "description": "fake file",

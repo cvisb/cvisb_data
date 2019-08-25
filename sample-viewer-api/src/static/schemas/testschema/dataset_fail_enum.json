@@ -1,11 +1,11 @@
 {
   "name": "fakeDataset",
   "description": "a fake dataset for testing purposes",
-  "measurementTechnique": "HLA sequencing",
+  "measurementTechnique": "HLA",
   "variableMeasured": ["HLA genotype"],
   "url": "www.google.com",
   "includedInDataCatalog": ["www.google.com"],
-  "identifier": "hla",
+  "identifier": "HLA",
   "@id": "id",
   "sameAs": ["www.google.com"],
   "keywords": ["science"],
@@ -18,9 +18,9 @@
   },
   "spatialCoverage": [{
     "@type": "Country",
-    "name": "Sierra Leone",
-    "identifier": "SL",
-    "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
+    "name": "SierraLeone",
+    "identifier": "SLE",
+    "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166"
   }],
   "author": [{
     "@type": "Organization",
@@ -58,9 +58,9 @@
       "postalCode": "92037",
       "addressCountry": {
         "@type": "Country",
-        "name": "United States",
-        "identifier": "US",
-        "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:US"
+        "name": "United States of America",
+        "identifier": "USA",
+        "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:USA"
       }
     },
     "contactPoint": {

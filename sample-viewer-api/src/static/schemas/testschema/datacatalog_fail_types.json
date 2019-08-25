@@ -1,31 +1,23 @@
 {
   "name": "data catalog",
-  "alternateName": ["randomcatalog"],
+  "alternateName": "randomcatalog",
   "description": "random data catalog",
   "url": "www.google.com",
-  "dataset": ["fakeDataset"],
+  "dataset": "fakeDataset",
   "identifier": "catalog",
   "@id": "catalogdoi",
-  "sameAs": ["www.google.com"],
-  "keywords": ["Ebola", "Lassa"],
-  "datePublished": "2019-01-01",
-  "dateModified": "2019-01-01",
+  "sameAs": "www.google.com",
+  "keywords": "Ebola",
+  "datePublished": "Jan 1 2019",
+  "dateModified": "Jan 1 2019",
   "updatedBy": "LDH",
-  "temporalCoverage": {
-    "lte": "2019-12-31",
-    "gte": "2019-01-01"
-  },
-  "spatialCoverage": [{
-    "@type": "Country",
-    "name": "Sierra Leone",
-    "identifier": "SL",
-    "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:SL"
-  }],
+  "temporalCoverage": "2019-01-01",
+  "spatialCoverage": ["SLE"],
   "publisher": [{
     "@type": "Organization",
     "url": "https://cvisb.org/",
     "name": "Center for Viral Systems Biology",
-    "alternateName": ["CViSB"],
+    "alternateName": "CViSB",
     "description": "What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections? The mission of the Center for Viral Systems Biology (CViSB; pronounced “SEE-VIZ-bee”) is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease. We hope that via this research we will be able to provide a deep system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies.
 
     We will achieve these goals by applying several‘ omics’ technologies,
@@ -38,38 +30,33 @@
     and provide novel computational algorithms applicable to a wide range of other human pathogens.
     ",
     "email": "info@cvisb.org",
-    "logo": "https://cvisb.org/wp-content/uploads/2018/01/cvisb_icon_600px.png",
+    "logo": "cvisb_icon_600px.png",
     "address": {
       "streetAddress": "10550 North Torrey Pines Road, SGM-300",
       "addressLocality": "La Jolla",
       "addressRegion": "California",
       "postalCode": "92037",
-      "addressCountry": {
-        "@type": "Country",
-        "name": "United States",
-        "identifier": "US",
-        "url": "https:\/\/www.iso.org\/obp\/ui\/#iso:code:3166:US"
-      }
+      "addressCountry": "USA"
     },
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "technical support",
       "url": "https://cvisb.org/",
-      "email": "info@cvisb.org"
+      "email": "infocvisb.org"
     }
   }],
-  "_version": 6,
-  "releaseVersion": "0.1.1",
-  "schemaVersion": "0.0.1",
+  "_version": "6",
+  "releaseVersion": 1,
+  "schemaVersion": 1,
   "funding": [{
     "identifier": "U19AI135995",
     "funder": {
       "@type": "Organization",
       "name": "National Institute of Allergy & Infectious Diseases",
-      "alternateName": ["NIAID"],
+      "alternateName": "NIAID",
       "description": "Funding for the Center for Viral Systems Biology is provided by National Institute of Allergy & Infectious Diseases (National Institutes for Health) award U19AI135995",
       "url": "https://taggs.hhs.gov/Detail/AwardDetail?arg_AwardNum=U19AI135995&arg_ProgOfficeCode=104",
-      "parentOrganization": "National Institutes for Health"
+      "parentOrganization": {"name": "National Institutes for Health"}
     }
   }],
 }

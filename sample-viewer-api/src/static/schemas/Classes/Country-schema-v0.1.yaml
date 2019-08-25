@@ -50,6 +50,7 @@
                           - NG
                           - LR
                           - GN
+                          - US
                           - null
 
 - "@id":                 cvisb:url
@@ -71,6 +72,7 @@
                           - https://www.iso.org/obp/ui/#iso:code:3166:NG
                           - https://www.iso.org/obp/ui/#iso:code:3166:LR
                           - https://www.iso.org/obp/ui/#iso:code:3166:GN
+                          - https://www.iso.org/obp/ui/#iso:code:3166:US
                           - null
 
 - "@id":                 cvisb:name
@@ -92,6 +94,7 @@
                           - Nigeria
                           - Liberia
                           - Guinea
+                          - United States
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property

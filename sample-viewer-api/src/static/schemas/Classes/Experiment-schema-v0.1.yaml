@@ -259,16 +259,16 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:publication
+- "@id":                 cvisb:citation
   "@type":               rdf:Property
   rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
-  rdfs:label:            publication
+  rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:sameAs:
-    "@id":               schema:publication
+    "@id":               schema:citation
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

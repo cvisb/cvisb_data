@@ -1,12 +1,8 @@
 {
-  "name": "file1",
   "description": "fake file",
-  "includedInDataset": "hla",
-  "identifier": "uniqueid",
   "@id": "doi",
   "isBasedOn": ["file2"],
   "_version": 5,
-  "contentUrl": "www.google.com",
   "contentUrlRepository": "GitHub",
   "contentUrlIdentifier": "ghid",
   "citation": [{
@@ -43,13 +39,10 @@
     "url": "https:\/\/www.ncbi.nlm.nih.gov\/pubmed\/?term=26276630"
   }],
   "sameAs": ["www.google.com"],
-  "additionalType": "raw data",
   "keywords": ["blah"],
-  "measurementTechnique": "HLA sequencing",
   "encodingFormat": "text/csv",
   "dateCreated": "2019-01-01",
   "datePublished": "2019-01-01",
-  "dateModified": "2019-01-01",
   "updatedBy": "LDH",
   "author": [{
     "@type": "Organization",
@@ -123,6 +116,5 @@
         "email": "data@andersen-lab.com"
       }
     }]
-  }],
-  "experimentIDs": ["randomExpt1"]
+  }]
 }

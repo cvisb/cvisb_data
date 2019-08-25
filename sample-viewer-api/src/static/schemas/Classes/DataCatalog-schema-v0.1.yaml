@@ -301,17 +301,17 @@
   authenticated:         false
 
 
-  # Funder. For CViSB:   NIH award U19AI135995
-- "@id":                 cvisb:funder
+  # Funding. For CViSB:   NIH award U19AI135995
+- "@id":                 cvisb:funding
   "@type":               rdf:Property
-  rdfs:comment:          A person or organization that supports (sponsors) the collection of this dataset through some kind of financial contribution
-  rdfs:label:            funder
+  rdfs:comment:          Funding that supports (sponsors) the collection of this dataset through some kind of financial contribution
+  rdfs:label:            funding
   schema:domainIncludes:
     - "@id":             cvisb:DataCatalog
   schema:rangeIncludes:
-    - "@id":             cvisb:Organization
+    - "@id":             cvisb:MonetaryGrant
   schema:sameAs:
-    "@id":               schema:funder
+    "@id":               schema:funding
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

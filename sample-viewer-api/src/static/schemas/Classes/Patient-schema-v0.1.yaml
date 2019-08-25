@@ -711,14 +711,14 @@
   authenticated:         true
 
 # Piccolo blood chemistry data
-- "@id":                 cvisb:piccolo
-  "@type":               rdf:Property
-  rdfs:comment:          List of Piccolo blood chemistry measurements for a patient
-  rdfs:label:            piccolo
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             cvisb:PiccoloMeasurement
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         true
+# - "@id":                 cvisb:piccolo
+#   "@type":               rdf:Property
+#   rdfs:comment:          List of Piccolo blood chemistry measurements for a patient
+#   rdfs:label:            piccolo
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Patient
+#   schema:rangeIncludes:
+#     - "@id":             cvisb:PiccoloMeasurement
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         true

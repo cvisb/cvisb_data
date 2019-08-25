@@ -39,7 +39,10 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
-
+  schema:Enumeration:
+                         - Ebola
+                         - Lassa
+                         
 - "@id":                 cvisb:referenceSeq
   "@type":               rdf:Property
   rdfs:comment:          reference sequence used for alignment.
