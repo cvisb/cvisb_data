@@ -1,4 +1,4 @@
-{
+[{
   "experimentID": "randomExpt1",
   "batchID": ["batch1"],
   "sampleID": "fakeSample1-PBMC-2019-01-02",
@@ -157,4 +157,4 @@
       "collectionInstrument": "conventionfsdfkdslfjdskal"
     }]
   }]
-}
+}]
