@@ -1,24 +1,22 @@
 {
   "@context": {
-    "dct": "http://purl.org/dc/terms/",
-    "owl": "http://www.w3.org/2002/07/owl#",
+    "bts": "http://schema.biothings.io/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfa": "http://www.w3.org/ns/rdfa#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "schema": "http://schema.org/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "cvisb": "https://data.cvisb.org/jsonschema/"
+    "cvisb": "https://data.cvisb.org/jsonschema/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@graph": [{
     "@id": "cvisb:Patient",
     "@type": "rdfs:Class",
-    "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
+    "rdfs:comment": null,
     "rdfs:label": "Patient",
     "rdfs:subClassOf": {
       "@id": "schema:Patient"
     },
     "schema:isPartOf": {
-      "@id": "https://data.cvisb.org/jsonschema/"
+      "@id": "http://schema.biothings.io"
     }
   }]
 }
