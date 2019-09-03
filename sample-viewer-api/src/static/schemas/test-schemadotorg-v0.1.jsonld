@@ -7,7 +7,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "schema": "http://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
-
+    "cvisb": "https://data.cvisb.org/jsonschema/"
   },
   "@graph": [{
     "@id": "cvisb:Patient",
@@ -15,7 +15,7 @@
     "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
     "rdfs:label": "Patient",
     "rdfs:subClassOf": {
-      "@id": "schema:Patient"
+      "@id": "cvisb:sequencingExperiment"
     },
     "schema:isPartOf": {
       "@id": "https://data.cvisb.org/jsonschema/"
