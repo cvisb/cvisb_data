@@ -4,6 +4,7 @@
 #   - a `schema` jsonld, based on a schema.org graph representation of the data
 # Specific types include: Dataset, DataDownload, Experiment, Sample, Patient
 # NOTE: code isn't super robust.  Doesn't check for different versions of a given expected file.
+#  python scripts/cvisb_yaml2schemadotorg.py cvisb-context.yaml
 
 import sys
 import os
@@ -12,41 +13,12 @@ import yaml
 import fnmatch
 import csv
 
-os.chdir('/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes')
-all_files = os.listdir()
-all_files
 # How expected files should be combined:
 schema_grps = {
-'sample': ['sample-schema', 'SampleLocation-schema', 'derivedSample-schema'],
-'experiment': ['andersenSequencing', 'ELISA', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
-'patient': ['Patient'],
-'dataset': ['Dataset', 'DataDownload', 'DataCatalog'],
-'cvisb': ['RepertoireSequencing',
- 'Experiment',
- 'ELISA',
- 'AndersenSequencing',
- 'Patient',
- 'Sample',
- 'DerivedSample',
- 'Country',
- 'SoftwareSourceCode',
- 'cvisb_fields.csv',
- 'AdministrativeArea',
- 'DataCatalog',
- 'SampleLocation',
- 'Place',
- 'SequencingExperiment',
- 'PostalAddress',
- 'RDT',
- 'Organization',
- 'DataDownload',
- 'Dataset',
- 'DateRange',
- 'Person',
- 'ContactPoint',
- 'ScholarlyArticle',
- 'SystemsSerology',
- 'RTPCR']
+# 'sample': ['sample-schema', 'SampleLocation-schema', 'derivedSample-schema'],
+# 'experiment': ['andersenSequencing', 'ELISA', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
+# 'patient': ['Patient'],
+# 'dataset': ['Dataset', 'DataDownload', 'DataCatalog']
 }
 
 
@@ -66,13 +38,13 @@ def open_yaml(yaml_file):
 # file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
 # schema = open_yaml(file)
 
-output_file='test_valid.jsonld'
-for attr in schema:
-    print(attr['rdfs:label'])
-
-with open("cvisb_fields.csv", 'w', newline='') as myfile:
-     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-     wr.writerow(schema)
+# output_file='test_valid.jsonld'
+# for attr in schema:
+#     print(attr['rdfs:label'])
+#
+# with open("cvisb_fields.csv", 'w', newline='') as myfile:
+#      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+#      wr.writerow(schema)
 
 def get_validation(schema):
     counter = 0;
@@ -86,9 +58,21 @@ def get_validation(schema):
     with open(validation_file, 'w') as out_f:
         json.dump(validation_schema, out_f, indent=2)
 
-def convert(context_file, schema_grps = schema_grps, output_file = None):
-    all_files = os.listdir()
-    context = open_yaml(context_file)
+def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", output_file = None):
+    current_dir = os.curdir
+    print(current_dir)
+    schema_dir = f'{current_dir}/{schema_dir}'
+
+    all_files = os.listdir(schema_dir)
+
+    # Put together a list of *all* the different schemas to append together.
+    yamls = []
+    for file in all_files:
+        if fnmatch.fnmatch(file, "*.yaml"):
+            yamls.append(file)
+
+    schema_grps['schemadotorg'] = yamls
+    context = open_yaml(f"{current_dir}/{context_file}")
 
     try:
         version = "v" + str(context['version'])
@@ -99,15 +83,15 @@ def convert(context_file, schema_grps = schema_grps, output_file = None):
 
     # Loop over schema groups
     for key, sel_files in schema_grps.items():
-        output_file = os.path.splitext(context_file)[0].split("-")[0] + "-" + key + "-" + version + ".jsonld"
+        output_file = f"{os.path.splitext(context_file)[0].split('-')[0] + '-' + key + '-' + version + '.jsonld'}"
 
         schema_graph = []
 
         # Find files in directory
         for sel_file in sel_files:
             for file in all_files:
-                if fnmatch.fnmatch(file, sel_file + "*.yaml"):
-                    schema = open_yaml(file)
+                if fnmatch.fnmatch(file, sel_file):
+                    schema = open_yaml(f"{schema_dir}/{file}")
                     schema_graph.extend(schema)
 
         schema_data = {**context, **{'@graph': schema_graph}}
