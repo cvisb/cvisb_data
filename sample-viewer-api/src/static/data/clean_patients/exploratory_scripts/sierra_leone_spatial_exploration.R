@@ -122,27 +122,27 @@ adm3_pop = census %>%
 
 # join w/ patients --------------------------------------------------------
 
-# lsv = read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12_PRIVATE.csv")
-# ebv = read_excel("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx")
-# 
-# lsv = lsv %>% 
-#   mutate(
-#     district = ifelse(is.na(District), NA_character_, str_to_title(District)),
-#     chiefdom = ifelse(is.na(Chiefdom), NA_character_, str_to_title(Chiefdom)),
-#     village = ifelse(is.na(Village), NA_character_, str_to_title(Village)))
-# 
-# 
-# ebv = ebv %>% 
-#   mutate(
-#     district = ifelse(is.na(district), NA_character_, str_to_title(district)),
-#     village = ifelse(is.na(village), NA_character_, str_to_title(village))
-#   )
+lsv = read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12_PRIVATE.csv")
+ebv = read_excel("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx")
 
-lsv = read_csv("GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_viral_seq/exploratory_scripts/2019-08-08_raphaelle_geo_matches.csv")
 lsv = lsv %>%
-  filter(!is.na(Village)) %>%
-  mutate(chiefdom = ifelse(Chiefdom %in% c("L/B", "L/Bambara", "Lower bombara", "Lowerbambara"), "Lower Bambara", 
-                           ifelse(Chiefdom %in% c("Wandoh"), "Wandor", Chiefdom)))
+  mutate(
+    district = ifelse(is.na(District), NA_character_, str_to_title(District)),
+    chiefdom = ifelse(is.na(Chiefdom), NA_character_, str_to_title(Chiefdom)),
+    village = ifelse(is.na(Village), NA_character_, str_to_title(Village)))
+
+
+ebv = ebv %>%
+  mutate(
+    district = ifelse(is.na(district), NA_character_, str_to_title(district)),
+    village = ifelse(is.na(village), NA_character_, str_to_title(village))
+  )
+
+# lsv = read_csv("GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_viral_seq/exploratory_scripts/2019-08-08_raphaelle_geo_matches.csv")
+# lsv = lsv %>%
+#   filter(!is.na(Village)) %>%
+#   mutate(chiefdom = ifelse(Chiefdom %in% c("L/B", "L/Bambara", "Lower bombara", "Lowerbambara"), "Lower Bambara", 
+#                            ifelse(Chiefdom %in% c("Wandoh"), "Wandor", Chiefdom)))
   
 
 
@@ -158,12 +158,13 @@ comb = bind_rows(lsv %>% select(district, chiefdom, village),
 
 villages = comb %>% count(district, chiefdom, village)
 
-district_kgh = districts %>% right_join(adm2_pop, by=c("district" = "admin2Name")) %>% mutate(pct_kgh = n/sum(n, na.rm=TRUE), pct_sle = total/sum(total))
 
 # stage 1: clean up districts ---------------------------------------------
-# districts = villages %>% group_by(district) %>% summarise(n = sum(n))
-# city_districts = cities %>% count(admin2Name)
-# district_match = stringdist_left_join(districts %>% filter(!is.na(district)), city_districts, by=c("district" = "admin2Name"), distance_col="admin2_dist", method="osa") 
+districts = villages %>% group_by(district) %>% summarise(n = sum(n))
+city_districts = cities %>% count(admin2Name)
+district_match = stringdist_left_join(districts %>% filter(!is.na(district)), city_districts, by=c("district" = "admin2Name"), distance_col="admin2_dist", method="osa")
+
+district_kgh = districts %>% right_join(adm2_pop, by=c("district" = "admin2Name")) %>% mutate(pct_kgh = n/sum(n, na.rm=TRUE), pct_sle = total/sum(total))
 
 # After reviewing the matches by hand, looks like the fuzzy matches make sense
 # The only ones that don't match well are the Western Areas-- but unclear if they're urban or rural, so better wait.
