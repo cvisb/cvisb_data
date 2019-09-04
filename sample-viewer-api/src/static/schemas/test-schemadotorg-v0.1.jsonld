@@ -13,7 +13,7 @@
     "rdfs:comment": "patient!",
     "rdfs:label": "Patient",
     "rdfs:subClassOf": {
-      "@id": "schema:Patient"
+      "@id": "schema:Thing"
     },
     "schema:isPartOf": {
       "@id": "https://data.cvisb.org/jsonschema/"
