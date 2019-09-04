@@ -93,6 +93,8 @@ export class getDatasetsService {
 
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = files;
+            dataset["@context"] = "http://schema.org/";
+            dataset["@type"] = "Dataset";
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
