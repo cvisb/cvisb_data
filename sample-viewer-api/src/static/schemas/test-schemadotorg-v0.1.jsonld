@@ -8,15 +8,15 @@
     "cvisb": "https://data.cvisb.org/jsonschema/"
   },
   "@graph": [{
-    "@id": "cvisb:Patient.json",
+    "@id": "bts:Patient",
     "@type": "rdfs:Class",
-    "rdfs:comment": "patient!",
+    "rdfs:comment": "patient!!!",
     "rdfs:label": "Patient",
     "rdfs:subClassOf": {
       "@id": "schema:Thing"
     },
     "schema:isPartOf": {
-      "@id": "https://data.cvisb.org/jsonschema/"
+      "@id": "http://schema.biothings.io"
     }
   }]
 }
