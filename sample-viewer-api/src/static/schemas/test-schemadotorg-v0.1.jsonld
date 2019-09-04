@@ -10,13 +10,13 @@
   "@graph": [{
     "@id": "cvisb:Patient",
     "@type": "rdfs:Class",
-    "rdfs:comment": "patient derived from schema.org!!!",
-    "rdfs:label": "Patient!!",
+    "rdfs:comment": "patient derived from schema.org",
+    "rdfs:label": "Patient",
     "rdfs:subClassOf": {
       "@id": "schema:Thing"
     },
     "schema:isPartOf": {
-      "@id": "http://data.cvisb.org/jsonschema/"
+      "@id": "http://schema.cvisb.org/jsonschema/"
     }
   }]
 }
