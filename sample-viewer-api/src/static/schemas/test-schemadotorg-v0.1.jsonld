@@ -16,7 +16,7 @@
       "@id": "schema:Thing"
     },
     "schema:isPartOf": {
-      "@id": "http://schema.cvisb.org/jsonschema/"
+      "@id": "http://data.cvisb.org/jsonschema/"
     }
   }]
 }
