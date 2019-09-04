@@ -7,16 +7,16 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "cvisb": "https://data.cvisb.org/jsonschema/"
   },
-  "@graph": [{
-    "@id": "cvisb:Patient",
-    "@type": "rdfs:Class",
-    "rdfs:comment": "patient derived from schema.org",
-    "rdfs:label": "Patient!!",
-    "rdfs:subClassOf": {
-      "@id": "schema:Thing"
-    },
-    "schema:isPartOf": {
-      "@id": "http://data.cvisb.org/jsonschema/"
-    }
-  }]
+  "@graph": [    {
+        "@id": "cvisb:RepertoireSequencing",
+        "@type": "rdfs:Class",
+        "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
+        "rdfs:label": "RepertoireSequencing",
+        "rdfs:subClassOf": {
+          "@id": "cvisb:sequencingExperiment"
+        },
+        "schema:isPartOf": {
+          "@id": "http://schema.cvisb.org"
+        }
+      }]
 }
