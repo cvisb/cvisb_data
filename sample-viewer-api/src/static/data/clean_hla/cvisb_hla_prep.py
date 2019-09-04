@@ -17,7 +17,9 @@ import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static
 # import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/HLA/HLA_genotypeCalls_v1_2019-01-09_PRIVATE.csv"
 # import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/2019-01-29_Genotype_calls.csv"
 export_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer/src/assets/data/hla_data.json"
-expt_dir = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/"
+output_dir = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data"
+expt_dir = f"{output_dir}/experiments/"
+patients_path = f"{output_dir}/patients/HLA_patients_{today}.json"
 expt_path = f"{expt_dir}experiments_HLA_{today}.json"
 dupes_path = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/inconsistencies/experiments_HLA_duplicates_{today}.csv"
 
@@ -211,7 +213,6 @@ pub_ids[['ID', 'publicID']].to_csv(f"{expt_dir}HLA_publicIDs_{today}.csv", index
 
 
 
-
 # [Conversion for ]  ----------------------------------------------------------------------------------------------------
 
 df_merged['experimentID'] = df_merged.apply(lambda x: f"HLA_{x.patientID}", axis=1)
@@ -243,7 +244,7 @@ B: [{"B*420101",	"B*530101"}],
 """
 
 df_merged.columns
-df_merged.drop(['ID', 'alternateIdentifier', 'privatePatientID', "Location", "Unnamed: 0", "Typing Institution", "Outcome", "Status ","cohort_agree", "outcome_agree", "issue", "gender", "countryName","KGH_id", "age", "elisa", "gID", "sID", "_merge", "countryName", "cohort_y", "outcome_y"], axis=1, inplace=True)
+df_merged.drop(['ID', 'Alternative ID', 'privatePatientID', "Location", "Unnamed: 0", "Typing Institution", "Outcome", "Status ","cohort_agree", "outcome_agree", "issue", "gender", "countryName","KGH_id", "age", "elisa", "gID", "sID", "_merge", "countryName", "cohort_y", "outcome_y"], axis=1, inplace=True)
 
 
 df_long = pd.melt(df_merged, id_vars=['experimentDate', 'dateModified',
@@ -275,6 +276,31 @@ df[~df.patientID.str.contains("^id")].patientID.to_csv(
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 df_long.to_json(export_path, orient='records')
+
+
+# [Export patient data]  ----------------------------------------------------------------------------------------------------
+# Any patient that isn't a KGH patient needs to be added to /patient with any assoicated data.
+df.sample(3)
+
+patients = df.loc[~df.KGH_id, ['ID', 'Alternative ID', 'country', 'cohort', 'outcome', 'dateModified', 'updatedBy']]
+
+
+
+# Fix / rename ids
+patients.rename(columns={'ID': 'patientID'}, inplace = True)
+
+# alternateIdentifier = ID + any alternate identifier
+def getAltIDs(row):
+    if(row["Alternative ID"] == row["Alternative ID"]):
+        return[row["Alternative ID"]].append(row.patientID)
+    else:
+        return([row.patientID])
+
+patients['alternateIdentifier'] = patients.apply(getAltIDs, axis = 1)
+
+patients.drop(['Alternative ID'], axis = 1, inplace=True)
+
+patients.to_json(patients_path, orient="records")
 
 
 # [Export data]  ----------------------------------------------------------------------------------------------------
