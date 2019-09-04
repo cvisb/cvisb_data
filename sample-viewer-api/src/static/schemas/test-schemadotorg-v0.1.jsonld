@@ -11,12 +11,12 @@
     "@id": "cvisb:Patient",
     "@type": "rdfs:Class",
     "rdfs:comment": "patient derived from schema.org!!!",
-    "rdfs:label": "Patient",
+    "rdfs:label": "Patient!!",
     "rdfs:subClassOf": {
       "@id": "schema:Thing"
     },
     "schema:isPartOf": {
-      "@id": "http://schema.biothings.i"
+      "@id": "https://data.cvisb.org/jsonschema/"
     }
   }]
 }
