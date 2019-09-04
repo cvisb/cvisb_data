@@ -13,10 +13,10 @@
     "rdfs:comment": "patient derived from schema.org!!!",
     "rdfs:label": "Patient",
     "rdfs:subClassOf": {
-      "@id": "schema:Patient"
+      "@id": "schema:Thing"
     },
     "schema:isPartOf": {
-      "@id": "http://schema.biothings.io"
+      "@id": "http://schema.biothings.i"
     }
   }]
 }
