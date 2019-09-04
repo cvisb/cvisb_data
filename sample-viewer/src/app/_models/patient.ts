@@ -1,5 +1,3 @@
-import { DateRangePipe } from "../_pipes";
-
 export class Patient {
   // TODO: resort location based on inverse specificity
   patientID: string;
@@ -83,7 +81,7 @@ export class PatientDownload {
     this.gender = patient.gender;
     this.age = patient.age;
     this.infectionYear = patient.infectionYear;
-    this.infectionDate = datePipe.transform(patient.infectionDate, "yyyy-MM-dd");
+    this.infectionDate = datePipe.transform(patient.infectionDate);
     this.daysInHospital = patient.daysInHospital;
     this.dischargeDate = patient.dischargeDate;
     this.evalDate = patient.evalDate;
