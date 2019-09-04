@@ -190,7 +190,6 @@
   schema:Enumeration:
                         - acute
                         - survivor
-                        - null
 
 # sample type
 - "@id":                 cvisb:sampleType
@@ -254,7 +253,6 @@
                         - "human"
                         - "rat"
                         - "monkey"
-                        - null
   authenticated:         false
 
 # protocol

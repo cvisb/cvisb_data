@@ -486,7 +486,6 @@
                          - Male
                          - Female
                          - Unknown
-                         - null
   authenticated:         false
 
 # contacts:

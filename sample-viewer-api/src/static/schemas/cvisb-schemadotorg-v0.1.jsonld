@@ -21,7 +21,7 @@
         "@id": "cvisb:sequencingExperiment"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -169,7 +169,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "root_entity": true
     },
@@ -563,37 +563,6 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:data",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Data associated with the experiment. Typically summary values for that particular measurement.",
-      "rdfs:label": "data",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Experiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Data"
-        },
-        {
-          "@id": "cvisb:PiccoloData"
-        },
-        {
-          "@id": "cvisb:ViralSeqData"
-        },
-        {
-          "@id": "cvisb:Vitals"
-        },
-        {
-          "@id": "cvisb:HLAData"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
       "@id": "cvisb:ELISA",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments",
@@ -602,7 +571,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -743,7 +712,7 @@
         "@id": "cvisb:sequencingExperiment"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -959,7 +928,7 @@
         "@id": "health:Patient"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "root_entity": true
     },
@@ -1609,8 +1578,7 @@
       "schema:Enumeration": [
         "Male",
         "Female",
-        "Unknown",
-        null
+        "Unknown"
       ],
       "authenticated": false
     },
@@ -1955,7 +1923,7 @@
         "@id": "cvisb:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "root_entity": true
     },
@@ -2183,8 +2151,7 @@
       "authenticated": false,
       "schema:Enumeration": [
         "acute",
-        "survivor",
-        null
+        "survivor"
       ]
     },
     {
@@ -2271,8 +2238,7 @@
       "schema:Enumeration": [
         "human",
         "rat",
-        "monkey",
-        null
+        "monkey"
       ],
       "authenticated": false
     },
@@ -2477,7 +2443,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -2550,7 +2516,7 @@
         "@id": "cvisb:Sample"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -2645,7 +2611,7 @@
         "@id": "schema:Country"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:Country"
@@ -2680,8 +2646,7 @@
         "NG",
         "LR",
         "GN",
-        "US",
-        null
+        "US"
       ]
     },
     {
@@ -2713,8 +2678,7 @@
         "https://www.iso.org/obp/ui/#iso:code:3166:NG",
         "https://www.iso.org/obp/ui/#iso:code:3166:LR",
         "https://www.iso.org/obp/ui/#iso:code:3166:GN",
-        "https://www.iso.org/obp/ui/#iso:code:3166:US",
-        null
+        "https://www.iso.org/obp/ui/#iso:code:3166:US"
       ]
     },
     {
@@ -2783,7 +2747,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -2833,7 +2797,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -2906,7 +2870,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -2956,7 +2920,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3066,7 +3030,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3208,7 +3172,7 @@
         "@id": "schema:SoftwareSourceCode"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:SoftwareSourceCode"
@@ -3502,7 +3466,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3552,7 +3516,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3667,7 +3631,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3717,7 +3681,7 @@
         "@id": "health:UpdateLog"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -3808,7 +3772,7 @@
         "@id": "cvisb:Place"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:AdministrativeArea"
@@ -6236,8 +6200,7 @@
         1,
         2,
         3,
-        4,
-        null
+        4
       ],
       "authenticated": false
     },
@@ -6275,7 +6238,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -6344,7 +6307,7 @@
         "@id": "schema:DataCatalog"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:DataCatalog"
@@ -6764,7 +6727,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -6875,7 +6838,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -6944,7 +6907,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -7250,7 +7213,7 @@
         "@id": "schema:Place"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -7432,7 +7395,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -8622,7 +8585,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -8672,7 +8635,7 @@
         "@id": "schema:Place"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:Place"
@@ -8744,7 +8707,7 @@
         "@id": "cvisb:Experiment"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -8863,7 +8826,7 @@
         "@id": "schema:PostalAddress"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:PostalAddress"
@@ -9000,7 +8963,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -9059,7 +9022,7 @@
         "@id": "schema:Organization"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:Organization"
@@ -9286,7 +9249,7 @@
         "@id": "schema:DataDownload"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "root_entity": true
     },
@@ -9484,8 +9447,7 @@
       "schema:Enumeration": [
         "SRA",
         "AWS",
-        "GitHub",
-        null
+        "GitHub"
       ],
       "authenticated": false
     },
@@ -9664,8 +9626,7 @@
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "application/xml",
         "application/zip",
-        "application/gzip",
-        null
+        "application/gzip"
       ],
       "authenticated": false
     },
@@ -10412,7 +10373,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -10485,7 +10446,7 @@
         "@id": "schema:Date"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:Date"
@@ -10588,7 +10549,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -10661,7 +10622,7 @@
         "@id": "schema:Person"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:Person"
@@ -10764,7 +10725,7 @@
         "@id": "schema:ContactPoint"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:ContactPoint"
@@ -10858,7 +10819,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -11060,7 +11021,7 @@
         "@id": "schema:ScholarlyArticle"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:ScholarlyArticle"
@@ -11377,7 +11338,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -11653,7 +11614,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -11726,7 +11687,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -11826,7 +11787,7 @@
         "@id": "schema:MonetaryGrant"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       },
       "schema:sameAs": {
         "@id": "schema:MonetaryGrant"
@@ -11885,7 +11846,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {
@@ -11982,7 +11943,7 @@
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
-        "@id": "http://schema.cvisb.org"
+        "@id": "https://schema.cvisb.org"
       }
     },
     {

@@ -60,7 +60,6 @@ def get_validation(schema):
 
 def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", output_file = None):
     current_dir = os.curdir
-    print(current_dir)
     schema_dir = f'{current_dir}/{schema_dir}'
 
     all_files = os.listdir(schema_dir)
