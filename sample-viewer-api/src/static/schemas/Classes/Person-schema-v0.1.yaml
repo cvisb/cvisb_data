@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               schema:Person
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:Person
 

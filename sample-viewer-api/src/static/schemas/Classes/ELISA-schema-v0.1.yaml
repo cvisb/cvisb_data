@@ -27,7 +27,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 # - "@id":                 cvisb:ebola_IgG
 #   "@type":               rdf:Property

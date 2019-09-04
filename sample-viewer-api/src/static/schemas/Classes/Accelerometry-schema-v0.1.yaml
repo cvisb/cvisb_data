@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://data.cvisb.org/jsonschema
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:time
   "@type":               rdf:Property

@@ -34,7 +34,7 @@
   rdfs:subClassOf:
     "@id":               schema:Dataset
   schema:isPartOf:
-    "@id":               https://data.cvisb.org/jsonschema
+    "@id":               https://data.cvisb.org/schema
   root_entity:           true
 
 # name

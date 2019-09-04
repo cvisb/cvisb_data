@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:sequencingExperiment
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:cellType
   "@type":               rdf:Property

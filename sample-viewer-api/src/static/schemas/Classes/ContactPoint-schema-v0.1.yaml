@@ -29,7 +29,7 @@
   rdfs:subClassOf:
     "@id":               schema:ContactPoint
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:ContactPoint
 

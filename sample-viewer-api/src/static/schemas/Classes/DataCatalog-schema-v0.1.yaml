@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               schema:DataCatalog
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:DataCatalog
   root_entity:           true

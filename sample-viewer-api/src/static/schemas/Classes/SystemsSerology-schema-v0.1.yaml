@@ -29,7 +29,7 @@
     "@id":               cvisb:Experiment
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 - "@id":                 cvisb:assayType

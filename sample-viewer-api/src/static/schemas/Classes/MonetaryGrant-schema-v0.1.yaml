@@ -25,7 +25,7 @@
   rdfs:subClassOf:
     "@id":               schema:MonetaryGrant
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:MonetaryGrant
 

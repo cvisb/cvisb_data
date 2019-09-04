@@ -27,7 +27,7 @@
   rdfs:subClassOf:
     "@id":               schema:Place
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:Place
 
