@@ -85,8 +85,8 @@ export class PatientDownload {
     this.infectionYear = patient.infectionYear;
     this.infectionDate = datePipe.transform(patient.infectionDate);
     this.daysInHospital = patient.daysInHospital;
-    this.dischargeDate = patient.dischargeDate;
-    this.evalDate = patient.evalDate;
+    this.dischargeDate = datePipe.transform(patient.dischargeDate);
+    this.evalDate = datePipe.transform(patient.evalDate);
     this.daysOnset = patient.daysOnset;
 
     this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
@@ -115,7 +115,7 @@ export class PatientDownload {
     }
 
     this._version = patient._version;
-    this.dateModified = patient.dateModified;
+    this.dateModified = datePipe.transform(patient.dateModified);
     this.updatedBy = patient.updatedBy;
 
   }
