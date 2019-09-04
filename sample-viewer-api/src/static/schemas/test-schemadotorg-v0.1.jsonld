@@ -16,7 +16,7 @@
           "@id": "cvisb:sequencingExperiment"
         },
         "schema:isPartOf": {
-          "@id": "http://schema.cvisb.org"
+          "@id": "https://data.cvisb.org/jsonschema/"
         }
       }]
 }
