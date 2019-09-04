@@ -641,8 +641,7 @@
       "schema:Enumeration": [
         "positive",
         "negative",
-        "indeterminate",
-        null
+        "indeterminate"
       ],
       "authenticated": false
     },
@@ -3772,7 +3771,7 @@
         "@id": "cvisb:Place"
       },
       "schema:isPartOf": {
-        "@id": "https://schema.cvisb.org"
+        "@id": "https://data.cvisb.org/jsonschema"
       },
       "schema:sameAs": {
         "@id": "schema:AdministrativeArea"
@@ -6727,7 +6726,7 @@
         "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
-        "@id": "https://schema.cvisb.org"
+        "@id": "https://data.cvisb.org/jsonschema"
       }
     },
     {
