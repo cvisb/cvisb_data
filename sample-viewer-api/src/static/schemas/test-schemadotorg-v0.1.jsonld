@@ -13,7 +13,7 @@
         "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
         "rdfs:label": "RepertoireSequencing",
         "rdfs:subClassOf": {
-          "@id": "cvisb:sequencingExperiment"
+          "@id": "schema:Thing"
         },
         "schema:isPartOf": {
           "@id": "https://data.cvisb.org/jsonschema/"
