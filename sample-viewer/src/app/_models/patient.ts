@@ -3,6 +3,10 @@ export class Patient {
   patientID: string;
   infectionYear?: number;
   infectionDate?: string;
+  evalDate?: string;
+  dischargeDate?: string;
+  daysOnset?: number;
+  daysInHospital?: number;
   admitDate?: string;
   dateModified?: string;
   cohort: string;
@@ -17,10 +21,12 @@ export class Patient {
   associatedSamples?: string[];
   availableData?: Object[];
   relatedTo?: string[];
-  elisa?: Object[];
+  elisa?: ELISA[];
   pregnant: boolean;
   occupation: string;
   symptoms?: Object[];
+  sID?: string;
+  gID?: string[];
   exposureType?: string;
   _version?: number;
   updatedBy?: string;
@@ -37,7 +43,7 @@ export class PatientDownload {
   contactSurvivorRelationship?: string;
   country?: string;
   dateModified?: string;
-  elisa?: any;
+  elisa?: ELISA[];
   exposureType?: string;
   gender?: string;
   outcome?: string;
@@ -55,23 +61,39 @@ export class PatientDownload {
   muscle_pain?: boolean;
   ringing_in_ears?: boolean;
   vision_loss?: boolean;
-
+  sID: string;
+  gID: string;
+  daysInHospital: number;
+  daysOnset: number;
+  dischargeDate: string;
+  evalDate: string;
+  infectionDate: string;
+  infectionYear: number;
 
   constructor(patient: Patient) {
     this.patientID = patient.patientID;
     this.alternateIdentifier = patient.alternateIdentifier ? patient.alternateIdentifier.join(", ") : null;
+    this.sID = patient.sID;
+    this.gID = patient.gID ? patient.gID.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
     this.country = patient.country['name'];
     this.gender = patient.gender;
     this.age = patient.age;
+    this.infectionYear = patient.infectionYear;
+    this.infectionDate = patient.infectionDate;
+    this.daysInHospital = patient.daysInHospital;
+    this.dischargeDate = patient.dischargeDate;
+    this.evalDate = patient.evalDate;
+    this.daysOnset = patient.daysOnset;
+
     this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
     this.relatedTo = patient.relatedTo ? patient.relatedTo.join(", ") : null;
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
 
 
-    // TODO: ELISAs
+
     if (patient.symptoms && patient.symptoms[0]) {
       this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'];
       this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'];
@@ -86,9 +108,20 @@ export class PatientDownload {
       this.vision_loss = patient.symptoms[0]['symptoms']['vision_loss']
     }
 
+    if (patient.elisa && patient.elisa[0]) {
+      this.elisa = patient.elisa;
+    }
+
     this._version = patient._version;
     this.dateModified = patient.dateModified;
     this.updatedBy = patient.updatedBy;
 
   }
+}
+
+export class ELISA {
+  ELISAresult: string;
+  assayType: string;
+  timepoint: string;
+  virus: string;
 }
