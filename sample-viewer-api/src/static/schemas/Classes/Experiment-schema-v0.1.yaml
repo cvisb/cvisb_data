@@ -102,10 +102,10 @@
 
 
 # NCBI IDs
-- "@id":                 cvisb:SRA_ID
+- "@id":                 cvisb:sraID
   "@type":               rdf:Property
   rdfs:comment:          ID used by the National Center for Biotechnology Information (NCBI) to identify the data within the Sequence Read Archive (SRA)
-  rdfs:label:            SRA_ID
+  rdfs:label:            sraID
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
@@ -115,10 +115,10 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:GenBank_ID
+- "@id":                 cvisb:genbankID
   "@type":               rdf:Property
   rdfs:comment:          ID used to identify the data within GenBank, the NIH's genetic sequence database
-  rdfs:label:            GenBank_ID
+  rdfs:label:            genbankID
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
