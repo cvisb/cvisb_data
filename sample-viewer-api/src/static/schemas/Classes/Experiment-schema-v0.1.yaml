@@ -287,18 +287,18 @@
   authenticated:         false
 
 # Data
-- "@id":                 cvisb:data
-  "@type":               rdf:Property
-  rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
-  rdfs:label:            data
-  schema:domainIncludes:
-    - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             cvisb:Data
-    - "@id":             cvisb:PiccoloData
-    - "@id":             cvisb:ViralSeqData
-    - "@id":             cvisb:Vitals
-    - "@id":             cvisb:HLAData
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
+# - "@id":                 cvisb:data
+#   "@type":               rdf:Property
+#   rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
+#   rdfs:label:            data
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Experiment
+#   schema:rangeIncludes:
+#     - "@id":             cvisb:Data
+#     - "@id":             cvisb:PiccoloData
+#     - "@id":             cvisb:ViralSeqData
+#     - "@id":             cvisb:Vitals
+#     - "@id":             cvisb:HLAData
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
