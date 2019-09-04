@@ -43,7 +43,7 @@ export class PatientDownload {
   contactSurvivorRelationship?: string;
   country?: string;
   dateModified?: string;
-  elisa?: ELISA[];
+  elisa?: string;
   exposureType?: string;
   gender?: string;
   outcome?: string;
@@ -109,7 +109,7 @@ export class PatientDownload {
     }
 
     if (patient.elisa && patient.elisa[0]) {
-      this.elisa = patient.elisa;
+      this.elisa = JSON.stringify(patient.elisa);
     }
 
     this._version = patient._version;
