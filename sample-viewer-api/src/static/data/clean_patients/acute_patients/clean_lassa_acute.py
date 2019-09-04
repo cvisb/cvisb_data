@@ -120,7 +120,13 @@ def mergeMetadata(df, ids):
     df_merged['cohort'] = "Lassa"
 
     # --- infection year ---
-    df_merged['infectionYear'] = df_merged.apply(helpers.getInfectionYear, axis = 1)
+    # df_merged['infectionYear'] = df_merged.apply(helpers.getInfectionYear, axis = 1)
+    df_merged['infectionYear'] = pd.np.nan
+    df_merged['infectionDate'] = pd.NaT
+    df_merged['onsetYear'] = pd.np.nan
+    df_merged['daysOnset'] = pd.np.nan
+    df_merged['daysOnset2Discharge'] = pd.np.nan
+    df_merged['converted_onsetDate'] = pd.NaT
 
     # Add in checks
     df_merged['hasPatientData'] = df_merged._merge.apply(lambda x: x != "right_only")
@@ -167,7 +173,15 @@ def cleanAcute(filename):
     df['gender'] = df.Sex_CN.apply(helpers.convertGender)
 
     # --- age ---
-    df['age'] = df.apply(helpers.getAge, axis = 1)
+    # 2019-07-22: previous versions of the data included age broken down by year/month/day-- current version seems to be just year.
+    # df['age'] = df.apply(helpers.getAge, axis = 1)
+
+    # --- occupation ---
+    df['occupation'] = df.Occupation.apply(helpers.convertLower)
+
+    # --- pregnant ---
+    df['pregnant'] = df.pregnant.apply(helpers.convertBoolean)
+
 
     # -- elisas --
     df['elisa'] = df.apply(helpers.nestELISAs, axis = 1)
@@ -193,16 +207,16 @@ def cleanAcute(filename):
     # --- time variables: convert all to python objects and then standardized YYYY-MM-DD dates ---
     df['converted_evalDate'] = df.evaldate_lba1.apply(helpers.convertExcelDate)
     df['converted_dischargeDate'] = df.DateofDischarge.apply(helpers.convertExcelDate)
-    df['converted_onsetDate'] = df.apply(helpers.convertExcelDateNum, axis = 1)
+    # df['converted_onsetDate'] = df.apply(helpers.convertExcelDateNum, axis = 1) # missing from 2019-06-12 data
     df['evalDate'] = df.converted_evalDate.apply(helpers.dates2String)
     df['dischargeDate'] = df.converted_dischargeDate.apply(helpers.dates2String)
-    df['infectionDate'] = df.converted_onsetDate.apply(helpers.dates2String)
+    # df['infectionDate'] = df.converted_onsetDate.apply(helpers.dates2String)
     df['evalYear'] = df.converted_evalDate.apply(helpers.getYearfromDate)
     df['dischargeYear'] = df.converted_dischargeDate.apply(helpers.getYearfromDate)
-    df['onsetYear'] = df.converted_onsetDate.apply(helpers.getYearfromDate)
-    df['daysOnset'] = df.apply(helpers.calcOnset, axis=1)
+    # df['onsetYear'] = df.converted_onsetDate.apply(helpers.getYearfromDate)
+    # df['daysOnset'] = df.apply(helpers.calcOnset, axis=1)
     df['daysInHospital'] = df.apply(helpers.calcHospitalStay, axis=1)
-    df['daysOnset2Discharge'] = df.apply(helpers.calcOnsetDischargeGap, axis=1)
+    # df['daysOnset2Discharge'] = df.apply(helpers.calcOnsetDischargeGap, axis=1)
 
 
     return(df)
