@@ -73,3 +73,15 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+
+- "@id":                 cvisb:viralLoad
+  "@type":               rdf:Property
+  rdfs:comment:          viral load, in copies/ml
+  rdfs:label:            viralLoad
+  schema:domainIncludes:
+    - "@id":             cvisb:RTPCR
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false

@@ -24,3 +24,28 @@
     "@id":               schema:Thing
   schema:isPartOf:
     "@id":               https://schema.cvisb.org
+
+
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          Description of when the data was taken (e.g. at survivor enrollment, initial presentation in hospital, etc.)
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:Data
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when data were measured. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:Data
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
