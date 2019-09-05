@@ -365,13 +365,13 @@ export class FilterableHistogramComponent implements OnInit {
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
     // Drag event listeners
-    let endDrag = function(x, xLinear, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
+    let endDrag = function(x, xLinear, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
     // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
       updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits, filterSubject);
       // updateHandles(xLinear, side, filterSubject);
 
-      // sendParams(filterSubject, requestSvc, endpoint);
+      sendParams(filterSubject, requestSvc, endpoint);
     }
 
     let updateHandles = function(x, xLinear, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
@@ -383,6 +383,9 @@ export class FilterableHistogramComponent implements OnInit {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
+      console.log(d3.event.x)
+      console.log(x)
+      console.log(xLinear)
       console.log(xValue)
       console.log(handleSide)
 
@@ -432,7 +435,7 @@ export class FilterableHistogramComponent implements OnInit {
     //     // Update positions on start or drag events
     //     .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
     //     // Once you're done, announce the new parameters to the query service.
-    //     .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
+    //     .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
     //     // Update positions on start or drag events
     //     // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
     //     // Once you're done, announce the new parameters to the query service.
@@ -450,7 +453,7 @@ export class FilterableHistogramComponent implements OnInit {
         // .on("start drag", () => updateHandles(this.xLinear, 'left', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
         // .on("end", () => endDrag(this.xLinear, 'left', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
-        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject))
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
       );
 
 
