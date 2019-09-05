@@ -131,7 +131,6 @@ export class FilterableHistogramComponent implements OnInit {
 
     // Wait till everything is loaded; then set the initial limits
     this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
-    // this.updateLimits(this.yearLimits);
   }
 
   prepData() {
@@ -146,30 +145,6 @@ export class FilterableHistogramComponent implements OnInit {
 
   createPlot() {
     this.element = this.chartContainer.nativeElement;
-
-    // this.sendParams = function(filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string) {
-    //   // Check that the limits haven't flipped
-    //   let lower_limit = Math.min(filterSubject.value['lower'], filterSubject.value['upper']);
-    //   let upper_limit = Math.max(filterSubject.value['lower'], filterSubject.value['upper']);
-    //
-    //   // call requestSvc to announce new search parameters.
-    //   // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
-    //   // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
-    //   // `-` negates that query
-    //   // Since `_exists_` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
-    //   filterSubject.value['unknown'] ?
-    //     // include unknown as an OR statement.
-    //     requestSvc.updateParams(endpoint,
-    //       {
-    //         field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]`,
-    //         orSelector: { field: '-_exists_', value: 'infectionYear' }
-    //       }) :
-    //     // ignore unknown values.
-    //     requestSvc.updateParams(endpoint,
-    //       { field: 'infectionYear', value: `[${lower_limit} TO ${upper_limit}]` });
-    // }
-
-
 
     // Append SVG
     this.svg = d3.select(this.element)
@@ -284,17 +259,7 @@ export class FilterableHistogramComponent implements OnInit {
 
 
       // --- EVENT LISTENERS ---
-      // // --- Single bar event listener ---
-      // let selectYear = function(filterSubject, requestSvc, endpoint, sendParams) {
-      //   return function(d) {
-      //     d.term === "unknown" ?
-      //       filterSubject.next({ lower: 0, upper: 0, unknown: true }) :
-      //       filterSubject.next({ lower: d.term, upper: d.term, unknown: false });
-      //
-      //     // update parameters.
-      //     sendParams(filterSubject, requestSvc, endpoint);
-      //   }
-      // }
+      // --- Single bar event listener ---
       let selectYear = function(filterFunc, filterSvc, requestSvc, endpoint) {
         return function(d) {
           filterFunc({ lower: d.term, upper: d.term, unknown: false }, filterSvc, requestSvc, endpoint);
@@ -350,7 +315,6 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.rects
         .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint));
-      // .on("click", selectYear(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
     }
   }
@@ -364,9 +328,7 @@ export class FilterableHistogramComponent implements OnInit {
       // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
       updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits, filterSubject);
-      // updateHandles(xLinear, side, filterSubject);
 
-      // sendParams(filterSubject, requestSvc, endpoint);
       let limits = filterSubject.value;
       console.log(limits)
       filterFunc(limits, filterSvc, requestSvc, endpoint);
@@ -380,7 +342,6 @@ export class FilterableHistogramComponent implements OnInit {
       // round to the nearest integer to snap to a year.
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
-      // let xValue = Math.round(xScale.invert(d3.event.x));
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
@@ -396,9 +357,16 @@ export class FilterableHistogramComponent implements OnInit {
     // --- Checkbox for whether to include unknown values.
     let checkUnknown = function(filterSubject, requestSvc, endpoint, filterFunc, filterSvc) {
       return function(d) {
+        console.log(d)
+        console.log(filterSubject.value)
         // update the status of checkbox
         let limits = { ...filterSubject.value, unknown: !filterSubject.value.unknown };
+        console.log(limits)
         filterSubject.next(limits);
+        
+        // update the check status
+        d3.select(".slider-checkbox")
+          .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
 
         filterFunc(limits, filterSvc, requestSvc, endpoint);
         // sendParams(filterSubject, requestSvc, endpoint);
@@ -431,10 +399,6 @@ export class FilterableHistogramComponent implements OnInit {
         .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
         .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc))
-        // Update positions on start or drag events
-        // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
-        // Once you're done, announce the new parameters to the query service.
-        // .on("end", () => endDrag(this.xLinear, 'right', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
       );
 
     this.handle_left = this.slider.append("path")
@@ -445,9 +409,7 @@ export class FilterableHistogramComponent implements OnInit {
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
         .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject))
-        // .on("start drag", () => updateHandles(this.xLinear, 'left', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
-        // .on("end", () => endDrag(this.xLinear, 'left', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
         .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc))
       );
 
@@ -458,7 +420,8 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x", this.width + this.margin.betweenGraphs + this.x.bandwidth() * (5 / 8))
       .attr("y", "0.55em")
       .attr("dy", 2)
-      .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
+      .text("\uf14a");
+    // .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
 
@@ -470,6 +433,8 @@ export class FilterableHistogramComponent implements OnInit {
     let lower_limit = Math.min(limits['lower'], limits['upper']);
     let upper_limit = Math.max(limits['lower'], limits['upper']);
 
+    console.log(lower_limit)
+    console.log(upper_limit)
 
     // Update rectangles
     d3.selectAll("rect")
