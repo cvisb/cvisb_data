@@ -83,7 +83,7 @@ export class RequestParametersService {
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
-        // console.log(params)
+        console.log(params)
         // console.log('reducing params')
         // this.reduceParams(params);
 
