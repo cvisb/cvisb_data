@@ -297,7 +297,7 @@ export class FilterableHistogramComponent implements OnInit {
       // }
       let selectYear = function(filterFunc, filterSvc, requestSvc, endpoint) {
         return function(d) {
-          filterFunc({lower: d.term, upper: d.term, unknown: false}, filterSvc, requestSvc, endpoint);
+          filterFunc({ lower: d.term, upper: d.term, unknown: false }, filterSvc, requestSvc, endpoint);
         }
       }
 
@@ -458,7 +458,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x", this.width + this.margin.betweenGraphs + this.x.bandwidth() * (5 / 8))
       .attr("y", "0.55em")
       .attr("dy", 2)
-    // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
+      .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
 
@@ -507,7 +507,7 @@ export class FilterableHistogramComponent implements OnInit {
       }
 
       d3.select(".slider-checkbox")
-        .text(d => limits['unknown'] ? "\uf14a" : "\uf0c8");
+        .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
     }
   }
 
