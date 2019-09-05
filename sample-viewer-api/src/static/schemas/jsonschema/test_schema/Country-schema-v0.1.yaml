@@ -27,7 +27,7 @@
   rdfs:subClassOf:
     "@id":               schema:Country
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:Country
 
@@ -50,7 +50,7 @@
                           - NG
                           - LR
                           - GN
-                          - null
+                          - US
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -71,7 +71,7 @@
                           - https://www.iso.org/obp/ui/#iso:code:3166:NG
                           - https://www.iso.org/obp/ui/#iso:code:3166:LR
                           - https://www.iso.org/obp/ui/#iso:code:3166:GN
-                          - null
+                          - https://www.iso.org/obp/ui/#iso:code:3166:US
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -92,6 +92,7 @@
                           - Nigeria
                           - Liberia
                           - Guinea
+                          - United States
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property

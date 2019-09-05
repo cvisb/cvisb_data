@@ -4,6 +4,7 @@ from api.query_builder import ESQueryBuilder
 from api.query import ESQuery
 from api.transform import ESResultTransformer
 from api.handlers import EntityHandler, QueryHandler, SchemaHandler
+from api.jwt_handlers import JWTQueryHandler, JWTEntityHandler
 from web.handlers import UserInfoHandler, LogoutHandler
 import os
 
@@ -19,6 +20,9 @@ ES_HOST = 'localhost:9200'
 # App URL Patterns
 # *****************************************************************************
 APP_LIST = [
+    (r"/api/jwt/(.+)/query/?", JWTQueryHandler),
+    (r"/api/jwt/(.+)/(.+)/?", JWTEntityHandler),
+    (r"/api/jwt/(.+)/?$", JWTEntityHandler),
     (r"/api/(.+)/query/?", QueryHandler),
     (r"/api/(.+)/(.+)/?", EntityHandler),
     (r"/api/(.+)/?$", EntityHandler),

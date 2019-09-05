@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 # identifier
 - "@id":                 cvisb:virus
@@ -44,7 +44,7 @@
   schema:Enumeration:
                           - Ebola
                           - Lassa
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:RDTresult
   "@type":               rdf:Property
@@ -60,4 +60,4 @@
                          - positive
                          - negative
                          - indeterminate
-  authenticated:         false
+  authenticated:         true

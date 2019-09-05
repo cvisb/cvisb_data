@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 # Data
@@ -39,6 +39,9 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
+  schema:Enumeration:
+                         - Ebola
+                         - Lassa
 
 - "@id":                 cvisb:referenceSeq
   "@type":               rdf:Property

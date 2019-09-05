@@ -27,7 +27,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:timepoint
   "@type":               rdf:Property
@@ -39,7 +39,19 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
+
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:SymptomList
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
 
 - "@id":                 cvisb:symptoms
   "@type":               rdf:Property
@@ -51,4 +63,4 @@
     - "@id":             cvisb:Symptom
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true

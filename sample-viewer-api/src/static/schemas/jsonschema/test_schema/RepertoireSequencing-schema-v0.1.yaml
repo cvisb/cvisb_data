@@ -28,11 +28,11 @@
   rdfs:subClassOf:
     "@id":               cvisb:sequencingExperiment
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:cellType
   "@type":               rdf:Property
-  rdfs:comment:          Whether the repertoire sequencing was performed on B-cells or T-cells
+  rdfs:comment:          "Whether the repertoire sequencing was performed on B-cells or T-cells"
   rdfs:label:            cellType
   schema:domainIncludes:
     - "@id":             cvisb:RepertoireSequencing
@@ -42,7 +42,8 @@
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
-  enumeration:           - "B-cell"
+  schema:Enumeration:
+                         - "B-cell"
                          - "T-cell"
 
 - "@id":                 cvisb:primerSet

@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               schema:Place
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 # source sample ID
@@ -52,7 +52,7 @@
                         - "Tulane-Schieffelin"
                         - "Tulane-Garry"
   authenticated:         true
-  
+
 # source sample type
 - "@id":                 cvisb:numAliquots
   "@type":               rdf:Property
@@ -75,7 +75,7 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
   authenticated:         true
 
@@ -87,7 +87,7 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
   authenticated:         true
 
@@ -99,7 +99,7 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
   authenticated:         true
 
@@ -111,7 +111,7 @@
     - "@id":             cvisb:SampleLocation
   schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           optional
   authenticated:         true
 

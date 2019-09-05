@@ -118,7 +118,7 @@ def process_file(entity, entity_dict, error_file, _out_directory, args, namespac
         _sub_schema['oneOf'] = [json.loads(x) for x in list(set([json.dumps(y, sort_keys=True) for y in _sub_schema['oneOf']]))]
 
         if _many and _sub_schema['oneOf']:
-            _sub_schema = {'type': 'array', 'items': _sub_schema['oneOf']}
+            _sub_schema = {'type': 'array', 'items': {'oneOf': _sub_schema['oneOf']}}
 
         if _required:
             _ret['required'].append(_id)

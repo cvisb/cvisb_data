@@ -27,11 +27,11 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:joint_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced joint pain.
+  rdfs:comment:          If the patient reports joint pain
   rdfs:label:            joint_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
@@ -39,11 +39,11 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:muscle_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced muscle pain.
+  rdfs:comment:          If the patient reports muscle pain
   rdfs:label:            muscle_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
@@ -51,95 +51,59 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
-- "@id":                 cvisb:hearing_loss
+- "@id":                 cvisb:abdominal_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced hearing loss
-  rdfs:label:            hearing_loss
+  rdfs:comment:          If the patient reports abdominal pain
+  rdfs:label:            abdominal_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
-- "@id":                 cvisb:ringing_in_ears
+- "@id":                 cvisb:back_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced ringing in ears
-  rdfs:label:            ringing_in_ears
+  rdfs:comment:          If the patient reports back pain
+  rdfs:label:            back_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
-- "@id":                 cvisb:dry_eyes
+- "@id":                 cvisb:side_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced dry eyes
-  rdfs:label:            dry_eyes
+  rdfs:comment:          If the patient reports side pain
+  rdfs:label:            side_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
-- "@id":                 cvisb:burning_eyes
+- "@id":                 cvisb:retrosternal_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced burning in eyes
-  rdfs:label:            burning_eyes
+  rdfs:comment:          If the patient reports retrosternal pain
+  rdfs:label:            retrosternal_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
-
-- "@id":                 cvisb:vision_loss
-  "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced vision loss
-  rdfs:label:            vision_loss
-  schema:domainIncludes:
-    - "@id":             cvisb:Symptom
-  schema:rangeIncludes:
-    - "@id":             schema:Boolean
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         false
-
-- "@id":                 cvisb:blurry_vision
-  "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced blurry vision
-  rdfs:label:            blurry_vision
-  schema:domainIncludes:
-    - "@id":             cvisb:Symptom
-  schema:rangeIncludes:
-    - "@id":             schema:Boolean
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         false
-
-- "@id":                 cvisb:light_sensitivity
-  "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced light sensitivity
-  rdfs:label:            light_sensitivity
-  schema:domainIncludes:
-    - "@id":             cvisb:Symptom
-  schema:rangeIncludes:
-    - "@id":             schema:Boolean
-  owl:cardinality:       one
-  marginality:           optional
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:eye_pain
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced eye pain
+  rdfs:comment:          If the patient reports eye pain
   rdfs:label:            eye_pain
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
@@ -147,11 +111,108 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
+
+- "@id":                 cvisb:other_pain
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports other pain
+  rdfs:label:            other_pain
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:hearing_loss
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports hearing loss
+  rdfs:label:            hearing_loss
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:ringing_in_ears
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports ringing in ears
+  rdfs:label:            ringing_in_ears
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:dry_eyes
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports dry eyes
+  rdfs:label:            dry_eyes
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:burning_eyes
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports burning in eyes
+  rdfs:label:            burning_eyes
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:vision_loss
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports vision loss
+  rdfs:label:            vision_loss
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:blurry_vision
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports blurry vision
+  rdfs:label:            blurry_vision
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:light_sensitivity
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports light sensitivity
+  rdfs:label:            light_sensitivity
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 
 - "@id":                 cvisb:eye_foreign_body_sensation
   "@type":               rdf:Property
-  rdfs:comment:          If the patient experienced sensation of a foreign body in his/her eye(s)
+  rdfs:comment:          If the patient reports a sensation of a foreign body in his/her eye(s)
   rdfs:label:            eye_foreign_body_sensation
   schema:domainIncludes:
     - "@id":             cvisb:Symptom
@@ -159,4 +220,557 @@
     - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           optional
-  authenticated:         false
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_gums
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports bleeding gums
+  rdfs:label:            bleeding_gums
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_nose
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports a bloody nose
+  rdfs:label:            bleeding_nose
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_stools
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports bloody stools
+  rdfs:label:            bleeding_stools
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_vomit
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports vomited blood
+  rdfs:label:            bleeding_vomit
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_injection
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient was bleeding at injection sites
+  rdfs:label:            bleeding_injection
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_hematoma
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports a hematoma
+  rdfs:label:            bleeding_hematoma
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_sputum
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports coughing up blood / blood in his/her sputum
+  rdfs:label:            bleeding_sputum
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_urine
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports blood in his/her urine
+  rdfs:label:            bleeding_urine
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_vaginal
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports vaginal bleeding
+  rdfs:label:            bleeding_vaginal
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_other
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports any other unusual bleeding
+  rdfs:label:            bleeding_other
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:bleeding_none
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports no symptoms of bleeding
+  rdfs:label:            bleeding_none
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:fever
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports a fever
+  rdfs:label:            fever
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:conjunctivitis
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports conjunctivitis
+  rdfs:label:            conjunctivitis
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:facial_swelling
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports facial or neck swelling
+  rdfs:label:            facial_swelling
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:joint_swelling
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports joint swelling
+  rdfs:label:            joint_swelling
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:lymphadenopathy
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports lymphadenopathy
+  rdfs:label:            lymphadenopathy
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:shortness_breath
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have shortness of breath
+  rdfs:label:            shortness_breath
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:rales
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have rales
+  rdfs:label:            rales
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:crepitations
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have crepitations
+  rdfs:label:            crepitations
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:abdominal_tenderness
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have abdominal tenderness
+  rdfs:label:            abdominal_tenderness
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:hepatomegaly
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have hepatomegaly
+  rdfs:label:            hepatomegaly
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:splenomegaly
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have splenomegaly
+  rdfs:label:            splenomegaly
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:RUQtenderness
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is observed to have right upper quadrant (RUQ) tenderness
+  rdfs:label:            RUQtenderness
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:disorientation
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is reports having disorientation
+  rdfs:label:            disorientation
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:tremors
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is reports having tremors
+  rdfs:label:            tremors
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:seizures
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is reports having seizures
+  rdfs:label:            seizures
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:hiccups
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient is reports having hiccups
+  rdfs:label:            hiccups
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+
+- "@id":                 cvisb:edema
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports edema
+  rdfs:label:            edema
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:inflammation
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports inflammation
+  rdfs:label:            inflammation
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:rash
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports a rash
+  rdfs:label:            rash
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:headache
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports headaches
+  rdfs:label:            headache
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:sore_throat
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports a sore throat
+  rdfs:label:            sore_throat
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:vomit
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports vomiting
+  rdfs:label:            vomit
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:decreased_urination
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports decreased urination
+  rdfs:label:            decreased_urination
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:cough
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports coughing
+  rdfs:label:            cough
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:diarrhea
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports diarrhea
+  rdfs:label:            diarrhea
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:malaise
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports malaise
+  rdfs:label:            malaise
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:appetite_loss
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports loss of appetite
+  rdfs:label:            appetite_loss
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:weakness
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports weakness
+  rdfs:label:            weakness
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:dizziness
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports dizziness
+  rdfs:label:            dizziness
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:convulsions
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports convulsions
+  rdfs:label:            convulsions
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:confusion
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports confusion
+  rdfs:label:            confusion
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:jaundice
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports  jaundice
+  rdfs:label:            jaundice
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:dyspnea
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports dyspnea
+  rdfs:label:            dyspnea
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:no_symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports no symptoms
+  rdfs:label:            no_symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:other_symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          If the patient reports other symptoms
+  rdfs:label:            other_symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           optional
+  authenticated:         true

@@ -28,25 +28,10 @@
   rdfs:subClassOf:
     "@id":               schema:PostalAddress
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:PostalAddress
 
-# streetAddress
-- "@id":                 cvisb:streetAddress
-  "@type":               rdf:Property
-  rdfs:comment:          The street address. For example, 1600 Amphitheatre Pkwy
-  rdfs:label:            streetAddress
-  schema:domainIncludes:
-    - "@id":             cvisb:PostalAddress
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               schema:streetAddress
-  owl:cardinality:       one
-  marginality:           required
-  authenticated:         false
 
 # streetAddress
 - "@id":                 cvisb:streetAddress

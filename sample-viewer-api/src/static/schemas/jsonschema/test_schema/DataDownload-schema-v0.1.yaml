@@ -29,7 +29,7 @@
   rdfs:subClassOf:
     "@id":               schema:DataDownload
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   root_entity:           true
 
 # name
@@ -167,7 +167,7 @@
   schema:Enumeration:
                         - SRA
                         - AWS
-                        - null
+                        - GitHub
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier
@@ -183,16 +183,16 @@
   authenticated:         false
 
 
-- "@id":                 cvisb:publication
+- "@id":                 cvisb:citation
   "@type":               rdf:Property
   rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
-  rdfs:label:            publication
+  rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:sameAs:
-    "@id":               schema:publication
+    "@id":               schema:citation
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -268,6 +268,8 @@
                            - TCR sequencing
                            - Systems Serology
                            - Metabolomics
+                           - blood chemistry
+                           - vitals
                            - other
   authenticated:         false
 
@@ -300,7 +302,6 @@
                          - application/xml
                          - application/zip
                          - application/gzip
-                         - null
   authenticated:         false
 
 # dates

@@ -27,15 +27,57 @@
   rdfs:subClassOf:
     "@id":               schema:ScholarlyArticle
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:ScholarlyArticle
 
 # identifier
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
-  rdfs:comment:          DOI for publication
+  rdfs:comment:          Identifier or DOI for publication
   rdfs:label:            identifier
+  schema:domainIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:issn
+  "@type":               rdf:Property
+  rdfs:comment:          ISSN for publication
+  rdfs:label:            issn
+  schema:domainIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:DOI
+  "@type":               rdf:Property
+  rdfs:comment:          DOI for publication
+  rdfs:label:            DOI
+  schema:domainIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:PMID
+  "@type":               rdf:Property
+  rdfs:comment:          Pubmed ID for publication
+  rdfs:label:            PMID
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:rangeIncludes:
@@ -95,7 +137,7 @@
 # publication date
 - "@id":                 cvisb:datePublished
   "@type":               rdf:Property
-  rdfs:comment:          Journal name for publication
+  rdfs:comment:          Date when the ScholarlyArticle was published
   rdfs:label:            datePublished
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
@@ -145,6 +187,18 @@
   "@type":               rdf:Property
   rdfs:comment:          Name of journal/publication of the article
   rdfs:label:            journalName
+  schema:domainIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:journalNameAbbrev
+  "@type":               rdf:Property
+  rdfs:comment:          Abbreviated name of journal/publication of the article
+  rdfs:label:            journalNameAbbrev
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:rangeIncludes:
