@@ -467,6 +467,8 @@ console.log(this.handle_left)
   }
 
   updateLimits(limits) {
+    console.log("UPDATING LIMITS")
+    console.log(this.x)
     console.log(this.handle_left)
     console.log(this.handle_right)
     // Check to make sure the left and right handle haven't flipped sides.
