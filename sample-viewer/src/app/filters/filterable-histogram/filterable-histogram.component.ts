@@ -384,10 +384,10 @@ export class FilterableHistogramComponent implements OnInit {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        updateLimits({ lower: 0, upper: xValue, unknown: true }, x, xLinear, handle_left, handle_right);
+        updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: xValue });
       } else {
-        updateLimits({ lower: xValue, upper: 3000, unknown: true }, x, xLinear, handle_left, handle_right);
+        updateLimits({ ...filterSubject.value, lower: xValue }, x, xLinear, handle_left, handle_right);
         // Left side updated; lower limit
         filterSubject.next({ ...filterSubject.value, lower: xValue });
       }
@@ -397,7 +397,7 @@ export class FilterableHistogramComponent implements OnInit {
     let checkUnknown = function(filterSubject, requestSvc, endpoint, sendParams) {
       return function(d) {
         // update the status of checkbox
-        // filterSubject.next({ ...filterSubject.value, unknown: !filterSubject.value.unknown });
+        filterSubject.next({ ...filterSubject.value, unknown: !filterSubject.value.unknown });
 
         // sendParams(filterSubject, requestSvc, endpoint);
       }
