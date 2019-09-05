@@ -42,7 +42,8 @@ export class FilterSampleYearComponent implements OnInit {
     // Since `_exists_` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
     // MUST paren the whole clause
     // include unknown as an OR statement.
-    requestSvc.updateParams(endpoint, { field: 'infectionYear', value: `[${params.lower} TO ${params.upper}]`, orSelector: { value: '-_exists_', field: 'infectionYear' } });
+    let unknown_selector = params.unknown ? { value: '-_exists_', field: 'infectionYear' } : null;
+    requestSvc.updateParams(endpoint, { field: 'infectionYear', value: `[${params.lower} TO ${params.upper}]`, orSelector: unknown_selector });
 
   }
 }
