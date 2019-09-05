@@ -35,14 +35,14 @@ export class FilterSampleYearComponent implements OnInit {
   filterHandler(params, filterSvc, requestSvc, endpoint) {
     console.log("Calling filter handler in years!")
     console.log(params)
-    requestSvc.updateParams(endpoint, { field: 'infectionYear', value:  `[${params.lower} TO ${params.upper}]`, orSelector: { field: '-_exists_', value: 'infectionYear' } });
 
-    //   params.term === "unknown" ?
-    //        filterSubject.next({ lower: 0, upper: 0, unknown: true }) :
-    //        filterSubject.next({ lower: d.term, upper: d.term, unknown: false });
-    //
-    //      // update parameters.
-    //      sendParams(filterSubject, requestSvc, endpoint);
-    // }
+    // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
+    // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
+    // `-` negates that query
+    // Since `_exists_` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
+    // MUST paren the whole clause
+    // include unknown as an OR statement.
+    requestSvc.updateParams(endpoint, { field: 'infectionYear', value: `[${params.lower} TO ${params.upper}]`, orSelector: { field: '-_exists_', value: 'infectionYear' } });
+
   }
 }

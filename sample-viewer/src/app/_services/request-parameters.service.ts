@@ -464,8 +464,8 @@ export class RequestParametersService {
 
       // Check if there's an OR parameter to relate to that property.
       if (param.orSelector) {
-        let or_param = this.params2String(param.orSelector);
-        new_param = `${new_param} OR ${or_param}`
+        let or_param = `(${this.params2String(param.orSelector)})`;
+        new_param = `(${new_param} OR ${or_param})`
         console.log(or_param)
         console.log(new_param)
       }
@@ -487,8 +487,8 @@ export class RequestParametersService {
 
       // Check if there's an OR parameter to relate to that property.
       if (param.orSelector) {
-        let or_param = this.params2String(param.orSelector);
-        new_param = `${new_param} OR ${or_param}`
+        let or_param = `(${this.params2String(param.orSelector)})`;
+        new_param = `(${new_param} OR ${or_param})`
         console.log(or_param)
         console.log(new_param)
       }

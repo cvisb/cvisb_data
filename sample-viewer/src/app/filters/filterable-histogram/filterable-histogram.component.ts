@@ -156,7 +156,7 @@ export class FilterableHistogramComponent implements OnInit {
     //   // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
     //   // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
     //   // `-` negates that query
-    //   // Since `_exists` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
+    //   // Since `_exists_` flips the variable/value pair, have the field be exists and value be the variable. e.g.: `q=-_exists_:infectionDate`
     //   filterSubject.value['unknown'] ?
     //     // include unknown as an OR statement.
     //     requestSvc.updateParams(endpoint,
@@ -394,11 +394,13 @@ export class FilterableHistogramComponent implements OnInit {
     }
 
     // --- Checkbox for whether to include unknown values.
-    let checkUnknown = function(filterSubject, requestSvc, endpoint, sendParams) {
+    let checkUnknown = function(filterSubject, requestSvc, endpoint, filterFunc, filterSvc) {
       return function(d) {
         // update the status of checkbox
-        filterSubject.next({ ...filterSubject.value, unknown: !filterSubject.value.unknown });
+        let limits = { ...filterSubject.value, unknown: !filterSubject.value.unknown };
+        filterSubject.next(limits);
 
+        filterFunc(limits, filterSvc, requestSvc, endpoint);
         // sendParams(filterSubject, requestSvc, endpoint);
       }
     }
@@ -458,7 +460,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("dy", 2)
     // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
-    // check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
+    check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
 
 
   }
