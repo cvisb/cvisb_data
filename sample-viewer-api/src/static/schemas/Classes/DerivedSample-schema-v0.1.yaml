@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":                   cvisb:Sample
   schema:isPartOf:
-    "@id":                   https://schema.cvisb.org
+    "@id":                   https://data.cvisb.org/schema
 
 
 # source sample ID
@@ -49,7 +49,7 @@
 - "@id":                     cvisb:sourceSampleType
   "@type":                   rdf:Property
   rdfs:comment:              Sample ID for the primary source of the derived sample
-  rdfs:label:                sourceSampleID
+  rdfs:label:                sourceSampleType
   schema:domainIncludes:
     - "@id":                 cvisb:DerivedSample
   schema:rangeIncludes:
@@ -89,4 +89,4 @@
     - "@id":                 cvisb:Date
   owl:cardinality:           one
   marginality:               recommended
-  authenticated:             true
+  authenticated:             false

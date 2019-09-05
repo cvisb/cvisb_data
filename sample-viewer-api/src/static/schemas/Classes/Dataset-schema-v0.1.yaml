@@ -34,7 +34,7 @@
   rdfs:subClassOf:
     "@id":               schema:Dataset
   schema:isPartOf:
-    "@id":               https://data.cvisb.org/jsonschema
+    "@id":               https://data.cvisb.org/schema
   root_entity:           true
 
 # name
@@ -91,6 +91,8 @@
                            - TCR sequencing
                            - Systems Serology
                            - metabolomics
+                           - blood chemistry
+                           - vitals
                            - other
   authenticated:         false
 
@@ -375,20 +377,6 @@
   authenticated:         false
 
 # Publications
-- "@id":                 cvisb:publication
-  "@type":               rdf:Property
-  rdfs:comment:          Citation string (not an object) for the journal article or other publication associated with the dataset
-  rdfs:label:            publication
-  schema:domainIncludes:
-    - "@id":             cvisb:Dataset
-  schema:rangeIncludes:
-    - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               schema:publication
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
   rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
@@ -403,17 +391,17 @@
   marginality:           recommended
   authenticated:         false
 
-# Funder. For CViSB:     NIH award U19AI135995
-- "@id":                 cvisb:funder
+# Funding. For CViSB:     NIH award U19AI135995
+- "@id":                 cvisb:funding
   "@type":               rdf:Property
-  rdfs:comment:          A person or organization that supports (sponsors) the collection of this dataset through some kind of financial contribution
-  rdfs:label:            funder
+  rdfs:comment:          Funding that supports (sponsors) the collection of this dataset through some kind of financial contribution
+  rdfs:label:            funding
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
-    - "@id":             cvisb:Organization
+    - "@id":             cvisb:MonetaryGrant
   schema:sameAs:
-    "@id":               schema:funder
+    "@id":               schema:funding
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

@@ -18,7 +18,7 @@
       contactType:                      "technical support"
       email:                            "info@cvisb.org"
       url:                              "https://cvisb.org/"
-  funder:
+  funding:
     "@type":                            "Organization"
     name:                               "National Institute of Allergy & Infectious Diseases"
     alternateName:                      "NIAID"

@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 # Data
@@ -37,7 +37,7 @@
     - "@id":             cvisb:HeartRate
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:respiratoryRate
   "@type":               rdf:Property
@@ -49,7 +49,7 @@
     - "@id":             cvisb:RespiratoryRate
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:oxygenSaturation
   "@type":               rdf:Property
@@ -61,7 +61,7 @@
     - "@id":             cvisb:OxygenSaturation
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:systolicPressure
   "@type":               rdf:Property
@@ -73,7 +73,7 @@
     - "@id":             cvisb:SystolicPressure
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:diastolicPressure
   "@type":               rdf:Property
@@ -85,7 +85,7 @@
     - "@id":             cvisb:DiastolicPressure
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:meanArterialPressure
   "@type":               rdf:Property
@@ -97,7 +97,7 @@
     - "@id":             cvisb:MeanArterialPressure
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:skinTemperature
   "@type":               rdf:Property
@@ -109,7 +109,7 @@
     - "@id":             cvisb:SkinTemperature
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:bodyTemperature
   "@type":               rdf:Property
@@ -121,7 +121,7 @@
     - "@id":             cvisb:BodyTemperature
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 
 - "@id":                 cvisb:ECG
@@ -134,7 +134,7 @@
     - "@id":             cvisb:ECGPoint
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:accelerometry
   "@type":               rdf:Property
@@ -146,4 +146,4 @@
     - "@id":             cvisb:Accelerometry
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true

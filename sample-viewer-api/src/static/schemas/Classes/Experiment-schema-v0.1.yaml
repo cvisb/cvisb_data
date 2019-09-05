@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   root_entity:           true
 
 # id
@@ -102,10 +102,10 @@
 
 
 # NCBI IDs
-- "@id":                 cvisb:SRA_ID
+- "@id":                 cvisb:sraID
   "@type":               rdf:Property
   rdfs:comment:          ID used by the National Center for Biotechnology Information (NCBI) to identify the data within the Sequence Read Archive (SRA)
-  rdfs:label:            SRA_ID
+  rdfs:label:            sraID
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
@@ -115,10 +115,10 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:GenBank_ID
+- "@id":                 cvisb:genbankID
   "@type":               rdf:Property
   rdfs:comment:          ID used to identify the data within GenBank, the NIH's genetic sequence database
-  rdfs:label:            GenBank_ID
+  rdfs:label:            genbankID
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
@@ -173,6 +173,7 @@
   marginality:           recommended
   authenticated:         false
 
+
 # measurementTechnique
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
@@ -196,6 +197,8 @@
                            - TCR sequencing
                            - Systems Serology
                            - Metabolomics
+                           - blood chemistry
+                           - vitals
                            - other
 # when updated
 - "@id":                 cvisb:dateModified
@@ -256,16 +259,16 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:publication
+- "@id":                 cvisb:citation
   "@type":               rdf:Property
   rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
-  rdfs:label:            publication
+  rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:sameAs:
-    "@id":               schema:publication
+    "@id":               schema:citation
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -284,29 +287,18 @@
   authenticated:         false
 
 # Data
-- "@id":                 cvisb:data
-  "@type":               rdf:Property
-  rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
-  rdfs:label:            data
-  schema:domainIncludes:
-    - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             cvisb:Data
-    - "@id":             cvisb:Accelerometry
-    - "@id":             cvisb:BodyTemperature
-    - "@id":             cvisb:DiastolicPressure
-    - "@id":             cvisb:ECGPoint
-    - "@id":             cvisb:HeartRate
-    - "@id":             cvisb:HLAData
-    - "@id":             cvisb:MeanArterialPressure
-    - "@id":             cvisb:OxygenSaturation
-    - "@id":             cvisb:PiccoloData
-    - "@id":             cvisb:RespiratoryRate
-    - "@id":             cvisb:SkinTemperature
-    - "@id":             cvisb:SNPData
-    - "@id":             cvisb:SystolicPressure
-    - "@id":             cvisb:ViralSeqData
-    - "@id":             cvisb:Vitals
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
+# - "@id":                 cvisb:data
+#   "@type":               rdf:Property
+#   rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
+#   rdfs:label:            data
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Experiment
+#   schema:rangeIncludes:
+#     - "@id":             cvisb:Data
+#     - "@id":             cvisb:PiccoloData
+#     - "@id":             cvisb:ViralSeqData
+#     - "@id":             cvisb:Vitals
+#     - "@id":             cvisb:HLAData
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false

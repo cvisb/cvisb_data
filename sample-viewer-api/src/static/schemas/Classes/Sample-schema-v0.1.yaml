@@ -28,7 +28,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   root_entity:           true
 
 # id
@@ -108,18 +108,18 @@
   authenticated:         true
 
 # patient ID
-- "@id":                 cvisb:patientID
-  "@type":               rdf:Property
-  rdfs:comment:          Unique public patient id. Will be added into the database via join
-  rdfs:label:            patientID
-  schema:domainIncludes:
-    - "@id":             cvisb:Sample
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
+# - "@id":                 cvisb:patientID
+#   "@type":               rdf:Property
+#   rdfs:comment:          Unique public patient id. Will be added into the database via join
+#   rdfs:label:            patientID
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Sample
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       one
+#   marginality:           recommended
+#   authenticated:         false
 
 - "@id":                 cvisb:privatePatientID
   "@type":               rdf:Property
@@ -161,6 +161,19 @@
   marginality:           required
   authenticated:         true
 
+
+- "@id":                 cvisb:samplingDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of sample collection used for the the experiment.  Should refer to the initial time the sample was collected from the patient.
+  rdfs:label:            samplingDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 # sample type:           from an acute or survivor patient.
 - "@id":                 cvisb:sampleGroup
   "@type":               rdf:Property
@@ -173,10 +186,10 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
+  authenticated:         false
   schema:Enumeration:
                         - acute
                         - survivor
-                        - null
 
 # sample type
 - "@id":                 cvisb:sampleType
@@ -240,7 +253,6 @@
                         - "human"
                         - "rat"
                         - "monkey"
-                        - null
   authenticated:         false
 
 # protocol

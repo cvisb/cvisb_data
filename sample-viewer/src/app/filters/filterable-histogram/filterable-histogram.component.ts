@@ -31,14 +31,14 @@ export class FilterableHistogramComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private element_dims: any;
+  // private element_dims: any;
   private margin: any = { top: 0, bottom: 25, left: 12, right: 12, axisBottom: 3, betweenGraphs: 15 };
   private width: number = 150;
   private min_width_unknown: number = 40;
   private height: number = 90;
   private slider_height: number = 50;
-  private bar_height: number = 10;
-  private bar_spacing: number = 3;
+  // private bar_height: number = 10;
+  // private bar_spacing: number = 3;
 
   // --- Selectors ---
   private years: any; // normal histogram
@@ -58,7 +58,6 @@ export class FilterableHistogramComponent implements OnInit {
   private x2: any;
   private xLinear: any;
   private y: any;
-  private colorScale: any;
   private xAxis: any;
   private xAxis2: any;
   private axisHist: any;
@@ -216,8 +215,6 @@ export class FilterableHistogramComponent implements OnInit {
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
     // Range is funky to account for padding on edges.
     this.xLinear = d3.scaleLinear()
-      .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-      this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       .clamp(true);
 
 
@@ -250,8 +247,9 @@ export class FilterableHistogramComponent implements OnInit {
         .domain(this.xDomain.map(String));
 
       this.xLinear
+        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
         .domain(d3.extent(this.xDomain));
-
 
       let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
@@ -263,7 +261,7 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.xAxis = d3.axisBottom(this.x)
         .tickSizeOuter(0)
-        .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
+        .tickValues(this.x.domain().filter((_, i) => !(i % 2)));
 
       this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
@@ -366,17 +364,17 @@ export class FilterableHistogramComponent implements OnInit {
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
     // Drag event listeners
-    let endDrag = function(xLinear: any, side: string, updateLimits) {
-    // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
+    let endDrag = function(x, xLinear, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
+      // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
-      updateHandles(xLinear, side, updateLimits);
+      updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits, filterSubject);
       // updateHandles(xLinear, side, filterSubject);
 
       // sendParams(filterSubject, requestSvc, endpoint);
     }
 
-    let updateHandles = function(xLinear: any, handleSide: string, updateLimits) {
-    // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
+    let updateHandles = function(x, xLinear, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
+      // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
       // convert the pixel position (range value) to data value (domain value)
@@ -384,16 +382,15 @@ export class FilterableHistogramComponent implements OnInit {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
-      console.log(xValue)
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        updateLimits({lower: 0,  upper: xValue, unknown: true});
-        // filterSubject.next({ ...filterSubject.value, upper: xValue });
+        updateLimits({ lower: 0, upper: xValue, unknown: true }, x, xLinear, handle_left, handle_right);
+        filterSubject.next({ ...filterSubject.value, upper: xValue });
       } else {
-      updateLimits({lower: xValue,  upper: 3000, unknown: true});
-        // // Left side updated; lower limit
-        // filterSubject.next({ ...filterSubject.value, lower: xValue });
+        updateLimits({ lower: xValue, upper: 3000, unknown: true }, x, xLinear, handle_left, handle_right);
+        // Left side updated; lower limit
+        filterSubject.next({ ...filterSubject.value, lower: xValue });
       }
     }
 
@@ -429,8 +426,10 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
-        .on("start drag", () => updateHandles(this.xLinear, 'right', this.updateLimits))
-        .on("end", () => endDrag(this.xLinear, 'right', this.updateLimits))
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
         // Update positions on start or drag events
         // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
@@ -444,11 +443,11 @@ export class FilterableHistogramComponent implements OnInit {
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.xLinear, 'left', this.updateLimits))
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject))
         // .on("start drag", () => updateHandles(this.xLinear, 'left', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
         // .on("end", () => endDrag(this.xLinear, 'left', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
-        .on("end", () => endDrag(this.xLinear, 'left', this.updateLimits))
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
       );
 
 
@@ -458,14 +457,16 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x", this.width + this.margin.betweenGraphs + this.x.bandwidth() * (5 / 8))
       .attr("y", "0.55em")
       .attr("dy", 2)
-      // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
+    // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     // check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
 
   }
 
-  updateLimits(limits) {
+  updateLimits(limits, x, xLinear, handle_left, handle_right) {
+    console.log("UPDATING LIMITS")
+    console.log(limits)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.min(limits['lower'], limits['upper']);
     let upper_limit = Math.max(limits['lower'], limits['upper']);
@@ -480,29 +481,29 @@ export class FilterableHistogramComponent implements OnInit {
 
 
     // Update slider handles
-    if (this.handle_left && this.handle_right) {
-      this.handle_left
-        .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
+    if (handle_left && handle_right) {
+      handle_left
+        .attr("transform", `translate(${xLinear(lower_limit) - x.bandwidth() * 0.5},-5)`);
 
       if (lower_limit === 0 && upper_limit === 0) {
         // If the limit is 0, set the left and right handles to overlap.
-        this.handle_right
-          .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
+        handle_right
+          .attr("transform", `translate(${xLinear(upper_limit) - x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
         d3.selectAll(".track-filled")
-          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-          .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+          .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
+          .attr("x2", xLinear(upper_limit) - x.bandwidth() * 0.5);
 
 
       } else {
-        this.handle_right
-          .attr("transform", `translate(${this.xLinear(upper_limit) + this.x.bandwidth() * 0.5},-5)`);
+        handle_right
+          .attr("transform", `translate(${xLinear(upper_limit) + x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
         d3.selectAll(".track-filled")
-          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-          .attr("x2", this.xLinear(upper_limit) + this.x.bandwidth() * 0.5);
+          .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
+          .attr("x2", xLinear(upper_limit) + x.bandwidth() * 0.5);
 
       }
 

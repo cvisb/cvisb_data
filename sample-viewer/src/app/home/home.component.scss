@@ -10,7 +10,12 @@ h1 {
 }
 
 summary {
-  margin: 0 13px;
+  margin: 13px 13px 0;
+  background: #ffffff87;
+  font-weight: 400;
+  padding: 5px 15px;
+  align-items: center;
+  max-width: 600px;
 }
 
 .card {
@@ -37,10 +42,11 @@ a {
 
   &.link {
     color: $cvisb-theme;
-    margin-left: 15px;
+    // margin-left: 15px;
   }
 }
 // Markdown changes
+
 /deep/ .markdown-bold {
   font-weight: 400;
 }
@@ -64,4 +70,153 @@ a {
   color: accent-redder(600);
   font-weight: 400;
   padding-bottom: 8px;
+}
+
+.intro {
+  background-image: url("../../assets/img/IMG_9143.jpeg");
+  height: 100%;
+  padding: 50px;
+  background-size: cover;
+  // background-position-y: -80px;
+}
+
+.cvisb-header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#cvisb-title {
+  font-size: 4em;
+  font-weight: 700;
+  color: white;
+  color: $grey-500;
+  margin-bottom: 0;
+  margin-top: 15px;
+}
+
+#cvisb-subtitle {
+  font-weight: 400;
+  color: white;
+  margin: 0;
+}
+
+#collaboration,
+#sharing-good,
+.cvisb-container,
+.learn-more-link {
+  display: flex;
+  justify-content: center;
+}
+
+#learn-more {
+  width: 125px;
+  margin-bottom: 10px;
+  color: $grey-600;
+}
+
+#collaboration {
+  margin: 10px 13px;
+  background: #ffffffab;
+  padding: 5px 15px;
+  border-top: 2px white solid;
+  border-bottom: 2px white solid;
+  max-width: 550px;
+}
+
+.intro-section {
+margin: -18px -63px;
+}
+
+#sharing-good {
+  margin-top: 10px;
+  font-size: 1.25em;
+  margin-bottom: 5px;
+}
+
+.section-links {
+  justify-content: space-between;
+}
+
+.section-link {
+  flex: 1;
+  padding: 10px;
+  margin: 0 5px;
+
+  & ul {
+    margin: 0;
+    padding-left: 10px;
+  }
+
+  & li {
+    list-style: none;
+  }
+}
+
+.patient {
+  background: $ebola-md;
+}
+
+.samples {
+  background: accent-redder(300);
+}
+
+.data {
+  background: $lassa-md;
+}
+
+.section-title {
+  font-size: 1.5em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 0;
+  margin: 7px 0;
+}
+
+i.section-icon {
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+}
+
+.patient .section-icon {
+  color: $ebola-color;
+}
+
+.data .section-icon {
+  color: $lassa-color;
+}
+
+.samples .section-icon {
+  color: accent-redder(500);
+}
+
+.about-group.container {
+  margin-bottom: 50px;
+  max-width: 600px;
+}
+
+.about-title {
+  display: flex;
+  width: 125px;
+  align-content: flex-end;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 400;
+  margin-right: 50px;
+}
+
+.description {
+  flex: 1;
+}
+
+.section-subtitle {
+  font-size: 0.8em;
+}
+
+.who-are-we {
+    margin-top: 50px;
 }

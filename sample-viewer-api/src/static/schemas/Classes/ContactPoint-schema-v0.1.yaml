@@ -29,12 +29,12 @@
   rdfs:subClassOf:
     "@id":               schema:ContactPoint
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:ContactPoint
 
 # contactType
-# types after: https://developers.google.com/search/docs/data-types/corporate-contact
+# types after:           https://developers.google.com/search/docs/data-types/corporate-contact
 - "@id":                 cvisb:contactType
   "@type":               rdf:Property
   rdfs:comment:          contact type of the contactPoint
@@ -53,7 +53,7 @@
     - technical support
     - customer support
 
-# url: URL or phone number required by Google on a ContactPoint
+# url:                   URL or phone number required by Google on a ContactPoint
 - "@id":                 cvisb:url
   "@type":               rdf:Property
   rdfs:comment:          url of the contactPoint

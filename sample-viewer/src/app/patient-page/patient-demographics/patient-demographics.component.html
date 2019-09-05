@@ -16,12 +16,20 @@
 <div class="country container" [ngClass]="patient.country['name']">
   <span class="variable-field">location:</span>
   <span class="variable-value">
-  <span *ngFor="let area of patient.homeLocation">
-    {{ area['name'] }} {{ area['administrativeType'] }},
-  </span> {{ patient.country['name'] }}
-
-
-  </span>
+    <span *ngFor="let area of patient.homeLocation">
+      {{ area['name'] }} {{ area['administrativeType'] }},
+    </span> {{ patient.country['name'] }} </span>
 
   <svg-icon [icon]="patient.country['identifier']" class="country-icon" [ngClass]="patient.country['identifier']" *ngIf="patient.country['identifier']"></svg-icon>
+</div>
+
+
+<div class="pregnant" *ngIf="patient.gender == 'Female'">
+  pregnant:
+  <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
+</div>
+
+<div class="occupation" *ngIf="patient.occupation">
+  occupation:
+  <span class="variable-value">{{ patient.occupation }}</span>
 </div>

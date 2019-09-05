@@ -24,7 +24,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 - "@id":                 cvisb:timepoint
@@ -37,7 +37,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:daysSinceAdmit
   "@type":               rdf:Property
@@ -49,16 +49,16 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:piccolo
   "@type":               rdf:Property
-  rdfs:comment:          Array of Piccolo data measured for the patient at the timepoint.
+  rdfs:comment:          Object of Piccolo data measured for the patient at the timepoint.
   rdfs:label:            symptoms
   schema:domainIncludes:
     - "@id":             cvisb:PiccoloData
   schema:rangeIncludes:
     - "@id":             cvisb:Symptom
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true

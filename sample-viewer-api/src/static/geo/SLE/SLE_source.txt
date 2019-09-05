@@ -1,3 +1,11 @@
+SLE boundaries: # SLE from https://data.humdata.org/dataset/sierra-leone-all-ad-min-level-boundaries
+  
+
+SLE populated places originally from NGA; cleaned up by UN-OCHA
+https://data.humdata.org/dataset/sierra-leone-settlements
+
+SLE places also from OSM via HOT
+https://data.humdata.org/dataset/open-street-map-data-on-guinea-liberia-and-sierra-leone
 
 Mapshaper simplification: Adm2
 

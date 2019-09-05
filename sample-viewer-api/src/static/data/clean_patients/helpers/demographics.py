@@ -1,6 +1,21 @@
 import pandas as pd
 import re
 
+def convertLower(input, unknownVal = pd.np.nan):
+    # Value is NA; collapse to unknown
+    if(input != input):
+        return(unknownVal)
+    return(input.lower())
+
+def convertBoolean(input):
+    # Value is NA
+    if(input != input):
+        return(pd.np.nan)
+    if((input.lower == "n") | (input.lower == "no")):
+        return(False)
+    if((input.lower == "y") | (input.lower == "yes")):
+        return(True)
+
 # convert gender to M/F
 def convertGender(gender):
     if(gender == gender):

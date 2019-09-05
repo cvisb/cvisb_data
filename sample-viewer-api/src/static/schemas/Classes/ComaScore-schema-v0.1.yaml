@@ -27,7 +27,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:daysSinceAdmit
   "@type":               rdf:Property
@@ -39,7 +39,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:glasgowComaScore
   "@type":               rdf:Property
@@ -51,7 +51,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
   minimum:               3
   maximum:               15
 
@@ -65,7 +65,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
   minimum:               1
   maximum:               4
 
@@ -79,7 +79,7 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
   minimum:               1
   maximum:               5
 
@@ -93,6 +93,6 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
   minimum:               1
   maximum:               6

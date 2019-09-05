@@ -37,7 +37,7 @@
 
 .circle-packing,
 .patient-count-container {
-  max-width: 1200px;
+  // max-width: 1200px;
 }
 
 .left-container {
@@ -66,4 +66,15 @@
 
 .bar-graph {
   margin-right: 15px;
+}
+
+
+.title {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+.subtitle {
+    font-size: 0.8em;
 }

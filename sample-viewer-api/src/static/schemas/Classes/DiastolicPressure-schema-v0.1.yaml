@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:time
   "@type":               rdf:Property
@@ -35,7 +35,7 @@
     - "@id":             schema:DateTime
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:diastolicPressure
   "@type":               rdf:Property
@@ -47,4 +47,4 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true

@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               schema:Thing
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 
 - "@id":                 cvisb:timepoint
@@ -48,4 +48,4 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true

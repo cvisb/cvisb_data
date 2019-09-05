@@ -1,40 +1,156 @@
-<div class="centered">
-  <h1>Center for Viral Systems Biology Data</h1>
-
-  <section class="intro">
-    <summary class="description">
-      CViSB is committed to making our scientific research and data available to the public. Here are a few of the things we're working on.
-    </summary>
-  </section>
-
-  <section class="container card-container">
-
-
-    <div class="card" *ngFor="let card of cards">
-      <a [routerLink]="['../', card.path]">
-        <h4 class="card-title">
-        {{ card.label }}
-        </h4>
-
-        <div class="card-tbd" *ngIf="card.tbd">
-          coming soon
-        </div>
-
-        <div class="card-warning" *ngIf="card.warning">
-          {{ card.warning }}
-        </div>
-      </a>
-
-      <div class="card-description">
-        <span [outerHTML]="card.description | sloppyMarkdown"></span>
+<div class="intro-section">
+  <section class="intro container-column">
+    <div class="cvisb-container">
+      <div class="cvisb-header">
+        <h1 id="cvisb-title">See-Viz-Bee</h1>
+        <h2 id="cvisb-subtitle">The Data Portal for the Center for Viral Systems Biology</h2>
       </div>
+    </div>
 
+    <div class="cvisb-container">
+      <summary class="description container-column">
+        What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections?
+        The mission of the Center for Viral Systems Biology is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease.
+        <!-- We hope that via this research we will be able to provide a deep
+      system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies. -->
+
+        <div id="collaboration">
+          A collaboration between CViSB and the Kenema Government Hospital
+        </div>
+
+        <div class="learn-more-link">
+          <a routerLink="/about" class="link">
+            <button mat-stroked-button id="learn-more">Learn more</button>
+          </a>
+        </div>
+
+      </summary>
     </div>
   </section>
 
-  <!-- <section>
-      <a routerLink="/about" class="link"> Learn more about CViSB data</a>
-  </section> -->
+  <div id="sharing-good">
+    Explore our scientific research and data
+    <!-- CViSB is committed to sharing our scientific research and data with the public. -->
+  </div>
 
+  <div class="container section-links">
+    <a routerLink="/dataset" class="data section-link">
+
+      <i class="section-icon fas fa-table"></i>
+
+      <div class="section-title">
+        Data
+      </div>
+
+      <div>
+        <div class="section-subtitle">
+          explore, visualize, and download experimental data
+        </div>
+        <ul>
+
+          <a [routerLink]='["/dataset/hla"]'>
+            <li>
+              HLA Genotypes
+            </li>
+          </a>
+          <a [routerLink]='["/dataset/viralseq"]'>
+            <li>
+              Viral Sequencing
+            </li>
+          </a>
+        </ul>
+      </div>
+    </a>
+
+
+    <a routerLink="/patient" class="patient section-link">
+      <i class="section-icon fas fa-users"></i>
+
+      <div class="section-title">
+        Patients
+      </div>
+
+      <div>
+        <div class="section-subtitle">
+          view and download demographic and clinical data
+        </div>
+        <ul>
+          <li>
+            acutely infected
+          </li>
+          <li>
+            survivors
+          </li>
+          <li>
+            contacts
+          </li>
+          <li>
+            healthy controls
+          </li>
+        </ul>
+      </div>
+    </a>
+
+    <a routerLink="/sample" class="samples section-link">
+      <i class="section-icon fas fa-dna"></i>
+      <div class="section-title">
+        Samples
+      </div>
+      <div class="section-subtitle">
+        view and download metadata for biological samples
+      </div>
+    </a>
+
+  </div>
+</div>
+
+
+<div class="who-are-we">
+  <div class="about-group container">
+    <div class="about-title">
+      What we study
+    </div>
+    <div class="description">
+      We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs.
+    </div>
+  </div>
+
+  <div class="about-group container">
+    <div class="about-title">
+      Where we get our data
+    </div>
+    <div class="description">
+      The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
+      KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
+      We have also analyzed samples from additional partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
+    </div>
+  </div>
+
+  <div class="about-group container">
+    <div class="about-title">
+      More about our data
+    </div>
+    <div class="description">
+      See our <a routerLink="/documentation" class="link">documentation</a> section for more info about our data and their limitations.
+    </div>
+  </div>
 
 </div>
+
+<!-- <app-compare-cohorts></app-compare-cohorts>
+
+<div class="main-graph">
+  <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
+</div>
+<div class="main-graph">
+  <app-allele-circle-packing [data]="alleleCount" [scale]="0.5" class="unique-alleles"></app-allele-circle-packing>
+</div>
+<div class="main-graph">
+  <app-allele-circle-packing [data]="alleleCount" [scale]="0.5" class="novel-alleles"></app-allele-circle-packing>
+</div>
+
+<app-download-btn [data]="test" filenamePart="Ebola" filetype="viral sequences"></app-download-btn>
+
+<app-download-aligned-sequences></app-download-aligned-sequences> -->
+
+<!-- <app-beeswarm></app-beeswarm> -->

@@ -2,12 +2,26 @@
 
 import pandas as pd
 from Bio import SeqIO
+from Bio import Phylo
 import os
 from datetime import datetime
 
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
 # Helper functions for cleanup...
 import helpers
+
+
+# x = Phylo.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/ebola.MCC.tre", 'newick')
+
+
+# import imp
+#
+# bt = imp.load_source("baltic", "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_viral_seq/exploratory_scripts/baltic/baltic.py")
+#
+# x = bt.loadNexus("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/ebola.MCC.tre")
+
+# for tree in x:
+#     print(tree)
 
 # [Commonalities]  ----------------------------------------------------------------------------------------------------
 today = datetime.today().strftime('%Y-%m-%d')
@@ -30,12 +44,12 @@ def getPublisher(row, varName="cvisb_data"):
             }
         }])
 
-def getDNAseq(all_seq, df, df_id, virus):
+def getDNAseq(all_seq, df, df_id, virus, seq_type = "DNAsequence"):
     for seq in all_seq:
         id = seq.id.split("|")[0]
         if(sum(df[df_id] == id) == 0):
             print(seq.id)
-        seq_obj = [{"DNAsequence": str(seq.seq), "virus": virus}]
+        seq_obj = [{seq_type: str(seq.seq), "virus": virus}]
         df.at[df[df_id] == id, 'data'] = seq_obj
     return(df)
 
@@ -116,7 +130,6 @@ ebv.groupby('KGH_id')._merge.value_counts()
 # [Lassa]  ----------------------------------------------------------------------------------------------------
 lsv = pd.read_csv(lsv_file)
 
-
 lsv['privatePatientID'] = lsv.sample_id.apply(helpers.interpretID)
 
 lsv['outcome'] = lsv.outcome.apply(helpers.cleanOutcome)
@@ -140,10 +153,17 @@ lsv_seq = list(SeqIO.parse(
     "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_mafft_aln_04102019.fasta", "fasta"))
 lsv['data'] = None
 lsv = getDNAseq(lsv_seq, lsv, 'sample_id', "Lassa")
-lsv[exptCols].iloc[9].to_json()
+# lsv[exptCols].iloc[9].to_json()
 sum(lsv.data.apply(lambda x: x is None))
 
-lsv[exptCols].sample(4)
+# Import AA sequences
+lsv_aaseq = list(SeqIO.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_04102019_aa_aln.fasta", "fasta"))
+lsv['data'] = None
+lsv = getDNAseq(lsv_aaseq, lsv, 'sample_id', "Lassa", "AAsequence")
+lsv[exptCols].iloc[9].to_json()
+sum(lsv.data.apply(lambda x: x is None))
+lsv.columns
+lsv[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
 
 # Merge in the known set of ids...
 lsv = pd.merge(lsv, ids, how="left", indicator=True,

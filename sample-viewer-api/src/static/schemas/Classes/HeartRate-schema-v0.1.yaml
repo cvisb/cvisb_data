@@ -23,7 +23,7 @@
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
-    "@id":               https://schema.cvisb.org
+    "@id":               https://data.cvisb.org/schema
 
 - "@id":                 cvisb:time
   "@type":               rdf:Property
@@ -35,7 +35,7 @@
     - "@id":             schema:DateTime
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
 
 - "@id":                 cvisb:heartRate
   "@type":               rdf:Property
@@ -47,4 +47,20 @@
     - "@id":             schema:Integer
   owl:cardinality:       one
   marginality:           required
-  authenticated:         false
+  authenticated:         true
+
+
+- "@id":                 cvisb:collectionInstrument
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor
+  rdfs:label:            collectionInstrument
+  schema:domainIncludes:
+    - "@id":             cvisb:HeartRate
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+  schema:Enumeration:
+                        - PhysIQ
+                        - conventional

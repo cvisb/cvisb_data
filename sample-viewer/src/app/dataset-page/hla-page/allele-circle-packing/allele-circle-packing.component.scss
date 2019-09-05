@@ -1,5 +1,5 @@
-@import '../../../../sass/variables.scss';
-// --- General params for all circle packing graphs ---
+@import '../../../../sass/variables.scss'; // --- General params for all circle packing graphs ---
+
 .masked {
   opacity: 0.05 !important;
 }
@@ -48,8 +48,6 @@ div.circlepacking-tooltip {
   display: none;
 }
 
-
-
 .title--allele,
 .title--locus {
   border-bottom: 1px solid $default-color;
@@ -67,8 +65,8 @@ div.circlepacking-tooltip {
   border-radius: 3px;
   background-color: $ebola-md;
 }
-
 // annotations
+
 .annotation {
   fill: $grey-400;
 }
@@ -91,32 +89,31 @@ div.circlepacking-tooltip {
   text-anchor: end;
   dominant-baseline: ideographic;
 }
-
 // --- SPECIFIC TO THE UNIQUE ALLELES MINI-PLOT ---
 // Main circle packing graph
+
 .main-packing {
   & .node circle {
-    stroke: none !important;
+    // stroke: none !important;
+    // stroke-width: 0;
   }
 
   .label {
     display: none !important;
   }
-
-  .locus-enabled circle {
-    stroke-dasharray: 4,4;
-    stroke: white !important;
-    stroke-opacity: 1 !important;
-    stroke-width: 1;
-  }
-
-  .simplified-annotation, .annotation--patient {
+  // .locus-enabled circle {
+  //   stroke-dasharray: 4,4;
+  //   stroke: white !important;
+  //   stroke-opacity: 1 !important;
+  //   stroke-width: 1;
+  // }
+  .annotation--patient,
+  .simplified-annotation {
     display: none !important;
   }
 
   .allele-circles {
     circle:hover {
-      stroke: $default-color !important;
       stroke-width: 1;
       opacity: 1 !important;
     }
@@ -125,10 +122,27 @@ div.circlepacking-tooltip {
   .node--root circle:hover {
     stroke: none !important;
   }
-}
 
+  & .node circle.circle-stroke {
+    stroke-opacity: 1;
+    opacity: 1;
+    stroke-width: 3;
+  }
+
+  & .node circle.circle-fill {
+    stroke: none !important;
+  }
+
+  & .node--locus circle.circle-stroke {
+    stroke-dasharray: 4,4;
+  }
+}
 // Unique alleles count mini-graph (outer circles)
 .unique-alleles {
+  .circle-stroke {
+    stroke: none !important;
+  }
+
   .node--leaf {
     display: none;
   }
@@ -141,7 +155,11 @@ div.circlepacking-tooltip {
     stroke: none !important;
   }
 
-  .annotation--hla-title, .annotation--bottom-right, .full-annotation, .annotation--patient, .annotation--novel {
+  .annotation--bottom-right,
+  .annotation--hla-title,
+  .annotation--novel,
+  .annotation--patient,
+  .full-annotation {
     display: none;
   }
 
@@ -178,9 +196,14 @@ div.circlepacking-tooltip {
     }
   }
 }
-
 // Novel alleles circles (innermost circles)
+
 .novel-alleles {
+  .circle-stroke {
+    stroke: none !important;
+    display: none !important;
+  }
+
   .node--root circle {
     // fill: white !important;
     // stroke: $default-color !important;
@@ -195,7 +218,10 @@ div.circlepacking-tooltip {
     fill-opacity: 1 !important;
   }
 
-  .annotation--hla-title, .annotation--upper-right, .annotation--patient, .annotation--bottom-right {
+  .annotation--bottom-right,
+  .annotation--hla-title,
+  .annotation--patient,
+  .annotation--upper-right {
     display: none;
   }
 
@@ -217,8 +243,8 @@ div.circlepacking-tooltip {
     stroke: none !important;
   }
 }
-
 // Patient page: alleles circles (innermost circles)
+
 .patients {
   .node--root circle {
     // fill: white !important;
@@ -228,7 +254,10 @@ div.circlepacking-tooltip {
     stroke: none !important;
   }
 
-  .annotation--hla-title, .full-annotation, .simplified-annotation, .annotation--novel {
+  .annotation--hla-title,
+  .annotation--novel,
+  .full-annotation,
+  .simplified-annotation {
     display: none;
   }
 
@@ -236,7 +265,7 @@ div.circlepacking-tooltip {
     font-size: 1.5em;
   }
 
-    .node--leaf :not(.highlight) {
+  .node--leaf :not(.highlight) {
     fill: white !important;
     stroke-dasharray: 2,2;
     fill-opacity: 1 !important;
@@ -261,13 +290,26 @@ div.circlepacking-tooltip {
   }
 
   .allele-enabled circle.highlight {
-    stroke-width: 2;
-    stroke: $default-color !important;
-    stroke-dasharray: 3,3;
+    // stroke-width: 2;
+    // stroke: $default-color !important;
+    // stroke-dasharray: 3,3;
   }
 
   .allele-masked circle {
     fill-opacity: 0.35 !important;
     stroke: none !important;
   }
+}
+// tooltips
+
+.allele-label {
+  dominant-baseline: hanging;
+  font-weight: 700;
+}
+
+.allele-novel,
+.locus-novel {
+  font-size: 0.85em;
+  font-weight: 400;
+  fill: $ebola-md;
 }

@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
+import { DateRangePipe } from "../_pipes";
 
 // import PATIENTS from '../../assets/data/patients.json';
 
@@ -39,6 +40,7 @@ export class GetPatientsService {
     private router: Router,
     private apiSvc: ApiService,
     private requestSvc: RequestParametersService,
+    private datePipe: DateRangePipe,
     private authSvc: AuthService) {
 
     // this.apiSvc.put('patient', [this.fakePatients[1]]);
@@ -256,7 +258,7 @@ export class GetPatientsService {
         console.log(res);
 
         let patientArray = res["body"]['hits'].map(patient => {
-          return (new PatientDownload(patient));
+          return (new PatientDownload(patient, this.datePipe));
         });
 
         return (patientArray)
