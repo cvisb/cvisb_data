@@ -498,7 +498,7 @@ console.log(this.handle_left)
 
 
       } else {
-        this.handle_right
+        handle_right
           .attr("transform", `translate(${xLinear(upper_limit) + x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
