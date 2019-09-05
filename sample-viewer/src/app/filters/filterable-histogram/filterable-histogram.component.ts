@@ -131,7 +131,7 @@ export class FilterableHistogramComponent implements OnInit {
     // })
 
     // Wait till everything is loaded; then set the initial limits
-    // this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
+    this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
     // this.updateLimits(this.yearLimits);
   }
 
@@ -465,8 +465,6 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateLimits(limits, x, xLinear, handle_left, handle_right) {
-    console.log("UPDATING LIMITS")
-    console.log(limits)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.min(limits['lower'], limits['upper']);
     let upper_limit = Math.max(limits['lower'], limits['upper']);
