@@ -356,14 +356,11 @@ export class FilterableHistogramComponent implements OnInit {
 
     // --- Checkbox for whether to include unknown values.
     let checkUnknown = function(filterSubject, requestSvc, endpoint, filterFunc, filterSvc) {
-      return function(d) {
-        console.log(d)
-        console.log(filterSubject.value)
+      return function(_) {
         // update the status of checkbox
         let limits = { ...filterSubject.value, unknown: !filterSubject.value.unknown };
-        console.log(limits)
         filterSubject.next(limits);
-        
+
         // update the check status
         d3.select(".slider-checkbox")
           .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
@@ -430,18 +427,27 @@ export class FilterableHistogramComponent implements OnInit {
 
   updateLimits(limits, x, xLinear, handle_left, handle_right) {
     // Check to make sure the left and right handle haven't flipped sides.
-    let lower_limit = Math.min(limits['lower'], limits['upper']);
-    let upper_limit = Math.max(limits['lower'], limits['upper']);
+    let lower_limit = Math.round(Math.min(limits['lower'], limits['upper']));
+    let upper_limit = Math.round(Math.max(limits['lower'], limits['upper']));
 
     console.log(lower_limit)
     console.log(upper_limit)
 
     // Update rectangles
     d3.selectAll("rect")
-      .classed("selected", (d: any) =>
-        limits['unknown'] ?
-          (d.term >= lower_limit && d.term <= upper_limit) || d.term === 'unknown' :
-          d.term >= lower_limit && d.term <= upper_limit);
+      .classed("selected", (d: any) => {
+
+        let result =
+          limits['unknown'] ?
+            (d.term >= lower_limit && d.term <= upper_limit) || d.term === 'unknown' :
+            d.term >= lower_limit && d.term <= upper_limit;
+
+        console.log(d.term)
+        console.log(result)
+
+        return (result)
+      }
+      );
 
 
     // Update slider handles
