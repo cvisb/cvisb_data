@@ -35,7 +35,7 @@ export class FilterSampleYearComponent implements OnInit {
   filterHandler(params, filterSvc, requestSvc, endpoint) {
     console.log("Calling filter handler in years!")
     console.log(params)
-    requestSvc.updateParams(endpoint, { field: 'infectionYear', value:  `[${params.term} TO ${params.term}]` });
+    requestSvc.updateParams(endpoint, { field: 'infectionYear', value:  `[${params.lower} TO ${params.upper}]` });
 
     //   params.term === "unknown" ?
     //        filterSubject.next({ lower: 0, upper: 0, unknown: true }) :
