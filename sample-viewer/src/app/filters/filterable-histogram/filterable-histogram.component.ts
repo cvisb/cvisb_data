@@ -383,10 +383,8 @@ export class FilterableHistogramComponent implements OnInit {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
-      console.log(xLinear)
       console.log(xValue)
       console.log(handleSide)
-      console.log(updateLimits)
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
@@ -453,6 +451,7 @@ export class FilterableHistogramComponent implements OnInit {
         .on("end", () => endDrag(this.xLinear, 'left', this.updateLimits))
       );
 
+console.log(this.handle_left)
 
     let check = this.slider
       .append('text')
@@ -468,6 +467,8 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateLimits(limits) {
+    console.log(this.handle_left)
+    console.log(this.handle_right)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.min(limits['lower'], limits['upper']);
     let upper_limit = Math.max(limits['lower'], limits['upper']);
