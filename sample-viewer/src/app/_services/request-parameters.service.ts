@@ -154,15 +154,11 @@ export class RequestParametersService {
       // --- CASE 2: Parameter doesn't exists.  APPEND ---
     } else {
       if (newParam.value) {
-        if(this.singleValueFields.includes(newParam.field)) {
-          currentParams = newParam.value;
-        }
-        else {
         // if value isn't an array, turn it into one.
-        if (!Array.isArray(newParam.value)) {
+        if (!Array.isArray(newParam.value) && !this.singleValueFields.includes(newParam.field)) {
           newParam.value = [newParam.value];
         }
-        currentParams.push(newParam)}
+        currentParams.push(newParam)
       }
     }
     return (currentParams)
