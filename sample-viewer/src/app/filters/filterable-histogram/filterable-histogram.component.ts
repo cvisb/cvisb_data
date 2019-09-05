@@ -31,14 +31,14 @@ export class FilterableHistogramComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private element_dims: any;
+  // private element_dims: any;
   private margin: any = { top: 0, bottom: 25, left: 12, right: 12, axisBottom: 3, betweenGraphs: 15 };
   private width: number = 150;
   private min_width_unknown: number = 40;
   private height: number = 90;
   private slider_height: number = 50;
-  private bar_height: number = 10;
-  private bar_spacing: number = 3;
+  // private bar_height: number = 10;
+  // private bar_spacing: number = 3;
 
   // --- Selectors ---
   private years: any; // normal histogram
@@ -58,7 +58,6 @@ export class FilterableHistogramComponent implements OnInit {
   private x2: any;
   private xLinear: any;
   private y: any;
-  private colorScale: any;
   private xAxis: any;
   private xAxis2: any;
   private axisHist: any;
@@ -263,7 +262,7 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.xAxis = d3.axisBottom(this.x)
         .tickSizeOuter(0)
-        .tickValues(this.x.domain().filter((d, i) => !(i % 2)));
+        .tickValues(this.x.domain().filter((_, i) => !(i % 2)));
 
       this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
@@ -384,7 +383,10 @@ export class FilterableHistogramComponent implements OnInit {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
+      console.log(xLinear)
       console.log(xValue)
+      console.log(handleSide)
+      console.log(updateLimits)
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
