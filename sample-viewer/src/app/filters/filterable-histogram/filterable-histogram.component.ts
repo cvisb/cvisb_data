@@ -365,16 +365,16 @@ export class FilterableHistogramComponent implements OnInit {
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
     // Drag event listeners
-    let endDrag = function(xLinear: any, side: string, updateLimits) {
+    let endDrag = function(x, xLinear, handle_left, handle_right, side: string, updateLimits) {
     // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
-      updateHandles(xLinear, side, updateLimits);
+      updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits);
       // updateHandles(xLinear, side, filterSubject);
 
       // sendParams(filterSubject, requestSvc, endpoint);
     }
 
-    let updateHandles = function(xLinear: any, handleSide: string, updateLimits) {
+    let updateHandles = function(x, xLinear, handle_left, handle_right, handleSide: string, updateLimits) {
     // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
@@ -388,10 +388,10 @@ export class FilterableHistogramComponent implements OnInit {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        updateLimits({lower: 0,  upper: xValue, unknown: true});
+        updateLimits({lower: 0,  upper: xValue, unknown: true}, x, xLinear, handle_left, handle_right);
         // filterSubject.next({ ...filterSubject.value, upper: xValue });
       } else {
-      updateLimits({lower: xValue,  upper: 3000, unknown: true});
+      updateLimits({lower: xValue,  upper: 3000, unknown: true}, x, xLinear, handle_left, handle_right);
         // // Left side updated; lower limit
         // filterSubject.next({ ...filterSubject.value, lower: xValue });
       }
@@ -429,8 +429,8 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("d", this.handle_path)
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
-        .on("start drag", () => updateHandles(this.xLinear, 'right', this.updateLimits))
-        .on("end", () => endDrag(this.xLinear, 'right', this.updateLimits))
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits))
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits))
         // Update positions on start or drag events
         // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
@@ -444,11 +444,11 @@ export class FilterableHistogramComponent implements OnInit {
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.xLinear, 'left', this.updateLimits))
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits))
         // .on("start drag", () => updateHandles(this.xLinear, 'left', this.filterSubject))
         // Once you're done, announce the new parameters to the query service.
         // .on("end", () => endDrag(this.xLinear, 'left', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
-        .on("end", () => endDrag(this.xLinear, 'left', this.updateLimits))
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'left', this.updateLimits))
       );
 
 console.log(this.handle_left)
@@ -466,11 +466,8 @@ console.log(this.handle_left)
 
   }
 
-  updateLimits(limits) {
+  updateLimits(limits, x, xLinear, handle_left, handle_right) {
     console.log("UPDATING LIMITS")
-    console.log(this.x)
-    console.log(this.handle_left)
-    console.log(this.handle_right)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.min(limits['lower'], limits['upper']);
     let upper_limit = Math.max(limits['lower'], limits['upper']);
@@ -485,29 +482,29 @@ console.log(this.handle_left)
 
 
     // Update slider handles
-    if (this.handle_left && this.handle_right) {
-      this.handle_left
-        .attr("transform", `translate(${this.xLinear(lower_limit) - this.x.bandwidth() * 0.5},-5)`);
+    if (handle_left && handle_right) {
+      handle_left
+        .attr("transform", `translate(${xLinear(lower_limit) - x.bandwidth() * 0.5},-5)`);
 
       if (lower_limit === 0 && upper_limit === 0) {
         // If the limit is 0, set the left and right handles to overlap.
-        this.handle_right
-          .attr("transform", `translate(${this.xLinear(upper_limit) - this.x.bandwidth() * 0.5},-5)`);
+        handle_right
+          .attr("transform", `translate(${xLinear(upper_limit) - x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
         d3.selectAll(".track-filled")
-          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-          .attr("x2", this.xLinear(upper_limit) - this.x.bandwidth() * 0.5);
+          .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
+          .attr("x2", xLinear(upper_limit) - x.bandwidth() * 0.5);
 
 
       } else {
         this.handle_right
-          .attr("transform", `translate(${this.xLinear(upper_limit) + this.x.bandwidth() * 0.5},-5)`);
+          .attr("transform", `translate(${xLinear(upper_limit) + x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
         d3.selectAll(".track-filled")
-          .attr("x1", this.xLinear(lower_limit) - this.x.bandwidth() * 0.5)
-          .attr("x2", this.xLinear(upper_limit) + this.x.bandwidth() * 0.5);
+          .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
+          .attr("x2", xLinear(upper_limit) + x.bandwidth() * 0.5);
 
       }
 
