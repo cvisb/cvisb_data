@@ -251,9 +251,6 @@ export class FilterableHistogramComponent implements OnInit {
         this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
         .domain(d3.extent(this.xDomain));
 
-        console.log(this.xLinear)
-
-
       let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
       this.x2 = d3.scaleBand()
@@ -373,7 +370,7 @@ export class FilterableHistogramComponent implements OnInit {
       updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits, filterSubject);
       // updateHandles(xLinear, side, filterSubject);
 
-      sendParams(filterSubject, requestSvc, endpoint);
+      // sendParams(filterSubject, requestSvc, endpoint);
     }
 
     let updateHandles = function(x, xLinear, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
@@ -385,11 +382,6 @@ export class FilterableHistogramComponent implements OnInit {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
       // let xValue = Math.round(xScale.invert(d3.event.x));
-      console.log(d3.event.x)
-      console.log(x)
-      console.log(xLinear)
-      console.log(xValue)
-      console.log(handleSide)
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
@@ -428,21 +420,21 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x1", this.x.range()[0])
       .attr("x2", this.x.range()[1]);
 
-    // this.handle_right = this.slider.append("path")
-    //   .attr("class", "handle-right")
-    //   .attr("transform", `translate(${this.x.range()[1]},-5)`)
-    //   .attr("d", this.handle_path)
-    //   .call(d3.drag()
-    //     .on("start.interrupt", () => this.slider.interrupt())
-    //     // Update positions on start or drag events
-    //     .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
-    //     // Once you're done, announce the new parameters to the query service.
-    //     .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
-    //     // Update positions on start or drag events
-    //     // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
-    //     // Once you're done, announce the new parameters to the query service.
-    //     // .on("end", () => endDrag(this.xLinear, 'right', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
-    //   );
+    this.handle_right = this.slider.append("path")
+      .attr("class", "handle-right")
+      .attr("transform", `translate(${this.x.range()[1]},-5)`)
+      .attr("d", this.handle_path)
+      .call(d3.drag()
+        .on("start.interrupt", () => this.slider.interrupt())
+        // Update positions on start or drag events
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        .on("end", () => endDrag(this.x, this.xLinear, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
+        // Update positions on start or drag events
+        // .on("start drag", () => updateHandles(this.xLinear, 'right', this.filterSubject))
+        // Once you're done, announce the new parameters to the query service.
+        // .on("end", () => endDrag(this.xLinear, 'right', this.filterSubject, this.requestSvc, this.endpoint, this.sendParams))
+      );
 
     this.handle_left = this.slider.append("path")
       .attr("class", "handle-left")
