@@ -385,11 +385,11 @@ export class FilterableHistogramComponent implements OnInit {
       // Right side updated; upper limit
       if (handleSide === 'right') {
         updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, handle_left, handle_right);
-        filterSubject.next({ ...filterSubject.value, upper: xValue });
+        filterSubject.next({ ...filterSubject.value, upper: Math.round(xValue) });
       } else {
         updateLimits({ ...filterSubject.value, lower: xValue }, x, xLinear, handle_left, handle_right);
         // Left side updated; lower limit
-        filterSubject.next({ ...filterSubject.value, lower: xValue });
+        filterSubject.next({ ...filterSubject.value, lower: Math.round(xValue) });
       }
     }
 
