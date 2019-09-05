@@ -215,8 +215,6 @@ export class FilterableHistogramComponent implements OnInit {
     // Necessary b/c need to use .invert to convert b/w ranges and domains on drag events.
     // Range is funky to account for padding on edges.
     this.xLinear = d3.scaleLinear()
-      .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
-      this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
       .clamp(true);
 
 
@@ -249,7 +247,11 @@ export class FilterableHistogramComponent implements OnInit {
         .domain(this.xDomain.map(String));
 
       this.xLinear
+        .range([this.outerPadding * this.x.step() + 0.5 * this.x.bandwidth(),
+        this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
         .domain(d3.extent(this.xDomain));
+
+        console.log(this.xLinear)
 
 
       let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
@@ -366,7 +368,7 @@ export class FilterableHistogramComponent implements OnInit {
 
     // Drag event listeners
     let endDrag = function(x, xLinear, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
-    // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
+      // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
       updateHandles(x, xLinear, handle_left, handle_right, side, updateLimits, filterSubject);
       // updateHandles(xLinear, side, filterSubject);
@@ -375,7 +377,7 @@ export class FilterableHistogramComponent implements OnInit {
     }
 
     let updateHandles = function(x, xLinear, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
-    // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
+      // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
       // convert the pixel position (range value) to data value (domain value)
@@ -391,10 +393,10 @@ export class FilterableHistogramComponent implements OnInit {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        updateLimits({lower: 0,  upper: xValue, unknown: true}, x, xLinear, handle_left, handle_right);
+        updateLimits({ lower: 0, upper: xValue, unknown: true }, x, xLinear, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: xValue });
       } else {
-      updateLimits({lower: xValue,  upper: 3000, unknown: true}, x, xLinear, handle_left, handle_right);
+        updateLimits({ lower: xValue, upper: 3000, unknown: true }, x, xLinear, handle_left, handle_right);
         // Left side updated; lower limit
         filterSubject.next({ ...filterSubject.value, lower: xValue });
       }
@@ -463,7 +465,7 @@ export class FilterableHistogramComponent implements OnInit {
       .attr("x", this.width + this.margin.betweenGraphs + this.x.bandwidth() * (5 / 8))
       .attr("y", "0.55em")
       .attr("dy", 2)
-      // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
+    // .text(d => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     // check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.sendParams));
 
