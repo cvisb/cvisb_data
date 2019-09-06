@@ -184,14 +184,14 @@ sum((lsv.countryName_x != lsv.countryName_y) &
 
 # [Merge and export: experimental data]  ----------------------------------------------------------------------------------------------------
 expts = pd.concat([ebv[exptCols], lsv[exptCols]])
-expts = pd.concat([ebv, lsv])
+# expts = pd.concat([ebv, lsv])
 
 
 expts.loc[(expts._merge=="left_only") & expts.KGH_id, ['privatePatientID']]
 expts[expts._merge=="both"].issue.value_counts()
 
-expts.privatePatientID.to_csv("test.csv", index=False)
-
+# expts.privatePatientID.to_csv("test.csv", index=False)
+expts.head()
 ebv[ebv._merge == "both"]
 expts['data'] = expts.data.apply(helpers.listify)
 expts['citation'] = expts.citation.apply(helpers.listify)
