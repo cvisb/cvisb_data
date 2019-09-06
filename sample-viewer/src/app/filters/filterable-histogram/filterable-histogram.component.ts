@@ -334,7 +334,6 @@ export class FilterableHistogramComponent implements OnInit {
       updateHandles(x, xLinear, slider, handle_left, handle_right, side, updateLimits, filterSubject);
 
       let limits = filterSubject.value;
-      console.log(limits)
       filterFunc(limits, filterSvc, requestSvc, endpoint);
     }
 
@@ -433,9 +432,6 @@ export class FilterableHistogramComponent implements OnInit {
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.round(Math.min(limits['lower'], limits['upper']));
     let upper_limit = Math.round(Math.max(limits['lower'], limits['upper']));
-
-    console.log(lower_limit)
-    console.log(upper_limit)
 
     // Update rectangles
     d3.selectAll("rect")
