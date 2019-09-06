@@ -456,7 +456,7 @@ export class FilterableHistogramComponent implements OnInit {
           .attr("transform", `translate(${xLinear(upper_limit) - x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
-        slider.selectAll(".track-filled")
+        d3.selectAll(".track-filled")
           .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
           .attr("x2", xLinear(upper_limit) - x.bandwidth() * 0.5);
 
@@ -466,7 +466,7 @@ export class FilterableHistogramComponent implements OnInit {
           .attr("transform", `translate(${xLinear(upper_limit) + x.bandwidth() * 0.5},-5)`);
 
         // Update position of the highlight bar
-        slider.selectAll(".track-filled")
+        d3.selectAll(".track-filled")
           .attr("x1", xLinear(lower_limit) - x.bandwidth() * 0.5)
           .attr("x2", xLinear(upper_limit) + x.bandwidth() * 0.5);
 
