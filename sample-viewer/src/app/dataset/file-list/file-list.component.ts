@@ -116,11 +116,11 @@ export class FileListComponent implements OnInit {
 
 
 
-  selectRow($event, row) {
+  selectRow(row) {
     console.log('row selected!')
     console.log(row)
-    $event.preventDefault();
-    $event.stopPropagation();  // <- that will stop propagation on lower layers
+    // $event.preventDefault();
+    // $event.stopPropagation();  // <- that will stop propagation on lower layers
 
     this.mdSvc.clickFile(true);
     this.selectedRow = row;
