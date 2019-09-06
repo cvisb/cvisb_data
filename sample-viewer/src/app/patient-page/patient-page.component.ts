@@ -39,6 +39,20 @@ export class PatientPageComponent implements OnInit {
 
       this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
         this.patient = patient;
+
+        // Double check that altID is an array
+        if (!Array.isArray(this.patient.alternateIdentifier)) {
+          this.patient.alternateIdentifier = [this.patient.alternateIdentifier];
+        }
+
+        // set patient title
+        if (this.patient.gID && this.patient.gID.length > 0) {
+          this.patient['patientLabel'] = this.patient.gID[0];
+        } else if (this.patient.sID) {
+          this.patient['patientLabel'] = this.patient.sID;
+        } else {
+          this.patient['patientLabel'] = this.patient.patientID;
+        }
       });
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
@@ -69,8 +83,8 @@ export class PatientPageComponent implements OnInit {
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
-    console.log('on init')
-    console.log(document.querySelector("#" + anchor_tag))
+      console.log('on init')
+      console.log(document.querySelector("#" + anchor_tag))
       this.anchorSvc.clickAnchor(anchor_tag);
     })
   }
@@ -79,8 +93,8 @@ export class PatientPageComponent implements OnInit {
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
-    console.log('after view init')
-    console.log(document.querySelector("#" + anchor_tag))
+      console.log('after view init')
+      console.log(document.querySelector("#" + anchor_tag))
       this.anchorSvc.clickAnchor(anchor_tag);
     })
   }

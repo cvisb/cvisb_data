@@ -8,8 +8,7 @@
       <!-- NAV: ID + cohort -->
       <div class="patient-header">
         <div class="page-header" [ngClass]="patient.cohort">
-          <h1 *ngIf="patient.alternateIdentifier">Patient {{ patient.alternateIdentifier.sort()[0] }}</h1>
-          <h1 *ngIf="!patient.alternateIdentifier">Patient {{ patient.patientID }}</h1>
+          <h1>Patient {{ patient.patientLabel }}</h1>
         </div>
 
         <div class="cohort-group">
