@@ -282,10 +282,10 @@ export class FilterableHistogramComponent implements OnInit {
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
-        .classed("selected", (d: any) =>
-          this.filterSubject.value['unknown'] ?
-            (d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper']) || d.term === 'unknown' :
-            d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
+        // .classed("selected", (d: any) =>
+        //   this.filterSubject.value['unknown'] ?
+        //     (d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper']) || d.term === 'unknown' :
+        //     d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .transition(t)
         .attr("y", (d: any) => {
           return (this.y(d.count));
