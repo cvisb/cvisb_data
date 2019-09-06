@@ -3,7 +3,7 @@
 
   <div class="container" *ngIf="patients">
     <!-- <input class="patient-ids" /> -->
-    <ng-select #selectpatients class="patient-ids" [items]="patients" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" placeholder="Select patients" (search)="onSearch($event)" (ngModelChange)="filterPatientIDs($event)" [(ngModel)]="selectedPatients">
+    <ng-select #selectpatients class="patient-ids" [items]="all_patients" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" placeholder="Select patients" (search)="onSearch($event)" (ngModelChange)="filterPatientIDs($event)" [(ngModel)]="selectedPatients">
     </ng-select>
     <!-- <mat-checkbox class="include-contacts" [(ngModel)]="inclContacts" (ngModelChange)="filterContacts($event)">include patient contacts</mat-checkbox> -->
   </div>
