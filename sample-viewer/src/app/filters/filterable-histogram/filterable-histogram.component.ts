@@ -260,9 +260,11 @@ export class FilterableHistogramComponent implements OnInit {
 
       // --- EVENT LISTENERS ---
       // --- Single bar event listener ---
-      let selectYear = function(filterFunc, filterSvc, requestSvc, endpoint) {
+      let selectBar = function(filterFunc, filterSvc, requestSvc, endpoint, updateLimits, x, xLinear, slider, handle_left, handle_right) {
         return function(d) {
-          filterFunc({ lower: d.term, upper: d.term, unknown: false }, filterSvc, requestSvc, endpoint);
+          let limits = { lower: d.term, upper: d.term, unknown: false };
+          updateLimits(limits, x, xLinear, slider, handle_left, handle_right);
+          filterFunc(limits, filterSvc, requestSvc, endpoint);
         }
       }
 
@@ -318,7 +320,7 @@ export class FilterableHistogramComponent implements OnInit {
       this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
 
       this.rects
-        .on("click", selectYear(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint));
+        .on("click", selectBar(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint, this.updateLimits, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right));
 
     }
   }
