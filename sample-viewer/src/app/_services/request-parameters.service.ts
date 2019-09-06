@@ -38,15 +38,11 @@ export class RequestParametersService {
   ) {
     // subscribe to current parameters
     this.patientParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log("API params")
-      // console.log(params)
       this.patientSearchParams = params;
     })
 
 
     this.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      // console.log("API params")
-      // console.log(params)
       this.sampleSearchParams = params;
     })
 
@@ -83,7 +79,7 @@ export class RequestParametersService {
     switch (endpoint) {
       case 'patient': {
         let params = this.checkExists(this.patientSearchParams, newParam);
-        console.log(params)
+        // console.log(params)
         // console.log('reducing params')
         // this.reduceParams(params);
 
@@ -187,7 +183,7 @@ export class RequestParametersService {
   reducePatientParams(request_params): HttpParams {
     // default options
     let reduced = this.reduceParams(request_params, 'patient');
-    console.log(reduced);
+    // console.log(reduced);
 
     let patient_string: string = reduced.patient_string ? reduced.patient_string : "__all__"; // Note: * will only return those samples who are in the patient registry.  "" will return everything
     let sample_string: string = reduced.sample_string ? reduced.sample_string : "";
@@ -280,7 +276,6 @@ export class RequestParametersService {
 
     if (filteredParams.length === 1) {
       let elisaVars = filteredParams[0].value;
-      console.log(elisaVars)
 
       let elisaStrings: string[] = [];
 
@@ -460,14 +455,10 @@ export class RequestParametersService {
       // convert the parameter object into a string and add to array.
       let new_param = this.params2String(param);
 
-      console.log(new_param)
-
       // Check if there's an OR parameter to relate to that property.
       if (param.orSelector) {
         let or_param = `(${this.params2String(param.orSelector)})`;
         new_param = `(${new_param} OR ${or_param})`
-        console.log(or_param)
-        console.log(new_param)
       }
       params.push(new_param);
     }
@@ -483,14 +474,10 @@ export class RequestParametersService {
       // convert the parameter object into a string and add to array.
       let new_param = this.params2String(param);
 
-      console.log(new_param)
-
       // Check if there's an OR parameter to relate to that property.
       if (param.orSelector) {
         let or_param = `(${this.params2String(param.orSelector)})`;
         new_param = `(${new_param} OR ${or_param})`
-        console.log(or_param)
-        console.log(new_param)
       }
       return (new_param);
     }
