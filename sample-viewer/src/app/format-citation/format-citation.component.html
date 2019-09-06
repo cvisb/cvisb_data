@@ -2,36 +2,36 @@
   <div *ngFor="let citation of citations" class="container" [ngClass]="{'container-column': !simplifiedCitation}">
     <div class="citation">
       <span id="title" *ngIf="simplifiedCitation === false">
-        <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">
-          <span [outerHTML]="citation.title"></span>
+        <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">
+          <span [outerHTML]="citation.name"></span>
         </a>.
       </span>
       <span id="authors">
         <ng-container *ngIf="simplifiedCitation === false; else firstAuthor">
           <span *ngFor="let author of citation.author; let i=index" class="author">
-            {{ author.given }} {{ author.family}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
+            {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
           </span>
         </ng-container>
 
         <ng-template #firstAuthor>
           <a [href]="citation.url" target="_blank" rel="noreferrer">
-            {{ citation.author[0].given }} {{ citation.author[0].family}}
+            {{ citation.author[0].givenName }} {{ citation.author[0].familyName}}
             <i>et al.</i>
           </a>
         </ng-template>
       </span>
 
       <span id="journal"><i>{{citation['container-title']}}</i></span>
-      <span id="date" *ngIf="citation.issued['date-parts']">{{citation.issued['date-parts'][0][0]}}</span>,
+      <span id="date" *ngIf="citation.datePublished">{{citation.datePublished}}</span>,
 
-      <span id="vol">{{citation.volume}}</span>, <span id="issue">{{citation.issue}}</span>, <span id="page">{{citation.page}}</span>.
+      <span id="vol">{{citation.volumeNumber}}</span>, <span id="issue">{{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
     </div>
 
     <div class="links container" *ngIf="simplifiedCitation === false">
-      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
+      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.pmid" target="_blank" rel="noreferrer">{{citation.pmid}}</a></span>
 
       <span class="data-separator"></span>
-      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
+      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">{{ citation.doi }}</a></span>
     </div>
 
   </div>
