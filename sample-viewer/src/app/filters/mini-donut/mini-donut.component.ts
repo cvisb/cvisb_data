@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 
@@ -40,10 +41,15 @@ export class MiniDonutComponent implements OnInit {
   // --- Scales/Axes ---
   private y: any;
 
-  constructor(private requestSvc: RequestParametersService) { }
+  constructor(
+    private requestSvc: RequestParametersService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   ngOnInit() {
-    this.createPlot();
+    if (isPlatformBrowser(this.platformId)) {
+      this.createPlot();
+    }
   }
 
 
