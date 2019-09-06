@@ -27,7 +27,7 @@ export class FileListComponent implements OnInit {
   anything_selected: boolean;
   qParams: HttpParams;
   selectedRow;
-  displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
+  displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download', 'metadata'];
   dataSource: DownloadsDataSource;
 
   id2MeasurementTechnique: Object = {
@@ -43,11 +43,11 @@ export class FileListComponent implements OnInit {
   constructor(
     private apiSvc: ApiService,
     private datasetSvc: getDatasetsService,
-    // private mdSvc: FileMetadataService
+    private mdSvc: FileMetadataService
   ) {
-    // mdSvc.fileClicked$.subscribe(status => {
-    //   this.anything_selected = status;
-    // })
+    mdSvc.fileClicked$.subscribe(status => {
+      this.anything_selected = status;
+    })
   }
 
 
@@ -116,23 +116,25 @@ export class FileListComponent implements OnInit {
 
 
 
-  // selectRow($event, row) {
-  //   $event.preventDefault();
-  //   $event.stopPropagation();  // <- that will stop propagation on lower layers
-  //
-  //   this.mdSvc.clickFile(true);
-  //   this.selectedRow = row;
-  //   this.mdSvc.sendMetadata(row, "DataDownload");
-  //
-  // }
-  //
-  // // If click outside the list, unselect all.
-  // @HostListener('document:click', ['$event']) clickedOutside($event) {
-  //   this.selectedRow = null;
-  //   if (this.anything_selected) {
-  //     this.mdSvc.clickFile(false);
-  //     this.mdSvc.sendMetadata(null, "");
-  //   }
-  // }
+  selectRow($event, row) {
+    console.log('row selected!')
+    console.log(row)
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+
+    this.mdSvc.clickFile(true);
+    this.selectedRow = row;
+    this.mdSvc.sendMetadata(row, "DataDownload");
+
+  }
+
+  // If click outside the list, unselect all.
+  @HostListener('document:click', ['$event']) clickedOutside($event) {
+    this.selectedRow = null;
+    if (this.anything_selected) {
+      this.mdSvc.clickFile(false);
+      this.mdSvc.sendMetadata(null, "");
+    }
+  }
 
 }
