@@ -171,6 +171,7 @@
                          - positive
                          - negative
                          - indeterminate
+                         - null
   authenticated:         false
 
 
