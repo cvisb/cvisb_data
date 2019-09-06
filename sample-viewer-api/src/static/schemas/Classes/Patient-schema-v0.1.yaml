@@ -634,17 +634,17 @@
 
 
 # ELISAs
-# - "@id":                 cvisb:elisa
-#   "@type":               rdf:Property
-#   rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
-#   rdfs:label:            elisa
-#   schema:domainIncludes:
-#     - "@id":             cvisb:Patient
-#   schema:rangeIncludes:
-#     - "@id":             cvisb:ELISA
-#   owl:cardinality:       many
-#   marginality:           recommended
-#   authenticated:         false
+- "@id":                 cvisb:elisa
+  "@type":               rdf:Property
+  rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
+  rdfs:label:            elisa
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:ELISA
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
 
 # RDT:                   rapid diagnostic tests
 - "@id":                 cvisb:rapidDiagostics
