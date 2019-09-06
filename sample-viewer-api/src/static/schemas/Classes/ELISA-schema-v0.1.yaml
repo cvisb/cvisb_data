@@ -167,11 +167,11 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  schema:Enumeration:
-                         - positive
-                         - negative
-                         - indeterminate
-                         - null
+  # schema:Enumeration:
+  #                        - positive
+  #                        - negative
+  #                        - indeterminate
+  #                        - null
   authenticated:         false
 
 
