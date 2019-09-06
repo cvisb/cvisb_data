@@ -34,110 +34,161 @@
   </div>
 
   <div class="container section-links">
-    <a routerLink="/dataset" class="data section-link">
 
-      <i class="section-icon fas fa-table"></i>
+    <div class="container-column link-container" id="dataset">
+      <div class="data section-link">
+        <a routerLink="/dataset">
+          <i class="section-icon fas fa-table"></i>
 
-      <div class="section-title">
-        Data
+          <div class="section-title">
+            Data
+          </div>
+
+          <div>
+            <div class="section-subtitle">
+              explore, visualize, and download experimental data
+            </div>
+            <ul>
+
+              <a [routerLink]='["/dataset/hla"]'>
+                <li>
+                  HLA Genotypes
+                </li>
+              </a>
+              <a [routerLink]='["/dataset/viralseq"]'>
+                <li>
+                  Viral Sequencing
+                </li>
+              </a>
+            </ul>
+          </div>
+        </a>
       </div>
 
-      <div>
-        <div class="section-subtitle">
-          explore, visualize, and download experimental data
-        </div>
-        <ul>
-
-          <a [routerLink]='["/dataset/hla"]'>
-            <li>
-              HLA Genotypes
-            </li>
-          </a>
-          <a [routerLink]='["/dataset/viralseq"]'>
-            <li>
-              Viral Sequencing
-            </li>
-          </a>
-        </ul>
+      <div class="counts">
+        <a routerLink="/dataset">
+          <div class="container count-pair">
+            <div class="count-value">
+              312
+            </div>
+            <div class="count-label">
+              HLA genotypes
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
+    </div>
 
+    <div class="container-column link-container" id="patient">
+      <div class="patient section-link">
+        <a routerLink="/patient">
+          <i class="section-icon fas fa-users"></i>
 
-    <a routerLink="/patient" class="patient section-link">
-      <i class="section-icon fas fa-users"></i>
+          <div class="section-title">
+            Patients
+          </div>
 
-      <div class="section-title">
-        Patients
+          <div>
+            <div class="section-subtitle">
+              view and download demographic and clinical data
+            </div>
+            <ul>
+              <li>
+                acutely infected
+              </li>
+              <li>
+                survivors
+              </li>
+              <li>
+                contacts
+              </li>
+              <li>
+                healthy controls
+              </li>
+            </ul>
+          </div>
+        </a>
       </div>
 
-      <div>
-        <div class="section-subtitle">
-          view and download demographic and clinical data
-        </div>
-        <ul>
-          <li>
-            acutely infected
-          </li>
-          <li>
-            survivors
-          </li>
-          <li>
-            contacts
-          </li>
-          <li>
-            healthy controls
-          </li>
-        </ul>
+      <div class="counts">
+        <a routerLink="/patient">
+          <div class="container count-pair">
+            <div class="count-value">
+              5039
+            </div>
+            <div class="count-label">
+              patients
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
+    </div>
 
-    <a routerLink="/sample" class="samples section-link">
-      <i class="section-icon fas fa-dna"></i>
-      <div class="section-title">
-        Samples
+
+    <div class="container-column  link-container" id="sample">
+      <div class="samples section-link">
+        <a routerLink="/sample">
+          <i class="section-icon fas fa-dna"></i>
+          <div class="section-title">
+            Samples
+          </div>
+          <div class="section-subtitle">
+            view and download metadata for biological samples
+          </div>
+        </a>
       </div>
-      <div class="section-subtitle">
-        view and download metadata for biological samples
+
+      <div class="counts">
+        <a routerLink="/sample">
+          <div class="container count-pair">
+            <div class="count-value">
+              925
+            </div>
+            <div class="count-label">
+              samples
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
+    </div>
+
 
   </div>
-</div>
 
 
-<div class="who-are-we">
-  <div class="about-group container">
-    <div class="about-title">
-      What we study
+  <div class="who-are-we">
+    <div class="about-group container">
+      <div class="about-title">
+        What we study
+      </div>
+      <div class="description">
+        We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs.
+      </div>
     </div>
-    <div class="description">
-      We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs.
+
+    <div class="about-group container">
+      <div class="about-title">
+        Where we get our data
+      </div>
+      <div class="description">
+        The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
+        KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
+        We have also analyzed samples from additional partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
+      </div>
     </div>
+
+    <div class="about-group container">
+      <div class="about-title">
+        More about our data
+      </div>
+      <div class="description">
+        See our <a routerLink="/documentation" class="link">documentation</a> section for more info about our data and their limitations.
+      </div>
+    </div>
+
   </div>
 
-  <div class="about-group container">
-    <div class="about-title">
-      Where we get our data
-    </div>
-    <div class="description">
-      The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
-      KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
-      We have also analyzed samples from additional partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
-    </div>
-  </div>
-
-  <div class="about-group container">
-    <div class="about-title">
-      More about our data
-    </div>
-    <div class="description">
-      See our <a routerLink="/documentation" class="link">documentation</a> section for more info about our data and their limitations.
-    </div>
-  </div>
-
-</div>
-
-<!-- <app-compare-cohorts></app-compare-cohorts>
+  <!-- <app-compare-cohorts></app-compare-cohorts>
 
 <div class="main-graph">
   <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
@@ -153,4 +204,4 @@
 
 <app-download-aligned-sequences></app-download-aligned-sequences> -->
 
-<!-- <app-beeswarm></app-beeswarm> -->
+  <!-- <app-beeswarm></app-beeswarm> -->
