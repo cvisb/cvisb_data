@@ -60,10 +60,10 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:DOI
+- "@id":                 cvisb:doi
   "@type":               rdf:Property
   rdfs:comment:          DOI for publication
-  rdfs:label:            DOI
+  rdfs:label:            doi
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:rangeIncludes:
@@ -74,10 +74,10 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:PMID
+- "@id":                 cvisb:pmid
   "@type":               rdf:Property
   rdfs:comment:          Pubmed ID for publication
-  rdfs:label:            PMID
+  rdfs:label:            pmid
   schema:domainIncludes:
     - "@id":             cvisb:ScholarlyArticle
   schema:rangeIncludes:
