@@ -63,21 +63,21 @@ ids = pd.read_json(id_dict)
 ids.reset_index(inplace=True)
 ids.rename(columns={'index': 'ID'}, inplace=True)
 
-hla = pd.read_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/hla_test.json")
-
-hla.head()
-
-hla['KGH_id'] = hla.privatePatientID.apply(
-    helpers.checkIDstructure).apply(lambda x: not x)
-
-hla = pd.merge(hla, ids, how="left", indicator=True,
-                   right_on="ID", left_on="privatePatientID")
-x=hla[hla.KGH_id & (hla.issue != hla.issue) & (hla._merge == "both")]
-x[x.duplicated(subset="patientID", keep=False)].sort_values('patientID')[['privatePatientID', 'patientID']]
-
-
-merged = pd.merge(hla.drop('_merge', axis = 1), expts.drop('_merge', axis=1), on="privatePatientID", indicator=True)
-merged.loc[merged.issue_x != merged.issue_x, 'privatePatientID']
+# hla = pd.read_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/hla_test.json")
+#
+# hla.head()
+#
+# hla['KGH_id'] = hla.privatePatientID.apply(
+#     helpers.checkIDstructure).apply(lambda x: not x)
+#
+# hla = pd.merge(hla, ids, how="left", indicator=True,
+#                    right_on="ID", left_on="privatePatientID")
+# x=hla[hla.KGH_id & (hla.issue != hla.issue) & (hla._merge == "both")]
+# x[x.duplicated(subset="patientID", keep=False)].sort_values('patientID')[['privatePatientID', 'patientID']]
+#
+#
+# merged = pd.merge(hla.drop('_merge', axis = 1), expts.drop('_merge', axis=1), on="privatePatientID", indicator=True)
+# merged.loc[merged.issue_x != merged.issue_x, 'privatePatientID']
 
 
 # Import data  ----------------------------------------------------------------------------------------------------
@@ -157,13 +157,13 @@ lsv = getDNAseq(lsv_seq, lsv, 'sample_id', "Lassa")
 sum(lsv.data.apply(lambda x: x is None))
 
 # Import AA sequences
-lsv_aaseq = list(SeqIO.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_04102019_aa_aln.fasta", "fasta"))
-lsv['data'] = None
-lsv = getDNAseq(lsv_aaseq, lsv, 'sample_id', "Lassa", "AAsequence")
-lsv[exptCols].iloc[9].to_json()
-sum(lsv.data.apply(lambda x: x is None))
-lsv.columns
-lsv[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
+# lsv_aaseq = list(SeqIO.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_04102019_aa_aln.fasta", "fasta"))
+# lsv['data'] = None
+# lsv = getDNAseq(lsv_aaseq, lsv, 'sample_id', "Lassa", "AAsequence")
+# lsv[exptCols].iloc[9].to_json()
+# sum(lsv.data.apply(lambda x: x is None))
+# lsv.columns
+# lsv[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
 
 # Merge in the known set of ids...
 lsv = pd.merge(lsv, ids, how="left", indicator=True,
@@ -186,13 +186,12 @@ sum((lsv.countryName_x != lsv.countryName_y) &
 expts = pd.concat([ebv[exptCols], lsv[exptCols]])
 # expts = pd.concat([ebv, lsv])
 
-
-expts.loc[(expts._merge=="left_only") & expts.KGH_id, ['privatePatientID']]
-expts[expts._merge=="both"].issue.value_counts()
+#
+# expts.loc[(expts._merge=="left_only") & expts.KGH_id, ['privatePatientID']]
+# expts[expts._merge=="both"].issue.value_counts()
 
 # expts.privatePatientID.to_csv("test.csv", index=False)
-expts.head()
-ebv[ebv._merge == "both"]
+# ebv[ebv._merge == "both"]
 expts['data'] = expts.data.apply(helpers.listify)
 expts['citation'] = expts.citation.apply(helpers.listify)
 expts.to_json(f"{expt_dir}viral_seq_{today}.json", orient="records")
