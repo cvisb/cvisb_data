@@ -52,7 +52,7 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'upload/dataset', component: AddDataComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
 
-  { path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' },
+  { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' },
     resolve: {
       samplePatientMD: SamplesResolver,
     }

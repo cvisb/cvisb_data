@@ -121,7 +121,6 @@ export class GetPatientsService {
           .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
       }).pipe(
         map(expts => {
-          console.log('inner call!')
           let patients = patientResults['body']['hits'];
 
           patients.forEach(patient => {
