@@ -26,6 +26,12 @@
 
         <app-format-citation [citations]="seq.citation" class="citation"></app-format-citation>
 
+        <div class="NCBI-link">
+          <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
+            GenBank ID {{seq.genbankID}}
+          </a>
+        </div>
+
         <div class="updated">
           updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
         </div>
