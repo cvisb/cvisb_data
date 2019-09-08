@@ -25,6 +25,21 @@ def convertGender(gender):
             return("Female")
     return("Unknown")
 
+# convert species to controlled vocabulary
+def convertSpecies(species):
+    if(species == species):
+        if((species.lower() == 'hs') | (species.lower() == "homo sapiens") | (species.lower() == "human")):
+            return("Homo sapiens")
+        elif((species.lower() == 'hp') | (species.lower() == "hylomyscus pamfi")):
+            return("Hylomyscus pamfi")
+        elif((species.lower() == 'me') | (species.lower() == "Mastomys erythroleucus")):
+            return("Mastomys erythroleucus")
+        elif((species.lower() == 'mn') | (species.lower() == "Mastomys natalensis")):
+            return("Mastomys natalensis")
+        elif((species.lower() == 'rodent')):
+            return("rodent")
+    return(pd.np.nan)
+
 # --- cohort ---
 def cleanCohort(input):
     if(input != input):

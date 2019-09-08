@@ -54,7 +54,7 @@ export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outc
                'age', 'gender', 'country', 'occupation', 'pregnant',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',
-               'elisa', 'dateModified']
+               'elisa', 'dateModified', 'species']
 
 dict_cols = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
              'evalDate', 'dischargeDate', 'daysOnset', 'infectionDate',

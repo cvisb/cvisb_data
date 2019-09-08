@@ -55,6 +55,7 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
 
     # --- concat together all data and assign primary patient ids ---
     merged = merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified)
+    merged['species'] = "Homo sapiens" # Everyone is human!
 
     merged.to_csv(output_patients + "_ALL.csv", index = False)
     merged.to_json(output_patients + "_ALL.json", orient="records")
