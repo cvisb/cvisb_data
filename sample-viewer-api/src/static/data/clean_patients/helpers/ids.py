@@ -49,6 +49,18 @@ def checkIDtype(id):
     # Check and remove any gunk
     id = str(id).upper().strip()
 
+    gpublic = re.search("^(G\d\d\-\d\d\d\d\d\d)$", id)
+    if(gpublic):
+        return("acute", gpublic[1])
+
+    spublic = re.search("^(S-\d\d\d\d\d\d\d)$", id)
+    if(spublic):
+        return("survivor", spublic[1])
+
+    cpublic = re.search("^(C-\d\d\d\d\d\d\d)$", id)
+    if(cpublic):
+        return("contact", cpublic[1])
+
     g2 = re.search("^(G\-)(\d\d)$", id)
     if(g2):
         return("acute", g2[1] + str(g2[2]).zfill(4))
@@ -170,13 +182,12 @@ def checkIDtype(id):
 
     return("unknown", None)
 
-
-def interpretID(id):
+def interpretID(id_raw):
     """
     Check first if the ID is of a known, reasonably safe pattern.
     If not, try to interpret the ID.
     """
-    id = str(id).upper().strip()
+    id = str(id_raw).upper().strip()
 
     checkedID = checkIDtype(id)
     if(checkedID[0] != "unknown"):
@@ -211,9 +222,20 @@ def interpretID(id):
         if nohyphen:
             return(nohyphen[1] + "-" + nohyphen[2])
 
-        return(id)
+        gpublic = re.search("^(G\d\d\-\d\d\d\d\d\d)", id)
+        if(gpublic):
+            return("acute", gpublic[1])
 
-interpretID("C-1-4")
+        spublic = re.search("^(S-\d\d\d\d\d\d\d)", id)
+        if(spublic):
+            return("survivor", spublic[1])
+
+        cpublic = re.search("^(C-\d\d\d\d\d\d\d)", id)
+        if(cpublic):
+            return("contact", cpublic[1])
+
+        return(str(id_raw).strip())
+
 
 def getPrivateContactGroup(id):
     """
