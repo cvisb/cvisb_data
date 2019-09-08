@@ -43,6 +43,22 @@
                          - Ebola
                          - Lassa
 
+- "@id":                 cvisb:virusSegment
+  "@type":               rdf:Property
+  rdfs:comment:          "Segment of the virus sequenced, for Lassa (S or L)"
+  rdfs:label:            virusSegment
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                         - L
+                         - S
+
 - "@id":                 cvisb:referenceSeq
   "@type":               rdf:Property
   rdfs:comment:          reference sequence used for alignment.
@@ -82,10 +98,36 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:alignedDNAsequence
+  "@type":               rdf:Property
+  rdfs:comment:          Aligned, curated DNA sequence for the virus
+  rdfs:label:            alignedDNAsequence
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:AAsequence
   "@type":               rdf:Property
-  rdfs:comment:          Amino acid sequence for the virus
+  rdfs:comment:          Raw amino acid sequence for the virus
   rdfs:label:            AAsequence
+  schema:domainIncludes:
+    - "@id":             cvisb:ViralSeqData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:alignedAAsequence
+  "@type":               rdf:Property
+  rdfs:comment:          Aligned, curated amino acid sequence for the virus
+  rdfs:label:            alignedAAsequence
   schema:domainIncludes:
     - "@id":             cvisb:ViralSeqData
   schema:rangeIncludes:
