@@ -19,18 +19,15 @@
             <div class="keyword-container container">
               <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
             </div>
+            <div class="experiment-count">
+              {{dataset.expt_count}} experiments
+            </div>
           </h4>
           <div class="dataset-description">
             {{dataset.description}}
           </div>
         </div>
-
-
-        <app-file-list [datasetID]="dataset.identifier"></app-file-list>
       </div>
     </div>
 
-    <div class="grid-item metadata">
-      <app-file-metadata></app-file-metadata>
-    </div>
   </div>

@@ -1,10 +1,13 @@
-import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { getDatasetsService, AuthService } from '../_services';
+import { HttpParams } from '@angular/common/http';
+import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError, mergeMap } from "rxjs/operators";
+
+import { getDatasetsService, ApiService } from '../_services';
 
 @Component({
   selector: 'app-dataset',
@@ -20,19 +23,36 @@ export class DatasetComponent implements OnInit {
 
   constructor(
     private datasetSvc: getDatasetsService,
+    private apiSvc: ApiService,
     private titleSvc: Title,
-    private route: ActivatedRoute,
-    private authSvc: AuthService
+    private route: ActivatedRoute
   ) {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    datasetSvc.getDatasets().subscribe((datasets) => {
-      this.datasets = datasets;
-      // console.log(this.datasets);
-    });
+    let exptParams = new HttpParams()
 
+    this.datasetSvc.getDatasets()
+      .pipe(
+        mergeMap((datasets: any) => this.apiSvc.get("experiment", new HttpParams().set("q", `measurementTechnique:"viral%20sequencing",%20"HLA%20sequencing"`).set("facets", "measurementTechnique.keyword"), 0).pipe(
+          map(expts => {
 
+            datasets.forEach(dataset => {
+              dataset["expt_count"] = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique)
+            })
+
+            this.datasets = datasets;
+
+            console.log(expts)
+            console.log(this.datasets)
+          }),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (new Observable<any>())
+          })
+        )
+        ))
   }
 
   ngOnInit() {
