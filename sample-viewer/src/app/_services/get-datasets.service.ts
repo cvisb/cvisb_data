@@ -39,7 +39,8 @@ export class getDatasetsService {
     }).pipe(
       mergeMap((datasets: any) =>
         this.apiSvc.get("experiment",
-          new HttpParams().set("q", `measurementTechnique:${datasets.map(d => `"${d.measurementTechnique}"`).join(",")}`)
+          new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
+          // new HttpParams().set("q", `measurementTechnique:${datasets.map(d => `"${d.measurementTechnique}"`).join(",")}`)
             .set("facets", "measurementTechnique.keyword"), 0).pipe(
               map(expts => {
 
