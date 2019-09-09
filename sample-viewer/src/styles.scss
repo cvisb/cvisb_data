@@ -226,10 +226,11 @@ a {
 
 .keyword {
   background: $grey-50;
-  margin: 0 5px;
+  margin: 0 5px 3px;
   font-size: x-small;
   padding: 3px 5px;
   font-weight: 400;
+  white-space: nowrap;
 }
 // --- icons ---
 // --- sex ---
@@ -586,7 +587,6 @@ button.stepper-button {
 .hidden {
   display: none;
 }
-
 // Font size for all tables
 th.mat-header-cell {
   font-size: 14px !important;

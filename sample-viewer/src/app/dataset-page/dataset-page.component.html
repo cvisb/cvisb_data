@@ -2,8 +2,8 @@
 
 <div class="container" id="dataset.identifier" *ngIf="dataset && dataset.identifier">
 
-  <div class="dataset-container dataset-page" >
-  <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->
+  <div class="dataset-container dataset-page">
+    <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->
 
     <app-dataset-page-nav [id]="dataset.identifier" class="nav dataset-nav"></app-dataset-page-nav>
 
@@ -14,7 +14,9 @@
         <h2>
           <a>{{ dataset.name }}</a>
           <!-- <a (click)="selectDataset($event, dataset)" [matTooltip]="'view metadata for ' + dataset.name + ' dataset'">{{ dataset.name }}</a> -->
-          <span class="keyword" *ngFor="let keyword of dataset.keywords">{{ keyword }}</span>
+          <div class="keyword-container container">
+            <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
+          </div>
         </h2>
 
         <div class="dataset-description">
