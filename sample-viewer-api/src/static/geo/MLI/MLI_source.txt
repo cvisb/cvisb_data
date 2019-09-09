@@ -1,0 +1,9 @@
+Mali boundardies downloaded 8 September 2019 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/administrative-boundaries-cod-mli
+from UN-OCHA's boundaries; last updated August 2019
+
+Mapshaper simplification
+xl: none
+lg: 2.1%
+md: 1%
+sm: 0.59%
