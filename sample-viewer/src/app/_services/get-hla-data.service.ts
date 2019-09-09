@@ -92,61 +92,67 @@ export class GetHlaDataService {
   //     ))
   // }
 
-
   summarizeHLA() {
     console.log('summarizing HLA data:')
 
+    // ex. summarization call:
+    // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:"HLA%20sequencing"&size=0&facets=cohort.keyword,%20outcome.keyword&facet_size=10000
+    let patientParams = new HttpParams()
+      .set("q", "__all__")
+      .set("experimentQuery", 'measurementTechnique:"HLA sequencing"')
+      .set("facets", "cohort.keyword, outcome.keyword")
+      .set("facet_size", "10000");
+
     return this.getHLAdata().pipe(
-      map((hla_data: any) => {
-        console.log("HLA summarization called")
-        console.log(hla_data);
+      mergeMap(patientResults => this.apiSvc.get("patient", patientParams, 0)
+        .pipe(
+          map((hla_data: any) => {
+            console.log("HLA summarization called")
+            console.log(hla_data);
+            console.log(patientResults);
 
-        // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
-        let unique_IDs = _.uniqBy(hla_data, d => d.patientID)
+            this.patientCountSubject.next(patientResults['total']);
 
-        this.patientCountSubject.next(unique_IDs.length);
+            let patientOutcomes = patientResults['facets']['outcome.keyword']['terms'];
+            // nest()
+            //   .key((d: HLA) => d.outcome)
+            //   .rollup((values: any) => values.length)
+            //   .entries(unique_IDs);
+            //
+            // // Align w/ ES syntax
+            // patientOutcomes.forEach(d => {
+            //   d['term'] = d.key;
+            //   d['count'] = d.value;
+            //
+            // })
+            console.log(patientOutcomes)
 
-        let patientOutcomes = nest()
-          .key((d: HLA) => d.outcome)
-          .rollup((values: any) => values.length)
-          .entries(unique_IDs);
-
-        // Align w/ ES syntax
-        patientOutcomes.forEach(d => {
-          d['term'] = d.key;
-          d['count'] = d.value;
-
-        })
-        console.log(patientOutcomes)
-
-        this.patientOutcomeSubject.next(patientOutcomes);
+            this.patientOutcomeSubject.next(patientOutcomes);
 
 
-        // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:"HLA%20sequencing"&size=0&facets=cohort.keyword,%20outcome.keyword&facet_size=10000
-        // _.countBy(unique_IDs, 'outcome');
-        let patientTypes = nest()
-          .key((d: HLA) => d.cohort)
-          .rollup((values: any) => values.length)
-          .entries(unique_IDs);
+            let patientTypes = patientResults['facets']['cohort.keyword']['terms']
+            // nest()
+            //   .key((d: HLA) => d.cohort)
+            //   .rollup((values: any) => values.length)
+            //   .entries(unique_IDs);
+            //
+            // // Align w/ ES syntax
+            // patientTypes.forEach(d => {
+            //   d['term'] = d.key;
+            //   d['count'] = d.value;
+            // })
 
-        // Align w/ ES syntax
-        patientTypes.forEach(d => {
-          d['term'] = d.key;
-          d['count'] = d.value;
+            console.log(patientTypes)
 
-        })
+            this.patientTypeSubject.next(patientTypes);
 
-        console.log(patientTypes)
+            // --- unique alleles ---
+            this.getAlleleCounts(hla_data);
 
-        this.patientTypeSubject.next(patientTypes);
-
-        // --- unique alleles ---
-        this.getAlleleCounts(hla_data);
-
-        // --- unique alleles ---
-        this.getUniqueCounts(hla_data);
-      }
-      ))
+            // --- unique alleles ---
+            this.getUniqueCounts(hla_data);
+          })
+        )))
   }
 
   getAlleleCounts(hla_data) {
