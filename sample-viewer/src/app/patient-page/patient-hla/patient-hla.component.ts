@@ -25,6 +25,7 @@ export class PatientHlaComponent implements OnChanges {
   constructor(private hlaSvc: GetHlaDataService, private hlaColorSvc: HlaService) {
     // --- unique alleles: population of all samples ---
     hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
+    console.log(cts)
       this.alleleCount = cts;
     })
 

@@ -41,7 +41,9 @@ export class GetHlaDataService {
 
 
   constructor(private apiSvc: ApiService) {
-    this.summarizeHLA();
+    this.summarizeHLA().subscribe(res => {
+      console.log("subscribing in service")
+    });;
   }
 
   getHLAdata(patientID?: string): Observable<Object[]> {
@@ -120,7 +122,7 @@ export class GetHlaDataService {
         this.patientOutcomeSubject.next(patientOutcomes);
 
 
-        // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:%22HLA%20sequencing%22&size=0&facets=cohort.keyword,%20outcome.keyword
+        // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:"HLA%20sequencing"&size=0&facets=cohort.keyword,%20outcome.keyword&facet_size=10000
         // _.countBy(unique_IDs, 'outcome');
         let patientTypes = nest()
           .key((d: HLA) => d.cohort)
