@@ -11,6 +11,7 @@ import { Citation } from '../_models';
 export class FormatCitationComponent implements OnInit {
   @Input() citations: Citation[];
   @Input() simplifiedCitation: boolean = true;
+  @Input() allAuthors: boolean = false;
 
   constructor() { }
 

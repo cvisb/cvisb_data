@@ -6,7 +6,7 @@
           <span [outerHTML]="citation.name"></span>
         </a>.
       </span>
-      <ng-container *ngIf="simplifiedCitation === false; else firstAuthor">
+      <ng-container *ngIf="allAuthors === false; else firstAuthor">
         <span id="authors">
           <span *ngFor="let author of citation.author; let i=index" class="author">
             {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
