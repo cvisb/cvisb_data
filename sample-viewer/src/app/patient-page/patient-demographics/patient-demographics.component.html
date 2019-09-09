@@ -9,12 +9,12 @@
 </div>
 
 <div class="age">
-  age:
+  <span class="variable-label">age:</span>
   <span class="variable-value">{{ patient.age }}</span>
 </div>
 
 <div class="country container" [ngClass]="patient.country['name']">
-  <span class="variable-field">location:</span>
+  <span class="variable-label">location:</span>
   <span class="variable-value">
     <span *ngFor="let area of patient.homeLocation">
       {{ area['name'] }} {{ area['administrativeType'] }},
@@ -25,11 +25,11 @@
 
 
 <div class="pregnant" *ngIf="patient.gender == 'Female'">
-  pregnant:
+  <span class="variable-label">pregnant:</span>
   <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
 </div>
 
 <div class="occupation" *ngIf="patient.occupation">
-  occupation:
+  <span class="variable-label">occupation:</span>
   <span class="variable-value">{{ patient.occupation }}</span>
 </div>
