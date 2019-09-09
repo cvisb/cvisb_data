@@ -37,15 +37,16 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      mergeMap((datasets: any) =>
+      mergeMap((ds_results: any) =>
         this.apiSvc.get("experiment",
           new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
-          // new HttpParams().set("q", `measurementTechnique:${datasets.map(d => `"${d.measurementTechnique}"`).join(",")}`)
+          // new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
             .set("facets", "measurementTechnique.keyword"), 0).pipe(
               map(expts => {
 
                 console.log(expts)
-                console.log(datasets)
+                console.log(ds_results)
+                let datasets = ds_results['body']['hits'];
 
                 datasets.forEach(dataset => {
                   dataset["expt_count"] = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique)
