@@ -44,12 +44,13 @@ export class getDatasetsService {
             .set("facets", "measurementTechnique.keyword"), 0).pipe(
               map(expts => {
 
+                console.log(expts)
+                console.log(datasets)
+
                 datasets.forEach(dataset => {
                   dataset["expt_count"] = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique)
                 })
 
-                console.log(expts)
-                console.log(datasets)
                 return (datasets)
               }),
               catchError(e => {
