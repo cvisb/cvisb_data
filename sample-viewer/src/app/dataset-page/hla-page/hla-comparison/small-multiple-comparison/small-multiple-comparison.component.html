@@ -1,4 +1,4 @@
-<div class="container small-multiple-container" *ngIf="right && left">
+<div class="container small-multiple-container" *ngIf="right && left && right.length > 0 && left.length > 0">
   <ng-container *ngFor="let locus of loci; let idx = index">
     <div class="small-multiple">
       <h4>{{ locus }}</h4>
