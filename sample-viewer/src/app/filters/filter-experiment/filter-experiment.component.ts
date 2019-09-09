@@ -19,8 +19,7 @@ export class FilterExperimentComponent implements OnInit {
     this.expts = [
       { key: "hla", name: "HLA sequencing", disabled: true },
       { key: "viralseq", name: "viral sequencing", disabled: true },
-      { key: "systemsserology", name: "systems serology", disabled: true },
-
+      // { key: "systemsserology", name: "systems serology", disabled: true },
     ];
   }
 
