@@ -31,3 +31,19 @@
   -webkit-text-stroke-color: $lassa-color;
   -webkit-text-stroke-width: 1px;
 }
+
+.counts {
+  background: $lassa-dk;
+}
+
+.count-value {
+  color: $lassa-lt;
+}
+
+.count-label {
+  color: white;
+}
+
+.dataset {
+  margin-bottom: 50px;
+}

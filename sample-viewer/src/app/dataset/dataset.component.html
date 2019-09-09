@@ -15,14 +15,24 @@
       <!-- DATASET LOOP -->
       <div class="dataset" *ngFor="let dataset of datasets">
         <div class="dataset-header">
-          <h4><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
-            <div class="keyword-container container">
-              <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
+          <div class="container">
+            <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
+              <div class="keyword-container container">
+                <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
+              </div>
+            </h4>
+
+            <div class="container count-pair">
+              <div class="count-value">
+                {{dataset.expt_count}}
+              </div>
+              <div class="count-label">
+                experiments
+              </div>
             </div>
-            <div class="experiment-count">
-              {{dataset.expt_count}} experiments
-            </div>
-          </h4>
+          </div>
+
+
           <div class="dataset-description">
             {{dataset.description}}
           </div>
