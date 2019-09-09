@@ -42,8 +42,7 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    let hla: any;
-    this.hlaSvc.getpatientHLA(this.patient.patientID).subscribe((res:Object[]) => {
+    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res:Object[]) => {
       console.log(res)
       let hla_data = res;
 

@@ -44,20 +44,14 @@ export class GetHlaDataService {
     this.summarizeHLA();
   }
 
-  getHLAdata() {
+  getHLAdata(patientID?: string): Observable<Object[]> {
     let params = new HttpParams()
       .set("q", 'measurementTechnique:"HLA sequencing"')
-      .set("fields", "data")
-
-    // TODO: change to fetchAll
-    return this.apiSvc.get("experiment", params, 1000)
-  }
-
-  getpatientHLA(patientID): Observable<Object[]> {
-    let params = new HttpParams()
-      .set("q", 'measurementTechnique:"HLA sequencing"')
-      .set("patientID", `"${patientID}"`)
       .set("fields", "data");
+
+    if (patientID) {
+      params = params.append("patientID", `"${patientID}"`);
+    }
 
     // TODO: change to fetchAll
     return this.apiSvc.get("experiment", params, 1000).pipe(
@@ -74,49 +68,81 @@ export class GetHlaDataService {
       ))
   }
 
+  // getpatientHLA(patientID): Observable<Object[]> {
+  //   let params = new HttpParams()
+  //     .set("q", 'measurementTechnique:"HLA sequencing"')
+  //     .set("patientID", `"${patientID}"`)
+  //     .set("fields", "data");
+  //
+  //   // TODO: change to fetchAll
+  //   return this.apiSvc.get("experiment", params, 1000).pipe(
+  //     map((res: ESResponse) => {
+  //       console.log(res);
+  //
+  //       // collapse the data down to a single long array of each allele
+  //       // make sure to remove any expts which lack a data object
+  //       let data = res['hits'].flatMap(d => d.data).filter(d => d);
+  //       console.log(data)
+  //
+  //       return (data)
+  //     }
+  //     ))
+  // }
+
 
   summarizeHLA() {
-    // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
-    let unique_IDs = _.uniqBy(this.HLA_DATA, d => d.patientID)
+    console.log('summarizing HLA data:')
 
-    this.patientCountSubject.next(unique_IDs.length);
+    this.getHLAdata().pipe(
+      map((hla_data: any) => {
+        console.log(hla_data);
 
-    let patientOutcomes = nest()
-      .key((d: HLA) => d.outcome)
-      .rollup((values: any) => values.length)
-      .entries(unique_IDs);
+        // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
+        let unique_IDs = _.uniqBy(hla_data, d => d.patientID)
 
-    // Align w/ ES syntax
-    patientOutcomes.forEach(d => {
-      d['term'] = d.key;
-      d['count'] = d.value;
+        this.patientCountSubject.next(unique_IDs.length);
 
-    })
+        let patientOutcomes = nest()
+          .key((d: HLA) => d.outcome)
+          .rollup((values: any) => values.length)
+          .entries(unique_IDs);
 
-    this.patientOutcomeSubject.next(patientOutcomes);
+        // Align w/ ES syntax
+        patientOutcomes.forEach(d => {
+          d['term'] = d.key;
+          d['count'] = d.value;
+
+        })
+        console.log(patientOutcomes)
+
+        this.patientOutcomeSubject.next(patientOutcomes);
 
 
-    // _.countBy(unique_IDs, 'outcome');
-    let patientTypes = nest()
-      .key((d: HLA) => d.cohort)
-      .rollup((values: any) => values.length)
-      .entries(unique_IDs);
 
-    // Align w/ ES syntax
-    patientTypes.forEach(d => {
-      d['term'] = d.key;
-      d['count'] = d.value;
+        // _.countBy(unique_IDs, 'outcome');
+        let patientTypes = nest()
+          .key((d: HLA) => d.cohort)
+          .rollup((values: any) => values.length)
+          .entries(unique_IDs);
 
-    })
+        // Align w/ ES syntax
+        patientTypes.forEach(d => {
+          d['term'] = d.key;
+          d['count'] = d.value;
 
-    this.patientTypeSubject.next(patientTypes);
+        })
 
-    // --- unique alleles ---
-    this.getAlleleCounts(this.HLA_DATA);
+        console.log(patientTypes)
 
-    // --- unique alleles ---
-    this.getUniqueCounts(this.HLA_DATA);
+        this.patientTypeSubject.next(patientTypes);
 
+        // --- unique alleles ---
+        this.getAlleleCounts(hla_data);
+
+        // --- unique alleles ---
+        this.getUniqueCounts(hla_data);
+      }
+    ))
   }
 
   getAlleleCounts(hla_data) {
@@ -135,7 +161,7 @@ export class GetHlaDataService {
 
     this.alleleCountSubject.next(alleleCount);
 
-    // console.log(alleleCount);
+    console.log(alleleCount);
     return (alleleCount);
   }
 
@@ -159,6 +185,7 @@ export class GetHlaDataService {
     )
 
     this.novelAllelesSubject.next(novelAlleles);
+    console.log(novelAlleles)
     return (novelAlleles);
   }
 
