@@ -41,8 +41,7 @@ export class GetHlaDataService {
 
 
   constructor(private apiSvc: ApiService) {
-    this.summarizeHLA().subscribe(res => {
-      console.log("subscribing in service")
+    this.summarizeHLA().subscribe(_ => {
     });;
   }
 
@@ -58,9 +57,6 @@ export class GetHlaDataService {
     // TODO: change to fetchAll
     return this.apiSvc.get("experiment", params, 1000).pipe(
       map((res: ESResponse) => {
-        console.log('result from getHLAdata');
-        console.log(res);
-
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
         let data = res['hits'].flatMap(d => d.data).filter(d => d);
@@ -93,8 +89,6 @@ export class GetHlaDataService {
   // }
 
   summarizeHLA() {
-    console.log('summarizing HLA data:')
-
     // ex. summarization call:
     // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:"HLA%20sequencing"&size=0&facets=cohort.keyword,%20outcome.keyword&facet_size=10000
     let patientParams = new HttpParams()
@@ -107,42 +101,14 @@ export class GetHlaDataService {
       mergeMap(hla_data => this.apiSvc.get("patient", patientParams, 0)
         .pipe(
           map((patientData: any) => {
-            console.log("HLA summarization called")
-            console.log(hla_data);
-            console.log(patientData);
-
             this.patientCountSubject.next(patientData['total']);
 
             let patientOutcomes = patientData['facets']['outcome.keyword']['terms'];
-            // nest()
-            //   .key((d: HLA) => d.outcome)
-            //   .rollup((values: any) => values.length)
-            //   .entries(unique_IDs);
-            //
-            // // Align w/ ES syntax
-            // patientOutcomes.forEach(d => {
-            //   d['term'] = d.key;
-            //   d['count'] = d.value;
-            //
-            // })
-            console.log(patientOutcomes)
 
             this.patientOutcomeSubject.next(patientOutcomes);
 
 
             let patientTypes = patientData['facets']['cohort.keyword']['terms']
-            // nest()
-            //   .key((d: HLA) => d.cohort)
-            //   .rollup((values: any) => values.length)
-            //   .entries(unique_IDs);
-            //
-            // // Align w/ ES syntax
-            // patientTypes.forEach(d => {
-            //   d['term'] = d.key;
-            //   d['count'] = d.value;
-            // })
-
-            console.log(patientTypes)
 
             this.patientTypeSubject.next(patientTypes);
 
@@ -171,7 +137,6 @@ export class GetHlaDataService {
 
     this.alleleCountSubject.next(alleleCount);
 
-    console.log(alleleCount);
     return (alleleCount);
   }
 
@@ -195,7 +160,6 @@ export class GetHlaDataService {
     )
 
     this.novelAllelesSubject.next(novelAlleles);
-    console.log(novelAlleles)
     return (novelAlleles);
   }
 
