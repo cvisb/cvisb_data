@@ -21,7 +21,10 @@ export class SmallMultipleComparisonComponent implements OnChanges {
 
 
   constructor(private hlaSvc: GetHlaDataService) {
-    // this.HLA_DATA = hlaSvc.getHLAdata();
+    hlaSvc.getHLAdata().subscribe((res: HLA[]) => {
+      console.log(res)
+      this.HLA_DATA = res;
+    });
    }
 
   ngOnChanges() {
