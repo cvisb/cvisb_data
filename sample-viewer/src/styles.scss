@@ -586,3 +586,8 @@ button.stepper-button {
 .hidden {
   display: none;
 }
+
+// Font size for all tables
+th.mat-header-cell {
+  font-size: 14px !important;
+}
