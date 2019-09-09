@@ -103,7 +103,7 @@ export class FilterPatientsComponent implements OnInit {
       if (years.length === 0) {
         this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
       } else {
-        let minYear = Math.min(...years);
+        let minYear = Math.max(Math.min(...years), 2007); // Majority of our data is before 2007; windsorize to < 2007
         let maxYear = Math.max(...years);
         let yearLength = (maxYear - minYear) + 1;
         this.all_years = Array.from(new Array(yearLength), (_, i) => i + minYear);
