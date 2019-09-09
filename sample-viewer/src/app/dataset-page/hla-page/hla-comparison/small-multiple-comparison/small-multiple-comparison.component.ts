@@ -71,13 +71,15 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   }
 
   filterData(data: HLA[], params: CohortSelectOptions): HLAnested[] {
-    let filtered = data
-      .filter((d: HLA) => params['cohort'].includes(d.cohort))
-      .filter((d: HLA) => params['outcome'].includes(d.outcome));
+    if (data && data.length > 0) {
+      let filtered = data
+        .filter((d: HLA) => params['cohort'].includes(d.cohort))
+        .filter((d: HLA) => params['outcome'].includes(d.outcome));
 
-    // console.log(filtered)
+      // console.log(filtered)
 
-    return (this.nestData(filtered));
+      return (this.nestData(filtered));
+    }
   }
 
 }
