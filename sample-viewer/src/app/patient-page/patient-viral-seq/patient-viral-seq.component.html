@@ -26,7 +26,7 @@
 
         <app-format-citation [citations]="seq.citation" class="citation"></app-format-citation>
 
-        <div class="NCBI-link">
+        <div class="NCBI-link" *ngIf="seq.genbankID">
           <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
             GenBank ID {{seq.genbankID}}
           </a>
