@@ -15,7 +15,7 @@
 
 
   <div class="circle-packing container">
-    <div class="main-graph">
+    <div class="main-graph" *ngIf="alleleCount">
       <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
     </div>
 
