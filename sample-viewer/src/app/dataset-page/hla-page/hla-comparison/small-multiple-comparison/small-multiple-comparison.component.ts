@@ -39,14 +39,9 @@ export class SmallMultipleComparisonComponent implements OnChanges {
    }
 
   ngOnChanges() {
-
-    // console.log(HLA_DATA)
-    // console.log("this.left_params")
-    // console.log(this.left_params)
-    // this.nested_hla = this.nestData(HLA_DATA);
-
-    // console.log(this.nested_hla)
-    // console.log(this.loci)
+    console.log(this.HLA_DATA)
+    console.log("this.left_params")
+    console.log(this.left_params)
     if (this.left_params) {
       this.left = this.filterData(this.HLA_DATA, this.left_params);
       this.loci = this.left.map((d: HLAnested) => d.key)
@@ -82,6 +77,8 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   }
 
   filterData(data: HLA[], params: CohortSelectOptions): HLAnested[] {
+    console.log(data)
+    console.log(params)
     let filtered = data
       .filter((d: HLA) => params['cohort'].includes(d.cohort))
       .filter((d: HLA) => params['outcome'].includes(d.outcome));
