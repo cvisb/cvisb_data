@@ -39,13 +39,13 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
 
   {
-    canActivate: [AuthGuard], path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
+    path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
       patients: PatientsResolver,
       all: AllPatientsResolver
     }
   },
-  { canActivate: [AuthGuard],path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
+  { path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
   { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
