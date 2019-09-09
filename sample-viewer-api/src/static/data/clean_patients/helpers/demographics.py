@@ -58,6 +58,8 @@ def cleanCohort(input):
         return("Ebola")
     if(re.search("EVD", input.upper())):
         return("Ebola")
+    if(re.search("Control", input.title())):
+        return("Control")
     else:
         return("Unknown")
 

@@ -37,7 +37,6 @@ sampleCols = ["creatorInitials", "sampleLabel", "sampleType", "species", "sample
 
 hla_cols = ["A", "A.1", "B", "B.1", "C", "C.1", "DPA1", "DRB4", "DRB4.1", "DRB5","DRB5.1", "DPA1.1", "DPB1", "DPB1.1", "DQA1", "DQA1.1", "DQB1", "DQB1.1", "DRB1", "DRB1.1", "DRB3", "DRB3.1"]
 
-
 hla_code = {
     "dateModified": "2019-06-03",
     "version": "https://github.com/andersen-lab/lassa-ebola-hla/commit/ea4f9e10fd569c9a21b06d0ab310a7157f1eedd0",
@@ -270,9 +269,9 @@ Original form:
 {"patientID":"id12","outcome":"control","cohort":"control","country":"Sierra Leone","locus":"A","allele":"A*020101","novel":false},
 """
 longCols = hla_cols.copy()
-longCols.append("patientID")
+longCols.extend(["patientID", "cohort", "outcome"])
 
-df_long = pd.melt(df[longCols], id_vars=['patientID'], var_name="locus", value_name="allele")
+df_long = pd.melt(df[longCols], id_vars=['patientID', "cohort", "outcome"], var_name="locus", value_name="allele")
 
 df_long['novel'] = df_long.allele.apply(findNovel)
 df_long['locus'] = df_long.locus.apply(cleanLoci)
