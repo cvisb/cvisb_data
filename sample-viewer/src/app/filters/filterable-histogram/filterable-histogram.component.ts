@@ -233,9 +233,12 @@ export class FilterableHistogramComponent implements OnInit {
         .paddingOuter(0)
         .domain(['unknown']);
 
+      // Only show 5 values in the histogram.
+      let tickSpacing = Math.round(this.x.domain().length / 5);
+
       this.xAxis = d3.axisBottom(this.x)
         .tickSizeOuter(0)
-        .tickValues(this.x.domain().filter((_, i) => !(i % 2)));
+        .tickValues(this.x.domain().filter((_, i) => !(i % tickSpacing)));
 
       this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
