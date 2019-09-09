@@ -1,7 +1,7 @@
 <div class="hla-container patient-data-container">
   <h4 class="patient-data">HLA Sequencing</h4>
 
-  <ng-container *ngIf="genotype; else nodata">
+  <ng-container *ngIf="genotype && alleleCount; else nodata">
     <div class="hla-files">
       <h5 class="patient-data">files</h5>
       <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
@@ -14,7 +14,7 @@
         updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
       </div>
 
-      <div class="hla-data" *ngIf="alleleCount">
+      <div class="hla-data">
         <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
 
         <div class="container-column">
