@@ -15,26 +15,6 @@
         <span id="journal"><i>{{citation.journalName}}</i></span>
       </ng-container>
 
-      <ng-template #firstAuthor>
-        <span id="authors" *ngIf="simplifiedCitation === true; else linkedAuthor">
-          {{citation.author[0].givenName}} {{citation.author[0].familyName}}
-          <i>et al.</i>
-        </span>
-        <span id="journal"><i>{{citation.journalName}}</i></span>
-
-        <ng-template #linkedAuthor>
-          <span id="authors" *ngIf="simplifiedCitation === true; else linkedAuthor">
-            <a [href]="citation.url" target="_blank" rel="noreferrer">
-              {{citation.author[0].givenName}} {{citation.author[0].familyName}}
-              <i>et al.</i>
-            </a>
-          </span>
-          <span id="journal"><i>{{citation.journalNameAbbrev}}</i></span>
-        </ng-template>
-
-      </ng-template>
-
-
       <span id="date" *ngIf="citation.datePublished">{{citation.datePublished}}</span>,
 
       <span id="vol">{{citation.volumeNumber}}</span>, <span id="issue">{{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
@@ -48,4 +28,23 @@
     </div>
 
   </div>
+
+  <ng-template #firstAuthor>
+    <span id="authors" *ngIf="simplifiedCitation === true; else linkedAuthor">
+      {{citation.author[0].givenName}} {{citation.author[0].familyName}}
+      <i>et al.</i>
+    </span>
+    <span id="journal"><i>{{citation.journalName}}</i></span>
+  </ng-template>
+
+  <ng-template #linkedAuthor>
+    <span id="authors" *ngIf="simplifiedCitation === true; else linkedAuthor">
+      <a [href]="citation.url" target="_blank" rel="noreferrer">
+        {{citation.author[0].givenName}} {{citation.author[0].familyName}}
+        <i>et al.</i>
+      </a>
+    </span>
+    <span id="journal"><i>{{citation.journalNameAbbrev}}</i></span>
+  </ng-template>
+
 </ng-container>
