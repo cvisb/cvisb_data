@@ -26,8 +26,11 @@ export class HomeComponent implements OnInit {
 
   alleleCount: any;
   patientCount: number;
+  sampleCount: number;
+  experimentCount: Object[];
 
-  test = [{ name: "fdjaskfdls", seq: 'ejwifhajndjskfnkds' }]
+  // connection between measurementTechnique and /dataset/{dsid}
+  exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
 
   cards: Object[] = [
     { label: "Explore CViSB data", path: "dataset", description: "We will follow a strict release of open access data within two weeks of data generation.", warning: "CViSB-members only" },
@@ -47,7 +50,6 @@ export class HomeComponent implements OnInit {
 
     this.hlaSvc.alleleCountState$.subscribe((cts: any[]) => {
       this.alleleCount = cts;
-      console.log(cts)
     })
 
 
@@ -55,10 +57,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     let patientParams = new HttpParams().set("q", "__all__");
+    let exptParams = new HttpParams()
+      .set("q", "__all__")
+      .set("facets", "measurementTechnique.keyword");
 
     this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
-      console.log(res)
       this.patientCount = res['total'];
+    });
+
+    this.apiSvc.get("sample", patientParams, 0).subscribe(res => {
+      this.sampleCount = res['total'];
+    });
+
+    this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
+      this.experimentCount = res["facets"]["measurementTechnique.keyword"].terms;
+      this.experimentCount.forEach(d => {
+        d['link'] = this.exptDict[d['term']];
+      })
+
     });
 
     let transitionSync = d3.transition().duration(5000);

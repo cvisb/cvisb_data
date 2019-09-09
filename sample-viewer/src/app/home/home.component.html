@@ -66,13 +66,13 @@
       </div>
 
       <div class="counts">
-        <a routerLink="/dataset">
+        <a [routerLink]="['/dataset', expt.link]" *ngFor="let expt of experimentCount">
           <div class="container count-pair">
             <div class="count-value">
-              312
+              {{expt.count}}
             </div>
             <div class="count-label">
-              HLA genotypes
+              {{expt.term}} experiments
             </div>
           </div>
         </a>
@@ -114,7 +114,7 @@
         <a routerLink="/patient">
           <div class="container count-pair">
             <div class="count-value">
-              5039
+              {{patientCount}}
             </div>
             <div class="count-label">
               patients
@@ -142,7 +142,7 @@
         <a routerLink="/sample">
           <div class="container count-pair">
             <div class="count-value">
-              925
+              {{sampleCount}}
             </div>
             <div class="count-label">
               samples
