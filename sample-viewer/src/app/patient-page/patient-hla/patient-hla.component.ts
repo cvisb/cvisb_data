@@ -25,21 +25,9 @@ export class PatientHlaComponent implements OnChanges {
   constructor(private hlaSvc: GetHlaDataService, private hlaColorSvc: HlaService) {
     // --- unique alleles: population of all samples ---
     hlaSvc.alleleCountState$.subscribe((cts: D3Nested[]) => {
-    console.log(cts)
+      console.log(cts)
       this.alleleCount = cts;
     })
-
-    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res:Object[]) => {
-      console.log(res)
-      let hla_data = res;
-
-      if (hla_data.length > 0) {
-        this.genotype = hla_data.map((d:any) => d.allele);
-      } else {
-        this.genotype = null;
-      }
-    });
-
 
     hlaColorSvc.selectedLocusState$.subscribe((selectedLocus: string) => {
       this.selectedLocus = selectedLocus;
@@ -55,6 +43,16 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
+      console.log(res)
+      let hla_data = res;
+
+      if (hla_data.length > 0) {
+        this.genotype = hla_data.map((d: any) => d.allele);
+      } else {
+        this.genotype = null;
+      }
+    });
   }
 
   sendLocus(event, locus: string) {
