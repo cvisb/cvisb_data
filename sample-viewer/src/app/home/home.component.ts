@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 
 import * as d3 from 'd3';
 
-import { GetPatientsService, ApiService, GetHlaDataService } from '../_services';
+import { ApiService } from '../_services';
 
 @Component({
   selector: 'app-home',
@@ -37,16 +37,10 @@ export class HomeComponent implements OnInit {
   ];
 
 
-  constructor(private titleSvc: Title, private route: ActivatedRoute, private patientSvc: GetPatientsService, public apiSvc: ApiService, private hlaSvc: GetHlaDataService) {
+  constructor(private titleSvc: Title, private route: ActivatedRoute, public apiSvc: ApiService) {
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;
     this.titleSvc.setTitle(title);
-
-    this.hlaSvc.alleleCountState$.subscribe((cts: any[]) => {
-      this.alleleCount = cts;
-    })
-
-
   }
 
   ngOnInit() {
