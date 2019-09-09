@@ -23,6 +23,7 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() public endpoint: string;
   @Input() public filter_title: string;
   @Input() public filterHandler: Function;
+  @Input() public windsorized: boolean = false;
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -259,6 +260,13 @@ export class FilterableHistogramComponent implements OnInit {
 
       this.axisUnknown
         .call(this.xAxis2);
+
+      // Function for windsorized data:
+      if (this.windsorized) {
+        d3.selectAll(".axis--x").selectAll(".tick text")
+          .classed("windsor-value", (_, i) => i === 0)
+          .text((d:string,i) => i === 0 ? `<${d}` : d);
+      }
 
 
       // --- EVENT LISTENERS ---
