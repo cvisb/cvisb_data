@@ -9,13 +9,7 @@ import { environment } from '../../environments/environment';
 
 import * as d3 from 'd3';
 
-import { GetPatientsService, ApiService, GetHlaDataService } from '../_services'
-// import { RequestParamArray, RequestParam} from '../_models'
-//
-import SAMPLES from '../../assets/data/test_samples.json';
-import EXPTS from '../../assets/data/test_experiments.json';
-import DATASETS from '../../assets/data/dataset_public.json';
-import DOWNLOADS from '../../assets/data/test_datadownloads.json';
+import { GetPatientsService, ApiService, GetHlaDataService } from '../_services';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +21,7 @@ export class HomeComponent implements OnInit {
   alleleCount: any;
   patientCount: number;
   sampleCount: number;
-  experimentCount: Object[];
+  experimentCount: Object[] = [];
 
   // connection between measurementTechnique and /dataset/{dsid}
   exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
@@ -80,7 +74,7 @@ export class HomeComponent implements OnInit {
     let transitionSync = d3.transition().duration(5000);
 
     let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
-    let dataDiv = d3.select("#dataset").selectAll(".count-value");
+    let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
     let sampleDiv = d3.select("#sample").selectAll(".count-value");
 
     dataDiv.transition(transitionSync)

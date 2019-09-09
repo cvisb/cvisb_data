@@ -48,34 +48,23 @@
             <div class="section-subtitle">
               explore, visualize, and download experimental data
             </div>
-            <ul>
-
-              <a [routerLink]='["/dataset/hla"]'>
-                <li>
-                  HLA Genotypes
-                </li>
-              </a>
-              <a [routerLink]='["/dataset/viralseq"]'>
-                <li>
-                  Viral Sequencing
-                </li>
-              </a>
-            </ul>
           </div>
         </a>
       </div>
 
-      <div class="counts">
-        <a [routerLink]="['/dataset', expt.link]" *ngFor="let expt of experimentCount">
-          <div class="container count-pair">
-            <div class="count-value">
-              {{expt.count}}
+      <div class="counts" id="dataset-counts" *ngIf="experimentCount.length > 0">
+        <ng-container *ngFor="let expt of experimentCount">
+          <a [routerLink]="['/dataset', expt.link]">
+            <div class="container count-pair">
+              <div class="count-value">
+                {{expt.count}}
+              </div>
+              <div class="count-label">
+                {{expt.term}} experiments
+              </div>
             </div>
-            <div class="count-label">
-              {{expt.term}} experiments
-            </div>
-          </div>
-        </a>
+          </a>
+        </ng-container>
       </div>
     </div>
 
@@ -110,7 +99,7 @@
         </a>
       </div>
 
-      <div class="counts">
+      <div class="counts" *ngIf="patientCount">
         <a routerLink="/patient">
           <div class="container count-pair">
             <div class="count-value">
@@ -138,7 +127,7 @@
         </a>
       </div>
 
-      <div class="counts">
+      <div class="counts" *ngIf="sampleCount">
         <a routerLink="/sample">
           <div class="container count-pair">
             <div class="count-value">

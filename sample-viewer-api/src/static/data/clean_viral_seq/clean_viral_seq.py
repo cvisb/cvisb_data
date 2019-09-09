@@ -246,9 +246,9 @@ expts['sampleID'] = expts.apply(lambda x: f"{x.creatorInitials}-{x.sampleLabel}_
 expts['data'] = expts.data.apply(helpers.listify)
 expts['citation'] = expts.citation.apply(helpers.listify)
 
-
 # [Export]  ----------------------------------------------------------------------------------------------------
 expts[exptCols].to_json(f"{output_dir}/experiments/viral_seq_{today}.json", orient="records")
 expts.loc[~expts.KGH_id, patientCols].to_json(f"{output_dir}/patients/viral_seq_patients_{today}.json", orient="records")
 expts[sampleCols].to_json(f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
-expts[['seqType', 'experimentID']].groupby('seqType').experimentID.apply(list).to_json(f"{output_dir}/datadownloads/viral_seq_exptIDs{today}.json")
+# Make sure only to get the experiment IDs of those in the alignment
+expts.loc[expts.inAlignment,['seqType', 'experimentID']].groupby('seqType').experimentID.apply(list).to_json(f"{output_dir}/datadownloads/viral_seq_exptIDs{today}.json")
