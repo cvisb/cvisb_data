@@ -33,6 +33,8 @@ export class SmallMultipleComparisonComponent implements OnChanges {
       if (this.right_params) {
         this.right = this.filterData(this.HLA_DATA, this.right_params);
       }
+      console.log(this.right)
+      console.log(this.left)
     });
    }
 
