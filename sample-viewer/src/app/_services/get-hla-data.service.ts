@@ -20,6 +20,7 @@ export class GetHlaDataService {
   patientTypes: D3Nested[];
   patientOutcomes: D3Nested[];
   patientCount: number;
+  HLA_DATA = [];
   // alleleCount: D3Nested[];
   // novelAlleles: D3Nested[];
 
@@ -70,6 +71,7 @@ export class GetHlaDataService {
       ))
   }
 
+
   summarizeHLA() {
     // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
     let unique_IDs = _.uniqBy(this.HLA_DATA, d => d.patientID)
@@ -107,10 +109,10 @@ export class GetHlaDataService {
     this.patientTypeSubject.next(patientTypes);
 
     // --- unique alleles ---
-    this.getAlleleCounts();
+    this.getAlleleCounts(this.HLA_DATA);
 
     // --- unique alleles ---
-    this.getUniqueCounts();
+    this.getUniqueCounts(this.HLA_DATA);
 
   }
 
