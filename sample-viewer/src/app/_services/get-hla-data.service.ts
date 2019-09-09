@@ -56,6 +56,7 @@ export class GetHlaDataService {
     // TODO: change to fetchAll
     return this.apiSvc.get("experiment", params, 1000).pipe(
       map((res: ESResponse) => {
+        console.log('result from getHLAdata');
         console.log(res);
 
         // collapse the data down to a single long array of each allele
@@ -93,8 +94,9 @@ export class GetHlaDataService {
   summarizeHLA() {
     console.log('summarizing HLA data:')
 
-    this.getHLAdata().pipe(
+    return this.getHLAdata().pipe(
       map((hla_data: any) => {
+        console.log("HLA summarization called")
         console.log(hla_data);
 
         // TODO: figure better way?  Lodash only takes the first (?) value for the data, so doesn't check if there are unique ID/cohort combos.  Which should be okay, but not ideal.
@@ -118,7 +120,7 @@ export class GetHlaDataService {
         this.patientOutcomeSubject.next(patientOutcomes);
 
 
-
+        // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:%22HLA%20sequencing%22&size=0&facets=cohort.keyword,%20outcome.keyword
         // _.countBy(unique_IDs, 'outcome');
         let patientTypes = nest()
           .key((d: HLA) => d.cohort)
@@ -142,7 +144,7 @@ export class GetHlaDataService {
         // --- unique alleles ---
         this.getUniqueCounts(hla_data);
       }
-    ))
+      ))
   }
 
   getAlleleCounts(hla_data) {

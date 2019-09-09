@@ -14,6 +14,8 @@ export class HlaResolver implements Resolve<any> {
   constructor(private hlaSvc: GetHlaDataService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    return this.hlaSvc.summarizeHLA();
+    return this.hlaSvc.summarizeHLA().subscribe(res => {
+      console.log("subscribing in resolver")
+    });
   }
 }
