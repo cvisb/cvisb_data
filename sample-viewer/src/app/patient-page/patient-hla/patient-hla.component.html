@@ -1,7 +1,7 @@
 <div class="hla-container patient-data-container">
   <h4 class="patient-data">HLA Sequencing</h4>
 
-  <ng-container *ngIf="genotype && alleleCount; else nodata">
+  <ng-container *ngIf="genotype && alleleCount && alleleCount.length > 1; else nodata">
     <div class="hla-files">
       <h5 class="patient-data">files</h5>
       <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>

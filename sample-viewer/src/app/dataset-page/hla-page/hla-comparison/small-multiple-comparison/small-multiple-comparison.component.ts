@@ -24,6 +24,15 @@ export class SmallMultipleComparisonComponent implements OnChanges {
     hlaSvc.getHLAdata().subscribe((res: HLA[]) => {
       console.log(res)
       this.HLA_DATA = res;
+
+      if (this.left_params) {
+        this.left = this.filterData(this.HLA_DATA, this.left_params);
+        this.loci = this.left.map((d: HLAnested) => d.key)
+      }
+
+      if (this.right_params) {
+        this.right = this.filterData(this.HLA_DATA, this.right_params);
+      }
     });
    }
 
