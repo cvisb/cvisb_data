@@ -283,14 +283,14 @@ df_long.allele.replace(r'\-', pd.np.nan, regex=True, inplace=True)
 # Double check no other '-', etc.
 df_long.allele.value_counts(dropna=False)
 
+import json
+# Sure there's a less kludgey way to do this, but it gets the job done.
 df_agg = df_long.groupby("patientID").apply(lambda x: x.to_json(orient="records"))
 df_agg = df_agg.reset_index()
-
 df_agg.rename(columns = {0: 'data'}, inplace = True)
-
+df_agg['data'] = df_agg.data.apply(lambda x: json.loads(x))
 # Merge allele calls back into the df object.
 df_merged = pd.merge(df, df_agg, how="outer", on="patientID", indicator = True)
-
 df_merged._merge.value_counts()
 
 # Export
@@ -299,7 +299,6 @@ df_merged._merge.value_counts()
 
 # [Export patient data]  ----------------------------------------------------------------------------------------------------
 # Any patient that isn't a KGH patient needs to be added to /patient with any assoicated data.
-df_merged[exptCols].sample(3)
 
 
 # [Patient-specific properties]  ----------------------------------------------------------------------------------------------------
@@ -317,7 +316,7 @@ patients = df_merged.loc[~df_merged.KGH_id, patientCols]
 
 # [Export data]  ----------------------------------------------------------------------------------------------------
 # experiments
-df_merged[expt_cols].to_json(expt_path, orient="records")
+df_merged[exptCols].to_json(expt_path, orient="records")
 # patients
 patients.to_json(patients_path, orient="records")
 # samples
