@@ -104,16 +104,16 @@ export class GetHlaDataService {
       .set("facet_size", "10000");
 
     return this.getHLAdata().pipe(
-      mergeMap(patientResults => this.apiSvc.get("patient", patientParams, 0)
+      mergeMap(hla_data => this.apiSvc.get("patient", patientParams, 0)
         .pipe(
-          map((hla_data: any) => {
+          map((patientData: any) => {
             console.log("HLA summarization called")
             console.log(hla_data);
-            console.log(patientResults);
+            console.log(patientData);
 
-            this.patientCountSubject.next(patientResults['total']);
+            this.patientCountSubject.next(patientData['total']);
 
-            let patientOutcomes = patientResults['facets']['outcome.keyword']['terms'];
+            let patientOutcomes = patientData['facets']['outcome.keyword']['terms'];
             // nest()
             //   .key((d: HLA) => d.outcome)
             //   .rollup((values: any) => values.length)
@@ -130,7 +130,7 @@ export class GetHlaDataService {
             this.patientOutcomeSubject.next(patientOutcomes);
 
 
-            let patientTypes = patientResults['facets']['cohort.keyword']['terms']
+            let patientTypes = patientData['facets']['cohort.keyword']['terms']
             // nest()
             //   .key((d: HLA) => d.cohort)
             //   .rollup((values: any) => values.length)
