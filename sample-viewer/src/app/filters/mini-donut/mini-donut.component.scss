@@ -39,8 +39,6 @@ path.unknown {
 text.Unknown,
 text.unknown {
   fill: $grey-400;
-
-
 }
 
 text.Unknown,
@@ -151,53 +149,13 @@ div.tooltip {
   dominant-baseline: central;
 }
 
-.checkbox {
-  stroke-width: 2;
-  shape-rendering: crispEdges;
-  fill: white;
-  cursor: pointer;
-  stroke: $default-color;
-
-  &.Ebola {
-    stroke: $ebola-md;
-
-    &:hover {
-      fill: $ebola-lt;
-    }
-  }
-
-  &.Lassa {
-    stroke: $lassa-md;
-
-    &:hover {
-      fill: $lassa-lt;
-    }
-  }
-
-  &.Unknown {
-    stroke: $grey-600;
-
-    &:hover {
-      fill: $grey-50;
-    }
-  }
-
-  &.Unknown {
-    stroke: $grey-400;
-
-    &:hover {
-      fill: $grey-50;
-    }
-  }
-}
-
 .checkmark {
   cursor: pointer;
   font-size: 1.1em;
   dominant-baseline: ideographic;
   // pointer-events: none;
-  stroke-width: 2.5;
-  fill: none;
+  stroke-width: 2;
+  fill: none !important;
 
   &.Ebola {
     stroke: $ebola-md;
