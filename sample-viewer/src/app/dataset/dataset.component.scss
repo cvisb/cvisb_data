@@ -1,6 +1,5 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
-
 $icon-size: 35px;
 
 .grid-container {
@@ -69,4 +68,9 @@ svg-icon {
 
 h4 {
   margin-top: 8px;
+  margin-left: 13px;
+}
+
+.container-title {
+  align-items: center;
 }

@@ -17,7 +17,7 @@
         <div class="dataset-header">
           <div class="container container-header">
 
-            <div class="container">
+            <div class="container container-title">
               <svg-icon [icon]="dataset.identifier" [class]="dataset.identifier + '-icon'"></svg-icon>
 
               <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
@@ -26,7 +26,7 @@
                 </div>
               </h4>
             </div>
-            
+
             <div class="container count-pair">
               <div class="count-value">
                 {{dataset.expt_count}}
