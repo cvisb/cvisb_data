@@ -57,8 +57,6 @@ export class MiniDonutComponent implements OnInit {
 
   getSelected(params, fieldName = "cohort") {
     let filtered = params.filter(d => d.field === fieldName);
-    console.log(filtered)
-    console.log(this.cohorts)
 
     if (filtered.length === 1) {
       return (filtered[0].value);
@@ -71,15 +69,10 @@ export class MiniDonutComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
 
-      console.log(this.endpoint)
-
       switch (this.endpoint) {
         case "patient":
-          console.log("PATIENT ENDPOINT")
           this.requestSvc.patientParamsState$.subscribe(params => {
-            console.log(params)
             this.selectedCohorts = this.getSelected(params);
-            console.log(this.selectedCohorts)
           })
           break;
 
@@ -152,8 +145,6 @@ export class MiniDonutComponent implements OnInit {
       this.data.forEach(d => {
         d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
       })
-      console.log(this.selectedCohorts)
-      console.log(this.data)
 
       // --- Update axes ---
       this.y
@@ -182,10 +173,7 @@ export class MiniDonutComponent implements OnInit {
             .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
             .classed("checked", (d: any) => d.selected);
 
-          console.log(data)
-
           let cohorts = data.filter(d => d.selected).map(d => d.term);
-          console.log('filtering ' + cohorts)
           requestSvc.updateParams(endpoint, { field: 'cohort', value: cohorts })
         }
       }
