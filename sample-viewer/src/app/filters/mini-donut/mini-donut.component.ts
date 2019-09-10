@@ -247,13 +247,6 @@ export class MiniDonutComponent implements OnInit {
         .attr("dx", 15)
         .attr('class', 'annotation--count');
 
-      // let checkEnter = annotationGroupEnter
-      //   .append("rect")
-      //   .attr("class", "checkbox");
-
-      // let checkmarkEnter = annotationGroupEnter
-      //   .append("polyline")
-      //   .attr("class", "checkmark");
       let checkmarkEnter = annotationGroupEnter
         .append("text")
         .attr("x", (d: any) => this.checkboxX)
@@ -272,26 +265,11 @@ export class MiniDonutComponent implements OnInit {
         .classed('disabled', (d: any) => d.count === 0)
         .text((d: any) => `${d.term}: ${d.count}`);
 
-      // let checkbox_width = Math.min(this.y.bandwidth(), 14);
-
-      // checkboxes.merge(checkEnter)
-      //   .attr("class", (d: any) => `checkbox ${d.term}`)
-      //   .attr("x", (d: any) => this.checkboxX)
-      //   .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2)
-      //   .attr("width", checkbox_width)
-      //   .attr("height", checkbox_width)
-
       checkmarks.merge(checkmarkEnter)
         .attr("class", (d: any) => `checkmark ${d.term}`)
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .text(d => d.selected ? "\uf14a" : "\uf0c8")
         .classed("checked", (d: any) => d.selected);
-
-      // checkmarks.merge(checkmarkEnter)
-      //   .attr("class", (d: any) => `checkmark ${d.term}`)
-      //   .attr("transform", d => `translate(${this.checkboxX},${this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2})`)
-      //   .attr("points", `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}`)
-      //   .style("display", d => d.selected ? "block" : "none");
 
       // --- click listener ---
       this.svg.selectAll(".checkmark")
