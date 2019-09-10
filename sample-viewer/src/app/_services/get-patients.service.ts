@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError, mergeMap, expand, reduce } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, EMPTY } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
@@ -127,6 +127,7 @@ export class GetPatientsService {
             let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
             patient['availableData'] = patientExpts;
           })
+
           console.log(patients)
           console.log(expts)
 
@@ -264,29 +265,92 @@ export class GetPatientsService {
       }
       )
     );
-
-    // this.myhttp.get('./customer.json').map((res: Response) => res.json())
-    //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
-    //            .map((res: Response) => res.json())
-    //            .subscribe(res => this.contract = res);
-
-
-    // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&fetch_all=true", {
-    //   observe: 'response',
-    //   headers: new HttpHeaders()
-    //     .set('Accept', 'application/json')
-    // }).subscribe(data => {
-    //   console.log(data);
-    //   if (data['body']['success'] !== false) {
-    //     let patients = data['body']['hits'];
-    //     let scroll_id = data['body']['_scroll_id'];
-    //   }
-    // },
-    //   err => {
-    //     console.log('Error in getting patients')
-    //     console.log(err)
-    //   })
   }
+
+  // https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
+  getAllPeople(qParams): Observable<any[]> {
+    return Observable.create(observer => {
+      this.getPage(qParams).pipe(
+        expand((data, _) => {
+          return data.next ? this.getPage(data.next) : EMPTY;
+        }),
+        reduce((acc, data: any) => {
+          console.log(acc)
+          console.log(data)
+          return acc.concat(data.results);
+        }, []),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        }),
+        map((people) => {
+          console.log(people)
+          observer.next(people);
+          observer.complete();
+        })
+      )
+      // .expand((data, i) => {
+      //   return data.next ? this.getPage(data.next) : EMPTY;
+      // })
+      // .reduce((acc, data) => {
+      //   return acc.concat(data.results);
+      // }, [])
+      // .catch(error => observer.error(error))
+      // .subscribe((people) => {
+      //   console.log(people)
+      //   observer.next(people);
+      //   observer.complete();
+      // });
+    });
+  }
+
+  getPage(qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
+    let params = qParams
+      .append('fetch_all', "true");
+    if (scrollID) {
+      params = params.append('scroll_id', scrollID);
+      console.log(params);
+    }
+
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(response => {
+        console.log(response)
+        return {
+          next: response['body']['_scroll_id'],
+          results: response['body']['hits']
+        };
+      }
+      )
+    );
+  }
+
+  // this.myhttp.get('./customer.json').map((res: Response) => res.json())
+  //            .mergeMap(customer => this.myhttp.get(customer.contractUrl))
+  //            .map((res: Response) => res.json())
+  //            .subscribe(res => this.contract = res);
+
+
+  // this.myhttp.get<any[]>(environment.api_url + "/api/patient/query?q=__all__&fetch_all=true", {
+  //   observe: 'response',
+  //   headers: new HttpHeaders()
+  //     .set('Accept', 'application/json')
+  // }).subscribe(data => {
+  //   console.log(data);
+  //   if (data['body']['success'] !== false) {
+  //     let patients = data['body']['hits'];
+  //     let scroll_id = data['body']['_scroll_id'];
+  //   }
+  // },
+  //   err => {
+  //     console.log('Error in getting patients')
+  //     console.log(err)
+  //   })
 
   fetchAll() {
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
