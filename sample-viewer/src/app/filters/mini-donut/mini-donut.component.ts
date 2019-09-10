@@ -116,7 +116,7 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
-    if (this.data && this.donut) {
+    if (this.data && this.donut && this.selectedCohorts) {
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
