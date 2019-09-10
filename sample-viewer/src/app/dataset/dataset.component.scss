@@ -1,6 +1,8 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
 
+$icon-size: 35px;
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(12, [col-start] 1fr);
