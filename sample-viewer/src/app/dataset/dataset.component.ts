@@ -27,10 +27,7 @@ export class DatasetComponent implements OnInit {
 
     this.datasetSvc.getDatasets().subscribe((datasets) => {
       this.datasets = datasets;
-      console.log(this.datasets);
     });
-
-
   }
 
   ngOnInit() {

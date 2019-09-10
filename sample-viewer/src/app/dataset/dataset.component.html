@@ -3,7 +3,7 @@
   <div class="filter-header">
 
     <div class="page-header">
-      <h1>Data Files</h1>
+      <h1>Datasets</h1>
     </div>
 
     <!-- <app-filter-files [datasets]="datasets"></app-filter-files> -->
@@ -23,6 +23,7 @@
             </h4>
 
             <div class="container count-pair">
+              <svg-icon [icon]="dataset.identifier" [class]="dataset.identifier + '-icon'"></svg-icon>
               <div class="count-value">
                 {{dataset.expt_count}}
               </div>
