@@ -27,7 +27,7 @@ export class MiniDonutComponent implements OnInit {
 
   // --- plot sizes ---
   private element: any; // selector for SVG DIV
-  private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
+  private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
   private width: number;
   private hole_frac: number = 0.5;
   private checkboxX: number = 110;
@@ -140,10 +140,10 @@ export class MiniDonutComponent implements OnInit {
           this.data.push({ term: d, count: 0 });
         })
       }
-// if selectedCohorts doesn't exist, set to the cohorts.
-if(!this.selectedCohorts) {
-  this.selectedCohorts = this.cohorts;
-}
+      // if selectedCohorts doesn't exist, set to the cohorts.
+      if (!this.selectedCohorts) {
+        this.selectedCohorts = this.cohorts;
+      }
       this.data.forEach(d => {
         d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
       })
@@ -169,7 +169,12 @@ if(!this.selectedCohorts) {
           data[i]['selected'] = !d.selected;
 
           // flip the checkbox path on/off
-          d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
+          // d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
+          d3.selectAll(".checkmark").text((d: any) => {
+            console.log(d)
+            return (d.selected ? "\uf14a" : "\uf0c8")
+          });
+          console.log(data)
 
           let cohorts = data.filter(d => d.selected).map(d => d.term);
           console.log('filtering ' + cohorts)
@@ -235,7 +240,6 @@ if(!this.selectedCohorts) {
         .data(this.data, function(d) {
           return d.term;
         });
-      let checkboxes = annotation_group.select(".checkbox");
       let checkmarks = annotation_group.select(".checkmark");
 
       // --- exit ---
@@ -251,12 +255,16 @@ if(!this.selectedCohorts) {
         .attr("dx", 15)
         .attr('class', 'annotation--count');
 
-      let checkEnter = annotationGroupEnter
-        .append("rect")
-        .attr("class", "checkbox");
+      // let checkEnter = annotationGroupEnter
+      //   .append("rect")
+      //   .attr("class", "checkbox");
 
+      // let checkmarkEnter = annotationGroupEnter
+      //   .append("polyline")
+      //   .attr("class", "checkmark");
       let checkmarkEnter = annotationGroupEnter
-        .append("polyline")
+        .append("text")
+        .attr("x", (d: any) => this.checkboxX)
         .attr("class", "checkmark");
 
       // --- update/merge ---
@@ -272,25 +280,28 @@ if(!this.selectedCohorts) {
         .classed('disabled', (d: any) => d.count === 0)
         .text((d: any) => `${d.term}: ${d.count}`);
 
-      let checkbox_width = Math.min(this.y.bandwidth(), 14);
+      // let checkbox_width = Math.min(this.y.bandwidth(), 14);
 
-      checkboxes.merge(checkEnter)
-        .attr("class", (d: any) => `checkbox ${d.term}`)
-        .attr("x", (d: any) => this.checkboxX)
-        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2)
-        .attr("width", checkbox_width)
-        .attr("height", checkbox_width)
+      // checkboxes.merge(checkEnter)
+      //   .attr("class", (d: any) => `checkbox ${d.term}`)
+      //   .attr("x", (d: any) => this.checkboxX)
+      //   .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2)
+      //   .attr("width", checkbox_width)
+      //   .attr("height", checkbox_width)
 
       checkmarks.merge(checkmarkEnter)
         .attr("class", (d: any) => `checkmark ${d.term}`)
-        // .select(function(d) { return d.selected ? this : null })
-        .attr("transform", d => `translate(${this.checkboxX},${this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2})`)
-        .attr("points", `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}`)
-        .style("display", d => d.selected ? "block" : "none");
-      // .attr("points", d => d.selected ? `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}` : '')
+        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
+        .text(d => d.selected ? "\uf14a" : "\uf0c8");
+
+      // checkmarks.merge(checkmarkEnter)
+      //   .attr("class", (d: any) => `checkmark ${d.term}`)
+      //   .attr("transform", d => `translate(${this.checkboxX},${this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2})`)
+      //   .attr("points", `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}`)
+      //   .style("display", d => d.selected ? "block" : "none");
 
       // --- click listener ---
-      this.svg.selectAll(".checkbox")
+      this.svg.selectAll(".checkmark")
         .on("click", filterCheckbox(this.endpoint, this.requestSvc, this.data));
     }
   }

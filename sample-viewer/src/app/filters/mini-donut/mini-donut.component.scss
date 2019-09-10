@@ -40,9 +40,12 @@ text.Unknown,
 text.unknown {
   fill: $grey-400;
 
-  &:hover {
-    fill: $grey-500;
-  }
+
+}
+
+text.Unknown,
+text.unknown {
+  fill: $grey-350;
 }
 
 .Ebola,
@@ -178,11 +181,53 @@ div.tooltip {
       fill: $grey-50;
     }
   }
+
+  &.Unknown {
+    stroke: $grey-400;
+
+    &:hover {
+      fill: $grey-50;
+    }
+  }
 }
 
 .checkmark {
   cursor: pointer;
-  pointer-events: none;
-  stroke-width: 2;
+  font-size: 1.1em;
+  dominant-baseline: ideographic;
+  // pointer-events: none;
+  stroke-width: 2.5;
   fill: none;
+
+  &.Ebola {
+    stroke: $ebola-md;
+
+    &:hover {
+      fill: $ebola-lt;
+    }
+  }
+
+  &.Lassa {
+    stroke: $lassa-md;
+
+    &:hover {
+      fill: $lassa-lt;
+    }
+  }
+
+  &.Unknown {
+    stroke: $grey-600;
+
+    &:hover {
+      fill: $grey-50;
+    }
+  }
+
+  &.Unknown {
+    stroke: $grey-400;
+
+    &:hover {
+      fill: $grey-50;
+    }
+  }
 }
