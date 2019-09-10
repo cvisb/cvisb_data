@@ -19,17 +19,18 @@ export class MiniDonutComponent implements OnInit {
   @Input() private data: any;
   @Input() private endpoint: string;
   @Input() private height: number;
-  @Input() private name_var: string;
-
-  // Expected values
+  // Expected domain
   @Input() private cohorts: string[];
 
-  // plot sizes
+  // --- selected cohorts ---
+  selectedCohorts: string[];
+
+  // --- plot sizes ---
   private element: any; // selector for SVG DIV
-  private element_dims: any;
   private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
   private width: number;
   private hole_frac: number = 0.5;
+  private checkboxX: number = 100;
 
   // --- Selectors ---
   private donut: any; // dotplot
@@ -42,7 +43,34 @@ export class MiniDonutComponent implements OnInit {
   constructor(
     private requestSvc: RequestParametersService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          console.log(params)
+          this.selectedCohorts = this.getSelected(params);
+          console.log(this.selectedCohorts)
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.selectedCohorts = this.getSelected(params);
+        })
+        break;
+    }
+
+  }
+
+  getSelected(params, fieldName = "cohort") {
+    let filtered = params.filted(d => d.field === d[fieldName]);
+
+    if (filtered.length > 0) {
+      return (filtered.value);
+    } else {
+      return (this.cohorts);
+    }
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -105,7 +133,7 @@ export class MiniDonutComponent implements OnInit {
       }
 
       this.data.forEach(d => {
-        d['selected'] = true;
+        d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
       })
 
       // --- Update axes ---
@@ -127,7 +155,7 @@ export class MiniDonutComponent implements OnInit {
           data[i]['selected'] = !d.selected;
 
           // flip the checkbox path on/off
-          d3.selectAll(".checkmark").style("display", (d:any) => d.selected ? "block" : "none");
+          d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
 
           let cohorts = data.filter(d => d.selected).map(d => d.term);
           console.log('filtering ' + cohorts)
@@ -234,7 +262,7 @@ export class MiniDonutComponent implements OnInit {
 
       checkboxes.merge(checkEnter)
         .attr("class", (d: any) => `checkbox ${d.term}`)
-        .attr("x", (d: any) => 90)
+        .attr("x", (d: any) => this.checkboxX)
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2)
         .attr("width", checkbox_width)
         .attr("height", checkbox_width)
@@ -242,7 +270,7 @@ export class MiniDonutComponent implements OnInit {
       checkmarks.merge(checkmarkEnter)
         .attr("class", (d: any) => `checkmark ${d.term}`)
         // .select(function(d) { return d.selected ? this : null })
-        .attr("transform", d => `translate(${90},${this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2})`)
+        .attr("transform", d => `translate(${this.checkboxX},${this.y(d.term) + this.y.bandwidth() / 2 - checkbox_width / 2})`)
         .attr("points", `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}`)
         .style("display", d => d.selected ? "block" : "none");
       // .attr("points", d => d.selected ? `${checkbox_width * 0.2},${checkbox_width * 0.35} ${checkbox_width * 0.35},${checkbox_width * 0.65} ${checkbox_width * 0.8},${checkbox_width * 0.25}` : '')
