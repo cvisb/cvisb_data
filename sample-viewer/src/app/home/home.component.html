@@ -9,11 +9,13 @@
 
     <div class="cvisb-container">
       <summary class="description container-column">
-        What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections?
-        The mission of the Center for Viral Systems Biology is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease.
-        <!-- We hope that via this research we will be able to provide a deep
-      system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies. -->
+        <div id="summary-description">
+          The mission of the Center for Viral Systems Biology is to identify the immunological, genetic, microbial and physiological factors that play essential roles in determining outcomes from viral infections.
+        </div>
 
+        <!-- What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections?
+        The mission of the Center for Viral Systems Biology is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease.
+        We hope that via this research we will be able to provide a deep system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies.  -->
         <div id="collaboration">
           A collaboration between CViSB and the Kenema Government Hospital
         </div>
@@ -151,7 +153,7 @@
         What we study
       </div>
       <div class="description">
-        We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs.
+        We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs. <a class="link" routerLink="/about">Learn more</a>
       </div>
     </div>
 
@@ -162,7 +164,7 @@
       <div class="description">
         The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
         KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
-        We have also analyzed samples from additional partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
+        We have also analyzed samples from our partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
       </div>
     </div>
 
@@ -171,7 +173,21 @@
         More about our data
       </div>
       <div class="description">
-        See our <a routerLink="/documentation" class="link">documentation</a> section for more info about our data and their limitations.
+        <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].dateReleased | date: "d MMMM y"}}. See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
+        our data and their limitations.
+      </div>
+    </div>
+
+    <div class="about-group container">
+      <div class="about-title">
+        Data use
+      </div>
+      <div class="description">
+        Please note that this data is still based on work in progress and should be considered preliminary. If you intend to include any of these data in publications, please let us know – otherwise please feel free to download and use without
+        restrictions. We
+        have shared this data with the hope that people will download and use it, as well as scrutinize it so we can improve our methods and analyses. Please <a [href]="'mailto:info@cvisb.org?subject=cvisb data'">contact us</a> if you have any
+        questions or comments.
+        <a routerLink="/terms" class="link">Full Terms of Use</a>
       </div>
     </div>
 

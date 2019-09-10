@@ -23,10 +23,10 @@
   <div class="release-notes" *ngFor="let release of releaseNotes">
     <div class="container release-header" [ngClass]="{'current-release': release.version === releaseVersion}">
       <div class="version">
-        CViSB version {{ release.version }}
+        CViSB version {{release.version }}
       </div>
       <div class="updated">
-        published {{ release.dateReleased | date: "d MMMM y" }}
+        published {{release.dateReleased | date: "d MMMM y"}}
       </div>
     </div>
 
