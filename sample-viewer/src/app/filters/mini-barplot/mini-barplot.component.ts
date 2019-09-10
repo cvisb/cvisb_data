@@ -69,7 +69,6 @@ export class MiniBarplotComponent implements OnInit {
       switch (this.endpoint) {
         case "patient":
           this.requestSvc.patientParamsState$.subscribe(params => {
-            console.log(params)
             this.selectedOutcomes = this.getSelected(params);
           })
           break;
@@ -171,7 +170,6 @@ export class MiniBarplotComponent implements OnInit {
       // Handle into filtering by virus type
       let filterOutcome = function(endpoint: string, requestSvc: any, data: any[]) {
         return function(selected) {
-          console.log(selected)
           // reverse the selection
           let idx = data.findIndex(d => d.term == selected.term);
           if (idx > -1) {
@@ -244,7 +242,6 @@ export class MiniBarplotComponent implements OnInit {
 
 
       // Y-label annotations ---
-      console.log(this.data)
       let labelGroup = this.ylabels.selectAll(".y-label-group")
         .data(this.data);
 
