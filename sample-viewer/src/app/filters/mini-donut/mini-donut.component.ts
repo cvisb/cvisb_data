@@ -30,7 +30,7 @@ export class MiniDonutComponent implements OnInit {
   private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
   private width: number;
   private hole_frac: number = 0.5;
-  private checkboxX: number = 105;
+  private checkboxX: number = 110;
 
   // --- Selectors ---
   private donut: any; // dotplot
@@ -142,11 +142,13 @@ export class MiniDonutComponent implements OnInit {
       }
 // if selectedCohorts doesn't exist, set to the cohorts.
 if(!this.selectedCohorts) {
-  this.selectedCohorts = this.cohorts
+  this.selectedCohorts = this.cohorts;
 }
       this.data.forEach(d => {
         d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
       })
+      console.log(this.selectedCohorts)
+      console.log(this.data)
 
       // --- Update axes ---
       this.y
