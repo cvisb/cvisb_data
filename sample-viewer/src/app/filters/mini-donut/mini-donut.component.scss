@@ -1,10 +1,10 @@
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
 
-path {
-  // shape-rendering: crispedges;
-  cursor: pointer;
-}
+// path {
+//   // shape-rendering: crispedges;
+//   cursor: pointer;
+// }
 
 .Control,
 .control {
@@ -64,7 +64,7 @@ tspan.unknown {
 path.Ebola,
 path.ebola {
   &:hover {
-      fill: $ebola-md;
+    fill: $ebola-md;
   }
 }
 
@@ -85,17 +85,17 @@ path.ebola {
 path.Lassa,
 path.lassa {
   &:hover {
-      fill: $lassa-md;
+    fill: $lassa-md;
   }
 }
 
 .donut--annot {
-  & tspan {
+  & text {
     stroke: none;
     dominant-baseline: middle;
     font-family: $font-default;
-    font-weight: 400;
-    cursor: pointer;
+    font-weight: 700;
+    // cursor: pointer;
 
     &:hover {
       opacity: 1 !important;
@@ -115,6 +115,7 @@ path.lassa {
   fill: accent-redder(A700);
 }
 // --- Tooltips ---
+
 div.tooltip {
   position: absolute;
   text-align: center;
@@ -143,4 +144,38 @@ div.tooltip {
     background: #a2a8acc4;
     // color: $grey-400;
   }
+}
+
+// checkboxes
+.annotation--count {
+  dominant-baseline: central;
+}
+
+.checkbox {
+  stroke-width: 2;
+  shape-rendering: crispEdges;
+  fill: white;
+  cursor: pointer;
+  stroke: $default-color;
+
+  &.Ebola {
+    stroke: $ebola-md;
+    &:hover {
+      fill: $ebola-lt;
+    }
+  }
+
+  &.Lassa {
+    stroke: $lassa-md;
+    &:hover {
+      fill: $lassa-lt;
+    }
+  }
+}
+
+.checkmark {
+  cursor: pointer;
+  pointer-events: none;
+  stroke-width: 2;
+  fill: none;
 }
