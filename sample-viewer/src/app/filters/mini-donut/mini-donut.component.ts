@@ -47,7 +47,8 @@ export class MiniDonutComponent implements OnInit {
 
     this.requestSvc.patientParamsState$.subscribe(params => {
       console.log(params)
-      this.selectedCohorts = this.getSelected(params);
+      this.selectedCohorts = this.cohorts;
+      this.getSelected(params);
       console.log(this.selectedCohorts)
     })
 
@@ -71,6 +72,8 @@ export class MiniDonutComponent implements OnInit {
 
   getSelected(params, fieldName = "cohort") {
     let filtered = params.filter(d => d.field === d[fieldName]);
+    console.log(filtered)
+    console.log(this.cohorts)
 
     if (filtered.length > 0) {
       return (filtered.value);
