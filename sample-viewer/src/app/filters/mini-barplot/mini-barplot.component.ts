@@ -243,12 +243,12 @@ export class MiniBarplotComponent implements OnInit {
 
 
       // Y-label annotations ---
+      console.log(this.data)
       let labelGroup = this.ylabels.selectAll(".y-label-group")
         .data(this.data);
 
       let ylabels = labelGroup.select(".annotation--label");
       let checkmarks = labelGroup.select(".checkmark");
-
 
 
       // --- exit ---
@@ -261,8 +261,7 @@ export class MiniBarplotComponent implements OnInit {
 
       let textEnter = labelGroupEnter
         .append("tspan") // enter the first tspan on the text element
-        .attr("x", this.x(0))
-        .attr("dx", 15)
+        .attr("dx", 6)
         .attr('class', 'annotation annotation--label');
 
       let checkmarkEnter = labelGroupEnter
@@ -271,24 +270,21 @@ export class MiniBarplotComponent implements OnInit {
         .attr("class", "checkmark");
 
       // --- update/merge ---
-      labelGroupEnter
-        .merge(labelGroup)
-        .attr("id", (d: any) => `${d.term}`);
-
-      ylabels.merge(textEnter)
-        .attr("class", "annotation")
-        // .attr("x", this.x(0))
-        .attr("dx", 6)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
+      labelGroup = labelGroupEnter
         .merge(labelGroup)
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+        .attr("id", (d: any) => `${d.term}`);
+
+      labelGroup.select(".annotation--label").merge(textEnter)
+        .attr("x", this.x(0))
+        .style("font-size", Math.min(this.y.bandwidth(), 14))
+        .merge(labelGroup)
         .classed('disabled', (d: any) => d.count === 0)
         .transition(t)
         .text((d: any) => (d[this.name_var]));
 
       checkmarks.merge(checkmarkEnter)
         .attr("class", (d: any) => `checkmark ${d.term}`)
-        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .text(d => d.selected ? "\uf14a" : "\uf0c8")
         .classed("checked", (d: any) => d.selected);
 
