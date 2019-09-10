@@ -30,7 +30,7 @@ export class MiniDonutComponent implements OnInit {
   private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
   private width: number;
   private hole_frac: number = 0.5;
-  private checkboxX: number = 100;
+  private checkboxX: number = 105;
 
   // --- Selectors ---
   private donut: any; // dotplot
@@ -47,8 +47,7 @@ export class MiniDonutComponent implements OnInit {
 
     this.requestSvc.patientParamsState$.subscribe(params => {
       console.log(params)
-      this.selectedCohorts = this.cohorts;
-      this.getSelected(params);
+      this.selectedCohorts = this.getSelected(params);
       console.log(this.selectedCohorts)
     })
 
@@ -126,8 +125,7 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
-    console.log(this.selectedCohorts)
-    if (this.data && this.donut && this.selectedCohorts) {
+    if (this.data && this.donut) {
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
@@ -142,7 +140,10 @@ export class MiniDonutComponent implements OnInit {
           this.data.push({ term: d, count: 0 });
         })
       }
-
+// if selectedCohorts doesn't exist, set to the cohorts.
+if(!this.selectedCohorts) {
+  this.selectedCohorts = this.cohorts
+}
       this.data.forEach(d => {
         d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
       })
