@@ -96,6 +96,7 @@ export class DownloadBtnComponent implements OnInit {
         });
         dwnld_data += lineDelimiter;
       });
+      console.log(dwnld_data)
 
       this.saveData(dwnld_data, filename);
     }
@@ -141,6 +142,8 @@ export class DownloadBtnComponent implements OnInit {
 
         this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
           this.data = patients;
+          console.log("patients in download")
+          console.log(patients)
           this.parseData(patients, this.filename);
         });
         break;
