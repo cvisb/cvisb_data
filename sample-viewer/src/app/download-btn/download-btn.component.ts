@@ -96,15 +96,16 @@ export class DownloadBtnComponent implements OnInit {
         });
         dwnld_data += lineDelimiter;
       });
-      console.log(dwnld_data)
 
       this.saveData(dwnld_data, filename);
     }
   }
 
   saveData(dwnld_data, filename: string) {
+    var blob = new Blob([dwnld_data], { type: 'text/csv' });
     var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
+    hiddenElement.href = window.URL.createObjectURL(blob);
+    // hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
     hiddenElement.target = '_blank';
     hiddenElement.download = filename;
     // Gotta actually append the hidden element to the DOM for the click to work in Firefox
@@ -142,8 +143,6 @@ export class DownloadBtnComponent implements OnInit {
 
         this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
           this.data = patients;
-          console.log("patients in download")
-          console.log(patients)
           this.parseData(patients, this.filename);
         });
         break;
