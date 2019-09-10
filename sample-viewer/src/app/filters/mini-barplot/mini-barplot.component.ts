@@ -69,6 +69,7 @@ export class MiniBarplotComponent implements OnInit {
       switch (this.endpoint) {
         case "patient":
           this.requestSvc.patientParamsState$.subscribe(params => {
+            console.log(params)
             this.selectedOutcomes = this.getSelected(params);
           })
           break;
@@ -82,7 +83,7 @@ export class MiniBarplotComponent implements OnInit {
     }
   }
 
-  getSelected(params, fieldName = "otucome") {
+  getSelected(params, fieldName = "outcome") {
     let filtered = params.filter(d => d.field === fieldName);
 
     if (filtered.length === 1) {

@@ -13,7 +13,6 @@
   stroke: $grey-400;
   // cursor: pointer;
 }
-
 // .minirect:hover {
 //   fill: primary(300);
 //   stroke: primary(600);
@@ -89,11 +88,11 @@
   }
 }
 
-
-.barplot{
-.checkmark {
-  fill: $grey-400;
-  cursor: pointer;
-  dominant-baseline: middle;
-}
+.barplot {
+  .checkmark {
+    fill: $grey-400;
+    cursor: pointer;
+    dominant-baseline: middle;
+    stroke: none;
+  }
 }
