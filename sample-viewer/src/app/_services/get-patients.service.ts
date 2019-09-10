@@ -272,7 +272,8 @@ export class GetPatientsService {
   console.log("calling getAllPeople")
     return this.getPage(qParams).pipe(
         expand((data, _) => {
-          return data.next ? this.getPage(data.next) : EMPTY;
+          console.log(data)
+          return data.next ? this.getPage(qParams, data.next) : EMPTY;
         }),
         reduce((acc, data: any) => {
           console.log(acc)
