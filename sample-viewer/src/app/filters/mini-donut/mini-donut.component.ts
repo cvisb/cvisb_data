@@ -44,21 +44,28 @@ export class MiniDonutComponent implements OnInit {
     private requestSvc: RequestParametersService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    switch (this.endpoint) {
-      case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
-          console.log(params)
-          this.selectedCohorts = this.getSelected(params);
-          console.log(this.selectedCohorts)
-        })
-        break;
 
-      case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
-          this.selectedCohorts = this.getSelected(params);
-        })
-        break;
-    }
+    this.requestSvc.patientParamsState$.subscribe(params => {
+      console.log(params)
+      this.selectedCohorts = this.getSelected(params);
+      console.log(this.selectedCohorts)
+    })
+
+    // switch (this.endpoint) {
+    //   case "patient":
+    //     this.requestSvc.patientParamsState$.subscribe(params => {
+    //       console.log(params)
+    //       this.selectedCohorts = this.getSelected(params);
+    //       console.log(this.selectedCohorts)
+    //     })
+    //     break;
+    //
+    //   case "sample":
+    //     this.requestSvc.sampleParamsState$.subscribe(params => {
+    //       this.selectedCohorts = this.getSelected(params);
+    //     })
+    //     break;
+    // }
 
   }
 
@@ -116,6 +123,7 @@ export class MiniDonutComponent implements OnInit {
   }
 
   updatePlot() {
+    console.log(this.selectedCohorts)
     if (this.data && this.donut && this.selectedCohorts) {
       // --- Merge in null values ---
       // update the data to add in missing values.
