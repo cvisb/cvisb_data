@@ -36,10 +36,23 @@ export class FilterElisasComponent implements OnInit {
   }
 
   ngOnInit() {
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+    }
   }
 
-// Get method to grab the formArray within formGroup
-// https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
+  // Get method to grab the formArray within formGroup
+  // https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
   get elisaArray() {
     return this.elisaForm.get('elisaGroups') as FormArray;;
   }
@@ -65,5 +78,13 @@ export class FilterElisasComponent implements OnInit {
     this.elisaGrps.removeAt(idx);
   }
 
+  // Used to reset, when the filters are cleared.
+  checkParams(params) {
+    if (params.length === 0) {
+      this.elisaForm = this.fb.group({
+        elisaGroups: this.fb.array([this.createGroup()])
+      });
+    }
+  }
 
 }

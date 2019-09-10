@@ -21,6 +21,20 @@ export class FilterExperimentComponent implements OnInit {
       { key: "viralseq", name: "viral sequencing", disabled: true },
       // { key: "systemsserology", name: "systems serology", disabled: true },
     ];
+
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+    }
   }
 
   filterExpt(idx) {
@@ -29,6 +43,13 @@ export class FilterExperimentComponent implements OnInit {
     let exptNames = this.expts.filter(d => !d.disabled).map(d => d.name);
 
     this.requestSvc.updateParams(this.endpoint, { field: "measurementTechnique", value: exptNames });
+  }
+
+  // Used to reset, when the filters are cleared.
+  checkParams(params) {
+    if (params.length === 0) {
+      this.expts.forEach(d => d.disabled = true);
+    }
   }
 
 }

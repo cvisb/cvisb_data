@@ -34,6 +34,26 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
   ngOnInit() {
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+    }
+  }
+
+  // Used to reset, when the filters are cleared.
+  checkParams(params) {
+    if (params.length === 0) {
+      this.selectedPatients = null;
+    }
   }
 
 
@@ -52,25 +72,25 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
 
-  filterContacts(includeContacts: boolean) {
-    // console.log(includeContacts)
-    // console.log(this.patients)
-
-    if (this.selectedPatients && this.selectedPatients.length > 0) {
-      if (this.inclContacts) {
-        this.requestSvc.updateParams(this.endpoint,
-          {
-            field: 'patientID', value: this.selectedPatients, orSelector: {
-              field: 'relatedTo', value: this.selectedPatients
-            }
-          });
-      } else {
-        this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: this.selectedPatients });
-      }
-    } else {
-      this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null });
-    }
-  }
+  // filterContacts(includeContacts: boolean) {
+  //   // console.log(includeContacts)
+  //   // console.log(this.patients)
+  //
+  //   if (this.selectedPatients && this.selectedPatients.length > 0) {
+  //     if (this.inclContacts) {
+  //       this.requestSvc.updateParams(this.endpoint,
+  //         {
+  //           field: 'patientID', value: this.selectedPatients, orSelector: {
+  //             field: 'relatedTo', value: this.selectedPatients
+  //           }
+  //         });
+  //     } else {
+  //       this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: this.selectedPatients });
+  //     }
+  //   } else {
+  //     this.requestSvc.updateParams(this.endpoint, { field: 'patientID', value: null });
+  //   }
+  // }
 
   filterID(includeID: boolean, ID_type) {
     // console.log(includeSID)
