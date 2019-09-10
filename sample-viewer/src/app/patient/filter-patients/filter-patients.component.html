@@ -1,9 +1,9 @@
 <ng-container *ngIf='patientSummary'>
-  <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="filter-expansion-panel">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <div class="container filter-header">
-          <h2>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h2>
+          <h3>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h3>
 
           <div class="container clear-filter">
             <button mat-stroked-button (click)="clearFilters()">clear filters</button>
@@ -12,7 +12,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        {{panelOpenState ? "hide" : "view"}} summary statistics and apply filters
+        {{panelOpenState ? "hide" : "view"}} summary statistics and {{panelOpenState ? "" : "apply"}} filters
       </mat-panel-description>
     </mat-expansion-panel-header>
 

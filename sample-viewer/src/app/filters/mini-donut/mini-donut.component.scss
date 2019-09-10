@@ -104,6 +104,7 @@ text.unknown {
 
   &.Unknown {
     stroke: $grey-600;
+    fill: none;
 
     &:hover {
       fill: $grey-50;
