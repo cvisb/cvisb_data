@@ -270,8 +270,7 @@ export class GetPatientsService {
   // https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
   getAllPeople(qParams): Observable<any[]> {
   console.log("calling getAllPeople")
-    return Observable.create(observer => {
-      this.getPage(qParams).pipe(
+    return this.getPage(qParams).pipe(
         expand((data, _) => {
           return data.next ? this.getPage(data.next) : EMPTY;
         }),
@@ -287,8 +286,8 @@ export class GetPatientsService {
         }),
         map((people) => {
           console.log(people)
-          observer.next(people);
-          observer.complete();
+          return(people);
+          // observer.complete();
         })
       )
       // .expand((data, i) => {
@@ -303,17 +302,17 @@ export class GetPatientsService {
       //   observer.next(people);
       //   observer.complete();
       // });
-    });
   }
 
   getPage(qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
+    console.log("calling getPage")
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
-      console.log(params);
-    }
 
+    }
+  console.log(params);
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
