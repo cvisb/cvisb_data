@@ -84,7 +84,7 @@ text.unknown {
   dominant-baseline: ideographic;
   // pointer-events: none;
   stroke-width: 2;
-  fill: none !important;
+  fill: none;
 
   &.Ebola {
     stroke: $ebola-md;

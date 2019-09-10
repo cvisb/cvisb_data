@@ -265,7 +265,7 @@ export class FilterableHistogramComponent implements OnInit {
       if (this.windsorized) {
         d3.selectAll(".axis--x").selectAll(".tick text")
           .classed("windsor-value", (_, i) => i === 0)
-          .text((d:string,i) => (i === 0 &&  d !== "unknown") ? `< ${d}` : d);
+          .text((d:string,i) => (i === 0 &&  d !== "unknown") ? `<${d}` : d);
       }
 
 
