@@ -287,7 +287,8 @@ export class GetPatientsService {
         }),
         map((people) => {
           console.log(people)
-          return(people);
+          // last iteration returns undefined; filter out
+          return(people.filter(d => d));
           // observer.complete();
         })
       )
