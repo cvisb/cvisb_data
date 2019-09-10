@@ -296,12 +296,11 @@ svg-icon.country-icon {
 
 .filter-container {
   display: flex;
-  // background: red;
   padding: 5px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  border-bottom: 10px solid $grey-200;
+  // border-bottom: 10px solid $grey-200;
 
   &.inactive {
     opacity: 0.4;

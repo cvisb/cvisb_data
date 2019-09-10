@@ -17,6 +17,7 @@ export class FilterPatientsComponent implements OnInit {
   public patientSummary: PatientArray;
   public searchQuery: string = null;
   private authenticated: boolean;
+  panelOpenState: boolean = true;
   qString: string;
 
   // Parameters to set on the first call to the backend (e.g. max values, etc.)
