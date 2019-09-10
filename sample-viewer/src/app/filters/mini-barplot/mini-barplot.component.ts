@@ -26,7 +26,6 @@ export class MiniBarplotComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private element_dims: any;
   private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
   private width: number = 70;
   // private height: number = 70;
@@ -40,7 +39,6 @@ export class MiniBarplotComponent implements OnInit {
   // --- Scales/Axes ---
   private x: any;
   private y: any;
-  private colorScale: any;
   private yAxis: any;
 
   getSVGDims() {

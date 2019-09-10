@@ -44,15 +44,11 @@ export class MiniDonutComponent implements OnInit {
     private requestSvc: RequestParametersService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-
     // this.requestSvc.patientParamsState$.subscribe(params => {
     //   console.log(params)
     //   this.selectedCohorts = this.getSelected(params);
     //   console.log(this.selectedCohorts)
     // })
-
-
-
   }
 
   getSelected(params, fieldName = "cohort") {
