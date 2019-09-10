@@ -45,27 +45,27 @@ export class MiniDonutComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
-    this.requestSvc.patientParamsState$.subscribe(params => {
-      console.log(params)
-      this.selectedCohorts = this.getSelected(params);
-      console.log(this.selectedCohorts)
-    })
+    // this.requestSvc.patientParamsState$.subscribe(params => {
+    //   console.log(params)
+    //   this.selectedCohorts = this.getSelected(params);
+    //   console.log(this.selectedCohorts)
+    // })
 
-    // switch (this.endpoint) {
-    //   case "patient":
-    //     this.requestSvc.patientParamsState$.subscribe(params => {
-    //       console.log(params)
-    //       this.selectedCohorts = this.getSelected(params);
-    //       console.log(this.selectedCohorts)
-    //     })
-    //     break;
-    //
-    //   case "sample":
-    //     this.requestSvc.sampleParamsState$.subscribe(params => {
-    //       this.selectedCohorts = this.getSelected(params);
-    //     })
-    //     break;
-    // }
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          console.log(params)
+          this.selectedCohorts = this.getSelected(params);
+          console.log(this.selectedCohorts)
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.selectedCohorts = this.getSelected(params);
+        })
+        break;
+    }
 
   }
 
@@ -164,15 +164,18 @@ export class MiniDonutComponent implements OnInit {
 
       // Handle into filtering by virus type
       let filterCheckbox = function(endpoint: string, requestSvc: any, data) {
-        return function(d, i) {
+        return function(selected) {
           // reverse the selection
-          data[i]['selected'] = !d.selected;
+          let idx = data.findIndex(d => d.term == selected.term);
+          if (idx > -1) {
+            data[idx]['selected'] = !selected.selected;
+          }
 
           // flip the checkbox path on/off
           // d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
           d3.selectAll(".checkmark")
-          .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
-          .classed("checked", (d:any) => d.selected);
+            .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
+            .classed("checked", (d: any) => d.selected);
 
           console.log(data)
 
@@ -293,7 +296,7 @@ export class MiniDonutComponent implements OnInit {
         .attr("class", (d: any) => `checkmark ${d.term}`)
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .text(d => d.selected ? "\uf14a" : "\uf0c8")
-        .classed("checked", (d:any) => d.selected);
+        .classed("checked", (d: any) => d.selected);
 
       // checkmarks.merge(checkmarkEnter)
       //   .attr("class", (d: any) => `checkmark ${d.term}`)
