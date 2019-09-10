@@ -257,6 +257,7 @@ export class GetPatientsService {
       map((patients) => {
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
+        console.log(patients)
         patients = patients.filter(d => d).map(patient => {
           return (new PatientDownload(patient, this.datePipe));
         })
