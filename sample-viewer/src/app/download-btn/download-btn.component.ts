@@ -142,8 +142,8 @@ export class DownloadBtnComponent implements OnInit {
         this.patientSvc.getAllPeople(this.qParams).subscribe(patients => {
           console.log("patients subscribing")
           console.log(patients)
-          // this.data = patients;
-          // this.parseData(patients, this.filename);
+          this.data = patients;
+          this.parseData(patients, this.filename);
         });
 
         // this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
