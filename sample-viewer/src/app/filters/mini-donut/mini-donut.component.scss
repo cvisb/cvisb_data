@@ -1,7 +1,5 @@
 @import '../../../sass/variables.scss';
-@import '../../../sass/material-theme.scss';
-
-// path {
+@import '../../../sass/material-theme.scss'; // path {
 //   // shape-rendering: crispedges;
 //   cursor: pointer;
 // }
@@ -38,8 +36,8 @@ path.unknown {
   }
 }
 
-tspan.Unknown,
-tspan.unknown {
+text.Unknown,
+text.unknown {
   fill: $grey-400;
 
   &:hover {
@@ -96,7 +94,6 @@ path.lassa {
     font-family: $font-default;
     font-weight: 700;
     // cursor: pointer;
-
     &:hover {
       opacity: 1 !important;
     }
@@ -145,8 +142,8 @@ div.tooltip {
     // color: $grey-400;
   }
 }
-
 // checkboxes
+
 .annotation--count {
   dominant-baseline: central;
 }
@@ -160,6 +157,7 @@ div.tooltip {
 
   &.Ebola {
     stroke: $ebola-md;
+
     &:hover {
       fill: $ebola-lt;
     }
@@ -167,8 +165,17 @@ div.tooltip {
 
   &.Lassa {
     stroke: $lassa-md;
+
     &:hover {
       fill: $lassa-lt;
+    }
+  }
+
+  &.Unknown {
+    stroke: $grey-600;
+
+    &:hover {
+      fill: $grey-50;
     }
   }
 }
