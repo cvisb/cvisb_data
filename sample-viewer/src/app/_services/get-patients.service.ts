@@ -269,6 +269,7 @@ export class GetPatientsService {
 
   // https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
   getAllPeople(qParams): Observable<any[]> {
+  console.log("calling getAllPeople")
     return Observable.create(observer => {
       this.getPage(qParams).pipe(
         expand((data, _) => {

@@ -140,15 +140,16 @@ export class DownloadBtnComponent implements OnInit {
         this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
 
         this.patientSvc.getAllPeople(this.qParams).subscribe(patients => {
+          console.log("patients subscribing")
           console.log(patients)
           // this.data = patients;
           // this.parseData(patients, this.filename);
         });
 
-        this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
-          this.data = patients;
-          this.parseData(patients, this.filename);
-        });
+        // this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
+        //   this.data = patients;
+        //   this.parseData(patients, this.filename);
+        // });
         break;
       case ("samples"):
         this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
