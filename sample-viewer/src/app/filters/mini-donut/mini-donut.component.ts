@@ -51,21 +51,7 @@ export class MiniDonutComponent implements OnInit {
     //   console.log(this.selectedCohorts)
     // })
 
-    switch (this.endpoint) {
-      case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
-          console.log(params)
-          this.selectedCohorts = this.getSelected(params);
-          console.log(this.selectedCohorts)
-        })
-        break;
 
-      case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
-          this.selectedCohorts = this.getSelected(params);
-        })
-        break;
-    }
 
   }
 
@@ -84,6 +70,25 @@ export class MiniDonutComponent implements OnInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
+
+      console.log(this.endpoint)
+
+      switch (this.endpoint) {
+        case "patient":
+          console.log("PATIENT ENDPOINT")
+          this.requestSvc.patientParamsState$.subscribe(params => {
+            console.log(params)
+            this.selectedCohorts = this.getSelected(params);
+            console.log(this.selectedCohorts)
+          })
+          break;
+
+        case "sample":
+          this.requestSvc.sampleParamsState$.subscribe(params => {
+            this.selectedCohorts = this.getSelected(params);
+          })
+          break;
+      }
     }
   }
 
