@@ -1,10 +1,7 @@
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
 
-.GN-icon,
-.LR-icon,
-.NG-icon,
-.SL-icon,
+.country-icon,
 .unknown-icon {
   width: 30px;
   height: 30px;
@@ -65,4 +62,8 @@
 
 .disabled {
   cursor: default;
+}
+
+.country-container {
+  align-items: center;
 }
