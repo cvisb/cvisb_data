@@ -74,8 +74,8 @@ export class MiniDonutComponent implements OnInit {
     console.log(filtered)
     console.log(this.cohorts)
 
-    if (filtered.length > 0) {
-      return (filtered.value);
+    if (filtered.length === 1) {
+      return (filtered[0].value);
     } else {
       return (this.cohorts);
     }
@@ -170,10 +170,10 @@ export class MiniDonutComponent implements OnInit {
 
           // flip the checkbox path on/off
           // d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
-          d3.selectAll(".checkmark").text((d: any) => {
-            console.log(d)
-            return (d.selected ? "\uf14a" : "\uf0c8")
-          });
+          d3.selectAll(".checkmark")
+          .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
+          .classed("checked", (d:any) => d.selected);
+
           console.log(data)
 
           let cohorts = data.filter(d => d.selected).map(d => d.term);
@@ -292,7 +292,8 @@ export class MiniDonutComponent implements OnInit {
       checkmarks.merge(checkmarkEnter)
         .attr("class", (d: any) => `checkmark ${d.term}`)
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
-        .text(d => d.selected ? "\uf14a" : "\uf0c8");
+        .text(d => d.selected ? "\uf14a" : "\uf0c8")
+        .classed("checked", (d:any) => d.selected);
 
       // checkmarks.merge(checkmarkEnter)
       //   .attr("class", (d: any) => `checkmark ${d.term}`)

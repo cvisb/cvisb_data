@@ -8,19 +8,10 @@
 .control {
   fill: $grey-350;
   stroke: $grey-500;
-
-  &:hover {
-    fill: darken($grey-400, 25%);
-  }
 }
 
 path.Control,
 path.control {
-  &:hover {
-    fill: $grey-350;
-    // fill: darken($grey-350, 15%);
-  }
-
   &.not-highlight {
     opacity: 0.4;
   }
@@ -30,10 +21,6 @@ path.Unknown,
 path.unknown {
   fill: $grey-50;
   stroke: $grey-500;
-
-  &:hover {
-    fill: $grey-500;
-  }
 }
 
 text.Unknown,
@@ -51,19 +38,8 @@ text.unknown {
   fill: $ebola-md;
   stroke: $ebola-color;
 
-  &:hover {
-    fill: darken($ebola-md, 35%);
-  }
-
   &.not-highlight {
     opacity: 0.4;
-  }
-}
-
-path.Ebola,
-path.ebola {
-  &:hover {
-    fill: $ebola-md;
   }
 }
 
@@ -72,19 +48,8 @@ path.ebola {
   fill: $lassa-md;
   stroke: $lassa-color;
 
-  &:hover {
-    fill: darken($lassa-md, 30%);
-  }
-
   &.not-highlight {
     opacity: 0.4;
-  }
-}
-
-path.Lassa,
-path.lassa {
-  &:hover {
-    fill: $lassa-md;
   }
 }
 
@@ -94,10 +59,6 @@ path.lassa {
     dominant-baseline: middle;
     font-family: $font-default;
     font-weight: 700;
-    // cursor: pointer;
-    &:hover {
-      opacity: 1 !important;
-    }
   }
 
   .disabled {
@@ -112,39 +73,7 @@ path.lassa {
 .filter-data {
   fill: accent-redder(A700);
 }
-// --- Tooltips ---
-
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 110px;
-  height: 1.35em;
-  font-weight: 400;
-  padding: 2px;
-  background: #ffffffc9;
-  border: 0;
-  border-radius: 3px;
-  pointer-events: none;
-  font-size: 0.75em;
-  text-transform: uppercase;
-
-  &.Lassa {
-    background: #a1eabbc4;
-    // color: $lassa-md;
-  }
-
-  &.Ebola {
-    background: #F8BBD0c4;
-    // color: $ebola-md;
-  }
-
-  &.Control {
-    background: #a2a8acc4;
-    // color: $grey-400;
-  }
-}
 // checkboxes
-
 .annotation--count {
   dominant-baseline: central;
 }
