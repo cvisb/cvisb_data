@@ -70,7 +70,7 @@ export class MiniDonutComponent implements OnInit {
   }
 
   getSelected(params, fieldName = "cohort") {
-    let filtered = params.filted(d => d.field === d[fieldName]);
+    let filtered = params.filter(d => d.field === d[fieldName]);
 
     if (filtered.length > 0) {
       return (filtered.value);
