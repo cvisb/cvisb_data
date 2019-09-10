@@ -3,16 +3,25 @@
     <div class="container">
       <h2>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h2>
 
-      <div class="pull-right">
-        <app-filter-search endpoint="patient" *ngIf="authenticated"></app-filter-search>
-        <!-- <app-filter-search endpoint="patient" [query]="searchQuery"></app-filter-search> -->
-
+      <div class="container clear-filter">
         <button mat-stroked-button (click)="clearFilters()">clear filters</button>
+        <app-filter-search endpoint="patient" *ngIf="authenticated"></app-filter-search>
       </div>
 
     </div>
 
   </div>
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h2>
+      </mat-panel-title>
+      <mat-panel-description>
+        view summary statistics and apply filters
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
 
   <div>
     <div class="filter-item filter-patients">
@@ -48,5 +57,6 @@
       <app-filter-experiment endpoint="patient"></app-filter-experiment>
     </div>
   </div>
+    </mat-expansion-panel>
 
 </div>
