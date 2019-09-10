@@ -130,8 +130,8 @@ export class FilterPatientsComponent implements OnInit {
 
   clearFilters() {
     this.searchQuery = null;
-    this.requestSvc.patientParamsSubject.next([]);
     this.panelOpenState = true;
+    this.requestSvc.patientParamsSubject.next([]);
   }
 
 
