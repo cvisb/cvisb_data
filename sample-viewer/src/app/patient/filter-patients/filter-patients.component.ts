@@ -56,7 +56,7 @@ export class FilterPatientsComponent implements OnInit {
       console.log(qParams)
 
       let http_params = this.requestSvc.reducePatientParams(qParams);
-      console.log(http_params)
+      // console.log(http_params)
       // let param_string: string = this.requestSvc.reduceParams(qParams);
       // console.log(param_string)
       this.patientSvc.getPatientSummary(http_params).subscribe(x => {
@@ -112,8 +112,8 @@ export class FilterPatientsComponent implements OnInit {
       this.all_countries = pList.patientCountries;
 
       this.patientSummary = params.patients;
-      console.log(this.patientSummary)
-      console.log(pList)
+      // console.log(this.patientSummary)
+      // console.log(pList)
 
     });
 

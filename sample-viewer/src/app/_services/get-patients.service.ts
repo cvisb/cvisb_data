@@ -128,8 +128,8 @@ export class GetPatientsService {
             patient['availableData'] = patientExpts;
           })
 
-          console.log(patients)
-          console.log(expts)
+          // console.log(patients)
+          // console.log(expts)
 
           return ({ hits: patients, total: patientResults['body']['total'] });
         }),
@@ -222,7 +222,7 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map((res: ESResponse) => {
-        console.log(res);
+        // console.log(res);
         let summary = new PatientSummary(res.body)
         // console.log(summary)
         return (summary);

@@ -53,7 +53,7 @@ export class DownloadBtnComponent implements OnInit {
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParamArray = qParams;
-      console.log(qParams)
+      // console.log(qParams)
     })
   }
 
