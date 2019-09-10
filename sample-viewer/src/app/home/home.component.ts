@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ import { ReleaseNote } from '../_models';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit {
   alleleCount: any;
   patientCount: number;
   sampleCount: number;
@@ -45,18 +45,44 @@ export class HomeComponent implements AfterViewInit {
     this.titleSvc.setTitle(title);
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     let patientParams = new HttpParams().set("q", "__all__");
     let exptParams = new HttpParams()
       .set("q", "__all__")
       .set("facets", "measurementTechnique.keyword");
 
+    let transitionSync = d3.transition().duration(5000);
+
     this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
       this.patientCount = res['total'];
+
+      let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
+
+      patientDiv.transition(transitionSync)
+        // .duration(transitionTime)
+        .tween("text", function(_) {
+          let countMax = this['textContent'];
+          var i = <any>d3.interpolate(0, countMax);
+          return function(t) {
+            d3.select(this).text(Math.round(i(t)));
+          };
+        });
     });
 
     this.apiSvc.get("sample", patientParams, 0).subscribe(res => {
       this.sampleCount = res['total'];
+
+      let sampleDiv = d3.select("#sample").selectAll(".count-value");
+
+      sampleDiv.transition(transitionSync)
+        // .duration(transitionTime * (925/5039))
+        .tween("text", function(_) {
+          let countMax = this['textContent'];
+          var i = <any>d3.interpolate(0, countMax);
+          return function(t) {
+            d3.select(this).text(Math.round(i(t)));
+          };
+        });
     });
 
     this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
@@ -65,43 +91,19 @@ export class HomeComponent implements AfterViewInit {
         d['link'] = this.exptDict[d['term']];
       })
 
+      let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
+
+      dataDiv.transition(transitionSync)
+        // .duration(transitionTime * (312/5039))
+        .tween("text", function(_) {
+          let countMax = this['textContent'];
+          var i = <any>d3.interpolate(0, countMax);
+          return function(t) {
+            d3.select(this).text(Math.round(i(t)));
+          };
+        });
     });
 
-    let transitionSync = d3.transition().duration(5000);
-
-    let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
-    let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
-    let sampleDiv = d3.select("#sample").selectAll(".count-value");
-
-    dataDiv.transition(transitionSync)
-      // .duration(transitionTime * (312/5039))
-      .tween("text", function(_) {
-        let countMax = this['textContent'];
-        var i = <any>d3.interpolate(0, countMax);
-        return function(t) {
-          d3.select(this).text(Math.round(i(t)));
-        };
-      });
-
-    patientDiv.transition(transitionSync)
-      // .duration(transitionTime)
-      .tween("text", function(_) {
-        let countMax = this['textContent'];
-        var i = <any>d3.interpolate(0, countMax);
-        return function(t) {
-          d3.select(this).text(Math.round(i(t)));
-        };
-      });
-
-    sampleDiv.transition(transitionSync)
-      // .duration(transitionTime * (925/5039))
-      .tween("text", function(_) {
-        let countMax = this['textContent'];
-        var i = <any>d3.interpolate(0, countMax);
-        return function(t) {
-          d3.select(this).text(Math.round(i(t)));
-        };
-      });
   }
 
 }
