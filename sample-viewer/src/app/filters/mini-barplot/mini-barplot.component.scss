@@ -11,13 +11,13 @@
   shape-rendering: crispedges;
   fill: $grey-300;
   stroke: $grey-400;
-  cursor: pointer;
+  // cursor: pointer;
 }
 
-.minirect:hover {
-  fill: primary(300);
-  stroke: primary(600);
-}
+// .minirect:hover {
+//   fill: primary(300);
+//   stroke: primary(600);
+// }
 
 .bar--annot text {
   text-anchor: end;
@@ -87,4 +87,9 @@
     fill: $grey-200;
     stroke: $grey-400;
   }
+}
+
+.checkmark {
+  fill: $grey-400;
+  cursor: pointer;
 }
