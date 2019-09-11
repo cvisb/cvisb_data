@@ -35,7 +35,6 @@ export class FilterLocationComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.countries);
     if (this.countries && this.countries.length > 0) {
       this.addMissing();
       this.updateCountrySelections(this.params)
@@ -48,7 +47,6 @@ export class FilterLocationComponent implements OnChanges {
       let filtered = params.filter(d => d.field === fieldName);
 
       let selectedCountries = filtered.flatMap((d: any) => d.value);
-      console.log(selectedCountries)
 
       this.countries.forEach((d: any) => {
         d['disabled'] = !selectedCountries.includes(d.term);
@@ -59,10 +57,6 @@ export class FilterLocationComponent implements OnChanges {
         d['disabled'] = true;
       })
     }
-
-
-    console.log(this.countries);
-
   }
 
   selectCountry(ctry: string) {
@@ -70,16 +64,12 @@ export class FilterLocationComponent implements OnChanges {
     this.countries[idx].disabled = !this.countries[idx].disabled;
 
     let countries = this.countries.filter(d => !d.disabled).map(d => d.term);
-    console.log(countries);
 
     this.requestSvc.updateParams(this.endpoint, { field: 'country.identifier', value: countries })
   }
 
   addMissing() {
     let keys = this.countries.map(d => d.term);
-    console.log(this.countries)
-    console.log(this.all_countries)
-    console.log(keys)
     if (this.all_countries) {
       let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
 
