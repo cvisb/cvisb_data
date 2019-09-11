@@ -70,11 +70,12 @@ export class FilterLocationComponent implements OnChanges {
 
 
     console.log(this.all_countries)
+    console.log(keys)
     if (this.all_countries) {
       let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
 
       missing_data.forEach(d => {
-        this.countries.push({ key: d.term, name: d.name, value: 0, disabled: true });
+        this.countries.push({ term: d.term, count: 0, disabled: true });
       })
     }
   }
