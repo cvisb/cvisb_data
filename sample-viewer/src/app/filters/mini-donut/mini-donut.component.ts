@@ -13,7 +13,7 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniDonutComponent implements OnInit {
+export class MiniDonutComponent implements OnInit, OnChanges {
 
   @ViewChild('donut') private chartContainer: ElementRef;
   @Input() private data: any;

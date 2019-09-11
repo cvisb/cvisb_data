@@ -1,4 +1,5 @@
-import { Component, OnInit, OnChanges, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, Inject, PLATFORM_ID, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 
@@ -14,7 +15,7 @@ import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
   encapsulation: ViewEncapsulation.None
 })
 
-export class FilterableHistogramComponent implements OnInit {
+export class FilterableHistogramComponent implements OnInit, OnChanges {
   @ViewChild('hist') private chartContainer: ElementRef;
 
   // data
@@ -77,7 +78,10 @@ export class FilterableHistogramComponent implements OnInit {
   @Input() filterState$: Observable<Object>;
 
 
-  constructor(private filterSvc: FilterTimepointsService, private requestSvc: RequestParametersService) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private filterSvc: FilterTimepointsService,
+    private requestSvc: RequestParametersService) {
     // Listen for changes to the limits. Required to reset the positions upon "clear filters"
     // and also for refreshing pages.
     // Pulls apart the compound limits to pass back to the filterSubject to update.
@@ -109,19 +113,21 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createPlot();
-    switch (this.endpoint) {
-      case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
-          this.checkParams(params);
-        })
-        break;
+    if (isPlatformBrowser(this.platformId)) {
+      this.createPlot();
+      switch (this.endpoint) {
+        case "patient":
+          this.requestSvc.patientParamsState$.subscribe(params => {
+            this.checkParams(params);
+          })
+          break;
 
-      case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
-          this.checkParams(params);
-        })
-        break;
+        case "sample":
+          this.requestSvc.sampleParamsState$.subscribe(params => {
+            this.checkParams(params);
+          })
+          break;
+      }
     }
   }
 
