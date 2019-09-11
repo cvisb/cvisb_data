@@ -111,7 +111,13 @@ export class FilterPatientIdComponent implements OnInit {
     let parsed = input.term.split("\,");
 
     if (parsed.length > 1) {
-      parsed = parsed.filter(d => d.length > 0)
+      parsed = parsed.filter(d => d.length > 0);
+
+      // check that selected patients exists
+      if (!this.selectedPatients) {
+        this.selectedPatients = [];
+      }
+
 
       // Update the selection to include the typed values.
       this.selectedPatients = this.selectedPatients.concat(parsed);
