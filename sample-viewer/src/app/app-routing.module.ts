@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AddSamplesComponent } from './add-samples/add-samples.component';
 import { SampleComponent } from './sample/sample.component';
-import { PatientComponent } from './patient/patient.component';
 import { PatientPageComponent } from './patient-page/patient-page.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { AddDataComponent } from './add-data/add-data/add-data.component';
@@ -39,54 +38,54 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
 
   {
-    path: 'patient', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' },
+    path: 'patient', loadChildren: () => import('./patient/patient.module').then(mod => mod.PatientModule), pathMatch: 'full', data: { title: 'Patients | CViSB' },
     resolve: {
-      patients: PatientsResolver,
-      all: AllPatientsResolver
+      // patients: PatientsResolver,
+      // all: AllPatientsResolver
     }
   },
-  { path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
+  // { path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
-  { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload/dataset', component: AddDataComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-
-  { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' },
-    resolve: {
-      samplePatientMD: SamplesResolver,
-    }
-  },
-  // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  // {
-  //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
+  // { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
+  // { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
+  // { canActivate: [AuthGuard], path: 'upload/dataset', component: AddDataComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  // { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  //
+  // { canActivate: [AuthGuard], path: 'sample', component: SampleComponent, pathMatch: 'full', data: { title: 'Samples | CViSB' },
   //   resolve: {
+  //     samplePatientMD: SamplesResolver,
+  //   }
+  // },
+  // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
+  // { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  // // {
+  // //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
+  // //   resolve: {
+  // //     datasetData: DatasetResolver,
+  // //     hlaSummary: HlaResolver
+  // //   }, data: { title: 'Dataset | CViSB' }
+  // // },
+  // { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
   //     datasetData: DatasetResolver,
   //     hlaSummary: HlaResolver
   //   }, data: { title: 'Dataset | CViSB' }
   // },
-  { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
-      datasetData: DatasetResolver,
-      hlaSummary: HlaResolver
-    }, data: { title: 'Dataset | CViSB' }
-  },
-  // {
-  //   path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver },
-  //   pathMatch: 'full', data: { title: 'Dataset | CViSB' },
-  //   children: [{
-  //     path: 'hla', component: PageNotFoundComponent, outlet: 'datasets'
-  //   }]
-  // },
-  { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
-  { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
-  { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
-  { path: 'about', component: AboutComponent, pathMatch: 'full', data: { title: 'About | CViSB Data' } },
-  { path: 'citation', component: CitationComponent, pathMatch: 'full', data: { title: 'Citing CViSB Data' } },
-  { path: 'release-notes', component: ReleaseNotesComponent, pathMatch: 'full', data: { title: 'CViSB Data Releases' } },
-  { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
-  { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
+  // // {
+  // //   path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver },
+  // //   pathMatch: 'full', data: { title: 'Dataset | CViSB' },
+  // //   children: [{
+  // //     path: 'hla', component: PageNotFoundComponent, outlet: 'datasets'
+  // //   }]
+  // // },
+  // { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  // { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
+  // { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
+  // { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
+  // { path: 'about', component: AboutComponent, pathMatch: 'full', data: { title: 'About | CViSB Data' } },
+  // { path: 'citation', component: CitationComponent, pathMatch: 'full', data: { title: 'Citing CViSB Data' } },
+  // { path: 'release-notes', component: ReleaseNotesComponent, pathMatch: 'full', data: { title: 'CViSB Data Releases' } },
+  // { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
+  // { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
   { path: 'home', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },
   { path: 'sitemap.xml', pathMatch: 'full', redirectTo: "../assets/sitemap.xml" },
   { path: 'robots.txt', pathMatch: 'full', redirectTo: "../assets/robots.txt" },
