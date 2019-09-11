@@ -81,9 +81,10 @@ export class FilterElisasComponent implements OnInit {
   // Used to reset, when the filters are cleared.
   checkParams(params) {
     if (params.length === 0) {
-      this.elisaForm = this.fb.group({
-        elisaGroups: this.fb.array([this.createGroup()])
-      });
+      console.log(this.elisaForm)
+      // this.elisaForm = this.fb.group({
+      //   elisaGroups: this.fb.array([this.createGroup()])
+      // });
     }
   }
 
