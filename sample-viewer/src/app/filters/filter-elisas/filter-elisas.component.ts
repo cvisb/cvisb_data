@@ -31,6 +31,8 @@ export class FilterElisasComponent implements OnInit {
     private fb: FormBuilder,
     private requestSvc: RequestParametersService) {
     this.elisaForm.valueChanges.subscribe(val => {
+      console.log("ELISA change")
+      console.log(val)
       this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
     })
   }
@@ -82,6 +84,10 @@ export class FilterElisasComponent implements OnInit {
   checkParams(params) {
     if (params.length === 0) {
       console.log(this.elisaForm)
+      console.log(this.elisaGrps)
+      this.elisaGrps = this.fb.array([this.createGroup()]);
+      // this.elisaGrps.removeAt();
+      // this.elisaGrps.push(this.createGroup());
       // this.elisaForm = this.fb.group({
       //   elisaGroups: this.fb.array([this.createGroup()])
       // });
