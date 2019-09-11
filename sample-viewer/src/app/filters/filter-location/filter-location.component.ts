@@ -44,9 +44,10 @@ export class FilterLocationComponent implements OnChanges {
     let filtered = params.filter(d => d.field === fieldName);
 
     let selectedCountries = filtered.flatMap((d: any) => d.value);
+    console.log(selectedCountries)
 
     this.countries.forEach((d: any) => {
-      d['disabled'] = selectedCountries.includes(d.term);
+      d['disabled'] = !selectedCountries.includes(d.term);
     })
 
 
