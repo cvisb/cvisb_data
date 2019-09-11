@@ -31,20 +31,19 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
 
   {
-    path: 'patient', loadChildren: () => import('./patient/patient.module').then(mod => mod.PatientModule), pathMatch: 'full'
+    path: 'patient', loadChildren: "./patient/patient.module#PatientModule", pathMatch: 'full'
   },
-  { path: 'patient/:pid', loadChildren: () => import('./patient-page/patient-page.module').then(mod => mod.PatientPageModule), pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
+  { path: 'patient/:pid', loadChildren: './patient-page/patient-page.module#PatientPageModule', pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
-  { canActivate: [AuthGuard], path: 'upload/sample', loadChildren: () => import('./add-samples/upload-samples/upload-samples.module').then(mod => mod.UploadSamplesModule), pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload/patient', loadChildren: () => import('./add-patients/upload-patients/upload-patients.module').then(mod => mod.UploadPatientsModule), pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload/dataset', loadChildren: () => import('./add-data/upload-data/upload-data.module').then(mod => mod.UploadDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-  { canActivate: [AuthGuard], path: 'upload', loadChildren: () => import('./upload/upload.module').then(mod => mod.UploadModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-
+  { canActivate: [AuthGuard], path: 'upload/sample', loadChildren: './add-samples/upload-samples/upload-samples.module#UploadSamplesModule', pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/patient', loadChildren: './add-patients/upload-patients/upload-patients.module#UploadPatientsModule', pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/dataset', loadChildren: './add-data/upload-data/upload-data.module#UploadDataModule', pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload', loadChildren: './upload/upload.module#UploadModule', pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   {
-    canActivate: [AuthGuard], path: 'sample', loadChildren: () => import('./sample/sample.module').then(mod => mod.SampleModule), pathMatch: 'full', data: { title: 'Samples | CViSB' }
+    canActivate: [AuthGuard], path: 'sample', loadChildren: './sample/sample.module#SampleModule', pathMatch: 'full', data: { title: 'Samples | CViSB' }
   },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(mod => mod.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  { path: 'dataset', loadChildren: './dataset/dataset.module#DatasetModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // // {
   // //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
   // //   resolve: {
