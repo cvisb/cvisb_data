@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AddSamplesComponent } from './add-samples/add-samples.component';
 import { SampleComponent } from './sample/sample.component';
-import { PatientPageComponent } from './patient-page/patient-page.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { AddDataComponent } from './add-data/add-data/add-data.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
@@ -39,7 +38,7 @@ const appRoutes: Routes = [
   {
     path: 'patient', loadChildren: () => import('./patient/patient.module').then(mod => mod.PatientModule), pathMatch: 'full'
   },
-  // { path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
+  { path: 'patient/:pid', loadChildren: () => import('./patient-page/patient-page.module').then(mod => mod.PatientPageModule), pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
   // { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
   // { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },

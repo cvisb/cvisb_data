@@ -3,7 +3,7 @@ import { Component, OnInit, OnChanges, ViewEncapsulation, ViewChild, Input, Elem
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
-import { HLAsummary, CohortSelectOptions } from '../../../../_models';
+import { HLAsummary, CohortSelectOptions } from '../../../_models';
 
 @Component({
   selector: 'app-comparison-barplot',

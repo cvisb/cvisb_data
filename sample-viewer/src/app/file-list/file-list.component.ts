@@ -6,7 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
-import { getDatasetsService, FileMetadataService, ApiService, DownloadsDataSource } from '../../_services';
+import { getDatasetsService, FileMetadataService, ApiService, DownloadsDataSource } from '../_services';
 
 @Component({
   selector: 'app-file-list',

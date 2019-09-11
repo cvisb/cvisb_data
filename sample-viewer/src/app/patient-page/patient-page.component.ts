@@ -32,6 +32,7 @@ export class PatientPageComponent implements OnInit {
     private anchorSvc: AnchorService,
     private exptObjPipe: ExperimentObjectPipe
   ) {
+    console.log("PATIENT PAGE COMPONENT LOADED")
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
 

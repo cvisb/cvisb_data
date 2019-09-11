@@ -1,8 +1,8 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-import { GetHlaDataService } from '../../../_services';
-import { HLA, D3Nested } from '../../../_models';
+import { GetHlaDataService } from '../../_services';
+import { HLA, D3Nested } from '../../_models';
 
 @Component({
   selector: 'app-hla-summary',

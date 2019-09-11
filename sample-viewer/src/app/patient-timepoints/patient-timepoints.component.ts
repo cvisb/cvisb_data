@@ -2,19 +2,19 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { SampleMetadataComponent } from '../../_dialogs';
+import { SampleMetadataComponent } from '../_dialogs';
 
-import { Sample } from '../../_models';
-import { ApiService } from '../../_services';
+import { Sample } from '../_models';
+import { ApiService } from '../_services';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
-import { environment } from "../../../environments/environment";
+import { environment } from "../../environments/environment";
 
 // services
-import { MyHttpClient } from '../../_services/http-cookies.service';
+import { MyHttpClient } from '../_services/http-cookies.service';
 
 
 

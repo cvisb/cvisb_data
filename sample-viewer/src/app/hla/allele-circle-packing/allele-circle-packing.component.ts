@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { mix, hex } from 'chroma-js';
 
-import { HlaService } from '../../../_services/';
+import { HlaService } from '../../_services';
 
 @Component({
   selector: 'app-allele-circle-packing',

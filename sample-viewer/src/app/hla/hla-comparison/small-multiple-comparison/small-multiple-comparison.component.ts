@@ -1,8 +1,8 @@
 import { Component, OnChanges, Input } from '@angular/core';
 
 import * as d3 from 'd3';
-import { GetHlaDataService } from '../../../../_services';
-import { CohortSelectOptions, HLA, HLAnested, HLAsummary } from '../../../../_models';
+import { GetHlaDataService } from '../../../_services';
+import { CohortSelectOptions, HLA, HLAnested, HLAsummary } from '../../../_models';
 
 @Component({
   selector: 'app-small-multiple-comparison',

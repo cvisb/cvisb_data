@@ -10,12 +10,12 @@ import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
 
 // --- components ---
 import { PatientComponent } from './patient.component';
 import { FilterPatientsComponent } from './filter-patients/filter-patients.component';
 import { PatientTableComponent } from './patient-table/patient-table.component';
-import { PatientTimepointsComponent } from './patient-timepoints/patient-timepoints.component';
 
 // --- services ---
 import { MyHttpClient } from '../_services/http-cookies.service';
@@ -32,13 +32,13 @@ import { AllPatientsResolver } from '../_services/allpatients.resolver';
     FiltersModule,
     DownloadBtnModule,
     SvgIconModule,
-    PipesModule
+    PipesModule,
+    PatientTimepointsModule
   ],
   declarations: [
     PatientComponent,
     FilterPatientsComponent,
-    PatientTableComponent,
-    PatientTimepointsComponent,
+    PatientTableComponent
   ],
   providers: [
     MyHttpClient,

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocomplete } from '@angular/material';
 
-import { CohortSelectOptions } from '../../../_models';
+import { CohortSelectOptions } from '../../_models';
 
 @Component({
   selector: 'app-hla-comparison',
