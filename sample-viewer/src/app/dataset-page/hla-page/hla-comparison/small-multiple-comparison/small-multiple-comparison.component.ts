@@ -36,12 +36,12 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.left_params) {
+    if (this.left_params && this.HLA_DATA) {
       this.left = this.filterData(this.HLA_DATA, this.left_params);
       this.loci = this.left.map((d: HLAnested) => d.key)
     }
 
-    if (this.right_params) {
+    if (this.right_params && this.HLA_DATA) {
       this.right = this.filterData(this.HLA_DATA, this.right_params);
     }
   }
