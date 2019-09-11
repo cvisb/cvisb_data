@@ -9,7 +9,6 @@ import { SampleComponent } from './sample/sample.component';
 import { PatientPageComponent } from './patient-page/patient-page.component';
 import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 import { AddDataComponent } from './add-data/add-data/add-data.component';
-import { DatasetComponent } from './dataset/dataset.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
 import { SchemaComponent } from './schema/schema.component';
 import { UploadComponent } from './upload/upload.component';
@@ -38,11 +37,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full', data: { title: 'Login | CViSB' } },
 
   {
-    path: 'patient', loadChildren: () => import('./patient/patient.module').then(mod => mod.PatientModule), pathMatch: 'full', data: { title: 'Patients | CViSB' },
-    resolve: {
-      // patients: PatientsResolver,
-      // all: AllPatientsResolver
-    }
+    path: 'patient', loadChildren: () => import('./patient/patient.module').then(mod => mod.PatientModule), pathMatch: 'full'
   },
   // { path: 'patient/:pid', component: PatientPageComponent, pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
@@ -57,7 +52,7 @@ const appRoutes: Routes = [
   //   }
   // },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
-  // { path: 'dataset', component: DatasetComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(mod => mod.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // // {
   // //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
   // //   resolve: {

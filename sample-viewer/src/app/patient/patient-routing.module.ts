@@ -8,7 +8,7 @@ import { AllPatientsResolver, PatientsResolver } from '../_services';
 
 
 const routes: Routes = [
-  { path: '', component: PatientComponent, resolve: {
+  { path: '', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' }, resolve: {
     patients: PatientsResolver,
     all: AllPatientsResolver
   }}
