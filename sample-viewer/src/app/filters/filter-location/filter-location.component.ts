@@ -13,6 +13,8 @@ export class FilterLocationComponent implements OnChanges {
   @Input() all_countries;
   @Input() endpoint: string;
 
+  params;
+
   constructor(private requestSvc: RequestParametersService) {
   }
 
@@ -20,13 +22,13 @@ export class FilterLocationComponent implements OnChanges {
     switch (this.endpoint) {
       case "patient":
         this.requestSvc.patientParamsState$.subscribe(params => {
-          this.updateCountrySelections(params);
+          this.params = params;
         })
         break;
 
       case "sample":
         this.requestSvc.sampleParamsState$.subscribe(params => {
-          this.updateCountrySelections(params);
+          this.params = params;
         })
         break;
     }
@@ -36,6 +38,7 @@ export class FilterLocationComponent implements OnChanges {
     console.log(this.countries);
     if (this.countries && this.countries.length > 0) {
       this.addMissing();
+      this.updateCountrySelections(this.params)
     }
 
   }
