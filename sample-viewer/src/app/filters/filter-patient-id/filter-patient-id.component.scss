@@ -18,7 +18,7 @@
 }
 
 
-.ng-value-container {
+/deep/ .ng-value-container {
     max-height: 60px;
     overflow-y: scroll;
 }
