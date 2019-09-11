@@ -129,7 +129,7 @@ export class FilterableHistogramComponent implements OnInit {
     console.log(params)
     if (params.length === 0) {
       console.log('resetting!')
-      this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
+      // this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
     }
   }
 

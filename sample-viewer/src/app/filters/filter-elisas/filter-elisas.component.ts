@@ -33,8 +33,8 @@ export class FilterElisasComponent implements OnInit {
     this.elisaForm.valueChanges.subscribe(val => {
       console.log(val.elisaGrps)
       // hard reset of params; otherwise ELISA has a "AND" issue
-      this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: [] });
-      // this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
+      // this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: [] });
+      this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
     })
   }
 
