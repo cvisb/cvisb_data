@@ -85,6 +85,7 @@ export class FilterElisasComponent implements OnInit {
     if (params.length === 0) {
       console.log(this.elisaForm)
       console.log(this.elisaGrps)
+      this.elisaGrps = this.elisaArray;
       this.elisaGrps = this.fb.array([this.createGroup()]);
       // this.elisaGrps.removeAt();
       // this.elisaGrps.push(this.createGroup());
