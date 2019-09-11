@@ -6,13 +6,12 @@ import { NgModule } from '@angular/core';
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
 import { MaterialModule } from './material.module';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-// import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AdminModule, PipesModule, HlaModule } from '.';
-import { FormatCitationModule }from './format-citation/format-citation.module';
-// import { AdminModule, PipesModule, HlaModule, PiccoloModule, ViralSequencingModule } from '.';
+import { FormatCitationModule } from './format-citation/format-citation.module';
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 
@@ -20,105 +19,74 @@ import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interc
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { DatasetResolver, HlaResolver } from './_services/';
+import { EmbedJsonldDirective } from './_directives/';
 
-import { Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
 // Components
 import { AppComponent } from './app.component';
-// import { AddSamplesComponent } from './add-samples/add-samples.component';
-// import { AddSampleTypesComponent } from './add-samples/add-sample-types/add-sample-types.component';
-// import { SampleUploadComponent } from './add-samples/sample-upload/sample-upload.component';
 import { HeaderComponent } from './header/header.component';
-// import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
-// import { FileMetadataComponent } from './dataset/file-metadata/file-metadata.component';
-// import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
-// import { DatasetPageComponent } from './dataset-page/dataset-page.component';
-// import { DatasetPageNavComponent } from './dataset-page/dataset-page-nav/dataset-page-nav.component';
-// import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
-// import { HlaComparisonComponent } from './dataset-page/hla-page/hla-comparison/hla-comparison.component';
-// import { HlaSummaryComponent } from './dataset-page/hla-page/hla-summary/hla-summary.component';
-// import { AlleleHistComponent } from './dataset-page/hla-page/allele-hist/allele-hist.component';
-// import { AlleleCountComponent } from './dataset-page/hla-page/allele-count/allele-count.component';
-// import { NovelAllelesComponent } from './dataset-page/hla-page/novel-alleles/novel-alleles.component';
-// import { SmallMultipleComparisonComponent } from './dataset-page/hla-page/hla-comparison/small-multiple-comparison/small-multiple-comparison.component';
-// import { ComparisonBarplotComponent } from './dataset-page/hla-page/hla-comparison/comparison-barplot/comparison-barplot.component';
-// import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { EmbedJsonldDirective } from './_directives/';
-
 import { SchemaComponent } from './schema/schema.component';
-// import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
-// import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
-// import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
-// import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
-// import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
-// import { PreviewDifferencesComponent } from './add-samples/preview-differences/preview-differences.component';
-// import { SubmitSamplesComponent } from './add-samples/submit-samples/submit-samples.component';
-// import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
-// import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
-// import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
 
+import { AddSampleTypesComponent } from './add-samples/add-sample-types/add-sample-types.component';
+import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
+import { FileMetadataComponent } from './dataset/file-metadata/file-metadata.component';
+import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
+import { DatasetPageComponent } from './dataset-page/dataset-page.component';
+import { DatasetPageNavComponent } from './dataset-page/dataset-page-nav/dataset-page-nav.component';
+import { HlaPageComponent } from './hla/hla-page.component';
+import { HlaComparisonComponent } from './hla/hla-comparison/hla-comparison.component';
+import { HlaSummaryComponent } from './hla/hla-summary/hla-summary.component';
+import { AlleleHistComponent } from './hla/allele-hist/allele-hist.component';
+import { AlleleCountComponent } from './hla/allele-count/allele-count.component';
+import { NovelAllelesComponent } from './hla/novel-alleles/novel-alleles.component';
+import { SmallMultipleComparisonComponent } from './hla/hla-comparison/small-multiple-comparison/small-multiple-comparison.component';
+import { ComparisonBarplotComponent } from './hla/hla-comparison/comparison-barplot/comparison-barplot.component';
+import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // AddSamplesComponent,
-    // AddSampleTypesComponent,
-    // SampleUploadComponent,
+    AddSampleTypesComponent,
     HeaderComponent,
-    // BulkEditComponent,
-    // FileMetadataComponent,
-    // FilterFilesComponent,
+    BulkEditComponent,
+    FileMetadataComponent,
+    FilterFilesComponent,
     SampleMetadataComponent,
     SpinnerPopupComponent,
     SchemaComponent,
-    // DatasetPageComponent,
-    // DatasetPageNavComponent,
-    // HlaPageComponent,
-    // HlaSummaryComponent,
-    // HlaComparisonComponent,
-    // AlleleHistComponent,
-    // AlleleCountComponent,
-    // NovelAllelesComponent,
-    // SmallMultipleComparisonComponent,
-    // ComparisonBarplotComponent,
-    // MdObjectComponent,
+    DatasetPageComponent,
+    DatasetPageNavComponent,
+    HlaPageComponent,
+    HlaSummaryComponent,
+    HlaComparisonComponent,
+    AlleleHistComponent,
+    AlleleCountComponent,
+    NovelAllelesComponent,
+    SmallMultipleComparisonComponent,
+    ComparisonBarplotComponent,
+    MdObjectComponent,
     FooterComponent,
     HomeComponent,
     EmbedJsonldDirective,
-    // AddStepperComponent,
-    // UploadStepperComponent,
-    // CheckIdsComponent,
-    // PreviewSamplesComponent,
-    // FrontendSampleValidationComponent,
-    // PreviewDifferencesComponent,
-    // SubmitSamplesComponent,
-    // CheckDupesComponent,
-    // PreviewAdditionsComponent,
-    // CombineDupesComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
     TransferHttpCacheModule,
     HttpModule,
     HttpClientModule,
-    // FormsModule,
-    // ReactiveFormsModule,
-    // NgSelectModule,
     BrowserAnimationsModule,
     MaterialModule,
     PipesModule,
     AppRoutingModule,
-    // ViralSequencingModule,
     AdminModule,
     FormatCitationModule,
     HlaModule,
-    // PiccoloModule,
     Angulartics2Module.forRoot(), // Google Analytics
   ],
   exports: [
