@@ -11,6 +11,7 @@ from datetime import datetime
 # [Static vars] -----------------------------------------------------------------------------------------
 dateModified = "2019-09-06"
 updatedBy = "Kathik Gangavarapu"
+source = "HLA_KG"
 today = datetime.today().strftime('%Y-%m-%d')
 
 import_path = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/HLA/HLA Genotype_calls_v4_2019-09-06.csv"
@@ -292,6 +293,7 @@ df_agg['data'] = df_agg.data.apply(lambda x: json.loads(x))
 df_merged = pd.merge(df, df_agg, how="outer", on="patientID", indicator = True)
 df_merged._merge.value_counts()
 
+df_merged['_source'] = source
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 # df_long.to_json(export_path, orient='records')

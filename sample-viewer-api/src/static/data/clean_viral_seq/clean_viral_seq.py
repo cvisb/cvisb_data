@@ -34,6 +34,7 @@ sampleCols = ["creatorInitials", "sampleLabel", "sampleType", "species", "sample
 # keep as np.nan if want to use today's date
 dateModified = "2019-09-04"
 updatedBy = "Raphaelle Klitting"
+source = "ViralSeq_RK"
 
 # [Import helper functions]  ----------------------------------------------------------------------------------------------------
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
@@ -249,6 +250,7 @@ expts['sampleID'] = expts.apply(lambda x: f"{x.creatorInitials}-{x.sampleLabel}_
 # Make sure arrays are arrays
 expts['data'] = expts.data.apply(helpers.listify)
 expts['citation'] = expts.citation.apply(helpers.listify)
+expts['_source'] = source
 
 # [Export]  ----------------------------------------------------------------------------------------------------
 expts[exptCols].to_json(f"{output_dir}/experiments/viral_seq_{today}.json", orient="records")
