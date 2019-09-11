@@ -44,14 +44,21 @@ export class FilterLocationComponent implements OnChanges {
   }
 
   updateCountrySelections(params, fieldName = "country.identifier") {
-    let filtered = params.filter(d => d.field === fieldName);
+    if (params) {
+      let filtered = params.filter(d => d.field === fieldName);
 
-    let selectedCountries = filtered.flatMap((d: any) => d.value);
-    console.log(selectedCountries)
+      let selectedCountries = filtered.flatMap((d: any) => d.value);
+      console.log(selectedCountries)
 
-    this.countries.forEach((d: any) => {
-      d['disabled'] = !selectedCountries.includes(d.term);
-    })
+      this.countries.forEach((d: any) => {
+        d['disabled'] = !selectedCountries.includes(d.term);
+      })
+    } else {
+      // initial conditions: off
+      this.countries.forEach((d: any) => {
+        d['disabled'] = true;
+      })
+    }
 
 
     console.log(this.countries);
