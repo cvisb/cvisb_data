@@ -31,7 +31,10 @@ export class FilterElisasComponent implements OnInit {
     private fb: FormBuilder,
     private requestSvc: RequestParametersService) {
     this.elisaForm.valueChanges.subscribe(val => {
-      this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
+      console.log(val.elisaGrps)
+      // hard reset of params; otherwise ELISA has a "AND" issue
+      this.requestSvc.patientParamsSubject.next([]);
+      // this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
     })
   }
 
@@ -90,9 +93,6 @@ export class FilterElisasComponent implements OnInit {
 
       // re-intialize
       this.elisaGrps.push(this.createGroup());
-
-      // hard reset of params; otherwise ELISA has a "AND" issue
-      this.requestSvc.patientParamsSubject.next([]);
     }
   }
 
