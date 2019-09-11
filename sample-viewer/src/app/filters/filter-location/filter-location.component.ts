@@ -59,7 +59,7 @@ export class FilterLocationComponent implements OnChanges {
     let idx = this.countries.findIndex(d => d.term === ctry);
     this.countries[idx].disabled = !this.countries[idx].disabled;
 
-    let countries = this.countries.filter(d => !d.disabled).map(d => d.name);
+    let countries = this.countries.filter(d => !d.disabled).map(d => d.term);
     console.log(countries);
 
     this.requestSvc.updateParams(this.endpoint, { field: 'country.identifier', value: countries })
