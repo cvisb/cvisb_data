@@ -31,8 +31,6 @@ export class FilterElisasComponent implements OnInit {
     private fb: FormBuilder,
     private requestSvc: RequestParametersService) {
     this.elisaForm.valueChanges.subscribe(val => {
-      console.log("ELISA change")
-      console.log(val)
       this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
     })
   }
@@ -83,25 +81,15 @@ export class FilterElisasComponent implements OnInit {
   // Used to reset, when the filters are cleared.
   checkParams(params) {
     if (params.length === 0) {
-      console.log(this.elisaForm)
-      console.log(this.elisaGrps)
       this.elisaGrps = this.elisaArray;
-      console.log(this.elisaGrps.length);
 
       // clear
       for (let i = 0; i < this.elisaGrps.length; i++) {
         this.elisaGrps.removeAt(i);
-        console.log(this.elisaGrps)
       }
 
       // re-intialize
-    this.elisaGrps.push(this.createGroup());
-      console.log(this.elisaGrps)
-
-      // this.elisaGrps.push(this.createGroup());
-      // this.elisaForm = this.fb.group({
-      //   elisaGroups: this.fb.array([this.createGroup()])
-      // });
+      this.elisaGrps.push(this.createGroup());
     }
   }
 
