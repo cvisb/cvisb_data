@@ -33,7 +33,7 @@ export class FilterLocationComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    // console.log(this.countries);
+    console.log(this.countries);
     if (this.countries && this.countries.length > 0) {
       this.addMissing();
     }
@@ -67,8 +67,7 @@ export class FilterLocationComponent implements OnChanges {
 
   addMissing() {
     let keys = this.countries.map(d => d.term);
-
-
+    console.log(this.countries)
     console.log(this.all_countries)
     console.log(keys)
     if (this.all_countries) {
