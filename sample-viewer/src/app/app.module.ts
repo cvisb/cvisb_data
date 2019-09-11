@@ -29,7 +29,6 @@ import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index
 
 // Components
 import { AppComponent } from './app.component';
-// import { SampleComponent } from './sample/sample.component';
 // import { AddSamplesComponent } from './add-samples/add-samples.component';
 // import { AddSampleTypesComponent } from './add-samples/add-sample-types/add-sample-types.component';
 // import { SampleUploadComponent } from './add-samples/sample-upload/sample-upload.component';
@@ -61,13 +60,11 @@ import { EmbedJsonldDirective } from './_directives/';
 // import { PreviewDifferencesComponent } from './add-samples/preview-differences/preview-differences.component';
 // import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
 // import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
-// import { FilterSampleComponent } from './sample/filter-sample/filter-sample.component';
 // import { SubmitSamplesComponent } from './add-samples/submit-samples/submit-samples.component';
 // import { UploadComponent } from './upload/upload.component';
 // import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
 // import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
 // import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
-// import { SampleTableComponent } from './sample/sample-table/sample-table.component';
 // import { AddDataComponent } from './add-data/add-data/add-data.component';
 // import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
 
@@ -75,7 +72,6 @@ import { EmbedJsonldDirective } from './_directives/';
 @NgModule({
   declarations: [
     AppComponent,
-    // SampleComponent,
     // AddSamplesComponent,
     // AddSampleTypesComponent,
     // SampleUploadComponent,
@@ -83,7 +79,6 @@ import { EmbedJsonldDirective } from './_directives/';
     // BulkEditComponent,
     // FileMetadataComponent,
     // FilterFilesComponent,
-    // FilterSampleComponent,
     SampleMetadataComponent,
     SpinnerPopupComponent,
     // DatasetPageComponent,
@@ -114,8 +109,7 @@ import { EmbedJsonldDirective } from './_directives/';
     // CheckDupesComponent,
     // PreviewAdditionsComponent,
     // CombineDupesComponent,
-    // SampleTableComponent,
-    // AddDataComponent,
+    // AddDataComponent,a
     // DataUploadComponent,
   ],
   imports: [
@@ -143,7 +137,6 @@ import { EmbedJsonldDirective } from './_directives/';
     MyHttpClient,
     DatePipe,
     DatasetResolver,
-    SamplesResolver,
     HlaResolver,
     {
       provide: HTTP_INTERCEPTORS,

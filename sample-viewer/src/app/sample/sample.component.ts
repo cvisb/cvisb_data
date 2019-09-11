@@ -31,7 +31,7 @@ export class SampleComponent implements OnInit {
     private authSvc: AuthService,
     private titleSvc: Title
   ) {
-
+    console.log("SAMPLE COMPONENT LOADED")
     // call authentication service to check if logged in
     // authSvc.checkLogin();
 
