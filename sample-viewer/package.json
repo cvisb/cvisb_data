@@ -11,8 +11,10 @@
     "build:dev": "npm run build:dev-bundles && npm run webpack:server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "serve:ssr": "node dist/server",
-    "build:dev-bundles": "ng build --preserve-symlinks --stats-json && ng run sample-viewer:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run sample-viewer:server:production",
+    "minify": "uglifyjs dist/vendor.bundle.js --screw-ie8 --compress --mangle --output dist/vendor.bundle.min.js",
+    "gzip": "gzip dist/vendor.bundle.min.js",
+    "build:dev-bundles": "ng build --preserve-symlinks --stats-json && ng run sample-viewer:server && npm run minify && npm run gzip",
+    "build:client-and-server-bundles": "ng build --prod && ng run sample-viewer:server:production && npm run minify && npm run gzip",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,
