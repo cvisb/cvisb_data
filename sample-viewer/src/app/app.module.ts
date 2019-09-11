@@ -51,7 +51,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { EmbedJsonldDirective } from './_directives/';
 
-// import { SchemaComponent } from './schema/schema.component';
+import { SchemaComponent } from './schema/schema.component';
 // import { AddStepperComponent } from './add-samples/add-stepper/add-stepper.component';
 // import { UploadStepperComponent } from './add-samples/upload-stepper/upload-stepper.component';
 // import { CheckIdsComponent } from './add-samples/check-ids/check-ids.component';
@@ -81,6 +81,7 @@ import { EmbedJsonldDirective } from './_directives/';
     // FilterFilesComponent,
     SampleMetadataComponent,
     SpinnerPopupComponent,
+    SchemaComponent,
     // DatasetPageComponent,
     // DatasetPageNavComponent,
     // HlaPageComponent,
@@ -95,7 +96,6 @@ import { EmbedJsonldDirective } from './_directives/';
     FooterComponent,
     HomeComponent,
     EmbedJsonldDirective,
-    // SchemaComponent,
     // AddStepperComponent,
     // UploadStepperComponent,
     // CheckIdsComponent,
