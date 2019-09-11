@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +19,6 @@ import { ReleaseNote } from '../_models';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  alleleCount: any;
   patientCount: number;
   sampleCount: number;
   experimentCount: Object[] = [];
@@ -30,7 +30,9 @@ export class HomeComponent implements OnInit {
   exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
 
 
-  constructor(private titleSvc: Title,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private titleSvc: Title,
     private route: ActivatedRoute,
     private dataCatalogSvc: GetDatacatalogService,
     public apiSvc: ApiService) {
@@ -46,64 +48,66 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    let patientParams = new HttpParams().set("q", "__all__");
-    let exptParams = new HttpParams()
-      .set("q", "__all__")
-      .set("facets", "measurementTechnique.keyword");
+    if (isPlatformBrowser(this.platformId)) {
+      let patientParams = new HttpParams().set("q", "__all__");
+      let exptParams = new HttpParams()
+        .set("q", "__all__")
+        .set("facets", "measurementTechnique.keyword");
 
-    let transitionSync = d3.transition().duration(5000);
+      let transitionSync = d3.transition().duration(5000);
 
-    this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
-      this.patientCount = res['total'];
+      this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
+        this.patientCount = res['total'];
 
-      let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
+        let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
 
-      patientDiv.transition(transitionSync)
-        // .duration(transitionTime)
-        .tween("text", function(_) {
-          let countMax = this['textContent'];
-          var i = <any>d3.interpolate(0, countMax);
-          return function(t) {
-            d3.select(this).text(Math.round(i(t)));
-          };
-        });
-    });
+        patientDiv.transition(transitionSync)
+          // .duration(transitionTime)
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
 
-    this.apiSvc.get("sample", patientParams, 0).subscribe(res => {
-      this.sampleCount = res['total'];
+      this.apiSvc.get("sample", patientParams, 0).subscribe(res => {
+        this.sampleCount = res['total'];
 
-      let sampleDiv = d3.select("#sample").selectAll(".count-value");
+        let sampleDiv = d3.select("#sample").selectAll(".count-value");
 
-      sampleDiv.transition(transitionSync)
-        // .duration(transitionTime * (925/5039))
-        .tween("text", function(_) {
-          let countMax = this['textContent'];
-          var i = <any>d3.interpolate(0, countMax);
-          return function(t) {
-            d3.select(this).text(Math.round(i(t)));
-          };
-        });
-    });
+        sampleDiv.transition(transitionSync)
+          // .duration(transitionTime * (925/5039))
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
 
-    this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
-      this.experimentCount = res["facets"]["measurementTechnique.keyword"].terms;
-      this.experimentCount.forEach(d => {
-        d['link'] = this.exptDict[d['term']];
-      })
+      this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
+        this.experimentCount = res["facets"]["measurementTechnique.keyword"].terms;
+        this.experimentCount.forEach(d => {
+          d['link'] = this.exptDict[d['term']];
+        })
 
-      let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
+        let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
 
-      dataDiv.transition(transitionSync)
-        // .duration(transitionTime * (312/5039))
-        .tween("text", function(_) {
-          let countMax = this['textContent'];
-          var i = <any>d3.interpolate(0, countMax);
-          return function(t) {
-            d3.select(this).text(Math.round(i(t)));
-          };
-        });
-    });
+        dataDiv.transition(transitionSync)
+          // .duration(transitionTime * (312/5039))
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
 
+    }
   }
 
 }
