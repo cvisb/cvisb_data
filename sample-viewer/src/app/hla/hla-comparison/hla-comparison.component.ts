@@ -16,6 +16,8 @@ export class HlaComparisonComponent implements OnInit {
   leftParams: CohortSelectOptions;
   rightParams: CohortSelectOptions;
   rightControl = new FormControl();
+  myForm1;
+  myForm2;
 
   options: CohortSelectOptions[] = [
     { id: "all", name: "all samples", cohort: ['Lassa', 'Ebola', 'Control'], outcome: ['dead', 'survivor', 'unknown', 'control'] },
