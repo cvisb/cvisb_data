@@ -37,6 +37,7 @@
     "@ngx-lite/json-ld": "^0.5.2",
     "@types/chroma-js": "^1.4.1",
     "angulartics2": "^7.5.2",
+    "array.prototype.flatmap": "^1.2.1",
     "autotrack": "^2.4.1",
     "chroma-js": "^2.0.6",
     "cookie-parser": "^1.4.3",
