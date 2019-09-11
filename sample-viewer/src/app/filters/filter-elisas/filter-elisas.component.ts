@@ -84,15 +84,15 @@ export class FilterElisasComponent implements OnInit {
   // Used to reset, when the filters are cleared.
   checkParams(params) {
     if (params.length === 0) {
-      this.elisaGrps = this.elisaArray;
-
-      // clear
-      for (let i = 0; i < this.elisaGrps.length; i++) {
-        this.elisaGrps.removeAt(i);
-      }
-
-      // re-intialize
-      this.elisaGrps.push(this.createGroup());
+      // this.elisaGrps = this.elisaArray;
+      //
+      // // clear
+      // for (let i = 0; i < this.elisaGrps.length; i++) {
+      //   this.elisaGrps.removeAt(i);
+      // }
+      //
+      // // re-intialize
+      // this.elisaGrps.push(this.createGroup());
     }
   }
 
