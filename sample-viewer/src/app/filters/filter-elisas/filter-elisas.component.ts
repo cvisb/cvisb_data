@@ -95,7 +95,7 @@ export class FilterElisasComponent implements OnInit {
       }
 
       // re-intialize
-      this.elisaGrps = this.fb.array([this.createGroup()]);
+    this.elisaGrps.push(this.createGroup());
       console.log(this.elisaGrps)
 
       // this.elisaGrps.push(this.createGroup());
