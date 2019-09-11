@@ -21,6 +21,13 @@ export class SmallMultipleComparisonComponent implements OnChanges {
 
 
   constructor(private hlaSvc: GetHlaDataService) {
+    let arr1 = ["it's Sunny in", "", "California"];
+
+arr1.map(x => x.split(" "));
+// [["it's","Sunny","in"],[""],["California"]]
+
+console.log(arr1.flatMap(x => x.split(" ")));
+
     hlaSvc.getHLAdata().subscribe((res: HLA[]) => {
       this.HLA_DATA = res;
 
