@@ -102,6 +102,10 @@ lsv['privatePatientID'] = lsv.rawID.apply(helpers.interpretID)
 lsv['KGH_id'] = lsv.privatePatientID.apply(helpers.checkIDstructure).apply(lambda x: not x)
 lsv.KGH_id.value_counts()
 
+# Check for duplicates
+lsv.loc[lsv.duplicated(subset="privatePatientID", keep=False), ['id', 'privatePatientID']].sort_values("privatePatientID")
+lsv.loc[lsv.duplicated(subset="id", keep=False), ['id', 'privatePatientID']].sort_values("privatePatientID")
+
 lsv['outcome_copy'] = lsv.outcome
 lsv['outcome'] = lsv.outcome.apply(helpers.cleanOutcome)
 lsv.groupby("outcome_copy").outcome.value_counts(dropna=False)
