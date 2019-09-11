@@ -110,6 +110,27 @@ export class FilterableHistogramComponent implements OnInit {
 
   ngOnInit() {
     this.createPlot();
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+    }
+  }
+
+  checkParams(params) {
+    console.log(params)
+    if (params.length === 0) {
+      console.log('resetting!')
+      this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
+    }
   }
 
   ngOnChanges() {
@@ -265,7 +286,7 @@ export class FilterableHistogramComponent implements OnInit {
       if (this.windsorized) {
         d3.selectAll(".axis--x").selectAll(".tick text")
           .classed("windsor-value", (_, i) => i === 0)
-          .text((d:string,i) => (i === 0 &&  d !== "unknown") ? `<${d}` : d);
+          .text((d: string, i) => (i === 0 && d !== "unknown") ? `<${d}` : d);
       }
 
 
@@ -442,6 +463,8 @@ export class FilterableHistogramComponent implements OnInit {
   }
 
   updateLimits(limits, x, xLinear, slider, handle_left, handle_right) {
+    console.log('updating limits')
+    console.log(limits)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.round(Math.min(limits['lower'], limits['upper']));
     let upper_limit = Math.round(Math.max(limits['lower'], limits['upper']));
