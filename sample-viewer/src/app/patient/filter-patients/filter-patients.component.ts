@@ -53,8 +53,8 @@ export class FilterPatientsComponent implements OnInit {
 
     // listen for changes in the request parameters.
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      console.log("qParams heard in filter-patients")
-      console.log(qParams)
+      // console.log("qParams heard in filter-patients")
+      // console.log(qParams)
 
       let http_params = this.requestSvc.reducePatientParams(qParams);
       // console.log(http_params)
