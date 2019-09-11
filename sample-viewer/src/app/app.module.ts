@@ -5,13 +5,14 @@ import { NgModule } from '@angular/core';
 
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
-import { MaterialModule } from './material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { AdminModule, PipesModule, HlaModule } from '.';
-import { FormatCitationModule } from './format-citation/format-citation.module';
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+import { MaterialModule } from './material.module';
+import { AdminModule, PipesModule, HlaModule } from '.';
+import { FormatCitationModule } from './format-citation/format-citation.module';
 
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 
@@ -81,6 +82,7 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MaterialModule,
     PipesModule,
     AppRoutingModule,
