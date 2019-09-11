@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { DownloadBtnComponent } from './download-btn.component';
 
+import { MatButtonModule } from '@angular/material';
+
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   declarations: [
     DownloadBtnComponent
