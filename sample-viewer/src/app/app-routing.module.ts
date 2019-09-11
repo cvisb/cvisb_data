@@ -4,19 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 // --- Pages ---
 import { HomeComponent } from './home/home.component';
-import { AddSamplesComponent } from './add-samples/add-samples.component';
-import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
-import { AddDataComponent } from './add-data/add-data/add-data.component';
 import { DatasetPageComponent } from './dataset-page/dataset-page.component';
-import { SchemaComponent } from './schema/schema.component';
-import { UploadComponent } from './upload/upload.component';
-import { ReleaseNotesComponent } from './admin/release-notes/release-notes.component';
 
 // --- Dataset pages ---
 // import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
 
 // --- Resolvers ---
-import { AllPatientsResolver, PatientsResolver, DatasetResolver, HlaResolver, SamplesResolver } from './_services';
+import { DatasetResolver, HlaResolver } from './_services';
 
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
@@ -28,6 +22,8 @@ import { PrivacyComponent } from './admin/privacy/privacy.component';
 import { CitationComponent } from './admin/citation/citation.component';
 import { AboutComponent } from './admin/about/about.component';
 import { AboutDataComponent } from './admin/about-data/about-data.component';
+import { SchemaComponent } from './schema/schema.component';
+import { ReleaseNotesComponent } from './admin/release-notes/release-notes.component';
 
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -39,10 +35,10 @@ const appRoutes: Routes = [
   },
   { path: 'patient/:pid', loadChildren: () => import('./patient-page/patient-page.module').then(mod => mod.PatientPageModule), pathMatch: 'full', data: { titleStart: 'Patient ', titleEnd: ' | CViSB' } },
 
-  // { canActivate: [AuthGuard], path: 'upload/sample', component: AddSamplesComponent, pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
-  // { canActivate: [AuthGuard], path: 'upload/patient', component: AddPatientsComponent, pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
-  // { canActivate: [AuthGuard], path: 'upload/dataset', component: AddDataComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-  // { canActivate: [AuthGuard], path: 'upload', component: UploadComponent, pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/sample', loadChildren: () => import('./add-samples/upload-samples/upload-samples.module').then(mod => mod.UploadSamplesModule), pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/patient', loadChildren: () => import('./add-patients/upload-patients/upload-patients.module').then(mod => mod.UploadPatientsModule), pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/dataset', loadChildren: () => import('./add-data/upload-data/upload-data.module').then(mod => mod.UploadDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload', loadChildren: () => import('./upload/upload.module').then(mod => mod.UploadModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
 
   {
     canActivate: [AuthGuard], path: 'sample', loadChildren: () => import('./sample/sample.module').then(mod => mod.SampleModule), pathMatch: 'full', data: { title: 'Samples | CViSB' }

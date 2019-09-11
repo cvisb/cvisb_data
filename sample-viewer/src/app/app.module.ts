@@ -19,7 +19,7 @@ import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interc
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver, PatientsResolver, AllPatientsResolver, HlaResolver, SamplesResolver } from './_services/';
+import { DatasetResolver, HlaResolver } from './_services/';
 
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -58,15 +58,10 @@ import { SchemaComponent } from './schema/schema.component';
 // import { PreviewSamplesComponent } from './add-samples/preview-samples/preview-samples.component';
 // import { FrontendSampleValidationComponent } from './add-samples/frontend-sample-validation/frontend-sample-validation.component';
 // import { PreviewDifferencesComponent } from './add-samples/preview-differences/preview-differences.component';
-// import { AddPatientsComponent } from './add-patients/add-patients/add-patients.component';
-// import { PatientUploadComponent } from './add-patients/patient-upload/patient-upload.component';
 // import { SubmitSamplesComponent } from './add-samples/submit-samples/submit-samples.component';
-// import { UploadComponent } from './upload/upload.component';
 // import { CheckDupesComponent } from './add-samples/check-dupes/check-dupes.component';
 // import { PreviewAdditionsComponent } from './add-samples/preview-additions/preview-additions.component';
 // import { CombineDupesComponent } from './add-samples/combine-dupes/combine-dupes.component';
-// import { AddDataComponent } from './add-data/add-data/add-data.component';
-// import { DataUploadComponent } from './add-data/data-upload/data-upload.component';
 
 
 @NgModule({
@@ -102,15 +97,10 @@ import { SchemaComponent } from './schema/schema.component';
     // PreviewSamplesComponent,
     // FrontendSampleValidationComponent,
     // PreviewDifferencesComponent,
-    // AddPatientsComponent,
-    // PatientUploadComponent,
     // SubmitSamplesComponent,
-    // UploadComponent,
     // CheckDupesComponent,
     // PreviewAdditionsComponent,
     // CombineDupesComponent,
-    // AddDataComponent,a
-    // DataUploadComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
