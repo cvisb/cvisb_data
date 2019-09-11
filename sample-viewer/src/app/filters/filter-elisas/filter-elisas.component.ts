@@ -90,6 +90,9 @@ export class FilterElisasComponent implements OnInit {
 
       // re-intialize
       this.elisaGrps.push(this.createGroup());
+
+      // hard reset of params; otherwise ELISA has a "AND" issue
+      this.requestSvc.patientParamsSubject.next([]);
     }
   }
 
