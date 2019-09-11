@@ -70,7 +70,7 @@ export class PatientTableComponent implements OnInit {
       // console.log(qParams)
 
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(this.qParams);
+      // console.log(this.qParams);
       this.loadPatientPage();
     })
 
