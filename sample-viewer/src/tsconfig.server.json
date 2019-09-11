@@ -4,7 +4,12 @@
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
     "module": "commonjs",
-    "types": []
+    "types": [],
+    "lib": [
+      "es2018",
+      "dom",
+      "esnext.array"
+    ]
   },
   "exclude": [
     "test.ts",
@@ -12,10 +17,5 @@
   ],
   "angularCompilerOptions": {
     "entryModule": "app/app.server.module#AppServerModule"
-  },
-  "lib": [
-    "es2018",
-    "dom",
-    "esnext.array"
-  ]
+  }
 }
