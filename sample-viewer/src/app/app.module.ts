@@ -13,8 +13,12 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { MaterialModule } from './material.module';
 import { AdminModule, PipesModule, HlaModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
-
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
+
+// Should be deleted when fix dataset lazy loading
+import { FileListModule } from './file-list/file-list.module';
+import { AlleleCirclePackingModule} from './hla/allele-circle-packing/allele-circle-packing.module';
+import {FiltersModule} from './filters/filters.module'
 
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
@@ -33,7 +37,6 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { SchemaComponent } from './schema/schema.component';
 
-import { AddSampleTypesComponent } from './add-samples/add-sample-types/add-sample-types.component';
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FileMetadataComponent } from './dataset/file-metadata/file-metadata.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
@@ -52,7 +55,6 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
 @NgModule({
   declarations: [
     AppComponent,
-    AddSampleTypesComponent,
     HeaderComponent,
     BulkEditComponent,
     FileMetadataComponent,
@@ -90,6 +92,10 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
     FormatCitationModule,
     HlaModule,
     Angulartics2Module.forRoot(), // Google Analytics
+
+    FileListModule,
+    AlleleCirclePackingModule,
+    FiltersModule
   ],
   exports: [
   ],

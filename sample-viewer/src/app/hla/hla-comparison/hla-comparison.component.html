@@ -4,7 +4,7 @@
 </div>
 
 <div class="select-cohort">
-  <form class="cohort-form">
+  <form class="cohort-form" [formGroup]="myForm2" >
     <mat-form-field class="cohort-select cohort-select--right">
       <input type="text" placeholder="left cohort" aria-label="select a cohort to compare"
       matInput [formControl]="leftControl" [matAutocomplete]="autoL"
@@ -17,7 +17,7 @@
     </mat-form-field>
   </form>
 
-  <form class="cohort-form">
+  <form class="cohort-form" [formGroup]="myForm1">
     <mat-form-field class="cohort-select cohort-select--right">
       <input type="text" placeholder="right cohort" aria-label="select a cohort to compare" matInput [formControl]="rightControl" [matAutocomplete]="autoR">
       <mat-autocomplete #autoR="matAutocomplete" [displayWith]="displayFn">
