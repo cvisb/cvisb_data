@@ -34,6 +34,7 @@ sample-viewer-api/src/static/data/**/*.csv
 sample-viewer-api/src/static/data/**/*.tsv
 sample-viewer-api/src/static/data/**/*.json
 sample-viewer-api/src/static/data/**/*.tre
+sample-viewer-api/src/static/data/**/*.log
 notes/*.md
 notes/wordpress_css_link_underline.css
 sample-viewer-api/src/static/data/clean_samples/exploratory_scripts/2019-05-06_prioritize4briney.py
