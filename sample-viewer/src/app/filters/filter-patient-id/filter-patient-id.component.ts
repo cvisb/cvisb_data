@@ -38,6 +38,8 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loaded_patients = this.all_patients.slice(0, this.bufferSize);
+
     switch (this.endpoint) {
       case "patient":
         this.requestSvc.patientParamsState$.subscribe(params => {
