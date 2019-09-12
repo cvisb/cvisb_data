@@ -15,6 +15,8 @@ export class FilterPatientTypeComponent implements OnInit {
   @Input() all_cohorts: string[];
   @Input() all_outcomes: string[];
   @Input() endpoint: string;
+  @Input() horizontal: boolean = false;
+  @Input() filterable: boolean = true;
 
   constructor() { }
 

@@ -23,6 +23,7 @@ export class MiniBarplotComponent implements OnInit {
   @Input() private height: number;
   @Input() private spacing: number;
   @Input() private name_var: string;
+  @Input() private filterable: boolean = true;
 
   private selectedOutcomes: string[];
 
@@ -258,10 +259,7 @@ export class MiniBarplotComponent implements OnInit {
         .attr("class", "y-label-group");
 
 
-      let checkmarkEnter = labelGroupEnter
-        .append("tspan")
-        .attr("dx", 6)
-        .attr("class", "checkmark");
+
 
       let textEnter = labelGroupEnter
         .append("tspan") // enter the first tspan on the text element
@@ -275,12 +273,22 @@ export class MiniBarplotComponent implements OnInit {
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
         .attr("id", (d: any) => `${d.term}`);
 
-      checkmarks.merge(checkmarkEnter)
-        .attr("x", this.x(0))
-        .attr("class", (d: any) => `checkmark ${d.term}`)
-        .text(d => d.selected ? "\uf14a" : "\uf0c8")
-        .classed("checked", (d: any) => d.selected);
+      if (this.filterable) {
+        let checkmarkEnter = labelGroupEnter
+          .append("tspan")
+          .attr("dx", 6)
+          .attr("class", "checkmark");
 
+        checkmarks.merge(checkmarkEnter)
+          .attr("x", this.x(0))
+          .attr("class", (d: any) => `checkmark ${d.term}`)
+          .text(d => d.selected ? "\uf14a" : "\uf0c8")
+          .classed("checked", (d: any) => d.selected);
+
+        // --- click listener ---
+        this.chart.selectAll(".checkmark")
+          .on("click", filterOutcome(this.endpoint, this.requestSvc, this.data));
+      }
       labelGroup.select(".annotation--label").merge(textEnter)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .merge(labelGroup)
@@ -289,9 +297,7 @@ export class MiniBarplotComponent implements OnInit {
         .text((d: any) => (d[this.name_var]));
 
 
-      // --- click listener ---
-      this.chart.selectAll(".checkmark")
-        .on("click", filterOutcome(this.endpoint, this.requestSvc, this.data));
+
     }
 
   }

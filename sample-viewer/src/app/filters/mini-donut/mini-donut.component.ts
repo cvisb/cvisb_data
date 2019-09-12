@@ -21,6 +21,7 @@ export class MiniDonutComponent implements OnInit, OnChanges {
   @Input() private height: number;
   // Expected domain
   @Input() private cohorts: string[];
+  @Input() private filterable: boolean = true;
 
   // --- selected cohorts ---
   selectedCohorts: string[];
@@ -247,11 +248,6 @@ export class MiniDonutComponent implements OnInit, OnChanges {
         .attr("dx", 15)
         .attr('class', 'annotation--count');
 
-      let checkmarkEnter = annotationGroupEnter
-        .append("text")
-        .attr("x", (d: any) => this.checkboxX)
-        .attr("class", "checkmark");
-
       // --- update/merge ---
       annotation_group = annotationGroupEnter
         .merge(annotation_group)
@@ -265,15 +261,22 @@ export class MiniDonutComponent implements OnInit, OnChanges {
         .classed('disabled', (d: any) => d.count === 0)
         .text((d: any) => `${d.term}: ${d.count}`);
 
-      checkmarks.merge(checkmarkEnter)
-        .attr("class", (d: any) => `checkmark ${d.term}`)
-        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
-        .text(d => d.selected ? "\uf14a" : "\uf0c8")
-        .classed("checked", (d: any) => d.selected);
+      if (this.filterable) {
+        let checkmarkEnter = annotationGroupEnter
+          .append("text")
+          .attr("x", (d: any) => this.checkboxX)
+          .attr("class", "checkmark");
 
-      // --- click listener ---
-      this.svg.selectAll(".checkmark")
-        .on("click", filterCheckbox(this.endpoint, this.requestSvc, this.data));
+        checkmarks.merge(checkmarkEnter)
+          .attr("class", (d: any) => `checkmark ${d.term}`)
+          .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
+          .text(d => d.selected ? "\uf14a" : "\uf0c8")
+          .classed("checked", (d: any) => d.selected);
+
+        // --- click listener ---
+        this.svg.selectAll(".checkmark")
+          .on("click", filterCheckbox(this.endpoint, this.requestSvc, this.data));
+      }
     }
   }
 

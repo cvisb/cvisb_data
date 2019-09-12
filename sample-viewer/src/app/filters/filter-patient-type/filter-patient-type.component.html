@@ -1,4 +1,4 @@
-<div class="patient-type-filter container-column" *ngIf="viruses && outcomes">
+<div [ngClass]="horizontal ? 'patient-type-filter container' : 'patient-type-filter container-column'" *ngIf="viruses && outcomes">
   <h4 class="filter-label">patient type</h4>
 
   <div class="filter-subtype filter-virus">
@@ -9,7 +9,7 @@
         suspected infection/exposure, pending diagnostic confirmation
     </a>
     </div>
-    <app-mini-donut [data]="viruses" [height]="plot_height" [cohorts]="all_cohorts" [endpoint]="endpoint"></app-mini-donut>
+    <app-mini-donut [data]="viruses" [height]="plot_height" [cohorts]="all_cohorts" [endpoint]="endpoint" [filterable]="filterable"></app-mini-donut>
   </div>
 
   <div class="filter-subtype filter-outcome">
@@ -19,6 +19,6 @@
       survivors were alive 10+ days after hospital admission
     </a>
     </div>
-    <app-mini-barplot [data]="outcomes" [name_var]="'term'" [height]="plot_height" [options]="all_outcomes" [endpoint]="endpoint"></app-mini-barplot>
+    <app-mini-barplot [data]="outcomes" [name_var]="'term'" [height]="plot_height" [options]="all_outcomes" [endpoint]="endpoint" [filterable]="filterable"></app-mini-barplot>
   </div>
 </div>
