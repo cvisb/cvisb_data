@@ -316,7 +316,10 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
             limits = { lower: d.term, upper: d.term, unknown: false };
           }
 
+          console.log(windsorized)
           console.log(d.term)
+          console.log(Number(x.domain[0]))
+          console.log(windsorized && d.term <= Number(x.domain[0]))
           console.log(limits)
           console.log(x.domain())
 
@@ -405,8 +408,12 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
 
+      console.log(handleSide)
+      console.log(windsorized)
       console.log(xValue)
+      console.log(Number(x.domain[0]))
       console.log(x.domain())
+      console.log(windsorized && xValue <= Number(x.domain[0]))
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
@@ -420,8 +427,6 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
           xValue = 0;
         }
 
-        console.log(xValue)
-        console.log(x.domain())
 
         updateLimits({ ...filterSubject.value, lower: xValue }, x, xLinear, slider, handle_left, handle_right);
         // Left side updated; lower limit
