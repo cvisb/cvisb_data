@@ -123,6 +123,9 @@ export class GetPatientsService {
         map(expts => {
           let patients = patientResults['body']['hits'];
 
+          console.log(patientResults)
+          console.log(expts)
+
           patients.forEach(patient => {
             let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
             patient['availableData'] = patientExpts;
