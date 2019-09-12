@@ -11,7 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { MaterialModule } from './material.module';
-import { AdminModule, PipesModule, HlaModule } from '.';
+import { AdminModule, PipesModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
@@ -59,7 +59,6 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     AppRoutingModule,
     AdminModule,
     FormatCitationModule,
-    HlaModule,
     Angulartics2Module.forRoot(), // Google Analytics
     EmbedJsonldModule
   ],
