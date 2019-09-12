@@ -53,7 +53,6 @@ export class FileListComponent implements OnInit {
 
   ngOnInit() {
     this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
-    console.log(this.measurementTechnique)
 
     if (this.patientID) {
       this.qParams = new HttpParams()
