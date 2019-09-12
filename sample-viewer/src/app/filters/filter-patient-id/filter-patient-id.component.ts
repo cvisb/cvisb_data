@@ -126,10 +126,10 @@ export class FilterPatientIdComponent implements OnInit {
       // Update the selection to include the typed values.
       this.selectedPatients = this.selectedPatients.concat(parsed);
       // clear the input text
-      this.ngSelect.active = [];
+      // this.ngSelect.filterValue = null;
+      // this.ngSelect.active = [];
 
-      console.log(this.ngSelect);
-            this.ngSelect.remove(input);
+            // this.ngSelect.remove(input);
       this.filterPatientIDs(this.selectedPatients);
     }
   }
