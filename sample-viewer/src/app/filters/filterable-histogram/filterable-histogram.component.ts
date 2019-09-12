@@ -327,10 +327,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       year_data.exit().remove();
 
-      let yearEnter = year_data.enter().append("rect")
-        .attr("class", "count-rect year-rect");
-
-      yearEnter.merge(year_data)
+      year_data.enter().append("rect")
+        .attr("class", "count-rect year-rect")
+        .merge(year_data)
         .attr("id", (d: any) => d.term)
         .attr("x", (d: any) => this.x(d.term))
         .attr("y", this.y(0))
