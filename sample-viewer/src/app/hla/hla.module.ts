@@ -28,7 +28,7 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
 import { HlaResolver } from '../_services/hla.resolver';
 
 // --- pipes ---
-import { SloppyMarkdownPipe } from '../_pipes/sloppy-markdown.pipe';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -39,11 +39,11 @@ import { SloppyMarkdownPipe } from '../_pipes/sloppy-markdown.pipe';
     FiltersModule,
     HlaRoutingModule,
     DatasetPageModule,
-    AlleleCirclePackingModule
+    AlleleCirclePackingModule,
+    PipesModule
   ],
   declarations: [
     AlleleBarComponent,
-    SloppyMarkdownPipe,
     HlaPageComponent,
     HlaComparisonComponent,
     HlaSummaryComponent,
@@ -54,8 +54,8 @@ import { SloppyMarkdownPipe } from '../_pipes/sloppy-markdown.pipe';
     AlleleCountComponent
   ],
   exports: [
-    AlleleBarComponent,
-    SloppyMarkdownPipe],
+    AlleleBarComponent
+  ],
   providers: [
     MyHttpClient,
     DatasetResolver,

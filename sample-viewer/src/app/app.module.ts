@@ -19,7 +19,6 @@ import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { SloppyMarkdownPipe } from './_pipes/sloppy-markdown.pipe';
 
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
@@ -44,8 +43,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     SpinnerPopupComponent,
     SchemaComponent,
     FooterComponent,
-    HomeComponent,
-    SloppyMarkdownPipe
+    HomeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
@@ -64,7 +62,6 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     EmbedJsonldModule
   ],
   exports: [
-    SloppyMarkdownPipe
   ],
   providers: [
     MyHttpClient,
