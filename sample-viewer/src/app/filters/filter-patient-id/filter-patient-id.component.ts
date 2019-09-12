@@ -112,11 +112,11 @@ export class FilterPatientIdComponent implements OnInit {
 
 
   onSearch(input) {
-    console.log(input)
     let parsed = input.term.split("\,");
 
     if (parsed.length > 1) {
       parsed = parsed.filter(d => d.length > 0);
+      parsed.forEach((d: string) => d.trim());
 
       // check that selected patients exists before concatting
       if (!this.selectedPatients) {
@@ -126,9 +126,7 @@ export class FilterPatientIdComponent implements OnInit {
       // Update the selection to include the typed values.
       this.selectedPatients = this.selectedPatients.concat(parsed);
       // clear the input text
-      this.ngSelect.filterValue = null;
-      console.log(this.ngSelect)
-      console.log(this.ngSelect.filterValue)
+      this.ngSelect.active = [];
       this.filterPatientIDs(this.selectedPatients);
     }
   }
