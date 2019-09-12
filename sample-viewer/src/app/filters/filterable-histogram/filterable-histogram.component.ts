@@ -135,7 +135,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     console.log(params)
     if (params.length === 0) {
       console.log('resetting!')
-      // this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
+      this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
     }
   }
 
@@ -302,6 +302,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         return function(d) {
           let limits: Object;
 
+
           if (d.term === "unknown") {
             limits = { lower: 0, upper: 3000, unknown: true };
           }
@@ -314,6 +315,11 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
           else {
             limits = { lower: d.term, upper: d.term, unknown: false };
           }
+
+          console.log(d.term)
+          console.log(limits)
+          console.log(x.domain)
+
           updateLimits(limits, x, xLinear, slider, handle_left, handle_right);
           filterFunc(limits, filterSvc, requestSvc, endpoint);
         }
@@ -399,6 +405,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
 
+      console.log(xValue)
+      console.log(x.domain)
+
       // Right side updated; upper limit
       if (handleSide === 'right') {
         if (windsorized && xValue === x.domain[x.domain.length - 1]) {
@@ -424,13 +433,8 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         let limits = { ...filterSubject.value, unknown: !filterSubject.value.unknown };
         filterSubject.next(limits);
 
-        console.log(limits['unknown'])
-        console.log(d3.select(".slider-checkbox"))
-
         // update the check status
         d3.select(".slider-checkbox")
-          // .html(_ => limits['unknown'] ? "&#61770;" : "&#61640;");
-          // .html(_ => limits['unknown'] ? "&#x2611;" : "&#x2610;");
           .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
 
         filterFunc(limits, filterSvc, requestSvc, endpoint);
@@ -484,10 +488,8 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .attr("class", "slider-checkbox")
       .attr("x", this.width + this.margin.betweenGraphs + Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown) * (1 / 2))
       .attr("y", "0.55em")
-      .attr("dy", 2)
-      .html("&#61770;");
-    // .html("&#x2611;");
-    // .text("\uf14a");
+      .attr("dy", -52)
+      .text("\uf14a");
     // .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
@@ -539,7 +541,6 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       d3.select(".slider-checkbox")
         .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
-      // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
     }
   }
 
