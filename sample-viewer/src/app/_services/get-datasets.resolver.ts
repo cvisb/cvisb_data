@@ -5,9 +5,6 @@ import { Injectable } from '@angular/core';
 
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { getDatasetsService } from './get-datasets.service';
 
 @Injectable()
@@ -16,7 +13,6 @@ export class DatasetResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.data.dsid;
-    console.log(dsid)
     return this.datasetSvc.getDataset(dsid);
   }
 }

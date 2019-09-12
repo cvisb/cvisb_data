@@ -301,7 +301,6 @@ svg-icon.country-icon {
   flex-wrap: wrap;
   justify-content: space-between;
   // border-bottom: 10px solid $grey-200;
-
   &.inactive {
     opacity: 0.4;
   }
@@ -587,6 +586,11 @@ button.stepper-button {
   display: none;
 }
 // Font size for all tables
+
 th.mat-header-cell {
   font-size: 14px !important;
+}
+
+.dataset-container {
+  margin-left: 9em;
 }
