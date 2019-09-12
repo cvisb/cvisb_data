@@ -9,6 +9,7 @@ import pandas as pd
 from Bio import SeqIO
 # from Bio import Phylo
 import os
+import re
 from datetime import datetime
 
 # [File locations]  ----------------------------------------------------------------------------------------------------
@@ -20,7 +21,8 @@ lassaS_Rawfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/sta
 # lassaS_Alignedfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_S_curated_aln_2019.09.04_public.fasta"
 # lassaS_Rawfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_S_aln_all_seq_2019.09.02_public.fasta"
 lassa_MDfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_dataset.2019.09.06.csv"
-id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-09_12_PRIVATE_dict.json"
+id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-05-15_PRIVATE_dict.json"
+# id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-09_12_PRIVATE_dict.json"
 
 # Outputs
 output_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data"
@@ -103,13 +105,23 @@ def getPrivateID(row):
     if(row.KGH_id):
         return(helpers.interpretID(row.rawID))
     else:
+        dupe_id = re.search("(.+)(\.\d)(.+)",row.id)
+        # Assuming "id.2" is the same person as "id"
+        if(dupe_id):
+            return(dupe_id[1] + dupe_id[3])
         return(row.id)
+
+# Experiment IDs should be unique... so adding back in .2 if it's a longitudinal sample.
+def getExptID(row, expt_stub = "LASV_seq_"):
+    dupe_id = re.search("(.+)(\.\d)(.+)",row.id)
+    # Assuming "id.2" is the same person as "id"
+    if(dupe_id):
+        return(expt_stub + row.patientID + dupe_id[2])
+    return(expt_stub + row.patientID)
+
 # initialize log file
 global log_notes
 log_notes = []
-
-
-
 
 # [IDs from KGH]  ----------------------------------------------------------------------------------------------------
 ids = pd.read_json(id_dict)
@@ -212,8 +224,14 @@ lsv_data = getDNAseq(lsv_data_seq, lsv_data, 'seqID', "Lassa", "DNAsequence", "S
 # Remove anything without any seq data
 lsv_data = lsv_data[lsv_data.data.apply(lambda x: x is not None)]
 
-lsv_data['experimentID'] = lsv_data.apply(
-    lambda x: "LASV_seq_" + x.patientID, axis=1)
+lsv_data['experimentID'] = lsv_data.apply(getExptID, axis=1)
+
+num_dupes_expt = sum(lsv_data.duplicated(subset="experimentID", keep=False))
+if(num_dupes_expt > 0):
+    log_notes.append(f"{num_dupes_expt} duplicate experimentIDs found in viral sequences:")
+    log_notes.append(lsv_data.loc[lsv_data.duplicated(subset="experimentID", keep=False), ['id', 'privatePatientID', "experimentID"]].sort_values("privatePatientID"))
+    log_notes.append("*"*100)
+
 lsv_data['sampleLabel'] = lsv_data.patientID
 lsv_data['genbankID'] = lsv_data.accession_S
 lsv_data['seqType'] = "LASV"
@@ -314,7 +332,7 @@ dwnlds['contentUrlIdentifier'] = dwnlds.accession
 
 # [Export]  ----------------------------------------------------------------------------------------------------
 # Experiments
-expts[exptCols].to_json(f"{output_dir}/experiments/viral_seq_{today}.json", orient="records")
+expts[exptCols].to_json(f"{output_dir}/experiments/viral_seq_experiments_{today}.json", orient="records")
 # patients
 expts.loc[~expts.KGH_id, patientCols].to_json(f"{output_dir}/patients/viral_seq_patients_{today}.json", orient="records")
 # samples
@@ -323,6 +341,9 @@ expts[sampleCols].to_json(f"{output_dir}/samples/viral_seq_samples_{today}.json"
 # Make sure only to get the experiment IDs of those in the alignment
 expts.loc[expts.inAlignment,['seqType', 'experimentID']].groupby('seqType').experimentID.apply(list).to_json(f"{output_dir}/datadownloads/viral_seq_exptIDs_{today}.json")
 dwnlds[downloadCols].to_json(f"{output_dir}/datadownloads/viral_seq_datadownloads_{today}.json", orient="records")
+
+# datasets
+dwnlds.identifier.to_json(f"{output_dir}/datasets/viral_seq_accession_downloadIDs_{today}.json", orient="records")
 
 # Write log file
 with open(f"{log_dir}/{today}_viral_sequence_cleanup.log", 'w') as f:
