@@ -21,7 +21,7 @@ export class GetDatacatalogService {
         {
           endpoint: "Data",
           note: ["Initial publication of HLA data",
-            "Initial publication of Lassa and Ebola viral sequencing data"
+            "Initial publication of aligned Lassa viral sequencing data"
           ]
         },
         {
