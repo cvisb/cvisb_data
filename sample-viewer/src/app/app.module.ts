@@ -16,9 +16,6 @@ import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 
-// Should be deleted when fix dataset lazy loading
-import { FiltersModule } from './filters/filters.module'
-
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
@@ -64,8 +61,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     FormatCitationModule,
     HlaModule,
     Angulartics2Module.forRoot(), // Google Analytics
-    EmbedJsonldModule,
-    FiltersModule
+    EmbedJsonldModule
   ],
   exports: [
   ],

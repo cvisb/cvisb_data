@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset', loadChildren: './dataset/dataset.module#DatasetModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  { path: 'dataset/hla', loadChildren: './hla/hla.module#HlaModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  { path: 'dataset/hla', loadChildren: './hla/hla.module#HlaModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
