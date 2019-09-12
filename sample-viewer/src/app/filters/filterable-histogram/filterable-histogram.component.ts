@@ -335,12 +335,13 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
+        .classed("selected", (d: any) =>
+          true)
+          // d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .transition(t)
         .attr("y", (d: any) => {
           return (this.y(d.count));
         })
-        .classed("selected", (d: any) =>
-          d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
       // Unknown bar
