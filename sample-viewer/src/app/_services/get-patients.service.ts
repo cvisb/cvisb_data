@@ -119,6 +119,8 @@ export class GetPatientsService {
           .set("q", "__all__")
           .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
           .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+          .set("size", "0")
+          .set("facet_size", "10000")
       }).pipe(
         map(expts => {
           let patients = patientResults['body']['hits'];
