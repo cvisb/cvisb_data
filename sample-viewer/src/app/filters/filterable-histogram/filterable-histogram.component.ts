@@ -304,12 +304,12 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
 
           if (d.term === "unknown") {
-            limits = { lower: 0, upper: 3000, unknown: true };
+            limits = { lower: null, upper: null, unknown: true };
           }
-          else if (windsorized && d.term === x.domain[0]) {
+          else if (windsorized && d.term <= x.domain[0]) {
             limits = { lower: 0, upper: d.term, unknown: false };
           }
-          else if (windsorized && d.term === x.domain[x.domain.length - 1]) {
+          else if (windsorized && d.term >= x.domain[x.domain.length - 1]) {
             limits = { lower: d.term, upper: 3000, unknown: false };
           }
           else {
@@ -318,7 +318,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
           console.log(d.term)
           console.log(limits)
-          console.log(x.domain)
+          console.log(x.domain())
 
           updateLimits(limits, x, xLinear, slider, handle_left, handle_right);
           filterFunc(limits, filterSvc, requestSvc, endpoint);
@@ -406,19 +406,22 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       let xValue = (xLinear.invert(d3.event.x));
 
       console.log(xValue)
-      console.log(x.domain)
+      console.log(x.domain())
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        if (windsorized && xValue === x.domain[x.domain.length - 1]) {
+        if (windsorized && xValue >= x.domain[x.domain.length - 1]) {
           xValue = 3000;
         }
         updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, slider, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: Math.round(xValue) });
       } else {
-        if (windsorized && xValue === x.domain[0]) {
+        if (windsorized && xValue <= x.domain[0]) {
           xValue = 0;
         }
+
+        console.log(xValue)
+        console.log(x.domain())
 
         updateLimits({ ...filterSubject.value, lower: xValue }, x, xLinear, slider, handle_left, handle_right);
         // Left side updated; lower limit
@@ -488,7 +491,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .attr("class", "slider-checkbox")
       .attr("x", this.width + this.margin.betweenGraphs + Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown) * (1 / 2))
       .attr("y", "0.55em")
-      .attr("dy", -52)
+      .attr("dy", -5)
       .text("\uf14a");
     // .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
