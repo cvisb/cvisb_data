@@ -594,3 +594,7 @@ th.mat-header-cell {
 .dataset-container {
   margin-left: 9.5em;
 }
+
+.header, .footer {
+    z-index: 1000;
+}
