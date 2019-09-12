@@ -132,9 +132,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   }
 
   checkParams(params) {
-    console.log(params)
     if (params.length === 0) {
-      console.log('resetting!')
       this.updateLimits({ lower: 0, upper: 3000, unknown: true }, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right)
     }
   }
@@ -316,13 +314,6 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
             limits = { lower: d.term, upper: d.term, unknown: false };
           }
 
-          console.log(windsorized)
-          console.log(d.term)
-          console.log(Number(x.domain()[0]))
-          console.log(windsorized && d.term <= Number(x.domain()[0]))
-          console.log(limits)
-          console.log(x.domain())
-
           updateLimits(limits, x, xLinear, slider, handle_left, handle_right);
           filterFunc(limits, filterSvc, requestSvc, endpoint);
         }
@@ -407,13 +398,6 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       // round to the nearest integer to snap to a year.
       // After personal testing, I find this behavior to be slightly annoying... smooth feels better
       let xValue = (xLinear.invert(d3.event.x));
-
-      console.log(handleSide)
-      console.log(windsorized)
-      console.log(xValue)
-      console.log(Number(x.domain()[0]))
-      console.log(x.domain())
-      console.log(windsorized && xValue <= Number(x.domain()[0]))
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
@@ -505,8 +489,8 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   }
 
   updateLimits(limits, x, xLinear, slider, handle_left, handle_right) {
-    console.log('updating limits')
-    console.log(limits)
+    // console.log('updating limits')
+    // console.log(limits)
     // Check to make sure the left and right handle haven't flipped sides.
     let lower_limit = Math.round(Math.min(limits['lower'], limits['upper']));
     let upper_limit = Math.round(Math.max(limits['lower'], limits['upper']));
