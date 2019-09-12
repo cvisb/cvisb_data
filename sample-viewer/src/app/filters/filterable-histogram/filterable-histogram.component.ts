@@ -393,13 +393,13 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     let endDrag = function(x, xLinear, slider, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, filterFunc, filterSvc, windsorized) {
       // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
-      updateHandles(x, xLinear, slider, handle_left, handle_right, side, updateLimits, filterSubject, windsorized, true);
+      updateHandles(x, xLinear, slider, handle_left, handle_right, side, updateLimits, filterSubject, windsorized);
 
       let limits = filterSubject.value;
       filterFunc(limits, filterSvc, requestSvc, endpoint);
     }
 
-    let updateHandles = function(x, xLinear, slider, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>, windsorized, endDrag = false) {
+    let updateHandles = function(x, xLinear, slider, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>, windsorized) {
       // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
@@ -417,13 +417,13 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        if (windsorized && xValue >= Number(x.domain()[x.domain.length - 1]) && endDrag) {
+        if (windsorized && xValue === Number(x.domain()[x.domain.length - 1]) && endDrag) {
           xValue = 3000;
         }
         updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, slider, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: Math.round(xValue) });
       } else {
-        if (windsorized && xValue <= Number(x.domain()[0]) && endDrag) {
+        if (windsorized && xValue === Number(x.domain()[0])) {
           xValue = 0;
         }
 
