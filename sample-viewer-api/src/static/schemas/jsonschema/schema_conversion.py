@@ -217,7 +217,7 @@ def main(args):
             if entity_dict['is_root']:
                 log_msg(error_file, "Opening file {} for root entity".format(entity_dict["file"]), verbose=args.verbose)
                 unauthorized_fields = process_file(entity=entity, entity_dict=preprocess_dict, error_file=error_file, _out_directory=_out_directory, args=args, namespace='')
-                sorted(unauthorized_fields)
+                unauthorized_fields = sorted(unauthorized_fields)
                 with open(_auth_out, 'a') as authfile:
                     authfile.write("*"*80 + "\nPublic fields for '{e}' entity: '{f}'\n".format(e=entity, f=list(unauthorized_fields)) + "*"*80 + '\n\n')
 
