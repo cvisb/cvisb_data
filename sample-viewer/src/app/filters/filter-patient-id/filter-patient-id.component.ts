@@ -112,19 +112,18 @@ export class FilterPatientIdComponent implements OnInit {
 
 
   onSearch(input) {
-    // console.log(this.ngSelect)
-    // console.log(input)
-    let parsed = input.term.split("\,");
+    console.log(input)
+    let parsed = input.split("\,");
 
     if (parsed.length > 1) {
       parsed = parsed.filter(d => d.length > 0);
 
-      // check that selected patients exists
+      // check that selected patients exists before concatting
       if (!this.selectedPatients) {
         this.selectedPatients = [];
       }
 
-
+console.log(this.ngSelect)
       // Update the selection to include the typed values.
       this.selectedPatients = this.selectedPatients.concat(parsed);
       // clear the input text
