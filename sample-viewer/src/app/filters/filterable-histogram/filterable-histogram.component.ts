@@ -306,10 +306,10 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
           if (d.term === "unknown") {
             limits = { lower: null, upper: null, unknown: true };
           }
-          else if (windsorized && d.term <= x.domain[0]) {
+          else if (windsorized && d.term <= Number(x.domain[0])) {
             limits = { lower: 0, upper: d.term, unknown: false };
           }
-          else if (windsorized && d.term >= x.domain[x.domain.length - 1]) {
+          else if (windsorized && d.term >= Number(x.domain[x.domain.length - 1])) {
             limits = { lower: d.term, upper: 3000, unknown: false };
           }
           else {
@@ -410,13 +410,13 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
-        if (windsorized && xValue >= x.domain[x.domain.length - 1]) {
+        if (windsorized && xValue >= Number(x.domain[x.domain.length - 1])) {
           xValue = 3000;
         }
         updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, slider, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: Math.round(xValue) });
       } else {
-        if (windsorized && xValue <= x.domain[0]) {
+        if (windsorized && xValue <= Number(x.domain[0])) {
           xValue = 0;
         }
 
