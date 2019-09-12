@@ -409,7 +409,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
         // update the check status
         d3.select(".slider-checkbox")
-          .text(_ => limits['unknown'] ? "Y" : "N");
+          .html(_ => limits['unknown'] ? "&#x2611;" : "&#x2610;");
           // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
 
         filterFunc(limits, filterSvc, requestSvc, endpoint);
@@ -464,7 +464,8 @@ this.x2
       .attr("x", this.width + this.margin.betweenGraphs + this.x2.range[1] * (1/2))
       .attr("y", "0.55em")
       .attr("dy", 2)
-      .text("\uf14a");
+      .html("&#x2611;");
+      // .text("\uf14a");
     // .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
@@ -515,7 +516,7 @@ this.x2
       }
 
       d3.select(".slider-checkbox")
-      .text(_ => limits['unknown'] ? "Y" : "N");
+      .html(_ => limits['unknown'] ? "&#x2611;" : "&#x2610;");
         // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
     }
   }
