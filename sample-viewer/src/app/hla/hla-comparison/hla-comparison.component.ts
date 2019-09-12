@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocomplete } from '@angular/material';
@@ -16,8 +16,6 @@ export class HlaComparisonComponent implements OnInit {
   leftParams: CohortSelectOptions;
   rightParams: CohortSelectOptions;
   rightControl = new FormControl();
-  myForm1;
-  myForm2;
 
   options: CohortSelectOptions[] = [
     { id: "all", name: "all samples", cohort: ['Lassa', 'Ebola', 'Control'], outcome: ['dead', 'survivor', 'unknown', 'control'] },
