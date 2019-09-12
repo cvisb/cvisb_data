@@ -15,6 +15,10 @@ export class FilterPatientIdComponent implements OnInit {
   @Input() endpoint: string;
   @Input() patients: string[];
   @Input() all_patients: string[];
+  loaded_patients: string[] = [];
+  bufferSize = 50;
+  numberOfItemsFromEndBeforeFetchingMore = 10;
+  loading = false;
   @ViewChild('selectpatients') public ngSelect: any;
   authorized: boolean;
 
@@ -128,6 +132,28 @@ export class FilterPatientIdComponent implements OnInit {
     }
   }
 
+  onScrollToEnd() {
+    this.fetchMore();
+  }
 
+  onScroll({ end }) {
+    if (this.loading || this.all_patients.length <= this.loaded_patients.length) {
+      return;
+    }
 
+    if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.loaded_patients.length) {
+      this.fetchMore();
+    }
+  }
+
+  private fetchMore() {
+    const len = this.loaded_patients.length;
+    const more = this.all_patients.slice(len, this.bufferSize + len);
+    this.loading = true;
+    // using timeout here to simulate backend API delay
+    setTimeout(() => {
+      this.loading = false;
+      this.loaded_patients = this.loaded_patients.concat(more);
+    }, 200)
+  }
 }
