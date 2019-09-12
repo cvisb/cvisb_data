@@ -298,9 +298,22 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       // --- EVENT LISTENERS ---
       // --- Single bar event listener ---
-      let selectBar = function(filterFunc, filterSvc, requestSvc, endpoint, updateLimits, x, xLinear, slider, handle_left, handle_right) {
+      let selectBar = function(filterFunc, filterSvc, requestSvc, endpoint, updateLimits, x, xLinear, slider, handle_left, handle_right, windsorized) {
         return function(d) {
-          let limits = { lower: d.term, upper: d.term, unknown: false };
+          let limits: Object;
+
+          if (d.term === "unknown") {
+            limits = { lower: 0, upper: 3000, unknown: true };
+          }
+          else if (windsorized && d.term === x.domain[0]) {
+            limits = { lower: 0, upper: d.term, unknown: false };
+          }
+          else if (windsorized && d.term === x.domain[x.domain.length - 1]) {
+            limits = { lower: d.term, upper: 3000, unknown: false };
+          }
+          else {
+            limits = { lower: d.term, upper: d.term, unknown: false };
+          }
           updateLimits(limits, x, xLinear, slider, handle_left, handle_right);
           filterFunc(limits, filterSvc, requestSvc, endpoint);
         }
@@ -358,7 +371,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
 
       this.rects
-        .on("click", selectBar(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint, this.updateLimits, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right));
+        .on("click", selectBar(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint, this.updateLimits, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, this.windsorized));
 
     }
   }
@@ -368,16 +381,16 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     // and https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 
     // Drag event listeners
-    let endDrag = function(x, xLinear, slider, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, filterFunc, filterSvc) {
+    let endDrag = function(x, xLinear, slider, handle_left, handle_right, side: string, updateLimits, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, filterFunc, filterSvc, windsorized) {
       // let endDrag = function(xLinear: any, side: string, filterSubject: BehaviorSubject<Object>, requestSvc: RequestParametersService, endpoint: string, sendParams) {
       // Update the position of the handles, rectangle highlighting.
-      updateHandles(x, xLinear, slider, handle_left, handle_right, side, updateLimits, filterSubject);
+      updateHandles(x, xLinear, slider, handle_left, handle_right, side, updateLimits, filterSubject, windsorized);
 
       let limits = filterSubject.value;
       filterFunc(limits, filterSvc, requestSvc, endpoint);
     }
 
-    let updateHandles = function(x, xLinear, slider, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>) {
+    let updateHandles = function(x, xLinear, slider, handle_left, handle_right, handleSide: string, updateLimits, filterSubject: BehaviorSubject<Object>, windsorized) {
       // let updateHandles = function(xLinear: any, handleSide: string, filterSubject: BehaviorSubject<Object>) {
       d3.event.sourceEvent.stopPropagation();
 
@@ -388,9 +401,16 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
       // Right side updated; upper limit
       if (handleSide === 'right') {
+        if (windsorized && xValue === x.domain[x.domain.length - 1]) {
+          xValue = 3000;
+        }
         updateLimits({ ...filterSubject.value, upper: xValue }, x, xLinear, slider, handle_left, handle_right);
         filterSubject.next({ ...filterSubject.value, upper: Math.round(xValue) });
       } else {
+        if (windsorized && xValue === x.domain[0]) {
+          xValue = 0;
+        }
+
         updateLimits({ ...filterSubject.value, lower: xValue }, x, xLinear, slider, handle_left, handle_right);
         // Left side updated; lower limit
         filterSubject.next({ ...filterSubject.value, lower: Math.round(xValue) });
@@ -409,9 +429,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
         // update the check status
         d3.select(".slider-checkbox")
-          .html(_ => limits['unknown'] ? "&#61770;" : "&#61640;");
+          // .html(_ => limits['unknown'] ? "&#61770;" : "&#61640;");
           // .html(_ => limits['unknown'] ? "&#x2611;" : "&#x2610;");
-          // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
+          .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
 
         filterFunc(limits, filterSvc, requestSvc, endpoint);
         // sendParams(filterSubject, requestSvc, endpoint);
@@ -441,9 +461,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject))
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.windsorized))
         // Once you're done, announce the new parameters to the query service.
-        .on("end", () => endDrag(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc))
+        .on("end", () => endDrag(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'right', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc, this.windsorized))
       );
 
     this.handle_left = this.slider.append("path")
@@ -453,21 +473,21 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .call(d3.drag()
         .on("start.interrupt", () => this.slider.interrupt())
         // Update positions on start or drag events
-        .on("start drag", () => updateHandles(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject))
+        .on("start drag", () => updateHandles(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.windsorized))
         // Once you're done, announce the new parameters to the query service.
-        .on("end", () => endDrag(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc))
+        .on("end", () => endDrag(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc, this.windsorized))
       );
 
-this.x2
+    this.x2
     let check = this.slider
       .append('text')
       .attr("class", "slider-checkbox")
-      .attr("x", this.width + this.margin.betweenGraphs + Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown) * (1/2))
+      .attr("x", this.width + this.margin.betweenGraphs + Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown) * (1 / 2))
       .attr("y", "0.55em")
       .attr("dy", 2)
       .html("&#61770;");
-      // .html("&#x2611;");
-      // .text("\uf14a");
+    // .html("&#x2611;");
+    // .text("\uf14a");
     // .text(_ => this.filterSubject.value['unknown'] ? "\uf0c8" : "\uf14a");
 
     check.on("click", checkUnknown(this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc));
@@ -518,8 +538,8 @@ this.x2
       }
 
       d3.select(".slider-checkbox")
-      .html(_ => limits['unknown'] ? "&#61770;" : "&#61640;");
-        // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
+        .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
+      // .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
     }
   }
 
