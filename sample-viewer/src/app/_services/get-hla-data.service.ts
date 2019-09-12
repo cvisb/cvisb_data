@@ -60,8 +60,6 @@ export class GetHlaDataService {
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
         let data = res['hits'].flatMap(d => d.data).filter(d => d);
-        console.log(data)
-
         return (data)
       }
       ))
