@@ -219,7 +219,6 @@ def main(args):
                 unauthorized_fields = process_file(entity=entity, entity_dict=preprocess_dict, error_file=error_file, _out_directory=_out_directory, args=args, namespace='')
                 unauthorized_fields = list(unauthorized_fields)
                 unauthorized_fields.sort()
-                print(unauthorized_fields)
                 with open(_auth_out, 'a') as authfile:
                     authfile.write("*"*80 + "\nPublic fields for '{e}' entity: '{f}'\n".format(e=entity, f=unauthorized_fields) + "*"*80 + '\n\n')
 
