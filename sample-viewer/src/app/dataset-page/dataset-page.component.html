@@ -1,5 +1,3 @@
-<router-outlet name="datasets"></router-outlet>
-
 <div class="container" id="dataset.identifier" *ngIf="dataset && dataset.identifier">
 
   <div class="dataset-container dataset-page">
@@ -27,11 +25,6 @@
           updated: {{dataset.dateModified ? (dataset.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
         </div>
       </div>
-
-      <ng-container *ngIf="dataset.identifier === 'hla'" id="compare">
-        <app-hla-page></app-hla-page>
-      </ng-container>
-
 
 
       <div id="files">

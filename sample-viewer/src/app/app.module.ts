@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
@@ -14,17 +14,14 @@ import { MaterialModule } from './material.module';
 import { AdminModule, PipesModule, HlaModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
+import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 
 // Should be deleted when fix dataset lazy loading
-import { FileListModule } from './file-list/file-list.module';
-import { AlleleCirclePackingModule} from './hla/allele-circle-packing/allele-circle-packing.module';
-import {FiltersModule} from './filters/filters.module'
+import { FiltersModule } from './filters/filters.module'
 
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { DatasetResolver, HlaResolver } from './_services/';
-import { EmbedJsonldDirective } from './_directives/';
 
 
 // Dialogue boxes
@@ -38,45 +35,19 @@ import { HomeComponent } from './home/home.component';
 import { SchemaComponent } from './schema/schema.component';
 
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
-import { FileMetadataComponent } from './dataset/file-metadata/file-metadata.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
-import { DatasetPageComponent } from './dataset-page/dataset-page.component';
-import { DatasetPageNavComponent } from './dataset-page/dataset-page-nav/dataset-page-nav.component';
-import { HlaPageComponent } from './hla/hla-page.component';
-import { HlaComparisonComponent } from './hla/hla-comparison/hla-comparison.component';
-import { HlaSummaryComponent } from './hla/hla-summary/hla-summary.component';
-import { AlleleHistComponent } from './hla/allele-hist/allele-hist.component';
-import { AlleleCountComponent } from './hla/allele-count/allele-count.component';
-import { NovelAllelesComponent } from './hla/novel-alleles/novel-alleles.component';
-import { SmallMultipleComparisonComponent } from './hla/hla-comparison/small-multiple-comparison/small-multiple-comparison.component';
-import { ComparisonBarplotComponent } from './hla/hla-comparison/comparison-barplot/comparison-barplot.component';
-import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BulkEditComponent,
-    FileMetadataComponent,
     FilterFilesComponent,
     SampleMetadataComponent,
     SpinnerPopupComponent,
     SchemaComponent,
-    DatasetPageComponent,
-    DatasetPageNavComponent,
-    HlaPageComponent,
-    HlaSummaryComponent,
-    HlaComparisonComponent,
-    AlleleHistComponent,
-    AlleleCountComponent,
-    NovelAllelesComponent,
-    SmallMultipleComparisonComponent,
-    ComparisonBarplotComponent,
-    MdObjectComponent,
     FooterComponent,
     HomeComponent,
-    EmbedJsonldDirective,
-
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
@@ -84,6 +55,7 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     PipesModule,
@@ -92,9 +64,7 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
     FormatCitationModule,
     HlaModule,
     Angulartics2Module.forRoot(), // Google Analytics
-
-    FileListModule,
-    AlleleCirclePackingModule,
+    EmbedJsonldModule,
     FiltersModule
   ],
   exports: [
@@ -102,8 +72,6 @@ import { MdObjectComponent } from './dataset/file-metadata/md-object/md-object.c
   providers: [
     MyHttpClient,
     DatePipe,
-    DatasetResolver,
-    HlaResolver,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EncodeHttpParamsInterceptor,

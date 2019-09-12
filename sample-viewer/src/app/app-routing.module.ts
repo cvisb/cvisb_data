@@ -4,13 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // --- Pages ---
 import { HomeComponent } from './home/home.component';
-import { DatasetPageComponent } from './dataset-page/dataset-page.component';
-
-// --- Dataset pages ---
-// import { HlaPageComponent } from './dataset-page/hla-page/hla-page.component';
-
-// --- Resolvers ---
-import { DatasetResolver, HlaResolver } from './_services';
 
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
@@ -44,25 +37,8 @@ const appRoutes: Routes = [
   },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset', loadChildren: './dataset/dataset.module#DatasetModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
-  // // {
-  // //   path: 'dataset/hla', component: DatasetPageComponent, pathMatch: 'full',
-  // //   resolve: {
-  // //     datasetData: DatasetResolver,
-  // //     hlaSummary: HlaResolver
-  // //   }, data: { title: 'Dataset | CViSB' }
-  // // },
-  // { path: 'dataset/:dsid', component: DatasetPageComponent, pathMatch: 'full', resolve: {
-  //     datasetData: DatasetResolver,
-  //     hlaSummary: HlaResolver
-  //   }, data: { title: 'Dataset | CViSB' }
-  // },
-  // // {
-  // //   path: 'dataset/:dsid', component: DatasetPageComponent, resolve: { datasetData: DatasetResolver },
-  // //   pathMatch: 'full', data: { title: 'Dataset | CViSB' },
-  // //   children: [{
-  // //     path: 'hla', component: PageNotFoundComponent, outlet: 'datasets'
-  // //   }]
-  // // },
+  { path: 'dataset/hla', loadChildren: './hla/hla.module#HlaModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
+
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },

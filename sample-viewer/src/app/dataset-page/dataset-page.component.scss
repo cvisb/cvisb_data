@@ -16,8 +16,16 @@
 .dataset-nav {
   flex: 0 0 12em;
   order: -1;
-  margin: -18px 2em -18px -63px;
-  padding-top: 149px;
+  // margin: -18px 2em -18px -63px;
+  // padding-top: 149px;
   // 18+98+27+22-16;
   background: lighten($cvisb-theme, 40%);
+  padding-top: 225px;
+  position: fixed;
+  z-index: -1;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 12em;
+  overflow-x: hidden;
 }
