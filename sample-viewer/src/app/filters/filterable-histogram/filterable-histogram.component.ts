@@ -404,6 +404,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         let limits = { ...filterSubject.value, unknown: !filterSubject.value.unknown };
         filterSubject.next(limits);
 
+        console.log(limits['unknown'])
+        console.log(d3.select(".slider-checkbox"))
+
         // update the check status
         d3.select(".slider-checkbox")
           .text(_ => limits['unknown'] ? "\uf14a" : "\uf0c8");
@@ -453,7 +456,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .on("end", () => endDrag(this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, 'left', this.updateLimits, this.filterSubject, this.requestSvc, this.endpoint, this.filterHandler, this.filterSvc))
       );
 
-
+console.log(this.x)
     let check = this.slider
       .append('text')
       .attr("class", "slider-checkbox")
