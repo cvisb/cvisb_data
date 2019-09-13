@@ -21,8 +21,7 @@ lassaS_Rawfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/sta
 # lassaS_Alignedfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_S_curated_aln_2019.09.04_public.fasta"
 # lassaS_Rawfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_S_aln_all_seq_2019.09.02_public.fasta"
 lassa_MDfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_dataset.2019.09.06.csv"
-id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-05-15_PRIVATE_dict.json"
-# id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-09_12_PRIVATE_dict.json"
+id_dict = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/patients/patients_2019-09-13_PRIVATE_dict.json"
 
 # Outputs
 output_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data"
@@ -113,21 +112,21 @@ def getPublicID(row):
 def getPrivateID(row):
     if(row.KGH_id):
         return(helpers.interpretID(row.rawID))
-    else:
-        dupe_id = re.search("(.+)(\.\d)(.+)", row.id)
-        # Assuming "id.2" is the same person as "id"
-        if(dupe_id):
-            return(dupe_id[1] + dupe_id[3])
-        return(row.id)
+    # else:
+    #     dupe_id = re.search("(.+)(\.\d)(.+)", row.id)
+    #     # Assuming "id.2" is the same person as "id"
+    #     if(dupe_id):
+    #         return(dupe_id[1] + dupe_id[3])
+    return(row.id)
 
 # Experiment IDs should be unique... so adding back in .2 if it's a longitudinal sample.
 
 
 def getExptID(row, expt_stub="LASV_seq_"):
-    dupe_id = re.search("(.+)(\.\d)(.+)", row.id)
-    # Assuming "id.2" is the same person as "id"
-    if(dupe_id):
-        return(expt_stub + row.patientID + dupe_id[2])
+    # dupe_id = re.search("(.+)(\.\d)(.+)", row.id)
+    # # Assuming "id.2" is the same person as "id"
+    # if(dupe_id):
+    #     return(expt_stub + row.patientID + dupe_id[2])
     return(expt_stub + row.patientID)
 
 
