@@ -76,22 +76,14 @@ def getInfectionYear(row):
     elif(discharge_date == discharge_date):
         return(discharge_date)
 
-def calcOnset(row):
+def calcOnsetDate(row):
     """
     calculate daysOnset-- the difference b/w presentation of symptoms and presentation in the hospital.
     Should be run after evaldate and infectionDate convert their respective variables to python dates
     """
-    if((row.converted_evalDate == row.converted_evalDate) & (row.converted_onsetDate == row.converted_onsetDate)):
-        return((row.converted_evalDate - row.converted_onsetDate).days)
-    elif((row.IllnessOnset == row.IllnessOnset)):
-        # Some of the IllnessOnset seem to be b/w 0-60-- presumably these are already daysOnset (?)
-        # For these observations, converted_onsetDate is None
-        try:
-            ordinal = int(row.IllnessOnset)
-            if(ordinal < 61):
-                return(ordinal)
-        except:
-            return(None)
+    if((row.daysOnset == row.daysOnset) & (row.converted_evalDate == row.converted_evalDate)):
+        return(row.converted_evalDate - timedelta(days = row.daysOnset))
+    return(pd.np.datetime64('NaT'))
 
 def calcHospitalStay(row):
     """

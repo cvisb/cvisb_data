@@ -32,20 +32,20 @@ def cleanDistrict(district):
         # standardize case
         district = district.title().strip()
         if district in adm2:
-            return(district)
+            district_clean = district
 
         if district in ["Bombabi"]:
-            return('Bombali')
+            district_clean = 'Bombali'
         if district in ["Bonth", "Bouthe"]:
-            return('Bonthe')
+            district_clean = 'Bonthe'
 
         if district in ["Kailahum", "Kailahunb", "Kailahim", "Kailuahun"]:
-            return('Kailahun')
+            district_clean = 'Kailahun'
 
         if district in ["Kernema", "Ken", "Kenem", "Kenenma"]:
-            return('Kenema')
+            district_clean = 'Kenema'
         if district in ["Koinadu"]:
-            return('Koinadugu')
+            district_clean = 'Koinadugu'
         #     return("Bo")
         #     # return('Kambia')
         #  return('Kono')
@@ -53,14 +53,15 @@ def cleanDistrict(district):
          # return('Port Loko')
          # return('Pujehun')
         if district in ["Tokolili", "Tonkilili"]:
-             return('Tonkolili')
-        if district in ["Western Rural"]:
-            return('Western Area Rural')
-        if district in ["Western", "Western Area", "Westen Area"]:
-            return('Western Area Urban')
-
+             district_clean = 'Tonkolili'
+        # if district in ["Western Rural"]:
+        #     return('Western Area Rural')
+        # if district in ["Western", "Western Area", "Westen Area"]:
+        #     return('Western Area Urban')
         else:
-            return(district)
+            district_clean = district
+        if district_clean in adm2:
+            return( {'administrativeType': 'district', 'administrativeUnit': 2,'name': district_clean})
     else:
         return(pd.np.nan)
 
@@ -73,10 +74,6 @@ def cleanDistrict(district):
         #     }]
         #     )
         # return([{
-        # 'administrativeType': 'district',
-        # 'administrativeUnit': 2,
-        # 'name': district.title()
-        # }])
 
 # df['district'] = df.District.apply(cleanDistrict)
 #

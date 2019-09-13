@@ -21,23 +21,23 @@
 #               2. `python compile_patient_roster.py`
 
 import pandas as pd
+from datetime import datetime
 
 import config
 import acute_patients as acute
 import survivors
+import extra_ids
 import helpers
-from datetime import datetime
-
 
 # Main function to stitch together the patients.
-def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, output_survivorRoster, output_survivorRosterWeirdos,
+def compile_patients(output_patients, input_extra_ids, output_extraIDs_weirdos, input_survivor_ids, output_allSurvivors, output_survivorRoster, output_survivorRosterWeirdos,
                      input_ebolaSurvivor, output_ebolaSurvivor, output_ebolaSurvivorWeirdos,
                      input_lassaAcute, input_lassaAcute_ids,
                      output_lassaAcute, output_lassaAcute_ids, output_lassaAcuteWeirdos, output_lassaAcuteWeirdos_ids,
                      export_cols, dict_cols, dateModified = datetime.today().strftime('%Y-%m-%d')):
     print('Compiling CViSB patients...')
 
-    # --- acute Lassa ---
+    # --- acute Lassa ---s
     # (1) call acute_patients to get the acute IDs
     acuteLassa = acute.clean_lassa_acute(input_lassaAcute, input_lassaAcute_ids,
                                          output_lassaAcute, output_lassaAcute_ids,
@@ -53,9 +53,12 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
         input_survivor_ids, input_ebolaSurvivor, output_allSurvivors,
         output_survivorRoster, output_survivorRosterWeirdos, output_ebolaSurvivor, output_ebolaSurvivorWeirdos)
 
-    # --- concat together all data and assign primary patient ids ---
-    merged = merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified)
-    merged['species'] = "Homo sapiens" # Everyone is human!
+    # --- leftover IDs ---
+    # (4) call additional ids -- extra ones that don't appear in other places.
+    extra = extra_ids.clean_extra_ids(input_extra_ids, output_extraIDs_weirdos)
+
+# --- concat together all data and assign primary patient ids ---
+    merged = merge_patients(acuteLassa, acuteEbola, survivorsAll, extra, dateModified)
 
     merged.to_csv(output_patients + "_ALL.csv", index = False)
     merged.to_json(output_patients + "_ALL.json", orient="records")
@@ -63,13 +66,16 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
     # --- export data ---
     # remove any patient IDs that are NA-- no identifier to use!
     # Also removing any row that has an issue that needs to be resolved by Tulane.
-    df2export = helpers.removeIssues(merged, "patients")
+    # df2export = helpers.removeIssues(merged, "patients")
+    # 2019-09-13: less conservatively: just removing anything which has a duplicated or NA patientID
+    df2export = merged[(~merged.duplicated(subset="patientID", keep=False)) & (~merged.patientID.isnull())]
     df2export = df2export[df2export.patientID == df2export.patientID]
 
     # Export just the transformed values to be uploaded to ES -- handled in the main function.
     # df2export = df2export.iloc[0:5]
     df2export[export_cols].to_json(output_patients + ".json", orient="records")
-    df2export.to_csv(output_patients + ".csv", index = False)
+    df2export[export_cols].sample(25).to_json(output_patients + "_randomsample.json", orient="records")
+    df2export[export_cols].to_csv(output_patients + "_clean.csv", index = False)
     # df2export[export_cols].to_csv(output_patients + ".csv", index = False)
 
     df_dict, _ = helpers.createDict(
@@ -79,15 +85,15 @@ def compile_patients(output_patients, input_survivor_ids, output_allSurvivors, o
 
     return(merged)
 
-
-def merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified):
+def merge_patients(acuteLassa, acuteEbola, survivorsAll, extra, dateModified):
     """
     Merges together all the disparate data sources and assigns their primary IDs.
 
-    First: concat together acute patients: Lassa + Ebola. These should have no overlap (in theory)
+    1. concat together acute patients: Lassa + Ebola. These should have no overlap (in theory)
     Double-check there are no duplicates within them.
-    Find primary ID, then join.
-    Joining rather than concatenating, since need to combine acute and survivor data.
+    2. Join and check acute and survivors.  Check for overlaps, etc.
+    3. Merge in extra IDs. Check for disagreements.
+    4. Do a bit of tidying up
     """
     acute = pd.concat([acuteLassa, acuteEbola], ignore_index=True)
 
@@ -99,10 +105,64 @@ def merge_patients(acuteLassa, acuteEbola, survivorsAll, dateModified):
 
     merged = merge_function(acute, survivorsAll)
 
-    merged = cleanup_merged(merged, dateModified)
 
-    return(merged)
+    merged['patientID'] = merged.apply(assign_publicID, axis=1)
 
+    # Merge in extra IDs
+    merged2 = mergeExtraIDs(merged, extra)
+    merged2 = helpers.idDupes(merged2, idCol="patientID", errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
+    merged2 = cleanup_merged(merged2, dateModified)
+
+    return(merged2)
+
+
+def mergeExtraIDs(merged, extra, varsInCommon=['cohort', 'outcome', 'patientID', 'countryName']):
+    print("\nBeginning merge together of extra ids.")
+    print(f"\n{len(merged)} patients initially")
+
+    merged['gID_string'] = merged.gID.apply(getGString)
+    extra.rename(columns= {'gID': 'gID_string'}, inplace = True)
+    merged.drop(["cohort_x", "cohort_y", "outcome_x", "outcome_y", 'countryName_x', 'countryName_y'], axis=1, inplace=True)
+    merged2 = pd.merge(merged, extra, on='gID_string', how="outer")
+
+        # Combine together gIDs
+    merged2['gID'] = merged2.apply(lambda x: helpers.combineIDs(x, columns=["gID", "gID_string"]), axis=1)
+        # unnest GiDs
+        # merged2['gID'] = merged2.gID.apply(unnestGIDs)
+    merged2.drop(["gID_string"], axis = 1, inplace = True)
+
+    merged2.fillna(value=pd.np.nan, inplace=True)
+    merged2['mergeIssue']= ""
+
+    combined = helpers.checkMerge2(merged2,
+                                mergeCols2Check= varsInCommon,
+                                df1_label="acute patient data", df2_label="survivor data ((ACUTE-SURVIVOR MERGE))",
+                                mergeCol="additional IDs", dropMerge=False,
+                                errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
+    print(f"\n{len(combined)} patients after merge w/ extra IDs")
+
+    combined['alternateIdentifier'] = None # necessary to initialize, b/c there's an uneven number of IDs for each patient returned
+    combined['alternateIdentifier'] = combined.apply(lambda x: helpers.combineIDs(x, columns=["gID", "sID", "publicGID", "publicSID", "patientID"]), axis=1)
+    return(combined)
+
+
+def getGString(gids):
+    try:
+        return(gids[0])
+    except:
+        return(pd.np.nan)
+
+def combineGIDs(row):
+    res = []
+    if(type(row.gID) == "list"):
+        res = row.gID.copy()
+    res.append(row.gID_string)
+    res = pd.np.unique(res)
+    return([res])
+
+def unnestGIDs(arr):
+    if(type(arr) == "list"):
+        lambda l: [item for sublist in l for item in sublist]
 
 def cleanup_merged(df, dateModified):
     """
@@ -113,30 +173,29 @@ def cleanup_merged(df, dateModified):
 
     # indicate the source of the patient data
     df['_source'] = "Tulane_JS"
+    df['species'] = helpers.convertSpecies("human") # Everyone is human!
 
     # Set the primary public ID
-    df['patientID'] = df.apply(assign_publicID, axis=1)
+    # df['patientID'] = df.apply(assign_publicID, axis=1)
     # Pull out the country name from the country object
     df['country'] = df.countryName.apply(helpers.getCountry)
+
+    # hack for now... admin2 isn't merging properly.
+    df['admin2'] = df.homeLocation.apply(getAdmin2)
     # Double check the gIDs are saved as an array, since they need to be an array for ES
     # df['gID'] = df.gID.apply(helpers.listify)
 
     # Double check that all Genders exist; it's required to be either Male, Female, or Unknown
     # For patients with IDs but no metadata/data, this info is missing... so subsitute w/ Unknown
     df['gender'] = df.gender.apply(helpers.convertGender)
-
-    df['alternateIdentifier'] = None # necessary to initialize, b/c there's an uneven number of IDs for each patient returned
-    df['alternateIdentifier'] = df.apply(
-        lambda x: helpers.combineIDs(x), axis=1)
+    df['cohort'] = df.cohort.apply(helpers.cleanCohort)
+    df['outcome'] = df.outcome.apply(helpers.cleanOutcome)
 
     # Fix dates to date ranges
     df['infectionDate'] = df.infectionDate.apply(helpers.date2Range)
     # df['infectionYear'] = df.infectionYear.apply(helpers.year2Range)
 
-    df = helpers.idDupes(df, idCol="patientID", errorMsg="((ACUTE-SURVIVOR MERGE)): Duplicate patientID")
-
     return(df)
-
 
 def assign_publicID(row):
     """
@@ -148,8 +207,7 @@ def assign_publicID(row):
         return(row.publicGID)
     return(row.publicSID)
 
-
-def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["cohort", "outcome", "age","gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID"]):
+def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["cohort", "outcome", "age","gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID", "admin2", "homeLocation"]):
     """
     Workhorse to combine together acute and survivor datasets.
 
@@ -216,9 +274,15 @@ def combineIssues(row, issueCol = "issue", mergeIssueCol = "mergeIssue"):
 def check_coverage():
     return()
 
+# Hack for now
+def getAdmin2(homeLocation):
+    try:
+        return(homeLocation[0])
+    except:
+        return(pd.np.nan)
 
 if __name__ == '__main__':
-    compile_patients(config.output_patients, config.input_survivor_ids, config.output_allSurvivors, config.output_survivorRoster, config.output_survivorRosterWeirdos,
+    compile_patients(config.output_patients, config.input_extra_ids, config.output_extraIDs_weirdos, config.input_survivor_ids, config.output_allSurvivors, config.output_survivorRoster, config.output_survivorRosterWeirdos,
                      config.input_ebolaSurvivor, config.output_ebolaSurvivor,
                      config.output_ebolaSurvivorWeirdos,
                      config.input_lassaAcute, config.input_lassaAcute_ids,

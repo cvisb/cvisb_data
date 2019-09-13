@@ -22,7 +22,7 @@ def clean_ebola_survivors(ids, filename, export_filename, export_weirdos, errorC
 
     # --- merge in public IDs ---
     # Left join IDs (all survivors) to df (just the Ebola ones)
-    df_merged = helpers.mergeByPublicIDs(df, ids, on=["publicSID"])
+    df_merged = helpers.mergeByPublicIDs(df, ids, on=["publicSID"], mergeCols2Check=["gID", "sID", "alternateIdentifier", "outcome", "cohort", "gender"])
 
     # --- Checks to identify strange values ---
     df_merged = runChecks(df_merged, df_raw)
@@ -78,6 +78,7 @@ def cleanESurvivors(df):
     df['gender'] = df.gender.apply(helpers.convertGender)
 
     # --- cohort ---
+    df['cohort'] = "Ebola"
     # outcome assumed to be survivor if S-number; contact if C-number
     df['outcome'] = df["ID number"].apply(helpers.assignOutcome)
 

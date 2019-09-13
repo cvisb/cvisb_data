@@ -11,14 +11,16 @@ def convertBoolean(input):
     # Value is NA
     if(input != input):
         return(pd.np.nan)
-    if((input.lower == "n") | (input.lower == "no")):
+    if((input.lower() == "n") | (input.lower() == "no")):
         return(False)
-    if((input.lower == "y") | (input.lower == "yes")):
+    if((input.lower() == "y") | (input.lower() == "yes")):
         return(True)
 
 # convert gender to M/F
 def convertGender(gender):
     if(gender == gender):
+        if(isinstance(gender, list)):
+            return("Unknown")
         if((gender.lower() == 'm') | (gender.lower() == "male")):
             return("Male")
         elif((gender.lower() == 'f') | (gender.lower() == 'female')):
@@ -43,6 +45,8 @@ def convertSpecies(species):
 # --- cohort ---
 def cleanCohort(input):
     if(input != input):
+        return("Unknown")
+    if(isinstance(input, list)):
         return("Unknown")
     if(re.search("Lassa", input.title())):
         return("Lassa")
@@ -75,7 +79,8 @@ def cleanOutcome(input):
     # Value is NA; collapse to unknown
     if(input != input):
         return('unknown')
-
+    if(isinstance(input, list)):
+        return("unknown")
     outcome = input.lower()
     # outcome looks good; just pass it through
     if((outcome == "contact") | (outcome == "control")):
