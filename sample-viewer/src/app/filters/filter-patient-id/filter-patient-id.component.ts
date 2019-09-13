@@ -115,8 +115,10 @@ export class FilterPatientIdComponent implements OnInit {
     let parsed = input.term.split("\,");
 
     if (parsed.length > 1) {
+      console.log(parsed)
       parsed = parsed.filter(d => d.length > 0);
-      parsed.forEach((d: string) => d.trim());
+      parsed = parsed.map((d: string) => d.trim());
+      console.log(parsed)
 
       // check that selected patients exists before concatting
       if (!this.selectedPatients) {
