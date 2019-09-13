@@ -62,7 +62,7 @@ def clean_extra_ids(file, output_file):
 
     if(len(dupes) > 0):
         print(f"{len(dupes)} duplicate public IDs found in additional roster!  Being removed")
-        dupes.to_csv(output_file, index=False)
+        dupes.to_csv(output_file + ".csv", index=False)
     extra_ids = df_unique[~df_unique.duplicated(subset=["patientID"], keep=False)]
 
     return(extra_ids)
