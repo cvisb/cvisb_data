@@ -26,6 +26,7 @@ export class Patient {
   elisa?: ELISA[];
   pregnant: boolean;
   species: string;
+  admin2: Object;
   occupation: string;
   symptoms?: Object[];
   sID?: string;
@@ -45,6 +46,7 @@ export class PatientDownload {
   contactGroupIdentifier?: string;
   contactSurvivorRelationship?: string;
   country?: string;
+  admin2?: string;
   dateModified?: string;
   elisa?: string;
   exposureType?: string;
@@ -82,6 +84,7 @@ export class PatientDownload {
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
     this.country = patient.country['name'];
+    this.admin2 = patient.admin2['name'];
     this.species = patient.species;
     this.gender = patient.gender;
     this.age = patient.age;
