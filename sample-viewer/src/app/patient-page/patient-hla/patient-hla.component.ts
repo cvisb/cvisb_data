@@ -47,6 +47,7 @@ export class PatientHlaComponent implements OnChanges {
 
       if (hla_data.length > 0) {
         this.genotype = hla_data.map((d: any) => d.allele);
+        console.log(this.genotype)
       } else {
         this.genotype = null;
       }

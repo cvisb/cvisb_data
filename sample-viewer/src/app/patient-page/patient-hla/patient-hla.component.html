@@ -10,8 +10,11 @@
     <div class="hla-genotype">
       <h5 class="patient-data">data</h5>
 
-      <div class="updated">
+      <div class="publisher" *ngIf="genotype.publisher">
         updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+      </div>
+      <div class="updated">
+        sequencing institution: {{genotype.publisher.name}}
       </div>
 
       <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">

@@ -48,7 +48,7 @@ export class GetHlaDataService {
   getHLAdata(patientID?: string): Observable<Object[]> {
     let params = new HttpParams()
       .set("q", 'measurementTechnique:"HLA sequencing"')
-      .set("fields", "data");
+      .set("fields", "data, publisher");
 
     if (patientID) {
       params = params.append("patientID", `"${patientID}"`);
@@ -59,7 +59,14 @@ export class GetHlaDataService {
       map((res: ESResponse) => {
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
+        console.log(res['hits'])
+
+        let arr1 = [1, 2, 3, 4];
+        arr1.flatMap(x => [x * 2]);
+        console.log(arr1)
+
         let data = res['hits'].flatMap(d => d.data).filter(d => d);
+        
         return (data)
       }
       ))
