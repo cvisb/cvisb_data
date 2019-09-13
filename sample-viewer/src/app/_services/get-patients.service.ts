@@ -130,9 +130,6 @@ export class GetPatientsService {
             patient['availableData'] = patientExpts;
           })
 
-          console.log(patientResults)
-          console.log(expts)
-
           return ({ hits: patients, total: patientResults['body']['total'] });
         }),
         catchError(e => {
