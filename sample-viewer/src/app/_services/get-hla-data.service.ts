@@ -113,10 +113,10 @@ export class GetHlaDataService {
             this.patientTypeSubject.next(patientTypes);
 
             // --- unique alleles ---
-            this.getAlleleCounts(hla_data);
+            this.getAlleleCounts(hla_data['data']);
 
             // --- unique alleles ---
-            this.getUniqueCounts(hla_data);
+            this.getUniqueCounts(hla_data['data']);
           })
         )))
   }
