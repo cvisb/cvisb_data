@@ -27,7 +27,8 @@ export class FileListComponent implements OnInit {
   anything_selected: boolean;
   qParams: HttpParams;
   selectedRow;
-  displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download', 'metadata'];
+  displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
+  // displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download', 'metadata'];
   dataSource: DownloadsDataSource;
 
   id2MeasurementTechnique: Object = {

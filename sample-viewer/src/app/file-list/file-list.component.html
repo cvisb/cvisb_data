@@ -11,8 +11,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">File</th>
       <td mat-cell *matCellDef="let element">
-        <a [href]="element.contentUrl" (click)="selectFile($event, element)" target="_blank" rel="noreferrer"
-        [matTooltip]="'download ' + element.name">{{element.name}}</a>
+        <a [href]="element.contentUrl" (click)="selectFile($event, element)" target="_blank" rel="noreferrer" [matTooltip]="'download ' + element.name">{{element.name}}</a>
       </td>
     </ng-container>
 
@@ -38,22 +37,21 @@
     <ng-container matColumnDef="download">
       <th mat-header-cell *matHeaderCellDef>Download</th>
       <td mat-cell *matCellDef="let element">
-        <a [href]="element.contentUrl" *ngIf="element.contentUrl && element.contentUrl !== ''"
-        (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
+        <a [href]="element.contentUrl" *ngIf="element.contentUrl && element.contentUrl !== ''" (click)="selectFile($event, element)" target="_blank" rel="noreferrer">
           <button class="small-icon download-btn" type="button" aria-label="download" [matTooltip]="'download ' + element.name">
-          <mat-icon aria-label="download">cloud_download</mat-icon>
-        </button>
+            <mat-icon aria-label="download">cloud_download</mat-icon>
+          </button>
         </a>
       </td>
     </ng-container>
 
     <!-- Metadata Column -->
-    <ng-container matColumnDef="metadata">
+    <!-- <ng-container matColumnDef="metadata">
       <th mat-header-cell *matHeaderCellDef>File properties</th>
       <td mat-cell *matCellDef="let element">
-<a (click)="selectRow(element)">show metadata</a>
+        <a (click)="selectRow(element)">show metadata</a>
       </td>
-    </ng-container>
+    </ng-container> -->
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
