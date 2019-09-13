@@ -21,7 +21,6 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 // --- services ---
 import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatasetResolver } from '../_services/get-datasets.resolver';
-import { HlaResolver } from '../_services/hla.resolver';
 
 @NgModule({
   imports: [
@@ -40,8 +39,7 @@ import { HlaResolver } from '../_services/hla.resolver';
   ],
   providers: [
     MyHttpClient,
-    DatasetResolver,
-    HlaResolver
+    DatasetResolver
   ]
 })
 
