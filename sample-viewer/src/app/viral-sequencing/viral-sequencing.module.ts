@@ -17,6 +17,12 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 // import { DownloadAlignedSequencesComponent } from './download-aligned-sequences/download-aligned-sequences.component';
 // import { CompareCohortsComponent } from './compare-cohorts/compare-cohorts.component'
 
+
+// --- services ---
+import { MyHttpClient } from '../_services/http-cookies.service';
+import { DatasetResolver } from '../_services/get-datasets.resolver';
+import { HlaResolver } from '../_services/hla.resolver';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -31,6 +37,11 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
     // SvgIconComponent,
     // DownloadAlignedSequencesComponent,
     // CompareCohortsComponent
+  ],
+  providers: [
+    MyHttpClient,
+    DatasetResolver,
+    HlaResolver
   ]
 })
 

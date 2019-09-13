@@ -22,7 +22,6 @@ export class DatasetComponent implements OnInit {
     private titleSvc: Title,
     private route: ActivatedRoute
   ) {
-    console.log("LOADING DATASET COMPONENT")
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
