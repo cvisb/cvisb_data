@@ -6,8 +6,7 @@
 
 .Control,
 .control {
-  fill: $grey-350;
-  stroke: $grey-500;
+  fill: $grey-500;
 }
 
 path.Control,
@@ -102,7 +101,7 @@ text.unknown {
     }
   }
 
-  &.Unknown {
+  &.Control {
     stroke: $grey-600;
     fill: none;
 
