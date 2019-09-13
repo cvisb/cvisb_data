@@ -1,6 +1,11 @@
 <h4 class="patient" id="demographics">demographics</h4>
 
-<div>
+<div class="species" *ngIf="patient.species">
+  <span class="variable-label">species: </span>
+  <span class="variable-value">{{patient.species}}</span>
+</div>
+
+<div class="sex">
   <span class="variable-label">sex: </span>
   <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender }}</span>
   <!-- <span class="sex" [ngClass]="patient.gender">
