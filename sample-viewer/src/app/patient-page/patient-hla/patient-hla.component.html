@@ -12,8 +12,8 @@
 
 
       <div class="publisher" *ngIf="publishers">
-        sequencing institution:
-        <span *ngFor="let publisher of publishers">{{publisher.name}}</span>
+        <span class="variable-label">sequencing institution: </span>
+        <span class="variable-value" *ngFor="let publisher of publishers">{{publisher.name}}</span>
       </div>
 
       <div class="updated">
