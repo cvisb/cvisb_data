@@ -21,8 +21,8 @@ export class SmallMultipleComparisonComponent implements OnChanges {
 
 
   constructor(private hlaSvc: GetHlaDataService) {
-    hlaSvc.getHLAdata().subscribe((res: HLA[]) => {
-      this.HLA_DATA = res;
+    hlaSvc.getHLAdata().subscribe((res: Object) => {
+      this.HLA_DATA = res['data'];
 
       if (this.left_params) {
         this.left = this.filterData(this.HLA_DATA, this.left_params);

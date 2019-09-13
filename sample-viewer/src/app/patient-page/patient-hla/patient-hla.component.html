@@ -10,11 +10,14 @@
     <div class="hla-genotype">
       <h5 class="patient-data">data</h5>
 
-      <div class="publisher" *ngIf="genotype.publisher">
-        updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+
+      <div class="publisher" *ngIf="publishers">
+        sequencing institution:
+        <span *ngFor="let publisher of publishers">{{publisher.name}}</span>
       </div>
+
       <div class="updated">
-        sequencing institution: {{genotype.publisher.name}}
+        updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
       </div>
 
       <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">
@@ -27,7 +30,8 @@
               <div class="locus" (mouseover)="sendLocus($event, locus.key)">
                 {{ locus.key }}
               </div>
-              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}" (mouseover)="sendAllele($event, allele)" (mouseout)="clearAllele()">
+              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}"
+                (mouseover)="sendAllele($event, allele)" (mouseout)="clearAllele()">
                 {{ allele }}
               </div>
             </div>

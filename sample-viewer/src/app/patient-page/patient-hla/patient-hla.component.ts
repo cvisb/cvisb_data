@@ -19,6 +19,7 @@ export class PatientHlaComponent implements OnChanges {
   selectedLocus: string;
   selectedAllele: string;
   backgroundColor: string;
+  publishers: Object[];
 
   @Input() files: any[];
 
@@ -43,11 +44,12 @@ export class PatientHlaComponent implements OnChanges {
 
   ngOnChanges() {
     this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
-      let hla_data = res;
+      console.log(res)
+      let hla_data = res['data'];
+      this.publishers = res['publisher'];
 
       if (hla_data.length > 0) {
         this.genotype = hla_data.map((d: any) => d.allele);
-        console.log(this.genotype)
       } else {
         this.genotype = null;
       }
