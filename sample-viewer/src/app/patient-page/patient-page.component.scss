@@ -1,6 +1,6 @@
 @import '../../sass/variables.scss';
-@import '../../sass/material-theme.scss';
-// --- structural elements ---
+@import '../../sass/material-theme.scss'; // --- structural elements ---
+
 .patient-header {
   flex: 100%;
   max-width: 1150px;
@@ -12,18 +12,27 @@
 .patient-container {
   display: flex;
   flex: 1;
+  min-height: 700px;
 }
 
 .patient-content {
   flex: 1;
+  margin-left: 9.5em;
 }
 
-.patient-nav{
+.patient-nav {
   flex: 0 0 12em;
   order: -1;
-  margin: -18px 2em -18px -63px;
-  padding-top: 149px;
-   // 18+98+27+22-16;
+  // margin: -18px 2em -18px -63px;
+  // padding-top: 149px;
+  // 18+98+27+22-16;
+  padding-top: 225px;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 12em;
+  overflow-x: hidden;
 }
 
 .patient-metadata {
@@ -33,8 +42,8 @@
 .patient-demographics {
   justify-content: space-between;
 }
-
 // --- right side nav pane ---
+
 .patient-nav {
   &.Ebola {
     background: lighten($ebola-md, 28%);
@@ -46,12 +55,16 @@
     border: none;
   }
 
-  &.control {
+  &.Control {
+    background: $grey-50;
+  }
+
+  &.Unknown {
     background: $grey-50;
   }
 }
-
 // --- Patient ID title ---
+
 .page-header {
   margin-bottom: 0;
 
@@ -67,13 +80,20 @@
     -webkit-text-stroke-width: 1px;
   }
 
-  &.control {
+  &.Control {
     color: $grey-300;
     -webkit-text-stroke-color: $grey-400;
     -webkit-text-stroke-width: 1px;
   }
+
+  &.Unknown {
+    color: $grey-400;
+    -webkit-text-stroke-color: $grey-600;
+    -webkit-text-stroke-width: 1px;
+  }
 }
 // --- fonts ---
+
 .cohort-group {
   font-size: 1.35em;
 }

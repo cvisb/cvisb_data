@@ -90,7 +90,7 @@ export class ApiService {
 
 
   getMultipleRequests(endpoint, qParamArray, sortVar: string = "", sortDirection?: string): Observable<any> {
-    console.log(qParamArray)
+    // console.log(qParamArray)
     let batchOfRequests = qParamArray.map(qParams =>
       this.getSorted(endpoint, qParams, sortVar, sortDirection)
         .pipe(
@@ -119,7 +119,7 @@ export class ApiService {
     //     queryParamsHandling: "merge", // remove to replace all query params by provided
     //   });
 
-    console.log(qParams.toString());
+    // console.log(qParams.toString());
 
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
@@ -137,7 +137,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return (res["body"])
       }
       )
@@ -205,7 +205,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return (res["body"])
       }
       )
@@ -227,7 +227,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return (res["body"])
       }
       )
@@ -258,7 +258,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return (res["body"])
       }
       )
@@ -266,47 +266,45 @@ export class ApiService {
   }
 
   // Generic getAll, which calls fetchAll. Results will not be sorted.
-  getAll(endpoint: string, qString) {
-    console.log('starting get all')
-    let scrollID = null;
-    let done = false;
-
-    let results = [];
-
-    for (let i = 0; i < 3; i++) {
-      // while (!done) {
-      console.log("still going!")
-      console.log(i);
-
-      this.fetchAll(endpoint, qString, scrollID).pipe(
-        catchError(e => {
-          console.log('error!')
-          console.log(e)
-          done = true;
-          return (new Observable<any>())
-        }),
-        // finalize(() => this.loadingSubject.next(false))
-      )
-        .subscribe((result) => {
-          console.log('samples from call to backend')
-          done = true;
-          console.log(result);
-
-          // Remove ES variables that we won't need.
-          let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
-          scrollID = result['_scroll_id'];
-
-          results = results.concat(resultArr);
-          console.log(results)
-          console.log(results.length / result.total);
-
-        });
-    }
-
-    return (results)
-
-
-  }
+  // getAll(endpoint: string, qString) {
+  //   // console.log('starting get all')
+  //   let scrollID = null;
+  //   let done = false;
+  //
+  //   let results = [];
+  //
+  //   for (let i = 0; i < 3; i++) {
+  //     // while (!done) {
+  //     console.log("still going!")
+  //     console.log(i);
+  //
+  //     this.fetchAll(endpoint, qString, scrollID).pipe(
+  //       catchError(e => {
+  //         console.log('error!')
+  //         console.log(e)
+  //         done = true;
+  //         return (new Observable<any>())
+  //       }),
+  //       // finalize(() => this.loadingSubject.next(false))
+  //     )
+  //       .subscribe((result) => {
+  //         console.log('samples from call to backend')
+  //         done = true;
+  //         console.log(result);
+  //
+  //         // Remove ES variables that we won't need.
+  //         let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
+  //         scrollID = result['_scroll_id'];
+  //
+  //         results = results.concat(resultArr);
+  //         console.log(results)
+  //         console.log(results.length / result.total);
+  //
+  //       });
+  //   }
+  //
+  //   return (results)
+  // }
 
   fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
 

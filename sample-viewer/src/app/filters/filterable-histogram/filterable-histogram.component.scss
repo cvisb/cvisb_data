@@ -75,10 +75,11 @@
   }
 
   .slider-checkbox {
-    cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1.2em;
     dominant-baseline: ideographic;
     fill: $sierraleone-blue;
+    text-anchor: middle;
+    font-family: "Font Awesome 5 Free";
   }
 
   .selected {
@@ -86,3 +87,5 @@
     stroke: primary(600);
   }
 }
+
+.windsor-value {}

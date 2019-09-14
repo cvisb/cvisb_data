@@ -15,13 +15,13 @@ export class GetDatacatalogService {
   cvisbCatalog: Object;
   releaseNotes: ReleaseNote[] = [
     {
-      dateReleased: "2019-06-12",
+      dateReleased: "2019-09-15",
       version: "0.1.0",
       notes: [
         {
           endpoint: "Data",
           note: ["Initial publication of HLA data",
-            "Initial publication of Lassa and Ebola viral sequencing data"
+            "Initial publication of aligned Lassa viral sequencing data"
           ]
         },
         {

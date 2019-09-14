@@ -1,0 +1,69 @@
+<!-- <h3 id="summary">Data summary</h3> -->
+<div class="container hla-summary-container" *ngIf="clientSide">
+
+  <div class="container left-container">
+    <div class="patient-count-container">
+      <span class="patient-count summary-item">
+        <div class="num-patients">{{ patientCount }}</div>
+        <div class="annot--patients">patients sequenced:</div>
+      </span>
+
+      <app-filter-patient-type [viruses]="patientTypes" [outcomes]="patientOutcomes"
+      [all_outcomes]="[]" [all_cohorts]="[]" [filterable]="false" [horizontal] = "true"
+      endpoint="none" class="summary-item"></app-filter-patient-type>
+    </div>
+
+  </div>
+
+
+  <div class="circle-packing container"  *ngIf="alleleCount && alleleCount.length > 0">
+    <div class="main-graph">
+      <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
+    </div>
+
+    <div class="sidebar">
+
+      <div class="container-column">
+        <div class="plot-title">
+          Number of <b>Unique</b> Alleles
+        </div>
+
+        <div class="item-group">
+          <div class="item bar-graph">
+            <app-allele-bar [data]="alleleCount"></app-allele-bar>
+          </div>
+          <div class="item">
+            <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="unique-alleles"></app-allele-circle-packing>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-column">
+        <div class="plot-title">
+          Number of <b>Novel</b> Alleles
+          <div class="subtitle">
+            Relative to the <a href="https://www.ebi.ac.uk/ipd/imgt/hla/" rel="noreferrer" target="_blank">IPD-IMGT/HLA Database</a>
+          </div>
+        </div>
+
+        <div class="item-group">
+          <div class="item bar-graph">
+            <app-allele-bar [data]="novelAlleles"></app-allele-bar>
+          </div>
+          <div class="item">
+            <app-allele-circle-packing [data]="alleleCount" [scale]="0.48" class="novel-alleles"></app-allele-circle-packing>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Outdated basic graphs -->
+  <!-- <ng-container *ngFor="let locus of alleleCount">
+    <app-allele-hist [data]="locus.values"></app-allele-hist>
+  </ng-container> -->
+
+  <!-- <app-allele-count [data]="alleleCount" class="summary-item"></app-allele-count> -->
+  <!-- <app-novel-alleles [data]="novelAlleles" class="summary-item"></app-novel-alleles> -->
+</div>

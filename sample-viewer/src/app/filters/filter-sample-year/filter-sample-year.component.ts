@@ -28,14 +28,10 @@ export class FilterSampleYearComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data)
   }
 
 
   filterHandler(params, filterSvc, requestSvc, endpoint) {
-    console.log("Calling filter handler in years!")
-    console.log(params)
-
     // ES query strings: to get range (inclusive of endpoints), use `[ lower TO upper ]`
     // For including unknown infectionYears, run `_exists` to get anything with a non-null value.
     // `-` negates that query

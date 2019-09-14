@@ -1,6 +1,6 @@
 <header class="container cvisb-header" [ngClass]="prodEnvironment ? 'blue-gradient' : 'purple-gradient'" *ngIf="prodEnvironment === true || prodEnvironment === false">
   <div class="logo">
-    <a href="./" alt="home link">
+    <a routerLink="./home" alt="home link">
       <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo"/>
     </a>
     <div class="dev-warning" *ngIf="!prodEnvironment">

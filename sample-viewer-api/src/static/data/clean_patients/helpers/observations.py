@@ -1,3 +1,5 @@
+import numpy as np
+
 def binarize(val):
     if(val == val):
         if(val.lower() == "yes"):
@@ -72,7 +74,7 @@ def nestELISAs(row):
     # return(elisas)
     try:
         # survivor; timepoint = survivor enrollment
-        if(row['ebola IgG'] == row['ebola IgG']):
+        if((row['ebola IgG'] == row['ebola IgG']) & (row['ebola IgG'] is not None)):
             elisas.append({
                 "virus": "Ebola",
                 "assayType": "IgG",
@@ -83,10 +85,10 @@ def nestELISAs(row):
             elisas.append({
                 "virus": "Ebola",
                 "assayType": "IgG",
-                "ELISAresult": row['ebola IgG'],
+                "ELISAresult": np.nan,
                 "timepoint": "survivor enrollment"
             })
-        if(row['lassa IgG'] == row['lassa IgG']):
+        if((row['lassa IgG'] == row['lassa IgG']) & (row['lassa IgG'] is not None)):
             elisas.append({
                 "virus": "Lassa",
                     "assayType": "IgG",
@@ -97,12 +99,12 @@ def nestELISAs(row):
             elisas.append({
                 "virus": "Lassa",
                     "assayType": "IgG",
-                    "ELISAresult": row['lassa IgG'],
+                    "ELISAresult": np.nan,
                     "timepoint": "survivor enrollment"
                     })
     except:
         # Acute; timepoint = patient admission
-        if((row['agvresultcc1'] == row['agvresultcc1'])):
+        if((row['agvresultcc1'] == row['agvresultcc1']) & (row['agvresultcc1'] is not None)):
             elisas.append(
                 {
                     "virus": "Lassa",
@@ -115,10 +117,10 @@ def nestELISAs(row):
             {
                 "virus": "Lassa",
                 "assayType": "Ag",
-                "ELISAresult": row['agvresultcc1'],
+                "ELISAresult": np.nan,
                 "timepoint": "patient admission"
             })
-        if((row['iggvresultcc1'] == row['iggvresultcc1'])):
+        if((row['iggvresultcc1'] == row['iggvresultcc1']) & (row['iggvresultcc1'] is not None)):
             elisas.append(
                 {
                     "virus": "Lassa",
@@ -131,10 +133,10 @@ def nestELISAs(row):
                 {
                     "virus": "Lassa",
                     "assayType": "IgG",
-                    "ELISAresult": row['iggvresultcc1'],
+                    "ELISAresult": np.nan,
                     "timepoint": "patient admission"
                 })
-        if((row['igmvresultcc1'] == row['igmvresultcc1'])):
+        if((row['igmvresultcc1'] == row['igmvresultcc1']) & (row['igmvresultcc1'] is not None)):
             elisas.append(
                 {
                     "virus": "Lassa",
@@ -147,7 +149,7 @@ def nestELISAs(row):
                 {
                     "virus": "Lassa",
                     "assayType": "IgM",
-                    "ELISAresult": row['igmvresultcc1'],
+                    "ELISAresult": np.nan,
                     "timepoint": "patient admission"
                 })
     return(elisas)

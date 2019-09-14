@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
+import { HttpParams } from '@angular/common/http';
+
 import { environment } from '../../environments/environment';
 
-import { GetPatientsService, ApiService } from '../_services'
-// import { RequestParamArray, RequestParam} from '../_models'
-//
-import SAMPLES from '../../assets/data/test_samples.json';
-import EXPTS from '../../assets/data/test_experiments.json';
-import DATASETS from '../../assets/data/dataset_public.json';
-import DOWNLOADS from '../../assets/data/test_datadownloads.json';
+import * as d3 from 'd3';
+
+import { ApiService, GetDatacatalogService } from '../_services';
+import { ReleaseNote } from '../_models';
 
 @Component({
   selector: 'app-home',
@@ -19,27 +19,95 @@ import DOWNLOADS from '../../assets/data/test_datadownloads.json';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  patientCount: number;
+  sampleCount: number;
+  experimentCount: Object[] = [];
+  releaseVersion: string;
+  cvisbCatalog: Object;
+  releaseNotes: ReleaseNote[];
 
-  cards: Object[] = [
-    { label: "Explore CViSB data", path: "dataset", description: "We will follow a strict release of open access data within two weeks of data generation.", warning: "CViSB-members only" },
-    { label: "View CViSB patients", path: "patient", description: "View and search metadata for all current patients", warning: "CViSB-members only", tbd: false },
-    { label: "View CViSB samples", path: "sample", description: "View and search location and metadata for all current samples", warning: "CViSB-members only" },
-    { label: "About CViSB", path: "about", description: "Learn more about the Center for Viral Systems Biology" },
-    { label: "Understand CViSB data", path: "documentation", description: "We know it's one thing to share data-- and another to make it FAIR. To improve the *findability* and *interoperability* of our data, we've created schemas for our dataset, patient, and experiment metadata built off of [schema.org](https://schema.org/)'s model.", tbd: false },
-    { label: "Add or update CViSB data", path: "upload", description: "Add or change the metadata for datasets, patients, and samples", warning: "CViSB-members only", tbd: true },
-
-  ];
+  // connection between measurementTechnique and /dataset/{dsid}
+  exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
 
 
-  constructor(private titleSvc: Title, private route: ActivatedRoute, private patientSvc: GetPatientsService, public apiSvc: ApiService) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private titleSvc: Title,
+    private route: ActivatedRoute,
+    private dataCatalogSvc: GetDatacatalogService,
+    public apiSvc: ApiService) {
+    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
+    if (this.cvisbCatalog) {
+      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
+    }
+    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
+
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;
     this.titleSvc.setTitle(title);
-
-
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      let patientParams = new HttpParams().set("q", "__all__");
+      let exptParams = new HttpParams()
+        .set("q", "__all__")
+        .set("facets", "measurementTechnique.keyword");
+
+      let transitionSync = d3.transition().duration(5000);
+
+      this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
+        this.patientCount = res['total'];
+
+        let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
+
+        patientDiv.transition(transitionSync)
+          // .duration(transitionTime)
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
+
+      this.apiSvc.get("sample", patientParams, 0).subscribe(res => {
+        this.sampleCount = res['total'];
+
+        let sampleDiv = d3.select("#sample").selectAll(".count-value");
+
+        sampleDiv.transition(transitionSync)
+          // .duration(transitionTime * (925/5039))
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
+
+      this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
+        this.experimentCount = res["facets"]["measurementTechnique.keyword"].terms;
+        this.experimentCount.forEach(d => {
+          d['link'] = this.exptDict[d['term']];
+        })
+
+        let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
+
+        dataDiv.transition(transitionSync)
+          // .duration(transitionTime * (312/5039))
+          .tween("text", function(_) {
+            let countMax = this['textContent'];
+            var i = <any>d3.interpolate(0, countMax);
+            return function(t) {
+              d3.select(this).text(Math.round(i(t)));
+            };
+          });
+      });
+
+    }
   }
 
 }

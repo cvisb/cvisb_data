@@ -37,16 +37,28 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      map(data => {
-        let datasets = data['body']['hits'];
-        // console.log(datasets)
+      mergeMap((ds_results: any) =>
+        this.apiSvc.get("experiment",
+          // new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
+          new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
+            .set("facets", "measurementTechnique.keyword"), 0).pipe(
+              map(expts => {
+                let datasets = ds_results['body']['hits'];
 
-        return (datasets)
+                datasets.forEach(dataset => {
+                  let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
+                  dataset["expt_count"] = cts[0]['count'];
+                })
 
-        // send new patients to subscription services.
-        // this.patientsSubject.next(this.patients);
-        // this.patientsSubject.next(patients);
-      }))
+                return (datasets)
+              }),
+              catchError(e => {
+                console.log(e)
+                throwError(e);
+                return (new Observable<any>())
+              })
+            )
+      ))
     // err => {
     //   console.log('Error in getting datasets')
     //   // console.log(err)

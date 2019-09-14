@@ -1,5 +1,13 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer, DOCUMENT } from '@angular/common';
+import {
+  Event,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router
+} from '@angular/router';
 
 import { AuthService } from './_services/auth.service';
 
@@ -21,6 +29,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 export class AppComponent {
   title = 'sample-viewer';
+  loading: boolean = false;
 
   links: Object[] = [
     { 'path': 'home', 'label': 'home', 'selected': true },
@@ -35,9 +44,29 @@ export class AppComponent {
     private authSvc: AuthService,
     @Inject(DOCUMENT) private doc: any,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router,
     private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
     angulartics2GoogleAnalytics.startTracking();
+
+    this.router.events.subscribe((event: Event) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.loading = true;
+          break;
+        }
+
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.loading = false;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    })
   }
 
   changeRoutes() {

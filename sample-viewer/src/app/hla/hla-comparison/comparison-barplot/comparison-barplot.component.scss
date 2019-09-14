@@ -1,0 +1,74 @@
+@import '../../../../sass/variables.scss';
+@import '../../../../sass/material-theme.scss';
+
+.barplot--comparison .axis--x line,
+.barplot--comparison .axis--x path,
+.barplot--comparison .axis--y line {
+  fill: none;
+  stroke: $default-color;
+}
+
+// #gridlines
+.barplot--comparison .axis--x line {
+    stroke: #ddd;
+}
+
+.barplot--comparison .axis--y path {
+  display: none;
+}
+
+#left {
+  fill: $grey-300;
+}
+
+#right  {
+  // fill: $sierraleone-green;
+  fill: $cvisb-dark;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+.title--left {
+  text-anchor: end;
+}
+
+// number of observation annotations
+.n {
+  font-weight: 700;
+}
+
+#right .n {
+  text-anchor: end;
+}
+
+
+// tooltips
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 80px;
+  padding: 8px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #ddd;
+  pointer-events: none;
+}
+
+.hover--allele {
+  opacity: 0.2;
+}
+
+.title--allele {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
+.right {
+  border-left: 2px solid $default-color;
+  padding-left: 10px;
+  margin-left: 5px;
+}

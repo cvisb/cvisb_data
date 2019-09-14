@@ -1,0 +1,26 @@
+@import '../../../sass/variables.scss';
+
+.subtitle {
+  font-size: 0.85em;
+  color: #73797d;
+}
+
+#hla-allele-count {
+  .axis--x text,
+  .axis--y text {
+    font-size: 1.25em;
+  }
+
+  .axis--x line {
+    display: none;
+  }
+
+  circle {
+    stroke: $default-color;
+    stroke-width: 0.5px;
+  }
+
+  .lollipop {
+    stroke: $grey-400;
+  }
+}

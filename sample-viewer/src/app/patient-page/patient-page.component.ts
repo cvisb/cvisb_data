@@ -57,7 +57,6 @@ export class PatientPageComponent implements OnInit {
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
         this.allExpts = this.exptObjPipe.exptDict;
-        console.log(expts);
         let exptData = expts['hits'].map(d => d.measurementTechnique);
         this.exptTypes = this.allExpts.filter(d => exptData.includes(d['name']));
 
@@ -69,7 +68,6 @@ export class PatientPageComponent implements OnInit {
       })
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
-        console.log(files);
         this.viralFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 
         this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');

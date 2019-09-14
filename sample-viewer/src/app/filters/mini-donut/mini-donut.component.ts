@@ -13,25 +13,25 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniDonutComponent implements OnInit {
+export class MiniDonutComponent implements OnInit, OnChanges {
 
   @ViewChild('donut') private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private endpoint: string;
   @Input() private height: number;
-  @Input() private name_var: string;
-
-  // Expected values
+  // Expected domain
   @Input() private cohorts: string[];
+  @Input() private filterable: boolean = true;
 
-  // plot sizes
+  // --- selected cohorts ---
+  selectedCohorts: string[];
+
+  // --- plot sizes ---
   private element: any; // selector for SVG DIV
-  private element_dims: any;
-  private margin: any = { top: 2, bottom: 2, left: 2, right: 125 };
+  private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
   private width: number;
   private hole_frac: number = 0.5;
-  private bar_height: number = 10;
-  private bar_spacing: number = 3;
+  private checkboxX: number = 110;
 
   // --- Selectors ---
   private donut: any; // dotplot
@@ -44,11 +44,41 @@ export class MiniDonutComponent implements OnInit {
   constructor(
     private requestSvc: RequestParametersService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {
+    // this.requestSvc.patientParamsState$.subscribe(params => {
+    //   console.log(params)
+    //   this.selectedCohorts = this.getSelected(params);
+    //   console.log(this.selectedCohorts)
+    // })
+  }
+
+  getSelected(params, fieldName = "cohort") {
+    let filtered = params.filter(d => d.field === fieldName);
+
+    if (filtered.length === 1) {
+      return (filtered[0].value);
+    } else {
+      return (this.cohorts);
+    }
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
+
+      switch (this.endpoint) {
+        case "patient":
+          this.requestSvc.patientParamsState$.subscribe(params => {
+            this.selectedCohorts = this.getSelected(params);
+          })
+          break;
+
+        case "sample":
+          this.requestSvc.sampleParamsState$.subscribe(params => {
+            this.selectedCohorts = this.getSelected(params);
+          })
+          break;
+      }
     }
   }
 
@@ -84,11 +114,6 @@ export class MiniDonutComponent implements OnInit {
       .attr("class", 'donut--annot')
       .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`);
 
-    // div for tooltips
-    let ttips = d3.select("body").append("div")
-      .attr("class", "tooltip")
-      .style("display", "none");
-
 
     // Initial call to update / populate with data
     this.updatePlot();
@@ -110,6 +135,13 @@ export class MiniDonutComponent implements OnInit {
           this.data.push({ term: d, count: 0 });
         })
       }
+      // if selectedCohorts doesn't exist, set to the cohorts.
+      if (!this.selectedCohorts) {
+        this.selectedCohorts = this.cohorts;
+      }
+      this.data.forEach(d => {
+        d['selected'] = this.selectedCohorts.includes(d.term) ? true : false;
+      })
 
       // --- Update axes ---
       this.y
@@ -117,75 +149,32 @@ export class MiniDonutComponent implements OnInit {
 
       // --- Filter event listener ---
       // Handle into filtering by virus type
-      let filterCohort = function(endpoint: string, requestSvc: any) {
-        return function(d) {
-          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.data.term })
-        }
-      }
+      // let filterCohort = function(endpoint: string, requestSvc: any) {
+      //   return function(d) {
+      //     requestSvc.updateParams(endpoint, { field: 'cohort', value: d.data.term })
+      //   }
+      // }
 
       // Handle into filtering by virus type
-      let filterText = function(endpoint: string, requestSvc: any) {
-        // TODO: flip on/off.
-        return function(d) {
-          console.log('filtering ' + d.term)
-          // If the parameter is already turned on, turn it off.
-          let isExcluded = d.count != 0;
-          requestSvc.updateParams(endpoint, { field: 'cohort', value: d.term, exclude: isExcluded })
-        }
-      }
-
-      // Turn on +/- tooltip for the text annotation
-      let mouseoverText = function() {
-        return function(d) {
-          // Turn off disabled class for text
-          d3.select(this).selectAll(".annotation--count")
-            .classed('disabled', false);
-
-          // Turn on X or + icon next to the text
-          d3.select(this).selectAll(".annotation--tooltip")
-            .style("display", "inline-block");
-        }
-      }
-
-      let mouseoutText = function() {
-        return function(d) {
-          d3.select(this).selectAll(".annotation--count")
-            .classed('disabled', (d: any) => d.count === 0);
-
-          // turn off tooltip
-          d3.select(this).selectAll(".annotation--tooltip")
-            .style("display", "none");
-        }
-      }
-
-      // Turn on/off the path tooltip
-      let showTooltips = function() {
+      let filterCheckbox = function(endpoint: string, requestSvc: any, data) {
         return function(selected) {
-          let html_payload = `select ${selected.data.term}`;
+          // reverse the selection
+          let idx = data.findIndex(d => d.term == selected.term);
+          if (idx > -1) {
+            data[idx]['selected'] = !selected.selected;
+          }
 
-          d3.selectAll("path")
-            .classed("not-highlight", true);
+          // flip the checkbox path on/off
+          // d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
+          d3.selectAll(".checkmark")
+            .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
+            .classed("checked", (d: any) => d.selected);
 
-          d3.select(this)
-            .classed("not-highlight", false);
-
-          d3.select(".tooltip").html(html_payload)
-            .style("left", (d3.event.pageX + 15) + "px")
-            .style("top", (d3.event.pageY + 15) + "px")
-            .attr("class", `tooltip ${selected.data.term}`)
-            .style("display", "inline-block");
+          let cohorts = data.filter(d => d.selected).map(d => d.term);
+          requestSvc.updateParams(endpoint, { field: 'cohort', value: cohorts })
         }
       }
 
-      let hideTooltips = function() {
-        return function(d) {
-          d3.selectAll("path")
-            .classed("not-highlight", false);
-
-          d3.select(".tooltip")
-            .style("display", "none");
-        }
-      }
 
       // --- transitions ----
       var t = d3.transition()
@@ -232,77 +221,62 @@ export class MiniDonutComponent implements OnInit {
         .attr("d", arc)
         .style("stroke-opacity", d => d.value > 0 ? 1 : 0)
         .attrTween("d", arcTween);
-      // .transition()
-      // .duration(50)
-      // .style("stroke-opacity", 0)
-      // .transition(t)
-      // .attr("d", arc)
-      // .attrTween("d", arcTween)
-      // .transition()
-      // .duration(50)
-      // .style("stroke-opacity", 1);
 
       // Add in tooltip/filtering behavior
-      this.svg.selectAll("path")
-        .on("click", filterCohort(this.endpoint, this.requestSvc))
-        .on("mouseover", showTooltips())
-        .on("mouseout", hideTooltips());
+      // this.svg.selectAll("path")
+      //   .on("click", filterCohort(this.endpoint, this.requestSvc));
 
       // --- Annotate donut ---
       // Group update/merge: https://stackoverflow.com/questions/41625978/d3-v4-update-pattern-for-groups
-      var node = this.annotation.selectAll(".annotation--group")
+      // --- selectors ---
+      var annotation_group = this.annotation.selectAll(".annotation--group")
         .data(this.data, function(d) {
           return d.term;
         });
+      let checkmarks = annotation_group.select(".checkmark");
 
-      node.exit().remove(); // exit, remove the text
+      // --- exit ---
+      annotation_group.exit().remove(); // exit, remove the text
 
-      let nodeEnter = node.enter() // enter the text
-        .append("text")
+      // --- enter ---
+      let annotationGroupEnter = annotation_group.enter() // enter the text
+        .append("g")
         .attr("class", "annotation--group");
 
-      nodeEnter.append("tspan") // enter the first tspan on the text element
+      let textEnter = annotationGroupEnter.append("text") // enter the first tspan on the text element
         .attr("x", 0)
         .attr("dx", 15)
         .attr('class', 'annotation--count');
 
-      nodeEnter.append("tspan") // enter the tspan tooltip on the text element
-        .attr("class", 'annotation--tooltip')
-        .style("display", "none")
-        .attr("dx", 15);
-
-      node = nodeEnter.merge(node); // enter + update
+      // --- update/merge ---
+      annotation_group = annotationGroupEnter
+        .merge(annotation_group)
+        .attr("id", (d: any) => `${d.term}`); // enter + update
 
       // Update the position, class, and text for the count per thing.
-      node.select(".annotation--count")
+      annotation_group.select(".annotation--count")
         .attr("class", (d: any) => `${d.term} annotation--count`)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .classed('disabled', (d: any) => d.count === 0)
         .text((d: any) => `${d.term}: ${d.count}`);
 
-      // Update the position, class, and text for the count per thing.
-      node.select(".annotation--tooltip")
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .attr("class", (d: any) => d.count > 0 ? 'far filter-data annotation--tooltip' : 'fas add-data annotation--tooltip')
-        .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
-        .text((d: any) => {
-          if (d.count > 0) {
-            // Delete/filter
-            return (`\uf057`);
-          }
-          // Add mark
-          return (`\uf0fe`);
-        });
+      if (this.filterable) {
+        let checkmarkEnter = annotationGroupEnter
+          .append("text")
+          .attr("x", (d: any) => this.checkboxX)
+          .attr("class", "checkmark");
 
-      // Add in tooltip/filtering behavior
-      this.svg.selectAll(".annotation--count")
-        .on("click", filterText(this.endpoint, this.requestSvc));
+        checkmarks.merge(checkmarkEnter)
+          .attr("class", (d: any) => `checkmark ${d.term}`)
+          .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
+          .text(d => d.selected ? "\uf14a" : "\uf0c8")
+          .classed("checked", (d: any) => d.selected);
 
-      this.svg.selectAll(".annotation--group")
-        .on("mouseover", mouseoverText())
-        .on("mouseout", mouseoutText());
-
+        // --- click listener ---
+        this.svg.selectAll(".checkmark")
+          .on("click", filterCheckbox(this.endpoint, this.requestSvc, this.data));
+      }
     }
   }
 

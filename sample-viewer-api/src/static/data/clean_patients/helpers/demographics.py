@@ -11,23 +11,42 @@ def convertBoolean(input):
     # Value is NA
     if(input != input):
         return(pd.np.nan)
-    if((input.lower == "n") | (input.lower == "no")):
+    if((input.lower() == "n") | (input.lower() == "no")):
         return(False)
-    if((input.lower == "y") | (input.lower == "yes")):
+    if((input.lower() == "y") | (input.lower() == "yes")):
         return(True)
 
 # convert gender to M/F
 def convertGender(gender):
     if(gender == gender):
+        if(isinstance(gender, list)):
+            return("Unknown")
         if((gender.lower() == 'm') | (gender.lower() == "male")):
             return("Male")
         elif((gender.lower() == 'f') | (gender.lower() == 'female')):
             return("Female")
     return("Unknown")
 
+# convert species to controlled vocabulary
+def convertSpecies(species):
+    if(species == species):
+        if((species.lower() == 'hs') | (species.lower() == "homo sapiens") | (species.lower() == "human")):
+            return("Homo sapiens")
+        elif((species.lower() == 'hp') | (species.lower() == "hylomyscus pamfi")):
+            return("Hylomyscus pamfi")
+        elif((species.lower() == 'me') | (species.lower() == "Mastomys erythroleucus")):
+            return("Mastomys erythroleucus")
+        elif((species.lower() == 'mn') | (species.lower() == "Mastomys natalensis")):
+            return("Mastomys natalensis")
+        elif((species.lower() == 'rodent')):
+            return("rodent")
+    return(pd.np.nan)
+
 # --- cohort ---
 def cleanCohort(input):
     if(input != input):
+        return("Unknown")
+    if(isinstance(input, list)):
         return("Unknown")
     if(re.search("Lassa", input.title())):
         return("Lassa")
@@ -43,6 +62,8 @@ def cleanCohort(input):
         return("Ebola")
     if(re.search("EVD", input.upper())):
         return("Ebola")
+    if(re.search("Control", input.title())):
+        return("Control")
     else:
         return("Unknown")
 
@@ -58,7 +79,8 @@ def cleanOutcome(input):
     # Value is NA; collapse to unknown
     if(input != input):
         return('unknown')
-
+    if(isinstance(input, list)):
+        return("unknown")
     outcome = input.lower()
     # outcome looks good; just pass it through
     if((outcome == "contact") | (outcome == "control")):

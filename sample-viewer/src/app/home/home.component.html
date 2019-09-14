@@ -2,18 +2,20 @@
   <section class="intro container-column">
     <div class="cvisb-container">
       <div class="cvisb-header">
-        <h1 id="cvisb-title">See-Viz-Bee</h1>
+        <h1 id="cvisb-title">CViSB Data</h1>
         <h2 id="cvisb-subtitle">The Data Portal for the Center for Viral Systems Biology</h2>
       </div>
     </div>
 
     <div class="cvisb-container">
       <summary class="description container-column">
-        What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections?
-        The mission of the Center for Viral Systems Biology is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease.
-        <!-- We hope that via this research we will be able to provide a deep
-      system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies. -->
+        <div id="summary-description">
+          The mission of the Center for Viral Systems Biology is to identify the immunological, genetic, microbial and physiological factors that play essential roles in determining outcomes from viral infections.
+        </div>
 
+        <!-- What are the immunological, genetic, microbial and physiological attributes that play essential roles in determining outcomes from viral infections?
+        The mission of the Center for Viral Systems Biology is to identify such factors and elucidate the molecular and immunological networks that determine outcomes of human disease.
+        We hope that via this research we will be able to provide a deep system-level understanding of the virus and human determinants of clinical outcome to discover predictive markers of disease, and guide future therapies.  -->
         <div id="collaboration">
           A collaboration between CViSB and the Kenema Government Hospital
         </div>
@@ -34,110 +36,164 @@
   </div>
 
   <div class="container section-links">
-    <a routerLink="/dataset" class="data section-link">
 
-      <i class="section-icon fas fa-table"></i>
+    <div class="container-column link-container" id="dataset">
+      <div class="data section-link">
+        <a routerLink="/dataset">
+          <i class="section-icon fas fa-table"></i>
 
-      <div class="section-title">
-        Data
+          <div class="section-title">
+            Data
+          </div>
+
+          <div>
+            <div class="section-subtitle">
+              explore, visualize, and download experimental data
+            </div>
+          </div>
+        </a>
       </div>
 
-      <div>
-        <div class="section-subtitle">
-          explore, visualize, and download experimental data
-        </div>
-        <ul>
-
-          <a [routerLink]='["/dataset/hla"]'>
-            <li>
-              HLA Genotypes
-            </li>
+      <div class="counts" id="dataset-counts" *ngIf="experimentCount.length > 0">
+        <ng-container *ngFor="let expt of experimentCount">
+          <a [routerLink]="['/dataset', expt.link]">
+            <div class="container count-pair">
+              <div class="count-value">
+                {{expt.count}}
+              </div>
+              <div class="count-label">
+                {{expt.term}} experiments
+              </div>
+            </div>
           </a>
-          <a [routerLink]='["/dataset/viralseq"]'>
-            <li>
-              Viral Sequencing
-            </li>
-          </a>
-        </ul>
+        </ng-container>
       </div>
-    </a>
+    </div>
+
+    <div class="container-column link-container" id="patient">
+      <div class="patient section-link">
+        <a routerLink="/patient">
+          <i class="section-icon fas fa-users"></i>
+
+          <div class="section-title">
+            Patients
+          </div>
+
+          <div>
+            <div class="section-subtitle">
+              view and download demographic and clinical data
+            </div>
+            <ul>
+              <li>
+                acutely infected
+              </li>
+              <li>
+                survivors
+              </li>
+              <li>
+                contacts
+              </li>
+              <li>
+                healthy controls
+              </li>
+            </ul>
+          </div>
+        </a>
+      </div>
+
+      <div class="counts" *ngIf="patientCount">
+        <a routerLink="/patient">
+          <div class="container count-pair">
+            <div class="count-value">
+              {{patientCount}}
+            </div>
+            <div class="count-label">
+              patients
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
 
 
-    <a routerLink="/patient" class="patient section-link">
-      <i class="section-icon fas fa-users"></i>
-
-      <div class="section-title">
-        Patients
+    <div class="container-column  link-container" id="sample">
+      <div class="samples section-link">
+        <a routerLink="/sample">
+          <i class="section-icon fas fa-dna"></i>
+          <div class="section-title">
+            Samples
+          </div>
+          <div class="section-subtitle">
+            view and download metadata for biological samples
+          </div>
+        </a>
       </div>
 
-      <div>
-        <div class="section-subtitle">
-          view and download demographic and clinical data
-        </div>
-        <ul>
-          <li>
-            acutely infected
-          </li>
-          <li>
-            survivors
-          </li>
-          <li>
-            contacts
-          </li>
-          <li>
-            healthy controls
-          </li>
-        </ul>
+      <div class="counts" *ngIf="sampleCount">
+        <a routerLink="/sample">
+          <div class="container count-pair">
+            <div class="count-value">
+              {{sampleCount}}
+            </div>
+            <div class="count-label">
+              samples
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
+    </div>
 
-    <a routerLink="/sample" class="samples section-link">
-      <i class="section-icon fas fa-dna"></i>
-      <div class="section-title">
-        Samples
-      </div>
-      <div class="section-subtitle">
-        view and download metadata for biological samples
-      </div>
-    </a>
 
   </div>
-</div>
 
 
-<div class="who-are-we">
-  <div class="about-group container">
-    <div class="about-title">
-      What we study
+  <div class="who-are-we">
+    <div class="about-group container">
+      <div class="about-title">
+        What we study
+      </div>
+      <div class="description">
+        We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs. <a class="link" routerLink="/about">Learn more</a>
+      </div>
     </div>
-    <div class="description">
-      We're studying two viral hemorrhagic fevers, Lassa mammarenavirus and Ebola virus, in people suspected of being exposed to the viruses, as well as in their animal reservoirs.
+
+    <div class="about-group container">
+      <div class="about-title">
+        Where we get our data
+      </div>
+      <div class="description">
+        The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
+        KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
+        We have also analyzed samples from our partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
+      </div>
     </div>
+
+    <div class="about-group container">
+      <div class="about-title">
+        More about our data
+      </div>
+      <div class="description">
+        <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].dateReleased | date: "d MMMM y"}}. See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
+        our data and their limitations.
+      </div>
+    </div>
+
+    <div class="about-group container">
+      <div class="about-title">
+        Data use
+      </div>
+      <div class="description">
+        Please note that this data is still based on work in progress and should be considered preliminary. If you intend to include any of these data in publications, please let us know – otherwise please feel free to download and use without
+        restrictions. We
+        have shared this data with the hope that people will download and use it, as well as scrutinize it so we can improve our methods and analyses. Please <a [href]="'mailto:info@cvisb.org?subject=cvisb data'">contact us</a> if you have any
+        questions or comments.
+        <a routerLink="/terms" class="link">Full Terms of Use</a>
+      </div>
+    </div>
+
   </div>
 
-  <div class="about-group container">
-    <div class="about-title">
-      Where we get our data
-    </div>
-    <div class="description">
-      The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
-      KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
-      We have also analyzed samples from additional partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
-    </div>
-  </div>
-
-  <div class="about-group container">
-    <div class="about-title">
-      More about our data
-    </div>
-    <div class="description">
-      See our <a routerLink="/documentation" class="link">documentation</a> section for more info about our data and their limitations.
-    </div>
-  </div>
-
-</div>
-
-<!-- <app-compare-cohorts></app-compare-cohorts>
+  <!-- <app-compare-cohorts></app-compare-cohorts>
 
 <div class="main-graph">
   <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
@@ -153,4 +209,4 @@
 
 <app-download-aligned-sequences></app-download-aligned-sequences> -->
 
-<!-- <app-beeswarm></app-beeswarm> -->
+  <!-- <app-beeswarm></app-beeswarm> -->

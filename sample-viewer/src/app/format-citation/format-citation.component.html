@@ -2,24 +2,35 @@
   <div *ngFor="let citation of citations" class="container" [ngClass]="{'container-column': !simplifiedCitation}">
     <div class="citation">
       <span id="title" *ngIf="simplifiedCitation === false">
-        <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">
+        <a [href]="citation.url" target="_blank" rel="noreferrer">
           <span [outerHTML]="citation.name"></span>
         </a>.
       </span>
-      <span id="authors">
-        <ng-container *ngIf="simplifiedCitation === false; else firstAuthor">
+      <ng-container *ngIf="allAuthors === true; else firstAuthor">
+        <span id="authors">
           <span *ngFor="let author of citation.author; let i=index" class="author">
             {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
-          </span>  <span id="journal"><i>{{citation.journalName}}</i></span>
-        </ng-container>
+          </span>
+        </span>
+        <span id="journal"><i>{{citation.journalName}}</i></span>
+      </ng-container>
 
-        <ng-template #firstAuthor>
+      <ng-template #firstAuthor>
+        <span id="authors" *ngIf="simplifiedCitation === true">
           <a [href]="citation.url" target="_blank" rel="noreferrer">
             {{citation.author[0].givenName}} {{citation.author[0].familyName}}
             <i>et al.</i>
-          </a>  <span id="journal"><i>{{citation.journalNameAbbrev}}</i></span>
-        </ng-template>
-      </span>
+          </a>
+        </span>
+        <span id="authors" *ngIf="simplifiedCitation === false">
+          {{citation.author[0].givenName}} {{citation.author[0].familyName}}
+          <i>et al.</i>
+        </span>
+
+        <span id="journal" *ngIf="simplifiedCitation === false"><i>{{citation.journalName}}</i></span>
+        <span id="journal" *ngIf="simplifiedCitation === true"><i>{{citation.journalNameAbbrev}}</i></span>
+      </ng-template>
+
 
       <span id="date" *ngIf="citation.datePublished">{{citation.datePublished}}</span>,
 

@@ -1,0 +1,30 @@
+@import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+
+.subtitle {
+  font-size: 0.85em;
+  color: #73797d;
+}
+
+#hla-allele-hist {
+  .axis--x text,
+  .axis--y text {
+    display: none;
+  }
+
+  .axis--y line {
+    display: none;
+  }
+
+  .axis--y path {
+    stroke: $grey-200;
+  }
+
+  .alleles-hist {
+    fill: $grey-200;
+
+    &.accent {
+      fill: accent-redder(A200);
+    }
+  }
+}

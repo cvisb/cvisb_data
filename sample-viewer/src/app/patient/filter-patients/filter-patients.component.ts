@@ -17,6 +17,7 @@ export class FilterPatientsComponent implements OnInit {
   public patientSummary: PatientArray;
   public searchQuery: string = null;
   private authenticated: boolean;
+  panelOpenState: boolean = true;
   qString: string;
 
   // Parameters to set on the first call to the backend (e.g. max values, etc.)
@@ -52,11 +53,11 @@ export class FilterPatientsComponent implements OnInit {
 
     // listen for changes in the request parameters.
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      console.log("qParams heard in filter-patients")
-      console.log(qParams)
+      // console.log("qParams heard in filter-patients")
+      // console.log(qParams)
 
       let http_params = this.requestSvc.reducePatientParams(qParams);
-      console.log(http_params)
+      // console.log(http_params)
       // let param_string: string = this.requestSvc.reduceParams(qParams);
       // console.log(param_string)
       this.patientSvc.getPatientSummary(http_params).subscribe(x => {
@@ -98,17 +99,22 @@ export class FilterPatientsComponent implements OnInit {
       this.all_cohorts = pList.patientTypes.map(d => d.term);
       this.all_outcomes = pList.patientOutcomes.map(d => d.term);
 
-      this.all_years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
-      this.all_years.sort();
-      if (this.all_years.length === 0) {
+      let years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+
+      if (years.length === 0) {
         this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
+      } else {
+        let minYear = Math.max(Math.min(...years), 2005); // Majority of our data is before 2007; windsorize to < 2007
+        let maxYear = Math.max(...years);
+        let yearLength = (maxYear - minYear) + 1;
+        this.all_years = Array.from(new Array(yearLength), (_, i) => i + minYear);
       }
 
       this.all_countries = pList.patientCountries;
 
       this.patientSummary = params.patients;
-      console.log(this.patientSummary)
-      console.log(pList)
+      // console.log(this.patientSummary)
+      // console.log(pList)
 
     });
 
@@ -124,6 +130,7 @@ export class FilterPatientsComponent implements OnInit {
 
   clearFilters() {
     this.searchQuery = null;
+    this.panelOpenState = true;
     this.requestSvc.patientParamsSubject.next([]);
   }
 

@@ -6,7 +6,7 @@ import { AuthState, RequestParamArray } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { SpinnerPopupComponent } from '../_dialogs';
 
 import { uniq } from 'lodash';
@@ -20,6 +20,8 @@ import { uniq } from 'lodash';
 export class DownloadBtnComponent implements OnInit {
   @Input() data: any;
   @Input() filetype: string;
+  @Input() filenamePart: string;
+  @Input() buttonLabel: string;
   filename: string;
   auth_stub: string;
   today: string;
@@ -40,7 +42,7 @@ export class DownloadBtnComponent implements OnInit {
   ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
-    authSvc.authState$.subscribe((authState: AuthState) => {
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
     })
 
@@ -51,12 +53,11 @@ export class DownloadBtnComponent implements OnInit {
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParamArray = qParams;
-      console.log(qParams)
+      // console.log(qParams)
     })
   }
 
   ngOnInit() {
-    this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
   }
 
   download() {
@@ -69,12 +70,12 @@ export class DownloadBtnComponent implements OnInit {
     this.downloadData();
   }
 
-  parseData() {
+  parseData(data, filename) {
     const columnDelimiter = '\t'; // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
-    if (this.data && this.data.length > 0) {
-      let colnames = uniq(this.data.map(d => Object.keys(d)).flat());
+    if (data && data.length > 0) {
+      let colnames = uniq(data.map(d => Object.keys(d)).flat());
 
       if (this.filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
@@ -84,7 +85,7 @@ export class DownloadBtnComponent implements OnInit {
       dwnld_data += colnames.join(columnDelimiter);
       dwnld_data += lineDelimiter;
 
-      this.data.forEach(function(item) {
+      data.forEach(function(item) {
         let counter = 0;
         colnames.forEach(function(key) {
           if (counter > 0) dwnld_data += columnDelimiter;
@@ -96,28 +97,57 @@ export class DownloadBtnComponent implements OnInit {
         dwnld_data += lineDelimiter;
       });
 
-      this.saveData(dwnld_data);
+      this.saveData(dwnld_data, filename);
     }
   }
 
-  saveData(dwnld_data) {
+  saveData(dwnld_data, filename: string) {
+    var blob = new Blob([dwnld_data], { type: 'text/csv' });
     var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
+    hiddenElement.href = window.URL.createObjectURL(blob);
+    // hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
     hiddenElement.target = '_blank';
-    hiddenElement.download = this.filename;
+    hiddenElement.download = filename;
+    // Gotta actually append the hidden element to the DOM for the click to work in Firefox
+    // https://support.mozilla.org/en-US/questions/968992
+    document.body.appendChild(hiddenElement);
     hiddenElement.click();
     this.dialogRef.close();
+  }
+
+
+  downloadFasta(data, filename) {
+    console.log(data)
+    let seqdata = data;
+    let dwnld_data = "";
+    let lineDelimiter = "\n";
+
+    seqdata.forEach(d => {
+      dwnld_data += ">" + d.name;
+      dwnld_data += lineDelimiter;
+      dwnld_data += d.seq;
+      dwnld_data += lineDelimiter;
+    })
+
+    // Sequences in .fasta format
+    this.saveData(dwnld_data, `${filename}.fasta`);
+    // patient metadata
+    this.parseData(data, `${filename}_patient-data.tsv`);
+    // this.parseData(data.patients, `${filename}-patientData.tsv`);
   }
 
   downloadData() {
     switch (this.filetype) {
       case ("patients"):
-        this.patientSvc.getPatientRoster(this.qParams).subscribe(patients => {
+        this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
+
+        this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
           this.data = patients;
-          this.parseData();
+          this.parseData(patients, this.filename);
         });
         break;
       case ("samples"):
+        this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
         this.data = this.longSvc.prep4download(this.data, ['location'], ['_score', '_version', '_id']);
 
         // sort of a hack; since location data is nested in the ES index, it will return *all* samples, regardless of location
@@ -129,10 +159,14 @@ export class DownloadBtnComponent implements OnInit {
           this.data = this.data.filter(d => labs.includes(d.lab))
         }
 
-        this.parseData();
+        this.parseData(this.data, this.filename);
+        break;
+      case ("viral sequences"):
+        this.filename = `${this.today}_cvisb_${this.filenamePart}-viral-sequences`;
+        this.downloadFasta(this.data, this.filename);
         break;
       default:
-        this.parseData();
+        this.parseData(this.data, `${this.today}_cvisb_data${this.auth_stub}.tsv`);
         break;
     }
   }

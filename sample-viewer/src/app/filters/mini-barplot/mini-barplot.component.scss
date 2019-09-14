@@ -11,13 +11,12 @@
   shape-rendering: crispedges;
   fill: $grey-300;
   stroke: $grey-400;
-  cursor: pointer;
+  // cursor: pointer;
 }
-
-.minirect:hover {
-  fill: primary(300);
-  stroke: primary(600);
-}
+// .minirect:hover {
+//   fill: primary(300);
+//   stroke: primary(600);
+// }
 
 .bar--annot text {
   text-anchor: end;
@@ -31,7 +30,6 @@
   dominant-baseline: middle;
   fill: $default-color;
   font-family: $font-default;
-  cursor: pointer;
 }
 // Buttons
 
@@ -87,5 +85,14 @@
   .faux-button {
     fill: $grey-200;
     stroke: $grey-400;
+  }
+}
+
+.barplot {
+  .checkmark {
+    fill: $grey-400;
+    cursor: pointer;
+    dominant-baseline: middle;
+    stroke: none;
   }
 }

@@ -23,10 +23,12 @@ export class MiniBarplotComponent implements OnInit {
   @Input() private height: number;
   @Input() private spacing: number;
   @Input() private name_var: string;
+  @Input() private filterable: boolean = true;
+
+  private selectedOutcomes: string[];
 
   // plot sizes
   private element: any;
-  private element_dims: any;
   private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
   private width: number = 70;
   // private height: number = 70;
@@ -40,7 +42,6 @@ export class MiniBarplotComponent implements OnInit {
   // --- Scales/Axes ---
   private x: any;
   private y: any;
-  private colorScale: any;
   private yAxis: any;
 
   getSVGDims() {
@@ -65,8 +66,33 @@ export class MiniBarplotComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.getSVGDims();
       this.createPlot();
+
+      switch (this.endpoint) {
+        case "patient":
+          this.requestSvc.patientParamsState$.subscribe(params => {
+            this.selectedOutcomes = this.getSelected(params);
+          })
+          break;
+
+        case "sample":
+          this.requestSvc.sampleParamsState$.subscribe(params => {
+            this.selectedOutcomes = this.getSelected(params);
+          })
+          break;
+      }
     }
   }
+
+  getSelected(params, fieldName = "outcome") {
+    let filtered = params.filter(d => d.field === fieldName);
+
+    if (filtered.length === 1) {
+      return (filtered[0].value);
+    } else {
+      return (this.options);
+    }
+  }
+
 
   ngOnChanges() {
     this.updatePlot(1000);
@@ -129,16 +155,37 @@ export class MiniBarplotComponent implements OnInit {
         })
       }
 
+      // if selectedCohorts doesn't exist, set to the cohorts.
+      if (!this.selectedOutcomes) {
+        this.selectedOutcomes = this.options;
+      }
+      this.data.forEach(d => {
+        d['selected'] = this.selectedOutcomes.includes(d.term) ? true : false;
+      })
+
+
       // transition
       var t = d3.transition()
         .duration(tDuration);
 
       // Handle into filtering by virus type
-      let filterOutcome = function(endpoint: string, requestSvc: any) {
-        return function(d) {
-          console.log(d)
-          requestSvc.updateParams(endpoint, { field: 'outcome', value: d.term })
+      let filterOutcome = function(endpoint: string, requestSvc: any, data: any[]) {
+        return function(selected) {
+          // reverse the selection
+          let idx = data.findIndex(d => d.term == selected.term);
+          if (idx > -1) {
+            data[idx]['selected'] = !selected.selected;
+          }
 
+          // flip the checkbox path on/off
+          // d3.selectAll(".checkmark").style("display", (d: any) => d.selected ? "block" : "none");
+          d3.selectAll(".checkmark")
+            .text((d: any) => d.selected ? "\uf14a" : "\uf0c8")
+            .classed("checked", (d: any) => d.selected);
+
+          let outcomes = data.filter(d => d.selected).map(d => d.term);
+
+          requestSvc.updateParams(endpoint, { field: 'outcome', value: outcomes })
         }
       }
 
@@ -150,39 +197,26 @@ export class MiniBarplotComponent implements OnInit {
 
       this.yAxis = d3.axisRight(this.y);
 
-      // --- Create axes ---
-      // svg.append('g')
-      //   .attr('class', 'axis axis--y')
-      //   .attr('transform', `translate(${this.margin.left + this.width}, ${this.margin.top})`)
-      //   .call(this.yAxis);
-
-
       // --- Create bars ---
       let bars_data = this.bars
         .selectAll("rect")
         .data(this.data);
 
       bars_data.exit()
-        // .transition()
-        // .duration(10)
-        // .style("fill-opacity", 1e-6)
         .remove();
 
       bars_data.enter().append("rect")
         .attr("class", "minirect")
         .merge(bars_data)
         .attr("id", (d: any) => this.strip.transform(d[this.name_var]))
-        // .attr("x", this.x(0))
         .attr("y", (d: any) => this.y(d[this.name_var]))
         .attr("height", this.y.bandwidth())
-        // .attr("width", 0)
         .transition(t)
         .attr("x", (d: any) => this.x(d.count))
         .attr("width", (d: any) => this.x(0) - this.x(d.count));
 
-      this.chart.selectAll("rect")
-        .on("click", filterOutcome(this.endpoint, this.requestSvc));
-
+      // this.chart.selectAll("rect")
+      //   .on("click", filterOutcome(this.endpoint, this.requestSvc));
 
       // --- Annotate bars ---
       let bars_labels = this.bars_annotations.selectAll("text")
@@ -209,64 +243,79 @@ export class MiniBarplotComponent implements OnInit {
 
 
       // Y-label annotations ---
-      let labels = this.ylabels.selectAll("text")
+      let labelGroup = this.ylabels.selectAll(".y-label-group")
         .data(this.data);
 
-      labels.exit()
-        // .transition(t)
-        // .style("fill-opacity", 1e-6)
-        .remove()
-
-      labels.enter().append("text")
-        .attr("class", "annotation")
-        .attr("x", (d: any) => this.x(0))
-        .attr("dx", 6)
-        .style("font-size", Math.min(this.y.bandwidth(), 14))
-        .merge(labels)
-        .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
-        .classed('disabled', (d: any) => d.count === 0)
-        .transition(t)
-        // .style("fill-opacity", 1)
-
-        .text((d: any) => (d[this.name_var]));
+      let ylabels = labelGroup.select(".annotation--label");
+      let checkmarks = labelGroup.select(".checkmark");
 
 
-      // Container for the annotation
-      // this.ylabels
-      //   .selectAll(".y-label")
-      //   .data(this.data).enter().append("g")
-      //   .attr("id", (d: any) => this.strip.transform(d[this.name_var]));
-      //
-      // // Dummy rectangle, if need to turn into a button
-      // ylabels.append("rect");
-      //
-      // // Actual label for the annotation
-      // ylabels.append("text")
-      //   .attr("class", "annotation")
-      //   .attr("x", (d: any) => this.x(0))
-      //   .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
-      //   .attr("dx", 6)
-      //   .style("font-size", Math.min(this.y.bandwidth(), 14))
-      //   .text((d: any) => (d[this.name_var]));
-      //
-      // let getTextBox = function(selection) {
-      //   selection.each(function(d) { d.bbox = this.getBBox(); })
-      // };
-      //
-      // if (this.name_var === 'type') {
-      //   ylabels.selectAll('text')
-      //     .attr("dx", 10)
-      //     .style("font-size", Math.min(this.y.bandwidth(), 14) * 0.8)
-      //     .call(getTextBox);
-      //
-      //   ylabels.insert("rect", "text")
-      //     .attr("class", "rect faux-button")
-      //     .attr("x", function(d) { return d.bbox.x - 4 })
-      //     .attr("y", function(d) { return d.bbox.y - 2 })
-      //     .attr("width", function(d) { return d.bbox.width + 8 })
-      //     .attr("height", function(d) { return d.bbox.height + 4 })
-      // }
+      // --- exit ---
+      labelGroup.exit().remove(); // exit, remove the text
+
+      // --- enter ---
+      let labelGroupEnter = labelGroup.enter() // enter the text
+        .append("text")
+        .attr("class", "y-label-group");
+
+      if (this.filterable) {
+        let checkmarkEnter = labelGroupEnter
+          .append("tspan")
+          .attr("dx", 6)
+          .attr("class", "checkmark");
+
+        let textEnter = labelGroupEnter
+          .append("tspan") // enter the first tspan on the text element
+          .attr("dx", 8)
+          .attr('class', 'annotation annotation--label');
+
+
+        // --- update/merge ---
+        labelGroup = labelGroupEnter
+          .merge(labelGroup)
+          .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+          .attr("id", (d: any) => `${d.term}`);
+
+        checkmarks.merge(checkmarkEnter)
+          .attr("x", this.x(0))
+          .attr("class", (d: any) => `checkmark ${d.term}`)
+          .text(d => d.selected ? "\uf14a" : "\uf0c8")
+          .classed("checked", (d: any) => d.selected);
+
+        labelGroup.select(".annotation--label").merge(textEnter)
+          .style("font-size", Math.min(this.y.bandwidth(), 14))
+          .merge(labelGroup)
+          .classed('disabled', (d: any) => d.count === 0)
+          .transition(t)
+          .text((d: any) => (d[this.name_var]));
+
+
+        // --- click listener ---
+        this.chart.selectAll(".checkmark")
+          .on("click", filterOutcome(this.endpoint, this.requestSvc, this.data));
+      }
+      else {
+        let textEnter = labelGroupEnter
+          .append("tspan") // enter the first tspan on the text element
+          .attr("dx", 8)
+          .attr('class', 'annotation annotation--label');
+
+        // --- update/merge ---
+        labelGroup = labelGroupEnter
+          .merge(labelGroup)
+          .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
+          .attr("id", (d: any) => `${d.term}`);
+
+        labelGroup.select(".annotation--label").merge(textEnter)
+          .attr("x", this.x(0))
+          .style("font-size", Math.min(this.y.bandwidth(), 14))
+          .merge(labelGroup)
+          .classed('disabled', (d: any) => d.count === 0)
+          .transition(t)
+          .text((d: any) => (d[this.name_var]));
+      }
     }
+
   }
 
 }

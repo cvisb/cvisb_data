@@ -16,7 +16,7 @@ def createDict(df, index_col, cols2include = "all", dropdupes = False):
         cols2include.append("index_col")
         cols2include = np.unique(cols2include)
 
-    # create a copy of the index column 
+    # create a copy of the index column
     df['index_col'] = df.loc[:,index_col].copy()
 
     # Select only what you need
@@ -84,20 +84,24 @@ def flatten(l):
             yield el
 
 
-def combineIDs(row, columns=["gID", "sID", "publicGID", "publicSID"]):
+def combineIDs(row, columns=["gID", "sID", "publicGID", "publicSID"], unique = True):
     """
     Creator for `alternateIdentifier` -- an array of all known IDs for a given patient
     """
     ids = []
 
     for column in columns:
-        if ((isinstance(row[column], list)) | (isinstance(row[column], np.ndarray))):
+        if ((isinstance(row[column], pd.Series)) | (isinstance(row[column], list)) | (isinstance(row[column], np.ndarray))):
             if(pd.notnull(row[column]).any()):
                 ids.extend(row[column])
         elif ((row[column] == row[column]) & (pd.notnull(row[column])) & (row[column] is not None)):
             ids.append(row[column])
 
-    return([ids])
+    if(unique):
+        ids = list(set(ids))
+    if(len(ids) > 0):
+        return([ids])
+    return(pd.np.nan)
 
 def mergeByPublicIDs(df1, df2, on=["publicPatientID"], how="left",
                      mergeCols2Check=["gID", "sID", "alternateIdentifier", "outcome"], errorCol="issue",
@@ -310,7 +314,7 @@ def combineColsRowwise2(row, colVar, ignoreUnknown):
             # y is NA; return x
             if (y != y):
                 return(x)
-            # If one of the values is 'unknown', replace with the toher.
+            # If one of the values is 'unknown', replace with the other.
             if (x.lower() == "unknown"):
                 return(y)
             if (y.lower() == "unknown"):

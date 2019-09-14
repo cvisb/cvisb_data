@@ -29,6 +29,8 @@ input_ebolaSurvivor = "../input_data/patient_rosters/ebolaSurvivors_metadata_v2_
 # Used to get a sense of weird IDs and coverage of metadata, etc.
 input_cvisb_roster = "../input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_PRIVATE.json"
 
+input_extra_ids = "../input_data/patient_rosters/additional_IDdict_v2_2019-09-13.csv"
+
 
 # [ output directories, names ] ------------------------------------------------------------------------------------
 output_dir = "../output_data/patients"
@@ -47,14 +49,16 @@ output_lassaAcute = f"{output_dir}/lassaAcute_cleaned_{today}_PRIVATE"
 output_lassaAcuteWeirdos = f"{inconsistencies_dir}/lassaAcute_inconsistencies_{today}_PRIVATE"
 output_lassaAcute_ids = f"{output_dir}/lassaAcuteIDs_cleaned_{today}_PRIVATE"
 output_lassaAcuteWeirdos_ids = f"{inconsistencies_dir}/lassaAcuteIDs_inconsistencies_{today}_PRIVATE"
+output_extraIDs_weirdos = f"{inconsistencies_dir}/extraIDs_inconsistencies_{today}_PRIVATE"
 
 # [ Columns to export ] -----------------------------------------------------------------------------------
 # sans dates, temporarily
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
-               'age', 'gender', 'country', 'homeLocation', 'occupation', 'pregnant',
+               'age', 'gender', 'country', 'occupation', 'pregnant', 'homeLocation', 'admin2',
+               'survivorEvalDates', 'survivorEnrollmentDate',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',
-               'elisa', 'dateModified']
+               'elisa', 'dateModified', 'species']
 
 dict_cols = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
              'evalDate', 'dischargeDate', 'daysOnset', 'infectionDate',

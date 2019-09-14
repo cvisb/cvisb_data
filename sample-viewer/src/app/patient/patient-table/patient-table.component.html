@@ -9,7 +9,7 @@
     <ng-container matColumnDef="patientID">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">public ID</th>
       <td mat-cell *matCellDef="let element" class="patient-id">
-        {{ element.patientID }}
+        {{element.patientID}}
       </td>
     </ng-container>
 
@@ -18,7 +18,7 @@
       <td mat-cell *matCellDef="let element">
         <span *ngIf="element.gID">
         <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
-          {{ id }} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
+          {{id}} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
         </span>
         </span>
       </td>
@@ -29,7 +29,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">sID</th>
       <td mat-cell *matCellDef="let element">
         <span class="alt-id">
-          {{ element.sID }}
+          {{element.sID}}
         </span>
       </td>
     </ng-container>
@@ -44,7 +44,7 @@
         <!-- <i class="fas fa-ambulance" *ngIf="element.outcome === 'dead'"></i> -->
         <!-- <i class="fas fa-medkit" *ngIf="element.outcome === 'dead'"></i> -->
         <!-- <i class="fas fa-hospital-symbol" *ngIf="element.outcome === 'dead'"></i> -->
-        <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{ timepoint }} -->
+        <!-- <i class="fas fa-home" *ngIf="element.outcome === 'contact'"></i> {{timepoint}} -->
         <!-- </mat-chip> -->
         <!-- </mat-chip-list> -->
       </td>
@@ -53,14 +53,14 @@
     <ng-container matColumnDef="cohort">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">cohort</th>
       <td mat-cell *matCellDef="let element">
-        <span class="cohort" [ngClass]="element.cohort">{{ element.cohort }}</span>
+        <span class="cohort" [ngClass]="element.cohort">{{element.cohort}}</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="outcome">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">outcome</th>
       <td mat-cell *matCellDef="let element">
-        <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{ element.outcome }}</span>
+        <span class="outcome" [ngClass]="[element.outcome, element.cohort]">{{element.outcome}}</span>
       </td>
     </ng-container>
 
@@ -68,7 +68,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">country</th>
       <td mat-cell *matCellDef="let element">
         <div class="table-country">
-          {{ element.country.name }}
+          {{element.country.name}}
           <svg-icon [icon]="element.country.identifier" class="country-icon" [ngClass]="element.country.identifier"></svg-icon>
         </div>
       </td>
@@ -89,7 +89,7 @@
     <ng-container matColumnDef="age">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">age</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.age }}
+        {{element.age | number: "1.0-1"}}
       </td>
     </ng-container>
 
@@ -97,7 +97,7 @@
       <th mat-header-cell *matHeaderCellDef>related patients</th>
       <td mat-cell *matCellDef="let element">
         <div>
-          <a [routerLink]="['/patient', contact]" *ngFor="let contact of element.relatedTo" class="related">{{ contact }}</a>
+          <a [routerLink]="['/patient', contact]" *ngFor="let contact of element.relatedTo" class="related">{{contact}}</a>
         </div>
       </td>
     </ng-container>
@@ -118,7 +118,7 @@
       <th mat-header-cell *matHeaderCellDef>ELISA</th>
       <td mat-cell *matCellDef="let element">
         <div *ngFor="let elisa of element.elisa" class="elisa-group" [matTooltip]="'at ' + elisa.timepoint">
-          {{ elisa.virus }} {{ elisa.assayType }}
+          {{elisa.virus}} {{elisa.assayType}}
           <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
             <mat-icon>control_point</mat-icon>
             </span>
@@ -139,6 +139,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
   </table>
 
-  <mat-paginator [length]="selectedLength" [pageSizeOptions]="[10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="selectedLength" [pageSizeOptions]="[10, 25, 50]" [pageSize]="10" showFirstLastButtons></mat-paginator>
   <!-- <mat-paginator [length]="patientList?.patientCount" [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator> -->
 </div>

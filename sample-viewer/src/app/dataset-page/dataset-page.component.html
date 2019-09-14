@@ -1,20 +1,19 @@
-<router-outlet name="datasets"></router-outlet>
-
 <div class="container" id="dataset.identifier" *ngIf="dataset && dataset.identifier">
 
-  <div class="dataset-container dataset-page" >
-  <!-- <div class="dataset-container dataset-page" *ngIf="dataset"> -->
+  <div class="dataset-page-container">
 
     <app-dataset-page-nav [id]="dataset.identifier" class="nav dataset-nav"></app-dataset-page-nav>
 
     <div class="dataset-content">
-      <a [routerLink]="'/dataset'" class="back-button">Return to all files</a>
+      <a [routerLink]="'/dataset'" class="back-button">Return to all datasets</a>
 
       <div class="dataset-header" id="summary">
         <h2>
           <a>{{ dataset.name }}</a>
           <!-- <a (click)="selectDataset($event, dataset)" [matTooltip]="'view metadata for ' + dataset.name + ' dataset'">{{ dataset.name }}</a> -->
-          <span class="keyword" *ngFor="let keyword of dataset.keywords">{{ keyword }}</span>
+          <div class="keyword-container container">
+            <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
+          </div>
         </h2>
 
         <div class="dataset-description">
@@ -25,11 +24,6 @@
           updated: {{dataset.dateModified ? (dataset.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
         </div>
       </div>
-
-      <ng-container *ngIf="dataset.identifier === 'hla'" id="compare">
-        <app-hla-page></app-hla-page>
-      </ng-container>
-
 
 
       <div id="files">

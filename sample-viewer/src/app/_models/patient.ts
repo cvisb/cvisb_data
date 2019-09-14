@@ -25,6 +25,8 @@ export class Patient {
   relatedTo?: string[];
   elisa?: ELISA[];
   pregnant: boolean;
+  species: string;
+  admin2: Object;
   occupation: string;
   symptoms?: Object[];
   sID?: string;
@@ -44,6 +46,7 @@ export class PatientDownload {
   contactGroupIdentifier?: string;
   contactSurvivorRelationship?: string;
   country?: string;
+  admin2?: string;
   dateModified?: string;
   elisa?: string;
   exposureType?: string;
@@ -63,6 +66,7 @@ export class PatientDownload {
   muscle_pain?: boolean;
   ringing_in_ears?: boolean;
   vision_loss?: boolean;
+  species: string;
   sID: string;
   gID: string;
   daysInHospital: number;
@@ -79,7 +83,9 @@ export class PatientDownload {
     this.gID = patient.gID ? patient.gID.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
-    this.country = patient.country['name'];
+    this.country = patient.country ? patient.country['name'] : null;
+    this.admin2 = patient.admin2 ? patient.admin2['name'] : null;
+    this.species = patient.species;
     this.gender = patient.gender;
     this.age = patient.age;
     this.infectionYear = patient.infectionYear;

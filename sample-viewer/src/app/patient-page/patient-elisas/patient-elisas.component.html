@@ -38,6 +38,10 @@
                 <mat-icon>help_outline</mat-icon>
               </div>
             </div>
+            <!-- explicit question mark if doesn't exist -->
+            <div class="elisa-result" *ngIf="!result" id="unknown">
+              <mat-icon>help_outline</mat-icon>
+            </div>
           </div>
 
         </td>
@@ -52,7 +56,7 @@
   </div>
 
   <ng-template #no_data>
-      <span class="nodata">no available data</span>
+    <span class="nodata">no available data</span>
   </ng-template>
 
 </div>

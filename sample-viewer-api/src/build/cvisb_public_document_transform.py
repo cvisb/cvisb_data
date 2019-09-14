@@ -40,7 +40,7 @@ def public_document_transform_function(source_index, entity, _id, doc_items):
     elif entity == 'patient':
         canonical_public_id = _doc['patientID']
         prune_doc(_doc, public_fields=public_fields)
-        _doc['alternateIdentifier'] = canonical_public_id
+        _doc['alternateIdentifier'] = [canonical_public_id]
     else:
         prune_doc(_doc, public_fields=public_fields)
     return _doc
@@ -70,4 +70,3 @@ def old_public_document_transform_function(source_index, entity, _id, doc_items)
 
 _client = Elasticsearch()
 id_mapping = get_id_mapping(client=_client)
-

@@ -12,13 +12,16 @@ import helpers
 
 def clean_survivors(id_filename, ebola_filename, output_allSurvivors, output_survivorRoster, output_survivorRosterWeirdos, export_ebola, weirdos_ebola):
     ids = clean_survivor_ids(id_filename, output_survivorRoster, output_survivorRosterWeirdos)
+    print('done with IDs')
     ebola = clean_ebola_survivors(ids, ebola_filename, export_ebola, weirdos_ebola)
+    print('done with survivors')
     lassa = clean_lassa_survivors("temp file")
 
     merged = merge_survivors(ids, ebola, lassa)
 
     merged.to_csv(output_allSurvivors + ".csv", index=False)
     # merged.to_json(output_allSurvivors + ".json", orient="records")
+    merged.drop(["cohort_x", "cohort_y", "outcome_x", "outcome_y", 'sID_x', 'sID_y', 'gID_x', 'gID_y', 'gender_x', 'gender_y', 'homeLocation_x', 'homeLocation_y'], axis=1, inplace=True)
     df2export = helpers.removeIssues(merged, "survivor patients")
 
     return(merged)

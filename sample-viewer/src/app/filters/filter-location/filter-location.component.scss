@@ -1,10 +1,7 @@
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
 
-.GN-icon,
-.LR-icon,
-.NG-icon,
-.SL-icon,
+.country-icon,
 .unknown-icon {
   width: 30px;
   height: 30px;
@@ -27,6 +24,18 @@
 
 .LR-icon {
   fill: $liberia-red;
+}
+
+.CI-icon {
+  fill: $cote-divoire-orange;
+}
+
+.TG-icon {
+  fill: $togo-yellow;
+}
+
+.ML-icon {
+  fill: $mali-red;
 }
 
 .unknown-icon {
@@ -53,4 +62,8 @@
 
 .disabled {
   cursor: default;
+}
+
+.country-container {
+  align-items: center;
 }

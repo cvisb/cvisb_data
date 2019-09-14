@@ -11,9 +11,9 @@ h1 {
 
 summary {
   margin: 13px 13px 0;
-  background: #ffffff87;
+  background: #ffffffaf;
   font-weight: 400;
-  padding: 5px 15px;
+  padding: 10px 15px;
   align-items: center;
   max-width: 600px;
 }
@@ -45,38 +45,14 @@ a {
     // margin-left: 15px;
   }
 }
-// Markdown changes
-
-/deep/ .markdown-bold {
-  font-weight: 400;
-}
-
-/deep/ a.markdown-link {
-  color: accent(900);
-}
-
-.card-warning {
-  border-top: 1px $grey-300 solid;
-  border-bottom: 1px $grey-300 solid;
-  color: $grey-400;
-  background: accent(200);
-  text-transform: uppercase;
-  padding: 3px 6px;
-  margin-bottom: 8px;
-  font-size: 0.85em;
-}
-
-.card-tbd {
-  color: accent-redder(600);
-  font-weight: 400;
-  padding-bottom: 8px;
-}
 
 .intro {
-  background-image: url("../../assets/img/IMG_9143.jpeg");
-  height: 100%;
-  padding: 50px;
+  background-image: url("../../assets/img/KGH_1600x630px.png");
+  height: 500px;
+  padding: 25px;
   background-size: cover;
+  align-items: center;
+  justify-content: space-between;
   // background-position-y: -80px;
 }
 
@@ -98,6 +74,7 @@ a {
 #cvisb-subtitle {
   font-weight: 400;
   color: white;
+  color: $default-color;
   margin: 0;
 }
 
@@ -107,6 +84,12 @@ a {
 .learn-more-link {
   display: flex;
   justify-content: center;
+}
+
+#summary-description {
+  margin: 10px 13px;
+  padding: 5px 15px;
+  font-size: 1.1em;
 }
 
 #learn-more {
@@ -125,7 +108,7 @@ a {
 }
 
 .intro-section {
-margin: -18px -63px;
+  margin: -18px -63px;
 }
 
 #sharing-good {
@@ -138,6 +121,7 @@ margin: -18px -63px;
   justify-content: space-between;
 }
 
+.counts,
 .section-link {
   flex: 1;
   padding: 10px;
@@ -153,6 +137,10 @@ margin: -18px -63px;
   }
 }
 
+.section-link {
+  flex-grow: 1000;
+}
+
 .patient {
   background: $ebola-md;
 }
@@ -163,6 +151,49 @@ margin: -18px -63px;
 
 .data {
   background: $lassa-md;
+}
+
+.count-pair {
+  align-items: center;
+}
+
+.count-label {
+  color: white;
+}
+
+.count-value {
+  font-size: 2.5em;
+  margin-right: 15px;
+}
+
+#dataset {
+  & .counts {
+    background: $lassa-dk;
+  }
+
+  & .count-value {
+    color: $lassa-lt;
+  }
+}
+
+#patient {
+  & .counts {
+    background: $ebola-color;
+  }
+
+  & .count-value {
+    color: $ebola-lt;
+  }
+}
+
+#sample {
+  & .counts {
+    background: accent-redder(800);
+  }
+
+  & .count-value {
+    color: accent-redder(100);
+  }
 }
 
 .section-title {
@@ -183,7 +214,7 @@ i.section-icon {
 }
 
 .patient .section-icon {
-  color: $ebola-color;
+  color: $ebola-dk;
 }
 
 .data .section-icon {
@@ -196,7 +227,7 @@ i.section-icon {
 
 .about-group.container {
   margin-bottom: 50px;
-  max-width: 600px;
+  max-width: 850px;
 }
 
 .about-title {
@@ -218,5 +249,11 @@ i.section-icon {
 }
 
 .who-are-we {
-    margin-top: 50px;
+  margin-top: 50px;
+  margin-left: 55px;
+  margin-right: 55px;
+}
+
+.link-container {
+  flex-grow: 1;
 }

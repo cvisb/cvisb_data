@@ -19,6 +19,7 @@ export class PatientHlaComponent implements OnChanges {
   selectedLocus: string;
   selectedAllele: string;
   backgroundColor: string;
+  publishers: Object[];
 
   @Input() files: any[];
 
@@ -42,18 +43,16 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    let hla: any;
-    let hla_data = this.hlaSvc.getpatientHLA(this.patient.patientID);
+    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
+      let hla_data = res['data'];
+      this.publishers = res['publisher'];
 
-    if (hla_data.length > 0) {
-      this.genotype = hla_data.map(d => d.allele);
-
-      // if (this.patient.availableData) {
-      //   hla = this.patient.availableData.filter((d: any) => d.identifier === 'hla');
-      //   this.genotype = hla.length === 1 ? hla[0]['data'] : null;
-    } else {
-      this.genotype = null;
-    }
+      if (hla_data.length > 0) {
+        this.genotype = hla_data.map((d: any) => d.allele);
+      } else {
+        this.genotype = null;
+      }
+    });
   }
 
   sendLocus(event, locus: string) {

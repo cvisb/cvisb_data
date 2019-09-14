@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./terms.component.scss']
 })
 export class TermsComponent implements OnInit {
-  updated_date: string = '2019-06-05';
+  updated_date: string = '2019-09-10';
 
   constructor(private titleSvc: Title, private route: ActivatedRoute) {
     // set page title

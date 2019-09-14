@@ -1,7 +1,13 @@
 <h4 class="patient" id="demographics">demographics</h4>
 
-<div>
-  sex: <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender }}</span>
+<div class="species" *ngIf="patient.species">
+  <span class="variable-label">species: </span>
+  <span class="variable-value">{{patient.species}}</span>
+</div>
+
+<div class="sex">
+  <span class="variable-label">sex: </span>
+  <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender }}</span>
   <!-- <span class="sex" [ngClass]="patient.gender">
   <span *ngIf="patient.gender === 'Female'"><i class="fas fa-venus"></i></span>
   <span *ngIf="patient.gender === 'Male'"><i class="fas fa-mars"></i></span>
@@ -9,15 +15,15 @@
 </div>
 
 <div class="age">
-  age:
+  <span class="variable-label">age:</span>
   <span class="variable-value">{{ patient.age }}</span>
 </div>
 
 <div class="country container" [ngClass]="patient.country['name']">
-  <span class="variable-field">location:</span>
+  <span class="variable-label">location:</span>
   <span class="variable-value">
-    <span *ngFor="let area of patient.homeLocation">
-      {{ area['name'] }} {{ area['administrativeType'] }},
+    <span *ngIf="patient.admin2">
+      {{patient.admin2.name}},
     </span> {{ patient.country['name'] }} </span>
 
   <svg-icon [icon]="patient.country['identifier']" class="country-icon" [ngClass]="patient.country['identifier']" *ngIf="patient.country['identifier']"></svg-icon>
@@ -25,11 +31,11 @@
 
 
 <div class="pregnant" *ngIf="patient.gender == 'Female'">
-  pregnant:
+  <span class="variable-label">pregnant:</span>
   <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
 </div>
 
 <div class="occupation" *ngIf="patient.occupation">
-  occupation:
+  <span class="variable-label">occupation:</span>
   <span class="variable-value">{{ patient.occupation }}</span>
 </div>

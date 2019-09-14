@@ -93,6 +93,7 @@ export_weirdos, export_id_weirdos):
 # Function to read the data.
 def read_data(filename):
     df = pd.read_csv(filename)
+
     print("\t" + str(len(df)) + " acute lassa patients imported")
     return(df)
 
@@ -120,13 +121,7 @@ def mergeMetadata(df, ids):
     df_merged['cohort'] = "Lassa"
 
     # --- infection year ---
-    # df_merged['infectionYear'] = df_merged.apply(helpers.getInfectionYear, axis = 1)
-    df_merged['infectionYear'] = pd.np.nan
-    df_merged['infectionDate'] = pd.NaT
-    df_merged['onsetYear'] = pd.np.nan
-    df_merged['daysOnset'] = pd.np.nan
-    df_merged['daysOnset2Discharge'] = pd.np.nan
-    df_merged['converted_onsetDate'] = pd.NaT
+    df_merged['infectionYear'] = df_merged.apply(helpers.getInfectionYear, axis = 1)
 
     # Add in checks
     df_merged['hasPatientData'] = df_merged._merge.apply(lambda x: x != "right_only")
@@ -186,6 +181,10 @@ def cleanAcute(filename):
     # -- elisas --
     df['elisa'] = df.apply(helpers.nestELISAs, axis = 1)
 
+    # --- admin2 ---
+    df['admin2'] = df.District.apply(helpers.cleanDistrict)
+    df['homeLocation'] = df.admin2.apply(helpers.listify)
+
     # -- admit status --
     # Waiting from John to hear what the differences are between these two vars.
     # # fix cases
@@ -206,17 +205,23 @@ def cleanAcute(filename):
 
     # --- time variables: convert all to python objects and then standardized YYYY-MM-DD dates ---
     df['converted_evalDate'] = df.evaldate_lba1.apply(helpers.convertExcelDate)
+    df['converted_admitDate'] = df.DOAdm.apply(helpers.convertExcelDate)
     df['converted_dischargeDate'] = df.DateofDischarge.apply(helpers.convertExcelDate)
-    # df['converted_onsetDate'] = df.apply(helpers.convertExcelDateNum, axis = 1) # missing from 2019-06-12 data
+
     df['evalDate'] = df.converted_evalDate.apply(helpers.dates2String)
     df['dischargeDate'] = df.converted_dischargeDate.apply(helpers.dates2String)
-    # df['infectionDate'] = df.converted_onsetDate.apply(helpers.dates2String)
+
     df['evalYear'] = df.converted_evalDate.apply(helpers.getYearfromDate)
     df['dischargeYear'] = df.converted_dischargeDate.apply(helpers.getYearfromDate)
-    # df['onsetYear'] = df.converted_onsetDate.apply(helpers.getYearfromDate)
-    # df['daysOnset'] = df.apply(helpers.calcOnset, axis=1)
+    df['daysOnset'] = df.duration # 2019-06-12 data has as separate column
+    # df['daysOnset'] = df.apply(helpers.calcOnset, axis=1) # outdated as of 2019-06-12
+
+    df['converted_onsetDate'] = df.apply(helpers.calcOnsetDate, axis = 1) # missing from 2019-06-12 data
+    df['onsetYear'] = df.converted_onsetDate.apply(helpers.getYearfromDate)
+    df['infectionDate'] = df.converted_onsetDate.apply(helpers.dates2String)
+
     df['daysInHospital'] = df.apply(helpers.calcHospitalStay, axis=1)
-    # df['daysOnset2Discharge'] = df.apply(helpers.calcOnsetDischargeGap, axis=1)
+    df['daysOnset2Discharge'] = df.apply(helpers.calcOnsetDischargeGap, axis=1)
 
 
     return(df)

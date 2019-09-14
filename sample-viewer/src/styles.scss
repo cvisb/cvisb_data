@@ -8,7 +8,7 @@
 
 body {
   font-family: $font-default;
-  font-weight: 300;
+  font-weight: 400;
   color: $default-color;
   margin: 0;
 }
@@ -84,6 +84,10 @@ a {
     word-spacing: 0.15em;
     text-shadow: 5px 5px 7px $grey-200;
   }
+}
+
+.variable-label {
+  font-weight: 300;
 }
 
 .variable-value {
@@ -222,10 +226,11 @@ a {
 
 .keyword {
   background: $grey-50;
-  margin: 0 5px;
+  margin: 0 5px 3px;
   font-size: x-small;
   padding: 3px 5px;
   font-weight: 400;
+  white-space: nowrap;
 }
 // --- icons ---
 // --- sex ---
@@ -262,6 +267,18 @@ svg-icon.country-icon {
   &.LR {
     fill: $liberia-red;
   }
+
+  &.TG {
+    fill: $togo-yellow;
+  }
+
+  &.ML {
+    fill: $mali-red;
+  }
+
+  &.CI {
+    fill: $cote-divoire-orange;
+  }
 }
 
 .hla-icon,
@@ -279,13 +296,11 @@ svg-icon.country-icon {
 
 .filter-container {
   display: flex;
-  // background: red;
   padding: 5px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  border-bottom: 10px solid $grey-200;
-
+  // border-bottom: 10px solid $grey-200;
   &.inactive {
     opacity: 0.4;
   }
@@ -569,4 +584,17 @@ button.stepper-button {
 
 .hidden {
   display: none;
+}
+// Font size for all tables
+
+th.mat-header-cell {
+  font-size: 14px !important;
+}
+
+.dataset-container {
+  margin-left: 9.5em;
+}
+
+.header, .footer {
+    z-index: 1000;
 }

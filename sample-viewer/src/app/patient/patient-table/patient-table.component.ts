@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
-import { PatientsDataSource, RequestParametersService, ApiService, GetPatientsService } from '../../_services/';
-import { Patient, PatientArray, RequestParamArray } from '../../_models';
+import { PatientsDataSource, RequestParametersService, AuthService, GetPatientsService } from '../../_services/';
+import { AuthState, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -19,7 +19,10 @@ export class PatientTableComponent implements OnInit {
   selectedLength: number;
   qParams: HttpParams;
 
-  displayedColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
+  displayedColumns: string[];
+  // sID, gID irrelevant when not logged in
+  publicColumns: string[] = ['patientID', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
+  privateColumns: string[] = ['gID', 'sID', 'patientID', 'associatedSamples', 'cohort', 'outcome', 'elisa', 'country', 'age', 'gender', 'relatedTo', 'availableData'];
 
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,14 +32,20 @@ export class PatientTableComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private requestSvc: RequestParametersService,
-    private apiSvc: ApiService,
-    private patientSvc: GetPatientsService
+    private patientSvc: GetPatientsService,
+    private authSvc: AuthService
   ) {
-
-
-    route.data.subscribe(params => {
+    this.route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
     });
+
+    this.authSvc.authState$.subscribe((status: AuthState) => {
+      if (status.authorized) {
+        this.displayedColumns = this.privateColumns;
+      } else {
+        this.displayedColumns = this.publicColumns;
+      }
+    })
   }
 
   ngOnInit() {
@@ -61,7 +70,7 @@ export class PatientTableComponent implements OnInit {
       // console.log(qParams)
 
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(this.qParams);
+      // console.log(this.qParams);
       this.loadPatientPage();
     })
 
@@ -76,7 +85,7 @@ export class PatientTableComponent implements OnInit {
       this.sort.active, this.sort.direction);
   }
 
-  selectRow($event, row) {
+  selectRow(_, row) {
     this.router.navigate(['/patient', row.patientID]);
   }
 

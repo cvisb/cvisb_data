@@ -12,7 +12,7 @@ import { getDatasetsService, FileMetadataService } from '../_services';
 })
 
 export class DatasetPageComponent implements OnInit {
-  private dsid: string; // file ID
+  // private dsid: string; // file ID
   private datasets: any[];
   dataset: any;
   // schema_dataset: any;
@@ -20,13 +20,12 @@ export class DatasetPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private meta: Meta,
     private titleSvc: Title,
-    private datasetSvc: getDatasetsService,
+    // private datasetSvc: getDatasetsService,
     // private mdSvc: FileMetadataService,
   ) {
   }
 
   ngOnInit() {
-    // console.log(this.route.snapshot.data)
     // fetch dataset data from resolver.
     this.dataset = this.route.snapshot.data['datasetData'];
 

@@ -168,6 +168,7 @@
                         - SRA
                         - AWS
                         - GitHub
+                        - GenBank
   authenticated:         false
 
 - "@id":                 cvisb:contentUrlIdentifier

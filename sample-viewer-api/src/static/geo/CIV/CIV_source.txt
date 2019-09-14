@@ -1,0 +1,9 @@
+Cote d'Ivoire boundardies downloaded 8 September 2019 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/cote-d-ivoire-administrative-level-0-3-boundaries-and-points
+from UN-OCHA's boundaries; last updated August 2019
+
+Mapshaper simplification
+xl: none
+lg: 3.4%
+md: 1.4%
+sm: 0.59%

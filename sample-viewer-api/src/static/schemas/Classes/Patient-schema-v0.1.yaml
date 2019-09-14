@@ -46,6 +46,26 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:species
+  "@type":               rdf:Property
+  rdfs:comment:          "Species of patient (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)"
+  rdfs:label:            species
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  schema:Enumeration:
+                        - "Homo sapiens"
+                        - "Hylomyscus pamfi"
+                        - "Mastomys erythroleucus"
+                        - "Mastomys natalensis"
+                        - "rodent"
+                        - null
+  authenticated:         false
+
 # alternate identifier
 - "@id":                 cvisb:alternateIdentifier
   "@type":               rdf:Property
@@ -634,17 +654,17 @@
 
 
 # ELISAs
-- "@id":                 cvisb:elisa
-  "@type":               rdf:Property
-  rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
-  rdfs:label:            elisa
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             cvisb:ELISA
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
+# - "@id":                 cvisb:elisa
+#   "@type":               rdf:Property
+#   rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
+#   rdfs:label:            elisa
+#   schema:domainIncludes:
+#     - "@id":             cvisb:Patient
+#   schema:rangeIncludes:
+#     - "@id":             cvisb:ELISA
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
 
 # RDT:                   rapid diagnostic tests
 - "@id":                 cvisb:rapidDiagostics

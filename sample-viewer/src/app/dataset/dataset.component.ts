@@ -1,10 +1,9 @@
-import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { getDatasetsService, AuthService } from '../_services';
+import { getDatasetsService } from '../_services';
 
 @Component({
   selector: 'app-dataset',
@@ -21,18 +20,14 @@ export class DatasetComponent implements OnInit {
   constructor(
     private datasetSvc: getDatasetsService,
     private titleSvc: Title,
-    private route: ActivatedRoute,
-    private authSvc: AuthService
+    private route: ActivatedRoute
   ) {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    datasetSvc.getDatasets().subscribe((datasets) => {
+    this.datasetSvc.getDatasets().subscribe((datasets) => {
       this.datasets = datasets;
-      // console.log(this.datasets);
     });
-
-
   }
 
   ngOnInit() {

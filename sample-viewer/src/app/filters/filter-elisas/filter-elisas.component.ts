@@ -31,15 +31,31 @@ export class FilterElisasComponent implements OnInit {
     private fb: FormBuilder,
     private requestSvc: RequestParametersService) {
     this.elisaForm.valueChanges.subscribe(val => {
+      console.log(val.elisaGrps)
+      // hard reset of params; otherwise ELISA has a "AND" issue
+      // this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: [] });
       this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: val.elisaGroups });
     })
   }
 
   ngOnInit() {
+    switch (this.endpoint) {
+      case "patient":
+        this.requestSvc.patientParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+
+      case "sample":
+        this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.checkParams(params);
+        })
+        break;
+    }
   }
 
-// Get method to grab the formArray within formGroup
-// https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
+  // Get method to grab the formArray within formGroup
+  // https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
   get elisaArray() {
     return this.elisaForm.get('elisaGroups') as FormArray;;
   }
@@ -65,5 +81,19 @@ export class FilterElisasComponent implements OnInit {
     this.elisaGrps.removeAt(idx);
   }
 
+  // Used to reset, when the filters are cleared.
+  checkParams(params) {
+    if (params.length === 0) {
+      // this.elisaGrps = this.elisaArray;
+      //
+      // // clear
+      // for (let i = 0; i < this.elisaGrps.length; i++) {
+      //   this.elisaGrps.removeAt(i);
+      // }
+      //
+      // // re-intialize
+      // this.elisaGrps.push(this.createGroup());
+    }
+  }
 
 }

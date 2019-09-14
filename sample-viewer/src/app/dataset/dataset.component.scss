@@ -1,5 +1,6 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
+$icon-size: 35px;
 
 .grid-container {
   display: grid;
@@ -30,4 +31,46 @@
   color: $lassa-md;
   -webkit-text-stroke-color: $lassa-color;
   -webkit-text-stroke-width: 1px;
+}
+
+.count-pair {
+  background: $lassa-dk;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 5px;
+  height: 3.25em;
+}
+
+.count-value {
+  color: $lassa-lt;
+  font-size: 2.5em;
+  margin-right: 15px;
+}
+
+.count-label {
+  color: white;
+}
+
+.dataset {
+  margin-bottom: 50px;
+}
+
+.container-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+svg-icon {
+  height: $icon-size;
+  width: $icon-size;
+  vertical-align: middle;
+}
+
+h4 {
+  margin-top: 8px;
+  margin-left: 13px;
+}
+
+.container-title {
+  align-items: center;
 }
