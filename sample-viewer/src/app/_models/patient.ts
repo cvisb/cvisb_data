@@ -83,8 +83,8 @@ export class PatientDownload {
     this.gID = patient.gID ? patient.gID.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
-    this.country = patient.country['name'];
-    this.admin2 = patient.admin2['name'];
+    this.country = patient.country ? patient.country['name'] : null;
+    this.admin2 = patient.admin2 ? patient.admin2['name'] : null;
     this.species = patient.species;
     this.gender = patient.gender;
     this.age = patient.age;

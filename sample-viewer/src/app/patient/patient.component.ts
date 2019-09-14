@@ -19,7 +19,6 @@ export class PatientComponent implements OnInit {
     private authSvc: AuthService,
     private patientSvc: GetPatientsService,
     private titleSvc: Title) {
-    console.log("loading patient component");
     route.data.subscribe(params => {
       // change the title of the page
       titleSvc.setTitle(params.title);
