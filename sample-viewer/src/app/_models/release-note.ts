@@ -1,10 +1,10 @@
 export class ReleaseNote {
-  dateReleased: string;
+  datePublished: string;
   version: string;
-  notes: Note[];
+  description: Note[];
 }
 
 export class Note {
   endpoint: string;
-  note: string[];
+  description: string[];
 }

@@ -15,26 +15,26 @@ export class GetDatacatalogService {
   cvisbCatalog: Object;
   releaseNotes: ReleaseNote[] = [
     {
-      dateReleased: "2019-09-15",
+      datePublished: "2019-09-15",
       version: "0.1.0",
-      notes: [
+      description: [
         {
           endpoint: "Data",
-          note: ["Initial publication of HLA data",
+          description: ["Initial publication of HLA data",
             "Initial publication of aligned Lassa viral sequencing data"
           ]
         },
         {
           endpoint: "Patient metadata",
-          note: [
+          decsription: [
             "Added Lassa acute patients and metadata",
             "Added Ebola survivor patients and metadata",
-            "Added Lassa survivor patients basic data",
+            "Added Lassa survivor patients basic data"
           ]
         },
         {
           endpoint: "Samples and sample metadata",
-          note: [
+          description: [
             "Added samples from June/July 2018 trip to Kenema Government Hospital in Sierra Leone",
             "Added samples from January 2019 trip to Kenema Government Hospital in Sierra Leone"
           ]
@@ -45,7 +45,7 @@ export class GetDatacatalogService {
 
   constructor(private apiSvc: ApiService) {
 
-    apiSvc.getPaginated("datacatalog", new HttpParams().set("q", "__all__")).subscribe(res => {
+    this.apiSvc.getPaginated("datacatalog", new HttpParams().set("q", "__all__")).subscribe(res => {
       this.dataCatalog = res['hits'];
       this.cvisbCatalog = this.dataCatalog.filter(d => d['identifier'] === "https://data.cvisb.org/")[0];
       this.dataModified = this.cvisbCatalog['dateModified'];
