@@ -26,7 +26,7 @@ export class GetDatacatalogService {
         },
         {
           endpoint: "Patient metadata",
-          decsription: [
+          description: [
             "Added Lassa acute patients and metadata",
             "Added Ebola survivor patients and metadata",
             "Added Lassa survivor patients basic data"
