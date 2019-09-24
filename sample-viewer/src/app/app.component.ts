@@ -32,7 +32,7 @@ export class AppComponent {
   loading: boolean = false;
 
   links: Object[] = [
-    { 'path': 'home', 'label': 'home', 'selected': true },
+    // { 'path': 'home', 'label': 'home', 'selected': true },
     { 'path': 'dataset', 'label': 'data', 'selected': false },
     { 'path': 'patient', 'label': 'patients', 'selected': false },
     { 'path': 'sample', 'label': 'samples', 'selected': false },

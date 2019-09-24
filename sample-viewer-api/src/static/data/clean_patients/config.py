@@ -1,5 +1,5 @@
 # <<< config.py >>>
-# @name:        config
+# @name:        config.py
 # @summary:     config file to assemble CViSB patient roster
 # @description: stores file names, other constants for import/merging/checking of CViSB patient info.
 # @inputs:      none

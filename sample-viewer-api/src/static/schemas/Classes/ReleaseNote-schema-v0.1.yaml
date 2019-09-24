@@ -1,0 +1,60 @@
+# Forked from https://github.com/data2health/schemas/blob/master/ReleaseNote/ReleaseNote.yaml
+# Schema built on top of https://schema.org/Patient
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/ReleaseNote/0.1"
+#
+# "@graph":
+- "@id":                 cvisb:ReleaseNote
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing the ReleaseNote for the Center for Viral Systems Biology experiments
+  rdfs:label:            ReleaseNote
+  rdfs:subClassOf:
+    "@id":               schema:ReleaseNote
+  schema:isPartOf:
+    "@id":               https://data.cvisb.org/schema
+  schema:sameAs:
+    "@id":               schema:ReleaseNote
+  root_entity:           true
+
+# name
+- "@id":                 cvisb:endpoint
+  "@type":               rdf:Property
+  rdfs:comment:          Which part of the website has been updated.
+  rdfs:label:            endpoint
+  schema:domainIncludes:
+    - "@id":             cvisb:ReleaseNote
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+# name
+- "@id":                 cvisb:description
+  "@type":               rdf:Property
+  rdfs:comment:          Explanation of what was changed in the release
+  rdfs:label:            description
+  schema:domainIncludes:
+    - "@id":             cvisb:ReleaseNote
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       many
+  marginality:           required
+  authenticated:         false

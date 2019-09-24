@@ -286,6 +286,18 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:releaseNotes
+  "@type":               rdf:Property
+  rdfs:comment:
+  rdfs:label:            releaseNotes
+  schema:domainIncludes:
+    - "@id":             cvisb:DataCatalog
+  schema:rangeIncludes:
+    - "@id":             cvisb:ReleaseSummary
+  owl:cardinality:       many
+  marginality:           required
+  authenticated:         false
+
 - "@id":                 cvisb:schemaVersion
   "@type":               rdf:Property
   rdfs:comment:          Version of DataCatalog schema

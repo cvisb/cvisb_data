@@ -26,14 +26,14 @@
         CViSB version {{release.version }}
       </div>
       <div class="updated">
-        published {{release.dateReleased | date: "d MMMM y"}}
+        published {{release.datePublished | date: "d MMMM y"}}
       </div>
     </div>
 
     <div *ngFor="let notes of release.notes">
       <h4>{{ notes.endpoint }}</h4>
       <ul class="release">
-        <li *ngFor="let note of notes.note">
+        <li *ngFor="let note of description.description">
           {{ note }}
         </li>
       </ul>
