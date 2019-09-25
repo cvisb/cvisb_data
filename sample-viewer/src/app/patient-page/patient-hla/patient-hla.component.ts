@@ -45,11 +45,9 @@ export class PatientHlaComponent implements OnChanges {
 
   ngOnChanges() {
     this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
-      console.log(res)
       let hla_data = res['data'];
       this.publishers = res['publisher'];
       this.dateModified = res['dateModified'];
-      console.log(this.dateModified)
 
       if (hla_data.length > 0) {
         this.genotype = hla_data.map((d: any) => d.allele);
