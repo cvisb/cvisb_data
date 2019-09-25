@@ -22,7 +22,6 @@ export class GetDatacatalogService {
       let catalog = this.dataCatalog.filter(d => d['identifier'] === "https://data.cvisb.org/");
 
       if (catalog && catalog.length > 0){
-        console.log(catalog)
         this.cvisbCatalog = catalog[0];
 
         this.dataModified = this.cvisbCatalog['dateModified'];

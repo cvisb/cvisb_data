@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   experimentCount: Object[] = [];
   releaseVersion: string;
   cvisbCatalog: Object;
-  releaseNotes: ReleaseNote[];
+  releaseSummary: ReleaseNote[];
 
   // connection between measurementTechnique and /dataset/{dsid}
   exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     if (this.cvisbCatalog) {
       this.releaseVersion = this.cvisbCatalog['releaseVersion'];
     }
-    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
+    this.releaseSummary = this.dataCatalogSvc.releaseNotes;
 
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;

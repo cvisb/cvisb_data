@@ -173,7 +173,10 @@
         More about our data
       </div>
       <div class="description">
-        <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].datePublished | date: "d MMMM y"}}. See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
+        <ng-container *ngIf="releaseVersion && releaseNotes && releaseNotes.length > 0">
+          <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseSummary[0].datePublished | date: "d MMMM y"}}.
+        </ng-container>
+        See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
         our data and their limitations.
       </div>
     </div>
