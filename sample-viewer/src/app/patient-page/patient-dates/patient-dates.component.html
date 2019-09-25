@@ -17,17 +17,20 @@
     <div class="container-column container-left hospital-dates" *ngIf="authorized && patient.outcome !== 'contact'">
 
       <div id="infection-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
         <span class="variable-label">onset of symptoms:
         </span>
         <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange) : "unknown"}}</span>
       </div>
 
       <div id="evaluation-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
         <span class="variable-label">hospital evaluation:</span>
         <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange) : "unknown"}}</span>
       </div>
 
       <div id="discharge-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
         <span class="variable-label">hospital discharge:</span>
         <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange) : "unknown"}}</span>
       </div>
