@@ -48,7 +48,7 @@ export class GetHlaDataService {
   getHLAdata(patientID?: string): Observable<Object[]> {
     let params = new HttpParams()
       .set("q", 'measurementTechnique:"HLA sequencing"')
-      .set("fields", "data, publisher");
+      .set("fields", "data, publisher, dateModified");
 
     if (patientID) {
       params = params.append("patientID", `"${patientID}"`);
@@ -61,8 +61,9 @@ export class GetHlaDataService {
         // make sure to remove any expts which lack a data object
         let data = res['hits'].flatMap(d => d.data).filter(d => d);
         let publisher = res['hits'].flatMap(d => d.publisher).filter(d => d);
+        let dateModified = res['hits'].map(d => d.dateModified).join();
 
-        return ({ data: data, publisher: publisher })
+        return ({ data: data, publisher: publisher, dateModified: dateModified })
       }
       ))
   }
