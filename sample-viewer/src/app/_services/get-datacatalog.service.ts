@@ -24,7 +24,9 @@ export class GetDatacatalogService {
 
       this.releaseNotes = this.cvisbCatalog['releaseNotes'];
 
-      this.releaseNotes.sort((a, b) => a.version > b.version ? -1 : 1);
+      if (this.releaseNotes) {
+        this.releaseNotes.sort((a, b) => a.version > b.version ? -1 : 1);
+      }
     })
 
 
