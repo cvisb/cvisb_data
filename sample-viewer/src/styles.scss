@@ -370,7 +370,11 @@ svg-icon.country-icon {
   color: white;
 }
 
-.cohort.Unknown,
+.cohort.Unknown {
+  background-color: $grey-100;
+  border: $grey-600 1px solid;
+}
+
 .cohort.Control {
   background-color: $grey-400;
   color: white;
@@ -413,7 +417,7 @@ svg-icon.country-icon {
       color: $ebola-dk;
     }
 
-    &.control {
+    &.control, &.Control, &.Unknown {
       color: $default-color;
     }
   }
