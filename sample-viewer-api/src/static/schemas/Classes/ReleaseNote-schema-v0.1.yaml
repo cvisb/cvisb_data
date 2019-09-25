@@ -31,7 +31,6 @@
     "@id":               https://data.cvisb.org/schema
   schema:sameAs:
     "@id":               schema:ReleaseNote
-  root_entity:           true
 
 # name
 - "@id":                 cvisb:endpoint
