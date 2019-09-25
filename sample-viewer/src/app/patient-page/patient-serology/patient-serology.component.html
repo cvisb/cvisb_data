@@ -3,7 +3,7 @@
 
 <ng-container *ngIf="data; else nodata">
   <div class="updated">
-    updated: {{data.dateModified ? (data.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+    updated {{data.dateModified ? (data.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
   </div>
 
   <div class="serology-files">

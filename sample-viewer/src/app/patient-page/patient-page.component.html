@@ -21,7 +21,7 @@
       <div class="container patient-ids">
         <div class="container-column column-left">
           <div class="updated">
-            updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+            updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
           </div>
 
           <div class="altIDs">

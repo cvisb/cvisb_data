@@ -17,7 +17,7 @@
       </div>
 
       <div class="updated">
-        updated: {{dateModified ? (dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+        updated {{dateModified ? (dateModified | date: 'd MMMM yyyy') : 'unknown'}}
       </div>
 
       <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">

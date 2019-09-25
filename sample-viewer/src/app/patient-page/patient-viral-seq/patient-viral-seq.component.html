@@ -33,7 +33,7 @@
         </div>
 
         <div class="updated">
-          updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
+          updated {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
         </div>
       </div>
 
