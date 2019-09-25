@@ -19,46 +19,65 @@
 
       <!-- IDS -->
       <div class="container patient-ids">
-        <div class="container-column column-left">
-          <div class="updated">
-            updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
-          </div>
-
-          <div class="altIDs">
-            public ID: <span class="altID variable-value">{{ patientID }}</span>
-          </div>
-
-          <div class="altIDs" *ngIf="patient.alternateIdentifier">
-            all IDs:
-            <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">
-              {{ id }}
-            </span>
-          </div>
+        <div class="altIDs">
+          public ID: <span class="altID variable-value">{{ patientID }}</span>
         </div>
 
-        <!-- DATES -->
-        <div class="container-column column-right">
-          <app-patient-dates [patient]="patient"></app-patient-dates>
+        <div class="altIDs" *ngIf="patient.alternateIdentifier">
+          all IDs:
+          <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">
+            {{ id }}
+          </span>
         </div>
+
+
+
+
+
 
       </div>
 
       <!-- METADATA -->
       <div class="container patient-metadata">
+
+        <div class="container patient-changelog">
+          <div class="updated">
+            updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+
+            <button mat-button-raised>view changes</button>
+          </div>
+
+          <div class="container embargoed">
+            <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
+              <i class="fas fa-stopwatch"></i>
+              embargoed
+            </div>
+          </div>
+
+
+        <div class="source">
+          <span class="variable-label">source:</span>
+          <span class="variable-value">Center for Viral Systems Biology</span>
+        </div>
+
+        </div>
+
+
         <div class="container-column patient-demographics">
           <app-patient-demographics [patient]="patient"></app-patient-demographics>
           <app-patient-relationships [patient]="patient"></app-patient-relationships>
           <app-patient-related [patient]="patient"></app-patient-related>
         </div>
 
-        <app-patient-samples [patient]="patient"></app-patient-samples>
-
-
-        <app-patient-elisas [patient]="patient"></app-patient-elisas>
+        <!-- DATES -->
+        <app-patient-dates [patient]="patient"></app-patient-dates>
 
         <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
 
       </div>
+
+
+      <app-patient-samples [patient]="patient"></app-patient-samples>
 
       <!-- CITATIONS -->
       <div class="patient-citations">
@@ -73,9 +92,11 @@
         <!-- icons of available experiments -->
         <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
           <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
-            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'" ></svg-icon>
+            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
         </div>
+
+        <app-patient-elisas [patient]="patient"></app-patient-elisas>
 
         <div id="HLA-sequencing">
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>

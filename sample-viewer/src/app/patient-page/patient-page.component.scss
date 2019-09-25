@@ -102,4 +102,7 @@
   color: $grey-400;
   font-size: 1.25em;
   text-transform: uppercase;
+  &:not(:first-of-type) {
+    margin-left: 50px;
+  }
 }

@@ -417,7 +417,9 @@ svg-icon.country-icon {
       color: $ebola-dk;
     }
 
-    &.control, &.Control, &.Unknown {
+    &.Control,
+    &.Unknown,
+    &.control {
       color: $default-color;
     }
   }
@@ -599,6 +601,34 @@ th.mat-header-cell {
   margin-left: 9.5em;
 }
 
-.header, .footer {
-    z-index: 1000;
+.footer,
+.header {
+  z-index: 1000;
+}
+// common tags for data
+
+.private-icon {
+  background: $grey-225;
+  padding: 5px;
+  color: $grey-500;
+  margin-right: 4px;
+  border-radius: 4px;
+}
+
+.embargoed-icon {
+  background: $grey-400;
+  background: accent-redder(A400);
+  padding: 5px;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8em;
+  display: flex;
+  margin: 5px 0;
+
+  & i {
+    color: $grey-100;
+    color: accent-redder(300);
+    margin-right: 4px;
+    font-size: 18px;
+  }
 }

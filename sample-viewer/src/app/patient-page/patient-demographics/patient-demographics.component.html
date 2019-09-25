@@ -31,11 +31,13 @@
 
 
 <div class="pregnant" *ngIf="patient.gender == 'Female'">
+  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
   <span class="variable-label">pregnant:</span>
   <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
 </div>
 
 <div class="occupation" *ngIf="patient.occupation">
+  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
   <span class="variable-label">occupation:</span>
   <span class="variable-value">{{ patient.occupation }}</span>
 </div>

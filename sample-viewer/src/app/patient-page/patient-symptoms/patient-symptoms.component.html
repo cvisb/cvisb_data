@@ -1,6 +1,8 @@
 <div class="patient symptoms" *ngIf="patient.symptoms">
 
-  <h4 class="patient" id="symptoms">Observed symptoms</h4>
+  <h4 class="patient" id="symptoms">
+    <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+    Observed symptoms</h4>
 
   <div class="symptom-timepoint" *ngFor="let timepoint of patient.symptoms">
     <div class="timepoint">
