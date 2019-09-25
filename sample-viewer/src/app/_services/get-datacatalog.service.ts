@@ -19,9 +19,10 @@ export class GetDatacatalogService {
 
     this.apiSvc.getPaginated("datacatalog", new HttpParams().set("q", "__all__")).subscribe(res => {
       this.dataCatalog = res['hits'];
-      let catalog = this.dataCatalog.filter(d => d['identifier'] === "https://data.cvisb.org/")
+      let catalog = this.dataCatalog.filter(d => d['identifier'] === "https://data.cvisb.org/");
+
       if (catalog && catalog.length > 0){
-        this.cvisbCatalog = this.cvisbCatalog[0];
+        this.cvisbCatalog = catalog[0];
 
         this.dataModified = this.cvisbCatalog['dateModified'];
 
