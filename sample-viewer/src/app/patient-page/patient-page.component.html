@@ -23,67 +23,91 @@
           public ID: <span class="altID variable-value">{{ patientID }}</span>
         </div>
 
-        <div class="altIDs" *ngIf="patient.alternateIdentifier">
-          all IDs:
-          <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">
-            {{ id }}
-          </span>
+        <div class="altIDs" *ngIf="patient.alternateIdentifier">all IDs:<span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">{{ id }}</span>
         </div>
-
-
-
-
-
-
       </div>
 
-      <!-- METADATA -->
-      <div class="container patient-metadata">
+      <!-- DEMOGRAPHICS -->
+      <mat-expansion-panel id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Demographics
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-        <div class="container patient-changelog">
-          <div class="updated">
-            updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+        <div class="container patient-metadata">
 
-            <button mat-button-raised>view changes</button>
-          </div>
+          <div class="container patient-changelog">
+            <div class="updated">
+              updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
 
-          <div class="container embargoed">
-            <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
-              <i class="fas fa-stopwatch"></i>
-              embargoed
+              <button mat-button mat-stroked-button>view changes</button>
             </div>
+
+            <div class="container embargoed">
+              <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
+                <i class="fas fa-stopwatch"></i>
+                embargoed
+              </div>
+            </div>
+
+
+            <div class="source">
+              <span class="variable-label">source: </span>
+              <span class="variable-value">Center for Viral Systems Biology</span>
+            </div>
+
           </div>
 
 
-        <div class="source">
-          <span class="variable-label">source:</span>
-          <span class="variable-value">Center for Viral Systems Biology</span>
+          <div class="container-column patient-demographics">
+            <app-patient-demographics [patient]="patient"></app-patient-demographics>
+            <app-patient-relationships [patient]="patient"></app-patient-relationships>
+            <app-patient-related [patient]="patient"></app-patient-related>
+          </div>
+
+          <!-- DATES -->
+          <app-patient-dates [patient]="patient"></app-patient-dates>
         </div>
+      </mat-expansion-panel>
 
-        </div>
-
-
-        <div class="container-column patient-demographics">
-          <app-patient-demographics [patient]="patient"></app-patient-demographics>
-          <app-patient-relationships [patient]="patient"></app-patient-relationships>
-          <app-patient-related [patient]="patient"></app-patient-related>
-        </div>
-
-        <!-- DATES -->
-        <app-patient-dates [patient]="patient"></app-patient-dates>
+      <!-- SYMPTOMS  -->
+      <mat-expansion-panel id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Symptoms
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
         <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
+      </mat-expansion-panel>
 
-      </div>
+      <!-- SAMPLES  -->
+      <mat-expansion-panel id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Samples
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
+        <app-patient-samples [patient]="patient"></app-patient-samples>
+      </mat-expansion-panel>
 
-      <app-patient-samples [patient]="patient"></app-patient-samples>
 
       <!-- CITATIONS -->
-      <div class="patient-citations">
-        <h4 class="patient" id="citations">Cited in</h4>
-        <app-patient-citations [publications]="publications"></app-patient-citations>
-      </div>
+      <mat-expansion-panel id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Citations
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="patient-citations">
+          <h4 class="patient" id="citations">Cited in</h4>
+          <app-patient-citations [publications]="publications"></app-patient-citations>
+        </div>
+      </mat-expansion-panel>
+
 
 
       <!-- DATA -->

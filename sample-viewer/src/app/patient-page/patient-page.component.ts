@@ -22,6 +22,10 @@ export class PatientPageComponent implements OnInit {
   publications: any[];
   allExpts: Object[];
   exptTypes: Object[];
+  demographicsPanelState: boolean = true;
+  symptomsPanelState: boolean = true;
+  samplesPanelState: boolean = true;
+  citationsPanelState: boolean = true;
 
 
   constructor(

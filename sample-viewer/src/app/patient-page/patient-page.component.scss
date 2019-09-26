@@ -102,7 +102,23 @@
   color: $grey-400;
   font-size: 1.25em;
   text-transform: uppercase;
+
   &:not(:first-of-type) {
     margin-left: 50px;
   }
+}
+
+.patient-changelog {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.panel-title {
+  background: $grey-200;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  color: $grey-500;
+  margin-top: 10px;
+  font-weight: 300;
+  font-size: 1.15em;
 }
