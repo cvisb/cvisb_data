@@ -29,7 +29,7 @@
 
       <!-- DEMOGRAPHICS -->
       <mat-expansion-panel class="panel-group" id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
-        <mat-expansion-panel-header class="panel-header">
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
           <mat-panel-title class="panel-title">
             Demographics
           </mat-panel-title>
@@ -46,7 +46,7 @@
               </div>
 
               <div class="container embargoed">
-                <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
+                <div class="embargoed-icon" matTooltip="Demographic data embargoed for public release; do not share">
                   <i class="fas fa-stopwatch"></i>
                   embargoed
                 </div>
@@ -74,7 +74,7 @@
 
       <!-- SYMPTOMS  -->
       <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
             <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
           </mat-panel-title>
@@ -85,7 +85,7 @@
 
       <!-- SAMPLES  -->
       <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
             Samples
           </mat-panel-title>
@@ -97,7 +97,7 @@
 
       <!-- CITATIONS -->
       <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
             Citations
           </mat-panel-title>

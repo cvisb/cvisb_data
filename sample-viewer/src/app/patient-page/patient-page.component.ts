@@ -26,6 +26,7 @@ export class PatientPageComponent implements OnInit {
   symptomsPanelState: boolean = true;
   samplesPanelState: boolean = true;
   citationsPanelState: boolean = true;
+  expansionPanelHeight: string = "42px";
 
 
   constructor(

@@ -112,14 +112,16 @@
 .patient-changelog {
   width: 100%;
   justify-content: space-between;
+  margin-top: 5px;
 }
 
 .panel-group {
   margin-bottom: 10px !important;
 }
 
+.mat-expansion-panel-header,
 .panel-header {
-  background: $grey-200;
+  background: $grey-200 !important;
 }
 
 .panel-title {
@@ -137,4 +139,5 @@
   line-height: 2em;
   margin-left: 5px;
   color: $ebola-md;
+  background: lighten($ebola-lt, 12%)
 }

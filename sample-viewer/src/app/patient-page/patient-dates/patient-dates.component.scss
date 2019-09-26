@@ -7,6 +7,9 @@
 
 .date-summary {
   // margin-right: 15px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
 }
 
 .header-label {
@@ -66,3 +69,8 @@
 .missing-date {
   font-weight: 300 !important;
 }
+
+.mat-expansion-panel-body {
+    padding-top: 5px;
+    background: #eef1f4;
+  }
