@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProvenanceComponent } from './provenance/provenance.component';
+import { ProvenanceComponent } from './provenance.component';
+
+import { MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
-  declarations: [ProvenanceComponent]
+  declarations: [
+    ProvenanceComponent
+  ],
+  exports: [
+    ProvenanceComponent
+  ]
 })
 export class ProvenanceModule { }
