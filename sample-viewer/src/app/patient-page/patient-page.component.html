@@ -130,7 +130,7 @@
 
         <!-- ELISAS -->
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <div class="expt-type mat-shadow elisa">
                 <svg-icon icon="elisa" class="elisa-icon"></svg-icon>
@@ -143,7 +143,7 @@
 
         <!-- HLA -->
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <div class="expt-type mat-shadow hla">
                 <svg-icon icon="hla" class="hla-icon"></svg-icon>
@@ -154,9 +154,9 @@
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
         </mat-expansion-panel>
 
-        <!-- HLA -->
+        <!-- ViralSeq -->
         <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <div class="expt-type mat-shadow viralseq">
                 <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon>

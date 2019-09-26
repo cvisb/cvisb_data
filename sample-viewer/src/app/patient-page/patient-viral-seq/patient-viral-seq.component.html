@@ -1,5 +1,3 @@
-<h4 class="patient-data">Viral Sequencing</h4>
-
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
   <div class="sequence-group" *ngFor="let seq of sequences">
     <ng-container *ngFor="let data of seq.data">

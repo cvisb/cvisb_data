@@ -31,6 +31,7 @@ export class PatientPageComponent implements OnInit {
   viralSeqPanelState: boolean = true;
 
   expansionPanelHeight: string = "42px";
+  dataPanelHeight: string = "55px";
 
 
   constructor(
