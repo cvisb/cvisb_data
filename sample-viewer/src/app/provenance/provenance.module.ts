@@ -23,7 +23,8 @@ import { ProvenanceTitleComponent } from './provenance-title/provenance-title.co
     ProvenanceTitleComponent
   ],
   exports: [
-    ProvenanceComponent
+    ProvenanceComponent,
+    ProvenanceTitleComponent
   ]
 })
 export class ProvenanceModule { }
