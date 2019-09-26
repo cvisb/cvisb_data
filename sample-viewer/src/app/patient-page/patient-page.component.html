@@ -31,7 +31,7 @@
       <mat-expansion-panel class="panel-group" id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
           <mat-panel-title class="panel-title">
-            <app-provenance-title title="Demographics" [embargoed]="true"></app-provenance-title>
+            <app-provenance-title class="flex-grow1" title="Demographics" [embargoed]="true"></app-provenance-title>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -53,7 +53,7 @@
         <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title title="Symptoms" [embargoed]="true" [private]="true"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Symptoms" [embargoed]="true" [private]="true"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -66,7 +66,7 @@
       <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
-            <app-provenance-title title="Samples"></app-provenance-title>
+            <app-provenance-title class="flex-grow1" title="Samples"></app-provenance-title>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -79,7 +79,7 @@
         <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title title="Citations"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Citations"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -109,10 +109,7 @@
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow elisa">
-                <svg-icon icon="elisa" class="elisa-icon"></svg-icon>
-              </div>
-              <app-provenance-title title="ELISA Data"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -124,17 +121,7 @@
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-
-
-              <span class="container-justified">
-                <div>
-                  <div class="expt-type mat-shadow hla">
-                    <svg-icon icon="hla" class="hla-icon"></svg-icon>
-                  </div>
-                  <app-provenance-title title="HLA Sequencing" [embargoed]="true"></app-provenance-title>
-                </div>
-
-              </span>
+              <app-provenance-title class="flex-grow1" title="HLA Sequencing" icon="hla" [embargoed]="true"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
@@ -144,10 +131,7 @@
         <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow viralseq">
-                <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon>
-              </div>
-              <app-provenance-title title="Viral Sequencing"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>

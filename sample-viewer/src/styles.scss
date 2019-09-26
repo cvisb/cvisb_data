@@ -30,6 +30,10 @@ body {
   flex-direction: column;
 }
 
+.flex-grow1 {
+  .flex-grow: 1;
+}
+
 .centered {
   max-width: 1000px;
   margin: auto;
@@ -626,7 +630,6 @@ th.mat-header-cell {
 .embargoed-icon {
   background: $grey-400;
   background: accent-redder(A400);
-  color: accent-redder(300);
   padding: 5px;
   color: white;
   border-radius: 4px;
@@ -639,5 +642,9 @@ th.mat-header-cell {
     color: accent-redder(300);
     margin-right: 4px;
     font-size: 18px;
+  }
+
+  i.embargoed-icon {
+    color: accent-redder(300);
   }
 }
