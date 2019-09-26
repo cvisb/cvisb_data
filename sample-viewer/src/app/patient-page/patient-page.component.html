@@ -37,145 +37,131 @@
 
         <div class="container patient-metadata">
 
-          <div class="container patient-changelog">
-            <div class="container-column">
-              <div class="updated">
-                updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+          <app-provenance embargoLabel="Demographic" [embargoed]="true"></app-provenance>
 
-                <button mat-button mat-stroked-button class="view-changes">view changes</button>
-              </div>
-
-              <div class="container embargoed">
-                <div class="embargoed-icon" matTooltip="Demographic data embargoed for public release; do not share">
-                  <i class="fas fa-stopwatch"></i>
-                  embargoed
-                </div>
-              </div>
-            </div>
-
-            <div class="source">
-              <span class="variable-label">source: </span>
-              <span class="variable-value">Center for Viral Systems Biology</span>
-            </div>
-
+          <div class="source">
+            <span class="variable-label">source: </span>
+            <span class="variable-value">Center for Viral Systems Biology</span>
           </div>
-
-
-          <div class="container patient-demographics">
-            <app-patient-demographics [patient]="patient"></app-patient-demographics>
-            <app-patient-relationships [patient]="patient"></app-patient-relationships>
-            <app-patient-related [patient]="patient"></app-patient-related>
-            <app-patient-dates [patient]="patient"></app-patient-dates>
-          </div>
-
 
         </div>
-      </mat-expansion-panel>
 
-      <!-- SYMPTOMS  -->
-      <ng-container *ngIf="patient.symptoms">
-        <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
-            <mat-panel-title class="panel-title">
-              <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
-            </mat-panel-title>
-          </mat-expansion-panel-header>
 
-          <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
-        </mat-expansion-panel>
-      </ng-container>
+        <div class="container patient-demographics">
+          <app-patient-demographics [patient]="patient"></app-patient-demographics>
+          <app-patient-relationships [patient]="patient"></app-patient-relationships>
+          <app-patient-related [patient]="patient"></app-patient-related>
+          <app-patient-dates [patient]="patient"></app-patient-dates>
+        </div>
 
-      <!-- SAMPLES  -->
-      <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+
+    </div>
+    </mat-expansion-panel>
+
+    <!-- SYMPTOMS  -->
+    <ng-container *ngIf="patient.symptoms">
+      <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
-            Samples
+            <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <app-patient-samples [patient]="patient"></app-patient-samples>
+        <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
       </mat-expansion-panel>
+    </ng-container>
+
+    <!-- SAMPLES  -->
+    <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+      <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+        <mat-panel-title class="panel-title">
+          Samples
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <app-patient-samples [patient]="patient"></app-patient-samples>
+    </mat-expansion-panel>
 
 
-      <!-- CITATIONS -->
-      <ng-container *ngIf="publications && publications.length > 0">
-        <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
-            <mat-panel-title class="panel-title">
-              Citations
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+    <!-- CITATIONS -->
+    <ng-container *ngIf="publications && publications.length > 0">
+      <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+          <mat-panel-title class="panel-title">
+            Citations
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-          <div class="patient-citations">
-            <h4 class="patient" id="citations">Cited in</h4>
-            <app-patient-citations [publications]="publications"></app-patient-citations>
-          </div>
-        </mat-expansion-panel>
-      </ng-container>
+        <div class="patient-citations">
+          <h4 class="patient" id="citations">Cited in</h4>
+          <app-patient-citations [publications]="publications"></app-patient-citations>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
 
 
-      <!-- DATA -->
-      <div class="patient-data-header">
-        <h3>Data</h3>
+    <!-- DATA -->
+    <div class="patient-data-header">
+      <h3 class="data-title">Data</h3>
 
-        <!-- icons of available experiments -->
-        <!-- <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
+      <!-- icons of available experiments -->
+      <!-- <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
           <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
         </div> -->
-      </div>
+    </div>
 
-      <div id="data" class="patient-data">
+    <div id="data" class="patient-data">
 
-        <!-- ELISAS -->
-        <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
-            <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow elisa">
-                <svg-icon icon="elisa" class="elisa-icon"></svg-icon>
-              </div>
-              ELISA data
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-patient-elisas [patient]="patient"></app-patient-elisas>
-        </mat-expansion-panel>
+      <!-- ELISAS -->
+      <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+          <mat-panel-title class="panel-title">
+            <div class="expt-type mat-shadow elisa">
+              <svg-icon icon="elisa" class="elisa-icon"></svg-icon>
+            </div>
+            ELISA data
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-patient-elisas [patient]="patient"></app-patient-elisas>
+      </mat-expansion-panel>
 
-        <!-- HLA -->
-        <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
-            <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow hla">
-                <svg-icon icon="hla" class="hla-icon"></svg-icon>
-              </div>
-              HLA sequencing
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-        </mat-expansion-panel>
+      <!-- HLA -->
+      <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+          <mat-panel-title class="panel-title">
+            <div class="expt-type mat-shadow hla">
+              <svg-icon icon="hla" class="hla-icon"></svg-icon>
+            </div>
+            HLA sequencing
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
+      </mat-expansion-panel>
 
-        <!-- ViralSeq -->
-        <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
-            <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow viralseq">
-                <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon>
-                </div>
-                Viral sequencing
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
-        </mat-expansion-panel>
+      <!-- ViralSeq -->
+      <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+          <mat-panel-title class="panel-title">
+            <div class="expt-type mat-shadow viralseq">
+              <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon>
+            </div>
+            Viral sequencing
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
+      </mat-expansion-panel>
 
-      </div>
+    </div>
 
 
 
-      <!-- <div id="Systems-Serology">
+    <!-- <div id="Systems-Serology">
           <app-patient-serology [patient]="patient"></app-patient-serology>
         </div> -->
 
-    </div>
   </div>
+</div>
 
 </div>

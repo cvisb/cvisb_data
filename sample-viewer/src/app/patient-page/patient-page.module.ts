@@ -12,6 +12,7 @@ import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoint
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FileListModule } from '../file-list/file-list.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
+import { ProvenanceModule } from '../provenance/provenance.module';
 
 // --- components ---
 import { PatientPageComponent } from './patient-page.component';
@@ -44,7 +45,8 @@ import { DatePipe } from '@angular/common';
     PatientTimepointsModule,
     FormatCitationModule,
     FileListModule,
-    AlleleCirclePackingModule
+    AlleleCirclePackingModule,
+    ProvenanceModule
   ],
   declarations: [
     PatientPageComponent,

@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProvenanceComponent } from './provenance.component';
 
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTooltipModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   declarations: [
     ProvenanceComponent

@@ -1,0 +1,15 @@
+@import '../../sass/variables.scss';
+
+.view-changes {
+  font-size: 1em;
+  padding: 0;
+  line-height: 2em;
+  margin-left: 5px;
+  color: $ebola-md;
+  background: lighten($ebola-lt, 12%)
+}
+
+.patient-changelog {
+  width: 100%;
+  justify-content: space-between;
+}

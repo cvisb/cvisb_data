@@ -1,3 +1,22 @@
-<p>
-  provenance works!
-</p>
+<div class="container patient-changelog">
+  <div class="container-column">
+    <div class="updated">
+      {{ dateModified ? 'updated' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
+
+      <button mat-button mat-stroked-button class="view-changes">view changes</button>
+    </div>
+
+    <div class="container embargoed" *ngIf="embargoed">
+      <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
+        <i class="fas fa-stopwatch"></i>
+        embargoed
+      </div>
+    </div>
+  </div>
+
+  <div class="source">
+    <span class="variable-label">source: </span>
+    <span class="variable-value">{{source}}</span>
+  </div>
+
+</div>
