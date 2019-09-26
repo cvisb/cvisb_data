@@ -29,7 +29,7 @@
 
       <!-- DEMOGRAPHICS -->
       <mat-expansion-panel id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="panel-header">
           <mat-panel-title class="panel-title">
             Demographics
           </mat-panel-title>
@@ -38,19 +38,20 @@
         <div class="container patient-metadata">
 
           <div class="container patient-changelog">
-            <div class="updated">
-              updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+            <div class="container-column">
+              <div class="updated">
+                updated {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
 
-              <button mat-button mat-stroked-button>view changes</button>
-            </div>
+                <button mat-button mat-stroked-button class="view-changes">view changes</button>
+              </div>
 
-            <div class="container embargoed">
-              <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
-                <i class="fas fa-stopwatch"></i>
-                embargoed
+              <div class="container embargoed">
+                <div class="embargoed-icon" matTooltip="embargoed for public release; do not share">
+                  <i class="fas fa-stopwatch"></i>
+                  embargoed
+                </div>
               </div>
             </div>
-
 
             <div class="source">
               <span class="variable-label">source: </span>
@@ -60,7 +61,7 @@
           </div>
 
 
-          <div class="container-column patient-demographics">
+          <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
             <app-patient-relationships [patient]="patient"></app-patient-relationships>
             <app-patient-related [patient]="patient"></app-patient-related>
@@ -75,7 +76,7 @@
       <mat-expansion-panel id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
         <mat-expansion-panel-header>
           <mat-panel-title class="panel-title">
-            Symptoms
+            <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
           </mat-panel-title>
         </mat-expansion-panel-header>
 

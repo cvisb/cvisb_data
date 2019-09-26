@@ -40,6 +40,7 @@
 }
 
 .patient-demographics {
+  width: 100%;
   justify-content: space-between;
 }
 // --- right side nav pane ---
@@ -113,12 +114,22 @@
   justify-content: space-between;
 }
 
-.panel-title {
+.panel-header {
   background: $grey-200;
-  padding: 5px 15px;
+}
+
+.panel-title {
+  // padding: 5px 15px;
+  // margin-top: 10px;
   text-transform: uppercase;
   color: $grey-500;
-  margin-top: 10px;
   font-weight: 300;
   font-size: 1.15em;
+}
+
+.view-changes {
+  font-size: 1em;
+  padding: 0;
+  line-height: 2em;
+  margin-left: 5px;
 }
