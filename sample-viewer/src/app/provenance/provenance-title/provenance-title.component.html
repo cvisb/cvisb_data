@@ -1,6 +1,6 @@
 <div class="container-justified provenance-title">
   <div class="container container-title">
-    <div [ngClass]="icon 'expt-type' 'mat-shadow'" *ngIf="icon">
+    <div [ngClass]="[icon, 'expt-type', 'mat-shadow']" *ngIf="icon">
       <svg-icon [icon]="icon" [ngClass]="icon + '-icon'"></svg-icon>
     </div>
 
