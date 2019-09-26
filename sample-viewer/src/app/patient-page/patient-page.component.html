@@ -115,31 +115,59 @@
 
 
       <!-- DATA -->
-      <div class="patient-data">
-        <h4 class="patient" id="data">Data</h4>
+      <div class="patient-data-header">
+        <h3>Data</h3>
+
         <!-- icons of available experiments -->
         <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
           <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
         </div>
+      </div>
 
-        <app-patient-elisas [patient]="patient"></app-patient-elisas>
+      <mat-accordion class="patient-data">
 
-        <div id="HLA-sequencing">
+        <!-- ELISAS -->
+        <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              ELISA data
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-patient-elisas [patient]="patient"></app-patient-elisas>
+        </mat-expansion-panel>
+
+        <!-- HLA -->
+        <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              HLA sequencing
+            </mat-panel-title>
+          </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-        </div>
+        </mat-expansion-panel>
 
-        <div id="viral-sequencing">
+        <!-- HLA -->
+        <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              Viral sequencing
+            </mat-panel-title>
+          </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
-        </div>
+        </mat-expansion-panel>
 
-        <!-- <div id="Systems-Serology">
+      </mat-accordion>
+
+
+
+      <!-- <div id="Systems-Serology">
           <app-patient-serology [patient]="patient"></app-patient-serology>
         </div> -->
 
-      </div>
     </div>
   </div>
+</div>
 
 </div>
