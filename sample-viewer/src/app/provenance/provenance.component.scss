@@ -12,8 +12,48 @@
 .patient-changelog {
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
-.source {
+.source-container {
+  align-items: center;
+}
+
+.source-group {
+  margin-right: 5px;
+    font-size: 0.9em;
+}
+
+.cvisb-icon {
+  height: 30px;
+  width: 30px;
+  margin-right: 7px;
+}
+
+.source-tag {
+  font-weight: 400;
+  text-transform: uppercase;
   font-size: 0.9em;
+}
+
+.source-icon {
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
+
+  &.cvisb-data {
+    background: lighten($cvisb-bright, 47%);
+    color: darken(#0080C5, 5%);
+  }
+
+  &.public-data {
+    padding: 5px 10px;
+    color: $dev-dark;
+    background: lighten($dev-theme, 30%);
+  }
+}
+
+.citation {
+  font-size: 0.85em;
+  margin: 0;
 }

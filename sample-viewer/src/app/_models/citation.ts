@@ -1,19 +1,22 @@
 export class Citation {
-  DOI: string;
-  PMID: string;
+  doi: string;
+  pmid: string;
+  issn: string;
+  identifier: string;
+  datePublished: string;
   author: AuthorName[];
-  "container-title": string;
-  "container-title-short": string;
-  issue: string;
-  page: string;
-  title: string;
-  volume: string;
-  issued: issueDate;
+  issueNumber: string;
+  journalName: string;
+  journalNameAbbrev: string;
+  name: string;
+  pagination: string;
+  url: string;
+  volumeNumber: string;
 }
 
 export class AuthorName {
-  family: string;
-  given: string;
+  familyName: string;
+  givenName: string;
 }
 
 export class issueDate {

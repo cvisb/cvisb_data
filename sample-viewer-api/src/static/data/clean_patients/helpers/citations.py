@@ -49,7 +49,6 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
 # getCitation("26276630")
 
 
-getCitation("26276630")
 # Publisher Institution
 cvisb = {
     "url": "https://cvisb.org/",

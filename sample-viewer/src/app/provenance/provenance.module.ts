@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProvenanceComponent } from './provenance.component';
 
+// --- Modules ---
 import { MatButtonModule, MatTooltipModule } from '@angular/material';
+import { SvgIconModule } from '../svg-icon/svg-icon.module';
+import { FormatCitationModule } from '../format-citation/format-citation.module';
+
+// --- Components ---
+import { ProvenanceComponent } from './provenance.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FormatCitationModule,
+    SvgIconModule
   ],
   declarations: [
     ProvenanceComponent

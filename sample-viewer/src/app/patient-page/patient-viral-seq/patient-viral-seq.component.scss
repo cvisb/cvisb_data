@@ -28,42 +28,8 @@
   margin: 0.5em 0;
 }
 
-.citation {
-  font-size: 0.85em;
-  margin: 0;
-}
-
 .copy-icon {
   font-size: 1.5em;
-}
-
-.cvisb-icon {
-  height: 30px;
-  width: 30px;
-  margin-right: 7px;
-}
-
-.source-tag {
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size: 0.9em;
-}
-
-.source {
-  padding: 5px;
-  border-radius: 5px;
-  align-items: center;
-
-  &.cvisb-data {
-    background: lighten($cvisb-bright, 50%);
-    color: darken(#0080C5, 5%);
-  }
-
-  &.public-data {
-    padding: 5px 10px;
-    color: $dev-dark;
-    background: lighten($dev-theme, 35%)
-  }
 }
 
 .aligned-sequence,

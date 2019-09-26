@@ -33,13 +33,13 @@
           <mat-panel-title class="panel-title">
             <span class="container-justified">
               Demographics
-              <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+              <i class="fas fa-stopwatch embargoed-icon header-icon" matTooltip="embargoed data; do not share"></i>
             </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
         <div class="container patient-metadata">
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [embargoed]="true" class="provenance"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" changes="initial data load" [embargoed]="true" class="provenance"></app-provenance>
 
           <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
@@ -59,7 +59,7 @@
               <span class="container-justified">
                 Symptoms
                 <i class="fas fa-lock private-icon header-icon" matTooltip="private data; do not share"></i>
-                <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+                <i class="fas fa-stopwatch embargoed-icon header-icon" matTooltip="embargoed data; do not share"></i>
               </span>
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -141,7 +141,7 @@
                   HLA sequencing
                 </div>
 
-                <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+                <i class="fas fa-stopwatch embargoed-icon header-icon" matTooltip="embargoed data; do not share"></i>
               </span>
             </mat-panel-title>
           </mat-expansion-panel-header>

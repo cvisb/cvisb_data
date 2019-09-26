@@ -12,7 +12,7 @@ import { ExperimentObjectPipe } from '../_pipes';
   templateUrl: './patient-page.component.html',
   styleUrls: ['./patient-page.component.scss']
 })
-export class PatientPageComponent implements OnInit {
+export class PatientPageComponent implements OnInit, AfterViewInit {
   patientID: string;
   patient: Patient;
   viralSeq: ViralSeqObj[];
@@ -45,7 +45,7 @@ export class PatientPageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
 
-      titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
+      this.titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
 
       this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
         this.patient = patient;
