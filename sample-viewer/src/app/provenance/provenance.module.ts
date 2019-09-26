@@ -8,6 +8,7 @@ import { FormatCitationModule } from '../format-citation/format-citation.module'
 
 // --- Components ---
 import { ProvenanceComponent } from './provenance.component';
+import { ProvenanceTitleComponent } from './provenance-title/provenance-title.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { ProvenanceComponent } from './provenance.component';
     SvgIconModule
   ],
   declarations: [
-    ProvenanceComponent
+    ProvenanceComponent,
+    ProvenanceTitleComponent
   ],
   exports: [
     ProvenanceComponent
