@@ -73,15 +73,17 @@
       </mat-expansion-panel>
 
       <!-- SYMPTOMS  -->
-      <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
-        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
-          <mat-panel-title class="panel-title">
-            <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      <ng-container *ngIf="patient.symptoms">
+        <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-        <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
-      </mat-expansion-panel>
+          <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
+        </mat-expansion-panel>
+      </ng-container>
 
       <!-- SAMPLES  -->
       <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
@@ -96,19 +98,20 @@
 
 
       <!-- CITATIONS -->
-      <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
-        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
-          <mat-panel-title class="panel-title">
-            Citations
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      <ng-container *ngIf="publications && publications.length > 0">
+        <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              Citations
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-        <div class="patient-citations">
-          <h4 class="patient" id="citations">Cited in</h4>
-          <app-patient-citations [publications]="publications"></app-patient-citations>
-        </div>
-      </mat-expansion-panel>
-
+          <div class="patient-citations">
+            <h4 class="patient" id="citations">Cited in</h4>
+            <app-patient-citations [publications]="publications"></app-patient-citations>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
 
 
       <!-- DATA -->
