@@ -3,7 +3,7 @@
     <div class="updated">
       {{ dateModified ? 'updated' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
 
-      <button mat-button mat-stroked-button class="view-changes">view changes</button>
+      <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>
 
     <div class="container embargoed" *ngIf="embargoed">
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="source">
+  <div class="source" *ngIf="source">
     <span class="variable-label">source: </span>
     <span class="variable-value">{{source}}</span>
   </div>

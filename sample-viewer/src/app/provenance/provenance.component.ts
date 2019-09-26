@@ -10,6 +10,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() embargoLabel: string;
   @Input() embargoed: boolean = false;
   @Input() source: string = "Center for Viral Systems Biology";
+  @Input() changes: string;
 
   constructor() { }
 

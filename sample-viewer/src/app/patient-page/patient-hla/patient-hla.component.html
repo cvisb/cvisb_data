@@ -1,16 +1,8 @@
 <div class="hla-container patient-data-container">
   <ng-container *ngIf="genotype && alleleCount && alleleCount.length > 1; else nodata">
+
+    <app-provenance [dateModified]="dateModified" embargoLabel="HLA" [embargoed]="true" [source]="publishers" class="provenance"></app-provenance>
     <div class="hla-genotype">
-      <!-- <h5 class="patient-data">data</h5> -->
-
-      <div class="publisher" *ngIf="publishers">
-        <span class="variable-label">sequencing institution: </span>
-        <span class="variable-value" *ngFor="let publisher of publishers">{{publisher.name}}</span>
-      </div>
-
-      <div class="updated">
-        updated {{dateModified ? (dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-      </div>
 
       <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">
         <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>

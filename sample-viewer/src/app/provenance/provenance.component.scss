@@ -6,10 +6,14 @@
   line-height: 2em;
   margin-left: 5px;
   color: $ebola-md;
-  background: lighten($ebola-lt, 12%)
+  background: lighten($ebola-lt, 12%);
 }
 
 .patient-changelog {
   width: 100%;
   justify-content: space-between;
+}
+
+.source {
+  font-size: 0.9em;
 }

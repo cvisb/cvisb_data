@@ -36,7 +36,7 @@
         </mat-expansion-panel-header>
 
         <div class="container patient-metadata">
-          <app-provenance embargoLabel="Demographic" [embargoed]="true"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [embargoed]="true" class="provenance"></app-provenance>
 
           <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
@@ -57,6 +57,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
+          <app-provenance [dateModified]="patient.dateModified" class="provenance"></app-provenance>
           <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
         </mat-expansion-panel>
       </ng-container>
@@ -114,6 +115,8 @@
               ELISA data
             </mat-panel-title>
           </mat-expansion-panel-header>
+
+          <app-provenance [dateModified]="patient.dateModified" class="provenance"></app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
         </mat-expansion-panel>
 
