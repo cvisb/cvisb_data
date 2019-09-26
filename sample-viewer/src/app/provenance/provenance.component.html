@@ -1,7 +1,7 @@
 <div class="container patient-changelog">
   <div class="container-column">
     <div class="updated">
-      {{ dateModified ? 'updated' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
+      {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
 
       <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>

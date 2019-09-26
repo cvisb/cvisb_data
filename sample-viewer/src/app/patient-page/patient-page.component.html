@@ -31,7 +31,10 @@
       <mat-expansion-panel class="panel-group" id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
           <mat-panel-title class="panel-title">
-            Demographics
+            <span class="container-justified">
+              Demographics
+              <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+            </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -53,11 +56,15 @@
         <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
+              <span class="container-justified">
+                Symptoms
+                <i class="fas fa-lock private-icon header-icon" matTooltip="private data; do not share"></i>
+                <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+              </span>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-provenance [dateModified]="patient.dateModified" class="provenance"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true"></app-provenance>
           <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
         </mat-expansion-panel>
       </ng-container>
@@ -124,10 +131,18 @@
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <div class="expt-type mat-shadow hla">
-                <svg-icon icon="hla" class="hla-icon"></svg-icon>
-              </div>
-              HLA sequencing
+
+
+              <span class="container-justified">
+                <div>
+                  <div class="expt-type mat-shadow hla">
+                    <svg-icon icon="hla" class="hla-icon"></svg-icon>
+                  </div>
+                  HLA sequencing
+                </div>
+
+                <i class="fas fa-lock embargo-icon header-icon" matTooltip="embargoed data; do not share"></i>
+              </span>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
