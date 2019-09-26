@@ -1,26 +1,27 @@
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
-  <div class="sequence-group" *ngFor="let seq of sequences">
-    <app-provenance [dateModified]="seq.dateModified" embargoLabel="Viral Sequence" [public_data]="true" [cvisb_data]="false" [citation]="seq.citation" class="provenance"></app-provenance>
+  <ng-container *ngFor="let seq of sequences">
+    <app-provenance [dateModified]="seq.dateModified" embargoLabel="Viral Sequence" [source]="null" [public_data]="true" [cvisb_data]="false" [citation]="seq.citation" class="provenance"></app-provenance>
 
-    <ng-container *ngFor="let data of seq.data">
-      <div class="container sequence-header">
-        <h4 class="virus">{{ data.virus }} sequence</h4>
+    <div class="sequence-group">
+      <ng-container *ngFor="let data of seq.data">
+        <div class="container sequence-header">
+          <h4 class="virus">{{ data.virus }} sequence</h4>
 
-        <div class="quality-rating" *ngIf="data && data.quality">
-          quality:
-          <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
-          <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
+          <div class="quality-rating" *ngIf="data && data.quality">
+            quality:
+            <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
+            <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
+          </div>
+
+          <div class="NCBI-link" *ngIf="seq.genbankID">
+            <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
+              GenBank ID {{seq.genbankID}}
+            </a>
+          </div>
         </div>
 
-        <div class="NCBI-link" *ngIf="seq.genbankID">
-          <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
-            GenBank ID {{seq.genbankID}}
-          </a>
-        </div>
-      </div>
 
-
-      <!-- <div class="aligned-sequence">
+        <!-- <div class="aligned-sequence">
       <div class="container sequence-header">
         <p class="sequence-label">
           aligned sequence
@@ -34,29 +35,30 @@
     </div> -->
 
 
-      <div class="raw-sequence">
-        <div class="container sequence-header">
-          <p class="sequence-label">
-            raw sequence
+        <div class="raw-sequence">
+          <div class="container sequence-header">
+            <p class="sequence-label">
+              raw sequence
+            </p>
+
+            <!-- Dummy so the document has something to select with the data bound -->
+            <input class="no-show" type="text" [value]="data.DNAsequence" #rawseq>
+            <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
+          </div>
+
+
+          <p class="sequence DNA-sequence">
+            {{ data.DNAsequence }}
           </p>
-
-          <!-- Dummy so the document has something to select with the data bound -->
-          <input class="no-show" type="text" [value]="data.DNAsequence" #rawseq>
-          <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
         </div>
+      </ng-container>
+    </div>
 
-
-        <p class="sequence DNA-sequence">
-          {{ data.DNAsequence }}
-        </p>
-      </div>
-    </ng-container>
-  </div>
-
-  <div class="viralseq-files">
-    <h5 class="patient-data">files</h5>
-    <app-file-list datasetID="viralseq" [patientID]="patientID"></app-file-list>
-  </div>
+    <div class="viralseq-files">
+      <h5 class="patient-data">files</h5>
+      <app-file-list datasetID="viralseq" [patientID]="patientID"></app-file-list>
+    </div>
+  </ng-container>
 </ng-container>
 
 <ng-template #nodata>

@@ -3,13 +3,13 @@
 
 .sequence-group {
   max-width: 500px;
-  margin-bottom: 100px;
+  margin-bottom: 35px;
 }
 
 .sequence-header {
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 5px 0 0;
 }
 
 .virus {
@@ -56,6 +56,6 @@
 }
 
 .NCBI-link a {
-    font-size: 0.85em;
-    text-decoration: underline;
+  font-size: 0.85em;
+  text-decoration: underline;
 }

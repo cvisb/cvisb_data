@@ -15,12 +15,13 @@ export class ProvenanceComponent implements OnInit {
   @Input() source: string = "Center for Viral Systems Biology";
   @Input() changes: string;
   @Input() public_data: boolean = false;
-  @Input() cvisb_data: boolean = true;
+  @Input() cvisb_data: boolean;
   @Input() citation: Citation[];
 
   constructor() { }
 
   ngOnInit() {
+    this.cvisb_data = this.source === "Center for Viral Systems Biology"
   }
 
 }
