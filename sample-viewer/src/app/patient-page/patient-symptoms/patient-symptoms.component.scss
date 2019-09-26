@@ -1,12 +1,13 @@
 @import '../../../sass/material-theme.scss';
+@import '../../../sass/variables.scss';
 
 .symptom-true {
   & .fas {
-    color: #dedae7;
+    color: $grey-300;
   }
 
   & .far {
-    color: #8c77bb;
+    color: $dev-theme;
   }
 }
 

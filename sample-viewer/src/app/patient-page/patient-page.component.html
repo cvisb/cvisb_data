@@ -126,13 +126,13 @@
         </div>
       </div>
 
-      <mat-accordion class="patient-data">
+      <div id="data" class="patient-data">
 
         <!-- ELISAS -->
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              ELISA data
+              <svg-icon icon="elisa" class="elisa-icon"></svg-icon> ELISA data
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
@@ -142,7 +142,7 @@
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              HLA sequencing
+            <svg-icon icon="hla" class="hla-icon"></svg-icon> HLA sequencing
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
@@ -152,13 +152,13 @@
         <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              Viral sequencing
+              <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon> Viral sequencing
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
         </mat-expansion-panel>
 
-      </mat-accordion>
+      </div>
 
 
 

@@ -1,15 +1,7 @@
 <div class="hla-container patient-data-container">
-  <h4 class="patient-data">HLA Sequencing</h4>
-
   <ng-container *ngIf="genotype && alleleCount && alleleCount.length > 1; else nodata">
-    <div class="hla-files">
-      <h5 class="patient-data">files</h5>
-      <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
-    </div>
-
     <div class="hla-genotype">
-      <h5 class="patient-data">data</h5>
-
+      <!-- <h5 class="patient-data">data</h5> -->
 
       <div class="publisher" *ngIf="publishers">
         <span class="variable-label">sequencing institution: </span>
@@ -38,6 +30,11 @@
 
           </div>
         </div>
+      </div>
+
+      <div class="hla-files">
+        <h5 class="patient-data">files</h5>
+        <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
       </div>
 
     </div>

@@ -112,7 +112,6 @@
 .patient-changelog {
   width: 100%;
   justify-content: space-between;
-  margin-top: 5px;
 }
 
 .panel-group {
@@ -124,8 +123,9 @@
   background: $grey-200 !important;
 }
 
-.mat-expansion-panel-body {
+/deep/ .mat-expansion-panel-body {
   background: $grey-50 !important;
+  padding-top: 5px !important;
 }
 
 
