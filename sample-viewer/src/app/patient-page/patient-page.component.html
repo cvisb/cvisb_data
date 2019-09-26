@@ -132,7 +132,10 @@
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <svg-icon icon="elisa" class="elisa-icon"></svg-icon> ELISA data
+              <div class="expt-type mat-shadow elisa">
+                <svg-icon icon="elisa" class="elisa-icon"></svg-icon>
+              </div>
+              ELISA data
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
@@ -142,7 +145,10 @@
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-            <svg-icon icon="hla" class="hla-icon"></svg-icon> HLA sequencing
+              <div class="expt-type mat-shadow hla">
+                <svg-icon icon="hla" class="hla-icon"></svg-icon>
+              </div>
+              HLA sequencing
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
@@ -152,7 +158,10 @@
         <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon> Viral sequencing
+              <div class="expt-type mat-shadow viralseq">
+                <svg-icon icon="viralseq" class="viralseq-icon">
+              </div>
+              </svg-icon> Viral sequencing
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
