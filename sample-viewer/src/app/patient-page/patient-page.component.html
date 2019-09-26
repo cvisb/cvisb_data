@@ -28,7 +28,7 @@
       </div>
 
       <!-- DEMOGRAPHICS -->
-      <mat-expansion-panel id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
+      <mat-expansion-panel class="panel-group" id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
         <mat-expansion-panel-header class="panel-header">
           <mat-panel-title class="panel-title">
             Demographics
@@ -65,15 +65,15 @@
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
             <app-patient-relationships [patient]="patient"></app-patient-relationships>
             <app-patient-related [patient]="patient"></app-patient-related>
+            <app-patient-dates [patient]="patient"></app-patient-dates>
           </div>
 
-          <!-- DATES -->
-          <app-patient-dates [patient]="patient"></app-patient-dates>
+
         </div>
       </mat-expansion-panel>
 
       <!-- SYMPTOMS  -->
-      <mat-expansion-panel id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
+      <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
         <mat-expansion-panel-header>
           <mat-panel-title class="panel-title">
             <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i> Symptoms
@@ -84,7 +84,7 @@
       </mat-expansion-panel>
 
       <!-- SAMPLES  -->
-      <mat-expansion-panel id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+      <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
         <mat-expansion-panel-header>
           <mat-panel-title class="panel-title">
             Samples
@@ -96,7 +96,7 @@
 
 
       <!-- CITATIONS -->
-      <mat-expansion-panel id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+      <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
         <mat-expansion-panel-header>
           <mat-panel-title class="panel-title">
             Citations

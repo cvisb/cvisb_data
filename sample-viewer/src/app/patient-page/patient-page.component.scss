@@ -114,6 +114,10 @@
   justify-content: space-between;
 }
 
+.panel-group {
+  margin-bottom: 10px !important;
+}
+
 .panel-header {
   background: $grey-200;
 }
@@ -132,4 +136,5 @@
   padding: 0;
   line-height: 2em;
   margin-left: 5px;
+  color: $ebola-md;
 }
