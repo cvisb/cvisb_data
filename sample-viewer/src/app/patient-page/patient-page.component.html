@@ -119,11 +119,11 @@
         <h3>Data</h3>
 
         <!-- icons of available experiments -->
-        <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
+        <!-- <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
           <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
             <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
           </a>
-        </div>
+        </div> -->
       </div>
 
       <div id="data" class="patient-data">
@@ -159,9 +159,9 @@
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
               <div class="expt-type mat-shadow viralseq">
-                <svg-icon icon="viralseq" class="viralseq-icon">
-              </div>
-              </svg-icon> Viral sequencing
+                <svg-icon icon="viralseq" class="viralseq-icon"></svg-icon>
+                </div>
+                Viral sequencing
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
