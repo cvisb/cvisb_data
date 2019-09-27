@@ -5,7 +5,7 @@ import numpy as np
 
 
 def dateArr2Str(arr):
-    return(arr[0])
+    return(str(arr[0]))
     # return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-{str(arr[2]).zfill(2)}")
 
 

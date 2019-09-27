@@ -30,7 +30,7 @@
 </div>
 
 
-<div class="pregnant" *ngIf="patient.gender == 'Female'">
+<div class="pregnant" *ngIf="patient.pregnant === true || patient.pregnant === false">
   <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
   <span class="variable-label">pregnant:</span>
   <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
