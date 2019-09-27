@@ -23,7 +23,7 @@
           public ID: <span class="altID variable-value">{{ patientID }}</span>
         </div>
 
-        <div class="altIDs" *ngIf="patient.alternateIdentifier">all IDs:<span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">{{ id }}</span>
+        <div class="altIDs" *ngIf="patient.alternateIdentifier">all IDs: <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">{{ id }}</span>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
         </mat-expansion-panel>
 
         <!-- ViralSeq -->
-        <mat-expansion-panel class="panel-group" id="viral-sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
+        <mat-expansion-panel class="panel-group" id="Viral-Sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq"></app-provenance-title>

@@ -15,7 +15,7 @@ export class PatientNavComponent {
 
   links: any =
     ['demographics', 'samples', 'clinical observations',
-      { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "viral sequencing"]},
+      { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "Viral Sequencing"]},
       'citations'
     ];
 
@@ -30,7 +30,12 @@ export class PatientNavComponent {
   }
 
   onAnchorClick(anchor_tag: string) {
+    console.log("anchor_tag clicked: " + anchor_tag)
     this.anchorSvc.clickAnchor(anchor_tag);
+  }
+
+  onAnchorClick2(anchor_tag: string) {
+    console.log("anchor_tag2 clicked: " + anchor_tag)
   }
 
   isObject(value) {
