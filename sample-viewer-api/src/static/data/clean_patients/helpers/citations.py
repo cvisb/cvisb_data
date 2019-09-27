@@ -5,7 +5,9 @@ import numpy as np
 
 
 def dateArr2Str(arr):
-    return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-{str(arr[2]).zfill(2)}")
+    return(arr[0])
+    # return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-{str(arr[2]).zfill(2)}")
+
 
 def convertAuthor(authorObj):
     try:
@@ -17,40 +19,51 @@ def convertAuthor(authorObj):
     except:
         family = np.nan
     return({'givenName': given,
-    'familyName': family
-    })
+            'familyName': family
+            })
+
 
 def getCitation(pmid, ncbi_stub=ncbi_stub):
-    res = requests.get(ncbi_stub + "{:.0f}".format(pmid))
-    if(res.status_code == 200):
-        citation_raw = res.json()
-        citation = {}
-        # reformat to schema.org format.
-        citation['doi'] = citation_raw['DOI']
-        citation['pmid'] = citation_raw['PMID']
-        citation["identifier"] = citation_raw['id']
-        citation["issn"] = citation_raw['ISSN']
+    if(pmid == pmid):
+        if(isinstance(pmid, str)):
+            pmid_string = pmid
+        elif(isinstance(pmid, int) | isinstance(pmid, float)):
+            pmid_string = "{:.0f}".format(pmid)
+        if(pmid_string):
+            res = requests.get(ncbi_stub + pmid_string)
+            citation = {}
+            if(res.status_code == 200):
+                citation_raw = res.json()
+                # reformat to schema.org format.
+                citation['doi'] = citation_raw['DOI']
+                citation['pmid'] = citation_raw['PMID']
+                citation["identifier"] = citation_raw['id']
+                citation["issn"] = citation_raw['ISSN']
 
-        citation["author"] = [convertAuthor(author) for author in citation_raw['author']]
-        citation["datePublished"] = dateArr2Str(citation_raw['issued']['date-parts'][0])
+                citation["author"] = [convertAuthor(
+                    author) for author in citation_raw['author']]
+                citation["datePublished"] = dateArr2Str(
+                    citation_raw['issued']['date-parts'][0])
 
-        try:
-            citation["issueNumber"] = citation_raw['issue']
-        except:
-            pass
-        citation["journalName"] = citation_raw['container-title']
-        citation["journalNameAbbrev"] = citation_raw['container-title-short']
-        citation["name"] = citation_raw['title']
+                try:
+                    citation["issueNumber"] = citation_raw['issue']
+                except:
+                    pass
+                citation["journalName"] = citation_raw['container-title']
+                citation["journalNameAbbrev"] = citation_raw['container-title-short']
+                citation["name"] = citation_raw['title']
 
-        citation["pagination"] = citation_raw['page']
+                citation["pagination"] = citation_raw['page']
 
-        citation["volumeNumber"] = citation_raw['volume']
-        citation['url'] =  'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + \
-            citation['pmid']
-        return(citation)
+                citation["volumeNumber"] = citation_raw['volume']
+                citation['url'] = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + \
+                    citation['pmid']
+                return(citation)
 
 # getCitation("26276630")
-# getCitation(27140942.0)
+# getCitation(26276630)
+# getCitation(26276630.0)
+
 
 # Publisher Institution
 cvisb = {
