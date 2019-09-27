@@ -14,7 +14,6 @@ export class PatientDemographicsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.patient)
   }
 
 }
