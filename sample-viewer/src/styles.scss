@@ -385,7 +385,7 @@ svg-icon.country-icon {
 }
 
 .cohort.Control {
-  background-color: $grey-400;
+  background-color: $grey-600;
   color: white;
   border: $grey-600 1px solid;
 }
@@ -400,19 +400,25 @@ svg-icon.country-icon {
   font-weight: 400;
   // border-left: whitesmoke solid 3px;
   &.control {
-    background-color: $grey-200;
-    color: $default-color;
+    background-color: $grey-500;
+    color: white;
     border-color: $grey-600;
   }
 
-  &.contact.Ebola {
-    background-color: lighten($ebola-lt, 12%);
-    color: $ebola-color;
-  }
+  &.contact {
+    &.Ebola {
+      background-color: lighten($ebola-lt, 12%);
+      color: $ebola-color;
+    }
 
-  &.contact.Lassa {
-    background-color: lighten($lassa-lt, 15%);
-    color: $lassa-color;
+    &.Lassa {
+      background-color: lighten($lassa-lt, 15%);
+      color: $lassa-color;
+    }
+
+    &.Unknown {
+      background-color: $grey-50;
+    }
   }
 
   &.unknown {
@@ -426,34 +432,44 @@ svg-icon.country-icon {
       color: $ebola-dk;
     }
 
-    &.Control,
-    &.Unknown,
-    &.control {
+    &.Unknown {
       color: $default-color;
     }
   }
-}
 
-.dead.Lassa,
-.died.Lassa {
-  background-color: $lassa-lt;
-  color: $default-color;
-}
+  .dead {
+    &.Lassa {
+      background-color: $lassa-lt;
+      color: $default-color;
+    }
 
-.survivor.Lassa {
-  background-color: $lassa-md;
-  color: $default-color;
-}
+    &.Ebola {
+      background-color: $ebola-lt;
+      color: $default-color;
+    }
 
-.dead.Ebola,
-.died.Ebola {
-  background-color: $ebola-lt;
-  color: $default-color;
-}
+    &.Unknown {
+      background-color: $grey-225;
+      color: $default-color;
+    }
+  }
 
-.survivor.Ebola {
-  background-color: $ebola-md;
-  color: $default-color;
+  .survivor {
+    &.Lassa {
+      background-color: $lassa-md;
+      color: $default-color;
+    }
+
+    &.Ebola {
+      background-color: $ebola-md;
+      color: $default-color;
+    }
+
+    &.Unknown {
+      background-color: $grey-300;
+      color: $default-color;
+    }
+  }
 }
 // --- alternate IDs ---
 
