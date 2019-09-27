@@ -30,15 +30,15 @@ export class PatientNavComponent {
   }
 
   public scroll(element: any) {
-    element.scrollIntoView({ behavior: 'smooth' });
+    // element.scrollIntoView({ behavior: 'smooth' });
   }
 
   ngAfterViewInit() {
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
-    this.route.fragment.subscribe(anchor_tag => {
-      this.anchorSvc.clickAnchor(anchor_tag);
-    })
+    // this.route.fragment.subscribe(anchor_tag => {
+    //   this.anchorSvc.clickAnchor(anchor_tag);
+    // })
   }
 
 
