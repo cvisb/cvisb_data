@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { nest } from 'd3';
 import * as d3 from 'd3';
-import * as _ from 'lodash';
+import { countBy, flattenDeep } from 'lodash';
 import { HLA, D3Nested } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
@@ -60,8 +60,12 @@ export class GetHlaDataService {
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
         let data = res['hits'].flatMap(d => d.data).filter(d => d);
+        let data2 = flattenDeep(res['hits'].map(d => d.data)).filter(d => d);
         let publisher = res['hits'].flatMap(d => d.publisher).filter(d => d);
         let dateModified = res['hits'].map(d => d.dateModified).join();
+
+        console.log(data)
+        console.log(data2)
 
         return ({ data: data, publisher: publisher, dateModified: dateModified })
       }
@@ -150,7 +154,7 @@ export class GetHlaDataService {
           data: values,
           alleles: values.map((patient: HLA) => patient.allele),
           unique_alleles: d3.map(values, (patient: HLA) => patient.allele).keys(),
-          unique_summary: _.countBy(values, 'allele'),
+          unique_summary: countBy(values, 'allele'),
           unique_total: d3.map(values, (patient: HLA) => patient.allele).keys().length
         }
       })
