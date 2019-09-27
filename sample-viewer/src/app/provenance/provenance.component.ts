@@ -21,7 +21,8 @@ export class ProvenanceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.cvisb_data = this.source === "Center for Viral Systems Biology"
+    // Search within any part of the string for CViSB
+    this.cvisb_data = this.source.indexOf("Center for Viral Systems Biology") >= 0;
   }
 
 }
