@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { ExperimentObjectPipe } from '../_pipes';
   templateUrl: './patient-page.component.html',
   styleUrls: ['./patient-page.component.scss']
 })
-export class PatientPageComponent implements OnInit, AfterViewInit {
+export class PatientPageComponent {
   patientID: string;
   patient: Patient;
   viralSeq: ViralSeqObj[];
@@ -39,7 +39,6 @@ export class PatientPageComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private patientSvc: GetPatientsService,
     private apiSvc: ApiService,
-    private anchorSvc: AnchorService,
     private exptObjPipe: ExperimentObjectPipe
   ) {
     this.route.params.subscribe(params => {
@@ -86,31 +85,5 @@ export class PatientPageComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnInit() {
-    // For anchor jumping
-    // Needs to be in ngOnInit to make sure page exists before querying document
-    // this.route.fragment.subscribe(anchor_tag => {
-    //   this.anchorSvc.clickAnchor(anchor_tag);
-    // })
-  }
-
-  ngAfterViewInit() {
-    // For anchor jumping
-    // Needs to be in ngOnInit to make sure page exists before querying document
-  //   this.route.fragment.subscribe(anchor_tag => {
-  //     console.log('patient page: anchor click- ' + anchor_tag)
-  //     this.anchorSvc.clickAnchor(anchor_tag);
-  //   })
-  }
-  //
-  // ngOnChanges() {
-  //   console.log("patient page changed.")
-  //   // For anchor jumping
-  //   // Needs to be in ngOnInit to make sure page exists before querying document
-  //   this.route.fragment.subscribe(anchor_tag => {
-  //     console.log('patient page-- changes-- anchor click- ' + anchor_tag)
-  //     this.anchorSvc.clickAnchor(anchor_tag);
-  //   })
-  // }
 
 }
