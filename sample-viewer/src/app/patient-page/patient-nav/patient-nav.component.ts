@@ -33,7 +33,7 @@ export class PatientNavComponent {
     console.log("anchor_tag clicked: " + anchor_tag)
     console.log(event)
     event.stopPropagation();
-    this.anchorSvc.clickAnchor(anchor_tag);
+    // this.anchorSvc.clickAnchor(anchor_tag);
   }
 
 
