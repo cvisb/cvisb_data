@@ -167,7 +167,7 @@
   rdfs:comment:          Date of sample collection used for the the experiment.  Should refer to the initial time the sample was collected from the patient.
   rdfs:label:            samplingDate
   schema:domainIncludes:
-    - "@id":             cvisb:Experiment
+    - "@id":             cvisb:Sample
   schema:rangeIncludes:
     - "@id":             cvisb:DateRange
   owl:cardinality:       one
