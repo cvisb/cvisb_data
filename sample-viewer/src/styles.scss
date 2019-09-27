@@ -437,7 +437,7 @@ svg-icon.country-icon {
     }
   }
 
-  .dead {
+  &.dead {
     &.Lassa {
       background-color: $lassa-lt;
       color: $default-color;
@@ -454,7 +454,7 @@ svg-icon.country-icon {
     }
   }
 
-  .survivor {
+  &.survivor {
     &.Lassa {
       background-color: $lassa-md;
       color: $default-color;
