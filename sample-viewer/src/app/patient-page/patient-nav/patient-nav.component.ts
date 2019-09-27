@@ -36,21 +36,18 @@ export class PatientNavComponent {
   }
 
   public scroll(element: any) {
-    console.log('direct call')
-    console.log(element)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    console.log('direct scroll')
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
-  // ngAfterViewInit() {
-  //   // For anchor jumping
-  //   // Needs to be in ngOnInit to make sure page exists before querying document
-  //   this.route.fragment.subscribe(anchor_tag => {
-  //     console.log('nav page: anchor click- ' + anchor_tag)
-  //     this.anchorSvc.clickAnchor(anchor_tag);
-  //   })
-  // }
+  ngAfterViewInit() {
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+      console.log('nav page: anchor click- ' + anchor_tag)
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
+  }
 
 
   isObject(value) {
