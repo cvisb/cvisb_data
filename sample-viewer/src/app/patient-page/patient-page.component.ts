@@ -7,6 +7,8 @@ import { GetPatientsService, ApiService, AnchorService } from '../_services/';
 import { Patient, ViralSeqObj } from '../_models';
 import { ExperimentObjectPipe } from '../_pipes';
 
+import { flatMapDeep } from 'lodash';
+
 @Component({
   selector: 'app-patient-page',
   templateUrl: './patient-page.component.html',
@@ -73,7 +75,7 @@ export class PatientPageComponent {
 
         this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
 
-        this.publications = expts['hits'].map(d => d.citation).filter(d => d).flat();
+        this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);
       })
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {

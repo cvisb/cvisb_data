@@ -7,6 +7,7 @@ import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } 
 import { ActivatedRoute } from '@angular/router';
 
 import * as d3 from 'd3';
+import { flattenDeep } from 'lodash';
 
 import { environment } from "../../environments/environment";
 import { Sample, SampleWide, AuthState, RequestParamArray, Patient, ESFacetTerms } from '../_models/';
@@ -232,7 +233,7 @@ export class GetSamplesService {
 
     // Make sure to remove nulls-- ngSelect can't have nulls as options
     // Should also remove duplicates, since there are multiple samples / patient
-    summary['patients'] = samples.map((d: any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
+    summary['patients'] = flattenDeep(samples.map((d: any) => d.alternateIdentifier)).filter(d => d).sort((a, b) => a < b ? -1 : 1);
     summary['patients'] = Array.from(new Set(summary['patients']));
 
     console.log(summary)

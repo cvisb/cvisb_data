@@ -239,7 +239,7 @@ export class SampleUploadService {
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
-        d[col] = (d[col] && d[col] !== "") ? d[col].split(this.arrayDelim[0]).map(d => d.split(this.arrayDelim[1])).flat() : null;
+        d[col] = (d[col] && d[col] !== "") ? d[col].split(_.flatMapDeep(this.arrayDelim[0]), d => d.split(this.arrayDelim[1])) : null;
       })
     })
   }
@@ -515,7 +515,7 @@ export class SampleUploadService {
     // HOWEVER-- nulls aren't valid inputs for an array of strings in ES (sigh)
     // so filtering out null values... people will just have to check and find the locations themselves.
     function arrayizeLocations(v, varName): string[] {
-      return (v.map(d => d[varName]).flat().filter(d => d));
+      return (_.flatMapDeep(v, d => d[varName]).filter(d => d));
     }
 
 

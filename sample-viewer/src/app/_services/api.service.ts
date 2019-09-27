@@ -11,7 +11,7 @@ import { environment } from "../../environments/environment";
 
 // services
 import { MyHttpClient } from './http-cookies.service';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, flattenDeep } from 'lodash';
 
 import { nest } from 'd3';
 
@@ -531,7 +531,7 @@ export class ApiService {
       let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
       errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
 
-      errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
+      errorObj = flattenDeep(errs.filter(d => d.error.error_list).map(d => d.error.error_list));
       //
       if (errorObj.length > 0) {
         errorObj = this.tidyBackendErrors(errorObj)

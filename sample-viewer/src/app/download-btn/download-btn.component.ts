@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { SpinnerPopupComponent } from '../_dialogs';
 
-import { uniq } from 'lodash';
+import { uniq, flatMapDeep } from 'lodash';
 
 @Component({
   selector: 'app-download-btn',
@@ -75,7 +75,7 @@ export class DownloadBtnComponent implements OnInit {
     const lineDelimiter = '\n';
 
     if (data && data.length > 0) {
-      let colnames = uniq(data.map(d => Object.keys(d)).flat());
+      let colnames = uniq(flatMapDeep(data, d => Object.keys(d)));
 
       if (this.filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))

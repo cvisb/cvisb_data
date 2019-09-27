@@ -4,7 +4,7 @@ import { D3Nested } from './d3-nested';
 import { ESResult, ESFacet, ESFacetTerms } from './es-result';
 
 import * as d3 from 'd3';
-import * as _ from 'lodash';
+import { cloneDeep, flattenDeep } from 'lodash';
 
 export class PatientSummary {
   total: number;
@@ -106,7 +106,7 @@ export class PatientArray {
       this.exptTypes = [];
       if (Object.keys(patients).includes("availableData")) {
         let expts: any = patients.filter((d: Patient) => d.availableData).map((d: Patient) => d.availableData);
-        expts = expts.flat();
+        expts = flattenDeep(expts);
 
         for (let expt of expts) {
           let id = expt['identifier'];
@@ -126,7 +126,7 @@ export class PatientArray {
 
       // --- Downloadable version ---
       // Create a copy, so I don't modify the orignal
-      this.downloadable = _.cloneDeep(patients);
+      this.downloadable = cloneDeep(patients);
 
       // Un-nest objects
       this.downloadable.forEach((d: Patient) => {
