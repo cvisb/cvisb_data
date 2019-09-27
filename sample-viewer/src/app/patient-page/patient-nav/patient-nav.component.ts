@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -31,9 +31,17 @@ export class PatientNavComponent {
 
   onAnchorClick(event, anchor_tag: string) {
     console.log("anchor_tag clicked: " + anchor_tag)
-    console.log(event)
     event.stopPropagation();
     // this.anchorSvc.clickAnchor(anchor_tag);
+  }
+
+  ngAfterViewInit() {
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+      console.log('nav page: anchor click- ' + anchor_tag)
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute } from '@angular/router';
@@ -98,7 +98,17 @@ export class PatientPageComponent implements OnInit, AfterViewInit {
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
-    console.log('patient page: anchor click- ' + anchor_tag)
+      console.log('patient page: anchor click- ' + anchor_tag)
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
+  }
+
+  ngOnChanges() {
+    console.log("patient page changed.")
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+      console.log('patient page-- changes-- anchor click- ' + anchor_tag)
       this.anchorSvc.clickAnchor(anchor_tag);
     })
   }
