@@ -70,11 +70,11 @@ export class FileListComponent implements OnInit {
 
   ngAfterViewInit() {
     // set initial conditions
-    this.sort.sort(<MatSortable>{
-      id: 'additionalType',
-      start: 'desc'
-    }
-    );
+    // this.sort.sort(<MatSortable>{
+    //   id: 'additionalType',
+    //   start: 'desc'
+    // }
+    // );
     // this.sort.active = "additionalType";
     // this.sort.direction = "desc";
 
