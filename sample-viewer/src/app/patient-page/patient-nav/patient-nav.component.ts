@@ -35,6 +35,12 @@ export class PatientNavComponent {
     this.anchorSvc.clickAnchor(anchor_tag);
   }
 
+  public scroll(element: any) {
+    console.log('direct call')
+    console.log(element)
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
   // ngAfterViewInit() {
   //   // For anchor jumping
   //   // Needs to be in ngOnInit to make sure page exists before querying document
