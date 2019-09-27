@@ -21,7 +21,7 @@ def convertAuthor(authorObj):
     })
 
 def getCitation(pmid, ncbi_stub=ncbi_stub):
-    res = requests.get(ncbi_stub + str(pmid))
+    res = requests.get(ncbi_stub + "{:.0f}".format(pmid))
     if(res.status_code == 200):
         citation_raw = res.json()
         citation = {}
@@ -34,7 +34,10 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
         citation["author"] = [convertAuthor(author) for author in citation_raw['author']]
         citation["datePublished"] = dateArr2Str(citation_raw['issued']['date-parts'][0])
 
-        citation["issueNumber"] = citation_raw['issue']
+        try:
+            citation["issueNumber"] = citation_raw['issue']
+        except:
+            pass
         citation["journalName"] = citation_raw['container-title']
         citation["journalNameAbbrev"] = citation_raw['container-title-short']
         citation["name"] = citation_raw['title']
@@ -47,7 +50,7 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
         return(citation)
 
 # getCitation("26276630")
-
+# getCitation(27140942.0)
 
 # Publisher Institution
 cvisb = {
