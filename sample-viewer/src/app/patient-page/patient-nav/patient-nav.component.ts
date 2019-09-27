@@ -30,10 +30,7 @@ export class PatientNavComponent {
   }
 
   public scroll(element: any) {
-    try {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } catch {
-    }
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
   ngAfterViewInit() {
