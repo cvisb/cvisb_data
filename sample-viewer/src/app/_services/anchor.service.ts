@@ -20,6 +20,7 @@ export class AnchorService {
       let anchor_div = document.querySelector("#" + anchor_tag);
       console.log(anchor_div)
       if (anchor_div) {
+        console.log("SCROLLING!")
         anchor_div.scrollIntoView();
       }
     }
