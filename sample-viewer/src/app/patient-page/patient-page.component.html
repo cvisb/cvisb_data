@@ -28,7 +28,7 @@
       </div>
 
       <!-- DEMOGRAPHICS -->
-      <mat-expansion-panel class="panel-group" id="panel--demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
+      <mat-expansion-panel class="panel-group" id="demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
           <mat-panel-title class="panel-title">
             <app-provenance-title class="flex-grow1" title="Demographics" [embargoed]="true"></app-provenance-title>
@@ -48,22 +48,8 @@
         </div>
       </mat-expansion-panel>
 
-      <!-- SYMPTOMS  -->
-      <ng-container *ngIf="patient.symptoms">
-        <mat-expansion-panel class="panel-group" id="panel--symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
-            <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="Symptoms" [embargoed]="true" [private]="true"></app-provenance-title>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true"></app-provenance>
-          <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
-        </mat-expansion-panel>
-      </ng-container>
-
       <!-- SAMPLES  -->
-      <mat-expansion-panel class="panel-group" id="panel--samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+      <mat-expansion-panel class="panel-group" id="samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
         <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
           <mat-panel-title class="panel-title">
             <app-provenance-title class="flex-grow1" title="Samples"></app-provenance-title>
@@ -73,37 +59,27 @@
         <app-patient-samples [patient]="patient"></app-patient-samples>
       </mat-expansion-panel>
 
-
-      <!-- CITATIONS -->
-      <ng-container *ngIf="publications && publications.length > 0">
-        <mat-expansion-panel class="panel-group" id="panel--citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+      <!-- SYMPTOMS  -->
+      <ng-container *ngIf="patient.symptoms">
+        <mat-expansion-panel class="panel-group" id="clinical-observations" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="Citations"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Clinical observations" [embargoed]="true" [private]="true"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="patient-citations">
-            <h4 class="patient" id="citations">Cited in</h4>
-            <app-patient-citations [publications]="publications"></app-patient-citations>
-          </div>
+          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true"></app-provenance>
+          <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
         </mat-expansion-panel>
       </ng-container>
 
 
       <!-- DATA -->
       <div class="patient-data-header">
-        <h3 class="data-title">Data</h3>
-
-        <!-- icons of available experiments -->
-        <!-- <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
-          <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
-            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'"></svg-icon>
-          </a>
-        </div> -->
+        <h3 class="data-title" id="data">Data</h3>
       </div>
 
-      <div id="data" class="patient-data">
+      <div class="patient-data">
 
         <!-- ELISAS -->
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
@@ -145,6 +121,22 @@
           <app-patient-serology [patient]="patient"></app-patient-serology>
         </div> -->
 
+
+      <!-- CITATIONS -->
+      <ng-container *ngIf="publications && publications.length > 0">
+        <mat-expansion-panel class="panel-group" id="citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              <app-provenance-title class="flex-grow1" title="Citations"></app-provenance-title>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="patient-citations">
+            <h4 class="patient">Cited in</h4>
+            <app-patient-citations [publications]="publications"></app-patient-citations>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
     </div>
   </div>
 

@@ -1,6 +1,8 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss'; // --- structural elements ---
 
+$nav-width: 215px;
+
 .patient-header {
   flex: 100%;
   max-width: 1150px;
@@ -17,11 +19,11 @@
 
 .patient-content {
   flex: 1;
-  margin-left: 9.5em;
+  margin-left: 175px;
 }
 
 .patient-nav {
-  flex: 0 0 12em;
+  flex: 0 0 $nav-width;
   order: -1;
   // margin: -18px 2em -18px -63px;
   // padding-top: 149px;
@@ -31,7 +33,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  width: 12em;
+  width: $nav-width;
   overflow-x: hidden;
 }
 

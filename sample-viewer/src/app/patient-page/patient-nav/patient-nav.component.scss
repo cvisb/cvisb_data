@@ -6,7 +6,7 @@
     list-style-type: none;
 
     &.level0 {
-      padding: 0 30px;
+      padding: 0 20px;
     }
 
     &.level1 {
@@ -20,7 +20,7 @@
   }
 
   .link:hover {
-    font-weight: 400;
+    font-weight: bold;
   }
 
   .level0 > li {
