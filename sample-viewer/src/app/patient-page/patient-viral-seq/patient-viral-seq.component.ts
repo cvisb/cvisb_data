@@ -34,7 +34,7 @@ export class PatientViralSeqComponent implements OnChanges {
 
   copySeq(seqElement, seqType) {
     seqElement.select();
-    document.execCommand('copy');
+    // document.execCommand('copy');
     this.snackBar.open(`${seqType} sequence`, "copied to clipboard!", {
       duration: 2000,
     });
