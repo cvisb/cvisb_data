@@ -14,6 +14,8 @@ import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes";
 
+import { flatMapDeep } from 'lodash';
+
 // import PATIENTS from '../../assets/data/patients.json';
 
 
@@ -126,7 +128,7 @@ export class GetPatientsService {
           let patients = patientResults['body']['hits'];
 
           patients.forEach(patient => {
-            let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["measurementTechnique.keyword"]["terms"]).map(d => d.term);
             patient['availableData'] = patientExpts;
           })
 

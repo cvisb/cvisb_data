@@ -2,6 +2,8 @@ import { Component, OnChanges, OnInit, Input } from '@angular/core';
 
 import { RequestParametersService } from '../../_services';
 
+import { flatMapDeep } from 'lodash';
+
 @Component({
   selector: 'app-filter-location',
   templateUrl: './filter-location.component.html',
@@ -46,7 +48,7 @@ export class FilterLocationComponent implements OnChanges {
     if (params) {
       let filtered = params.filter(d => d.field === fieldName);
 
-      let selectedCountries = filtered.flatMap((d: any) => d.value);
+      let selectedCountries = flatMapDeep(filtered, (d: any) => d.value);
 
       this.countries.forEach((d: any) => {
         d['disabled'] = !selectedCountries.includes(d.term);
