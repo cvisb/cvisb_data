@@ -36,16 +36,20 @@
 
 .Ebola {
   a {
-    color: $ebola-color;
+    color: $ebola-dk;
     text-decoration: none;
 
     &:hover {
-      color: $ebola-dk;
+      color: $ebola-color;
     }
   }
 
   ul > li > ul > li a {
     color: $ebola-md;
+
+    &:hover {
+      color: $ebola-color;
+    }
   }
 
   .level0 > li {
@@ -55,16 +59,20 @@
 
 .Lassa {
   a {
-    color: $lassa-color;
+    color: $lassa-dk;
     text-decoration: none;
 
     &:hover {
-      color: $lassa-dk;
+      color: $lassa-color;
     }
   }
 
   ul > li > ul > li a {
     color: $lassa-md;
+
+    &:hover {
+      color: $lassa-color;
+    }
   }
 
   .level0 > li {
@@ -85,6 +93,10 @@
 
   ul > li > ul > li a {
     color: $grey-400;
+
+    &:hover {
+      color: $default-color;
+    }
   }
 
   .level0 > li {

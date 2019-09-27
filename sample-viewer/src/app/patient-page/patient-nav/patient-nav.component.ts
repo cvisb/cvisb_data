@@ -29,14 +29,13 @@ export class PatientNavComponent {
 
   }
 
-  onAnchorClick(anchor_tag: string) {
+  onAnchorClick(event, anchor_tag: string) {
     console.log("anchor_tag clicked: " + anchor_tag)
+    console.log(event)
+    event.stopPropagation();
     this.anchorSvc.clickAnchor(anchor_tag);
   }
 
-  onAnchorClick2(anchor_tag: string) {
-    console.log("anchor_tag2 clicked: " + anchor_tag)
-  }
 
   isObject(value) {
     // necessary b/c can't use typeof in html in Angular...
