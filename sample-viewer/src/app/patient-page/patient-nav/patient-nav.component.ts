@@ -15,7 +15,7 @@ export class PatientNavComponent {
 
   links: any =
     ['demographics', 'samples', 'clinical observations',
-      { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "Viral Sequencing"]},
+      { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "Viral Sequencing"] },
       'citations'
     ];
 
@@ -32,17 +32,17 @@ export class PatientNavComponent {
   onAnchorClick(event, anchor_tag: string) {
     console.log("anchor_tag clicked: " + anchor_tag)
     event.stopPropagation();
-    // this.anchorSvc.clickAnchor(anchor_tag);
+    this.anchorSvc.clickAnchor(anchor_tag);
   }
 
-  ngAfterViewInit() {
-    // For anchor jumping
-    // Needs to be in ngOnInit to make sure page exists before querying document
-    this.route.fragment.subscribe(anchor_tag => {
-      console.log('nav page: anchor click- ' + anchor_tag)
-      this.anchorSvc.clickAnchor(anchor_tag);
-    })
-  }
+  // ngAfterViewInit() {
+  //   // For anchor jumping
+  //   // Needs to be in ngOnInit to make sure page exists before querying document
+  //   this.route.fragment.subscribe(anchor_tag => {
+  //     console.log('nav page: anchor click- ' + anchor_tag)
+  //     this.anchorSvc.clickAnchor(anchor_tag);
+  //   })
+  // }
 
 
   isObject(value) {
