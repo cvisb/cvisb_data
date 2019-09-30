@@ -99,7 +99,7 @@ export class GetHlaDataService {
     return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
       map((res) => {
         console.log(res)
-        let data = res.map(d => d['data']);
+        let data =  flatMapDeep(res, d => d.data).filter(d => d);;
         console.log(data)
         return (this.getComparisonCounts(data))
       }
