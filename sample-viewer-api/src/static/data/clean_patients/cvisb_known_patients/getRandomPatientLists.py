@@ -120,7 +120,7 @@ lsv['outcome'] = lsv['outcome'].apply(lambda x: cleanOutcome(x))
 lsv['cohort'] = 'Lassa'
 lsv.rename(columns={'sample_id': 'patientID'}, inplace=True)
 lsv = lsv[['patientID', 'country', 'outcome', 'cohort']]
-lsv['source'] = 'LSV_prevSeq_karthik'
+lsv['source'] = 'LASV_prevSeq_karthik'
 
 # Brian's list of current samples
 # n = 118

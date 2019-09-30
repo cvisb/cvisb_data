@@ -304,7 +304,7 @@ from merge_public_ids_20190227 import ids
 # first-- simple merge based just on the study IDs.
 simple_merge = pd.merge(df, ids, how="outer", indicator=True, left_on=["study specific number"], right_on=["Study Specific #"])
 simple_merge._merge.value_counts()
-# Looks more or less as expected. ~ 495 LSV survivors/contacts, 3 non-matches: 2 from the C-ids missing a study specific number, 1 from a duplicate row that was meant to be contact #3.
+# Looks more or less as expected. ~ 495 LASV survivors/contacts, 3 non-matches: 2 from the C-ids missing a study specific number, 1 from a duplicate row that was meant to be contact #3.
 simple_merge[simple_merge._merge == "left_only"]
 # merge in previous roster info based on all fields
 
