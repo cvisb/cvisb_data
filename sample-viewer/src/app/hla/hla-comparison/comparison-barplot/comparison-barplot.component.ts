@@ -219,7 +219,7 @@ export class ComparisonBarplotComponent implements OnInit {
 
       // --- Create tooltip div ---
       let ttips = d3.select("body").append("div")
-        .attr("class", "tooltip")
+        .attr("class", "tooltip hla-comparison-tooltip")
         .style("display", "none");
 
 
