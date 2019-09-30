@@ -57,8 +57,6 @@ export class HlaComparisonComponent implements OnInit {
 
 
   ngOnInit() {
-
-
     this.filteredOptionsL = this.leftControl.valueChanges
       .pipe(
         startWith<string | CohortSelectOptions>(this.init_left),

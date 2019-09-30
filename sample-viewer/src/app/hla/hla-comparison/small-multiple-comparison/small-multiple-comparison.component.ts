@@ -44,6 +44,12 @@ export class SmallMultipleComparisonComponent implements OnChanges {
     if (this.right_params && this.HLA_DATA) {
       this.right = this.filterData(this.HLA_DATA, this.right_params);
     }
+
+    console.log(this.left_params)
+    console.log(this.right_params)
+    console.log(this.left)
+    console.log(this.right)
+    console.log(this.loci)
   }
 
   nestData(data: HLA[]): HLAnested[] {
