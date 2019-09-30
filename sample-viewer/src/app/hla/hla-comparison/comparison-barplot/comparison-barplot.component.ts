@@ -162,7 +162,7 @@ export class ComparisonBarplotComponent implements OnInit {
     if (this.creationPromise) {
 
       this.locus = this.data.data_right[0].key.split("\*")[0];
-      if (this.locus === "null") {
+      if (this.locus === "null" && this.data.data_right.length > 1) {
         // locus was null; select the next one
         this.locus = this.data.data_right[1].key.split("\*")[0];
       }
