@@ -317,7 +317,6 @@ export class ApiService {
       }),
       map((all_data) => {
         // last iteration returns undefined; filter out
-        console.log(all_data)
         all_data = all_data.filter(d => d);
 
         return (all_data);

@@ -65,7 +65,6 @@ export class ComparisonBarplotComponent implements OnInit {
 
 
   ngOnChanges() {
-    console.log(this.data)
     this.data_left = this.data.left;
     this.data_right = this.data.data_right;
     this.params_left = this.data.params_left;
