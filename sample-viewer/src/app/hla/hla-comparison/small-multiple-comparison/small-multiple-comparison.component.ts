@@ -17,28 +17,21 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   right: HLAnested[];
   loci: string[];
 
-  HLA_DATA: HLA[];
+  // HLA_DATA: HLA[];
 
 
   constructor(private hlaSvc: GetHlaDataService) {
-    hlaSvc.getHLAdata().subscribe((res: Object) => {
-      this.HLA_DATA = res['data'];
-
-      if (this.left_params) {
-        this.left = this.filterData(this.HLA_DATA, this.left_params);
-        this.loci = this.left.map((d: HLAnested) => d.key)
-      }
-
-      if (this.right_params) {
-        this.right = this.filterData(this.HLA_DATA, this.right_params);
-      }
-    });
   }
 
   ngOnChanges() {
-    if (this.left_params && this.HLA_DATA) {
-      this.left = this.filterData(this.HLA_DATA, this.left_params);
-      this.loci = this.left.map((d: HLAnested) => d.key)
+    if (this.left_params) {
+      this.hlaSvc.getFilteredHLA(this.left_params).subscribe((hlaData: HLAnested[)] => {
+        // this.left = this.filterData(this.HLA_DATA, this.left_params);
+        console.log(hlaData)
+        this.left = hlaData;
+        this.loci = this.left.map((d: HLAnested) => d.key)
+      })
+
     }
 
     if (this.right_params && this.HLA_DATA) {

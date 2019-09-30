@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { nest } from 'd3';
 import * as d3 from 'd3';
 import { countBy, flatMapDeep } from 'lodash';
-import { HLA, D3Nested } from '../_models';
+import { HLA, D3Nested, HLAnested, HLAsummary, CohortSelectOptions } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -64,6 +64,27 @@ export class GetHlaDataService {
         let dateModified = res['hits'].map(d => d.dateModified).join();
 
         return ({ data: data, publisher: publisher, dateModified: dateModified })
+      }
+      ))
+  }
+
+  getFilteredHLA(patientOptions): Observable<Object[]> {
+    let pQuery = `cohort:${patientOptions.cohort.join(",")} AND outcome:${patientOptions.outcome.join(",")}`;
+
+    let params = new HttpParams()
+      .set("q", 'measurementTechnique:"HLA sequencing"')
+      .set("fields", "data")
+      .set("patientQuery", pQuery);
+
+
+    // TODO: change to fetchAll
+    return this.apiSvc.get("experiment", params, 1000).pipe(
+      map((res: ESResponse) => {
+        console.log(res)
+        // collapse the data down to a single long array of each allele
+        // make sure to remove any expts which lack a data object
+        let data = flatMapDeep(res['hits'], d => d.data).filter(d => d);
+        return (this.getComparisonCounts(data))
       }
       ))
   }
@@ -139,6 +160,30 @@ export class GetHlaDataService {
     this.alleleCountSubject.next(alleleCount);
 
     return (alleleCount);
+  }
+
+  getComparisonCounts(data: HLA[]): HLAnested[] {
+    // nest data
+    let nested_hla = d3.nest()
+      .key((d: HLA) => d.locus)
+      .key((d: HLA) => d.allele)
+      .rollup((values: any) => values.length)
+      .entries(data);
+
+    nested_hla.forEach((element: HLAnested) => {
+      // calculate total per locus.
+      element.total = d3.sum(element.values.map((d: HLAsummary) => d.value))
+
+      let locus_total = element.total;
+
+      // calc allelic frequency
+      element.values.forEach(locus_allele => {
+        locus_allele.pct = locus_allele.value / locus_total;
+      })
+    })
+    console.log(nested_hla)
+
+    return (nested_hla);
   }
 
   getUniqueCounts(hla_data) {
