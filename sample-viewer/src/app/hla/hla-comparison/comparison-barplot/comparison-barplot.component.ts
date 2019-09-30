@@ -195,7 +195,7 @@ export class ComparisonBarplotComponent implements OnInit {
       let alleles = this.combined.map((d: any) => d.key);
 
       // --- update height based on length of data ---
-      this.height = this.bar_height * alleles.length;
+      this.height = Math.min(this.bar_height * alleles.length, 400);
 
       this.svg_right
         .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -232,11 +232,11 @@ export class ComparisonBarplotComponent implements OnInit {
         .call(this.yLeftAxis);
 
       this.svg_right.selectAll('.axis--x')
+        .attr('transform', `translate(${this.margin.middle}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.xRightAxis);
 
       this.svg_right.selectAll('.axis--y.axis--right')
-        .attr('transform', `translate(${this.margin.middle}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.yRightAxis);
 
