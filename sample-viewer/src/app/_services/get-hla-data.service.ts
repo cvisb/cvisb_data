@@ -97,9 +97,11 @@ export class GetHlaDataService {
 
     // TODO: change to fetchAll
     return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
-      map((res: HLA[]) => {
+      map((res) => {
         console.log(res)
-        return (this.getComparisonCounts(res))
+        let data = res.map(d => d['data']);
+        console.log(data)
+        return (this.getComparisonCounts(data))
       }
       ))
   }
