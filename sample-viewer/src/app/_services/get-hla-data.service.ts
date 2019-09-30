@@ -72,6 +72,8 @@ export class GetHlaDataService {
     return this.getFilteredHLA(leftOptions).pipe(
       mergeMap(leftResults => this.getFilteredHLA(rightOptions).pipe(
         map(rightResults => {
+          console.log(leftResults)
+          console.log(rightResults)
           return ({ left: leftResults, right: rightResults });
         }),
         catchError(e => {
@@ -97,10 +99,7 @@ export class GetHlaDataService {
     return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
       map((res: ESResponse) => {
         console.log(res)
-        // collapse the data down to a single long array of each allele
-        // make sure to remove any expts which lack a data object
-        let data = flatMapDeep(res['hits'], d => d.data).filter(d => d);
-        return (this.getComparisonCounts(data))
+        return (this.getComparisonCounts(res))
       }
       ))
   }
