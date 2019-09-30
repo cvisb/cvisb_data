@@ -61,10 +61,10 @@
 
       <!-- SYMPTOMS  -->
       <ng-container *ngIf="patient.symptoms">
-        <mat-expansion-panel class="panel-group" id="clinical-observations" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
+        <mat-expansion-panel class="panel-group" id="symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="Clinical observations" [embargoed]="true" [private]="true"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Reported symptoms" [embargoed]="true" [private]="true"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
 

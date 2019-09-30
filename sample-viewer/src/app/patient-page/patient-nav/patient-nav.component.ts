@@ -14,7 +14,7 @@ export class PatientNavComponent {
   private patientID: string;
 
   links: any =
-    ['demographics', 'samples', 'clinical observations',
+    ['demographics', 'samples', 'symptoms',
       { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "Viral Sequencing"] },
       'citations'
     ];
