@@ -162,7 +162,7 @@ export class ComparisonBarplotComponent implements OnInit {
     if (this.creationPromise) {
 
       this.locus = this.data.data_right[0].key.split("\*")[0];
-      if (!this.locus) {
+      if (this.locus === "null") {
         // locus was null; select the next one
         this.locus = this.data.data_right[1].key.split("\*")[0];
       }
@@ -210,11 +210,19 @@ export class ComparisonBarplotComponent implements OnInit {
 
       this.x_right.domain([0, pct_max]);
 
-      this.y.domain(alleles);
+      this.y.domain(alleles)
+        .rangeRound([0, this.height]);
+
+      this.xLeftAxis
+        .tickSize(-this.height);
+
+      this.xRightAxis
+        .tickSize(-this.height);
 
 
       // --- Create axes ---
       this.svg_left.selectAll('.axis--x.axis--left')
+        .attr('transform', `translate(${this.margin.end}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.xLeftAxis)
 
@@ -228,6 +236,7 @@ export class ComparisonBarplotComponent implements OnInit {
         .call(this.xRightAxis);
 
       this.svg_right.selectAll('.axis--y.axis--right')
+        .attr('transform', `translate(${this.margin.middle}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.yRightAxis);
 
