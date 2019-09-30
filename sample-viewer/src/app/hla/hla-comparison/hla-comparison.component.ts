@@ -38,6 +38,7 @@ export class HlaComparisonComponent implements OnInit {
     { id: "LASV_dead-unknown", name: "Lassa dead or unknown outcome", cohort: ['Lassa'], outcome: ['dead', 'unknown'] },
     { id: "LASV_all", name: "Lassa survivors + dead + unknown outcome + contacts", cohort: ['Lassa'], outcome: ['dead', 'survivor', 'unknown', 'contact'] },
 
+    { id: "contacts", name: "all contacts", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['contact'] },
     { id: "control", name: "all control", cohort: ['Control'], outcome: ['control'] },
     { id: "all_survivor", name: "all survivors", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['survivor'] },
     { id: "all_dead", name: "all dead", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['dead'] },
