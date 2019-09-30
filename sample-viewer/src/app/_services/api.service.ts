@@ -302,10 +302,10 @@ export class ApiService {
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
-  fetchAllGeneric(endpoint: string, qParams): Observable<any[]> {
+  fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       expand((data, _) => {
-        return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
+        return data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY;
       }),
       reduce((acc, data: any) => {
         return acc.concat(data.results);
@@ -325,7 +325,7 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string, results: any[] }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
