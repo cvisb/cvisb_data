@@ -15,8 +15,12 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   left: HLAnested[];
   right: HLAnested[];
   loci: string[];
+  loading: boolean = false;
 
   constructor(private hlaSvc: GetHlaDataService) {
+    this.hlaSvc.loadingState$.subscribe(loading => {
+      this.loading = loading;
+    })
   }
 
   ngOnChanges() {
@@ -28,10 +32,4 @@ export class SmallMultipleComparisonComponent implements OnChanges {
       })
     }
   }
-
-  // console.log(this.left_params)
-  // console.log(this.right_params)
-  // console.log(this.left)
-  // console.log(this.right)
-  // console.log(this.loci)
 }

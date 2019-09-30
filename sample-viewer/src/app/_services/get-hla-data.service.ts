@@ -7,7 +7,7 @@ import { HLA, D3Nested, HLAnested, HLAsummary, CohortSelectOptions } from '../_m
 
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
-import { map, catchError, mergeMap } from "rxjs/operators";
+import { map, catchError, mergeMap, finalize } from "rxjs/operators";
 
 import { ApiService } from './api.service';
 import { ESResponse } from '../_models';
@@ -39,6 +39,10 @@ export class GetHlaDataService {
   public patientCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public patientCountState$ = this.patientCountSubject.asObservable();
 
+  // Loading spinner
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
+
 
   constructor(private apiSvc: ApiService) {
     this.summarizeHLA().subscribe(_ => {
@@ -69,18 +73,19 @@ export class GetHlaDataService {
   }
 
   getLRFiltered(leftOptions, rightOptions): Observable<Object[]> {
+    this.loadingSubject.next(true);
+
     return this.getFilteredHLA(leftOptions).pipe(
       mergeMap(leftResults => this.getFilteredHLA(rightOptions).pipe(
         map(rightResults => {
-          console.log(leftResults)
-          console.log(rightResults)
           return ({ left: leftResults, right: rightResults });
         }),
         catchError(e => {
           console.log(e)
           throwError(e);
           return (new Observable<any>())
-        })
+        }),
+        finalize(() => this.loadingSubject.next(false))
       )
       )
     )
@@ -98,9 +103,7 @@ export class GetHlaDataService {
     // TODO: change to fetchAll
     return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
       map((res) => {
-        console.log(res)
-        let data =  flatMapDeep(res, d => d.data).filter(d => d);;
-        console.log(data)
+        let data = flatMapDeep(res, d => d.data).filter(d => d);;
         return (this.getComparisonCounts(data))
       }
       ))
@@ -198,7 +201,6 @@ export class GetHlaDataService {
         locus_allele.pct = locus_allele.value / locus_total;
       })
     })
-    console.log(nested_hla)
 
     return (nested_hla);
   }
