@@ -22,7 +22,7 @@
 
 #right {
   // fill: $sierraleone-green;
-  fill: $cvisb-dark;
+  fill: $cvisb-theme;
 }
 
 .title {
@@ -46,7 +46,7 @@
 .hla-comparison-tooltip {
   position: absolute;
   text-align: center;
-  width: 80px;
+  width: 125px;
   padding: 8px;
   margin-top: -20px;
   background: #ddd;
@@ -59,6 +59,7 @@
     font-size: 16px;
     color: $cvisb-theme;
     font-weight: 700;
+    border: none;
   }
 
   & .label--freq {

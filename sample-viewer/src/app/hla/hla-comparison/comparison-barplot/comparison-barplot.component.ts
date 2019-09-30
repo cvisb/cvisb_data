@@ -28,6 +28,7 @@ export class ComparisonBarplotComponent implements OnInit {
   private margin: any = { top: 25, bottom: 35, beg: 5, middle: 0, end: 100 };
   private width: number = 400;
   private height: number = 300;
+  private bar_height: number = 14;
 
   // --- Selectors ---
   private left: any; // left plot
@@ -162,8 +163,13 @@ export class ComparisonBarplotComponent implements OnInit {
 
       this.locus = this.data.data_right[0].key.split("\*")[0];
 
+      // update height based on length of data
+      this.height = this.bar_height * this.data.data_left.length;
+
       this.svg_right.classed(this.locus, true);
-      this.svg_left.classed(this.locus, true);
+      this.svg_left
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .classed(this.locus, true);
 
       var t = d3.transition()
         .duration(500);

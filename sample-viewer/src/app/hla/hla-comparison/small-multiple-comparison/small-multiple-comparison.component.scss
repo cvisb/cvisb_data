@@ -2,7 +2,8 @@
 @import '../../../../sass/material-theme.scss';
 
 .small-multiple-container h4 {
-  background: desaturate(accent-redder(900), 25%);
+  // background: desaturate(accent-redder(900), 25%);
+  background: #ca8f7f;
   color: white;
   // background: lighten($cvisb-dark, 45%);
   padding: 5px 25px;
