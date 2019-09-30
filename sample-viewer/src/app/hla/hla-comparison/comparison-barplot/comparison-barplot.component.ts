@@ -162,14 +162,11 @@ export class ComparisonBarplotComponent implements OnInit {
     if (this.creationPromise) {
 
       this.locus = this.data.data_right[0].key.split("\*")[0];
+      if (!this.locus) {
+        // locus was null; select the next one
+        this.locus = this.data.data_right[1].key.split("\*")[0];
+      }
 
-      // update height based on length of data
-      this.height = this.bar_height * this.data_left.length;
-
-      this.svg_right.classed(this.locus, true);
-      this.svg_left
-        .attr("height", this.height + this.margin.top + this.margin.bottom)
-        .classed(this.locus, true);
 
       var t = d3.transition()
         .duration(500);
@@ -196,6 +193,17 @@ export class ComparisonBarplotComponent implements OnInit {
       });
       // this.combined.sort((a:any, b:any) => b.key > a.key ? 1 : -1);
       let alleles = this.combined.map((d: any) => d.key);
+
+      // --- update height based on length of data ---
+      this.height = this.bar_height * alleles.length;
+
+      this.svg_right
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .classed(this.locus, true);
+
+      this.svg_left
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .classed(this.locus, true);
 
       // --- Update domains of x & y axes --
       this.x_left.domain([0, pct_max]);
