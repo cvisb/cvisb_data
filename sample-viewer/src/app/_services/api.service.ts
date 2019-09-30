@@ -4,8 +4,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY } from 'rxjs';
+import { map, catchError, tap, mergeMap, reduce, finalize, expand } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -265,49 +265,7 @@ export class ApiService {
     );
   }
 
-  // Generic getAll, which calls fetchAll. Results will not be sorted.
-  // getAll(endpoint: string, qString) {
-  //   // console.log('starting get all')
-  //   let scrollID = null;
-  //   let done = false;
-  //
-  //   let results = [];
-  //
-  //   for (let i = 0; i < 3; i++) {
-  //     // while (!done) {
-  //     console.log("still going!")
-  //     console.log(i);
-  //
-  //     this.fetchAll(endpoint, qString, scrollID).pipe(
-  //       catchError(e => {
-  //         console.log('error!')
-  //         console.log(e)
-  //         done = true;
-  //         return (new Observable<any>())
-  //       }),
-  //       // finalize(() => this.loadingSubject.next(false))
-  //     )
-  //       .subscribe((result) => {
-  //         console.log('samples from call to backend')
-  //         done = true;
-  //         console.log(result);
-  //
-  //         // Remove ES variables that we won't need.
-  //         let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
-  //         scrollID = result['_scroll_id'];
-  //
-  //         results = results.concat(resultArr);
-  //         console.log(results)
-  //         console.log(results.length / result.total);
-  //
-  //       });
-  //   }
-  //
-  //   return (results)
-  // }
-
   fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
-
     let params = new HttpParams()
       .set('q', qString)
       .append('fetch_all', "true");
@@ -336,6 +294,58 @@ export class ApiService {
         return (of(e))
       })
     )
+  }
+
+
+  // Using MyGene fetch_all to grab all the data, unscored:
+  // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
+  // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
+  // If no more results to be found, "success": false
+  // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
+  fetchAllGeneric(endpoint: string, qParams): Observable<any[]> {
+    return this.fetchOne(endpoint, qParams).pipe(
+      expand((data, _) => {
+        return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
+      }),
+      reduce((acc, data: any) => {
+        return acc.concat(data.results);
+      }, []),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      }),
+      map((all_data) => {
+        // last iteration returns undefined; filter out
+        console.log(all_data)
+        all_data = all_data.filter(d => d);
+
+        return (all_data);
+      })
+    )
+  }
+
+  fetchOne(endpoint: string, qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
+    let params = qParams
+      .append('fetch_all', "true");
+    if (scrollID) {
+      params = params.append('scroll_id', scrollID);
+
+    }
+    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
+      map(response => {
+        return {
+          next: response['body']['_scroll_id'],
+          results: response['body']['hits']
+        };
+      }
+      )
+    );
   }
 
   // Generic function to pull out the ES `_ids` for all entries in an endpoint.

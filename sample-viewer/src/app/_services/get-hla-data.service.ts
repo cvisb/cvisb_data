@@ -78,7 +78,7 @@ export class GetHlaDataService {
 
 
     // TODO: change to fetchAll
-    return this.apiSvc.get("experiment", params, 1000).pipe(
+    return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
       map((res: ESResponse) => {
         console.log(res)
         // collapse the data down to a single long array of each allele

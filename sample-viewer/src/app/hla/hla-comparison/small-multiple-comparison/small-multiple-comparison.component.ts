@@ -33,10 +33,10 @@ export class SmallMultipleComparisonComponent implements OnChanges {
       })
     }
 
-    console.log(this.left_params)
-    console.log(this.right_params)
-    console.log(this.left)
-    console.log(this.right)
-    console.log(this.loci)
+    // console.log(this.left_params)
+    // console.log(this.right_params)
+    // console.log(this.left)
+    // console.log(this.right)
+    // console.log(this.loci)
   }
 }
