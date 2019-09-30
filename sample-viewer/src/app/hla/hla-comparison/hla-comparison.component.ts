@@ -39,10 +39,10 @@ export class HlaComparisonComponent implements OnInit {
     { id: "LASV_all", name: "Lassa survivors + dead + unknown outcome + contacts", cohort: ['Lassa'], outcome: ['dead', 'survivor', 'unknown', 'contact'] },
 
     { id: "control", name: "all control", cohort: ['Control'], outcome: ['control'] },
-    { id: "all_survivor", name: "all survivors", cohort: ['Lassa', 'Ebola'], outcome: ['survivor'] },
-    { id: "all_dead", name: "all dead", cohort: ['Lassa', 'Ebola'], outcome: ['dead'] },
-    { id: "all_survivor-dead", name: "all survivor + dead", cohort: ['Lassa', 'Ebola'], outcome: ['dead', 'survivor'] },
-    { id: "control-survivor", name: "control + survivors", cohort: ['Lassa', 'Ebola', 'Control'], outcome: ['survivor', 'control'] },
+    { id: "all_survivor", name: "all survivors", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['survivor'] },
+    { id: "all_dead", name: "all dead", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['dead'] },
+    { id: "all_survivor-dead", name: "all survivor + dead", cohort: ['Lassa', 'Ebola', 'Unknown'], outcome: ['dead', 'survivor'] },
+    { id: "control-survivor", name: "control + survivors", cohort: ['Lassa', 'Ebola', 'Control', 'Unknown'], outcome: ['survivor', 'control'] },
     // comparisons that probably don't make a ton of sense, or are already specified above b/c of the data
     // { id: "all_unknown", name: "all unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['unknown'] },
     // { id: "control-unknown", name: "control + unknown outcome", cohort: ['Lassa', 'Ebola'], outcome: ['unknown', 'control'] },
