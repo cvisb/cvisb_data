@@ -28,7 +28,7 @@ export class ComparisonBarplotComponent implements OnInit {
   private margin: any = { top: 25, bottom: 35, beg: 5, middle: 0, end: 100 };
   private width: number = 400;
   private height: number = 300;
-  private bar_height: number = 14;
+  private bar_height: number = 10;
 
   // --- Selectors ---
   private left: any; // left plot
