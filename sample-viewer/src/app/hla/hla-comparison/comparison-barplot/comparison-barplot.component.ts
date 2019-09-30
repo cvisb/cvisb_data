@@ -164,7 +164,7 @@ export class ComparisonBarplotComponent implements OnInit {
       this.locus = this.data.data_right[0].key.split("\*")[0];
 
       // update height based on length of data
-      this.height = this.bar_height * this.data.data_left.length;
+      this.height = this.bar_height * this.data_left.length;
 
       this.svg_right.classed(this.locus, true);
       this.svg_left
