@@ -6,7 +6,7 @@ import { countBy, flatMapDeep } from 'lodash';
 import { HLA, D3Nested, HLAnested, HLAsummary, CohortSelectOptions } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { ApiService } from './api.service';
@@ -66,6 +66,22 @@ export class GetHlaDataService {
         return ({ data: data, publisher: publisher, dateModified: dateModified })
       }
       ))
+  }
+
+  getLRFiltered(leftOptions, rightOptions): Observable<Object[]> {
+    return this.getFilteredHLA(leftOptions).pipe(
+      mergeMap(leftResults => this.getFilteredHLA(rightOptions).pipe(
+        map(rightResults => {
+          return ({ left: leftResults, right: rightResults });
+        }),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        })
+      )
+      )
+    )
   }
 
   getFilteredHLA(patientOptions): Observable<Object[]> {

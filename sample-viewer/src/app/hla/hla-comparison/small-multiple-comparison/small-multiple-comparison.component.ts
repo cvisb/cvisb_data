@@ -20,23 +20,18 @@ export class SmallMultipleComparisonComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.left_params) {
-      this.hlaSvc.getFilteredHLA(this.left_params).subscribe((hlaData: HLAnested[]) => {
-        this.left = hlaData;
+    if (this.left_params && this.right_params) {
+      this.hlaSvc.getLRFiltered(this.left_params, this.right_params).subscribe((hlaData: HLAnested[]) => {
+        this.left = hlaData['left'];
+        this.right = hlaData['right'];
         this.loci = this.left.map((d: HLAnested) => d.key)
       })
     }
-
-    if (this.right_params) {
-      this.hlaSvc.getFilteredHLA(this.right_params).subscribe((hlaData: HLAnested[]) => {
-        this.right = hlaData;
-      })
-    }
-
-    // console.log(this.left_params)
-    // console.log(this.right_params)
-    // console.log(this.left)
-    // console.log(this.right)
-    // console.log(this.loci)
   }
+
+  // console.log(this.left_params)
+  // console.log(this.right_params)
+  // console.log(this.left)
+  // console.log(this.right)
+  // console.log(this.loci)
 }
