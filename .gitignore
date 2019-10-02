@@ -43,3 +43,4 @@ notes/2019-05-14_experiment-dataset-metadata.json
 sample-viewer-api/src/static/schemas/cvisb_variables_2019-05-22.xlsx
 sample-viewer-api/src/static/privacy/*
 sample-viewer/src/assets/img/KGH_fullsize.jpeg
+sample-viewer-api/src/static/geo/SLE/whosonfirst-data-latest.db

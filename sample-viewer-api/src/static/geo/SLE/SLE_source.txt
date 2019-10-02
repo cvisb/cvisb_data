@@ -7,6 +7,11 @@ https://data.humdata.org/dataset/sierra-leone-settlements
 SLE places also from OSM via HOT
 https://data.humdata.org/dataset/open-street-map-data-on-guinea-liberia-and-sierra-leone
 
+
+Who's on First gazetteer, primarily based on NGA data but incorporating other places too.
+Downloaded 2019-10-02
+https://dist.whosonfirst.org/sqlite/
+
 Mapshaper simplification: Adm2
 
 md: 2.0%
