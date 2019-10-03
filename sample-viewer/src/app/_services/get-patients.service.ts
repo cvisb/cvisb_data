@@ -245,6 +245,7 @@ export class GetPatientsService {
   fetchAll(qParams): Observable<any[]> {
     return this.fetchOne(qParams).pipe(
       expand((data, _) => {
+        console.log(data)
         return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
       }),
       reduce((acc, data: any) => {
@@ -256,6 +257,8 @@ export class GetPatientsService {
         return (new Observable<any>())
       }),
       map((patients) => {
+        console.log("end of API")
+        console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
         patients = patients.filter(d => d).map(patient => {
@@ -273,6 +276,7 @@ export class GetPatientsService {
       params = params.append('scroll_id', scrollID);
 
     }
+    console.log(params)
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -280,6 +284,7 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map(response => {
+          console.log(response)
         return {
           next: response['body']['_scroll_id'],
           results: response['body']['hits']
