@@ -304,7 +304,7 @@ export class ApiService {
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, asapScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, queueScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
