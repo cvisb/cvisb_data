@@ -125,15 +125,13 @@ export class getDatasetsService {
 
             console.log(expt_flat)
 
-            // d['source_key'] = d.source ? d.source.name : null;
             console.log(expts)
 
             let sources = _(expt_flat)
               .groupBy('name')
               .map((items, id) => {
                 return {
-                  source: items, // !!!! being slightly lazy here. Assyming all source.name's are unique and contain redundant data.
-                  // source: _.uniqWith(items.map(d => d.source), _.isEqual),
+                  source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
                   count: items.length,
                   pct: items.length / expt_flat.length
                 };
