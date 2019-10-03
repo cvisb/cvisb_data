@@ -351,7 +351,12 @@ export class ApiService {
           results: response['body']['hits']
         };
       }
-      )
+      ),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
     );
   }
 

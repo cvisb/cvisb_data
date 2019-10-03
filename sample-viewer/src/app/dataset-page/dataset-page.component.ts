@@ -30,7 +30,9 @@ export class DatasetPageComponent implements OnInit {
     this.dataset = this.route.snapshot.data['datasetData'];
 
     // Set page name
-    this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
+    if (this.route.snapshot.data['datasetData']) {
+      this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
+    }
   }
 
 

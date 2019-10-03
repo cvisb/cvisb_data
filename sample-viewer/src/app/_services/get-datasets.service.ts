@@ -28,7 +28,7 @@ export class getDatasetsService {
   ) {
     console.log("CONSTRUCTING")
     this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', `includedInDataset:viralseq`))
+      .set('q', "includedInDataset:viralseq"))
   }
 
   getDatasets() {
