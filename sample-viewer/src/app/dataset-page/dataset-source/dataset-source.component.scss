@@ -1,6 +1,10 @@
 @import '../../../sass/variables.scss';
 $square-width: 2em;
 
+.source {
+  flex: 1;
+}
+
 .source-percent {
   width: $square-width;
   height: $square-width;
@@ -12,7 +16,7 @@ $square-width: 2em;
 }
 
 .dataset-source-container {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   align-items: center;
 }
 
