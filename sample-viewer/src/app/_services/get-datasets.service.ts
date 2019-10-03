@@ -117,8 +117,8 @@ export class getDatasetsService {
             let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
 
             expts.forEach(d => {
-              d['source'] = d.citation ? d.citation : d.publisher;
-              d['source_key'] = d.source.name;
+              d['source'] = d.citation ? cloneDeep(d.citation) : cloneDeep(d.publisher);
+              d['source_key'] = d.source ? d.source.name : null;
             })
             console.log(expts)
 
