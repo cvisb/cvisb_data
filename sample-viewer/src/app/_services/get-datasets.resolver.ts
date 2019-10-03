@@ -13,6 +13,6 @@ export class DatasetResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.data.dsid;
-    return this.datasetSvc.getDataset(dsid);
+    // return this.datasetSvc.getDataset(dsid);
   }
 }
