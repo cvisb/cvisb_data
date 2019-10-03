@@ -27,12 +27,14 @@ export class getDatasetsService {
     private exptPipe: ExperimentObjectPipe
   ) {
     console.log("CONSTRUCTING")
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+    this.apiSvc.fetchOne("datadownload", new HttpParams()
       .set('q', "includedInDataset:viralseq")).subscribe(rs => {
         console.log(rs)
       })
-    // this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-    //   .set('q', "includedInDataset:hla"))
+    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      .set('q', "includedInDataset:hla")).subscribe(rs => {
+        console.log(rs)
+      })
     // this.apiSvc.fetchOne("datadownload", new HttpParams()
     //   .set('q', "includedInDataset:viralseq"))
     // this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()

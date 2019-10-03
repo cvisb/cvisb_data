@@ -338,12 +338,7 @@ export class ApiService {
       params = params.append('scroll_id', scrollID);
     }
     console.log(params)
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
+    return this.get(endpoint, params).pipe(
       map(response => {
         console.log(response)
         return {
