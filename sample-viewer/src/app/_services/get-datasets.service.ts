@@ -9,7 +9,7 @@ import { MyHttpClient } from './http-cookies.service';
 import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
 
-import * as _ from 'lodash';
+import { cloneDeep, uniqWith, isEqual } from 'lodash';
 
 import DATASETS from '../../assets/data/dataset_public.json';
 import DOWNLOADS from '../../assets/data/test_datadownloads.json';
@@ -74,13 +74,9 @@ export class getDatasetsService {
 
   getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
     return forkJoin(
-      this.myhttp.get<any[]>(environment.api_url + "/api/datadownload/query", {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set('q', `includedInDataset:${id}`)
-      }),
+      this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+        .set('q', `includedInDataset:${id}`)
+      ),
       this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
         observe: 'response',
         headers: new HttpHeaders()
@@ -92,22 +88,20 @@ export class getDatasetsService {
         // new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
         new HttpParams()
           .set("q", `measurementTechnique:${id}`)
-          .set("fields", "measurementTechnique,citation,publisher"))
+          .set("fields", "citation,publisher"))
     )
       .pipe(
         map(([downloads, data, expts]) => {
           console.log("GET DATASET")
-          console.log(expts)
           console.log(data)
           console.log(downloads)
+          console.log(expts)
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
 
-            let files = downloads['body']['hits'];
-
             // remove ES _id from files:
-            files.forEach(d => {
+            downloads.forEach(d => {
               delete d._id;
               delete d._score;
             })
@@ -115,10 +109,18 @@ export class getDatasetsService {
             delete dataset._id;
             delete dataset._score;
 
+            let publishers = uniqWith(expts.map(d => d.publisher), isEqual);
+            let citations = uniqWith(expts.map(d => d.citation), isEqual);
+
+            console.log(publishers)
+            console.log(citations)
+
             // save DataDownloads to 'distribution' within dataset
-            dataset['distribution'] = files;
+            dataset['distribution'] = downloads;
             dataset["@context"] = "http://schema.org/";
             dataset["@type"] = "Dataset";
+            dataset["publisher"] = publishers;
+            dataset["citation"] = citations;
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
@@ -177,7 +179,7 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds) {
-    this.schema_dataset = _.cloneDeep(ds); // create copy
+    this.schema_dataset = cloneDeep(ds); // create copy
 
     // remove stuff from the dataset object
     let schemaorg = ["@context", "@type", "identifier", "name", "description", "url", "@id", "keywords", "measurementTechnique", "variableMeasured", "datePublished", "dateModified", "temporalCoverage", "spatialCoverage", "includedInDataCatalog", "author", "publisher", "version", "schemaVersion", "distribution"];
