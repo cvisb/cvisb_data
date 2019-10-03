@@ -27,6 +27,7 @@ export class getDatasetsService {
     public apiSvc: ApiService,
     private exptPipe: ExperimentObjectPipe
   ) {
+    this.getFiles()
   }
 
   // Soooo.... fetchAllGeneric fails with any query that goes beyond one page, but for some reason only in
@@ -148,7 +149,7 @@ export class getDatasetsService {
             dataset["publisher"] = publishers;
             dataset["citation"] = citations;
             dataset["source"] = sources;
-            console.log(dataset)
+            // console.log(dataset)
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")

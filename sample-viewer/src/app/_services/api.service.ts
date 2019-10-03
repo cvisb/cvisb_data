@@ -306,7 +306,7 @@ export class ApiService {
     return this.fetchOne(endpoint, qParams).pipe(
       expand((data, _) => {
         // console.log(data)
-        return data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY;
+        return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
       }),
       reduce((acc, data: any) => {
         // console.group()
@@ -331,19 +331,27 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string, results: any[] }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, ct?: number): Observable<{ next: string, results: any[], ct: number }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
+    if(!ct) {
+      ct = 0;
+    }
+
     // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
+        console.log(ct)
+        ct += 1;
+
         // console.log(response)
         return {
           next: response['_scroll_id'],
-          results: response['hits']
+          results: response['hits'],
+          ct: ct
         };
       }),
       catchError(e => {
