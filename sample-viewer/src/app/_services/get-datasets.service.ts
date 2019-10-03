@@ -27,7 +27,7 @@ export class getDatasetsService {
     public apiSvc: ApiService,
     private exptPipe: ExperimentObjectPipe
   ) {
-    this.getFiles();
+    // this.getFiles();
   }
 
   // Soooo.... fetchAllGeneric fails with any query that goes beyond one page, but for some reason only in
