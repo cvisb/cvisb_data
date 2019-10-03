@@ -306,9 +306,9 @@ export class ApiService {
     return this.fetchOne(endpoint, qParams).pipe(
       // asapScheduler ==> 1 call.
       // queueScheduler ==> works on SSR, but then on client-side goes into infinite loop.
-      // w/ concurrent = 1 -->
-      // w/o any params
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY
+      // w/ concurrent = 1 --> infinite loop on both
+      // w/o any, very quickly generates stack error.
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 0
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
