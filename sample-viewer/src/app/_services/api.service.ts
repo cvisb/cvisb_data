@@ -305,14 +305,14 @@ export class ApiService {
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       expand((data, _) => {
-        console.log(data)
+        // console.log(data)
         return data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY;
       }),
       reduce((acc, data: any) => {
-        console.group()
-        console.log(acc)
-        console.log(data)
-        console.groupEnd();
+        // console.group()
+        // console.log(acc)
+        // console.log(data)
+        // console.groupEnd();
         return acc.concat(data.results);
       }, []),
       catchError(e => {
@@ -321,8 +321,8 @@ export class ApiService {
         return (new Observable<any>())
       }),
       map((all_data) => {
-        console.log("end of API")
-        console.log(all_data)
+        // console.log("end of API")
+        // console.log(all_data)
         // last iteration returns undefined; filter out
         all_data = all_data.filter(d => d);
 
@@ -337,10 +337,10 @@ export class ApiService {
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
-    console.log(params)
+    // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
-        console.log(response)
+        // console.log(response)
         return {
           next: response['_scroll_id'],
           results: response['hits']
