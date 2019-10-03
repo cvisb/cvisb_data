@@ -123,10 +123,6 @@ export class getDatasetsService {
 
             let expt_flat = flatMapDeep(expts, d => d.source)
 
-            console.log(expt_flat)
-
-            console.log(expts)
-
             let sources = _(expt_flat)
               .groupBy('name')
               .map((items, id) => {
@@ -137,8 +133,6 @@ export class getDatasetsService {
                 };
               }).value();
 
-            console.log(sources)
-
             // flatten sources
             sources.forEach(d => {
               d.source['count'] = d.count;
@@ -146,8 +140,6 @@ export class getDatasetsService {
             })
 
             sources = sources.map(d => d.source)
-
-            console.log(sources)
 
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = downloads;
