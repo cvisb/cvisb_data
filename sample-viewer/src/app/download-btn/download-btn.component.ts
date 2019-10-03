@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { AuthService, GetPatientsService, RequestParametersService, Nested2longService } from '../_services';
+import { AuthService, GetPatientsService, RequestParametersService, Nested2longService, ApiService } from '../_services';
 import { AuthState, RequestParamArray } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
@@ -36,6 +36,7 @@ export class DownloadBtnComponent implements OnInit {
     private authSvc: AuthService,
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
+    private apiSvc: ApiService,
     private datePipe: DatePipe,
     private longSvc: Nested2longService,
     public dialog: MatDialog,
@@ -141,7 +142,8 @@ export class DownloadBtnComponent implements OnInit {
       case ("patients"):
         this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
 
-        this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
+        this.apiSvc.fetchAllGeneric("patient", this.qParams).subscribe(patients => {
+        // this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
           this.data = patients;
           this.parseData(patients, this.filename);
         });
