@@ -310,34 +310,34 @@ export class ApiService {
         // console.log(data)
         return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
       }),
-      concatMap(({ results }) => {
-        console.log(results)
-        return(results)
-      }),
-      // reduce((acc, data: any) => {
-      //   // console.group()
-      //   // console.log(acc)
-      //   // console.log(data)
-      //   // console.groupEnd();
-      //   return acc.concat(data.results);
-      // }, []),
+      // concatMap(({ results }) => {
+      //   console.log(results)
+      //   return(results)
+      // }),
+      reduce((acc, data: any) => {
+        // console.group()
+        // console.log(acc)
+        // console.log(data)
+        // console.groupEnd();
+        return acc.concat(data.results);
+      }, []),
       catchError(e => {
         console.log(e)
         throwError(e);
         return (new Observable<any>())
       }),
       map((all_data) => {
-        console.log("end of API")
-        console.log(all_data)
+        // console.log("end of API")
+        // console.log(all_data)
         // last iteration returns undefined; filter out
-        // all_data = all_data.filter(d => d);
+        all_data = all_data.filter(d => d);
 
         return (all_data);
       })
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, ct?: number): Observable<{ next: string, results: any[], ct: number }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, ct?: number): Observable<{ next: string | null, results: any[], ct: number }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
