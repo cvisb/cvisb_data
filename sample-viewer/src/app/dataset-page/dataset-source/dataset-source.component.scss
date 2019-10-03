@@ -1,0 +1,35 @@
+@import '../../../sass/variables.scss';
+$square-width: 2em;
+
+.source-percent {
+  width: $square-width;
+  height: $square-width;
+  padding: 5px;
+  text-align: center;
+  line-height: $square-width;
+  margin-right: 10px;
+  border: 1px solid $grey-400;
+}
+
+.dataset-source-container {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.helper-text {
+  font-size: 0.75em;
+  margin-left: $square-width/2;
+  color: $grey-400;
+  margin-bottom: 5px;
+  display: flex;
+  height: 1.7em;
+
+  & .text {
+    margin-left: 5px;
+  }
+}
+
+.helper-arrow {
+  transform: rotate(180deg);
+  color: $grey-300;
+}

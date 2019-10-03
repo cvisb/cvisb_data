@@ -12,6 +12,9 @@ import { FileListModule } from '../file-list/file-list.module';
 import { RouterModule } from '@angular/router';
 import { EmbedJsonldModule } from '../embed-jsonld/embed-jsonld.module';
 import { MaterialModule } from '../material.module';
+import { DatasetSourceComponent } from './dataset-source/dataset-source.component';
+import { FormatCitationModule } from '../format-citation/format-citation.module';
+import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 
 @NgModule({
   imports: [
@@ -19,13 +22,16 @@ import { MaterialModule } from '../material.module';
     RouterModule,
     MaterialModule,
     FileListModule,
+    FormatCitationModule,
+    FormatPublisherModule,
     EmbedJsonldModule
   ],
   declarations: [
     DatasetPageComponent,
     DatasetPageNavComponent,
     FileMetadataComponent,
-    MdObjectComponent
+    MdObjectComponent,
+    DatasetSourceComponent
   ],
   exports: [
     DatasetPageComponent

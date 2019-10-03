@@ -129,14 +129,14 @@ export class getDatasetsService {
                 return {
                   source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
                   count: items.length,
-                  pct: items.length / expt_flat.length
+                  percent: items.length / expt_flat.length
                 };
               }).value();
 
             // flatten sources
             sources.forEach(d => {
               d.source['count'] = d.count;
-              d.source['pct'] = d.pct;
+              d.source['percent'] = d.percent;
             })
 
             sources = sources.map(d => d.source)

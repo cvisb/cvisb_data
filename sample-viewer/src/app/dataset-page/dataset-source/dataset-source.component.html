@@ -1,0 +1,25 @@
+<ng-container *ngIf="sources">
+  <h2>Dataset sources</h2>
+
+  <div class="helper-text">
+    <!-- <i class="fas fa-arrow-down"></i>  -->
+    <i class="fas fa-level-up-alt helper-arrow"></i>
+    <span class="text">percent of experiments from source</span>
+  </div>
+
+  <div *ngFor="let source of sources" class="container dataset-source-container">
+    <div class="source-percent" [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
+      {{ source.percent | percent : 0 }}
+    </div>
+
+    <ng-container [ngSwitch]="source">
+      <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'"></app-format-citation>
+      <app-format-publisher></app-format-publisher>
+      <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+    </ng-container>
+  </div>
+</ng-container>
+
+<!-- <h2>How to cite</h2>
+<app-citation></app-citation> -->
