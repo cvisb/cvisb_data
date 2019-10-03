@@ -82,7 +82,7 @@ export class getDatasetsService {
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
-          .set("q", `measurementTechnique:${measurementTechnique.name}`)
+          .set("q", `measurementTechnique:"${measurementTechnique.name}"`)
           .set("fields", "citation,publisher"))
     )
       .pipe(
@@ -107,9 +107,6 @@ export class getDatasetsService {
 
             let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
             let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
-
-            console.log(publishers)
-            console.log(citations)
 
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = downloads;
