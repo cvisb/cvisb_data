@@ -118,11 +118,13 @@ export class getDatasetsService {
             let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
 
             expts.forEach(d => {
-              d['source'] = d.citation ? cloneDeep(d.citation) : d.publisher ? cloneDeep(d.publisher) : {}; // safeguard against nulls
-              d['source']['type'] = d.citation ? 'citation' : d.publisher ? 'publisher' : 'unknown';
+              d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
+              d['source']['type'] = d.citation ? 'citation' : (d.publisher ? 'publisher' : 'unknown');
             })
 
             let expt_flat = flatMapDeep(expts, d => d.source)
+            console.log(expts);
+            console.log(expt_flat);
 
             let sources = _(expt_flat)
               .groupBy('name')
