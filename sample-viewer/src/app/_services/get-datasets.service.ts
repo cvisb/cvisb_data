@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
+import { Observable, throwError, forkJoin } from 'rxjs';
 import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
@@ -9,10 +9,9 @@ import { MyHttpClient } from './http-cookies.service';
 import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
 
-import { cloneDeep, uniqWith, isEqual } from 'lodash';
+import { ExperimentObjectPipe } from '../_pipes';
 
-import DATASETS from '../../assets/data/dataset_public.json';
-import DOWNLOADS from '../../assets/data/test_datadownloads.json';
+import { cloneDeep, uniqWith, isEqual } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +23,10 @@ export class getDatasetsService {
   constructor(
     public http: HttpClient,
     public myhttp: MyHttpClient,
-    public apiSvc: ApiService
+    public apiSvc: ApiService,
+    private exptPipe: ExperimentObjectPipe
   ) {
-    this.getDatasets();
-    // apiSvc.put('dataset', DATASETS);
-    // apiSvc.put('datadownload', DOWNLOADS);
+    // this.getDatasets();
   }
 
   getDatasets() {
@@ -39,7 +37,6 @@ export class getDatasetsService {
     }).pipe(
       mergeMap((ds_results: any) =>
         this.apiSvc.get("experiment",
-          // new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
           new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
             .set("facets", "measurementTechnique.keyword"), 0).pipe(
               map(expts => {
@@ -59,20 +56,20 @@ export class getDatasetsService {
               })
             )
       ))
-    // err => {
-    //   console.log('Error in getting datasets')
-    //   // console.log(err)
-    // })
   }
 
   /*
-  getDataset performs two operations:
+  getDataset performs three operations:
   1. gets all DataDownloads for a particular dataset
   2. gets the Dataset metadata information for that dataset.
-  ... and adds DataDownloads to Dataset in the `distribution parameter`
+  3. gets the citations/publishers from experiment and attaches them to the dataset.
+  ... and adds DataDownloads to Dataset in the `distribution` parameter,
+  `citation`, and `publisher` as arrays.
    */
-
   getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
+    let measurementTechnique = this.exptPipe.transform(id, idVar);
+    console.log(measurementTechnique)
+
     return forkJoin(
       this.apiSvc.get("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
@@ -86,7 +83,7 @@ export class getDatasetsService {
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
-          .set("q", `measurementTechnique:${id}`)
+          .set("q", `measurementTechnique:${measurementTechnique.name}`)
           .set("fields", "citation,publisher"))
     )
       .pipe(
@@ -95,7 +92,7 @@ export class getDatasetsService {
           console.log(data)
           console.log(downloads)
           console.log(expts)
-          downloads= downloads['hits'];
+          downloads = downloads['hits'];
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
@@ -136,39 +133,6 @@ export class getDatasetsService {
       )
   }
 
-
-  //   return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
-  //     observe: 'response',
-  //     headers: new HttpHeaders()
-  //       .set('Accept', 'application/json'),
-  //     params: new HttpParams()
-  //       .set('q', `${idVar}:${id}`)
-  //   }).pipe(
-  //     map(data => {
-  //       if (data['body']['total'] === 1) {
-  //         // One result found, as expected.
-  //         let datasets = data['body']['hits'];
-  //         return (datasets[0])
-  //       } else {
-  //         console.log("More than one dataset returned. Check if your ID is unique!")
-  //         console.log(data);
-  //       }
-  //     }),
-  //     catchError(e => {
-  //       console.log(e)
-  //       throwError(e);
-  //       return (new Observable<any>())
-  //     })
-  //   )
-  // }
-
-
-  getSchema(dsid: string) {
-    // TODO: check if more than one dataset.
-    let dataset = DATASETS.filter((d: any) => d.identifier === dsid)[0];
-    return (this.removeNonSchema(dataset));
-  }
-
   // Function to convert
   jsonify(arr: any[]): string {
     let json_arr = [];
@@ -205,6 +169,5 @@ export class getDatasetsService {
       }
     }
   }
-
 
 }
