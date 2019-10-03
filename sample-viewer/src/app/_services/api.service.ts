@@ -342,8 +342,8 @@ export class ApiService {
       map(response => {
         console.log(response)
         return {
-          next: response['body']['_scroll_id'],
-          results: response['body']['hits']
+          next: response['_scroll_id'],
+          results: response['hits']
         };
       }),
       catchError(e => {
