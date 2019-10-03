@@ -121,6 +121,12 @@ export class getDatasetsService {
               d['source']['type'] = d.citation ? 'citation' : d.publisher ? 'publisher' : 'unknown';
               d['source_key'] = d.source ? d.source.name : null;
             })
+
+            let x = flatMapDeep(expts, d => d.source)
+
+            console.log(x)
+
+            // d['source_key'] = d.source ? d.source.name : null;
             console.log(expts)
 
             let sources = _(expts)
