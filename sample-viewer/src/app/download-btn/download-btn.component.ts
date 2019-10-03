@@ -142,7 +142,8 @@ export class DownloadBtnComponent implements OnInit {
       case ("patients"):
         this.filename = `${this.today}_cvisb_${this.filetype}${this.auth_stub}.tsv`;
 
-        this.apiSvc.fetchAllGeneric("patient", this.qParams).subscribe(patients => {
+        this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+          .set('q', "__all__")).subscribe(patients => {
         // this.patientSvc.fetchAll(this.qParams).subscribe(patients => {
           this.data = patients;
           this.parseData(patients, this.filename);
