@@ -305,17 +305,19 @@ export class ApiService {
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       expand((data, _) => {
+        console.log(data.ct)
+        console.log(data.next)
         // console.log(data)
         return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
       }),
-      concatMap(({ results }) => results),
-      // reduce((acc, data: any) => {
-      //   // console.group()
-      //   // console.log(acc)
-      //   // console.log(data)
-      //   // console.groupEnd();
-      //   return acc.concat(data.results);
-      // }, []),
+      // concatMap(({ results }) => results),
+      reduce((acc, data: any) => {
+        // console.group()
+        // console.log(acc)
+        // console.log(data)
+        // console.groupEnd();
+        return acc.concat(data.results);
+      }, []),
       catchError(e => {
         console.log(e)
         throwError(e);
@@ -345,7 +347,6 @@ export class ApiService {
     // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
-        console.log(ct)
         ct += 1;
 
         // console.log(response)
