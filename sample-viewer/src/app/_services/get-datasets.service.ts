@@ -84,7 +84,7 @@ export class getDatasetsService {
         params: new HttpParams()
           .set('q', `${idVar}:${id}`)
       }),
-      this.apiSvc.fetchAllGeneric("experiment",
+      this.apiSvc.get("experiment",
         new HttpParams()
           .set("q", `measurementTechnique:${id}`)
           .set("fields", "citation,publisher"))
