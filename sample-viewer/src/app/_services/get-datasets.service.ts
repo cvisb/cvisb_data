@@ -119,24 +119,23 @@ export class getDatasetsService {
             expts.forEach(d => {
               d['source'] = d.citation ? cloneDeep(d.citation) : d.publisher ? cloneDeep(d.publisher) : {}; // safeguard against nulls
               d['source']['type'] = d.citation ? 'citation' : d.publisher ? 'publisher' : 'unknown';
-              d['source_key'] = d.source ? d.source.name : null;
             })
 
-            let x = flatMapDeep(expts, d => d.source)
+            let expt_flat = flatMapDeep(expts, d => d.source)
 
-            console.log(x)
+            console.log(expt_flat)
 
             // d['source_key'] = d.source ? d.source.name : null;
             console.log(expts)
 
-            let sources = _(expts)
-              .groupBy('source_key')
+            let sources = _(expt_flat)
+              .groupBy('name')
               .map((items, id) => {
                 return {
                   source: items[0]['source'], // !!!! being slightly lazy here. Assyming all source.name's are unique and contain redundant data.
                   // source: _.uniqWith(items.map(d => d.source), _.isEqual),
                   count: items.length,
-                  pct: items.length / expts.length
+                  pct: items.length / expt_flat.length
                 };
               }).value();
 
