@@ -15,7 +15,6 @@ export class FormatCitationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.citations)
   }
 
 }

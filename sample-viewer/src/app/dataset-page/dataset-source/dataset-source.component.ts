@@ -18,8 +18,7 @@ export class DatasetSourceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.sources = this.sources.sort((a,b) => b.percent - a.percent);
-    console.log(this.sources)
+    this.sources = this.sources.sort((a, b) => b.percent - a.percent);
     this.colorScale = d3.scaleSequential(d3.interpolateGreys)
       .domain([0, 1]);
   }
