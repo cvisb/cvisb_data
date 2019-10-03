@@ -10,11 +10,12 @@ import { Citation } from '../_models';
 
 export class FormatCitationComponent implements OnInit {
   @Input() citations: Citation[];
-  @Input() verbosity: string = "basic"; // one of "basic", "links", or "verbose"
+  @Input() verbosity; // one of "basic", "links", or "verbose"
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.citations)
   }
 
 }
