@@ -74,7 +74,7 @@ export class getDatasetsService {
 
   getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
     return forkJoin(
-      this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      this.apiSvc.get("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
       ),
       this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
@@ -84,7 +84,7 @@ export class getDatasetsService {
         params: new HttpParams()
           .set('q', `${idVar}:${id}`)
       }),
-      this.apiSvc.get("experiment",
+      this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
           .set("q", `measurementTechnique:${id}`)
           .set("fields", "citation,publisher"))
