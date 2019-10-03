@@ -27,12 +27,8 @@ export class getDatasetsService {
     private exptPipe: ExperimentObjectPipe
   ) {
     console.log("CONSTRUCTING")
-    this.apiSvc.fetchOne("datadownload", new HttpParams()
-      .set('q', "includedInDataset:viralseq")).subscribe(rs => {
-        console.log(rs)
-      })
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', "__all__")).subscribe(rs => {
+    this.apiSvc.fetchAllGeneric("patient", new HttpParams()
+      .set('q', "cohort:Ebola")).subscribe(rs => {
         console.log(rs)
       })
   }
