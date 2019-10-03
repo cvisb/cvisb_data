@@ -12,6 +12,7 @@ import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes';
 
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class getDatasetsService {
   ) {
   }
 
+  // Soooo.... fetchAllGeneric fails with any query that goes beyond one page, but for some reason only in
   getFiles() {
     this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
       .set('q', "__all__")).subscribe(rs => {
@@ -84,7 +86,7 @@ export class getDatasetsService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json'),
         params: new HttpParams()
-        .set('q', `${idVar}:${id}`)
+          .set('q', `${idVar}:${id}`)
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
@@ -114,12 +116,40 @@ export class getDatasetsService {
             let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
             let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
 
+            expts.forEach(d => {
+              d['source'] = d.citation ? d.citation : d.publisher;
+              d['source_key'] = d.source.name;
+            })
+            console.log(expts)
+
+            let sources = _(expts)
+              .groupBy('source_key')
+              .map((items, id) => {
+                return {
+                  source: items[0]['source'], // !!!! being slightly lazy here. Assyming all source.name's are unique and contain redundant data.
+                  // source: _.uniqWith(items.map(d => d.source), _.isEqual),
+                  count: items.length,
+                  pct: items.length / expts.length
+                };
+              }).value();
+
+            // flatten sources
+            sources.forEach(d => {
+              d.source['count'] = d.count;
+              d.source['pct'] = d.pct;
+            })
+
+            sources = sources.map(d => d.source)
+
+            console.log(sources)
+
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = downloads;
             dataset["@context"] = "http://schema.org/";
             dataset["@type"] = "Dataset";
             dataset["publisher"] = publishers;
             dataset["citation"] = citations;
+            dataset["source"] = sources;
             console.log(dataset)
             return (dataset)
           } else {
