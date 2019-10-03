@@ -130,8 +130,6 @@ export class getDatasetsService {
             })
 
             let expt_flat = flatMapDeep(expts, d => d.source)
-            console.log(expts);
-            console.log(expt_flat);
 
             let sources = _(expt_flat)
               .groupBy('name')
@@ -158,7 +156,7 @@ export class getDatasetsService {
             dataset["publisher"] = publishers;
             dataset["citation"] = citations;
             dataset["source"] = sources;
-            console.log(dataset)
+            // console.log(dataset)
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")

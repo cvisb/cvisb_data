@@ -352,6 +352,7 @@ export class ApiService {
     // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
+        console.log(ct)
         ct += 1;
 
         // console.log(response)
