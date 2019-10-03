@@ -85,7 +85,6 @@ export class getDatasetsService {
           .set('q', `${idVar}:${id}`)
       }),
       this.apiSvc.fetchAllGeneric("experiment",
-        // new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
         new HttpParams()
           .set("q", `measurementTechnique:${id}`)
           .set("fields", "citation,publisher"))
@@ -109,8 +108,8 @@ export class getDatasetsService {
             delete dataset._id;
             delete dataset._score;
 
-            let publishers = uniqWith(expts.map(d => d.publisher), isEqual);
-            let citations = uniqWith(expts.map(d => d.citation), isEqual);
+            let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
+            let citations = uniqWith(expts.map(d => d.citation), isEqual).filter(d => d);
 
             console.log(publishers)
             console.log(citations)
@@ -121,6 +120,7 @@ export class getDatasetsService {
             dataset["@type"] = "Dataset";
             dataset["publisher"] = publishers;
             dataset["citation"] = citations;
+            console.log(dataset)
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")

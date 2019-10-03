@@ -338,6 +338,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(response => {
+        console.log(response)
         return {
           next: response['body']['_scroll_id'],
           results: response['body']['hits']
