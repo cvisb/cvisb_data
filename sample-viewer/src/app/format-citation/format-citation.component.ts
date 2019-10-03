@@ -10,7 +10,7 @@ import { Citation } from '../_models';
 
 export class FormatCitationComponent implements OnInit {
   @Input() citations: Citation[];
-  @Input() verbosity: string; // one of "basic", "links", or "verbose"
+  @Input() verbosity: string = "basic"; // one of "basic", "links", or "verbose"
 
   constructor() { }
 
