@@ -133,11 +133,13 @@ export class getDatasetsService {
                 };
               }).value();
 
+      console.log(sources)
+
             // flatten sources
-            sources.forEach(d => {
-              d.source['count'] = d.count;
-              d.source['pct'] = d.pct;
-            })
+            // sources.forEach(d => {
+            //   d.source['count'] = d.count;
+            //   d.source['pct'] = d.pct;
+            // })
 
             sources = sources.map(d => d.source)
 
