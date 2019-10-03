@@ -8,6 +8,7 @@ import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
+import { GetPatientsService } from './get-patients.service';
 
 import { ExperimentObjectPipe } from '../_pipes';
 
@@ -24,10 +25,11 @@ export class getDatasetsService {
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
+    public patientSvc: GetPatientsService,
     private exptPipe: ExperimentObjectPipe
   ) {
     console.log("CONSTRUCTING")
-    this.apiSvc.fetchAllGeneric("patient", new HttpParams()
+    this.patientSvc.fetchAll("patient", new HttpParams()
       .set('q', "cohort:Ebola")).subscribe(rs => {
         console.log(rs)
       })
