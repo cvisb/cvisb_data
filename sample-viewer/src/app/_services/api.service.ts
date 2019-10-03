@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize, expand } from "rxjs/operators";
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -308,13 +308,14 @@ export class ApiService {
         // console.log(data)
         return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
       }),
-      reduce((acc, data: any) => {
-        // console.group()
-        // console.log(acc)
-        // console.log(data)
-        // console.groupEnd();
-        return acc.concat(data.results);
-      }, []),
+      concatMap(({ results }) => results),
+      // reduce((acc, data: any) => {
+      //   // console.group()
+      //   // console.log(acc)
+      //   // console.log(data)
+      //   // console.groupEnd();
+      //   return acc.concat(data.results);
+      // }, []),
       catchError(e => {
         console.log(e)
         throwError(e);
@@ -337,7 +338,7 @@ export class ApiService {
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
-    if(!ct) {
+    if (!ct) {
       ct = 0;
     }
 
