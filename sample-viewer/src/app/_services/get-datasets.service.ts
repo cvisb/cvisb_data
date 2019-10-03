@@ -11,7 +11,7 @@ import { ApiService } from './api.service';
 
 import { ExperimentObjectPipe } from '../_pipes';
 
-import { cloneDeep, uniqWith, isEqual } from 'lodash';
+import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -68,10 +68,9 @@ export class getDatasetsService {
    */
   getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
     let measurementTechnique = this.exptPipe.transform(id, idVar);
-    console.log(measurementTechnique)
 
     return forkJoin(
-      this.apiSvc.get("datadownload", new HttpParams()
+      this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
       ),
       this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
@@ -107,7 +106,7 @@ export class getDatasetsService {
             delete dataset._score;
 
             let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
-            let citations = uniqWith(expts.map(d => d.citation), isEqual).filter(d => d);
+            let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
 
             console.log(publishers)
             console.log(citations)
