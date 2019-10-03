@@ -118,6 +118,7 @@ export class getDatasetsService {
 
             expts.forEach(d => {
               d['source'] = d.citation ? cloneDeep(d.citation) : cloneDeep(d.publisher);
+              d['source']['type'] = d.citation ? 'citation' : d.publisher ? 'publisher' : 'unknown';
               d['source_key'] = d.source ? d.source.name : null;
             })
             console.log(expts)
