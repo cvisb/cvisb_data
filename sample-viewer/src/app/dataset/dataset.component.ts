@@ -31,7 +31,6 @@ export class DatasetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasetSvc.getFiles();
   }
 
 }

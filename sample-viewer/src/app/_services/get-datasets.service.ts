@@ -76,7 +76,7 @@ export class getDatasetsService {
     let measurementTechnique = this.exptPipe.transform(id, idVar);
 
     return forkJoin(
-      this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      this.apiSvc.get("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
       ),
       this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
@@ -84,8 +84,7 @@ export class getDatasetsService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json'),
         params: new HttpParams()
-          .set("q", `identifier:hla`)
-        // .set('q', `${idVar}:${id}`)
+        .set('q', `${idVar}:${id}`)
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
@@ -94,11 +93,11 @@ export class getDatasetsService {
     )
       .pipe(
         map(([downloads, data, expts]) => {
-          console.log("GET DATASET")
-          console.log(data)
-          console.log(downloads)
-          console.log(expts)
-          // downloads = downloads['hits'];
+          // console.log("GET DATASET")
+          // console.log(data)
+          // console.log(downloads)
+          // console.log(expts)
+          downloads = downloads['hits'];
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
