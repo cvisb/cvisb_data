@@ -1,5 +1,10 @@
-<ng-container *ngIf="sources">
-  <h3>Dataset sources</h3>
+<mat-expansion-panel class="panel-group" id="sources" [expanded]="sourcesPanelState" (opened)="sourcesPanelState = true" (closed)="sourcesPanelState = false" *ngIf="sources">
+  <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
+    <mat-panel-title class="panel-title">
+      Sources
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
 
   <div class="helper-text">
     <!-- <i class="fas fa-arrow-down"></i>  -->
@@ -19,7 +24,9 @@
       <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
     </div>
   </div>
-</ng-container>
+
+  </div>
+</mat-expansion-panel>
 
 <!-- <h2>How to cite</h2>
 <app-citation></app-citation> -->

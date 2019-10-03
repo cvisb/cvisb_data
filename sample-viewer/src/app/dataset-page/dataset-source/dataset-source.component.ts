@@ -13,6 +13,7 @@ import * as d3 from 'd3';
 export class DatasetSourceComponent implements OnInit {
   textColorThreshold: number = 0.5; // threshold for when to switch from black text to white text.
   colorScale: any;
+  sourcesPanelState: boolean = true;
   @Input() sources: Source[];
 
   constructor() { }

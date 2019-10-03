@@ -37,3 +37,29 @@ $square-width: 2em;
   transform: rotate(180deg);
   color: $grey-300;
 }
+
+// mat-expansion-panel
+.panel-group {
+  margin-bottom: 10px !important;
+}
+
+.mat-expansion-panel-header,
+.panel-header {
+  background: $grey-200 !important;
+}
+
+/deep/ .mat-expansion-panel-body {
+  background: $grey-50 !important;
+  padding-top: 5px !important;
+}
+
+
+.panel-title {
+  // padding: 5px 15px;
+  // margin-top: 10px;
+  text-transform: uppercase;
+  color: $grey-500;
+  font-weight: 300;
+  font-size: 1.15em;
+  align-items: center;
+}
