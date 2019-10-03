@@ -14,6 +14,7 @@ export class DatasetSourceComponent implements OnInit {
   textColorThreshold: number = 0.5; // threshold for when to switch from black text to white text.
   colorScale: any;
   sourcesPanelState: boolean = true;
+  expansionPanelHeight: string = "42px";
   @Input() sources: Source[];
 
   constructor() { }

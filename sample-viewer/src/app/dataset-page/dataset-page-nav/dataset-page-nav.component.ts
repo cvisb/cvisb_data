@@ -14,12 +14,14 @@ export class DatasetPageNavComponent implements OnInit {
     {
       hla: [
         { key: "description", name: "about HLA" },
+        { key: "sources", name: "sources" },
         { key: "summary", name: "summary" },
         { key: "compare", name: "compare allelic frequencies" },
         { key: "files", name: "view files / metadata" },
       ],
-      viralsequencing: [
+      viralseq: [
         { key: "description", name: "about Viral Sequencing" },
+        { key: "sources", name: "sources" },
         { key: "summary", name: "summary" },
         { key: "files", name: "view files / metadata" },
       ],
