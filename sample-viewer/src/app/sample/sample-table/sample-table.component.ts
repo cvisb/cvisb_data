@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
+import { HttpParams } from '@angular/common/http'
+
 // import { HttpParams } from '@angular/common/http';
 
 import { SamplesDataSource, ApiService, GetSamplesService, RequestParametersService } from '../../_services/';
@@ -56,6 +58,11 @@ export class SampleTableComponent implements OnInit {
 
 
   ngOnInit() {
+    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      .set('q', "__all__")).subscribe(rs => {
+        console.log(rs)
+      })
+
     this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
     this.dataSource.loadSamples([], "", null, 0, 10);
     // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));

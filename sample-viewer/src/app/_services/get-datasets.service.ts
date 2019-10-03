@@ -8,7 +8,6 @@ import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
-import { GetPatientsService } from './get-patients.service';
 
 import { ExperimentObjectPipe } from '../_pipes';
 
@@ -25,16 +24,12 @@ export class getDatasetsService {
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
-    public patientSvc: GetPatientsService,
     private exptPipe: ExperimentObjectPipe
   ) {
     console.log("CONSTRUCTING")
-    this.patientSvc.fetchAll(new HttpParams()
-      .set('q', 'cohort:("Ebola")')
-      .set('elisa', '')
-      .set('sampleQuery', '')
-      .set('experimentQuery', '')
-    ).subscribe(rs => {
+
+    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      .set('q', "__all__")).subscribe(rs => {
         console.log(rs)
       })
   }
@@ -89,7 +84,7 @@ export class getDatasetsService {
           .set('Accept', 'application/json'),
         params: new HttpParams()
           .set("q", `identifier:hla`)
-          // .set('q', `${idVar}:${id}`)
+        // .set('q', `${idVar}:${id}`)
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
