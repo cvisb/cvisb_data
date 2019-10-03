@@ -91,7 +91,7 @@ export class getDatasetsService {
           console.log(data)
           console.log(downloads)
           console.log(expts)
-          downloads = downloads['hits'];
+          // downloads = downloads['hits'];
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
