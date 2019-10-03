@@ -1,5 +1,8 @@
 <ng-container *ngIf="publisher">
-  <div>
+  <div *ngIf="publisher.type !== 'unknown'">
     <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a><span class="unpublished-label"> (unpublished)</span>
+  </div>
+  <div *ngIf="publisher.type === 'unknown'">
+    unknown
   </div>
 </ng-container>

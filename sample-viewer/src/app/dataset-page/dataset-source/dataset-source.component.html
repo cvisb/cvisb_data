@@ -15,6 +15,7 @@
     <ng-container [ngSwitch]="source.type">
       <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'"></app-format-citation>
       <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+      <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'unknown'"></app-format-publisher>
       <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
     </ng-container>
   </div>
