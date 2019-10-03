@@ -132,7 +132,7 @@ export class getDatasetsService {
               .groupBy('name')
               .map((items, id) => {
                 return {
-                  source: items[0]['source'], // !!!! being slightly lazy here. Assyming all source.name's are unique and contain redundant data.
+                  source: items['source'], // !!!! being slightly lazy here. Assyming all source.name's are unique and contain redundant data.
                   // source: _.uniqWith(items.map(d => d.source), _.isEqual),
                   count: items.length,
                   pct: items.length / expt_flat.length
