@@ -1,3 +1,8 @@
-<p>
-  format-publisher works!
-</p>
+<ng-container *ngIf="publisher">
+  <div class="unpublished-label">
+    Unpublished data from
+  </div>
+  <div>
+    <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a>
+  </div>
+</ng-container>

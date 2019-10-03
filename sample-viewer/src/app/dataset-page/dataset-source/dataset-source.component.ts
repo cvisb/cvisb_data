@@ -21,7 +21,6 @@ export class DatasetSourceComponent implements OnInit {
     this.sources = this.sources.sort((a,b) => b.percent - a.percent);
     this.colorScale = d3.scaleSequential(d3.interpolateGreys)
       .domain([0, 1]);
-    console.log(this.colorScale(0.5))
   }
 
 }
