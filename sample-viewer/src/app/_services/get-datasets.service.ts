@@ -26,8 +26,9 @@ export class getDatasetsService {
     public apiSvc: ApiService,
     private exptPipe: ExperimentObjectPipe
   ) {
-    console.log("CONSTRUCTING")
+  }
 
+  getFiles() {
     this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
       .set('q', "__all__")).subscribe(rs => {
         console.log(rs)
