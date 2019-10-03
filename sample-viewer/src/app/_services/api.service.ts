@@ -304,12 +304,14 @@ export class ApiService {
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
-      expand((data, _) => {
-        console.log(data.ct)
-        console.log(data.next)
-        // console.log(data)
-        return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
-      }),
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1
+      ),
+      // expand((data, _) => {
+      //   console.log(data.ct)
+      //   console.log(data.next)
+      //   // console.log(data)
+      //   return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
+      // }),
       // concatMap(({ results }) => {
       //   console.log(results)
       //   return(results)
