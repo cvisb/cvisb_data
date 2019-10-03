@@ -34,7 +34,8 @@ export class getDatasetsService {
   getFiles() {
     this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
       .set('q', "__all__")).subscribe(rs => {
-        console.log(rs)
+        // console.log(rs)
+        console.log("datadownload length: " + rs.length)
       })
   }
 

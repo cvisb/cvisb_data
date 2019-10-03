@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler } from 'rxjs';
 import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
@@ -304,7 +304,7 @@ export class ApiService {
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, queueScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, asapScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
