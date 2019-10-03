@@ -28,13 +28,15 @@ export class getDatasetsService {
   ) {
     console.log("CONSTRUCTING")
     this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', "includedInDataset:viralseq"))
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', "includedInDataset:hla"))
-    this.apiSvc.fetchOne("datadownload", new HttpParams()
-      .set('q', "includedInDataset:viralseq"))
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', "__all__").set('facets', 'contentUrl'))
+      .set('q', "includedInDataset:viralseq")).subscribe(rs => {
+        console.log(rs)
+      })
+    // this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+    //   .set('q', "includedInDataset:hla"))
+    // this.apiSvc.fetchOne("datadownload", new HttpParams()
+    //   .set('q', "includedInDataset:viralseq"))
+    // this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+    //   .set('q', "__all__").set('facets', 'contentUrl'))
   }
 
   getDatasets() {
