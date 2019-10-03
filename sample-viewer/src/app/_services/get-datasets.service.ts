@@ -26,7 +26,9 @@ export class getDatasetsService {
     public apiSvc: ApiService,
     private exptPipe: ExperimentObjectPipe
   ) {
-    // this.getDatasets();
+    console.log("CONSTRUCTING")
+    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      .set('q', `includedInDataset:viralseq`))
   }
 
   getDatasets() {
