@@ -78,7 +78,8 @@ export class getDatasetsService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json'),
         params: new HttpParams()
-          .set('q', `${idVar}:${id}`)
+          .set("q", `measurementTechnique:"${measurementTechnique.name}"`)
+          // .set('q', `${idVar}:${id}`)
       }),
       this.apiSvc.fetchAllGeneric("experiment",
         new HttpParams()
