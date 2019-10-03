@@ -350,8 +350,7 @@ export class ApiService {
           next: response['body']['_scroll_id'],
           results: response['body']['hits']
         };
-      }
-      ),
+      }),
       catchError(e => {
         console.log(e)
         throwError(e);
