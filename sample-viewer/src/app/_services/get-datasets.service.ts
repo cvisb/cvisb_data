@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
 import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
@@ -72,22 +72,34 @@ export class getDatasetsService {
   ... and adds DataDownloads to Dataset in the `distribution parameter`
    */
 
-  getDataset(id: string, idVar: string = 'identifier') {
-    return this.myhttp.get<any[]>(environment.api_url + "/api/datadownload/query", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('q', `includedInDataset:${id}`)
-    }).pipe(
-      mergeMap(downloads => this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
+  getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
+    return forkJoin(
+      this.myhttp.get<any[]>(environment.api_url + "/api/datadownload/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: new HttpParams()
+          .set('q', `includedInDataset:${id}`)
+      }),
+      this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Accept', 'application/json'),
         params: new HttpParams()
           .set('q', `${idVar}:${id}`)
-      }).pipe(
-        map(data => {
+      }),
+      this.apiSvc.fetchAllGeneric("experiment",
+        // new HttpParams().set("q", `measurementTechnique:"viral sequencing", "HLA sequencing"`)
+        new HttpParams()
+          .set("q", `measurementTechnique:${id}`)
+          .set("fields", "measurementTechnique,citation,publisher"))
+    )
+      .pipe(
+        map(([downloads, data, expts]) => {
+          console.log("GET DATASET")
+          console.log(expts)
+          console.log(data)
+          console.log(downloads)
           if (data['body']['total'] === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
@@ -119,8 +131,6 @@ export class getDatasetsService {
           return (new Observable<any>())
         })
       )
-      )
-    )
   }
 
 
