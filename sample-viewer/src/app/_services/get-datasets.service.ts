@@ -30,7 +30,11 @@ export class getDatasetsService {
   ) {
     console.log("CONSTRUCTING")
     this.patientSvc.fetchAll(new HttpParams()
-      .set('q', "cohort:Ebola")).subscribe(rs => {
+      .set('q', 'cohort:("Ebola")')
+      .set('elisa', '')
+      .set('sampleQuery', '')
+      .set('experimentQuery', '')
+    ).subscribe(rs => {
         console.log(rs)
       })
   }
