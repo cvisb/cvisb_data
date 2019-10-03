@@ -29,7 +29,7 @@ export class getDatasetsService {
     private exptPipe: ExperimentObjectPipe
   ) {
     console.log("CONSTRUCTING")
-    this.patientSvc.fetchAll("patient", new HttpParams()
+    this.patientSvc.fetchAll(new HttpParams()
       .set('q', "cohort:Ebola")).subscribe(rs => {
         console.log(rs)
       })
