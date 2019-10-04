@@ -2,7 +2,7 @@
 // Necessary so Google Dataset search sees the dataset metadata being embedded in the page source as it crawls.
 
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import {  } from '@angular/common';
 
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
@@ -14,8 +14,8 @@ export class DatasetResolver implements Resolve<any> {
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    if (isPlatformServer(this.platformId)) {
-      console.log('server ')
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('client ')
       let dsid = route.data.dsid;
       return this.datasetSvc.getDataset(dsid);
     }
