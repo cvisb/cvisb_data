@@ -2,7 +2,7 @@
 // Necessary so Google Dataset search sees the dataset metadata being embedded in the page source as it crawls.
 
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import {  } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
