@@ -304,9 +304,12 @@ export class ApiService {
 
   Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
 
-  NOTE: Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
+  NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
   Some sort of weird cache shared settings?
-  Behavior: in
+  *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
+  when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
+  `RangeError: Maximum call stack size exceeded`
+
   */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
@@ -317,7 +320,7 @@ export class ApiService {
       // w/ concurrent = 0 --> quick infinte loop
       // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
       // expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
@@ -359,9 +362,9 @@ export class ApiService {
       params = params.append('scroll_id', scrollID);
     }
 
-    // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
+        console.log(response['_scroll_id'])
         return {
           next: response['_scroll_id'],
           results: response['hits']

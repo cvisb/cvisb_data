@@ -9,10 +9,7 @@ import { Meta, Title } from '@angular/platform-browser';
 })
 
 export class DatasetPageComponent implements OnInit {
-  // private dsid: string; // file ID
-  private datasets: any[];
   dataset: any;
-  // schema_dataset: any;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
