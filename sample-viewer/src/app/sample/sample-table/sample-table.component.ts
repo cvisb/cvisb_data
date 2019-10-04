@@ -58,14 +58,8 @@ export class SampleTableComponent implements OnInit {
 
 
   ngOnInit() {
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
-      .set('q', "__all__")).subscribe(rs => {
-        console.log(rs)
-      })
-
     this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
     this.dataSource.loadSamples([], "", null, 0, 10);
-    // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
   }
 
   ngAfterViewInit() {

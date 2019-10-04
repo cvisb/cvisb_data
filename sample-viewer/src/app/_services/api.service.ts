@@ -302,6 +302,7 @@ export class ApiService {
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
+  // NOTE: Seems to create some problems when 
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       // asapScheduler ==> 1 call.
@@ -310,7 +311,7 @@ export class ApiService {
       // w/o any, very quickly generates stack error.
       // w/ concurrent = 0 --> quick infinte loop
       // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, queueScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
@@ -345,28 +346,19 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, ct?: number): Observable<{ next: string | null, results: any[], ct: number }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string | null, results: any[] }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
-    if (!ct) {
-      ct = 0;
-    }
 
     // console.log(params)
     return this.get(endpoint, params).pipe(
       map(response => {
-        console.log(ct)
-        console.log(response['_scroll_id'])
-        ct += 1;
-
-        // console.log(response)
         return {
           next: response['_scroll_id'],
-          results: response['hits'],
-          ct: ct
+          results: response['hits']
         };
       }),
       catchError(e => {
