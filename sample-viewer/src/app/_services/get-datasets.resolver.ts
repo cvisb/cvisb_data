@@ -20,12 +20,13 @@ export class DatasetResolver implements Resolve<any> {
     private readonly transferState: TransferState) { }
 
   // From https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
+  // Note: could also set the conditions to be if(server), set
   resolve(route: ActivatedRouteSnapshot) {
     const found = this.transferState.hasKey(DATASET_KEY);
 
     if (found) {
       const res = of(this.transferState.get(DATASET_KEY, null));
-      this.transferState.remove(DATASET_KEY);
+      // this.transferState.remove(DATASET_KEY);
       return res;
     } else {
       this.transferState.onSerialize(DATASET_KEY, () => this.result);
