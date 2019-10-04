@@ -12,17 +12,36 @@
     <span class="text">percent of experiments from source</span>
   </div>
 
-  <div *ngFor="let source of sources" class="container dataset-source-container">
+  <div *ngFor="let source of sources; let idx=index" class="container dataset-source-container">
     <div class="source-percent" [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
       {{ source.percent | percent : 0 }}
     </div>
 
-    <div [ngSwitch]="source.type" class="source">
-      <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'"></app-format-citation>
-      <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
-    </div>
+
+    <ng-container [ngTemplateOutlet]="idx < source.length / 2 ? leftData : rightData" [ngTemplateOutletContext]="{ source: source }"></ng-container>
+
+
+    <ng-template #leftData let-source="source">
+      <div class="left-container">
+        <ng-container [ngTemplateOutlet]="sourceData" [ngTemplateOutletContext]="{ source: source}"></ng-container>
+      </div>
+    </ng-template>
+
+    <ng-template #rightData let-source="source">
+      <div class="left-container">
+        <ng-container [ngTemplateOutlet]="sourceData" [ngTemplateOutletContext]="{ source: source}"></ng-container>
+      </div>
+    </ng-template>
+
+    <ng-template #sourceData let-source="source">
+      <div [ngSwitch]="source.type" class="source">
+        <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'"></app-format-citation>
+        <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+        <app-format-publisher [publisher]="source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
+        <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+      </div>
+    </ng-template>
+
   </div>
 
 </mat-expansion-panel>
