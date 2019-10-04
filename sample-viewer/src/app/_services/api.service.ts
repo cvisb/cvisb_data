@@ -306,9 +306,13 @@ export class ApiService {
 
   NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
   Some sort of weird cache shared settings?
+
   *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
   when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
-  `RangeError: Maximum call stack size exceeded`
+  `RangeError: Maximum call stack size exceeded`. Seems to be an issue where both client-side and server-side
+  have the same `_scroll_id`, leading to conflicts where they never seem to exit the fetch next behavior.
+
+  *Solution*: have the API call execute only *once* (server-side)
 
   */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
@@ -319,8 +323,7 @@ export class ApiService {
       // w/o any, very quickly generates stack error.
       // w/ concurrent = 0 --> quick infinte loop
       // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
-      // expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
