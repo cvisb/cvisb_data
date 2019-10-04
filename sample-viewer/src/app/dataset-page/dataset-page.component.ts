@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { getDatasetsService, FileMetadataService } from '../_services';
-
-
 @Component({
   selector: 'app-dataset-page',
   templateUrl: './dataset-page.component.html',
