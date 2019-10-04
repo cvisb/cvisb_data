@@ -14,10 +14,10 @@ export class DatasetResolver implements Resolve<any> {
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    if (isPlatformBrowser(this.platformId)) {
-      console.log('client ')
+    // if (isPlatformBrowser(this.platformId)) {
+      // console.log('client ')
       let dsid = route.data.dsid;
       return this.datasetSvc.getDataset(dsid);
-    }
+    // }
   }
 }
