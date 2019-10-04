@@ -4,14 +4,15 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable, of } from "rxjs";
+import { tap } from "rxjs/operators";
 
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-
-const DATASET_KEY = makeStateKey('dataset_resolver.result');
 
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 import { getDatasetsService } from './get-datasets.service';
+
+const DATASET_KEY = makeStateKey('dataset_resolver.result');
 
 @Injectable()
 export class DatasetResolver implements Resolve<any> {
@@ -25,16 +26,16 @@ export class DatasetResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot) {
     const found = this.transferState.hasKey(DATASET_KEY);
 
-      if (isPlatformServer(this.platformId)) {
-        console.log('server')
-        console.log(found)
-    //     let dsid = route.data.dsid;
-    //     return this.datasetSvc.getDataset(dsid);
-      } else {
-        console.log('client')
-        console.log(found)
-        console.log(this.transferState.get(DATASET_KEY, null))
-      }
+    if (isPlatformServer(this.platformId)) {
+      console.log('server')
+      console.log(found)
+      //     let dsid = route.data.dsid;
+      //     return this.datasetSvc.getDataset(dsid);
+    } else {
+      console.log('client')
+      console.log(found)
+      console.log(this.transferState.get(DATASET_KEY, null))
+    }
     // }
     //
 
@@ -48,7 +49,10 @@ export class DatasetResolver implements Resolve<any> {
     } else {
       this.transferState.onSerialize(DATASET_KEY, () => this.result);
       let dsid = route.data.dsid;
-      return this.datasetSvc.getDataset(dsid);
+      // Send result --> this.result, which saves it to transferState
+      return this.datasetSvc.getDataset(dsid).pipe(
+        tap(result => this.result = result)
+      );
     }
   }
 }
