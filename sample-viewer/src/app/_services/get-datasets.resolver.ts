@@ -20,13 +20,21 @@ export class DatasetResolver implements Resolve<any> {
     private readonly transferState: TransferState) { }
 
   // From https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
-  // Note: could also set the conditions to be if(server), set
+  // NOTE: could also set the conditions to be if(server): call API; if(client): get state.
+  // BUT... this means that if you navigate between pages, the server-side wouldn't have necessarily been called,
+  // and no transferState exists.  So need to check if it exists, then call either server- (reload) or client- (navigate) side
+  //
+  // NOTE 2: the state ISN'T stored upon navigation change. This is inefficient; dataset results aren't cached,
+  // even though they shouldn't change.
+  // This is because `this.transferState.remove(DATASET_KEY);` removes saving the state.
+  // Since `get-datasets.resolver` is recycled and re-used between different datasets, need to clear it, so you don't have viral seq data saved when you call the HLA page.
+  // Could create separate resolvers for each dataset type and cache the results...
   resolve(route: ActivatedRouteSnapshot) {
     const found = this.transferState.hasKey(DATASET_KEY);
 
     if (found) {
       const res = of(this.transferState.get(DATASET_KEY, null));
-      // this.transferState.remove(DATASET_KEY);
+      this.transferState.remove(DATASET_KEY);
       return res;
     } else {
       this.transferState.onSerialize(DATASET_KEY, () => this.result);

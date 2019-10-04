@@ -321,8 +321,11 @@ export class ApiService {
     *    https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
     *    (which is good anyway, since it eliminates redundant calls)
     * 2) transfer the state (data from server-side call to API, in `get-datasets.resolver`)
-    * 3) set
-
+    * 3) set `concurrent` = 1 and added `queueScheduler` to `expand`, as suggested in the comments:
+    *    https://blog.angularindepth.com/rxjs-understanding-expand-a5f8b41a3602
+    *    Note: seems like this shouldn't be necessary, but it'll definitely lead to an infinite state
+    *    on the server-side, which doesn't resolve; therefore within the resolver, client-side gets called
+    *    as well, and it ends up being a big ole mess. Setting `concurrent=1` isn't sufficient to fix the problem.
 
     */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
@@ -365,7 +368,6 @@ export class ApiService {
 
     return this.get(endpoint, params).pipe(
       map(response => {
-        console.log(response['_scroll_id'])
         return {
           next: response['_scroll_id'],
           results: response['hits']
