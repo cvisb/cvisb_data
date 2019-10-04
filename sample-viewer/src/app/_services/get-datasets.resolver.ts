@@ -22,6 +22,7 @@ export class DatasetResolver implements Resolve<any> {
   // From https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
   resolve(route: ActivatedRouteSnapshot) {
     const found = this.transferState.hasKey(DATASET_KEY);
+    console.log(found)
 
     if (found) {
       const res = of(this.transferState.get(DATASET_KEY, null));

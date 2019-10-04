@@ -307,12 +307,21 @@ export class ApiService {
   NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
   Some sort of weird cache shared settings?
 
+  *Original problem*: calling `getDataset` from `get-datasets.service` in `get-datasets.resolver` makes three API calls: one get to `/dataset`,
+  one fetchAll to `/datadownload` and one fetchAll to `/experiment`. Also triggered by calling `fetchAll` in constructor of `get-datasets.resolver`.
+
   *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
   when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
   `RangeError: Maximum call stack size exceeded`. Seems to be an issue where both client-side and server-side
   have the same `_scroll_id`, leading to conflicts where they never seem to exit the fetch next behavior.
+  But... not totally clear, since
 
-  *Solution*: have the API call execute only *once* (server-side)
+  *Solution*:
+  * 1) have the API call execute only *once* (server-side) à la :
+  *    https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
+  *    (which is good anyway, since it eliminates redundant calls)
+  * 2) transfer the state (data from server-side call to API, in data)
+
 
   */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
@@ -323,7 +332,7 @@ export class ApiService {
       // w/o any, very quickly generates stack error.
       // w/ concurrent = 0 --> quick infinte loop
       // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
@@ -336,10 +345,6 @@ export class ApiService {
       //   return(results)
       // }),
       reduce((acc, data: any) => {
-        // console.group()
-        // console.log(acc)
-        // console.log(data)
-        // console.groupEnd();
         return acc.concat(data.results);
       }, []),
       catchError(e => {
