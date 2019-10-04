@@ -16,15 +16,12 @@ export class DatasetPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
-    private titleSvc: Title,
-    // private datasetSvc: getDatasetsService,
-    // private mdSvc: FileMetadataService,
+    private titleSvc: Title
   ) {
   }
 
   ngOnInit() {
     // fetch dataset data from resolver.
-    console.log(this.route.snapshot.data)
     this.dataset = this.route.snapshot.data['datasetData'];
 
     // Set page name

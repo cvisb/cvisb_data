@@ -296,13 +296,18 @@ export class ApiService {
     )
   }
 
+/*
+  Using MyGene fetch_all to grab all the data, unscored:
+  https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
+  subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
+  If no more results to be found, "success": false
 
-  // Using MyGene fetch_all to grab all the data, unscored:
-  // https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
-  // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
-  // If no more results to be found, "success": false
-  // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
-  // NOTE: Seems to create some problems when 
+  Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
+
+  NOTE: Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
+  Some sort of weird cache shared settings?
+  Behavior: in
+  */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       // asapScheduler ==> 1 call.
@@ -311,7 +316,8 @@ export class ApiService {
       // w/o any, very quickly generates stack error.
       // w/ concurrent = 0 --> quick infinte loop
       // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
+      // expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
