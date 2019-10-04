@@ -296,43 +296,38 @@ export class ApiService {
     )
   }
 
-/*
-  Using MyGene fetch_all to grab all the data, unscored:
-  https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
-  subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
-  If no more results to be found, "success": false
+  /*
+    Using MyGene fetch_all to grab all the data, unscored:
+    https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
+    subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
+    If no more results to be found, "success": false
 
-  Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
+    Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
 
-  NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
-  Some sort of weird cache shared settings?
+    NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
+    Some sort of weird cache shared settings?
 
-  *Original problem*: calling `getDataset` from `get-datasets.service` in `get-datasets.resolver` makes three API calls: one get to `/dataset`,
-  one fetchAll to `/datadownload` and one fetchAll to `/experiment`. Also triggered by calling `fetchAll` in constructor of `get-datasets.resolver`.
+    *Original problem*: calling `getDataset` from `get-datasets.service` in `get-datasets.resolver` makes three API calls: one get to `/dataset`,
+    one fetchAll to `/datadownload` and one fetchAll to `/experiment`. Also triggered by calling `fetchAll` in constructor of `get-datasets.resolver`.
 
-  *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
-  when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
-  `RangeError: Maximum call stack size exceeded`. Seems to be an issue where both client-side and server-side
-  have the same `_scroll_id`, leading to conflicts where they never seem to exit the fetch next behavior.
-  But... not totally clear, since
+    *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
+    when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
+    `RangeError: Maximum call stack size exceeded`. Seems to be an issue where both client-side and server-side
+    have the same `_scroll_id`, leading to conflicts where they never seem to exit the fetch next behavior.
+    But... not totally clear, since
 
-  *Solution*:
-  * 1) have the API call execute only *once* (server-side) à la :
-  *    https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
-  *    (which is good anyway, since it eliminates redundant calls)
-  * 2) transfer the state (data from server-side call to API, in data)
+    *Solution*:
+    * 1) have the API call execute only *once* (server-side) à la :
+    *    https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
+    *    (which is good anyway, since it eliminates redundant calls)
+    * 2) transfer the state (data from server-side call to API, in `get-datasets.resolver`)
+    * 3) set
 
 
-  */
+    */
   fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
-      // asapScheduler ==> 1 call.
-      // queueScheduler ==> works on SSR, but then on client-side goes into infinite loop.
-      // w/ concurrent = 1 --> infinite loop on both
-      // w/o any, very quickly generates stack error.
-      // w/ concurrent = 0 --> quick infinte loop
-      // concurrent = 0 + queueScheduler --> infinite loop on both SSR and client
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
@@ -353,8 +348,6 @@ export class ApiService {
         return (new Observable<any>())
       }),
       map((all_data) => {
-        // console.log("end of API")
-        // console.log(all_data)
         // last iteration returns undefined; filter out
         all_data = all_data.filter(d => d);
 
