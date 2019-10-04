@@ -3,6 +3,7 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { catchError, finalize } from "rxjs/operators";
 import { of } from "rxjs";
 
@@ -140,9 +141,10 @@ export class SampleUploadService {
     // Check if there are any updates to existing data
     // let sampleIDs = `sampleID:"${data_copy.map(d => d.sampleID).join('","')}"`;
 
-    this.apiSvc.fetchAll('sample', "__all__").pipe(
+    this.apiSvc.fetchAll('sample', new HttpParams().set("q", "__all__")).pipe(
       catchError(
         e => {
+          console.log(e)
           this.loadingSubject.next(false);
           return (of([]))
         }),
@@ -152,7 +154,7 @@ export class SampleUploadService {
         console.log('samples from call to backend')
         console.log(samples);
 
-        let mergedObj = this.mergeSvc.mergeSampleData(samples['hits'], data_copy);
+        let mergedObj = this.mergeSvc.mergeSampleData(samples, data_copy);
 
         // Save the merged form, doing the actual merge to combine old/new data.
         data_copy = this.mergeSvc.compressMergedSamples(mergedObj.merged);
@@ -453,13 +455,13 @@ export class SampleUploadService {
 
     // Find the disagreements for each sample group
     // If there are multiple values for a given variable within a sample ID, flag it
-    data_by_id.forEach((d) => {
+    data_by_id.forEach((d:any) => {
       d['disagreements'] = this.getDupes(d);
       d['highlight'] = _.uniq(_.flatMap(d.disagreements, 'column'));
     })
 
     // Isolate the values that disagree.
-    let disagreements = data_by_id.filter(d => d.disagreements.length > 0);
+    let disagreements = data_by_id.filter((d:any) => d.disagreements.length > 0);
     disagreements = _.cloneDeep(disagreements)
 
     disagreements.forEach((d) => {
@@ -485,8 +487,8 @@ export class SampleUploadService {
         {
           id: id,
           numRows: v.length,
-          sampleID: v[0].sampleID,
-          lab: v[0].lab,
+          sampleID: v[0]['sampleID'],
+          lab: v[0]['lab'],
           samples: v,
           // array-ize the location properties
           allFreezers: arrayizeLocations(v, "freezerID"),
@@ -573,7 +575,7 @@ export class SampleUploadService {
     // Should be a safe assumption
     let data_by_id = _(data)
       .groupBy('sampleID')
-      .map((items, id) => {
+      .map((items) => {
         return {
           values: items,
           to_save: items[0],

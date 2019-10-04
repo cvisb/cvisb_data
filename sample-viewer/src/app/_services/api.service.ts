@@ -265,37 +265,6 @@ export class ApiService {
     );
   }
 
-  fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
-    let params = new HttpParams()
-      .set('q', qString)
-      .append('fetch_all', "true");
-
-    if (scrollID) {
-      params = params.append("scroll_id", scrollID);
-      console.log(params)
-    }
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(data => {
-        console.log('getAll Backend call:');
-        console.log(data);
-
-        // let result = data['body']['hits'];
-        return (data['body']);
-      }),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (of(e))
-      })
-    )
-  }
-
   /*
     Using MyGene fetch_all to grab all the data, unscored:
     https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
@@ -328,7 +297,7 @@ export class ApiService {
     *    as well, and it ends up being a big ole mess. Setting `concurrent=1` isn't sufficient to fix the problem.
 
     */
-  fetchAllGeneric(endpoint: string, qParams: HttpParams): Observable<any[]> {
+  fetchAll(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
       expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
       ),

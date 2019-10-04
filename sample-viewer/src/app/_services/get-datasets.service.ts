@@ -30,9 +30,9 @@ export class getDatasetsService {
     // this.getFiles();
   }
 
-  // Soooo.... fetchAllGeneric fails with any query that goes beyond one page, but for some reason only in
+  // Soooo.... fetchAll fails with any query that goes beyond one page, but for some reason only in
   getFiles() {
-    this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+    this.apiSvc.fetchAll("datadownload", new HttpParams()
       .set('q', "__all__")).subscribe(rs => {
         // console.log(rs)
         console.log("datadownload length: " + rs.length)
@@ -80,7 +80,7 @@ export class getDatasetsService {
     let measurementTechnique = this.exptPipe.transform(id, idVar);
 
     return forkJoin(
-      this.apiSvc.fetchAllGeneric("datadownload", new HttpParams()
+      this.apiSvc.fetchAll("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
       ),
       this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
@@ -90,7 +90,7 @@ export class getDatasetsService {
         params: new HttpParams()
           .set('q', `${idVar}:${id}`)
       }),
-      this.apiSvc.fetchAllGeneric("experiment",
+      this.apiSvc.fetchAll("experiment",
         new HttpParams()
           .set("q", `measurementTechnique:"${measurementTechnique.name}"`)
           .set("fields", "citation,publisher"))

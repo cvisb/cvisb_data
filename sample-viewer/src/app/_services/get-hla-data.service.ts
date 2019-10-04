@@ -101,7 +101,7 @@ export class GetHlaDataService {
 
 
     // TODO: change to fetchAll
-    return this.apiSvc.fetchAllGeneric("experiment", params).pipe(
+    return this.apiSvc.fetchAll("experiment", params).pipe(
       map((res) => {
         let data = flatMapDeep(res, d => d.data).filter(d => d);;
         return (this.getComparisonCounts(data))
