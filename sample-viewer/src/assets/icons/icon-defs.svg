@@ -93,8 +93,9 @@
     <!-- Data status -->
     <symbol id="preliminary" viewBox="0 0 104.9 113.8" preserveAspectRatio='xMidYMin meet'>
       <title>Preliminary data</title>
-
-      <g id="preliminary">
+      <!-- note: to get the stroke to be internal (and therefore the same size as the "verified icon"), svg file converts from a path to a filled path.
+      As a result, stroke width has to be specified in Illustrator before export.  preliminary-sm has a fatter stroke, ideally for smaller icons -->
+      <g id="preliminary-sm">
         <path
           class="cvisb-stroke"
           stroke-miterlimit="10"
@@ -106,7 +107,7 @@
       </g>
     </symbol>
 
-    <symbol id="preliminary-md" viewBox="0 0 104.9 113.8" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="preliminary" viewBox="0 0 104.9 113.8" preserveAspectRatio='xMidYMin meet'>
       <title>Preliminary data</title>
 
       <g id="preliminary">

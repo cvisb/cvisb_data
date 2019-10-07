@@ -97,7 +97,7 @@
         <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="HLA Sequencing" icon="hla" [embargoed]="true"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="HLA Sequencing" icon="hla" [embargoed]="true" dataStatus="verified"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
@@ -107,7 +107,7 @@
         <mat-expansion-panel class="panel-group" id="Viral-Sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq" dataStatus="verified"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
