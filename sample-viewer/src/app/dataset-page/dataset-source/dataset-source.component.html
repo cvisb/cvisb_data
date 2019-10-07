@@ -13,7 +13,7 @@
   </div>
 
   <div *ngFor="let source of sources" class="container dataset-source-container">
-    <div class="source-percent" [matTooltip]="source.count + ' experiments'"
+    <div class="source-percent" [matTooltip]="source.count === 1 ? source.count + ' experiment' : source.count + ' experiments'"
     [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
       {{ source.percent | percent : 0 }}
     </div>
