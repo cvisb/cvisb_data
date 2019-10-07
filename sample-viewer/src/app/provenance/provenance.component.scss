@@ -64,6 +64,12 @@
 
 .data-status {
   color: $cvisb-theme;
+  margin-left: 8px;
+}
+
+.updated-container {
+  display: flex;
+  align-items: center;
 }
 
 .preliminary {
