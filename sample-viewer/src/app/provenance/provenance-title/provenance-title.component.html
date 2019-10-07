@@ -8,7 +8,7 @@
   </div>
 
   <div class="container container-icons">
-    <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'"></svg-icon>
+    <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
     <i class="fas fa-lock private-icon header-icon" matTooltip="private data; do not share" *ngIf="private"></i>
     <i class="fas fa-stopwatch embargoed-icon header-icon" matTooltip="embargoed data; do not share" *ngIf="embargoed"></i>
   </div>

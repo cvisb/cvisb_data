@@ -12,6 +12,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() dateModified: string;
   @Input() embargoLabel: string;
   @Input() embargoed: boolean = false;
+  @Input() dataStatus: string;
   @Input() source: string = "Center for Viral Systems Biology";
   @Input() changes: string;
   @Input() public_data: boolean = false;
