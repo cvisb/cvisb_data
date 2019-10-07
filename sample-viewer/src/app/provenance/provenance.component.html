@@ -3,6 +3,8 @@
     <div class="updated">
       {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
 
+      <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
+
       <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>
 
