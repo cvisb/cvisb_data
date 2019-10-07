@@ -9,7 +9,7 @@ export class ProvenanceTitleComponent implements OnInit {
   @Input() title: string;
   @Input() embargoed: boolean = false;
   @Input() private: boolean = false;
-  @Input() dataStatus: string = "preliminary";
+  @Input() dataStatus: string;
   @Input() icon: string;
 
   constructor() { }

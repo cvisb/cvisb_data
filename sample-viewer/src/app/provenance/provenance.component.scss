@@ -1,5 +1,9 @@
 @import '../../sass/variables.scss';
 
+.updated-container {
+  align-items: center;
+}
+
 .view-changes {
   font-size: 1em;
   padding: 0;
@@ -56,4 +60,12 @@
 .citation {
   font-size: 0.85em;
   margin: 0;
+}
+
+.data-status {
+  color: $cvisb-theme;
+}
+
+.preliminary {
+  margin-left: 3px;
 }

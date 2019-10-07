@@ -1,9 +1,13 @@
 <div class="container patient-changelog">
   <div class="container-column">
-    <div class="updated">
+    <div class="updated updated-container">
       {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
 
-      <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
+      <div class="data-status">
+        <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
+        <div *ngIf="dataStatus === 'preliminary'" class="preliminary">preliminary data</div>
+
+      </div>
 
       <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>
