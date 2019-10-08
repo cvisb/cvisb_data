@@ -5,7 +5,7 @@
     To reference data from the Center for Viral Systems Biology, please cite the Center for Viral Systems Biology:
   </p>
 
-  <p>
+  <p *ngIf="cvisbCatalog">
     The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['_version'] }}.
   </p>
 </div>
