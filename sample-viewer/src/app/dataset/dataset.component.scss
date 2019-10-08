@@ -1,6 +1,6 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
-$icon-size: 35px;
+$icon-size: 50px;
 
 .grid-container {
   display: grid;
@@ -64,6 +64,7 @@ svg-icon {
   height: $icon-size;
   width: $icon-size;
   vertical-align: middle;
+  margin: 0 !important;
 }
 
 h4 {

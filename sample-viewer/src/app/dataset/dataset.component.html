@@ -18,7 +18,7 @@
           <div class="container container-header">
 
             <div class="container container-title">
-              <svg-icon [icon]="dataset.identifier" [class]="dataset.identifier + '-icon'"></svg-icon>
+              <svg-icon [icon]="dataset.identifier" [class]="dataset mat-shadow dataset.identifier + '-icon'"></svg-icon>
 
               <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
                 <div class="keyword-container container">
