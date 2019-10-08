@@ -291,12 +291,11 @@ svg-icon.country-icon {
 }
 
 .verified-icon {
-  fill: url(#cvisb_gradient) $cvisb-dark;
+  fill: url("#cvisb_gradient") $cvisb-dark;
 }
 
-
 .preliminary-icon {
-  fill: url(#cvisb_gradient) $cvisb-theme;
+  fill: url("#cvisb_gradient") $cvisb-theme;
   // stroke-width: 10;
 }
 
@@ -313,7 +312,7 @@ svg-icon.country-icon {
 }
 
 .systemsserology-icon {
-  fill: $grey-200;
+  fill: url("#grey_radial_gradient") $grey-200;
   stroke: $nigeria-green;
 }
 // --- filters ---
@@ -594,17 +593,17 @@ button.stepper-button {
 }
 
 .hla {
-  background: lighten($female-color, 41%);
+  background: lighten($female-color, 38%);
   stroke: $default-color;
   stroke-width: 0.75;
 }
 
 .tcr {
-  background: accent(50);
+  background: mix(accent(50), accent(100), 75%);
 }
 
 .bcr {
-  background: lighten($cvisb-bright, 50%);
+  background: lighten($cvisb-bright, 48%);
 }
 
 .systemsserology {
@@ -618,11 +617,26 @@ button.stepper-button {
 }
 
 .rt_pcr {
-  background: #fff8fb;
+  background: lighten($ebola-lt, 11%);
 }
 
 .rdt {
-  background: lighten($sierraleone-blue, 56%);
+  // background: lighten($sierraleone-blue, 56%);
+  background: #e8eaf6;
+}
+
+.physiq {
+  background: #edffc7;
+  background: #e4ffca;
+}
+
+.vitals {
+  background: #fadcff;
+  background: #fbe6ff;
+}
+
+.piccolo {
+  background: #ffe7c7;
 }
 
 .viralseq {
