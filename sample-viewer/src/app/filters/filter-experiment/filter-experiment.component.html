@@ -2,7 +2,7 @@
   <h4 class="filter-label">experiment data</h4>
 
   <div class="expt-container">
-    <div class="filter-pair expt-type mat-shadow" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
+    <div class="filter-pair filter-expt" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
     [ngClass]="{'disabled' : expt.disabled}">
       <svg-icon [icon]="expt.key" [class]="expt.key + '-icon'"></svg-icon>
       <div class="expt-name">{{ expt.name }}</div>
