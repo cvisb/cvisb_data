@@ -189,6 +189,8 @@ def cleanup_merged(df, dateModified):
 
     # indicate the source of the patient data
     df['_source'] = "Tulane_JS"
+    df['publisher'] = helpers.patientSource
+    df['correction'] = ""
     df['species'] = helpers.convertSpecies("human")  # Everyone is human!
 
     # Set the primary public ID

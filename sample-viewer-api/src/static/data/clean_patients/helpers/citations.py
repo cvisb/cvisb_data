@@ -3,6 +3,7 @@ ncbi_stub = 'https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id='
 import requests
 import numpy as np
 
+
 def dateArr2Str(arr):
     if(len(arr) == 3):
         return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-{str(arr[2]).zfill(2)}")
@@ -10,6 +11,7 @@ def dateArr2Str(arr):
         return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-01")
     if(len(arr) == 1):
         return(f"{str(arr[0])}-01-01")
+
 
 def convertAuthor(authorObj):
     try:
@@ -21,8 +23,9 @@ def convertAuthor(authorObj):
     except:
         family = np.nan
     return({'givenName': given,
-    'familyName': family
-    })
+            'familyName': family
+            })
+
 
 def getCitation(pmid, ncbi_stub=ncbi_stub):
     if(pmid == pmid):
@@ -41,8 +44,10 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
                 citation["identifier"] = citation_raw['id']
                 citation["issn"] = citation_raw['ISSN']
 
-                citation["author"] = [convertAuthor(author) for author in citation_raw['author']]
-                citation["datePublished"] = dateArr2Str(citation_raw['issued']['date-parts'][0])
+                citation["author"] = [convertAuthor(
+                    author) for author in citation_raw['author']]
+                citation["datePublished"] = dateArr2Str(
+                    citation_raw['issued']['date-parts'][0])
 
                 try:
                     citation["issueNumber"] = citation_raw['issue']
@@ -55,11 +60,12 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
                 citation["pagination"] = citation_raw['page']
 
                 citation["volumeNumber"] = citation_raw['volume']
-                citation['url'] =  'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + \
+                citation['url'] = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + \
                     citation['pmid']
                 return(citation)
 
 # getCitation("26276630")
+
 
 # Publisher Institution
 cvisb = {
@@ -71,6 +77,12 @@ cvisb = {
         "url": "https://cvisb.org/",
         "email": "info@cvisb.org"
     }
+}
+
+# Publisher Institution
+patientSource = {
+    "url": "https://vhfc.org",
+    "name": "Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"
 }
 
 broad = {
