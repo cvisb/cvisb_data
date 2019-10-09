@@ -44,7 +44,7 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
 
   }
 
-  sortingFunc(a, sortOrderArr = ["summary data", "raw data", "curated data"]) {
+  sortingFunc(a, sortOrderArr = ["raw data", "curated data", "summary data"]) {
     let idx = sortOrderArr.indexOf(a);
     // if not found, return dummy so sorts at the end
     if (idx < 0) {
