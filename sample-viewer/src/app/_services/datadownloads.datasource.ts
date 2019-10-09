@@ -35,7 +35,9 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
     )
       .subscribe(files => {
         let downloads = files['hits'];
+        console.log(downloads)
         if (sortVar == "") {
+          console.log("sorting")
           downloads.sort((a,b) => this.sortingFunc(a.additionalType) - this.sortingFunc(b.additionalType))
         }
         this.resultCountSubject.next(files['total'])
