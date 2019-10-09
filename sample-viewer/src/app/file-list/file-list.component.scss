@@ -50,3 +50,7 @@ a:hover {
 .mat-table, .mat-paginator {
   background: inherit !important;
 }
+
+.mat-column-description {
+    max-width: 250px;
+}

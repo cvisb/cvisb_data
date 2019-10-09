@@ -34,10 +34,23 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(files => {
+        let downloads = files['hits'];
+        if (sortVar == "") {
+          downloads.sort((a,b) => this.sortingFunc(a.additionalType) - this.sortingFunc(b.additionalType))
+        }
         this.resultCountSubject.next(files['total'])
-        this.downloadsSubject.next(files['hits'])
+        this.downloadsSubject.next(downloads)
       });
 
+  }
+
+  sortingFunc(a, sortOrderArr = ["summary data", "raw data", "curated data"]) {
+    let idx = sortOrderArr.indexOf(a);
+    // if not found, return dummy so sorts at the end
+    if (idx < 0) {
+      return (1000);
+    }
+    return (idx);
   }
 
   connect(collectionViewer: CollectionViewer): Observable<DataDownload[]> {

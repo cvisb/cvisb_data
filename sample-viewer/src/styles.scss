@@ -214,6 +214,12 @@ a {
   border-color: accent-redder(900);
 }
 
+.curated-data {
+  background: lighten($cvisb-bright, 50%);
+  color: $cvisb-dark;
+  border-color:$cvisb-dark;
+}
+
 .unknown-type {
   background-color: #f3f3f3;
 }
