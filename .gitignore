@@ -44,3 +44,4 @@ sample-viewer-api/src/static/schemas/cvisb_variables_2019-05-22.xlsx
 sample-viewer-api/src/static/privacy/*
 sample-viewer/src/assets/img/KGH_fullsize.jpeg
 sample-viewer-api/src/static/geo/SLE/whosonfirst-data-latest.db
+sample-viewer-api/src/static/data/clean_patients/exploratory_scripts/2019-10-10_IDsforBonnie.py
