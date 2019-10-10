@@ -16,7 +16,7 @@ countries = c("Sierra Leone", "Guinea", "Liberia", "Ivory Coast", "Mali",
 
 wafr = df %>% 
   filter(ADMIN %in% countries) %>% 
-  select(geometry, country = NAME, identifier = ISO_A3, subregion = SUBREGION)
+  select(geometry, country = NAME, identifier = ISO_A2, subregion = SUBREGION)
 
 write_sf(wafr, "GitHub/cvisb_data/sample-viewer/src/assets/geo/naturalearth_west-africa.json", delete_dsn=TRUE, driver = "GeoJSON")
 
