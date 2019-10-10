@@ -1,0 +1,24 @@
+@import '../../sass/variables.scss';
+
+.dot {
+  stroke: $grey-600;
+  stroke-width: 0.5;
+}
+
+.dotplot-axis text {
+  color: $grey-600;
+  font-size: 1em;
+}
+
+.lollipop-stick {
+  stroke: $grey-400;
+  stroke-width: 2;
+}
+
+.chart-background {
+  fill: $grey-50;
+}
+
+.x-axis {
+  stroke: $grey-300;
+}

@@ -55,7 +55,6 @@ export class MiniBarplotComponent implements OnInit {
   }
 
 
-  // constructor() { }
   constructor(private strip: StripWhitespacePipe,
     private requestSvc: RequestParametersService,
     // Whether to be rendered server-side or client-side
@@ -133,7 +132,7 @@ export class MiniBarplotComponent implements OnInit {
       .append("g")
       .attr("class", 'y-label');
 
-    // --- call function to add data, with transition time = 0 ---
+    // ---  function to add data, with transition time = 0 ---
     this.updatePlot(0);
   }
 
