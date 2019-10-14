@@ -17,7 +17,9 @@
 
           <div class="container container-title">
             <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
-              <svg-icon [icon]="dataset.identifier"></svg-icon>
+              <a [routerLink]="['/dataset', dataset.identifier]">
+                <svg-icon [icon]="dataset.identifier"></svg-icon>
+              </a>
             </div>
 
             <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
