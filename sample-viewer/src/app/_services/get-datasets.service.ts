@@ -46,28 +46,44 @@ export class getDatasetsService {
         .set('Accept', 'application/json')
     }).pipe(
 
-      mergeMap((ds_results: any) =>
-// https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable
-        // `from` emits each contact separately
-        from(ds_results['body']['hits'].map(d => d.measurementTechnique)).pipe(
-          // load each contact
-          mergeMap(
-            ds_id => this.getDatasetCounts(ds_id),
-            // in result selector, connect fetched detail data
-            (original, detail) => ({ ...original, patients: detail })
-          ),
-          // collect all contacts into an array
-          // toArray(),
-          // add the newly fetched data to original result
-          map(contact => {
-            console.log(ds_results)
-            console.log(contact)
-            return ({ ...ds_results, contact })
-          }),
-        )
-      ),
-    );
-  }
+      mergeMap((result: any) => {
+       let allIds = ['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
+       return forkJoin(...allIds).pipe(
+         map((idDataArray) => {
+           console.log(result);
+           console.log(idDataArray);
+           // result.contact.forEach((eachContact, index) => {
+           //   eachContact.relationship = idDataArray[index];
+           // })
+           return result;
+         })
+       )
+     })
+   );
+ }
+
+//       mergeMap((ds_results: any) =>
+// // https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable
+//         // `from` emits each contact separately
+//         from(ds_results['body']['hits'].map(d => d.measurementTechnique)).pipe(
+//           // load each contact
+//           mergeMap(
+//             ds_id => this.getDatasetCounts(ds_id),
+//             // in result selector, connect fetched detail data
+//             (original, detail) => ({ ...original, patients: detail })
+//           ),
+//           // collect all contacts into an array
+//           // toArray(),
+//           // add the newly fetched data to original result
+//           map(contact => {
+//             console.log(ds_results)
+//             console.log(contact)
+//             return ({ ...ds_results, contact })
+//           }),
+//         )
+//       ),
+//     );
+//   }
 
   //     // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
   //     concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
@@ -110,6 +126,7 @@ export class getDatasetsService {
   }
 
   getPatientSummary(measurementTechnique): Observable<any> {
+    console.log(measurementTechnique)
     let params = new HttpParams()
       .set("q", "__all__")
       .set("experimentQuery", `measurementTechnique:${measurementTechnique}`)
