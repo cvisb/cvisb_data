@@ -68,6 +68,23 @@ export class getDatasetsService {
       ))
   }
 
+  getPatientSummary(measurementTechnique) {
+    let params = new HttpParams()
+      .set("q", "__all__")
+      .set("experimentQuery", `measurementTechnique:${measurementTechnique}`)
+      .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear");
+
+    return this.apiSvc.get("patient", params, 0);
+  }
+
+  getDownloadsSummary(measurementTechnique) {
+    let params = new HttpParams()
+      .set("q", `measurementTechnique:${measurementTechnique}`)
+      .set("facets", "additionalType.keyword");
+
+    return this.apiSvc.get("datadownload", params, 0);
+  }
+
   /*
   getDataset performs three operations:
   1. gets all DataDownloads for a particular dataset
