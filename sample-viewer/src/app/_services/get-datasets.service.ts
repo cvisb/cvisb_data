@@ -54,7 +54,7 @@ export class getDatasetsService {
             datasets.forEach((dataset, idx) => {
               dataset['counts'] = summaryData[idx];
             })
-            console.log(datasets);
+            // console.log(datasets);
             return datasets;
           }),
           catchError(e => {
