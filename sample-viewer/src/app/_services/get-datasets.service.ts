@@ -97,7 +97,9 @@ export class getDatasetsService {
         summary['years'] = patients['facets']['infectionYear']['terms'];
         summary['yearDomain'] = summary['years'].map(d => d.term);
 
-        summary['countries'] = this.getCountryName(patients['facets']['country.identifier.keyword']['terms'])
+        let countries = patients['facets']['country.identifier.keyword']['terms'].forEach(d =>
+          this.getCountryName(d));
+        summary['countries'] = countries;
 
 
         // pull out file summary stats
@@ -153,7 +155,7 @@ export class getDatasetsService {
     countryCount['name'] = countryObj['name'];
     countryCount['identifier'] = countryObj['identifier'];
     console.log(countryCount)
-    return(countryCount)
+    return (countryCount)
   }
 
   /*
