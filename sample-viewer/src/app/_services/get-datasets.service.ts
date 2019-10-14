@@ -45,7 +45,8 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      concatMap((ds_results: any) => this.getDatasetCounts(ds_results.map(ds_results['body']['hits'].map(d => d.measurementTechnique)))
+      // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
+      concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
       // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
         .pipe(
           map(expts => {
@@ -69,6 +70,7 @@ export class getDatasetsService {
   }
 
   getDatasetCounts(id): Observable<any> {
+    console.log('calling dataset counts')
     return(this.getPatientSummary(id));
 
   }
