@@ -128,10 +128,11 @@ export class getDatasetsService {
         summary['years'] = patients['facets']['infectionYear']['terms'];
         summary['yearDomain'] = summary['years'].map(d => d.term);
 
-        summary['files'] = downloads['facets']['alternateType.keyword']['terms'];
+        summary['files'] = downloads['facets']['additionalType.keyword']['terms'];
         summary['all_files'] = summary['files'].map(d => d.term);
 
         summary['expt_count'] = expts['total'];
+        console.log(summary)
 
         return (summary);
       }),
@@ -141,7 +142,6 @@ export class getDatasetsService {
         return (new Observable<any>())
       })
     )
-
   }
 
   getExperimentCount(measurementTechnique): Observable<any> {
