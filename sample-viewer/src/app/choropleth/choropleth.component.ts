@@ -55,8 +55,8 @@ export class ChoroplethComponent implements OnInit {
     console.log(WEST_AFRICA_JSON)
     if (WEST_AFRICA_JSON && AFRICA_JSON) {
       this.element = this.chartContainer.nativeElement;
-      this.west_africa = WEST_AFRICA_JSON['default']['features'];
-      let AFRICA = AFRICA_JSON['default']['features'];
+      this.west_africa = WEST_AFRICA_JSON['features'];
+      let AFRICA = AFRICA_JSON['features'];
 
       // --- color scale ---
       this.colorScale = d3.scaleSequential(d3.interpolateYlGnBu);
