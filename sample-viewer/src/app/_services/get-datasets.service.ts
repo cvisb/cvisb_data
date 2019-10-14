@@ -47,7 +47,7 @@ export class getDatasetsService {
     }).pipe(
 
       mergeMap((result: any) => {
-       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
+       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getExperimentCount(id));
        return forkJoin(...allIds).pipe(
          map((idDataArray) => {
            console.log(result);
