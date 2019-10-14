@@ -95,7 +95,6 @@ export class getDatasetsService {
 
         // pull out experiment summary stats
         summary['expt_count'] = expts['total'];
-        console.log(summary)
 
         return (summary);
       }),
@@ -138,10 +137,8 @@ export class getDatasetsService {
 
   getCountryName(countryCount) {
     let countryObj = this.countryPipe.transform(countryCount.term);
-    console.log(countryObj);
     countryCount['name'] = countryObj['name'];
     countryCount['identifier'] = countryObj['identifier'];
-    console.log(countryCount)
     return (countryCount)
   }
 
