@@ -2,7 +2,7 @@
   <div class="grid-item grid-column-container">
     <div class="container count-pair">
       <div class="count-value">
-        {{dataset.expt_count}}
+        {{dataset.counts.expt_count}}
       </div>
       <div class="count-label">
         experiments
@@ -19,8 +19,8 @@
   <div class="grid-item grid-column-container" id="country-count">
     <h4 class="filter-label">country</h4>
     <div class="grid-row-container">
-      <app-choropleth [data]="data1" [width]="150"></app-choropleth>
-      <app-dot-plot [data]="data1"></app-dot-plot>
+      <app-choropleth [data]="dataset.counts.countries" [width]="150"></app-choropleth>
+      <app-dot-plot [data]="dataset.counts.countries"></app-dot-plot>
     </div>
   </div>
 
@@ -37,7 +37,7 @@
 
     <div id="file-count" class="grid-column-container">
       <h4 class="filter-label">file type</h4>
-      <app-mini-barplot [data]="files" [height]="40" [width]="40" [options]="all_files" [filterable]="false"></app-mini-barplot>
+      <app-mini-barplot [data]="dataset.counts.files" [height]="40" [width]="40" [options]="dataset.counts.all_files" [filterable]="false"></app-mini-barplot>
     </div>
   </div>
 </div>
