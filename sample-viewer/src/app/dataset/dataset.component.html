@@ -13,7 +13,7 @@
 
     <div class="grid-item dataset-list">
       <!-- DATASET LOOP -->
-      <div class="dataset" *ngFor="let dataset of datasets">
+      <div class="container dataset" *ngFor="let dataset of datasets">
         <div class="dataset-header">
           <div class="container container-header">
 
@@ -28,15 +28,6 @@
                 </div>
               </h4>
             </div>
-
-            <div class="container count-pair">
-              <div class="count-value">
-                {{dataset.expt_count}}
-              </div>
-              <div class="count-label">
-                experiments
-              </div>
-            </div>
           </div>
 
 
@@ -44,6 +35,8 @@
             {{dataset.description}}
           </div>
         </div>
+
+        <app-dataset-summary></app-dataset-summary>
       </div>
     </div>
 

@@ -20,9 +20,8 @@ export class MiniBarplotComponent implements OnInit {
   @Input() private data: any;
   @Input() private options: string[];
   @Input() private endpoint: any;
-  @Input() private height: number;
   @Input() private spacing: number;
-  @Input() private name_var: string;
+  @Input() private name_var: string = "term";
   @Input() private filterable: boolean = true;
 
   private selectedOutcomes: string[];
@@ -30,7 +29,9 @@ export class MiniBarplotComponent implements OnInit {
   // plot sizes
   private element: any;
   private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
-  private width: number = 70;
+
+  @Input() private height: number;
+  @Input() private width: number = 70;
   // private height: number = 70;
 
   // --- Selectors ---

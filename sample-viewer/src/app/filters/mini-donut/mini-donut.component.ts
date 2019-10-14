@@ -28,7 +28,8 @@ export class MiniDonutComponent implements OnInit, OnChanges {
 
   // --- plot sizes ---
   private element: any; // selector for SVG DIV
-  private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
+  // @Input() right_margin: number;
+  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
   private width: number;
   private hole_frac: number = 0.5;
   private checkboxX: number = 110;

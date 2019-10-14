@@ -1,0 +1,44 @@
+@import "../../../sass/variables.scss";
+$expt-count-size: 1.75em;
+$container-margin: 10px;
+
+.count-pair {
+  background: $lassa-dk;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 5px;
+  height: 1.3*$expt-count-size;
+  margin-bottom: $container-margin;
+}
+
+.count-value {
+  color: $lassa-lt;
+  font-size: $expt-count-size;
+  margin-right: 15px;
+}
+
+.count-label {
+  color: white;
+}
+
+.dataset-summary {
+  display: grid;
+  grid-gap: $container-margin;
+  grid-template-columns: repeat(2, [col] min-content);
+  grid-template-rows: repeat(2, [row] min-content);
+}
+
+.grid-row-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#year-count {
+  margin-right: $container-margin;
+}

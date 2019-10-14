@@ -16,11 +16,12 @@ export class DotPlotComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private margin: any = { top: 0, bottom: 0, left: 70, right: 8 };
+  private margin: any = { top: 0, bottom: 2, left: 70, right: 8 };
   private width: number = 50;
   private height: number;
-  private ySpacing: number = 0.2;
-  private yHeight: number = 10.6; // manually determined, based on a 100px map of SLE and 6 countries in yDomain.
+  private ySpacing: number = 0.5;
+  private yHeight: number = 16; // manually determined, based on a 100px map of SLE and 6 countries in yDomain.
+  // private yHeight: number = 10.6; // manually determined, based on a 100px map of SLE and 6 countries in yDomain.
 
   // --- Selectors ---
   private svg: any; // svg container
@@ -83,94 +84,95 @@ export class DotPlotComponent implements OnInit {
   }
 
   updatePlot() {
-    var t = d3.transition()
-      .duration(1000);
+    if (this.data && this.svg) {
+      var t = d3.transition()
+        .duration(1000);
 
-    this.data = this.data.sort((a: any, b: any) => b.count - a.count);
+      this.data = this.data.sort((a: any, b: any) => b.count - a.count);
 
-    // --- update axes ---
-    this.height = this.data.length * this.yHeight;
-
-
-    this.svg.attr("height", this.height + this.margin.top + this.margin.bottom);
-
-    this.x.domain([0, <any>d3.max(this.data, (d: any) => d.count)]);
-
-    this.y
-      .rangeRound([0, this.height])
-      .domain(this.data.map((d: any) => d.name));
-
-    this.colorScale.domain([0, d3.max(this.data.map(d => d.count))]);
-
-    this.yAxis = d3.axisLeft(this.y);
-
-    this.svg.append('g')
-      .attr('class', 'dotplot-axis axis--y')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-      .call(this.yAxis);
-
-    // --- Update background ---
-    this.background
-      .attr("x", -this.y.bandwidth())
-      .attr("y", -this.y.bandwidth())
-      .attr("width", this.width + this.y.bandwidth() * 2)
-      .attr("height", this.height + this.y.bandwidth() * 2);
-
-    this.chart.append("line")
-    .attr("class", "x-axis")
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", this.height);
-
-    // --- Create dots / lollipops ---
-    // --- selectors ---
-    let dotGroup = this.chart
-      .selectAll(".dot-group")
-      .data(this.data);
-
-    let dots = dotGroup.select(".dot");
-    let lollipops = dotGroup.select(".lollipop-stick");
-
-    // --- exit ---
-    dotGroup.exit()
-      .remove();
-
-    // --- enter ---
-    let dotGroupEnter = dotGroup.enter() // enter the text
-      .append("g")
-      .attr("class", "dot-group");
+      // --- update axes ---
+      this.height = this.data.length * this.yHeight;
 
 
-    let lollipopEnter = dotGroupEnter.append("line") // enter the first tspan on the text element
-      .attr('class', 'lollipop-stick')
-      .attr("x1", 0);
+      this.svg.attr("height", this.height + this.margin.top + this.margin.bottom);
 
-    let dotEnter = dotGroupEnter.append("circle") // enter the first tspan on the text element
-      .attr('class', 'dot dot--count')
-      .attr("r", this.y.bandwidth() / 2);
+      this.x.domain([0, <any>d3.max(this.data, (d: any) => d.count)]);
+
+      this.y
+        .rangeRound([0, this.height])
+        .domain(this.data.map((d: any) => d.name));
+
+      this.colorScale.domain([0, d3.max(this.data.map(d => d.count))]);
+
+      this.yAxis = d3.axisLeft(this.y);
+
+      this.svg.append('g')
+        .attr('class', 'dotplot-axis axis--y')
+        .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+        .call(this.yAxis);
+
+      // --- Update background ---
+      this.background
+        .attr("x", -this.y.bandwidth())
+        .attr("y", -this.y.bandwidth())
+        .attr("width", this.width + this.y.bandwidth() * 2)
+        .attr("height", this.height + this.y.bandwidth() * 2);
+
+      this.chart.append("line")
+        .attr("class", "x-axis")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", this.height);
+
+      // --- Create dots / lollipops ---
+      // --- selectors ---
+      let dotGroup = this.chart
+        .selectAll(".dot-group")
+        .data(this.data);
+
+      let dots = dotGroup.select(".dot");
+      let lollipops = dotGroup.select(".lollipop-stick");
+
+      // --- exit ---
+      dotGroup.exit()
+        .remove();
+
+      // --- enter ---
+      let dotGroupEnter = dotGroup.enter() // enter the text
+        .append("g")
+        .attr("class", "dot-group");
+
+
+      let lollipopEnter = dotGroupEnter.append("line") // enter the first tspan on the text element
+        .attr('class', 'lollipop-stick')
+        .attr("x1", 0);
+
+      let dotEnter = dotGroupEnter.append("circle") // enter the first tspan on the text element
+        .attr('class', 'dot dot--count')
+        .attr("r", this.y.bandwidth() / 2);
 
 
 
-    // --- update/merge ---
-    dotGroup = dotGroupEnter
-      .merge(dotGroup)
-      .attr("id", (d: any) => `${d.name}`); // enter + update
+      // --- update/merge ---
+      dotGroup = dotGroupEnter
+        .merge(dotGroup)
+        .attr("id", (d: any) => `${d.name}`); // enter + update
 
-    // Update the position, class, and properties for the count per thing.
-    dots.merge(dotEnter)
-      .attr("cy", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
-      .attr("cx", 0)
-      .transition(t)
-      .style("fill", (d: any) => this.colorScale(d.count))
-      .attr("cx", (d: any) => this.x(d.count));
+      // Update the position, class, and properties for the count per thing.
+      dots.merge(dotEnter)
+        .attr("cy", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
+        .attr("cx", 0)
+        .transition(t)
+        .style("fill", (d: any) => this.colorScale(d.count))
+        .attr("cx", (d: any) => this.x(d.count));
 
-    dots.merge(lollipopEnter)
-      .attr("y1", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
-      .attr("y2", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
-      .transition(t)
-      .attr("x2", (d: any) => this.x(d.count));
-
+      dots.merge(lollipopEnter)
+        .attr("y1", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
+        .attr("y2", (d: any) => this.y(d.name) + this.y.bandwidth() / 2)
+        .transition(t)
+        .attr("x2", (d: any) => this.x(d.count));
+    }
   }
 
 }

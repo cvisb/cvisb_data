@@ -22,3 +22,10 @@
 .x-axis {
   stroke: $grey-300;
 }
+
+.dot-plot {
+  & .axis--y .tick line,
+  & .axis--y path {
+    display: none;
+  }
+}

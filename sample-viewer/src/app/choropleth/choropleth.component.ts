@@ -28,7 +28,7 @@ export class ChoroplethComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  @Input() width: number = 60;
+  @Input() width: number = 100;
   // for some reason, the lower edge of Nigeria seems to be slightly cut off by the map. Think it's a projection issue, but solving by adding slightly unequal margins
   private margin: any = { top: 0.0125*this.width, bottom: 0.03*this.width, left: 0.0125*this.width, right: 0.0125*this.width };
   private height: number; // unset; calculated to take up width of cropped map
@@ -57,7 +57,7 @@ export class ChoroplethComponent implements OnInit {
     let AFRICA = AFRICA_JSON['default']['features'];
 
     // --- color scale ---
-    this.colorScale = d3.scaleSequential(d3.interpolateYlGnBu)
+    this.colorScale = d3.scaleSequential(d3.interpolateYlGnBu);
 
     // --- mapping scales ---
     // Bounding box was manually chosen to crop the area to the bounding box of interest:
@@ -168,7 +168,7 @@ export class ChoroplethComponent implements OnInit {
   }
 
   updatePlot() {
-    if (this.data) {
+    if (this.data && this.colorScale) {
       // update color
       this.colorScale.domain([0, d3.max(this.data.map(d => d.count))]);
 

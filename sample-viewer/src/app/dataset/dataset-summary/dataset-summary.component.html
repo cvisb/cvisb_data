@@ -1,0 +1,41 @@
+<div class="grid-container dataset-summary">
+  <div class="grid-item grid-column-container">
+    <div class="container count-pair">
+      <div class="count-value">
+        {{dataset.expt_count}}
+      </div>
+      <div class="count-label">
+        experiments
+      </div>
+    </div>
+
+    <div id="cohort-count">
+      <h4 class="filter-label">cohort</h4>
+      <app-mini-donut [data]="viruses" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 125 }" [cohorts]="all_cohorts" [endpoint]="endpoint" [filterable]="false"></app-mini-donut>
+    </div>
+  </div>
+
+  <div class="grid-item grid-column-container" id="country-count">
+    <h4 class="filter-label">country</h4>
+    <div class="grid-row-container">
+      <app-choropleth [data]="data1" [width]="150"></app-choropleth>
+      <app-dot-plot [data]="data1"></app-dot-plot>
+    </div>
+  </div>
+
+  <div class="grid-item grid-column-container" id="outcome-count">
+    <h4 class="filter-label">outcome</h4>
+    <app-mini-barplot [data]="outcomes" [height]="40" [width]="70" [options]="all_outcomes" [filterable]="false"></app-mini-barplot>
+  </div>
+
+  <div class="grid-item grid-row-container" id="year-file-count">
+    <div id="year-count" class="grid-column-container">
+      <h4 class="filter-label">year</h4>
+      <app-filterable-histogram [data]="years" [xDomain]="yearDomain" [filterable]="false" [height]="40" [width]="80" [min_width_unknown]="0" [windsorized]="true" [filter_title]="'uniqueid'"></app-filterable-histogram>
+    </div>
+    <div id="file-count" class="grid-column-container">
+      <h4 class="filter-label">file type</h4>
+      <app-mini-barplot [data]="files" [height]="40" [width]="40" [options]="all_files" [filterable]="false"></app-mini-barplot>
+    </div>
+  </div>
+</div>

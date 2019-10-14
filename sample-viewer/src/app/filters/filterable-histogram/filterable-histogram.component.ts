@@ -25,6 +25,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   @Input() public filter_title: string;
   @Input() public filterHandler: Function;
   @Input() public windsorized: boolean = false;
+  @Input() public filterable: boolean = true;
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -35,9 +36,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   private element: any;
   // private element_dims: any;
   private margin: any = { top: 0, bottom: 25, left: 12, right: 12, axisBottom: 3, betweenGraphs: 15 };
-  private width: number = 150;
-  private min_width_unknown: number = 40;
-  private height: number = 90;
+  @Input() private min_width_unknown: number = 40;
+  @Input() private width: number = 150;
+  @Input() private height: number = 90;
   private slider_height: number = 50;
   // private bar_height: number = 10;
   // private bar_spacing: number = 3;
@@ -115,18 +116,20 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
-      switch (this.endpoint) {
-        case "patient":
-          this.requestSvc.patientParamsState$.subscribe(params => {
-            this.checkParams(params);
-          })
-          break;
+      if (this.filterable) {
+        switch (this.endpoint) {
+          case "patient":
+            this.requestSvc.patientParamsState$.subscribe(params => {
+              this.checkParams(params);
+            })
+            break;
 
-        case "sample":
-          this.requestSvc.sampleParamsState$.subscribe(params => {
-            this.checkParams(params);
-          })
-          break;
+          case "sample":
+            this.requestSvc.sampleParamsState$.subscribe(params => {
+              this.checkParams(params);
+            })
+            break;
+        }
       }
     }
   }
@@ -154,9 +157,10 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     //     this.updateLimits(limits);
     //   }
     // })
-
-    // Wait till everything is loaded; then set the initial limits
-    this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
+    if (this.filterable) {
+      // Wait till everything is loaded; then set the initial limits
+      this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
+    }
   }
 
   prepData() {
@@ -231,8 +235,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     if (this.data) {
       this.updateData();
     }
-
-    this.createSlider();
+    if (this.filterable) {
+      this.createSlider();
+    }
   }
 
   updateData() {
@@ -337,7 +342,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .attr("height", 0)
         .classed("selected", (d: any) =>
           true)
-          // d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
+        // d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .transition(t)
         .attr("y", (d: any) => {
           return (this.y(d.count));
@@ -369,9 +374,10 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       // Select the rects after they've been drawn.
       this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
 
-      this.rects
-        .on("click", selectBar(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint, this.updateLimits, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, this.windsorized));
-
+      if (this.filterable) {
+        this.rects
+          .on("click", selectBar(this.filterHandler, this.filterSvc, this.requestSvc, this.endpoint, this.updateLimits, this.x, this.xLinear, this.slider, this.handle_left, this.handle_right, this.windsorized));
+      }
     }
   }
 
