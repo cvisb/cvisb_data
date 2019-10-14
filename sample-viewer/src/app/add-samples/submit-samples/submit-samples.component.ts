@@ -44,9 +44,9 @@ export class SubmitSamplesComponent implements OnInit {
       let data2upload = cloneDeep(this.data);
 
       data2upload.forEach(d => {
-        delete d._merge;
+        delete d['_merge'];
 
-        d.location.forEach(loc => {
+        d['location'].forEach(loc => {
           delete loc._merge;
         })
       })
