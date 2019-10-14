@@ -47,7 +47,8 @@ export class getDatasetsService {
     }).pipe(
 
       mergeMap((result: any) => {
-       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getExperimentCount(id));
+       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
+       console.log(allIds)
        return forkJoin(...allIds).pipe(
          map((idDataArray) => {
            console.log(result);
@@ -55,7 +56,7 @@ export class getDatasetsService {
            // result.contact.forEach((eachContact, index) => {
            //   eachContact.relationship = idDataArray[index];
            // })
-           return result;
+           return result['body']['hits'];
          })
        )
      })
@@ -141,6 +142,7 @@ export class getDatasetsService {
       .set("q", `measurementTechnique:${measurementTechnique}`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
+      console.log(measurementTechnique)
 
     return this.apiSvc.get("datadownload", params, 0);
   }
