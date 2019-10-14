@@ -28,7 +28,7 @@ export class MiniBarplotComponent implements OnInit {
 
   // plot sizes
   private element: any;
-  private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
+  @Input() private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
 
   @Input() private height: number;
   @Input() private width: number = 70;
