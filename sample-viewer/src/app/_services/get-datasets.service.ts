@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, forkJoin, from } from 'rxjs';
-import { map, catchError, mergeMap, concatMap, flatMap } from "rxjs/operators";
+import { map, catchError, mergeMap, concatMap, flatMap, toArray } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -45,37 +45,61 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
-      concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
-      flatMap((arr: any) => this.getDatasetCounts(arr)
-      // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
-        .pipe(
-          map(expts => {
-            console.log(expts)
-            console.log(arr)
 
-            // let datasets = ds_results['body']['hits'];
-            let datasets =null;
+      mergeMap((ds_results: any) =>
 
-            // datasets.forEach(dataset => {
-            //   let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
-            //   dataset["expt_count"] = cts[0]['count'];
-            // })
-
-            return (datasets)
+        // `from` emits each contact separately
+        from(ds_results['body']['hits'].map(d => d.measurementTechnique)).pipe(
+          // load each contact
+          mergeMap(
+            ds_id => this.getDatasetCounts(ds_id),
+            // in result selector, connect fetched detail data
+            (original, detail) => ({ ...original, patients: detail })
+          ),
+          // collect all contacts into an array
+          toArray(),
+          // add the newly fetched data to original result
+          map(contact => {
+            console.log(ds_results)
+            console.log(contact)
+            return ({ ...ds_results, contact })
           }),
-          catchError(e => {
-            console.log(e)
-            throwError(e);
-            return (new Observable<any>())
-          })
         )
-      ))
+      ),
+    );
   }
+
+  //     // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
+  //     concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
+  //     flatMap((arr: any) => this.getDatasetCounts(arr)
+  //     // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
+  //       .pipe(
+  //         map(expts => {
+  //           console.log(expts)
+  //           console.log(arr)
+  //
+  //           // let datasets = ds_results['body']['hits'];
+  //           let datasets =null;
+  //
+  //           // datasets.forEach(dataset => {
+  //           //   let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
+  //           //   dataset["expt_count"] = cts[0]['count'];
+  //           // })
+  //
+  //           return (datasets)
+  //         }),
+  //         catchError(e => {
+  //           console.log(e)
+  //           throwError(e);
+  //           return (new Observable<any>())
+  //         })
+  //       )
+  //     ))
+  // }
 
   getDatasetCounts(id): Observable<any> {
     console.log('calling dataset counts')
-    return(this.getPatientSummary(id));
+    return (this.getPatientSummary(id));
 
   }
 
