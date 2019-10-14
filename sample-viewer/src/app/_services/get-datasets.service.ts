@@ -47,7 +47,7 @@ export class getDatasetsService {
     }).pipe(
 
       mergeMap((ds_results: any) =>
-
+// https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable
         // `from` emits each contact separately
         from(ds_results['body']['hits'].map(d => d.measurementTechnique)).pipe(
           // load each contact
@@ -57,7 +57,7 @@ export class getDatasetsService {
             (original, detail) => ({ ...original, patients: detail })
           ),
           // collect all contacts into an array
-          toArray(),
+          // toArray(),
           // add the newly fetched data to original result
           map(contact => {
             console.log(ds_results)
