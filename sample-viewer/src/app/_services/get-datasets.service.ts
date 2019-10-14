@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, forkJoin } from 'rxjs';
-import { map, catchError, mergeMap } from "rxjs/operators";
+import { map, catchError, mergeMap, concatMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -45,15 +45,17 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
+      concatMap((ds_results: any) => this.getDatasetCounts(ds_results.map(ds_results['body']['hits'].map(d => d.measurementTechnique)))
+      // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
         .pipe(
           map(expts => {
+            console.log(expts)
             let datasets = ds_results['body']['hits'];
 
-            datasets.forEach(dataset => {
-              let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
-              dataset["expt_count"] = cts[0]['count'];
-            })
+            // datasets.forEach(dataset => {
+            //   let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
+            //   dataset["expt_count"] = cts[0]['count'];
+            // })
 
             return (datasets)
           }),
@@ -64,6 +66,11 @@ export class getDatasetsService {
           })
         )
       ))
+  }
+
+  getDatasetCounts(id): Observable<any> {
+    return(this.getPatientSummary(id));
+
   }
 
   getExperimentCount(ds_results): Observable<any> {
