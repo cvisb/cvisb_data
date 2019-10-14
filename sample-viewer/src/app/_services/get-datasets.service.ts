@@ -52,6 +52,7 @@ export class getDatasetsService {
         .pipe(
           map(expts => {
             console.log(expts)
+            console.log(arr)
 
             // let datasets = ds_results['body']['hits'];
             let datasets =null;
