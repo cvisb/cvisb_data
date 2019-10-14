@@ -111,25 +111,29 @@ export class getDatasetsService {
     // return (this.getPatientSummary(id));
 
     return forkJoin(
-      this.getPatientSummary(id), this.getDownloadsSummary(id)
+      this.getPatientSummary(id), this.getDownloadsSummary(id), this.getExperimentCount(id)
     ).pipe(
-      map(([patients, downloads]) => {
+      map(([patients, downloads, expts]) => {
         console.log(patients)
         console.log(downloads)
+        console.log(expts)
         let summary = {};
 
         summary['cohorts'] = patients['facets']['cohort.keyword']['terms'];
-        summary['all_cohorts'] = summary['counts']['cohorts'].map(d => d.term);
+        summary['all_cohorts'] = summary['cohorts'].map(d => d.term);
 
         summary['outcomes'] = patients['facets']['outcome.keyword']['terms'];
-        summary['all_outcomes'] = summary['counts']['outcomes'].map(d => d.term);
+        summary['all_outcomes'] = summary['outcomes'].map(d => d.term);
 
         summary['years'] = patients['facets']['infectionYear']['terms'];
-        summary['yearDomain'] = summary['counts']['years'].map(d => d.term);
+        summary['yearDomain'] = summary['years'].map(d => d.term);
 
         summary['files'] = downloads['facets']['alternateType.keyword']['terms'];
-        summary['all_files'] = summary['counts']['files'].map(d => d.term);
-        return(summary);
+        summary['all_files'] = summary['files'].map(d => d.term);
+
+        summary['expt_count'] = expts['total'];
+
+        return (summary);
       }),
       catchError(e => {
         console.log(e)
@@ -140,14 +144,17 @@ export class getDatasetsService {
 
   }
 
-  getExperimentCount(ds_results): Observable<any> {
-    return this.apiSvc.get("experiment",
-      new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
-        .set("facets", "measurementTechnique.keyword"), 0)
+  getExperimentCount(measurementTechnique): Observable<any> {
+    // return this.apiSvc.get("experiment",
+    //   new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
+    //     .set("facets", "measurementTechnique.keyword"), 0)
+    let params = new HttpParams()
+      .set("q", `measurementTechnique:"${measurementTechnique}"`);
+
+    return this.apiSvc.get("experiment", params, 0);
   }
 
   getPatientSummary(measurementTechnique): Observable<any> {
-    console.log(measurementTechnique)
     let params = new HttpParams()
       .set("q", "__all__")
       .set("experimentQuery", `measurementTechnique:"${measurementTechnique}"`)
@@ -162,7 +169,6 @@ export class getDatasetsService {
       .set("q", `measurementTechnique:"${measurementTechnique}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
-    console.log(measurementTechnique)
 
     return this.apiSvc.get("datadownload", params, 0);
   }
