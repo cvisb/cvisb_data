@@ -45,30 +45,34 @@ export class getDatasetsService {
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
     }).pipe(
-      mergeMap((ds_results: any) =>
-        this.apiSvc.get("experiment",
-          new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
-            .set("facets", "measurementTechnique.keyword"), 0).pipe(
-              map(expts => {
-                let datasets = ds_results['body']['hits'];
+      mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
+        .pipe(
+          map(expts => {
+            let datasets = ds_results['body']['hits'];
 
-                datasets.forEach(dataset => {
-                  let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
-                  dataset["expt_count"] = cts[0]['count'];
-                })
+            datasets.forEach(dataset => {
+              let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
+              dataset["expt_count"] = cts[0]['count'];
+            })
 
-                return (datasets)
-              }),
-              catchError(e => {
-                console.log(e)
-                throwError(e);
-                return (new Observable<any>())
-              })
-            )
+            return (datasets)
+          }),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (new Observable<any>())
+          })
+        )
       ))
   }
 
-  getPatientSummary(measurementTechnique) {
+  getExperimentCount(ds_results): Observable<any> {
+    return this.apiSvc.get("experiment",
+      new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
+        .set("facets", "measurementTechnique.keyword"), 0)
+  }
+
+  getPatientSummary(measurementTechnique): Observable<any> {
     let params = new HttpParams()
       .set("q", "__all__")
       .set("experimentQuery", `measurementTechnique:${measurementTechnique}`)
@@ -78,7 +82,7 @@ export class getDatasetsService {
     return this.apiSvc.get("patient", params, 0);
   }
 
-  getDownloadsSummary(measurementTechnique) {
+  getDownloadsSummary(measurementTechnique): Observable<any> {
     let params = new HttpParams()
       .set("q", `measurementTechnique:${measurementTechnique}`)
       .set("facets", "additionalType.keyword")
