@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError, forkJoin } from 'rxjs';
+import { Observable, throwError, forkJoin, from } from 'rxjs';
 import { map, catchError, mergeMap, concatMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
@@ -46,12 +46,15 @@ export class getDatasetsService {
         .set('Accept', 'application/json')
     }).pipe(
       // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
-      concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
+      concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
+      concatMap((arr: any) => this.getDatasetCounts(arr)
       // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
         .pipe(
           map(expts => {
             console.log(expts)
-            let datasets = ds_results['body']['hits'];
+
+            // let datasets = ds_results['body']['hits'];
+            let datasets =null;
 
             // datasets.forEach(dataset => {
             //   let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
