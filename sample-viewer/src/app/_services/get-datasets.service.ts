@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, forkJoin, from } from 'rxjs';
-import { map, catchError, mergeMap, concatMap } from "rxjs/operators";
+import { map, catchError, mergeMap, concatMap, flatMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -47,7 +47,7 @@ export class getDatasetsService {
     }).pipe(
       // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
       concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
-      concatMap((arr: any) => this.getDatasetCounts(arr)
+      flatMap((arr: any) => this.getDatasetCounts(arr)
       // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
         .pipe(
           map(expts => {
