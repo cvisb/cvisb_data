@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError, forkJoin, from } from 'rxjs';
-import { map, catchError, mergeMap, concatMap, flatMap, toArray } from "rxjs/operators";
+import { Observable, throwError, forkJoin } from 'rxjs';
+import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
 
-import { ExperimentObjectPipe } from '../_pipes';
+import { ExperimentObjectPipe, CountryObjectPipe } from '../_pipes';
 
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
@@ -25,7 +25,8 @@ export class getDatasetsService {
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
-    private exptPipe: ExperimentObjectPipe
+    private exptPipe: ExperimentObjectPipe,
+    private countryPipe: CountryObjectPipe
   ) {
     // this.getFiles();
   }
@@ -119,6 +120,7 @@ export class getDatasetsService {
         console.log(expts)
         let summary = {};
 
+        // pull out patient summary stats
         summary['cohorts'] = patients['facets']['cohort.keyword']['terms'];
         summary['all_cohorts'] = summary['cohorts'].map(d => d.term);
 
@@ -128,9 +130,14 @@ export class getDatasetsService {
         summary['years'] = patients['facets']['infectionYear']['terms'];
         summary['yearDomain'] = summary['years'].map(d => d.term);
 
+        summary['countries'] = this.getCountryName(patients['facets']['country.identifier.keyword']['terms'])
+
+
+        // pull out file summary stats
         summary['files'] = downloads['facets']['additionalType.keyword']['terms'];
         summary['all_files'] = summary['files'].map(d => d.term);
 
+        // pull out experiment summary stats
         summary['expt_count'] = expts['total'];
         console.log(summary)
 
@@ -171,6 +178,13 @@ export class getDatasetsService {
       .set("facet_size", "10000");
 
     return this.apiSvc.get("datadownload", params, 0);
+  }
+
+  getCountryName(countryCount) {
+    let countryObj = this.countryPipe.transform(countryCount.term);
+    countryCount['name'] = countryObj['name'];
+    countryCount['identifier'] = countryObj['identifier'];
+    return(countryCount)
   }
 
   /*
