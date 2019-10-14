@@ -1,29 +1,28 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
 $icon-size: 50px;
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(12, [col-start] 1fr);
-  grid-gap: 20px;
-  // background-color: #2196F3;
-  padding: 10px;
-  margin-top: 25px;
-}
-
-.grid-item {
-  padding: 5px;
-}
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: repeat(12, [col-start] 1fr);
+//   grid-gap: 20px;
+//   // background-color: #2196F3;
+//   padding: 10px;
+//   margin-top: 25px;
+// }
+//
+// .grid-item {
+//   padding: 5px;
+// }
 
 .dataset-header {
-    flex: 1;
-    margin-right: 15px;
+  flex: 1;
+  margin-right: 15px;
 }
 
 .dataset-list {
   // background: red;
-  grid-column: col-start 1 / span 8;
-  grid-row: 1;
+  // grid-column: col-start 1 / span 8;
+  // grid-row: 1;
 }
 
 .metadata {
@@ -65,5 +64,5 @@ h4 {
 }
 
 .container-title {
-  align-items: center;
+  // align-items: center;
 }
