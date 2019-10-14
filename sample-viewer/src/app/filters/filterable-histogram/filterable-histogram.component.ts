@@ -186,12 +186,14 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .attr("id", this.filter_title.replace(/\s/g, "_"))
       .attr("height", this.height + this.margin.top + this.margin.bottom);
 
-    // Slider SVG
-    this.svg_slider = d3.select(this.element)
-      .append('svg')
-      .attr("class", "slider")
-      .attr("height", this.slider_height);
-
+    if (this.filterable) {
+      // Slider SVG
+      this.svg_slider = d3.select(this.element)
+        .append('svg')
+        .attr("class", "slider")
+        .attr("height", this.slider_height);
+    }
+    
     // selectors
     this.years = this.svg.append("g")
       .attr("id", "filter_hist")

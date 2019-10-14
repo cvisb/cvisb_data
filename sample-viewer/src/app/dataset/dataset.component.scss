@@ -17,6 +17,9 @@ $icon-size: 50px;
 .dataset-header {
   flex: 1;
   margin-right: 15px;
+  background: $grey-50;
+  border-right: $grey-100 7px solid;
+  padding: 15px;
 }
 
 .dataset-list {
