@@ -49,17 +49,21 @@ export class getDatasetsService {
       // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
       mergeMap((datasetResults: any) => {
         let summaryCalls = datasetResults['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
-        return forkJoin(... summaryCalls).pipe(
+        return forkJoin(...summaryCalls).pipe(
           map((summaryData) => {
             let datasets = datasetResults['body']['hits'];
             console.log(datasetResults);
             console.log(summaryData);
             datasets.forEach((dataset, idx) => {
-              dataset['counts'] = {};
-              dataset['counts']['cohorts'] = summaryData[idx]['facets']['cohort.keyword']['terms'];
-              dataset['counts']['all_cohorts'] = dataset['counts']['cohorts'].map(d => d.term);
-              dataset['counts']['outcomes'] = summaryData[idx]['facets']['outcome.keyword']['terms'];
-              dataset['counts']['all_outcomes'] = dataset['counts']['outcomes'].map(d => d.term);
+              dataset['counts'] = summaryData[idx];
+              // dataset['counts']['cohorts'] = summaryData[idx]['facets']['cohort.keyword']['terms'];
+              // dataset['counts']['all_cohorts'] = dataset['counts']['cohorts'].map(d => d.term);
+              //
+              // dataset['counts']['outcomes'] = summaryData[idx]['facets']['outcome.keyword']['terms'];
+              // dataset['counts']['all_outcomes'] = dataset['counts']['outcomes'].map(d => d.term);
+              //
+              // dataset['counts']['years'] = summaryData[idx]['facets']['infectionYear']['terms'];
+              // dataset['counts']['yearDomain'] = dataset['counts']['years'].map(d => d.term);
             })
             console.log(datasets);
             return datasets;
@@ -104,7 +108,35 @@ export class getDatasetsService {
 
   getDatasetCounts(id): Observable<any> {
     console.log('calling dataset counts')
-    return (this.getPatientSummary(id));
+    // return (this.getPatientSummary(id));
+
+    return forkJoin(
+      this.getPatientSummary(id), this.getDownloadsSummary(id)
+    ).pipe(
+      map(([patients, downloads]) => {
+        console.log(patients)
+        console.log(downloads)
+        let summary = {};
+
+        summary['cohorts'] = patients['facets']['cohort.keyword']['terms'];
+        summary['all_cohorts'] = summary['counts']['cohorts'].map(d => d.term);
+
+        summary['outcomes'] = patients['facets']['outcome.keyword']['terms'];
+        summary['all_outcomes'] = summary['counts']['outcomes'].map(d => d.term);
+
+        summary['years'] = patients['facets']['infectionYear']['terms'];
+        summary['yearDomain'] = summary['counts']['years'].map(d => d.term);
+
+        summary['files'] = downloads['facets']['alternateType.keyword']['terms'];
+        summary['all_files'] = summary['counts']['files'].map(d => d.term);
+        return(summary);
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
 
   }
 
