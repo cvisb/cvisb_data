@@ -42,3 +42,7 @@ $container-margin: 10px;
 #year-count {
   margin-right: $container-margin;
 }
+
+#country-count .grid-row-container {
+  align-items: center;
+}
