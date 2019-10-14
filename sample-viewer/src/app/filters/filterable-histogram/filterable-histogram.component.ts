@@ -168,6 +168,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
 
+    this.xDomain.sort();
+    console.log(this.xDomain)
+
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
     this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
