@@ -47,8 +47,7 @@ export class getDatasetsService {
     }).pipe(
 
       mergeMap((result: any) => {
-       let allIds = ['viral sequencing', 'HLA sequencing'].map(id => this.getDownloadsSummary(id));
-       // let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
+       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
        console.log(allIds)
        return forkJoin(...allIds).pipe(
          map((idDataArray) => {
@@ -131,7 +130,7 @@ export class getDatasetsService {
     console.log(measurementTechnique)
     let params = new HttpParams()
       .set("q", "__all__")
-      .set("experimentQuery", `measurementTechnique:${measurementTechnique}`)
+      .set("experimentQuery", `measurementTechnique:"${measurementTechnique}"`)
       .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear")
       .set("facet_size", "10000");
 
@@ -140,7 +139,7 @@ export class getDatasetsService {
 
   getDownloadsSummary(measurementTechnique): Observable<any> {
     let params = new HttpParams()
-      .set("q", `measurementTechnique:${measurementTechnique}`)
+      .set("q", `measurementTechnique:"${measurementTechnique}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
       console.log(measurementTechnique)
