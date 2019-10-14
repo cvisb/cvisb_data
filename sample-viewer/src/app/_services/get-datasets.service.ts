@@ -47,7 +47,8 @@ export class getDatasetsService {
     }).pipe(
 
       mergeMap((result: any) => {
-       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
+       let allIds = ['viral sequencing', 'HLA sequencing'].map(id => this.getDownloadsSummary(id));
+       // let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
        console.log(allIds)
        return forkJoin(...allIds).pipe(
          map((idDataArray) => {
