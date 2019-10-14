@@ -46,45 +46,33 @@ export class getDatasetsService {
         .set('Accept', 'application/json')
     }).pipe(
 
-      mergeMap((result: any) => {
-       let allIds = result['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDownloadsSummary(id));
-       console.log(allIds)
-       return forkJoin(...allIds).pipe(
-         map((idDataArray) => {
-           console.log(result);
-           console.log(idDataArray);
-           // result.contact.forEach((eachContact, index) => {
-           //   eachContact.relationship = idDataArray[index];
-           // })
-           return result['body']['hits'];
-         })
-       )
-     })
-   );
- }
-
-//       mergeMap((ds_results: any) =>
-// // https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable
-//         // `from` emits each contact separately
-//         from(ds_results['body']['hits'].map(d => d.measurementTechnique)).pipe(
-//           // load each contact
-//           mergeMap(
-//             ds_id => this.getDatasetCounts(ds_id),
-//             // in result selector, connect fetched detail data
-//             (original, detail) => ({ ...original, patients: detail })
-//           ),
-//           // collect all contacts into an array
-//           // toArray(),
-//           // add the newly fetched data to original result
-//           map(contact => {
-//             console.log(ds_results)
-//             console.log(contact)
-//             return ({ ...ds_results, contact })
-//           }),
-//         )
-//       ),
-//     );
-//   }
+      // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
+      mergeMap((datasetResults: any) => {
+        let summaryCalls = datasetResults['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
+        return forkJoin(... summaryCalls).pipe(
+          map((summaryData) => {
+            let datasets = datasetResults['body']['hits'];
+            console.log(datasetResults);
+            console.log(summaryData);
+            datasets.forEach((dataset, idx) => {
+              dataset['counts'] = {};
+              dataset['counts']['cohorts'] = summaryData[idx]['facets']['cohort.keyword']['terms'];
+              dataset['counts']['all_cohorts'] = dataset['counts']['cohorts'].map(d => d.term);
+              dataset['counts']['outcomes'] = summaryData[idx]['facets']['outcome.keyword']['terms'];
+              dataset['counts']['all_outcomes'] = dataset['counts']['outcomes'].map(d => d.term);
+            })
+            console.log(datasets);
+            return datasets;
+          }),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (new Observable<any>())
+          })
+        )
+      })
+    );
+  }
 
   //     // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
   //     concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
@@ -142,7 +130,7 @@ export class getDatasetsService {
       .set("q", `measurementTechnique:"${measurementTechnique}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
-      console.log(measurementTechnique)
+    console.log(measurementTechnique)
 
     return this.apiSvc.get("datadownload", params, 0);
   }
