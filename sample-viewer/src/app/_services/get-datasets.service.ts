@@ -28,10 +28,8 @@ export class getDatasetsService {
     private exptPipe: ExperimentObjectPipe,
     private countryPipe: CountryObjectPipe
   ) {
-    // this.getFiles();
   }
 
-  // Soooo.... fetchAll fails with any query that goes beyond one page, but for some reason only in
   getFiles() {
     this.apiSvc.fetchAll("datadownload", new HttpParams()
       .set('q', "__all__")).subscribe(rs => {
@@ -79,38 +77,7 @@ export class getDatasetsService {
     );
   }
 
-  //     // concatMap((ds_results: any) => this.getDatasetCounts(ds_results['body']['hits'].map(d => d.measurementTechnique))
-  //     concatMap((ds_results: any) => from(ds_results['body']['hits'].map(d => d.measurementTechnique))),
-  //     flatMap((arr: any) => this.getDatasetCounts(arr)
-  //     // mergeMap((ds_results: any) => this.getExperimentCount(ds_results)
-  //       .pipe(
-  //         map(expts => {
-  //           console.log(expts)
-  //           console.log(arr)
-  //
-  //           // let datasets = ds_results['body']['hits'];
-  //           let datasets =null;
-  //
-  //           // datasets.forEach(dataset => {
-  //           //   let cts = expts['facets']["measurementTechnique.keyword"]["terms"].filter(d => d.term === dataset.measurementTechnique);
-  //           //   dataset["expt_count"] = cts[0]['count'];
-  //           // })
-  //
-  //           return (datasets)
-  //         }),
-  //         catchError(e => {
-  //           console.log(e)
-  //           throwError(e);
-  //           return (new Observable<any>())
-  //         })
-  //       )
-  //     ))
-  // }
-
   getDatasetCounts(id): Observable<any> {
-    console.log('calling dataset counts')
-    // return (this.getPatientSummary(id));
-
     return forkJoin(
       this.getPatientSummary(id), this.getDownloadsSummary(id), this.getExperimentCount(id)
     ).pipe(
@@ -182,8 +149,10 @@ export class getDatasetsService {
 
   getCountryName(countryCount) {
     let countryObj = this.countryPipe.transform(countryCount.term);
+    console.log(countryObj);
     countryCount['name'] = countryObj['name'];
     countryCount['identifier'] = countryObj['identifier'];
+    console.log(countryCount)
     return(countryCount)
   }
 
