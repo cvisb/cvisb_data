@@ -72,7 +72,8 @@ export class getDatasetsService {
     let params = new HttpParams()
       .set("q", "__all__")
       .set("experimentQuery", `measurementTechnique:${measurementTechnique}`)
-      .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear");
+      .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear")
+      .set("facet_size", "10000");
 
     return this.apiSvc.get("patient", params, 0);
   }
@@ -80,7 +81,8 @@ export class getDatasetsService {
   getDownloadsSummary(measurementTechnique) {
     let params = new HttpParams()
       .set("q", `measurementTechnique:${measurementTechnique}`)
-      .set("facets", "additionalType.keyword");
+      .set("facets", "additionalType.keyword")
+      .set("facet_size", "10000");
 
     return this.apiSvc.get("datadownload", params, 0);
   }

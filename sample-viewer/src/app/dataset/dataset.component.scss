@@ -15,6 +15,11 @@ $icon-size: 50px;
   padding: 5px;
 }
 
+.dataset-header {
+    flex: 1;
+    margin-right: 15px;
+}
+
 .dataset-list {
   // background: red;
   grid-column: col-start 1 / span 8;
@@ -50,8 +55,13 @@ svg-icon {
 }
 
 h4 {
-  margin-top: 8px;
-  margin-left: 13px;
+  // margin-top: 8px;
+  // margin-left: 13px;
+  margin: 0;
+}
+
+.dataset-icon {
+  margin-top: auto;
 }
 
 .container-title {

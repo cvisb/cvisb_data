@@ -168,7 +168,6 @@ export class ChoroplethComponent implements OnInit {
   }
 
   updatePlot() {
-    console.log(WEST_AFRICA_JSON)
     if (this.data && this.colorScale) {
       // update color
       this.colorScale.domain([0, d3.max(this.data.map(d => d.count))]);
