@@ -198,6 +198,8 @@ export class ApiService {
     let params = qParams
       .append('size', pageSize.toString());
 
+      console.log(params)
+
     return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -205,7 +207,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        // console.log(res);
+        console.log(res);
         return (res["body"])
       }
       )
