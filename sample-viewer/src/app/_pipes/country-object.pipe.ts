@@ -32,7 +32,6 @@ export class CountryObjectPipe implements PipeTransform {
 
   transform(value: string, var2Search: string = "identifier"): any {
     let filtered = this.countryDict.filter(d => d[var2Search] === value);
-    console.log(filtered)
     if (filtered.length === 1) {
       return (filtered[0]);
     }

@@ -51,18 +51,8 @@ export class getDatasetsService {
         return forkJoin(...summaryCalls).pipe(
           map((summaryData) => {
             let datasets = datasetResults['body']['hits'];
-            console.log(datasetResults);
-            console.log(summaryData);
             datasets.forEach((dataset, idx) => {
               dataset['counts'] = summaryData[idx];
-              // dataset['counts']['cohorts'] = summaryData[idx]['facets']['cohort.keyword']['terms'];
-              // dataset['counts']['all_cohorts'] = dataset['counts']['cohorts'].map(d => d.term);
-              //
-              // dataset['counts']['outcomes'] = summaryData[idx]['facets']['outcome.keyword']['terms'];
-              // dataset['counts']['all_outcomes'] = dataset['counts']['outcomes'].map(d => d.term);
-              //
-              // dataset['counts']['years'] = summaryData[idx]['facets']['infectionYear']['terms'];
-              // dataset['counts']['yearDomain'] = dataset['counts']['years'].map(d => d.term);
             })
             console.log(datasets);
             return datasets;
@@ -82,9 +72,6 @@ export class getDatasetsService {
       this.getPatientSummary(id), this.getDownloadsSummary(id), this.getExperimentCount(id)
     ).pipe(
       map(([patients, downloads, expts]) => {
-        console.log(patients)
-        console.log(downloads)
-        console.log(expts)
         let summary = {};
 
         // pull out patient summary stats
@@ -97,8 +84,8 @@ export class getDatasetsService {
         summary['years'] = patients['facets']['infectionYear']['terms'];
         summary['yearDomain'] = summary['years'].map(d => d.term);
 
-        let countries = patients['facets']['country.identifier.keyword']['terms'].forEach(d =>
-          this.getCountryName(d));
+        let countries = patients['facets']['country.identifier.keyword']['terms']
+        countries.forEach(d => this.getCountryName(d));
         summary['countries'] = countries;
 
 
