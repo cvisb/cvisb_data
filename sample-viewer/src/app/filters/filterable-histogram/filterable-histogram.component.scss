@@ -15,7 +15,7 @@
     fill: $grey-300;
     stroke: $grey-400;
 
-    & .selectable {
+    &.selectable {
       cursor: pointer;
     }
   }

@@ -371,7 +371,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
-        .classed("selectable", _ => true)
+        .classed("selectable", _ => this.filterable)
         .classed("selected", _ => true)
         // d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .transition(t)
