@@ -33,7 +33,7 @@
   <div class="grid-item grid-row-container" id="year-file-count">
     <div id="year-count" class="grid-column-container">
       <h4 class="filter-label">year</h4>
-      <app-filterable-histogram [data]="dataset.counts.years" [xDomain]="dataset.counts.yearDomain" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [filter_title]="'uniqueid'"></app-filterable-histogram>
+      <app-filterable-histogram [data]="dataset.counts.years" [xDomain]="dataset.counts.yearDomain" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
     </div>
 
     <div id="file-count" class="grid-column-container">
