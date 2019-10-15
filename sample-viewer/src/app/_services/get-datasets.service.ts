@@ -38,13 +38,18 @@ export class getDatasetsService {
       })
   }
 
-  getDatasets() {
-    return this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query?q=__all__&size=1000", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-    }).pipe(
+  getDatasets(id?: string, idVar?: string = 'identifier') {
+    let qstring: string;
+    if(id && idVar) {
+      qstring = `${idVar}:${id}`;
+    }
+    let params = new HttpParams()
+      .set("q", qstring)
 
+
+
+return this.apiSvc.get("dataset", params, 1000)
+.pipe(
       // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
       mergeMap((datasetResults: any) => {
         let summaryCalls = datasetResults['body']['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
@@ -157,13 +162,14 @@ export class getDatasetsService {
       this.apiSvc.fetchAll("datadownload", new HttpParams()
         .set('q', `includedInDataset:${id}`)
       ),
-      this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set('q', `${idVar}:${id}`)
-      }),
+      this.getDatasets(id, idVar),
+      // this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
+      //   observe: 'response',
+      //   headers: new HttpHeaders()
+      //     .set('Accept', 'application/json'),
+      //   params: new HttpParams()
+      //     .set('q', `${idVar}:${id}`)
+      // }),
       this.apiSvc.fetchAll("experiment",
         new HttpParams()
           .set("q", `measurementTechnique:"${measurementTechnique.name}"`)
@@ -171,10 +177,10 @@ export class getDatasetsService {
     )
       .pipe(
         map(([downloads, data, expts]) => {
-          // console.log("GET DATASET")
-          // console.log(data)
-          // console.log(downloads)
-          // console.log(expts)
+          console.log("GET DATASET")
+          console.log(data)
+          console.log(downloads)
+          console.log(expts)
           // downloads = downloads['hits'];
           if (data['body']['total'] === 1) {
             // One result found, as expected.
