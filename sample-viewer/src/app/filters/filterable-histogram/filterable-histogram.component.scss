@@ -20,7 +20,7 @@
     }
   }
 
-  rect:hover {
+  rect.selectable:hover {
     fill: $cvisb-dark;
     stroke: primary(900);
   }
