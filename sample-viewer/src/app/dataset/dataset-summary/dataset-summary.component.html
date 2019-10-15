@@ -26,14 +26,14 @@
 
   <div class="grid-item grid-column-container" id="outcome-count">
     <h4 class="filter-label">outcome</h4>
-    <app-mini-barplot [data]="dataset.counts.outcomes" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 30, right: 70 }" 
+    <app-mini-barplot [data]="dataset.counts.outcomes" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 30, right: 70 }"
     [options]="dataset.counts.all_outcomes" [filterable]="false"></app-mini-barplot>
   </div>
 
   <div class="grid-item grid-row-container" id="year-file-count">
     <div id="year-count" class="grid-column-container">
       <h4 class="filter-label">year</h4>
-      <app-filterable-histogram [data]="dataset.counts.years" [xDomain]="dataset.counts.yearDomain" [filterable]="false" [height]="40" [width]="80" [min_width_unknown]="0" [windsorized]="true" [filter_title]="'uniqueid'"></app-filterable-histogram>
+      <app-filterable-histogram [data]="dataset.counts.years" [xDomain]="dataset.counts.yearDomain" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [filter_title]="'uniqueid'"></app-filterable-histogram>
     </div>
 
     <div id="file-count" class="grid-column-container">

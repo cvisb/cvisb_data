@@ -24,8 +24,9 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   @Input() public endpoint: string;
   @Input() public filter_title: string;
   @Input() public filterHandler: Function;
-  @Input() public windsorized: boolean = false;
+  @Input() public windsorized: number = 2007; // all values including this are lumped together. Currently, there's a decent number of patients at 2008+,
   @Input() public filterable: boolean = true;
+  @Input() public unknown: boolean = true; // whether unknown values should be included
 
 
   private num_data: Object[]; // numeric portion of the data
@@ -40,6 +41,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   @Input() private width: number = 150;
   @Input() private height: number = 90;
   private slider_height: number = 50;
+  @Input() private numXTicks: number = 5;
   // private bar_height: number = 10;
   // private bar_spacing: number = 3;
 
@@ -47,7 +49,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
   private years: any; // normal histogram
   private year_rects: any; // normal histogram bars
   private rects: any; // any histogram bar
-  private unknown: any; // unknown graph
+  private unknownGraph: any; // unknown graph
   private unknown_rects: any; // unknown bar
   private svg: any;
   private svg_slider: any;
@@ -168,8 +170,23 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
     this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
 
-    this.xDomain.sort();
+    // combine together the values below the limit
+    if (this.windsorized) {
+      this.xDomain = this.xDomain.filter(d => d >= this.windsorized);
+      this.xDomain.push(this.windsorized); // add in windsorized value
+
+      let windsorData = this.num_data.filter((d: any) => d.term < this.windsorized);
+      let windsorCount = windsorData.reduce((prev, curr) => prev + curr['count'], 0);
+
+      this.num_data = this.num_data.filter((d: any) => d.term >= this.windsorized);
+      this.num_data.push({ term: this.windsorized, count: windsorCount });
+    }
+
+    // create linear range of values
+    this.xDomain = d3.range(d3.min(this.xDomain), d3.max(this.xDomain) + 1);
     console.log(this.xDomain)
+    console.log(this.num_data)
+
 
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
@@ -203,13 +220,14 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     this.year_rects = this.years.append("g")
       .attr("class", 'filter--hist');
 
-    this.unknown = this.svg.append("g")
-      .attr("id", "unknown_hist")
-      .attr("transform", `translate(${this.margin.left + this.width + this.margin.betweenGraphs}, ${this.margin.top})`);
+    if (this.unknown) {
+      this.unknownGraph = this.svg.append("g")
+        .attr("id", "unknown_hist")
+        .attr("transform", `translate(${this.margin.left + this.width + this.margin.betweenGraphs}, ${this.margin.top})`);
 
-    this.unknown_rects = this.unknown.append("g")
-      .attr("class", 'filter--hist unknown');
-
+      this.unknown_rects = this.unknownGraph.append("g")
+        .attr("class", 'filter--hist unknown');
+    }
     this.rects = d3.select("#" + this.filter_title.replace(/\s/g, "_")).selectAll(".count-rect");
 
     // --- x & y axes ---
@@ -233,10 +251,11 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       .attr('class', 'axis axis--x axis--hists')
       .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
 
-    this.axisUnknown = this.unknown.append('g')
-      .attr('class', 'axis axis--x axis--unknown')
-      .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
-
+    if (this.unknown) {
+      this.axisUnknown = this.unknownGraph.append('g')
+        .attr('class', 'axis axis--x axis--unknown')
+        .attr('transform', `translate(0, ${this.height + this.margin.axisBottom})`);
+    }
     // Initialize w/ data, if it exists.
     if (this.data) {
       this.updateData();
@@ -262,30 +281,34 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
         .domain(d3.extent(this.xDomain));
 
-      let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
+      if (this.unknown) {
+        let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
-      this.x2 = d3.scaleBand()
-        .rangeRound([0, width2])
-        .paddingInner(0)
-        .paddingOuter(0)
-        .domain(['unknown']);
+        this.x2 = d3.scaleBand()
+          .rangeRound([0, width2])
+          .paddingInner(0)
+          .paddingOuter(0)
+          .domain(['unknown']);
+
+        this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
+
+        // rescale svg to proper width
+        this.svg
+          .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+        this.svg_slider
+          .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+        this.axisUnknown
+          .call(this.xAxis2);
+      }
 
       // Only show 5 values in the histogram.
-      let tickSpacing = Math.round(this.x.domain().length / 5);
+      let tickSpacing = Math.round(this.x.domain().length / this.numXTicks);
 
       this.xAxis = d3.axisBottom(this.x)
         .tickSizeOuter(0)
         .tickValues(this.x.domain().filter((_, i) => !(i % tickSpacing)));
-
-      this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
-
-
-      // rescale svg to proper width
-      this.svg
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
-
-      this.svg_slider
-        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
 
       this.y
@@ -294,14 +317,13 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
       this.axisHist
         .call(this.xAxis);
 
-      this.axisUnknown
-        .call(this.xAxis2);
+
 
       // Function for windsorized data:
       if (this.windsorized) {
         d3.selectAll(".axis--x").selectAll(".tick text")
           .classed("windsor-value", (_, i) => i === 0)
-          .text((d: string, i) => (i === 0 && d !== "unknown") ? `<${d}` : d);
+          .html((d: string, i) => (i === 0 && d !== "unknown") ? `&le; ${d}` : d);
       }
 
 
@@ -356,24 +378,25 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .attr("height", (d: any) => this.y(0) - this.y(d.count));
 
       // Unknown bar
-      let unknown_data = this.unknown_rects
-        .selectAll(".unknown-rect")
-        .data(this.unknown_data);
+      if (this.unknown) {
+        let unknown_data = this.unknown_rects
+          .selectAll(".unknown-rect")
+          .data(this.unknown_data);
 
-      unknown_data.exit().remove();
+        unknown_data.exit().remove();
 
-      unknown_data.enter().append("rect")
-        .attr("class", "count-rect unknown-rect")
-        .merge(unknown_data)
-        .attr("id", (d: any) => d.term)
-        .attr("x", (d: any) => this.x2(d.term) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
-        .attr("y", this.y(0))
-        .attr("width", this.x.bandwidth())
-        .attr("height", 0)
-        .transition(t)
-        .attr("y", (d: any) => this.y(d.count))
-        .attr("height", (d: any) => this.y(0) - this.y(d.count));
-
+        unknown_data.enter().append("rect")
+          .attr("class", "count-rect unknown-rect")
+          .merge(unknown_data)
+          .attr("id", (d: any) => d.term)
+          .attr("x", (d: any) => this.x2(d.term) + (this.x2.bandwidth() - this.x.bandwidth()) / 2)
+          .attr("y", this.y(0))
+          .attr("width", this.x.bandwidth())
+          .attr("height", 0)
+          .transition(t)
+          .attr("y", (d: any) => this.y(d.count))
+          .attr("height", (d: any) => this.y(0) - this.y(d.count));
+      }
 
 
       // Event listener for click event on rects
