@@ -15,6 +15,7 @@ import { MaterialModule } from '../material.module';
 import { DatasetSourceComponent } from './dataset-source/dataset-source.component';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
+import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { FormatPublisherModule } from '../format-publisher/format-publisher.modu
     FileListModule,
     FormatCitationModule,
     FormatPublisherModule,
+    DatasetSummaryModule,
     EmbedJsonldModule
   ],
   declarations: [

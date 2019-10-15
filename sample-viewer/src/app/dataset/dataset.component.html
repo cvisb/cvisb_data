@@ -30,7 +30,9 @@
           </div>
         </div>
 
-
+        <div class="updated">
+          updated {{dataset.dateModified ? (dataset.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+        </div>
         <div class="dataset-description">
           {{dataset.description}}
         </div>
