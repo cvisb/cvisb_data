@@ -296,6 +296,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
           .call(this.xAxis2);
       } else {
         width2 = 0;
+        this.margin.betweenGraphs = 0;
       }
 
       // rescale svg to proper width
