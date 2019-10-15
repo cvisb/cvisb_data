@@ -38,7 +38,7 @@ export class getDatasetsService {
       })
   }
 
-  getDatasets(id?: string, idVar?: string = 'identifier') {
+  getDatasets(id?: string, idVar?: string) {
     let qstring: string;
     if(id && idVar) {
       qstring = `${idVar}:${id}`;
