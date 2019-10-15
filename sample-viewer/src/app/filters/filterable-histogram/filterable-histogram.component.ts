@@ -396,6 +396,8 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
           .attr("y", this.y(0))
           .attr("width", this.x.bandwidth())
           .attr("height", 0)
+          .classed("selectable", _ => this.filterable)
+          .classed("selected", _ => true)
           .transition(t)
           .attr("y", (d: any) => this.y(d.count))
           .attr("height", (d: any) => this.y(0) - this.y(d.count));
