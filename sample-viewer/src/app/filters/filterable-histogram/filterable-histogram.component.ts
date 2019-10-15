@@ -183,13 +183,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     }
 
     // create linear range of values
-    console.log(this.xDomain)
     this.xDomain = d3.range(d3.min(this.xDomain), d3.max(this.xDomain) + 1);
-    console.log(this.xDomain)
-    console.log(d3.min(this.xDomain))
-    console.log(d3.max(this.xDomain))
-    console.log(this.num_data)
-
 
     // Add in any values if they're missing.
     this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
