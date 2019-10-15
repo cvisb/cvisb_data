@@ -281,8 +281,11 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         this.width - this.outerPadding * this.x.step() - 0.5 * this.x.bandwidth()])
         .domain(d3.extent(this.xDomain));
 
+
+      let width2: number; // size of unknown bar width.
+      
       if (this.unknown) {
-        let width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
+        width2 = Math.max(this.x.bandwidth() * 1.25, this.min_width_unknown);
 
         this.x2 = d3.scaleBand()
           .rangeRound([0, width2])
@@ -292,16 +295,20 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
 
         this.xAxis2 = d3.axisBottom(this.x2).tickSizeOuter(0);
 
-        // rescale svg to proper width
-        this.svg
-          .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
-        this.svg_slider
-          .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
         this.axisUnknown
           .call(this.xAxis2);
+      } else {
+        width2 = 0;
       }
+
+      // rescale svg to proper width
+      this.svg
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
+
+      this.svg_slider
+        .attr("width", this.width + this.margin.left + this.margin.right + this.margin.betweenGraphs + width2);
 
       // Only show 5 values in the histogram.
       let tickSpacing = Math.round(this.x.domain().length / this.numXTicks);
