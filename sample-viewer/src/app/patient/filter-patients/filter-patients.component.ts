@@ -108,6 +108,8 @@ export class FilterPatientsComponent implements OnInit {
         let maxYear = Math.max(...years);
         let yearLength = (maxYear - minYear) + 1;
         this.all_years = Array.from(new Array(yearLength), (_, i) => i + minYear);
+        this.all_years = [Math.min(...years), maxYear];
+        console.log(this.all_years)
       }
 
       this.all_countries = pList.patientCountries;
