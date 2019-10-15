@@ -42,7 +42,10 @@ export class getDatasetsService {
     let qstring: string;
     if(id && idVar) {
       qstring = `${idVar}:${id}`;
+    } else {
+      qstring = "__all__";
     }
+    
     let params = new HttpParams()
       .set("q", qstring)
 
@@ -53,10 +56,10 @@ return this.apiSvc.get("dataset", params, 1000)
       // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
       mergeMap((datasetResults: any) => {
       console.log(datasetResults)
-        let summaryCalls = datasetResults.map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
+        let summaryCalls = datasetResults['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
         return forkJoin(...summaryCalls).pipe(
           map((summaryData) => {
-            let datasets = datasetResults;
+            let datasets = datasetResults['hits'];
             datasets.forEach((dataset, idx) => {
               dataset['counts'] = summaryData[idx];
             })
