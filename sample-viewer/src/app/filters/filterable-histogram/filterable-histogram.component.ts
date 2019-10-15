@@ -371,8 +371,8 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
         .attr("y", this.y(0))
         .attr("width", this.x.bandwidth())
         .attr("height", 0)
-        .classed("selected", (d: any) =>
-          true)
+        .classed("selectable", _ => true)
+        .classed("selected", _ => true)
         // d.term >= this.filterSubject.value['lower'] && d.term <= this.filterSubject.value['upper'])
         .transition(t)
         .attr("y", (d: any) => {
@@ -535,7 +535,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     // Update rectangles
     d3.selectAll("rect")
       .classed("selected", (d: any) =>
-        limits['unknown'] ?
+        limits['unknown'] && this.filterable ?
           (d.term >= lower_limit && d.term <= upper_limit) || d.term === 'unknown' :
           d.term >= lower_limit && d.term <= upper_limit);
 

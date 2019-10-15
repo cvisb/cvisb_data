@@ -14,7 +14,10 @@
     shape-rendering: crispedges;
     fill: $grey-300;
     stroke: $grey-400;
-    cursor: pointer;
+
+    & .selectable {
+      cursor: pointer;
+    }
   }
 
   rect:hover {
