@@ -188,7 +188,7 @@ return this.apiSvc.get("dataset", params, 1000)
           // downloads = downloads['hits'];
           if (data.length === 1) {
             // One result found, as expected.
-            let dataset = data['body']['hits'][0];
+            let dataset = data[0];
 
             // remove ES _id from files:
             downloads.forEach(d => {
