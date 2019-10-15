@@ -45,7 +45,7 @@ export class getDatasetsService {
     } else {
       qstring = "__all__";
     }
-    
+
     let params = new HttpParams()
       .set("q", qstring)
 
@@ -186,7 +186,7 @@ return this.apiSvc.get("dataset", params, 1000)
           console.log(downloads)
           console.log(expts)
           // downloads = downloads['hits'];
-          if (data['body']['total'] === 1) {
+          if (data/length === 1) {
             // One result found, as expected.
             let dataset = data['body']['hits'][0];
 
