@@ -8,7 +8,7 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 import helpers
 
 
-def get_serology_dataset(export_dir, dateModified, downloads, experiments, version, datasetID="serology"):
+def get_serology_dataset(export_dir, dateModified, downloads, experiments, version, datasetID="systems-serology"):
     ds = {}
     export_file = f"{export_dir}/datasets/CViSB_v{version}__dataset_serology_{dateModified}.json"
 
@@ -40,7 +40,7 @@ def get_serology_dataset(export_dir, dateModified, downloads, experiments, versi
     ds["dataDownloadIDs"] = downloads
     # pulled from experiments
     ds["spatialCoverage"] = []
-    ds["measurementTechnique"] = "Systems Serology"
+    ds["measurementTechnique"] = ["ADNP"]
 
     with open(export_file, 'w') as outfile:
         json.dump([ds], outfile)
