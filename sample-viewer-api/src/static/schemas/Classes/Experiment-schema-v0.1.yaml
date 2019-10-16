@@ -366,7 +366,7 @@
 
 - "@id":                 cvisb:dataStatus
   "@type":               rdf:Property
-  rdfs:comment:          "description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified."
+  rdfs:comment:          'description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified.'
   rdfs:label:            dataStatus
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
