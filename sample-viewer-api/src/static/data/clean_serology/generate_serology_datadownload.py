@@ -10,7 +10,7 @@ import helpers
 
 def get_serology_downloads(export_dir, dateModified, downloads, experiments, version, datasetID="serology"):
     ds = {}
-    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__dataset_serology_{dateModified}.json"
+    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__datadownloads_serology_{dateModified}.json"
 
     # --- static variables ---
     # identifiers
