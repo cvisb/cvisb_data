@@ -8,13 +8,13 @@
       <a [routerLink]="'/dataset'" class="back-button">Return to all datasets</a>
 
       <div class="dataset-header container" id="summary">
-        <div class="dataset-header">
+        <div class="dataset-description">
           <div class="container container-header">
 
             <div class="container container-title">
               <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
                 <a [routerLink]="['/dataset', dataset.identifier]">
-                  <!-- <svg-icon [icon]="dataset.identifier"></svg-icon> -->
+                  <svg-icon [icon]="dataset.identifier"></svg-icon>
                 </a>
               </div>
 

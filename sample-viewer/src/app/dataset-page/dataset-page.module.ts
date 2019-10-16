@@ -16,6 +16,7 @@ import { DatasetSourceComponent } from './dataset-source/dataset-source.componen
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
+import { SvgIconModule } from '../svg-icon/svg-icon.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module'
     FormatCitationModule,
     FormatPublisherModule,
     DatasetSummaryModule,
-    EmbedJsonldModule
+    EmbedJsonldModule,
+    SvgIconModule
   ],
   declarations: [
     DatasetPageComponent,
