@@ -399,19 +399,19 @@
   rdfs:label:            data
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             cvisb:Data
-    - "@id":             cvisb:HLAData
-    - "@id":             cvisb:ViralSeqData
-    - "@id":             cvisb:SystemsSerology
-    - "@id":             cvisb:PiccoloData
-    - "@id":             cvisb:Vitals
-    - "@id":             cvisb:RDT
-    - "@id":             cvisb:RT-PCR
-    - "@id":             cvisb:ELISA
-    - "@id":             cvisb:SymptomList
-    - "@id":             cvisb:ComaScore
-    - "@id":             cvisb:Medication
+  # schema:rangeIncludes:
+  #   - "@id":             cvisb:Data
+  #   - "@id":             cvisb:HLAData
+  #   - "@id":             cvisb:ViralSeqData
+  #   - "@id":             cvisb:SystemsSerology
+  #   - "@id":             cvisb:PiccoloData
+  #   - "@id":             cvisb:Vitals
+  #   - "@id":             cvisb:RDT
+  #   - "@id":             cvisb:RT-PCR
+  #   - "@id":             cvisb:ELISA
+  #   - "@id":             cvisb:SymptomList
+  #   - "@id":             cvisb:ComaScore
+  #   - "@id":             cvisb:Medication
 
   owl:cardinality:       many
   marginality:           recommended
