@@ -1,5 +1,6 @@
 @import '../../../sass/variables.scss';
-$square-width: 2em;
+$square-width: 2.5em;
+$square-height: 2em;
 
 .source {
   flex: 1;
@@ -7,10 +8,10 @@ $square-width: 2em;
 
 .source-percent {
   width: $square-width;
-  height: $square-width;
+  height: $square-height;
   padding: 5px;
   text-align: center;
-  line-height: $square-width;
+  line-height: $square-height;
   margin-right: 10px;
   border: 1px solid $grey-400;
 }
