@@ -181,10 +181,10 @@ return this.apiSvc.get("dataset", params, 1000)
     )
       .pipe(
         map(([downloads, data, expts]) => {
-          console.log("GET DATASET")
-          console.log(data)
-          console.log(downloads)
-          console.log(expts)
+          // console.log("GET DATASET")
+          // console.log(data)
+          // console.log(downloads)
+          // console.log(expts)
           // downloads = downloads['hits'];
           if (data.length === 1) {
             // One result found, as expected.
