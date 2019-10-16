@@ -217,7 +217,7 @@ a {
 .curated-data {
   background: lighten($cvisb-bright, 50%);
   color: $cvisb-dark;
-  border-color:$cvisb-dark;
+  border-color: $cvisb-dark;
 }
 
 .unknown-type {
@@ -318,7 +318,7 @@ svg-icon.country-icon {
   fill: $grey-300;
 }
 
-.systemsserology-icon {
+.systems-serology-icon {
   fill: url("#grey_radial_gradient") $grey-200;
   stroke: $nigeria-green;
 }
@@ -614,7 +614,7 @@ button.stepper-button {
   background: lighten($cvisb-bright, 48%);
 }
 
-.systemsserology {
+.systems-serology {
   // background: lighten($lassa-lt, 20%);
   background: #e3ffe2;
 }
@@ -624,16 +624,16 @@ button.stepper-button {
   background: #faffd7;
 }
 
-.rt_pcr {
+.RT-PCR {
   background: lighten($ebola-lt, 11%);
 }
 
-.rdt {
+.rapid-diagnostics {
   // background: lighten($sierraleone-blue, 56%);
   background: #e8eaf6;
 }
 
-.physiq {
+.sensor-vitals {
   background: #edffc7;
   background: #e4ffca;
 }
@@ -643,11 +643,13 @@ button.stepper-button {
   background: #fbe6ff;
 }
 
-.piccolo {
+.blood-chemistry {
   background: #ffe7c7;
 }
 
-.viralseq {
+.ebola-viral-seq,
+.lassa-viral-seq,
+.viral-seq {
   background: #e4fffc;
 }
 

@@ -219,7 +219,7 @@
     </symbol>
 
     <!-- Systems serology -->
-    <symbol preserveAspectRatio='xMidYMin meet' id="systemsserology" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol preserveAspectRatio='xMidYMin meet' id="systems-serology" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
 
       <g>
         <polyline fill="none" stroke-miterlimit="10" stroke-width="3px" class="antibody_heavy" points="9.7,1.5 17,8.8 17,26.4 	"/>
@@ -234,7 +234,7 @@
     </symbol>
 
     <!-- viral sequencing -->
-    <symbol id="viralseq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Viral Sequencing</title>
 
       <g id="ebola">
@@ -395,7 +395,7 @@
     </symbol>
 
     <!-- viral sequencing -->
-    <symbol id="LASVseq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="lassa-viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Lassa Viral Sequencing</title>
       <g id="lassa">
         <defs>
@@ -497,7 +497,7 @@
       </g>
     </symbol>
     <!-- EBOV viral sequencing -->
-    <symbol id="EBOVseq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="ebola-viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Ebola Viral Sequencing</title>
 
       <g id="ebola">
@@ -618,7 +618,7 @@
     </symbol>
 
     <!-- RDT -->
-    <symbol id="rdt" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="rapid-diagnostics" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Rapid Diagnostics</title>
       <g>
         <rect fill="#F9F9DE" stroke="#212529" stroke-width="0.2186" stroke-miterlimit="10" id="tlc_plate" x="19.1" y="2.1" class="st0" width="15.6" height="35.8"/>
@@ -725,7 +725,7 @@
     </symbol>
 
     <!-- PhysIQ -->
-    <symbol id="physiq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="sensor-vitals" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>PhysIQ sensor</title>
 
       <g id="PhysIQ">
@@ -804,7 +804,7 @@
     </symbol>
 
     <!-- piccolo -->
-    <symbol id="piccolo" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="blood-chemistry" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Piccolo blood chemistry</title>
       <g id="piccolo">
         <g>
@@ -907,7 +907,7 @@
     </symbol>
 
     <!-- RT-PCR -->
-    <symbol id="rt_pcr" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="RT-PCR" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>RT PCR</title>
       <g id="copied_dna">
         <line class="st0" fill="none" stroke="#ff3d82" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="10" x2="24.1" y2="10"/>

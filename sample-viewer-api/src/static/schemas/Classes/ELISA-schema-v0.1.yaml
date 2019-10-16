@@ -4,20 +4,20 @@
 
 ---
 # "@context":
-#   dct:                   "http://purl.org/dc/terms/"
-#   owl:                   "http://www.w3.org/2002/07/owl#"
-#   rdf:                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-#   rdfa:                  "http://www.w3.org/ns/rdfa#"
-#   rdfs:                  "http://www.w3.org/2000/01/rdf-schema#"
-#   schema:                "http://schema.org/"
-#   health:                "https://health-lifesci.schema.org/"
-#   xsd:                   "http://www.w3.org/2001/XMLSchema#"
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   health:              "https://health-lifesci.schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
 #
-#   # bsc:                 "http://bioschemas.org/"
-#   # bts:                 "http://schema.biothings.io/"
-#   cvisb:                 "https://data.cvisb.org/jsonschema/"
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
 #
-# "@id":                   "https://data.cvisb.org/jsonschema/ELISA/0.1"
+# "@id":                 "https://data.cvisb.org/jsonschema/ELISA/0.1"
 
 # "@graph":
 - "@id":                 cvisb:ELISA
@@ -29,101 +29,101 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
-# - "@id":                 cvisb:ebola_IgG
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Ebola IgG ELISA, either positive/negative/indeterminate
-#   rdfs:label:            ebola_IgG
+# - "@id":               cvisb:ebola_IgG
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Ebola IgG ELISA, either positive/negative/indeterminate
+#   rdfs:label:          ebola_IgG
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 #
-# - "@id":                 cvisb:ebola_IgM
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Ebola IgM ELISA, either positive/negative/indeterminate
-#   rdfs:label:            ebola_IgM
+# - "@id":               cvisb:ebola_IgM
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Ebola IgM ELISA, either positive/negative/indeterminate
+#   rdfs:label:          ebola_IgM
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 #
-# - "@id":                 cvisb:ebola_Ag
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Ebola Ag ELISA, either positive/negative/indeterminate
-#   rdfs:label:            ebola_Ag
+# - "@id":               cvisb:ebola_Ag
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Ebola Ag ELISA, either positive/negative/indeterminate
+#   rdfs:label:          ebola_Ag
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 #
-# - "@id":                 cvisb:lassa_IgG
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Lassa IgG ELISA, either positive/negative/indeterminate
-#   rdfs:label:            lassa_IgG
+# - "@id":               cvisb:lassa_IgG
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Lassa IgG ELISA, either positive/negative/indeterminate
+#   rdfs:label:          lassa_IgG
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 #
-# - "@id":                 cvisb:lassa_IgM
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Lassa IgM ELISA, either positive/negative/indeterminate
-#   rdfs:label:            lassa_IgM
+# - "@id":               cvisb:lassa_IgM
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Lassa IgM ELISA, either positive/negative/indeterminate
+#   rdfs:label:          lassa_IgM
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 #
-# - "@id":                 cvisb:lassa_Ag
-#   "@type":               rdf:Property
-#   rdfs:comment:          Result of Lassa Ag ELISA, either positive/negative/indeterminate
-#   rdfs:label:            lassa_Ag
+# - "@id":               cvisb:lassa_Ag
+#   "@type":             rdf:Property
+#   rdfs:comment:        Result of Lassa Ag ELISA, either positive/negative/indeterminate
+#   rdfs:label:          lassa_Ag
 #   schema:domainIncludes:
-#     - "@id":             cvisb:ELISA
+#     - "@id":           cvisb:ELISA
 #   schema:rangeIncludes:
-#     - "@id":             schema:Text
-#   owl:cardinality:       one
-#   marginality:           recommended
+#     - "@id":           schema:Text
+#   owl:cardinality:     one
+#   marginality:         recommended
 #   schema:Enumeration:
 #                          - positive
 #                          - negative
 #                          - indeterminate
-#   authenticated:         false
+#   authenticated:       false
 
 
 - "@id":                 cvisb:virus
@@ -167,11 +167,11 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  # schema:Enumeration:
-  #                        - positive
-  #                        - negative
-  #                        - indeterminate
-  #                        - null
+  schema:Enumeration:
+                         - positive
+                         - negative
+                         - indeterminate
+                         - null
   authenticated:         false
 
 
@@ -210,3 +210,75 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+
+- "@id":                 cvisb:dataStatus
+  "@type":               rdf:Property
+  rdfs:comment:          "description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified."
+  rdfs:label:            dataStatus
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                        - preliminary
+                        - final
+
+# Citation and other link identifiers
+- "@id":                 cvisb:publisher
+  "@type":               rdf:Property
+  rdfs:comment:          Publisher of this dataset, usually the host organization
+  rdfs:label:            publisher
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             "cvisb:Organization"
+  schema:sameAs:
+    "@id":               "schema:publisher"
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:citation
+  "@type":               rdf:Property
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:label:            citation
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:sameAs:
+    "@id":               schema:citation
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:correction
+  "@type":               rdf:Property
+  rdfs:comment:          List of changes / corrections made to the data
+  rdfs:label:            correction
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:correction
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+
+- "@id":                 cvisb:_source
+  "@type":               rdf:Property
+  rdfs:comment:          Internal tracking of who / which file(s) supplied the ELISA data
+  rdfs:label:            _source
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true

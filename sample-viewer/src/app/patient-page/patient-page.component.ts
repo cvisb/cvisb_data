@@ -69,7 +69,7 @@ export class PatientPageComponent {
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
         this.allExpts = this.exptObjPipe.exptDict;
         let exptData = expts['hits'].map(d => d.measurementTechnique);
-        this.exptTypes = this.allExpts.filter(d => exptData.includes(d['name']));
+        this.exptTypes = this.allExpts.filter(d => exptData.includes(d['measurementTechnique']));
 
         this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
 

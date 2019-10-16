@@ -18,7 +18,7 @@ export class PatientSerologyComponent implements OnInit {
   ngOnInit() {
     let serology: any;
     if (this.patient.availableData) {
-      serology = this.patient.availableData.filter((d: any) => d.identifier === 'systemsserology');
+      serology = this.patient.availableData.filter((d: any) => d.identifier === 'systems-serology');
       this.data = serology.length === 1 ? serology[0]['data'] : null;
     } else {
       this.data = null;

@@ -191,15 +191,77 @@
   authenticated:         false
   schema:Enumeration:
                            - HLA sequencing
-                           - viral sequencing
                            - metagenome sequencing
+                           - Ebola viral sequencing
+                           - Lassa viral sequencing
                            - BCR sequencing
                            - TCR sequencing
-                           - Systems Serology
-                           - Metabolomics
+                           - ADCP
+                           - ADNP
+                           - ADCD
+                           - NKD
+                           - metabolomics
                            - blood chemistry
                            - vitals
+                           - sensor vitals
+                           - rapid diagnostics
+                           - RT-PCR
+                           - ELISA
+                           - acute symptoms
+                           - sequelae
+                           - coma score
+                           - medications
                            - other
+
+- "@id":                 cvisb:measurementCategory
+  "@type":               rdf:Property
+  rdfs:comment:          A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)
+  rdfs:label:            measurementCategory
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - HLA sequencing
+                           - viral sequencing
+                           - metagenome sequencing
+                           - immune repertoire sequencing
+                           - Systems Serology
+                           - clinical measurements
+                           - clinical observations
+
+# Connection to dataset
+- "@id":                 cvisb:includedInDataset
+  "@type":               rdf:Property
+  rdfs:comment:          "A unique identifier for the Dataset that the Experiment is contained in. Note: should be an internal, CViSB identifier. Must match Dataset:identifier options"
+  rdfs:label:            includedInDataset
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    "@id":               xsd:string
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - hla
+                           - metagenome-seq
+                           - ebola-viral-seq
+                           - lassa-viral-seq
+                           - bcr
+                           - tcr
+                           - systems-serology
+                           - metabolomics
+                           - blood-chemistry
+                           - sensor-vitals
+                           - rapid-diagnostics
+                           - RT-PCR
+
 # when updated
 - "@id":                 cvisb:dateModified
   "@type":               rdf:Property
@@ -286,19 +348,84 @@
   marginality:           recommended
   authenticated:         false
 
+
+- "@id":                 cvisb:correction
+  "@type":               rdf:Property
+  rdfs:comment:          List of changes / corrections made to the data
+  rdfs:label:            correction
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:correction
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+
+- "@id":                 cvisb:dataStatus
+  "@type":               rdf:Property
+  rdfs:comment:          "description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified."
+  rdfs:label:            dataStatus
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                        - preliminary
+                        - final
+
+- "@id":                 cvisb:releaseDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date upon which the data should be made publicly available.
+  rdfs:label:            releaseDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+
 # Data
-# - "@id":                 cvisb:data
-#   "@type":               rdf:Property
-#   rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
-#   rdfs:label:            data
-#   schema:domainIncludes:
-#     - "@id":             cvisb:Experiment
-#   schema:rangeIncludes:
-#     - "@id":             cvisb:Data
-#     - "@id":             cvisb:PiccoloData
-#     - "@id":             cvisb:ViralSeqData
-#     - "@id":             cvisb:Vitals
-#     - "@id":             cvisb:HLAData
-#   owl:cardinality:       many
-#   marginality:           recommended
-#   authenticated:         false
+- "@id":                 cvisb:data
+  "@type":               rdf:Property
+  rdfs:comment:          Data associated with the experiment. Typically summary values for that particular measurement.
+  rdfs:label:            data
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             cvisb:Data
+    - "@id":             cvisb:HLAData
+    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:SystemsSerology
+    - "@id":             cvisb:PiccoloData
+    - "@id":             cvisb:Vitals
+    - "@id":             cvisb:RDT
+    - "@id":             cvisb:RT-PCR
+    - "@id":             cvisb:ELISA
+    - "@id":             cvisb:SymptomList
+    - "@id":             cvisb:ComaScore
+    - "@id":             cvisb:Medication
+
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+  - "@id":                 cvisb:_source
+    "@type":               rdf:Property
+    rdfs:comment:          Internal tracking of who / which file(s) supplied the experiment data
+    rdfs:label:            _source
+    schema:domainIncludes:
+      - "@id":             cvisb:Experiment
+    schema:rangeIncludes:
+      - "@id":             xsd:string
+      - "@id":             schema:Text
+    owl:cardinality:       one
+    marginality:           recommended
+    authenticated:         true

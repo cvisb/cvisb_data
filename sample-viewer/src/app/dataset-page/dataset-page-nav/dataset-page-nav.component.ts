@@ -19,13 +19,19 @@ export class DatasetPageNavComponent implements OnInit {
         { key: "compare", name: "compare allelic frequencies" },
         { key: "files", name: "view files / metadata" },
       ],
-      viralseq: [
+      "lassa-viral-seq": [
         { key: "description", name: "about Viral Sequencing" },
         { key: "sources", name: "sources" },
         { key: "summary", name: "summary" },
         { key: "files", name: "view files / metadata" },
       ],
-      systemsserology: [
+      "ebola-viral-seq": [
+        { key: "description", name: "about Viral Sequencing" },
+        { key: "sources", name: "sources" },
+        { key: "summary", name: "summary" },
+        { key: "files", name: "view files / metadata" },
+      ],
+      "systems-serology": [
         { key: "description", name: "about Systems Serology" },
         { key: "summary", name: "summary" },
         { key: "files", name: "view files / metadata" },

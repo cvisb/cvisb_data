@@ -158,7 +158,7 @@ return this.apiSvc.get("dataset", params, 1000)
   ... and adds DataDownloads to Dataset in the `distribution` parameter,
   `citation`, and `publisher` as arrays.
    */
-  getDataset(id: string, idVar: string = 'identifier'): Observable<any> {
+  getDataset(id: string, idVar: string = 'dataset_id'): Observable<any> {
     let measurementTechnique = this.exptPipe.transform(id, idVar);
 
     return forkJoin(
@@ -175,7 +175,7 @@ return this.apiSvc.get("dataset", params, 1000)
       // }),
       this.apiSvc.fetchAll("experiment",
         new HttpParams()
-          .set("q", `measurementTechnique:"${measurementTechnique.name}"`)
+          .set("q", `measurementTechnique:"${measurementTechnique.measurementTechnique}"`)
           .set("fields", "citation,publisher"))
     )
       .pipe(
