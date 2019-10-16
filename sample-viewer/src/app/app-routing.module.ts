@@ -35,8 +35,7 @@ const appRoutes: Routes = [
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset/hla', loadChildren: './hla/hla.module#HlaModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
   { path: 'dataset/systems-serology', loadChildren: './serology/serology.module#SerologyModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
-  { path: 'dataset/viralseq', loadChildren: './viral-sequencing/viral-sequencing.module#ViralSequencingModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "viralseq" } },
-  // { path: 'dataset/lassa-viralseq', loadChildren: './viral-sequencing/viral-sequencing.module#ViralSequencingModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa_viralseq" } },
+  { path: 'dataset/lassa-viral-seq', loadChildren: './viral-sequencing/viral-sequencing.module#ViralSequencingModule', pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-viral-seq" } },
   { path: 'dataset', loadChildren: './dataset/dataset.module#DatasetModule', pathMatch: 'full', data: { title: 'Data | CViSB' } },
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },

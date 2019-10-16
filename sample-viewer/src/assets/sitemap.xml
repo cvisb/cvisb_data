@@ -4,7 +4,9 @@
 <url><loc>https://data.cvisb.org/citation</loc></url>
 <url><loc>https://data.cvisb.org/dataset</loc></url>
 <url><loc>https://data.cvisb.org/dataset/hla</loc></url>
-<url><loc>https://data.cvisb.org/dataset/viralseq</loc></url>
+<url><loc>https://data.cvisb.org/dataset/ebola-viral-seq</loc></url>
+<url><loc>https://data.cvisb.org/dataset/lassa-viral-seq</loc></url>
+<url><loc>https://data.cvisb.org/dataset/systems-serology</loc></url>
 <url><loc>https://data.cvisb.org/documentation</loc></url>
 <url><loc>https://data.cvisb.org/home</loc></url>
 <url><loc>https://data.cvisb.org/login</loc></url>
