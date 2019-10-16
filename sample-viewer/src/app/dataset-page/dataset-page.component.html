@@ -11,19 +11,16 @@
         <div class="dataset-description">
           <div class="container container-header">
 
-            <div class="container container-title">
-              <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
-                <a [routerLink]="['/dataset', dataset.identifier]">
+            <h2 class="container-column container-title">
+              <div class="container">
+                <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
                   <svg-icon [icon]="dataset.identifier"></svg-icon>
-                </a>
+                </div>{{dataset.name}}
               </div>
-
-              <h2 class="container-column">{{dataset.name}}
-                <div class="keyword-container container">
-                  <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
-                </div>
-              </h2>
-            </div>
+              <div class="keyword-container container">
+                <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
+              </div>
+            </h2>
           </div>
 
           <div class="updated">
@@ -34,7 +31,7 @@
           </div>
         </div>
 
-        <app-dataset-summary [dataset]="dataset"></app-dataset-summary>
+        <app-dataset-summary [dataset]="dataset" id="summary"></app-dataset-summary>
       </div>
 
       <app-dataset-source [sources]="dataset.source"></app-dataset-source>
