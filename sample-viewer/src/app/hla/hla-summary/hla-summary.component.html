@@ -1,21 +1,6 @@
 <!-- <h3 id="summary">Data summary</h3> -->
 <div class="container hla-summary-container" *ngIf="clientSide">
 
-  <div class="container left-container">
-    <div class="patient-count-container">
-      <span class="patient-count summary-item">
-        <div class="num-patients">{{ patientCount }}</div>
-        <div class="annot--patients">patients sequenced:</div>
-      </span>
-
-      <app-filter-patient-type [viruses]="patientTypes" [outcomes]="patientOutcomes"
-      [all_outcomes]="[]" [all_cohorts]="[]" [filterable]="false" [horizontal] = "true"
-      endpoint="none" class="summary-item"></app-filter-patient-type>
-    </div>
-
-  </div>
-
-
   <div class="circle-packing container"  *ngIf="alleleCount && alleleCount.length > 0">
     <div class="main-graph">
       <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
