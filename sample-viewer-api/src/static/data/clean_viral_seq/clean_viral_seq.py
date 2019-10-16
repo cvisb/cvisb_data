@@ -12,6 +12,7 @@ import os
 import re
 from datetime import datetime
 
+
 # [File locations]  ----------------------------------------------------------------------------------------------------
 # inputs
 lassaS_AAfile = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
@@ -28,11 +29,12 @@ output_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/
 log_dir = f"{output_dir}/log"
 
 
-exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID',
-            'measurementTechnique', 'publisher', 'citation', 'data', 'inAlignment',
-            'updatedBy', 'dateModified', 'cvisb_data']
+exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', '_source',
+            'measurementTechnique', "measurementGroup", "includedInDataset",
+            'publisher', 'citation', 'data', 'inAlignment',
+            'updatedBy', 'dateModified', 'releaseDate', 'dataStatus', 'cvisb_data']
 # for non-KGH patients
-patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
+patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData", "_source",
                "dateModified", "updatedBy", "cohort", "outcome", "country", "infectionYear", "species"]
 
 # For all experiments, to relate sample <--> experiment
@@ -40,11 +42,9 @@ sampleCols = ["creatorInitials", "sampleLabel",
               "sampleType", "species", "sampleID", "samplingDate"]
 
 # For all experiments with accession numbers, generate data downloads
-downloadCols = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType", "measurementTechnique",
+downloadCols = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType", "measurementTechnique", "measurementGroup",
                 "dateModified", "experimentIDs", "contentUrlRepository", "contentUrlIdentifier", "citation", "updatedBy"]
 
-# keep as np.nan if want to use today's date
-dateModified = "2019-09-04"
 updatedBy = "Raphaelle Klitting"
 source = "ViralSeq_RK"
 
@@ -56,8 +56,8 @@ import helpers
 # [Commonalities]  ----------------------------------------------------------------------------------------------------
 today = datetime.today().strftime('%Y-%m-%d')
 
-if(dateModified != dateModified):
-    dateModified = today
+
+dateModified = today
 
 
 def getPublisher(row, varName="cvisb_data"):
@@ -145,53 +145,57 @@ ids.rename(columns={'index': 'ID'}, inplace=True)
 # Lassa data stored in 4 files:
 # metadata file: contains any patient information known about them.  includes both S and L alignments.
 log_notes.append("Starting cleaning of Lassa viral sequences")
-lsv = pd.read_csv(lassa_MDfile)
-lsv.head()
-lsv["rawID"] = lsv.id.apply(lambda x: "_".join(x.split("_")[0:-2]))
-lsv['KGH_id'] = lsv.rawID.apply(
+lasv = pd.read_csv(lassa_MDfile)
+lasv.head()
+lasv["rawID"] = lasv.id.apply(lambda x: "_".join(x.split("_")[0:-2]))
+lasv['KGH_id'] = lasv.rawID.apply(
     helpers.checkIDstructure).apply(lambda x: not x)
-lsv['privatePatientID'] = lsv.apply(getPrivateID, axis=1)
+lasv['privatePatientID'] = lasv.apply(getPrivateID, axis=1)
 
 
 # Check for duplicates
-num_dupes = sum(lsv.duplicated(subset="privatePatientID", keep=False))
+num_dupes = sum(lasv.duplicated(subset="privatePatientID", keep=False))
 if(num_dupes > 0):
     log_notes.append(
         f"{num_dupes} duplicate privatePatientIDs found in viral sequences:")
-    log_notes.append(lsv.loc[lsv.duplicated(subset="privatePatientID", keep=False), [
+    log_notes.append(lasv.loc[lasv.duplicated(subset="privatePatientID", keep=False), [
                      'id', 'privatePatientID']].sort_values("privatePatientID"))
     log_notes.append("*" * 100)
-num_dupes = sum(lsv.duplicated(subset="id", keep=False))
+num_dupes = sum(lasv.duplicated(subset="id", keep=False))
 if(num_dupes > 0):
     log_notes.append(f"{num_dupes} duplicate ids found in viral sequences:")
-    log_notes.append(lsv.loc[lsv.duplicated(subset="id", keep=False), [
+    log_notes.append(lasv.loc[lasv.duplicated(subset="id", keep=False), [
                      'id', 'privatePatientID']].sort_values("privatePatientID"))
     log_notes.append("*" * 100)
 
-lsv['outcome_copy'] = lsv.outcome
-lsv['outcome'] = lsv.outcome.apply(helpers.cleanOutcome)
-lsv.groupby("outcome_copy").outcome.value_counts(dropna=False)
+lasv['outcome_copy'] = lasv.outcome
+lasv['outcome'] = lasv.outcome.apply(helpers.cleanOutcome)
+lasv.groupby("outcome_copy").outcome.value_counts(dropna=False)
 
-lsv['cohort'] = "Lassa"
+# static vars
+lasv['cohort'] = "Lassa"
+lasv['measurementTechnique'] = "Lassa viral sequencing"
+lasv['includedInDataset'] = "lassa-viral-seq"
+lasv['_source'] = "; ".join([lassaS_AAfile.split("/")[-1], lassaS_Alignedfile.split("/")[-1], lassaS_Rawfile.split("/")[-1], lassa_MDfile.split("/")[-1], id_dict.split("/")[-1] ])
 
 # [Merge in ids]  ----------------------------------------------------------------------------------------------------
 # Merge in the known set of ids...
-lsv = pd.merge(lsv, ids[["ID", "patientID"]], how="left", indicator=True,
-               # lsv = pd.merge(lsv, ids[["ID", "patientID", "outcome", "cohort", "countryName"]], how="left", indicator=True,
+lasv = pd.merge(lasv, ids[["ID", "patientID"]], how="left", indicator=True,
+               # lasv = pd.merge(lasv, ids[["ID", "patientID", "outcome", "cohort", "countryName"]], how="left", indicator=True,
                right_on="ID", left_on="privatePatientID")
 
-lsv.groupby('KGH_id')._merge.value_counts()
+lasv.groupby('KGH_id')._merge.value_counts()
 
-num_missing_pubIDs = sum((lsv.KGH_id) & (lsv._merge == "left_only"))
+num_missing_pubIDs = sum((lasv.KGH_id) & (lasv._merge == "left_only"))
 if(num_missing_pubIDs > 0):
     log_notes.append(
         f"{num_missing_pubIDs} KGH-esque IDs are missing public IDs in the master KGH roster:")
-    log_notes.append(lsv[(lsv.KGH_id) & (lsv._merge == "left_only")][[
+    log_notes.append(lasv[(lasv.KGH_id) & (lasv._merge == "left_only")][[
                      'privatePatientID', 'id']])
     log_notes.append("*" * 100)
     log_notes.append("\n")
 
-lsv['patientID'] = lsv.apply(getPublicID, axis=1)
+lasv['patientID'] = lasv.apply(getPublicID, axis=1)
 # Sequence ID in the files is publicID_countryiso3_year
 
 
@@ -202,126 +206,129 @@ def getSeqID(row):
         return(row.id)
 
 
-lsv['seqID'] = lsv.apply(getSeqID, axis=1)
+lasv['seqID'] = lasv.apply(getSeqID, axis=1)
 
-lsv['alternateIdentifier'] = lsv.apply(getAltIDs, axis=1)
+lasv['alternateIdentifier'] = lasv.apply(getAltIDs, axis=1)
 
-# lsv['mergeIssue'] = None
-# lsv = helpers.checkMerge2(lsv,
+# lasv['mergeIssue'] = None
+# lasv = helpers.checkMerge2(lasv,
 #                             mergeCols2Check=['outcome', 'cohort'],
 #                             df1_label="Ebola Viral Seq Data", df2_label="Tulane metadata",
 #                             mergeCol="ID", dropMerge=False,
 #                             errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
 # merge issue wrong
-# lsv.mergeIssue.value_counts()
+# lasv.mergeIssue.value_counts()
 
-# lsv.loc[lsv.KGH_id, ['ID', 'privatePatientID', 'patientID', 'outcome_x', 'outcome_y']]
-# sum((lsv_data.countryName_x != lsv_data.countryName_y) &
-#     (lsv_data.countryName_y == lsv_data.countryName_y))
+# lasv.loc[lasv.KGH_id, ['ID', 'privatePatientID', 'patientID', 'outcome_x', 'outcome_y']]
+# sum((lasv_data.countryName_x != lasv_data.countryName_y) &
+#     (lasv_data.countryName_y == lasv_data.countryName_y))
 
 
-lsv['inAlignment'] = lsv.curated
-lsv['cvisb_data'] = lsv.CViSB_data
-lsv['country'] = lsv.country_iso3.apply(helpers.getCountry)
+lasv['inAlignment'] = lasv.curated
+lasv['cvisb_data'] = lasv.CViSB_data
+lasv['country'] = lasv.country_iso3.apply(helpers.getCountry)
 
-lsv['countryName'] = lsv.country.apply(helpers.pullCountryName)
-lsv.groupby("country_iso3").countryName.value_counts(dropna=False)
+lasv['countryName'] = lasv.country.apply(helpers.pullCountryName)
+lasv.groupby("country_iso3").countryName.value_counts(dropna=False)
 
-lsv['infectionYear'] = lsv.year
-lsv['samplingDate'] = lsv.year.apply(helpers.year2Range)
+lasv['infectionYear'] = lasv.year
+lasv['samplingDate'] = lasv.year.apply(helpers.year2Range)
 
-lsv['species'] = lsv.host.apply(helpers.convertSpecies)
-lsv.groupby("host").species.value_counts(dropna=False)
+lasv['species'] = lasv.host.apply(helpers.convertSpecies)
+lasv.groupby("host").species.value_counts(dropna=False)
 
 
 # [S-sequence related info]  ----------------------------------------------------------------------------------------------------
-lsv_data_seq = list(SeqIO.parse(lassaS_Rawfile, "fasta"))
-lsv_data = lsv.copy(deep=True)
-lsv_data['data'] = None
-lsv_data = getDNAseq(lsv_data_seq, lsv_data, 'seqID',
+lasv_data_seq = list(SeqIO.parse(lassaS_Rawfile, "fasta"))
+lasv_data = lasv.copy(deep=True)
+lasv_data['data'] = None
+lasv_data = getDNAseq(lasv_data_seq, lasv_data, 'seqID',
                      "Lassa", "DNAsequence", "S")
 
 # Remove anything without any seq data
-lsv_data = lsv_data[lsv_data.data.apply(lambda x: x is not None)]
+lasv_data = lasv_data[lasv_data.data.apply(lambda x: x is not None)]
 
-lsv_data['experimentID'] = lsv_data.apply(getExptID, axis=1)
+lasv_data['experimentID'] = lasv_data.apply(getExptID, axis=1)
 
-num_dupes_expt = sum(lsv_data.duplicated(subset="experimentID", keep=False))
+num_dupes_expt = sum(lasv_data.duplicated(subset="experimentID", keep=False))
 if(num_dupes_expt > 0):
     log_notes.append(
         f"{num_dupes_expt} duplicate experimentIDs found in viral sequences:")
-    log_notes.append(lsv_data.loc[lsv_data.duplicated(subset="experimentID", keep=False), [
+    log_notes.append(lasv_data.loc[lasv_data.duplicated(subset="experimentID", keep=False), [
                      'id', 'privatePatientID', "experimentID"]].sort_values("privatePatientID"))
     log_notes.append("*" * 100)
 
-lsv_data['sampleLabel'] = lsv_data.patientID
-lsv_data['genbankID'] = lsv_data.accession_S
-lsv_data['seqType'] = "LASV"
+lasv_data['sampleLabel'] = lasv_data.patientID
+lasv_data['genbankID'] = lasv_data.accession_S
+lasv_data['seqType'] = "LASV"
 # Import AA sequences
-# lsv_data_aaseq = list(SeqIO.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_04102019_aa_aln.fasta", "fasta"))
-# lsv_data['data'] = None
-# lsv_data = getDNAseq(lsv_data_aaseq, lsv_data, 'sample_id', "Lassa", "AAsequence")
-# lsv_data[exptCols].iloc[9].to_json()
-# sum(lsv_data.data.apply(lambda x: x is None))
-# lsv_data.columns
-# lsv_data[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
+# lasv_data_aaseq = list(SeqIO.parse("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/Sseg_lasv_04102019_aa_aln.fasta", "fasta"))
+# lasv_data['data'] = None
+# lasv_data = getDNAseq(lasv_data_aaseq, lasv_data, 'sample_id', "Lassa", "AAsequence")
+# lasv_data[exptCols].iloc[9].to_json()
+# sum(lasv_data.data.apply(lambda x: x is None))
+# lasv_data.columns
+# lasv_data[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
 
 
 # [Ebola]  ----------------------------------------------------------------------------------------------------
-# ebv = pd.read_csv(ebv_file)
+# ebov = pd.read_csv(ebov_file)
 #
-# ebv.head()
+# ebov.head()
 # # Ebola: check IDs if they're from KGH. Most are not.
-# ebv['privatePatientID'] = ebv.sample_id.apply(helpers.interpretID)
-# ebv['KGH_id'] = ebv.sample_id.apply(
+# ebov['privatePatientID'] = ebov.sample_id.apply(helpers.interpretID)
+# ebov['KGH_id'] = ebov.sample_id.apply(
 #     helpers.checkIDstructure).apply(lambda x: not x)
 #
-# ebv['outcome'] = ebv.outcome.apply(helpers.cleanOutcome)
-# ebv['cohort'] = "Ebola"
-# ebv['experimentID'] = ebv.apply(
-#     lambda x: "EBV_seq" + str(x.name).zfill(3), axis=1)
-# ebv['genbankID'] = ebv.ncbi_accession
-# ebv['measurementTechnique'] = "viral sequencing"
-# ebv['dateModified'] = today
-# ebv['cvisb_data'] = False
-# ebv['publisher'] = ebv.apply(getPublisher, axis=1)
-# ebv['citation'] = ebv.publisher.apply(helpers.getCitation)
+# ebov['outcome'] = ebov.outcome.apply(helpers.cleanOutcome)
+# ebov['cohort'] = "Ebola"
+# ebov['experimentID'] = ebov.apply(
+#     lambda x: "ebov_seq" + str(x.name).zfill(3), axis=1)
+# ebov['genbankID'] = ebov.ncbi_accession
+# ebov['measurementTechnique'] = "viral sequencing"
+# ebov['dateModified'] = today
+# ebov['cvisb_data'] = False
+# ebov['publisher'] = ebov.apply(getPublisher, axis=1)
+# ebov['citation'] = ebov.publisher.apply(helpers.getCitation)
 #
 # # Read in Ebola sequence data
-# ebv_seq = list(SeqIO.parse(
+# ebov_seq = list(SeqIO.parse(
 #     "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/ebola_wg_ntseq_names_02152019_orfs.fasta", "fasta"))
-# ebv['data'] = None
-# ebv = getDNAseq(ebv_seq, ebv, 'sample_id', "Ebola")
-# sum(ebv.data.apply(lambda x: x is None))
+# ebov['data'] = None
+# ebov = getDNAseq(ebov_seq, ebov, 'sample_id', "Ebola")
+# sum(ebov.data.apply(lambda x: x is None))
 #
-# ebv[ebv.data.apply(lambda x: x is None)]
-# ebv = pd.merge(ebv, ids, how="left", indicator=True,
+# ebov[ebov.data.apply(lambda x: x is None)]
+# ebov = pd.merge(ebov, ids, how="left", indicator=True,
 #                right_on="ID", left_on="privatePatientID")
-# ebv.columns
-# ebv['mergeIssue'] = None
-# ebv = helpers.checkMerge2(ebv,
+# ebov.columns
+# ebov['mergeIssue'] = None
+# ebov = helpers.checkMerge2(ebov,
 #                           mergeCols2Check=['outcome', 'cohort'],
 #                           df1_label="Ebola Viral Seq Data", df2_label="Tulane metadata",
 #                           mergeCol="ID", dropMerge=False,
 #                           errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
 #
-# ebv.mergeIssue.value_counts()
+# ebov.mergeIssue.value_counts()
 #
-# ebv.loc[ebv.mergeIssue == ebv.mergeIssue, ['sample_id', 'ncbi_accession',
+# ebov.loc[ebov.mergeIssue == ebov.mergeIssue, ['sample_id', 'ncbi_accession',
 #                                            'outcome', 'outcome_x', 'outcome_y', 'cohort', 'cohort_x', 'cohort_y']]
-# ebv.groupby('KGH_id')._merge.value_counts()
+# ebov.groupby('KGH_id')._merge.value_counts()
 
 
 # [Merge and export: experimental data]  ----------------------------------------------------------------------------------------------------
-# expts = pd.concat([ebv, lsv])
-expts = lsv_data
+# expts = pd.concat([ebov, lasv])
+expts = lasv_data
 
 # combined, common properties
-expts['measurementTechnique'] = "viral sequencing"
+expts['measurementGroup'] = "viral sequencing"
 expts['dateModified'] = dateModified
 expts['updatedBy'] = updatedBy
+expts['releaseDate'] = today
+expts['dataStatus'] = "final"
 expts['publisher'] = expts.apply(getPublisher, axis=1)
 expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
+# expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
 # patient-specific properties
 # Note: not technically true; if a KGH patient, could have patient / survivor data.
 # But-- since only uploading the non-KGH patient data, should be fine.
@@ -355,7 +362,6 @@ dwnlds['contentUrlIdentifier'] = dwnlds.accession
 # Make sure arrays are arrays
 expts['data'] = expts.data.apply(helpers.listify)
 expts['citation'] = expts.citation.apply(helpers.listify)
-expts['_source'] = source
 
 # samples
 all_samples = expts[sampleCols]
