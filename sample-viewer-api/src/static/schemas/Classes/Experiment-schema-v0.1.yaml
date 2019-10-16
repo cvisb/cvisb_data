@@ -412,20 +412,19 @@
   #   - "@id":             cvisb:SymptomList
   #   - "@id":             cvisb:ComaScore
   #   - "@id":             cvisb:Medication
-
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
 
-  - "@id":                 cvisb:_source
-    "@type":               rdf:Property
-    rdfs:comment:          Internal tracking of who / which file(s) supplied the experiment data
-    rdfs:label:            _source
-    schema:domainIncludes:
-      - "@id":             cvisb:Experiment
-    schema:rangeIncludes:
-      - "@id":             xsd:string
-      - "@id":             schema:Text
-    owl:cardinality:       one
-    marginality:           recommended
-    authenticated:         true
+- "@id":                 cvisb:_source
+  "@type":               rdf:Property
+  rdfs:comment:          Internal tracking of who / which file(s) supplied the experiment data
+  rdfs:label:            _source
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
