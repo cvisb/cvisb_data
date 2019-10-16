@@ -55,7 +55,6 @@ return this.apiSvc.get("dataset", params, 1000)
 .pipe(
       // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
       mergeMap((datasetResults: any) => {
-      console.log(datasetResults)
         let summaryCalls = datasetResults['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
         return forkJoin(...summaryCalls).pipe(
           map((summaryData) => {
