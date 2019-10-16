@@ -346,7 +346,7 @@ gn = sf::st_join(gn, sl4 %>% select(admin4Name, admin3Name, admin2Name, admin1Na
 # who's on first ----------------------------------------------------------
 
 
-whoDB = RSQLite::dbConnect(dbDriver("SQLite"), "~/Downloads/whosonfirst-data-latest.db 2")
+whoDB = RSQLite::dbConnect(dbDriver("SQLite"), "~/GitHub/cvisb_data/sample-viewer-api/src/static/geo/SLE/whosonfirst-data-latest.db")
 # dbListTables(whoDB)
 # who1 = dbReadTable(whoDB, "ancestors")  # contains 16.6 M records of id, ancestor_id, ancestor_placetype and lastmodifed.  assuming not useful.
 # who2 = dbReadTable(whoDB, "concordances") # 4.8 M "other" places-- from wikipedia, etc (?)
@@ -357,6 +357,7 @@ whoDB = RSQLite::dbConnect(dbDriver("SQLite"), "~/Downloads/whosonfirst-data-lat
 who_sl_raw = RSQLite::dbGetQuery(whoDB, "SELECT * FROM names LEFT JOIN geojson ON names.id=geojson.id WHERE names.country ='SL'")
 # who_sl = RSQLite::dbGetQuery(whoDB, "SELECT * FROM names WHERE names.country ='SL'")
 
+write_csv(who_sl, "~/GitHub/cvisb_data/sample-viewer-api/src/static/geo/SLE/whosonfirst_places.csv")
 
 geonames_join = left_join(villages, who_sl, by = c("village" = "name"))
 
