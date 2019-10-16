@@ -67,6 +67,27 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
 # getCitation("26276630")
 
 
+def getLabAuthor(name):
+    if((name == "Galit") | (name == "Alter") | (name == "Galit Alter")):
+        return({
+            "@type": "Organization",
+            "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
+            "name": "Galit Alter laboratory"
+        })
+    elif((name == "KGA") | (name == "Kristian") | (name == "Andersen")):
+        return({
+            "@type": "Organization",
+            "url": "https://andersen-lab.com/",
+            "name": "Kristian Andersen laboratory",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "technical support",
+                "url": "https://andersen-lab.com/",
+                "email": "data@andersen-lab.com"
+            }
+        })
+
+
 # Publisher Institution
 cvisb = {
     "url": "https://cvisb.org/",
@@ -78,6 +99,18 @@ cvisb = {
         "email": "info@cvisb.org"
     }
 }
+
+cvisb_funding = [{
+"identifier": "U19AI135995",
+"funder": {
+  "@type": "Organization",
+  "name": "National Institute of Allergy & Infectious Diseases",
+  "alternateName": ["NIAID"],
+  "description": "Funding for the Center for Viral Systems Biology is provided by National Institute of Allergy & Infectious Diseases (National Institutes for Health) award U19AI135995",
+  "url": "https://taggs.hhs.gov/Detail/AwardDetail?arg_AwardNum=U19AI135995&arg_ProgOfficeCode=104",
+  "parentOrganization": "National Institutes for Health"
+}
+}]
 
 # Publisher Institution
 patientSource = {
