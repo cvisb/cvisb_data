@@ -15,7 +15,10 @@
               <div class="container">
                 <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
                   <svg-icon [icon]="dataset.identifier"></svg-icon>
-                </div>{{dataset.name}}
+                </div>
+                <div class="dataset-name">
+                  {{dataset.name}}
+                </div>
               </div>
               <div class="keyword-container container">
                 <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
