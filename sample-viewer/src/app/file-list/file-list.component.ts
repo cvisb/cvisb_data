@@ -22,7 +22,6 @@ export class FileListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  measurementTechnique: string;
   downloads: any[];
   anything_selected: boolean;
   qParams: HttpParams;
@@ -31,19 +30,8 @@ export class FileListComponent implements OnInit {
   // displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download', 'metadata'];
   dataSource: DownloadsDataSource;
 
-  id2MeasurementTechnique: Object = {
-    'hla': 'HLA sequencing',
-    'viralseq': 'viral sequencing',
-    'systemsserology': 'Systems Serology',
-    'metagenomeseq': 'metagenome sequencing',
-    'bcr': 'BCR sequencing',
-    'tcr': 'TCR sequencing',
-    'metabolomics': "metabolomics"
-  };
-
   constructor(
     private apiSvc: ApiService,
-    private datasetSvc: getDatasetsService,
     private mdSvc: FileMetadataService
   ) {
     mdSvc.fileClicked$.subscribe(status => {
@@ -53,15 +41,14 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
 
     if (this.patientID) {
       this.qParams = new HttpParams()
-        .set("q", `measurementTechnique:"${this.measurementTechnique}"`)
+        .set("q", `includedInDataset:"${this.datasetID}"`)
         .set("patientID", `"${this.patientID}"`);
     } else {
       this.qParams = new HttpParams()
-        .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
+        .set("q", `includedInDataset:"${this.datasetID}"`);
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);

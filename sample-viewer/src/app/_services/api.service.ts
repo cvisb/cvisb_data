@@ -205,7 +205,7 @@ export class ApiService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return (res["body"])
       }
       )
