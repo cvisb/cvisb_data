@@ -10,8 +10,8 @@ import copy
 import argparse
 from collections import OrderedDict
 
-SCHEMA_SERVER = 'http://data.cvisb.org/jsonschema'
-DEV_SCHEMA_SERVER = 'http://dev.cvisb.org/jsonschema'
+SCHEMA_SERVER = 'https://data.cvisb.org/jsonschema'
+DEV_SCHEMA_SERVER = 'https://dev.cvisb.org/jsonschema'
 
 SCHEMA_VERSION = "http://json-schema.org/draft-04/schema#"
 
