@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError, forkJoin } from 'rxjs';
 import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { MyHttpClient } from './http-cookies.service';
 
-import { environment } from "../../environments/environment";
 import { ApiService } from './api.service';
 
-import { ExperimentObjectPipe, CountryObjectPipe } from '../_pipes';
+import { CountryObjectPipe } from '../_pipes';
 
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
@@ -25,7 +24,6 @@ export class getDatasetsService {
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
-    private exptPipe: ExperimentObjectPipe,
     private countryPipe: CountryObjectPipe
   ) {
   }
