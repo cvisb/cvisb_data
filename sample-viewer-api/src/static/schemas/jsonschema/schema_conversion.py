@@ -100,7 +100,10 @@ def process_file(entity, entity_dict, error_file, _out_directory, args, namespac
                 if _id not in SKIPPED_KEYS and not _authenticated:
                     public_field = '.'.join(namespace.split('.') + [_id]) if namespace else _id
                     unauthorized_leaves.add(public_field)
-                _sub_schema['oneOf'].append(SCHEMA_ROOT_TYPE_MAP[_type['@id']])
+                schema_type = SCHEMA_ROOT_TYPE_MAP[_type['@id']]
+                if 'schema:Enumeration' in _obj:
+                    schema_type['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
+                _sub_schema['oneOf'].append(schema_type)
             elif _type['@id'].startswith('cvisb:'):
                 if _id not in SKIPPED_KEYS and not _authenticated:
                     new_namespace = '.'.join(namespace.split('.') + [_id]) if namespace else _id
@@ -130,8 +133,8 @@ def process_file(entity, entity_dict, error_file, _out_directory, args, namespac
         if ('oneOf' in _sub_schema) and len(_sub_schema['oneOf']) == 1:
             _sub_schema = _sub_schema['oneOf'][0]
 
-        if 'schema:Enumeration' in _obj:
-            _sub_schema['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
+        # if 'schema:Enumeration' in _obj:
+        #     _sub_schema['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
 
         _ret['properties'][_id] = _sub_schema
 
