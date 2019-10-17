@@ -413,6 +413,7 @@ samples.to_json(
     f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
 # --- data downloads ---
 all_dwnlds = get_viralseq_downloads("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", today, dwnlds[downloadCols], expts, '0.1', "Lassa")
+all_dwnlds.sample(4).to_json(f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/datadownloads/test-viralseq_{today}.json", orient="records")
 
 # --- datasets ---
 get_viralseq_dataset("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", today, all_dwnlds, expts, '0.2', "Lassa")

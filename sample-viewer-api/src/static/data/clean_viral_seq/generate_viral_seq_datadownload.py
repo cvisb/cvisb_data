@@ -13,6 +13,9 @@ def get_viralseq_downloads(export_dir, dateModified, downloads, experiments, ver
 
     # Combine together curated lassa sequence, curated ebola sequence, and all the individual raw files (contained in downloads, a DataFrame)
     lasv = get_lasv_curated(dateModified, "0.1", experiments, datasetVirus)
+
+    # Make sure arrays are arrays
+    downloads['measurementTechnique'] = downloads.measurementTechnique.apply(helpers.listify)
     ds = downloads.to_dict(orient="records")
 
     ds.append(lasv)
