@@ -100,7 +100,7 @@ def process_file(entity, entity_dict, error_file, _out_directory, args, namespac
                 if _id not in SKIPPED_KEYS and not _authenticated:
                     public_field = '.'.join(namespace.split('.') + [_id]) if namespace else _id
                     unauthorized_leaves.add(public_field)
-                schema_type = SCHEMA_ROOT_TYPE_MAP[_type['@id']]
+                schema_type = copy.deepcopy(SCHEMA_ROOT_TYPE_MAP[_type['@id']])
                 if 'schema:Enumeration' in _obj:
                     schema_type['enum'] = copy.deepcopy(_obj['schema:Enumeration'])
                 _sub_schema['oneOf'].append(schema_type)
