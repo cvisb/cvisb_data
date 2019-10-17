@@ -231,7 +231,7 @@ export class getDatasetsService {
             dataset["publisher"] = publishers;
             dataset["citation"] = citations;
             dataset["source"] = sources;
-            // console.log(dataset)
+            console.log(dataset)
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
