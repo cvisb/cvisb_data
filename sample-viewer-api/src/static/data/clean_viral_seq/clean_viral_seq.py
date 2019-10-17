@@ -31,7 +31,7 @@ log_dir = f"{output_dir}/log"
 
 exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', '_source',
             'measurementTechnique', "measurementGroup", "includedInDataset",
-            'publisher', 'citation', 'data', 'inAlignment',
+            'publisher', 'citation', 'data', 'inAlignment', "@type",
             'updatedBy', 'dateModified', 'releaseDate', 'dataStatus', 'cvisb_data']
 # for non-KGH patients
 patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData", "_source",
@@ -321,6 +321,7 @@ lasv_data['seqType'] = "LASV"
 expts = lasv_data
 
 # combined, common properties
+expts['@type'] = "ViralSeqData"
 expts['measurementGroup'] = "viral sequencing"
 expts['dateModified'] = dateModified
 expts['updatedBy'] = updatedBy
