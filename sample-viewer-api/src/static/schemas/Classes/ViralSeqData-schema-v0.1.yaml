@@ -83,7 +83,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:isReferenceSeq
@@ -95,7 +95,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 # Data

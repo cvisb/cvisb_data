@@ -31,7 +31,7 @@ log_dir = f"{output_dir}/log"
 
 exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', '_source',
             'measurementTechnique', "measurementGroup", "includedInDataset",
-            'publisher', 'citation', 'data', 'inAlignment', "@type",
+            'publisher', 'citation', 'data', 'inAlignment',
             'updatedBy', 'dateModified', 'releaseDate', 'dataStatus', 'cvisb_data']
 # for non-KGH patients
 patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData", "_source",
@@ -76,14 +76,14 @@ def getPublisher(row, varName="cvisb_data"):
         }])
 
 
-def getDNAseq(all_seq, df, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan):
+def getDNAseq(all_seq, df, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan, data_type = "ViralSeqData"):
     for seq in all_seq:
         id = seq.id.split("|")[0]
         if(sum(df[df_id] == id) == 0):
             log_notes.append(
                 f"no patient found in sequence metadata file for sequence {seq.id}")
             log_notes.append("*" * 100)
-        seq_obj = [{seq_type: str(seq.seq).upper(),
+        seq_obj = [{seq_type: str(seq.seq).upper(), "@type": data_type,
                     "virus": virus, "segment": segment}]
         df.at[df[df_id] == id, 'data'] = seq_obj
     return(df)
@@ -321,15 +321,15 @@ lasv_data['seqType'] = "LASV"
 expts = lasv_data
 
 # combined, common properties
-expts['@type'] = "ViralSeqData"
 expts['measurementGroup'] = "viral sequencing"
 expts['dateModified'] = dateModified
 expts['updatedBy'] = updatedBy
 expts['releaseDate'] = today
 expts['dataStatus'] = "final"
 expts['publisher'] = expts.apply(getPublisher, axis=1)
-expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
+expts['citation'] = np.nan
 # expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
+
 # patient-specific properties
 # Note: not technically true; if a KGH patient, could have patient / survivor data.
 # But-- since only uploading the non-KGH patient data, should be fine.
@@ -399,7 +399,8 @@ if(dupe_removed > 0):
 # Experiments
 expts[exptCols].to_json(
     f"{output_dir}/experiments/viral_seq_experiments_{today}.json", orient="records")
-
+expts[exptCols].sample(5).to_json(
+    f"{output_dir}/experiments/viral_seq_experiments-sample_{today}.json", orient="records")
 
 # patients
 patients.to_json(
