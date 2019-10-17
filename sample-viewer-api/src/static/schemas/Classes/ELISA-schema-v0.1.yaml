@@ -285,10 +285,10 @@
   authenticated:         false
 
 
-- "@id":                 cvisb:_source
+- "@id":                 cvisb:sourceFiles
   "@type":               rdf:Property
   rdfs:comment:          Internal tracking of who / which file(s) supplied the ELISA data
-  rdfs:label:            _source
+  rdfs:label:            sourceFiles
   schema:domainIncludes:
     - "@id":             cvisb:ELISA
   schema:rangeIncludes:

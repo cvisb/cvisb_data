@@ -7,7 +7,7 @@ export abstract class SchemaDefs {
     "gID",
     "sID",
     "contactGroupIdentifier",
-    "_source",
+    "sourceFiles",
     "cohort",
     "outcome",
     "country.name",

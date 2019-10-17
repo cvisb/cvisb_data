@@ -29,12 +29,12 @@ output_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/
 log_dir = f"{output_dir}/log"
 
 
-exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', '_source',
+exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', 'sourceFiles',
             'measurementTechnique', "measurementGroup", "includedInDataset",
             'publisher', 'citation', 'data', 'inAlignment',
             'updatedBy', 'dateModified', 'releaseDate', 'dataStatus', 'cvisb_data']
 # for non-KGH patients
-patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData", "_source",
+patientCols = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData", "sourceFiles",
                "dateModified", "updatedBy", "cohort", "outcome", "country", "infectionYear", "species"]
 
 # For all experiments, to relate sample <--> experiment
@@ -176,7 +176,7 @@ lasv.groupby("outcome_copy").outcome.value_counts(dropna=False)
 lasv['cohort'] = "Lassa"
 lasv['measurementTechnique'] = "Lassa viral sequencing"
 lasv['includedInDataset'] = "lassa-viral-seq"
-lasv['_source'] = "; ".join([lassaS_AAfile.split("/")[-1], lassaS_Alignedfile.split("/")[-1], lassaS_Rawfile.split("/")[-1], lassa_MDfile.split("/")[-1], id_dict.split("/")[-1] ])
+lasv['sourceFiles'] = "; ".join([lassaS_AAfile.split("/")[-1], lassaS_Alignedfile.split("/")[-1], lassaS_Rawfile.split("/")[-1], lassa_MDfile.split("/")[-1], id_dict.split("/")[-1] ])
 
 # [Merge in ids]  ----------------------------------------------------------------------------------------------------
 # Merge in the known set of ids...
@@ -327,8 +327,8 @@ expts['updatedBy'] = updatedBy
 expts['releaseDate'] = today
 expts['dataStatus'] = "final"
 expts['publisher'] = expts.apply(getPublisher, axis=1)
-expts['citation'] = np.nan
-# expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
+# expts['citation'] = pd.np.nan
+expts['citation'] = expts.source_PMID.apply(helpers.getCitation)
 
 # patient-specific properties
 # Note: not technically true; if a KGH patient, could have patient / survivor data.

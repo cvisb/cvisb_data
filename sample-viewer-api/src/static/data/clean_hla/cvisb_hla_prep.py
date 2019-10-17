@@ -293,7 +293,7 @@ df_agg['data'] = df_agg.data.apply(lambda x: json.loads(x))
 df_merged = pd.merge(df, df_agg, how="outer", on="patientID", indicator = True)
 df_merged._merge.value_counts()
 
-df_merged['_source'] = source
+df_merged['sourceFiles'] = source
 # Export
 # Expected output: [{"outcome":"control","Status":"Control","ID":"testpatient","loci":"A","allele":"A*340201","novel":false}]
 # df_long.to_json(export_path, orient='records')

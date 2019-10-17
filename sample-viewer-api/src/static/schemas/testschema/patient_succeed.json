@@ -14,7 +14,7 @@
     "dateModified": "2019-01-01",
     "updatedVariables": ["all"]
   }],
-  "_source": "made up",
+  "sourceFiles": "made up",
   "_version": 1,
   "cohort": "Lassa",
   "outcome": "survivor",

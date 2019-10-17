@@ -186,10 +186,10 @@
   marginality:           recommended
   authenticated:         true
 
-- "@id":                 cvisb:_source
+- "@id":                 cvisb:sourceFiles
   "@type":               rdf:Property
   rdfs:comment:          Internal tracking of who / which file(s) supplied the patient metadata
-  rdfs:label:            _source
+  rdfs:label:            sourceFiles
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:

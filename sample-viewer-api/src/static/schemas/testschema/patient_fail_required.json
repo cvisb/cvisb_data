@@ -11,7 +11,7 @@
     "dateModified": "2019-01-01",
     "updatedVariables": ["all"]
   }],
-  "_source": "made up",
+  "sourceFiles": "made up",
   "_version": 1,
   "admin2": {
     "alternateName": "Ken",
