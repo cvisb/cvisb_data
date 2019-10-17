@@ -126,6 +126,21 @@
 #   authenticated:       false
 
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:ELISA
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - ELISA
+
+
 - "@id":                 cvisb:virus
   "@type":               rdf:Property
   rdfs:comment:          Virus tested in ELISA (Ebola or Lassa)

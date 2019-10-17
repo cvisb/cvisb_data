@@ -30,6 +30,22 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
+
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:RTPCR
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - RTPCR
+
+
 # identifier
 - "@id":                 cvisb:virus
   "@type":               rdf:Property

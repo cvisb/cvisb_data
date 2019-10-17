@@ -25,7 +25,7 @@
   rdfs:comment:          A schema describing an Medication for a Patient in the Center for Viral Systems Biology experiments
   rdfs:label:            Medication
   rdfs:subClassOf:
-    "@id":               schema:Thing
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
@@ -41,18 +41,20 @@
   marginality:           required
   authenticated:         true
 
-
-- "@id":                 cvisb:daysSinceAdmit
+- "@id":                 cvisb:@type
   "@type":               rdf:Property
-  rdfs:comment:          Number of days between the admission date and when when the coma score was evaluated. At initial clinical presentation, daysSinceAdmit = 0
-  rdfs:label:            daysSinceAdmit
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
   schema:domainIncludes:
     - "@id":             cvisb:Medication
   schema:rangeIncludes:
-    - "@id":             schema:Integer
+    - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         true
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - Medication
+
 
 - "@id":                 cvisb:dateAdministered
   "@type":               rdf:Property

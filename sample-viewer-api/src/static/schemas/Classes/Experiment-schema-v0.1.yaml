@@ -388,7 +388,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Date
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 
@@ -400,7 +400,6 @@
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
-    - "@id":             cvisb:Data
     - "@id":             cvisb:HLAData
     - "@id":             cvisb:ViralSeqData
     - "@id":             cvisb:SystemsSerology

@@ -12,6 +12,8 @@
   "measurementTechnique": "HLA sequencing",
   "dateModified": "2019-01-01",
   "updatedBy": "LDH",
+  "includedInDataset": "hla",
+  "releaseDate": "2019-10-01",
   "_version": 3,
   "publisher": {
     "@type": "Organization",
@@ -110,6 +112,7 @@
     }]
   }],
   "data": [{
+    "@type": "HLAData",
     "A": ["A*101001", "A*101001"],
     "B": ["A*101001", "A*101001"],
     "C": ["A*101001", "A*101001"],
