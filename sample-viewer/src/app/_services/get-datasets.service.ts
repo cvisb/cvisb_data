@@ -166,7 +166,7 @@ export class getDatasetsService {
       // }),
       this.apiSvc.fetchAll("experiment",
         new HttpParams()
-          .set("q", `measurementTechnique:"${datasetID}"`)
+          .set("q", `includedInDataset:"${datasetID}"`)
           .set("fields", "citation,publisher"))
     )
       .pipe(
