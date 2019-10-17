@@ -51,7 +51,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -66,7 +66,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -81,7 +81,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -96,7 +96,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -111,7 +111,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -126,7 +126,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -141,7 +141,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -156,7 +156,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -171,7 +171,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -186,7 +186,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
@@ -201,7 +201,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       many
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
   minItems:              2
   maxItems:              2
