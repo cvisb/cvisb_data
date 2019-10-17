@@ -153,7 +153,7 @@ export class getDatasetsService {
   ... and adds DataDownloads to Dataset in the `distribution` parameter,
   `citation`, and `publisher` as arrays.
    */
-  getDataset(datasetID: string, idVar: string = "includedInDataset"): Observable<any> {
+  getDataset(datasetID: string, idVar: string = "identifier"): Observable<any> {
     return forkJoin(
       this.apiSvc.fetchAll("datadownload", new HttpParams()
         .set('q', `includedInDataset:${datasetID}`)
