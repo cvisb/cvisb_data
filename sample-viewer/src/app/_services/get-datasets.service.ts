@@ -40,7 +40,7 @@ export class getDatasetsService {
 
   getDatasets(id?: string, idVar?: string) {
     let qstring: string;
-    if(id && idVar) {
+    if (id && idVar) {
       qstring = `${idVar}:${id}`;
     } else {
       qstring = "__all__";
@@ -49,30 +49,28 @@ export class getDatasetsService {
     let params = new HttpParams()
       .set("q", qstring)
 
-
-
-return this.apiSvc.get("dataset", params, 1000)
-.pipe(
-      // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
-      mergeMap((datasetResults: any) => {
-        let summaryCalls = datasetResults['hits'].map(d => d.measurementTechnique).map(id => this.getDatasetCounts(id));
-        return forkJoin(...summaryCalls).pipe(
-          map((summaryData) => {
-            let datasets = datasetResults['hits'];
-            datasets.forEach((dataset, idx) => {
-              dataset['counts'] = summaryData[idx];
+    return this.apiSvc.get("dataset", params, 1000)
+      .pipe(
+        // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
+        mergeMap((datasetResults: any) => {
+          let summaryCalls = datasetResults['hits'].map(d => d.includedInDataset).map(id => this.getDatasetCounts(id));
+          return forkJoin(...summaryCalls).pipe(
+            map((summaryData) => {
+              let datasets = datasetResults['hits'];
+              datasets.forEach((dataset, idx) => {
+                dataset['counts'] = summaryData[idx];
+              })
+              // console.log(datasets);
+              return datasets;
+            }),
+            catchError(e => {
+              console.log(e)
+              throwError(e);
+              return (new Observable<any>())
             })
-            // console.log(datasets);
-            return datasets;
-          }),
-          catchError(e => {
-            console.log(e)
-            throwError(e);
-            return (new Observable<any>())
-          })
-        )
-      })
-    );
+          )
+        })
+      );
   }
 
   getDatasetCounts(id): Observable<any> {
@@ -114,29 +112,26 @@ return this.apiSvc.get("dataset", params, 1000)
     )
   }
 
-  getExperimentCount(measurementTechnique): Observable<any> {
-    // return this.apiSvc.get("experiment",
-    //   new HttpParams().set("q", `measurementTechnique:${ds_results['body']['hits'].map(d => `"${d.measurementTechnique}"`).join(",")}`)
-    //     .set("facets", "measurementTechnique.keyword"), 0)
+  getExperimentCount(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `measurementTechnique:"${measurementTechnique}"`);
+      .set("q", `includedInDataset:"${datasetID}"`);
 
     return this.apiSvc.get("experiment", params, 0);
   }
 
-  getPatientSummary(measurementTechnique): Observable<any> {
+  getPatientSummary(datasetID): Observable<any> {
     let params = new HttpParams()
       .set("q", "__all__")
-      .set("experimentQuery", `measurementTechnique:"${measurementTechnique}"`)
+      .set("experimentQuery", `includedInDataset:"${datasetID}"`)
       .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear")
       .set("facet_size", "10000");
 
     return this.apiSvc.get("patient", params, 0);
   }
 
-  getDownloadsSummary(measurementTechnique): Observable<any> {
+  getDownloadsSummary(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `measurementTechnique:"${measurementTechnique}"`)
+      .set("q", `includedInDataset:"${datasetID}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
 
@@ -158,14 +153,12 @@ return this.apiSvc.get("dataset", params, 1000)
   ... and adds DataDownloads to Dataset in the `distribution` parameter,
   `citation`, and `publisher` as arrays.
    */
-  getDataset(id: string, idVar: string = 'dataset_id'): Observable<any> {
-    let measurementTechnique = this.exptPipe.transform(id, idVar);
-
+  getDataset(datasetID: string, idVar: string = "includedInDataset"): Observable<any> {
     return forkJoin(
       this.apiSvc.fetchAll("datadownload", new HttpParams()
-        .set('q', `includedInDataset:${id}`)
+        .set('q', `includedInDataset:${datasetID}`)
       ),
-      this.getDatasets(id, idVar),
+      this.getDatasets(datasetID, idVar),
       // this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
       //   observe: 'response',
       //   headers: new HttpHeaders()
@@ -175,7 +168,7 @@ return this.apiSvc.get("dataset", params, 1000)
       // }),
       this.apiSvc.fetchAll("experiment",
         new HttpParams()
-          .set("q", `measurementTechnique:"${measurementTechnique.measurementTechnique}"`)
+          .set("q", `measurementTechnique:"${datasetID}"`)
           .set("fields", "citation,publisher"))
     )
       .pipe(
