@@ -6,12 +6,16 @@
 # 4) creates a series of Samples for all the experiments.
 
 import pandas as pd
-from Bio import SeqIO
-# from Bio import Phylo
 import os
 import re
 from datetime import datetime
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_viral_seq/")
+from generate_viral_seq_dataset import get_viralseq_dataset
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_viral_seq/")
+from generate_viral_seq_datadownload import get_viralseq_downloads
 
+from Bio import SeqIO
+# from Bio import Phylo
 
 # [File locations]  ----------------------------------------------------------------------------------------------------
 # inputs
@@ -30,7 +34,7 @@ log_dir = f"{output_dir}/log"
 
 
 exptCols = ['privatePatientID', 'experimentID', 'genbankID', 'sampleID', 'sourceFiles',
-            'measurementTechnique', "measurementGroup", "includedInDataset",
+            'measurementTechnique', "measurementCategory", "includedInDataset",
             'publisher', 'citation', 'data', 'inAlignment',
             'updatedBy', 'dateModified', 'releaseDate', 'dataStatus', 'cvisb_data']
 # for non-KGH patients
@@ -42,11 +46,10 @@ sampleCols = ["creatorInitials", "sampleLabel",
               "sampleType", "species", "sampleID", "samplingDate"]
 
 # For all experiments with accession numbers, generate data downloads
-downloadCols = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType", "measurementTechnique", "measurementGroup",
+downloadCols = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType", "measurementTechnique", "measurementCategory",
                 "dateModified", "experimentIDs", "contentUrlRepository", "contentUrlIdentifier", "citation", "updatedBy"]
 
 updatedBy = "Raphaelle Klitting"
-source = "ViralSeq_RK"
 
 # [Import helper functions]  ----------------------------------------------------------------------------------------------------
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
@@ -321,7 +324,7 @@ lasv_data['seqType'] = "LASV"
 expts = lasv_data
 
 # combined, common properties
-expts['measurementGroup'] = "viral sequencing"
+expts['measurementCategory'] = "viral sequencing"
 expts['dateModified'] = dateModified
 expts['updatedBy'] = updatedBy
 expts['releaseDate'] = today
@@ -396,28 +399,24 @@ if(dupe_removed > 0):
 
 
 # [Export]  ----------------------------------------------------------------------------------------------------
-# Experiments
+# --- experiments ---
 expts[exptCols].to_json(
     f"{output_dir}/experiments/viral_seq_experiments_{today}.json", orient="records")
 expts[exptCols].sample(5).to_json(
     f"{output_dir}/experiments/viral_seq_experiments-sample_{today}.json", orient="records")
 
-# patients
+# --- patients ---
 patients.to_json(
     f"{output_dir}/patients/viral_seq_patients_{today}.json", orient="records")
-# samples
+# --- samples ---
 samples.to_json(
     f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
-# data downloads
-# Make sure only to get the experiment IDs of those in the alignment
-expts.loc[expts.inAlignment, ['seqType', 'experimentID']].groupby('seqType').experimentID.apply(
-    list).to_json(f"{output_dir}/datadownloads/viral_seq_exptIDs_{today}.json")
-dwnlds[downloadCols].to_json(
-    f"{output_dir}/datadownloads/viral_seq_datadownloads_{today}.json", orient="records")
+# --- data downloads ---
+all_dwnlds = get_viralseq_downloads("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", today, dwnlds[downloadCols], expts, '0.1', "Lassa")
 
-# datasets
-dwnlds.identifier.to_json(
-    f"{output_dir}/datasets/viral_seq_accession_downloadIDs_{today}.json", orient="records")
+# --- datasets ---
+get_viralseq_dataset("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", today, all_dwnlds, expts, '0.2', "Lassa")
+# get_viralseq_dataset("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", today, [], expts, '0.2', "Ebola")
 
 # Write log file
 with open(f"{log_dir}/{today}_viral_sequence_cleanup.log", 'w') as f:

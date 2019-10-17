@@ -18,6 +18,7 @@ def get_serology_dataset(export_dir, dateModified, downloads, experiments, versi
     ds["@type"] = "Dataset"
     ds["identifier"] = datasetID
     ds["name"] = "Systems Serology"
+    ds["measurementCategory"] = "Systems Serology"
     ds["includedInDataCatalog"]= ["https://data.cvisb.org/"]
 
     # descriptions

@@ -2,6 +2,15 @@ import pandas as pd
 import re
 from . import checkIDstructure, getPrivateContactGroup
 
+def getUnique(arr, field):
+    unique_values = []
+    for idx, row in arr.iterrows():
+        if(row[field] == row[field]):
+            if(row[field] not in unique_values):
+                unique_values.append(row[field])
+    if(len(unique_values) > 0):
+        return(unique_values)
+
 def addError(df, condition, newError, errorCol="issue"):
     df.loc[condition, errorCol] = df.loc[condition, errorCol].apply(lambda x: updateError(x, newError))
     return(df)

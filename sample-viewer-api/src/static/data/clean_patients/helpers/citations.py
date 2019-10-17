@@ -17,11 +17,11 @@ def convertAuthor(authorObj):
     try:
         given = authorObj['given']
     except:
-        given = np.nan
+        given = None
     try:
         family = authorObj['family']
     except:
-        family = np.nan
+        family = None
     return({'givenName': given,
             'familyName': family
             })

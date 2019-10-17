@@ -22,6 +22,7 @@ def get_serology_downloads(export_dir, dateModified, downloads, experiments, ver
     ds["identifier"] = "CViSB_SystemsSerology.csv"
 
     # properties
+    ds["measurementCategory"] = "Systems Serology"
     ds["additionalType"] = "summary data"
     ds["encodingFormat"] = "text/csv"
     ds["contentUrl"] = f"https://data.cvisb.org/dataset/{datasetID}"
