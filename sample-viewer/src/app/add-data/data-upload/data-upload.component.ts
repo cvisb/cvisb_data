@@ -102,12 +102,9 @@ export class DataUploadComponent implements OnInit {
         this.uploadResponse = "File uploaded. Sending data to the database..."
 
         let data = this.prepData(reader.result);
-        console.log(data)
 
 
         let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
-        console.log(uploadSize)
-        console.log(this.fileKB)
         // double check upload size is greater than 0.
         uploadSize = uploadSize === 0 ? 1 : uploadSize;
 
