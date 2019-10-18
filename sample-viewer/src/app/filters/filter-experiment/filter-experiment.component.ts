@@ -23,6 +23,7 @@ export class FilterExperimentComponent implements OnInit {
   ngOnInit() {
 
     this.exptSvc.getExptCounts().subscribe(expts => {
+      console.log(expts)
       this.expts = expts;
       this.expts.forEach(d => {
         d['disabled'] = true;

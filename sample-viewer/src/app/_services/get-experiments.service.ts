@@ -27,7 +27,7 @@ export class GetExperimentsService {
     let params = new HttpParams()
       .set('q', '__all__')
       .set('facets', 'includedInDataset.keyword')
-      .set('facets', '1000')
+      .set('facet_size', '1000')
 
     return (this.apiSvc.get('experiment', params, 0).pipe(
       map(results => {
