@@ -68,9 +68,7 @@ export class PatientPageComponent {
 
         let allExpts = this.exptObjPipe.exptDict;
         let dsIDs = this.expts.map(d => d['includedInDataset']);
-        this.exptTypes = allExpts.filter(d => dsIDs.includes(d['includedInDataset']));
-        console.log(allExpts)
-        console.log(dsIDs)
+        this.exptTypes = allExpts.filter(d => dsIDs.includes(d['dataset_id']));
         // this.exptTypes = this.expts.map(d => d['includedInDataset']);
         console.log(this.expts)
         console.log(this.exptTypes)
