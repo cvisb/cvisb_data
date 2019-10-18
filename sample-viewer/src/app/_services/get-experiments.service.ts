@@ -18,7 +18,6 @@ export class GetExperimentsService {
     let params = new HttpParams()
       .set('q', qString)
       .set('patientID', patientID);
-    console.log(params)
 
     return (this.apiSvc.get('experiment', params));
   }
@@ -31,7 +30,6 @@ export class GetExperimentsService {
 
     return this.apiSvc.get('experiment', params, 0).pipe(
       map(results => {
-        console.log(results)
         return (results['facets']['includedInDataset.keyword']['terms']);
       })
     );

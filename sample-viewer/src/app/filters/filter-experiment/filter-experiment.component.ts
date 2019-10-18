@@ -23,20 +23,13 @@ export class FilterExperimentComponent implements OnInit {
   ngOnInit() {
 
     this.exptSvc.getExptCounts().subscribe(expts => {
-      console.log(expts)
       this.expts = expts;
       this.expts.forEach(d => {
         d['disabled'] = true;
         let filtered = this.exptPipe.transform(d['term'], 'includedInDataset');
         d['dataset_name'] = filtered['dataset_name'];
       })
-      console.log(this.expts)
     })
-    // this.expts = [
-    //   { key: "hla", name: "HLA sequencing", disabled: true },
-    //   { key: "viralseq", name: "viral sequencing", disabled: true },
-    //   // { key: "systemsserology", name: "systems serology", disabled: true },
-    // ];
 
     switch (this.endpoint) {
       case "patient":
