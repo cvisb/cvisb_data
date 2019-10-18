@@ -17,9 +17,9 @@ import { flatMapDeep } from 'lodash';
 export class PatientPageComponent {
   patientID: string;
   patient: Patient;
-  files: DataDownload[];
+  files: DataDownload[] = [];
   publications: any[];
-  expts: Object[];
+  expts: Object[] = [];
   exptTypes: Object[];
   demographicsPanelState: boolean = true;
   symptomsPanelState: boolean = true;
@@ -84,13 +84,13 @@ export class PatientPageComponent {
   }
 
   getFiles(dataset_id) {
-    if (this.files) {
+    if (this.files.length > 0) {
       return (this.files.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
 
   getExpt(dataset_id) {
-    if (this.expts) {
+    if (this.expts.length > 0) {
       return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
