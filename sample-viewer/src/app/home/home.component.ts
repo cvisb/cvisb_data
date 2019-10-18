@@ -8,9 +8,11 @@ import { HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 
+import { latLng, tileLayer } from 'leaflet';
+
 import * as d3 from 'd3';
 
-import { ApiService, GetDatacatalogService } from '../_services';
+import { ApiService, GetDatacatalogService, GetExperimentsService } from '../_services';
 import { ReleaseNote } from '../_models';
 
 @Component({
@@ -24,23 +26,32 @@ export class HomeComponent implements OnInit {
   experimentCount: Object[] = [];
   releaseVersion: string;
   cvisbCatalog: Object;
-  releaseSummary: ReleaseNote[];
+  releaseNotes: ReleaseNote[];
 
-  // connection between measurementTechnique and /dataset/{dsid}
-  exptDict = { 'HLA sequencing': 'hla', 'viral sequencing': 'viralseq' };
-
+  // options = {
+  //   layers: [
+  //     tileLayer(
+  //       'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png',
+  //       // 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  //       // 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+  //       { minZoom: 5, maxZoom: 18, attribution: '...' })
+  //   ],
+  //   zoom: 5,
+  //   center: latLng(10.9281311, -0.518234)
+  // };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private titleSvc: Title,
     private route: ActivatedRoute,
     private dataCatalogSvc: GetDatacatalogService,
+    private exptSvc: GetExperimentsService,
     public apiSvc: ApiService) {
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
     if (this.cvisbCatalog) {
       this.releaseVersion = this.cvisbCatalog['releaseVersion'];
     }
-    this.releaseSummary = this.dataCatalogSvc.releaseNotes;
+    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
 
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;
@@ -50,10 +61,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       let patientParams = new HttpParams().set("q", "__all__");
-      let exptParams = new HttpParams()
-        .set("q", "__all__")
-        .set("facets", "measurementTechnique.keyword");
-
       let transitionSync = d3.transition().duration(5000);
 
       this.apiSvc.get("patient", patientParams, 0).subscribe(res => {
@@ -88,26 +95,23 @@ export class HomeComponent implements OnInit {
           });
       });
 
-      this.apiSvc.get("experiment", exptParams, 0).subscribe(res => {
-        this.experimentCount = res["facets"]["measurementTechnique.keyword"].terms;
-        this.experimentCount.forEach(d => {
-          d['link'] = this.exptDict[d['term']];
-        })
+      this.exptSvc.getExptCounts().subscribe(res => {
+        this.experimentCount = res;
+      })
 
-        let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
+      let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
 
-        dataDiv.transition(transitionSync)
-          // .duration(transitionTime * (312/5039))
-          .tween("text", function(_) {
-            let countMax = this['textContent'];
-            var i = <any>d3.interpolate(0, countMax);
-            return function(t) {
-              d3.select(this).text(Math.round(i(t)));
-            };
-          });
-      });
+      dataDiv.transition(transitionSync)
+        // .duration(transitionTime * (312/5039))
+        .tween("text", function(_) {
+          let countMax = this['textContent'];
+          var i = <any>d3.interpolate(0, countMax);
+          return function(t) {
+            d3.select(this).text(Math.round(i(t)));
+          };
+        });
 
-    }
   }
+}
 
 }
