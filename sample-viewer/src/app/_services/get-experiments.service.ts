@@ -34,8 +34,7 @@ export class GetExperimentsService {
         let expts = results['facets']['includedInDataset.keyword']['terms'];
 
         expts.forEach(d => {
-          let filtered = this.exptPipe.transform(d['term'], 'includedInDataset');
-          console.log(filtered)
+          let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['dataset_name'] = filtered['dataset_name'];
         })
         console.log(expts)
