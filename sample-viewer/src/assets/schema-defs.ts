@@ -72,6 +72,7 @@ export abstract class SchemaDefs {
 
 
   static exptProperties: string[] = [
+    "includedInDataset",
     "experimentID",
     "batchID",
     "SRA_ID",
