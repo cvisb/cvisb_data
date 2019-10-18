@@ -102,7 +102,7 @@ final<div class="container" id="patientID" *ngIf="patient">
               </mat-panel-title>
             </mat-expansion-panel-header>
             <!-- <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla> -->
-            <app-patient-viral-seq [sequences]="getExpt(dataset_id.dataset_id)" [files]="getFiles(dataset_id.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
+            <app-patient-viral-seq [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
           </mat-expansion-panel>
         </ng-container>
 
