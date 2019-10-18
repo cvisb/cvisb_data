@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 // import { D3Nested } from '../../_models';
 //
 import { GetExperimentsService, RequestParametersService } from '../../_services';
-import { ExperimentObjectPipe } from '../../_pipes';
 
 @Component({
   selector: 'app-filter-experiment',
@@ -16,7 +15,6 @@ export class FilterExperimentComponent implements OnInit {
 
   constructor(
     private exptSvc: GetExperimentsService,
-    private exptPipe: ExperimentObjectPipe,
     private requestSvc: RequestParametersService
   ) { }
 
@@ -26,8 +24,6 @@ export class FilterExperimentComponent implements OnInit {
       this.expts = expts;
       this.expts.forEach(d => {
         d['disabled'] = true;
-        let filtered = this.exptPipe.transform(d['term'], 'includedInDataset');
-        d['dataset_name'] = filtered['dataset_name'];
       })
     })
 

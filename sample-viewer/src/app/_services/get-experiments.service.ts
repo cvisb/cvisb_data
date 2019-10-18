@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { ApiService } from './api.service';
+import { ExperimentObjectPipe } from '../_pipes';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class GetExperimentsService {
 
-  constructor(private apiSvc: ApiService) { }
+  constructor(private apiSvc: ApiService, private exptPipe: ExperimentObjectPipe) { }
 
   getExpt(patientID: string, dataset_id: string) {
     let qString = `includedInDataset:"${dataset_id}"`;
@@ -30,7 +31,13 @@ export class GetExperimentsService {
 
     return this.apiSvc.get('experiment', params, 0).pipe(
       map(results => {
-        return (results['facets']['includedInDataset.keyword']['terms']);
+let expts = results['facets']['includedInDataset.keyword']['terms'];
+
+        expts.forEach(d => {
+          let filtered = this.exptPipe.transform(d['term'], 'includedInDataset');
+          d['dataset_name'] = filtered['dataset_name'];
+        })
+        return (expts);
       })
     );
   }
