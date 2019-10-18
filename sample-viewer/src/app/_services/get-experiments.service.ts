@@ -31,12 +31,13 @@ export class GetExperimentsService {
 
     return this.apiSvc.get('experiment', params, 0).pipe(
       map(results => {
-let expts = results['facets']['includedInDataset.keyword']['terms'];
+        let expts = results['facets']['includedInDataset.keyword']['terms'];
 
         expts.forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'includedInDataset');
           d['dataset_name'] = filtered['dataset_name'];
         })
+        console.log(expts)
         return (expts);
       })
     );
