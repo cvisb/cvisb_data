@@ -1,7 +1,6 @@
 // based on https://blog.angular-university.io/angular-material-data-table/
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Injectable } from "@angular/core";
-import { map } from 'rxjs/operators';
 
 import { Observable } from "rxjs";
 
