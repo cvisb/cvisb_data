@@ -37,7 +37,6 @@ export class GetExperimentsService {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['dataset_name'] = filtered['dataset_name'];
         })
-        console.log(expts)
         return (expts);
       })
     );

@@ -66,10 +66,6 @@ export class ExperimentObjectPipe implements PipeTransform {
   transform(value: string, var2Search: string = "measurementTechnique"): any {
 
     let filtered = this.exptDict.filter(d => d[var2Search] === value);
-    console.log(value)
-    console.log(var2Search)
-    console.log(this.exptDict)
-    console.log(filtered)
     if (filtered.length > 0) {
       return (filtered[0]);
     }
