@@ -126,6 +126,9 @@ this.getSummaryCounts();
     forkJoin(this.apiSvc.get("patient", patientParams, 0), this.apiSvc.get("sample", patientParams, 0), this.exptSvc.getExptCounts())
       .pipe(
         map(([patients, samples, expts]) => {
+          console.log(patients)
+          console.log(sample)
+          console.log(expts)
           // patients
           this.patientCount = patients['total'];
 
