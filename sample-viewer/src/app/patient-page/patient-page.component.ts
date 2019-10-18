@@ -84,11 +84,15 @@ export class PatientPageComponent {
   }
 
   getFiles(dataset_id) {
-    return (this.files.filter(d => d['includedInDataset'] === dataset_id));
+    if (this.files) {
+      return (this.files.filter(d => d['includedInDataset'] === dataset_id));
+    }
   }
 
   getExpt(dataset_id) {
-    return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
+    if (this.expts) {
+      return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
+    }
   }
 
 }
