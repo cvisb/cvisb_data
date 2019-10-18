@@ -29,12 +29,12 @@ export class GetExperimentsService {
       .set('facets', 'includedInDataset.keyword')
       .set('facet_size', '1000')
 
-    return (this.apiSvc.get('experiment', params, 0).pipe(
+    return this.apiSvc.get('experiment', params, 0).pipe(
       map(results => {
         console.log(results)
-        return (results['facets']['includedInDataset.keyword']);
+        return (results['facets']['includedInDataset.keyword']['terms']);
       })
-    ));
+    );
   }
 
 
