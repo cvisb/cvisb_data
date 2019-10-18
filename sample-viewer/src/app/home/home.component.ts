@@ -127,7 +127,7 @@ this.getSummaryCounts();
       .pipe(
         map(([patients, samples, expts]) => {
           console.log(patients)
-          console.log(sample)
+          console.log(samples)
           console.log(expts)
           // patients
           this.patientCount = patients['total'];
