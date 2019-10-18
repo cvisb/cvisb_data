@@ -114,16 +114,20 @@ export class HomeComponent implements OnInit {
       //       };
       //     });
       // })
-this.getSummaryCounts();
+      this.getSummaryCounts().subscribe(x => {
+      console.log('subscribing')
+      console.log(x)
+    });
     }
   }
 
   getSummaryCounts() {
+    console.log("summarying")
     let patientParams = new HttpParams().set("q", "__all__");
     let transitionSync = d3.transition().duration(5000);
 
 
-    forkJoin(this.apiSvc.get("patient", patientParams, 0), this.apiSvc.get("sample", patientParams, 0), this.exptSvc.getExptCounts())
+    return forkJoin(this.apiSvc.get("patient", patientParams, 0), this.apiSvc.get("sample", patientParams, 0), this.exptSvc.getExptCounts())
       .pipe(
         map(([patients, samples, expts]) => {
           console.log(patients)
