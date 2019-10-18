@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { GetPatientsService, ApiService, AnchorService } from '../_services/';
-import { Patient, ViralSeqObj } from '../_models';
+import { Patient, DataDownload } from '../_models';
 import { ExperimentObjectPipe } from '../_pipes';
 
 import { flatMapDeep } from 'lodash';
@@ -17,12 +17,9 @@ import { flatMapDeep } from 'lodash';
 export class PatientPageComponent {
   patientID: string;
   patient: Patient;
-  viralSeq: ViralSeqObj[];
-  viralFiles: Object[];
-  HLA: any[];
-  HLAFiles: any[];
+  files: DataDownload[];
   publications: any[];
-  allExpts: Object[];
+  expts: Object[];
   exptTypes: Object[];
   demographicsPanelState: boolean = true;
   symptomsPanelState: boolean = true;
@@ -67,25 +64,30 @@ export class PatientPageComponent {
       });
 
       this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
-        this.allExpts = this.exptObjPipe.exptDict;
-        let exptData = expts['hits'].map(d => d.measurementTechnique);
-        this.exptTypes = this.allExpts.filter(d => exptData.includes(d['measurementTechnique']));
+        this.expts = expts['hits'];
 
-        this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
-
-        this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
+        let allExpts = this.exptObjPipe.exptDict;
+        this.exptTypes = allExpts.filter(d => this.expts.map(d => d['includedInDataset']).includes(d['includedInDataset']));
+        // this.exptTypes = this.expts.map(d => d['includedInDataset']);
+        console.log(this.expts)
+        console.log(this.exptTypes)
 
         this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);
       })
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
-        this.viralFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
-
-        this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
+        this.files = files;
       })
     })
 
   }
 
+  getFiles(dataset_id) {
+    return (this.files.filter(d => d['includedInDataset'] === dataset_id));
+  }
+
+  getExpt(dataset_id) {
+    return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
+  }
 
 }

@@ -94,24 +94,27 @@ final<div class="container" id="patientID" *ngIf="patient">
         </mat-expansion-panel>
 
         <!-- HLA -->
-        <mat-expansion-panel class="panel-group" id="HLA-sequencing" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
-            <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="HLA Sequencing" icon="hla" [embargoed]="true" dataStatus="final"></app-provenance-title>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-        </mat-expansion-panel>
+        <ng-container *ngFor="let expt of exptTypes">
+          <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
+            <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+              <mat-panel-title class="panel-title">
+                <app-provenance-title class="flex-grow1" [title]="expt.dataset_name" icon="expt.dataset_id" [embargoed]="true" dataStatus="final"></app-provenance-title>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla> -->
+            <app-patient-viral-seq [sequences]="getExpt(dataset_id.dataset_id)" [files]="getFiles(dataset_id.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
+          </mat-expansion-panel>
+        </ng-container>
 
         <!-- ViralSeq -->
-        <mat-expansion-panel class="panel-group" id="Viral-Sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
+        <!-- <mat-expansion-panel class="panel-group" id="Lassa-Viral-Sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq" dataStatus="final"></app-provenance-title>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
       </div>
 
