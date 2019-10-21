@@ -41,8 +41,6 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.datasetID)
-
     if (this.patientID) {
       this.qParams = new HttpParams()
         .set("q", `includedInDataset:"${this.datasetID}"`)
