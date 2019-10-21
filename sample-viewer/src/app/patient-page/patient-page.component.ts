@@ -28,6 +28,8 @@ export class PatientPageComponent {
   elisaPanelState: boolean = true;
   hlaPanelState: boolean = true;
   viralSeqPanelState: boolean = true;
+  // today = new Date();
+  today = new Date("2019-10-16");
 
   expansionPanelHeight: string = "42px";
   dataPanelHeight: string = "55px";
@@ -86,8 +88,7 @@ export class PatientPageComponent {
 
   getFiles(dataset_id) {
     if (this.files.length > 0) {
-      console.log(this.files)
-      console.log(dataset_id)
+      console.log(this.files.filter(d => d['includedInDataset'] === dataset_id))
       return (this.files.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
