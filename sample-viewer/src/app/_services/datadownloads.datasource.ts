@@ -27,7 +27,6 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
   }
 
   loadDownloads(params, pageNum: number, pageSize: number, sortVar, sortDirection) {
-    console.log('loading downloads')
     this.loadingSubject.next(true);
 
     this.apiSvc.getPaginated('datadownload', params, pageNum, pageSize, sortVar, sortDirection).pipe(
@@ -35,7 +34,6 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(files => {
-        console.log(files)
         let downloads = files['hits'];
         this.resultCountSubject.next(files['total'])
         this.downloadsSubject.next(downloads)
