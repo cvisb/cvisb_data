@@ -41,6 +41,7 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.datasetID)
 
     if (this.patientID) {
       this.qParams = new HttpParams()
@@ -50,6 +51,8 @@ export class FileListComponent implements OnInit {
       this.qParams = new HttpParams()
         .set("q", `includedInDataset:"${this.datasetID}"`);
     }
+
+  console.log(this.qParams)
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);
     this.dataSource.loadDownloads(this.qParams, 0, 5, "additionalType", "asc");

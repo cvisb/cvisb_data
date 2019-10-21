@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-patient-serology',
@@ -16,9 +16,4 @@ export class PatientSerologyComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges() {
-    console.log(this.data)
-    console.log(this.patientID)
-    console.log(this.datasetID)
-  }
 }

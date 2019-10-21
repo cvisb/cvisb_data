@@ -27,6 +27,7 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
   }
 
   loadDownloads(params, pageNum: number, pageSize: number, sortVar, sortDirection) {
+    console.log('loading downloads')
     this.loadingSubject.next(true);
 
     this.apiSvc.getPaginated('datadownload', params, pageNum, pageSize, sortVar, sortDirection).pipe(
