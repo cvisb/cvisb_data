@@ -1,16 +1,8 @@
 <h4 class="patient-data">Systems Serology</h4>
 
-
 <ng-container *ngIf="data; else nodata">
   <div class="updated">
     updated {{data.dateModified ? (data.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
-  </div>
-
-  <div class="serology-files">
-    <h5 class="patient-data">files</h5>
-    <div *ngFor="let file of files">
-      <a>{{ file }}</a>
-    </div>
   </div>
 
   <div class="serology-data">
@@ -40,6 +32,10 @@
 
       </tr>
     </table>
+  </div>
+
+  <div class="serology-files">
+    <app-file-list datasetID="systems-serology" [patientID]="patientID"></app-file-list>
   </div>
 </ng-container>
 

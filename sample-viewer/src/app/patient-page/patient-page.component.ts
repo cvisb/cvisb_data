@@ -78,6 +78,7 @@ export class PatientPageComponent {
 
       this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
         this.files = files;
+        console.log(files)
       })
     })
 

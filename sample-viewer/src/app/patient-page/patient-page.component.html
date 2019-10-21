@@ -93,7 +93,7 @@ final<div class="container" id="patientID" *ngIf="patient">
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
         </mat-expansion-panel>
 
-        <!-- HLA -->
+        <!-- Experimental Data -->
         <ng-container *ngFor="let expt of exptTypes">
           <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
@@ -101,28 +101,15 @@ final<div class="container" id="patientID" *ngIf="patient">
                 <app-provenance-title class="flex-grow1" [title]="expt.dataset_name" [icon]="expt.dataset_id" [embargoed]="true" dataStatus="final"></app-provenance-title>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla> -->
-            <app-patient-viral-seq [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
+            <ng-container [ngSwitch]="expt.dataset_id">
+              <app-patient-hla *ngSwitchCase="hla" [patient]="patient" [files]="HLAFiles"></app-patient-hla>
+              <app-patient-viral-seq *ngSwitchCase="ebola-viral-seq" [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="lassa-viral-seq" [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-serology *ngSwitchCase="systems-serology" [data]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)"></app-patient-serology>
+            </ng-container>
           </mat-expansion-panel>
         </ng-container>
-
-        <!-- ViralSeq -->
-        <!-- <mat-expansion-panel class="panel-group" id="Lassa-Viral-Sequencing" [expanded]="viralSeqPanelState" (opened)="viralSeqPanelState = true" (closed)="viralSeqPanelState = false">
-          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
-            <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="Viral Sequencing" icon="viralseq" dataStatus="final"></app-provenance-title>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
-        </mat-expansion-panel> -->
-
       </div>
-
-
-
-      <!-- <div id="Systems-Serology">
-          <app-patient-serology [patient]="patient"></app-patient-serology>
-        </div> -->
 
 
       <!-- CITATIONS -->
