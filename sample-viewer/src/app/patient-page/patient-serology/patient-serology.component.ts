@@ -14,4 +14,5 @@ export class PatientSerologyComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
 }
