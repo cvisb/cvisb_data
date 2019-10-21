@@ -1,6 +1,6 @@
 <h4 class="patient-data">Systems Serology</h4>
 
-<ng-container *ngIf="data; else nodata">
+<ng-container *ngIf="data && data.length > 0; else nodata">
   <div class="updated">
     updated {{data.dateModified ? (data.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
   </div>
