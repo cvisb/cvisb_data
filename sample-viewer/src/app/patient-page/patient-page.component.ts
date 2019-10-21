@@ -86,6 +86,8 @@ export class PatientPageComponent {
 
   getFiles(dataset_id) {
     if (this.files.length > 0) {
+      console.log(this.files)
+      console.log(dataset_id)
       return (this.files.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
