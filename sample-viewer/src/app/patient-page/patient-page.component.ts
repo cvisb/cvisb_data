@@ -17,7 +17,6 @@ import { flatMapDeep } from 'lodash';
 export class PatientPageComponent {
   patientID: string;
   patient: Patient;
-  files: DataDownload[] = [];
   publications: any[];
   expts: Object[] = [];
   exptTypes: Object[];
@@ -77,20 +76,8 @@ export class PatientPageComponent {
 
         this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);
       })
-
-      this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
-        this.files = files['hits'];
-        console.log(files)
-      })
     })
 
-  }
-
-  getFiles(dataset_id) {
-    if (this.files.length > 0) {
-      console.log(this.files.filter(d => d['includedInDataset'] === dataset_id))
-      return (this.files.filter(d => d['includedInDataset'] === dataset_id));
-    }
   }
 
   getExpt(dataset_id) {

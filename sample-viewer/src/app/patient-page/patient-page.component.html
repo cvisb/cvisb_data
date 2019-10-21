@@ -102,10 +102,10 @@ final<div class="container" id="patientID" *ngIf="patient">
               </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container [ngSwitch]="expt.dataset_id">
-              <app-patient-hla *ngSwitchCase="'hla'" [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-              <app-patient-viral-seq *ngSwitchCase="'ebola-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
-              <app-patient-viral-seq *ngSwitchCase="'lassa-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-viral-seq>
-              <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="getExpt(expt.dataset_id)" [files]="getFiles(expt.dataset_id)"></app-patient-serology>
+              <app-patient-hla *ngSwitchCase="'hla'" [data]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-hla>
+              <app-patient-viral-seq *ngSwitchCase="'ebola-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="'lassa-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
             </ng-container>
           </mat-expansion-panel>
         </ng-container>

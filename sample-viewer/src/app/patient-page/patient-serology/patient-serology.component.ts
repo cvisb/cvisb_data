@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Patient } from '../../_models';
-
 @Component({
   selector: 'app-patient-serology',
   templateUrl: './patient-serology.component.html',
@@ -9,7 +7,8 @@ import { Patient } from '../../_models';
 })
 export class PatientSerologyComponent implements OnInit {
   @Input() data: Object[];
-  @Input() files;
+  @Input() datasetID: string;
+  @Input() patientID: string;
 
   constructor() { }
 
