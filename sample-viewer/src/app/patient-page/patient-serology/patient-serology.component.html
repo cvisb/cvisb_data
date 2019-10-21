@@ -34,7 +34,9 @@
     </table>
   </div>
 
-  <div class="serology-files">
+  <div class="serology-files" *ngIf="datasetID && patientID">
+    {{ datasetID }}
+    {{ patientID }}
     <app-file-list [datasetID]="datasetID" [patientID]="patientID"></app-file-list>
   </div>
 </ng-container>
