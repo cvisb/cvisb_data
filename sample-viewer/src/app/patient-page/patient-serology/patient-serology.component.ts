@@ -10,7 +10,9 @@ export class PatientSerologyComponent implements OnInit {
   @Input() datasetID: string;
   @Input() patientID: string;
 
-  constructor() { }
+  constructor() {
+    console.log(datasetID)
+  }
 
   ngOnInit() {
   }
