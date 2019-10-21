@@ -11,7 +11,7 @@ export class PatientSerologyComponent implements OnInit {
   @Input() patientID: string;
 
   constructor() {
-    console.log(datasetID)
+    console.log(this.datasetID)
   }
 
   ngOnInit() {
