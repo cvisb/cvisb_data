@@ -16,6 +16,7 @@ export class PatientHlaComponent implements OnChanges {
   @Input() patient: Patient;
   @Input() patientID: string;
   @Input() datasetID: string;
+  @Input() data: Object[];
   genotype: string[];
   alleleCount: any;
   selectedLocus: string;
