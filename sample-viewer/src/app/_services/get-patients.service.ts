@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
-import { DateRangePipe } from "../_pipes";
+import { DateRangePipe } from "../_pipes/date-range.pipe";
 
 import { flatMapDeep } from 'lodash';
 

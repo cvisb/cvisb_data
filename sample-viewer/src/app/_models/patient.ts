@@ -1,4 +1,4 @@
-import { DateRangePipe } from "../_pipes";
+import { DateRangePipe } from "../_pipes/date-range.pipe";
 
 export class Patient {
   // TODO: resort location based on inverse specificity
