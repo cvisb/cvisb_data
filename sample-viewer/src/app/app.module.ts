@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
@@ -48,8 +49,8 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
+    BrowserTransferStateModule,
     TransferHttpCacheModule,
-    HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
