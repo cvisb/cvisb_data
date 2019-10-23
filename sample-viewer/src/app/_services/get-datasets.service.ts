@@ -8,7 +8,7 @@ import { MyHttpClient } from './http-cookies.service';
 
 import { ApiService } from './api.service';
 
-import { CountryObjectPipe } from '../_pipes';
+import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
