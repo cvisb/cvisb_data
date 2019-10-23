@@ -16,7 +16,7 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class MiniBarplotComponent implements OnInit {
-  @ViewChild('barplot') private chartContainer: ElementRef;
+  @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private options: string[];
   @Input() private endpoint: any;
