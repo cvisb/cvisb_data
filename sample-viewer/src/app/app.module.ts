@@ -15,6 +15,7 @@ import { AdminModule, PipesModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
+import 'hammerjs';
 
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
