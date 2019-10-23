@@ -8,6 +8,16 @@
 - all indices wiped and recreated
 
 # Dev
+### 2019-10-23
+- Upgraded to Angular 8 and updated all packages (from package.json)
+```
+rm package-lock.json
+npm install
+npm audit fix
+npm uninstall @angular-devkit/build-angular
+npm install @angular-devkit/build-angular
+```
+
 ### 2019-06-05
 - schema rebuilt
 - auth list updated
