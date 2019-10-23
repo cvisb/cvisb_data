@@ -22,6 +22,7 @@ import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { PatientsResolver } from '../_services/patients.resolver';
 import { AllPatientsResolver } from '../_services/allpatients.resolver';
+import { GetPatientsService } from '../_services/get-patients.service';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { AllPatientsResolver } from '../_services/allpatients.resolver';
     MyHttpClient,
     DatePipe,
     PatientsResolver,
-    AllPatientsResolver
+    AllPatientsResolver,
+    GetPatientsService
   ]
 })
 export class PatientModule { }
