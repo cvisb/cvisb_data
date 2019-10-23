@@ -134,6 +134,11 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
         }
       }
     }
+
+    if (this.filterable) {
+      // Wait till everything is loaded; then set the initial limits
+      this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
+    }
   }
 
   checkParams(params) {
@@ -146,24 +151,21 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
     this.updateData();
   }
 
-  ngAfterViewInit() {
-    // Update the class of the bars on update.
-    // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
-    // this.filterState$.subscribe((limits: Object) => {
-    //   // ignore initial setting
-    //   if (limits) {
-    //     console.log("NEW LIMITS FOUND")
-    //     console.log(limits)
-    //     this.yearLimits = limits;
-    //
-    //     this.updateLimits(limits);
-    //   }
-    // })
-    if (this.filterable) {
-      // Wait till everything is loaded; then set the initial limits
-      this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
-    }
-  }
+  // ngAfterViewInit() {
+  //   // Update the class of the bars on update.
+  //   // Needed to update the handle positions and the rectangle highlighting-- regardless of if the filter has been applied.
+  //   // this.filterState$.subscribe((limits: Object) => {
+  //   //   // ignore initial setting
+  //   //   if (limits) {
+  //   //     console.log("NEW LIMITS FOUND")
+  //   //     console.log(limits)
+  //   //     this.yearLimits = limits;
+  //   //
+  //   //     this.updateLimits(limits);
+  //   //   }
+  //   // })
+  //
+  // }
 
   prepData() {
     // Split data into numeric + non-numeric data
