@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 
-import { StripWhitespacePipe } from '../../_pipes';
+import { StripWhitespacePipe } from '../../_pipes/strip-whitespace.pipe';
 
 // Event listeners to update the search query
 import { RequestParametersService } from '../../_services';
