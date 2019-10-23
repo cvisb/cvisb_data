@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 
 import { isPlatformBrowser } from '@angular/common';
 
@@ -11,7 +11,7 @@ import { HLAsummary, CohortSelectOptions } from '../../../_models';
   styleUrls: ['./comparison-barplot.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ComparisonBarplotComponent implements OnInit {
+export class ComparisonBarplotComponent implements AfterViewInit {
   @ViewChild('comparison', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
 
@@ -53,7 +53,7 @@ export class ComparisonBarplotComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.creationPromise = this.createPlot();
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { mix, hex } from 'chroma-js';
@@ -12,7 +12,7 @@ import { HlaService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class AlleleCirclePackingComponent implements OnInit {
+export class AlleleCirclePackingComponent implements AfterViewInit {
   @Input() data: any;
   @Input() scale: number;
   @Input() genotype: string[];
@@ -42,7 +42,7 @@ export class AlleleCirclePackingComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (!this.genotype) {
       this.genotype = [];
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { Geojson } from '../_models';
@@ -16,7 +16,7 @@ import * as AFRICA_JSON from '../../assets/geo/naturalearth_africa.json';
   styleUrls: ['./choropleth.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ChoroplethComponent implements OnInit {
+export class ChoroplethComponent implements AfterViewInit {
   @ViewChild('choropleth', { static: false }) private chartContainer: ElementRef;
   @Input() data: any;
   west_africa: Geojson[]; // geojson of west africa data
@@ -41,7 +41,7 @@ export class ChoroplethComponent implements OnInit {
   private path: any; // geographic coordinates
   private colorScale: any;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, ngAfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 
@@ -8,7 +8,7 @@ import * as d3 from 'd3';
   styleUrls: ['./allele-hist.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlleleHistComponent implements OnInit {
+export class AlleleHistComponent implements ngAfterViewInit {
   @Input() data: any;
   @ViewChild('allele_hist', { static: false }) private chartContainer: ElementRef;
 
@@ -49,7 +49,7 @@ export class AlleleHistComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.getSVGDims();
       this.createPlot();

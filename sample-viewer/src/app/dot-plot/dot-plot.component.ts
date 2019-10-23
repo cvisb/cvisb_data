@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
@@ -10,7 +10,7 @@ import * as d3 from 'd3';
   styleUrls: ['./dot-plot.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DotPlotComponent implements OnInit {
+export class DotPlotComponent implements AfterViewInit {
   @ViewChild('dotplot', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
 
@@ -39,7 +39,7 @@ export class DotPlotComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
     }
