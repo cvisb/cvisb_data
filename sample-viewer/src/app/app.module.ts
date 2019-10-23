@@ -19,6 +19,7 @@ import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
+import { ApiService } from './_services/api.service';
 
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
@@ -34,6 +35,10 @@ import { SchemaComponent } from './schema/schema.component';
 
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
+
+// import { FiltersModule } from './filters/filters.module';
+// import { SvgIconModule } from './svg-icon/svg-icon.module';
+// import { ViralSequencingModule } from './viral-sequencing/viral-sequencing.module';
 
 @NgModule({
   declarations: [
@@ -61,13 +66,17 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     AdminModule,
     FormatCitationModule,
     Angulartics2Module.forRoot(), // Google Analytics
-    EmbedJsonldModule
+    EmbedJsonldModule,
+    // FiltersModule,
+    // SvgIconModule,
+    // ViralSequencingModule
   ],
   exports: [
   ],
   providers: [
     MyHttpClient,
     DatasetResolver,
+    ApiService,
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
