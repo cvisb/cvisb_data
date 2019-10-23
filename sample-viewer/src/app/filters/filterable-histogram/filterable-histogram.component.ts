@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Inject, PLATFORM_ID, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, Inject, PLATFORM_ID, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
@@ -15,7 +15,7 @@ import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
   encapsulation: ViewEncapsulation.None
 })
 
-export class FilterableHistogramComponent implements OnInit, OnChanges {
+export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
   @ViewChild('hist', { static: false }) private chartContainer: ElementRef;
 
   // data
@@ -115,7 +115,7 @@ export class FilterableHistogramComponent implements OnInit, OnChanges {
     // })
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
       if (this.filterable) {
