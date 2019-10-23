@@ -11,14 +11,14 @@
   font-size: 0.8em;
 }
 
-/deep/ .include-contacts .mat-checkbox-inner-container {
+:host ::ng-deep .include-contacts .mat-checkbox-inner-container {
   $check-width: 14px;
   width: $check-width !important;
   height: $check-width !important;
 }
 
 
-/deep/ .ng-value-container {
+:host ::ng-deep .ng-value-container {
     max-height: 60px;
     overflow-y: scroll;
 }

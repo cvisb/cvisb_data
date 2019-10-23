@@ -125,7 +125,7 @@ $nav-width: 215px;
   background: $grey-200 !important;
 }
 
-/deep/ .mat-expansion-panel-body {
+:host ::ng-deep .mat-expansion-panel-body {
   background: $grey-50 !important;
   padding-top: 5px !important;
 }

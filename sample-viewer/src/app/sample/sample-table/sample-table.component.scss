@@ -217,11 +217,11 @@ select.location {
 //   border: 1px black solid;
 //   padding: 5px;
 // }
-// /deep/ .mat-form-field-wrapper {
+// :host ::ng-deep .mat-form-field-wrapper {
 //     margin-bottom: -1.25em !important;
 // }
 //
-// /deep/ .location-form .mat-form-field-appearance-legacy .mat-form-field-infix {
+// :host ::ng-deep .location-form .mat-form-field-appearance-legacy .mat-form-field-infix {
 //     padding: 0.5em 0;
 //     border: none;
 // }

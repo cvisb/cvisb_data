@@ -18,7 +18,7 @@ th.mat-header-cell {
   text-align: center;
 }
 
-/deep/ .table-header .mat-sort-header-container {
+:host ::ng-deep .table-header .mat-sort-header-container {
   justify-content: center !important;
 }
 

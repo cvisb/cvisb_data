@@ -49,7 +49,7 @@ $square-height: 2em;
   background: $grey-200 !important;
 }
 
-/deep/ .mat-expansion-panel-body {
+:host ::ng-deep .mat-expansion-panel-body {
   background: $grey-50 !important;
   padding-top: 5px !important;
 }
