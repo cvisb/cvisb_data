@@ -16,3 +16,9 @@ Mapshaper simplification: Adm2
 
 md: 2.0%
 sm: 0.69%
+
+
+Adm
+lg: 3.5%
+md: 2% 
+Sm: 0.5%
