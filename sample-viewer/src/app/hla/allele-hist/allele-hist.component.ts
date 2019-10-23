@@ -10,7 +10,7 @@ import * as d3 from 'd3';
 })
 export class AlleleHistComponent implements OnInit {
   @Input() data: any;
-  @ViewChild('allele_hist') private chartContainer: ElementRef;
+  @ViewChild('allele_hist', { static: false }) private chartContainer: ElementRef;
 
   // plot sizes
   private element: any;

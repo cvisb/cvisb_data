@@ -23,8 +23,8 @@ import { SampleMetadataComponent } from '../../_dialogs';
 })
 
 export class SampleTableComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   samplePatientMD: Patient[];
   params: RequestParamArray;
   // dataSource: MatTableDataSource<any>;

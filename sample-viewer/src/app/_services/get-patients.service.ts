@@ -222,7 +222,7 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      map((res: ESResponse) => {
+      map((res: any) => {
         // console.log(res);
         let summary = new PatientSummary(res.body)
         // console.log(summary)

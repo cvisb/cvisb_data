@@ -15,7 +15,7 @@ import { RequestParametersService } from '../../_services';
 
 export class MiniDonutComponent implements OnInit, OnChanges {
 
-  @ViewChild('donut') private chartContainer: ElementRef;
+  @ViewChild('donut', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private endpoint: string;
   @Input() private height: number;

@@ -16,7 +16,7 @@ export class UploadStepperComponent implements OnInit {
   firstFormGroup: FormGroup;
   formGroup: FormGroup;
   previewData: Object[];
-  @ViewChild('sample_upload_stepper') stepper: MatStepper;
+  @ViewChild('sample_upload_stepper', { static: false }) stepper: MatStepper;
 
 
   constructor(

@@ -19,7 +19,7 @@ export class FilterPatientIdComponent implements OnInit {
   bufferSize = 50;
   numberOfItemsFromEndBeforeFetchingMore = 10;
   loading = false;
-  @ViewChild('selectpatients') public ngSelect: any;
+  @ViewChild('selectpatients', { static: false }) public ngSelect: any;
   authorized: boolean;
 
   selectedPatients: string[] = [];

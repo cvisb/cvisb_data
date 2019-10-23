@@ -12,7 +12,7 @@ import { HLAsummary, CohortSelectOptions } from '../../../_models';
   encapsulation: ViewEncapsulation.None
 })
 export class ComparisonBarplotComponent implements OnInit {
-  @ViewChild('comparison') private chartContainer: ElementRef;
+  @ViewChild('comparison', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
 
   private creationPromise: Promise<any>;

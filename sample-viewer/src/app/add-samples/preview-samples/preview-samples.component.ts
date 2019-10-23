@@ -19,8 +19,8 @@ export class PreviewSamplesComponent implements OnChanges {
 
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 

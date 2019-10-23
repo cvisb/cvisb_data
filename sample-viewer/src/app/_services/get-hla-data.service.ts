@@ -10,7 +10,7 @@ import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError, mergeMap, finalize } from "rxjs/operators";
 
 import { ApiService } from './api.service';
-import { ESResponse } from '../_models';
+import { ESResult } from '../_models';
 
 
 @Injectable({
@@ -49,7 +49,7 @@ export class GetHlaDataService {
     });;
   }
 
-  getHLAdata(patientID?: string): Observable<Object[]> {
+  getHLAdata(patientID?: string): Observable<Object> {
     let params = new HttpParams()
       .set("q", 'measurementTechnique:"HLA sequencing"')
       .set("fields", "data, publisher, dateModified");
@@ -60,7 +60,7 @@ export class GetHlaDataService {
 
     // TODO: change to fetchAll
     return this.apiSvc.get("experiment", params, 1000).pipe(
-      map((res: ESResponse) => {
+      map((res: any) => {
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
         let data = flatMapDeep(res['hits'], d => d.data).filter(d => d);

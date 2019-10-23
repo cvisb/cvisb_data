@@ -17,7 +17,7 @@ import * as AFRICA_JSON from '../../assets/geo/naturalearth_africa.json';
   encapsulation: ViewEncapsulation.None
 })
 export class ChoroplethComponent implements OnInit {
-  @ViewChild('choropleth') private chartContainer: ElementRef;
+  @ViewChild('choropleth', { static: false }) private chartContainer: ElementRef;
   @Input() data: any;
   west_africa: Geojson[]; // geojson of west africa data
 

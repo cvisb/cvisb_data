@@ -16,7 +16,7 @@ import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
 })
 
 export class FilterableHistogramComponent implements OnInit, OnChanges {
-  @ViewChild('hist') private chartContainer: ElementRef;
+  @ViewChild('hist', { static: false }) private chartContainer: ElementRef;
 
   // data
   @Input() public data: D3Nested[];

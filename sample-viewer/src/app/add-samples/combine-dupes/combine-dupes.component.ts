@@ -13,8 +13,8 @@ export class CombineDupesComponent implements OnChanges {
   @Input() data: Object[];
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   displayedColumns: string[] = ["sampleID", "lab", "totalAliquots", "samples"];
   flatColumns: string[];
