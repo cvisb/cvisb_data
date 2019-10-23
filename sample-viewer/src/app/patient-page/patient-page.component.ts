@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GetPatientsService, ApiService, AnchorService } from '../_services/';
 import { Patient, DataDownload } from '../_models';
-import { ExperimentObjectPipe } from '../_pipes';
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
 import { flatMapDeep } from 'lodash';
 

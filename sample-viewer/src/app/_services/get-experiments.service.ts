@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { ApiService } from './api.service';
-import { ExperimentObjectPipe } from '../_pipes';
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { map } from 'rxjs/operators';
 
 @Injectable({
