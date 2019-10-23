@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
@@ -15,7 +15,7 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniBarplotComponent implements OnInit {
+export class MiniBarplotComponent implements AfterViewInit {
   @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private options: string[];
@@ -62,7 +62,7 @@ export class MiniBarplotComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.getSVGDims();
       this.createPlot();

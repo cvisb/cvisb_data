@@ -16,6 +16,8 @@ npm install
 npm audit fix
 npm uninstall @angular-devkit/build-angular
 npm install @angular-devkit/build-angular
+rm node_modules // unneeded
+npm install // unneeded
 ```
 
 ### 2019-06-05
