@@ -22,7 +22,7 @@
 # "@graph":
 - "@id":                 cvisb:ScholarlyArticle
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing a ScholarlyArticle (a.k.a a paper) in the Center for Viral Systems Biology
+  rdfs:comment:          A schema describing a ScholarlyArticle (a.k.a. a paper) in the Center for Viral Systems Biology
   rdfs:label:            ScholarlyArticle
   rdfs:subClassOf:
     "@id":               schema:ScholarlyArticle
