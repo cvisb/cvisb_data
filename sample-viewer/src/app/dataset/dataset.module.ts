@@ -16,6 +16,7 @@ import { DatasetComponent } from './dataset.component'
 
 // --- services ---
 import { MyHttpClient } from '../_services/http-cookies.service';
+import { ApiService } from '../_services/api.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { MyHttpClient } from '../_services/http-cookies.service';
     DatasetComponent
   ],
   providers: [
-    MyHttpClient
+    MyHttpClient,
+    ApiService
   ]
 })
 export class DatasetModule { }
