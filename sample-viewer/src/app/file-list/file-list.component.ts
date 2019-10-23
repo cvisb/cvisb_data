@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource, MatSortable } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 
 import { HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
-import { getDatasetsService, FileMetadataService, ApiService, DownloadsDataSource } from '../_services';
+import { FileMetadataService, ApiService, DownloadsDataSource } from '../_services';
 
 @Component({
   selector: 'app-file-list',
@@ -19,8 +19,8 @@ export class FileListComponent implements OnInit {
   @Input() patientID: string;
 
   // MatPaginator
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   downloads: any[];
   anything_selected: boolean;
