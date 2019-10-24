@@ -29,7 +29,7 @@ input_ebolaSurvivor = "../input_data/patient_rosters/ebolaSurvivors_metadata_v2_
 # Used to get a sense of weird IDs and coverage of metadata, etc.
 input_cvisb_roster = "../input_data/cvisb_random_rosters/CViSB_knownpatients_cleaned_PRIVATE.json"
 
-input_extra_ids = "../input_data/patient_rosters/additional_IDdict_v2_2019-09-13.csv"
+input_extra_ids = "../input_data/patient_rosters/additional_IDdict_v3_2019-10-23.csv"
 
 
 # [ output directories, names ] ------------------------------------------------------------------------------------
