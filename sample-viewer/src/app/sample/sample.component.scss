@@ -7,14 +7,4 @@
     -webkit-text-stroke-color: accent-redder(500);
     -webkit-text-stroke-width: 1px;
   }
-
-  :host ::ng-deep .dwnld-btn {
-    background: lighten(accent-redder(200), 14%);
-    border: 1px solid accent-redder(500);
-    color: accent-redder(A700);
-  }
-}
-
-:host ::ng-deep .dwnld-btn.mat-button.mat-stroked-button .mat-button-focus-overlay {
-  background-color: #fdb09b66;
 }

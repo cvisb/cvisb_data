@@ -7,15 +7,4 @@
     -webkit-text-stroke-color: $ebola-color;
     -webkit-text-stroke-width: 1px;
   }
-
-  :host ::ng-deep .dwnld-btn {
-    background: lighten($ebola-lt, 10%);
-    border: 1px solid $ebola-color;
-    color: $ebola-color;
-  }
-}
-
-:host ::ng-deep .dwnld-btn.mat-button.mat-stroked-button .mat-button-focus-overlay,
-{
-  background-color: #c2185b25;
 }

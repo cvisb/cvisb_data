@@ -1,4 +1,5 @@
 @import '../../sass/variables.scss';
+@import '../../sass/material-theme';
 
 .dwnld-btn {
   text-transform: uppercase;
@@ -6,13 +7,23 @@
 }
 
 .dwnld-btn {
-  &.patient {
+  &.patients {
     background: lighten($ebola-lt, 10%);
     border: 1px solid $ebola-color;
     color: $ebola-color;
   }
 
-  &.patient.mat-button.mat-stroked-button .mat-button-focus-overlay {
+  &.patients.mat-button.mat-stroked-button .mat-button-focus-overlay {
     background-color: #c2185b25;
+  }
+
+  &.samples {
+    background: lighten(accent-redder(200), 14%);
+    border: 1px solid accent-redder(500);
+    color: accent-redder(A700);
+  }
+
+  &.samples.mat-button.mat-stroked-button .mat-button-focus-overlay {
+    background-color: #fdb09b66;
   }
 }
