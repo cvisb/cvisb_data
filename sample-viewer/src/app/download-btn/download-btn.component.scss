@@ -1,4 +1,18 @@
+@import '../../sass/variables.scss';
+
 .dwnld-btn {
   text-transform: uppercase;
   font-weight: 300;
+}
+
+.dwnld-btn {
+  &.patient {
+    background: lighten($ebola-lt, 10%);
+    border: 1px solid $ebola-color;
+    color: $ebola-color;
+  }
+
+  &.patient.mat-button.mat-stroked-button .mat-button-focus-overlay {
+    background-color: #c2185b25;
+  }
 }
