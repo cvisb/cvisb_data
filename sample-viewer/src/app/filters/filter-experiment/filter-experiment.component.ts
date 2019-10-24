@@ -54,7 +54,7 @@ export class FilterExperimentComponent implements OnInit {
 
   // Used to reset, when the filters are cleared.
   checkParams(params) {
-    if (params.length === 0) {
+    if (params.length === 0 && this.expts && this.expts.length > 0) {
       this.expts.forEach(d => d.disabled = true);
     }
   }
