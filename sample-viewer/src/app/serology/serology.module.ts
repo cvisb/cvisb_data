@@ -6,6 +6,7 @@ import { SerologyComponent } from './serology.component';
 
 import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 
+import { DatasetResolver } from '../_services/get-datasets.resolver';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
     SerologyRoutingModule,
     DatasetPageModule
   ],
-  declarations: [SerologyComponent]
+  declarations: [SerologyComponent],
+  providers: [ DatasetResolver ]
 })
 export class SerologyModule { }
