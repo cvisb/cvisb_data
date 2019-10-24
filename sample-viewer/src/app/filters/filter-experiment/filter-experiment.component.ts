@@ -22,9 +22,11 @@ export class FilterExperimentComponent implements OnInit {
 
     this.exptSvc.getExptCounts().subscribe(expts => {
       this.expts = expts;
-      this.expts.forEach(d => {
-        d['disabled'] = true;
-      })
+      if (this.expts && this.expts.length > 0) {
+        this.expts.forEach(d => {
+          d['disabled'] = true;
+        })
+      }
     })
 
     switch (this.endpoint) {
