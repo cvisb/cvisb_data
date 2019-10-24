@@ -2,6 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "downlevelIteration": true,
+    "importHelpers": true,
     "outDir": "../out-tsc/app",
     "sourceMap": true,
     "declaration": false,
