@@ -30,7 +30,6 @@ import { PatientViralSeqComponent } from './patient-viral-seq/patient-viral-seq.
 import { PatientSerologyComponent } from './patient-serology/patient-serology.component';
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 
 
@@ -64,7 +63,6 @@ import { DatePipe } from '@angular/common';
     PatientSerologyComponent
   ],
   providers: [
-    MyHttpClient,
     DatePipe
   ]
 })

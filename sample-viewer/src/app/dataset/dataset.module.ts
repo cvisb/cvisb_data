@@ -15,7 +15,6 @@ import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module'
 import { DatasetComponent } from './dataset.component'
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
 import { ApiService } from '../_services/api.service';
 import { getDatasetsService } from '../_services';
 
@@ -32,7 +31,6 @@ import { getDatasetsService } from '../_services';
     DatasetComponent
   ],
   providers: [
-    MyHttpClient,
     ApiService,
     getDatasetsService
   ]

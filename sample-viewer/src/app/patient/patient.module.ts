@@ -18,7 +18,6 @@ import { FilterPatientsComponent } from './filter-patients/filter-patients.compo
 import { PatientTableComponent } from './patient-table/patient-table.component';
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { PatientsResolver } from '../_services/patients.resolver';
 import { AllPatientsResolver } from '../_services/allpatients.resolver';
@@ -42,7 +41,6 @@ import { GetPatientsService } from '../_services/get-patients.service';
     PatientTableComponent
   ],
   providers: [
-    MyHttpClient,
     DatePipe,
     PatientsResolver,
     AllPatientsResolver,
