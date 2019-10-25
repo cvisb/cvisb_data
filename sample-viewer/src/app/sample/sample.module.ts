@@ -12,7 +12,6 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
 // import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
 
 // --- services ---
-import { DatePipe } from '@angular/common';
 import { SamplesResolver } from '../_services/samples.resolver';
 
 // --- Components ---
@@ -35,7 +34,6 @@ import { SampleTableComponent } from './sample-table/sample-table.component';
     SampleTableComponent
   ],
   providers: [
-    DatePipe,
     SamplesResolver
   ]
 })

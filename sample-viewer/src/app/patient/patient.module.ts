@@ -18,7 +18,6 @@ import { FilterPatientsComponent } from './filter-patients/filter-patients.compo
 import { PatientTableComponent } from './patient-table/patient-table.component';
 
 // --- services ---
-import { DatePipe } from '@angular/common';
 import { PatientsResolver } from '../_services/patients.resolver';
 import { AllPatientsResolver } from '../_services/allpatients.resolver';
 
@@ -40,7 +39,6 @@ import { AllPatientsResolver } from '../_services/allpatients.resolver';
     PatientTableComponent
   ],
   providers: [
-    DatePipe,
     PatientsResolver,
     AllPatientsResolver
   ]

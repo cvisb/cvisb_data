@@ -30,8 +30,6 @@ import { PatientViralSeqComponent } from './patient-viral-seq/patient-viral-seq.
 import { PatientSerologyComponent } from './patient-serology/patient-serology.component';
 
 // --- services ---
-import { DatePipe } from '@angular/common';
-
 
 @NgModule({
   imports: [
@@ -63,7 +61,6 @@ import { DatePipe } from '@angular/common';
     PatientSerologyComponent
   ],
   providers: [
-    DatePipe
   ]
 })
 export class PatientPageModule { }
