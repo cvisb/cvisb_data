@@ -89,6 +89,4 @@ export class MyHttpClient extends HttpClient {
     return super.request(first as (any), url, options);
   }
 
-  console.log(options)
-
 }
