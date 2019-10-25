@@ -18,9 +18,7 @@ notes/samples notes.md
 *.pem
 *.key
 *.crt
-
-
-
+notes/performance/*
 
 sample-viewer-api/src/static/data/*.xlsx
 sample-viewer-api/src/static/data/*.xls
