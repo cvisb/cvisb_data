@@ -7,7 +7,6 @@ import { ViralSequencingRoutingModule } from './viral-sequencing-routing.module'
 import { ViralSequencingComponent } from './viral-sequencing.component';
 // import { AlignedSequencesComponent } from './aligned-sequences/aligned-sequences.component';
 // import { AlignedSequencesFiltersComponent } from './aligned-sequences-filters/aligned-sequences-filters.component';
-import { SvgIconModule } from '../svg-icon/svg-icon.module';
 
 // -- Modules --
 import { MaterialModule } from '../material.module';
@@ -16,10 +15,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { DownloadAlignedSequencesComponent } from './download-aligned-sequences/download-aligned-sequences.component';
 // import { CompareCohortsComponent } from './compare-cohorts/compare-cohorts.component'
+import { SvgIconModule } from '../svg-icon/svg-icon.module';
 
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatasetResolver } from '../_services/get-datasets.resolver';
 
 @NgModule({
@@ -41,14 +40,13 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
     // CompareCohortsComponent
   ],
   exports: [
-    ViralSequencingComponent,
+    // ViralSequencingComponent,
     // AlignedSequencesComponent,
     // AlignedSequencesFiltersComponent,
     // DownloadAlignedSequencesComponent,
     // CompareCohortsComponent
   ],
   providers: [
-    MyHttpClient,
     DatasetResolver
   ]
 })
