@@ -24,6 +24,8 @@ import { GetExperimentsService } from './_services/get-experiments.service';
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
+import { DatasetResolver } from './_services/get-datasets.resolver';
+
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -77,6 +79,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
   ],
   providers: [
     MyHttpClient,
+    DatasetResolver,
     GetExperimentsService,
     DatePipe,
     {
