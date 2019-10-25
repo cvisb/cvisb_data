@@ -15,7 +15,6 @@ import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module'
 import { DatasetComponent } from './dataset.component'
 
 // --- services ---
-import { ApiService } from '../_services/api.service';
 import { getDatasetsService } from '../_services';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { getDatasetsService } from '../_services';
     DatasetComponent
   ],
   providers: [
-    ApiService,
     getDatasetsService
   ]
 })
