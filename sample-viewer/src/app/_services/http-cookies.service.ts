@@ -77,12 +77,18 @@ export class MyHttpClient extends HttpClient {
       // const req: any = this.injector.get('REQUEST'); --> StaticInjectorError.  Replaced by import of REQUEST
       const rawCookies = !!this.req.headers['cookie'] ? this.req.headers['cookie'] : '';
 
+      console.log(rawCookies)
+
       if (typeof first !== "string")
         first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
       options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
     }
 
+    console.log(options)
+
     return super.request(first as (any), url, options);
   }
+
+  console.log(options)
 
 }
