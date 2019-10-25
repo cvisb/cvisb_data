@@ -539,11 +539,11 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
     // Update rectangles
     d3.selectAll("rect")
       .classed("selected", (d: any) => {
-        if (d) {
+        // if (d) {
           return limits['unknown'] && this.filterable ?
             (d.term >= lower_limit && d.term <= upper_limit) || d.term === 'unknown' :
             d.term >= lower_limit && d.term <= upper_limit;
-        }
+        // }
       })
 
 
