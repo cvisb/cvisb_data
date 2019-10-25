@@ -35,3 +35,4 @@ def extractAuditData(directory, versionComment=None, date=datetime.datetime.now(
     return(all_results)
 
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_dev_loggedin", "Angular 8 upgrade")
+extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_prod_loggedin", "prod version 0.1; Angular 6.1.10")
