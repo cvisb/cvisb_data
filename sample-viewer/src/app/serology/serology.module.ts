@@ -8,6 +8,8 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 
 import { DatasetResolver } from '../_services/get-datasets.resolver';
 
+import { MyHttpClient } from '../_services/http-cookies.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,6 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
     DatasetPageModule
   ],
   declarations: [SerologyComponent],
-  providers: [ DatasetResolver ]
+  providers: [ MyHttpClient, DatasetResolver ]
 })
 export class SerologyModule { }
