@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
-// --- Pages ---
-import { HomeComponent } from './home/home.component';
-
 // --- Admin stuff ---
 import { LoginComponent } from './admin/login/login.component';
 import { RedirectComponent } from './admin/redirect/redirect.component';
@@ -47,7 +44,7 @@ const appRoutes: Routes = [
   { path: 'release-notes', component: ReleaseNotesComponent, pathMatch: 'full', data: { title: 'CViSB Data Releases' } },
   { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
   { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
-  { path: 'home', component: HomeComponent, pathMatch: 'full', data: { title: 'CViSB Data' } },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), pathMatch: 'full', data: { title: 'CViSB Data' } },
   { path: 'sitemap.xml', pathMatch: 'full', redirectTo: "/assets/sitemap.xml" },
   { path: 'robots.txt', pathMatch: 'full', redirectTo: "/assets/robots.txt" },
   { path: '**', component: PageNotFoundComponent }

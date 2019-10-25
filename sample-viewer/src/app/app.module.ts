@@ -19,20 +19,17 @@ import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
-import { GetExperimentsService } from './_services/get-experiments.service';
+import { DatasetResolver } from './_services/get-datasets.resolver';
 
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
-import { DatasetResolver } from './_services/get-datasets.resolver';
 
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
 import { SchemaComponent } from './schema/schema.component';
-
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
 
@@ -51,8 +48,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     SampleMetadataComponent,
     SpinnerPopupComponent,
     SchemaComponent,
-    FooterComponent,
-    HomeComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
@@ -80,7 +76,6 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
   providers: [
     MyHttpClient,
     DatasetResolver,
-    GetExperimentsService,
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
