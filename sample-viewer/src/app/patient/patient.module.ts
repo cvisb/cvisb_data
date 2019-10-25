@@ -21,7 +21,6 @@ import { PatientTableComponent } from './patient-table/patient-table.component';
 import { DatePipe } from '@angular/common';
 import { PatientsResolver } from '../_services/patients.resolver';
 import { AllPatientsResolver } from '../_services/allpatients.resolver';
-import { GetPatientsService } from '../_services/get-patients.service';
 
 @NgModule({
   imports: [
@@ -43,8 +42,7 @@ import { GetPatientsService } from '../_services/get-patients.service';
   providers: [
     DatePipe,
     PatientsResolver,
-    AllPatientsResolver,
-    GetPatientsService
+    AllPatientsResolver
   ]
 })
 export class PatientModule { }
