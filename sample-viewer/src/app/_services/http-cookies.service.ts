@@ -49,7 +49,7 @@ export class MyHttpClient extends HttpClient {
       options.headers = new HttpHeaders()
         .set('Cache-Control', 'no-cache')
         .set('Pragma', 'no-cache')
-        .set("Set-Cookie", "HttpOnly;Secure;SameSite=None")
+        .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
         .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
         .set('If-Modified-Since', '0');
     }
@@ -57,7 +57,7 @@ export class MyHttpClient extends HttpClient {
       options.headers = <HttpHeaders>options.headers;
       options.headers = options.headers.append('Cache-Control', 'no-cache')
         .append('Pragma', 'no-cache')
-        .append("Set-Cookie", "HttpOnly;Secure;SameSite=None")
+        .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
         .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
         .append('If-Modified-Since', '0')
     }
