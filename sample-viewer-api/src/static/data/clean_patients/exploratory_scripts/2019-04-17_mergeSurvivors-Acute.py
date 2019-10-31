@@ -7,7 +7,7 @@ import numpy as np
 import collections
 
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 import config
 
 import helpers

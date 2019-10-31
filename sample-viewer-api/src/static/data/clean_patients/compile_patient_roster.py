@@ -32,7 +32,7 @@ import config
 import acute_patients as acute
 import survivors
 import extra_ids
-import helpers
+from ...helpers import *
 
 # Main function to stitch together the patients.
 def compile_patients(output_patients, input_extra_ids, output_extraIDs_weirdos, input_survivor_ids, output_allSurvivors, output_survivorRoster, output_survivorRosterWeirdos,

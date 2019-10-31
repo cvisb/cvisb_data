@@ -4,7 +4,7 @@
 import pandas as pd
 
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 
 import helpers
 

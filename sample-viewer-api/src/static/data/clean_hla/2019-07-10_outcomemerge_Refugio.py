@@ -1,7 +1,7 @@
 # Script to pull outcome data for most recent HLA data from Refugio
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 # from getHLApatients import cleanCohort, cleanOutcome, cleanCountry, getAltIDs
 import helpers
 

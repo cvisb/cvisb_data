@@ -41,7 +41,7 @@ downloadCols = ["name", "includedInDataset", "identifier", "contentUrl", "additi
 
 
 # [Import helper functions]  ----------------------------------------------------------------------------------------------------
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 # Helper functions for cleanup...
 import helpers
 

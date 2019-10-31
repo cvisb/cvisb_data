@@ -3,7 +3,7 @@
 # And convert to a long dataset from wide
 import pandas as pd
 import os
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 import helpers
 import re
 from datetime import datetime
