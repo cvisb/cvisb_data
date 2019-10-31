@@ -3,7 +3,7 @@ import os
 import json
 
 # [Import helper functions]  ----------------------------------------------------------------------------------------------------
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients/")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 # Helper functions for cleanup...
 import helpers
 
@@ -16,12 +16,13 @@ def get_viralseq_downloads(export_dir, dateModified, downloads, experiments, ver
 
     # Make sure arrays are arrays
     downloads['measurementTechnique'] = downloads.measurementTechnique.apply(helpers.listify)
+    downloads['citation'] = downloads.citation.apply(helpers.listify)
     ds = downloads.to_dict(orient="records")
 
     ds.append(lasv)
 
     with open(export_file, 'w') as outfile:
-        json.dump([ds], outfile)
+        json.dump(ds, outfile)
 
     return(pd.DataFrame(ds))
 
@@ -72,6 +73,8 @@ def get_lasv_curated(dateModified, version, experiments, datasetVirus="Lassa"):
 
     # pulled from experiments
     ds['citation'] = helpers.getUnique(expts, "citation")
+    # Flatten citations from list of lists to list
+    ds['citation'] = ds.citation.apply(lambda l: [item for sublist in l for item in sublist])
     ds["measurementTechnique"] = helpers.getUnique(
         expts, "measurementTechnique")
     ds["experimentIDs"] = helpers.getUnique(expts, "experimentID")
