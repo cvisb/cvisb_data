@@ -2,6 +2,7 @@ ncbi_stub = 'https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id='
 # example: 'https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=26276630'
 import requests
 import numpy as np
+from .checks import getUnique
 
 
 def dateArr2Str(arr):
@@ -67,6 +68,20 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
 # getCitation("26276630")
 
 
+def createCitationDict(df, pmidCol= "source_PMID"):
+    pmids = getUnique(df, pmidCol)
+
+    citation_dict = {}
+    for id in pmids:
+        cite = getCitation(id)
+        citation_dict[id] = cite
+    return(citation_dict)
+
+def lookupCitation(id, citation_dict):
+    if(id == id):
+        return(citation_dict[id])
+
+
 def getLabAuthor(name):
     if((name == "Galit") | (name == "Alter") | (name == "Galit Alter")):
         return({
@@ -129,3 +144,8 @@ def getPublisher(name):
         return(cvisb)
     if((name.lower() == "broad")):
         return(broad)
+
+def getAuthor(name):
+    if((name.lower() == "tsri") | (name.lower() == "cvisb")):
+        return(getLabAuthor("KGA"))
+    return(None)

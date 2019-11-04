@@ -5,7 +5,7 @@ from . import checkIDstructure, getPrivateContactGroup
 def getUnique(arr, field):
     unique_values = []
     for idx, row in arr.iterrows():
-        if(row[field] == row[field]):
+        if((row[field] == row[field]) & (row[field] is not None)):
             if(row[field] not in unique_values):
                 unique_values.append(row[field])
     if(len(unique_values) > 0):
@@ -274,10 +274,10 @@ def listify(val):
     """
     Checks that val is a list. If not, returns it as a list containing one value
     """
-    if (isinstance(val, list)):
-        return(val)
     if (pd.isnull(val)):
         return(pd.np.nan)
+    if (isinstance(val, list)):
+        return(val)
     return([val])
 
 def summarizeChecks(df, errorCol = "issue", delim=";"):

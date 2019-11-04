@@ -8,8 +8,7 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 import helpers
 
 
-def get_viralseq_downloads(export_dir, dateModified, downloads, experiments, version, datasetVirus):
-    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__datadownloads_{datasetVirus}-viral-seq_{dateModified}.json"
+def get_viralseq_downloads(dateModified, downloads, experiments, version, datasetVirus):
 
     # Combine together curated lassa sequence, curated ebola sequence, and all the individual raw files (contained in downloads, a DataFrame)
     lasv = get_lasv_curated(dateModified, "0.1", experiments, datasetVirus)
@@ -20,9 +19,6 @@ def get_viralseq_downloads(export_dir, dateModified, downloads, experiments, ver
     ds = downloads.to_dict(orient="records")
 
     ds.append(lasv)
-
-    with open(export_file, 'w') as outfile:
-        json.dump(ds, outfile)
 
     return(pd.DataFrame(ds))
 
@@ -74,9 +70,9 @@ def get_lasv_curated(dateModified, version, experiments, datasetVirus="Lassa"):
     # pulled from experiments
     ds['citation'] = helpers.getUnique(expts, "citation")
     # Flatten citations from list of lists to list
-    ds['citation'] = ds.citation.apply(lambda l: [item for sublist in l for item in sublist])
+    # ds['citation'] = ds.citation.apply(lambda l: [item for sublist in l for item in sublist])
     ds["measurementTechnique"] = helpers.getUnique(
         expts, "measurementTechnique")
     ds["experimentIDs"] = helpers.getUnique(expts, "experimentID")
 
-    return(ds)
+    return(pd.DataFrame([ds]))

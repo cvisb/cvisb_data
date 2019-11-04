@@ -3,14 +3,13 @@ import os
 import json
 
 # [Import helper functions]  ----------------------------------------------------------------------------------------------------
-os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/")
 # Helper functions for cleanup...
 import helpers
 
 
-def get_serology_downloads(export_dir, dateModified, downloads, experiments, version, datasetID="systems-serology"):
+def get_serology_downloads(export_dir, dateModified, downloads, experiments, version, datasetID):
     ds = {}
-    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__datadownloads_serology_{dateModified}.json"
+    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__datadownload_serology_{dateModified}.json"
 
     # --- static variables ---
     # identifiers
@@ -42,6 +41,4 @@ def get_serology_downloads(export_dir, dateModified, downloads, experiments, ver
     with open(export_file, 'w') as outfile:
         json.dump([ds], outfile)
 
-    return(ds)
-
-get_serology_downloads("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", "2019-10-16", [], [], '0.1')
+    return(pd.DataFrame([ds]))

@@ -12,9 +12,8 @@ import helpers
 """
 datsetVirus should be Ebola || Lassa
 """
-def get_viralseq_dataset(export_dir, dateModified, downloads, experiments, version, datasetVirus):
+def get_viralseq_dataset(dateModified, downloads, experiments, version, datasetVirus):
     ds = {}
-    export_file = f"{export_dir}/datasets/CViSB_v{version}__dataset_{datasetVirus}-viral-seq_{dateModified}.json"
 
     # --- static variables ---
     # identifiers
@@ -54,9 +53,6 @@ def get_viralseq_dataset(export_dir, dateModified, downloads, experiments, versi
     ds["spatialCoverage"] = helpers.getUnique(expts, "country")
     ds["measurementTechnique"] = helpers.getUnique(expts, "measurementTechnique")
 
-    with open(export_file, 'w') as outfile:
-        json.dump([ds], outfile)
-
-    return(ds)
+    return(pd.DataFrame([ds]))
 
 # get_viralseq_dataset("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data", "2019-10-16", [], [], '0.2')
