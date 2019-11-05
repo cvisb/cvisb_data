@@ -16,7 +16,7 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 from Bio import SeqIO
 # from Bio import Phylo
 
-def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfile, lassa_MDfile, id_dict, exptCols_common, patientCols, sampleCols, downloadCols, dateModified, version, updatedBy, saveFiles):
+def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfile, lassa_MDfile, id_dict, exptCols_common, patientCols, sampleCols, downloadCols, dateModified, version, updatedBy, saveFiles, verbose):
     # [File locations]  ----------------------------------------------------------------------------------------------------
     # Outputs
     log_dir = f"{output_dir}/log"
@@ -24,10 +24,6 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # Custom, extra properties specific to viral sequencing
     exptCols = exptCols_common.copy()
     exptCols.extend(['genbankID', 'inAlignment', 'cvisb_data'])
-
-    # initialize log file
-    global log_notes
-    log_notes = []
 
     today = datetime.today().strftime('%Y-%m-%d')
 
@@ -41,7 +37,6 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # [Lassa]  ----------------------------------------------------------------------------------------------------
     # Lassa data stored in 4 files:
     # metadata file: contains any patient information known about them.  includes both S and L alignments.
-    log_notes.append("Starting cleaning of Lassa viral sequences")
     lasv = pd.read_csv(lassa_MDfile)
     lasv["rawID"] = lasv.id.apply(lambda x: "_".join(x.split("_")[0:-2]))
     lasv['KGH_id'] = lasv.rawID.apply(
@@ -52,17 +47,16 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # Check for duplicates
     num_dupes = sum(lasv.duplicated(subset="privatePatientID", keep=False))
     if(num_dupes > 0):
-        log_notes.append(
-            f"{num_dupes} duplicate privatePatientIDs found in viral sequences:")
-        log_notes.append(lasv.loc[lasv.duplicated(subset="privatePatientID", keep=False), [
-                         'id', 'privatePatientID']].sort_values("privatePatientID"))
-        log_notes.append("*" * 100)
+        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate privatePatientIDs found in viral sequences:", verbose)
+        helpers.log_msg(lasv.loc[lasv.duplicated(subset="privatePatientID", keep=False), [
+                         'id', 'privatePatientID']].sort_values("privatePatientID"), verbose)
+        helpers.log_msg("-" * 50, verbose)
     num_dupes = sum(lasv.duplicated(subset="id", keep=False))
     if(num_dupes > 0):
-        log_notes.append(f"{num_dupes} duplicate ids found in viral sequences:")
-        log_notes.append(lasv.loc[lasv.duplicated(subset="id", keep=False), [
-                         'id', 'privatePatientID']].sort_values("privatePatientID"))
-        log_notes.append("*" * 100)
+        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate ids found in viral sequences:", verbose)
+        helpers.log_msg(lasv.loc[lasv.duplicated(subset="id", keep=False), [
+                         'id', 'privatePatientID']].sort_values("privatePatientID"), verbose)
+        helpers.log_msg("-" * 50, verbose)
 
     lasv['outcome_copy'] = lasv.outcome
     lasv['outcome'] = lasv.outcome.apply(helpers.cleanOutcome)
@@ -86,12 +80,10 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
 
     num_missing_pubIDs = sum((lasv.KGH_id) & (lasv._merge == "left_only"))
     if(num_missing_pubIDs > 0):
-        log_notes.append(
-            f"{num_missing_pubIDs} KGH-esque IDs are missing public IDs in the master KGH roster:")
-        log_notes.append(lasv[(lasv.KGH_id) & (lasv._merge == "left_only")][[
-                         'privatePatientID', 'id']])
-        log_notes.append("*" * 100)
-        log_notes.append("\n")
+        helpers.log_msg(f"DATA ERROR: {num_missing_pubIDs} KGH-esque IDs are missing public IDs in the master KGH roster:", verbose)
+        helpers.log_msg(lasv[(lasv.KGH_id) & (lasv._merge == "left_only")][[
+                         'privatePatientID', 'id']], verbose)
+        helpers.log_msg("-" * 50, verbose)
 
     lasv['patientID'] = lasv.apply(getPublicID, axis=1)
     # Sequence ID in the files is publicID_countryiso3_year
@@ -140,7 +132,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     lasv_data_seq = list(SeqIO.parse(lassaS_Rawfile, "fasta"))
     lasv_data = lasv.copy(deep=True)
     lasv_data['data'] = None
-    lasv_data = getDNAseq(lasv_data_seq, lasv_data, 'seqID',
+    lasv_data = getDNAseq(lasv_data_seq, lasv_data, verbose, 'seqID',
                          "Lassa", "DNAsequence", "S")
 
     # Remove anything without any seq data
@@ -150,11 +142,10 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
 
     num_dupes_expt = sum(lasv_data.duplicated(subset="experimentID", keep=False))
     if(num_dupes_expt > 0):
-        log_notes.append(
-            f"{num_dupes_expt} duplicate experimentIDs found in viral sequences:")
-        log_notes.append(lasv_data.loc[lasv_data.duplicated(subset="experimentID", keep=False), [
-                         'id', 'privatePatientID', "experimentID"]].sort_values("privatePatientID"))
-        log_notes.append("*" * 100)
+        helpers.log_msg(f"DATA ERROR: {num_dupes_expt} duplicate experimentIDs found in viral sequences:", verbose)
+        helpers.log_msg(lasv_data.loc[lasv_data.duplicated(subset="experimentID", keep=False), [
+                         'id', 'privatePatientID', "experimentID"]].sort_values("privatePatientID"), verbose)
+        helpers.log_msg("-" * 50, verbose)
 
     lasv_data['sampleLabel'] = lasv_data.patientID
     lasv_data['genbankID'] = lasv_data.accession_S
@@ -273,10 +264,10 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     samples = all_samples.drop_duplicates(subset=sampleDupeCols)
     dupe_removed = len(all_samples) - len(samples)
     if(dupe_removed > 0):
-        log_notes.append(f"{dupe_removed} duplicate samples were removed:")
+        helpers.log_msg(f"DATA WARNING: {dupe_removed} duplicate samples were removed:", verbose)
         dupe_samples = all_samples[all_samples.duplicated(subset=sampleDupeCols)]
-        log_notes.append(dupe_samples.sampleID)
-        log_notes.append("*" * 100)
+        helpers.log_msg(dupe_samples.sampleID, verbose)
+        helpers.log_msg("-" * 50, verbose)
 
     # patients
     # Remove duplicate patients
@@ -289,11 +280,11 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     dupe_removed = len(all_patients) - len(patients)
     dupe_removed
     if(dupe_removed > 0):
-        log_notes.append(f"{dupe_removed} duplicate patients were removed:")
+        helpers.log_msg(f"DATA WARNING: {dupe_removed} duplicate patients were removed:", verbose)
         dupe_patients = all_patients[all_patients.duplicated(
             subset=patientDupeCols)]
-        log_notes.append(dupe_patients.patientID)
-        log_notes.append("*" * 100)
+        helpers.log_msg(dupe_patients.patientID, verbose)
+        helpers.log_msg("-" * 50, verbose)
     # [Pull out the data we need]  ----------------------------------------------------------------------------------------------------
     experiments = expts[exptCols]
     all_dwnlds = get_viralseq_downloads(today, dwnlds[downloadCols], expts, '0.1', "Lassa")
@@ -311,10 +302,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
         # --- samples ---
         samples.to_json(
             f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
-        # Write log file
-        with open(f"{log_dir}/{today}_viral_sequence_cleanup.log", 'w') as f:
-            for item in log_notes:
-                f.write("%s\n" % item)
+
     return({ "patient": patients, "sample": samples, "dataset": ds, "datadownload": all_dwnlds, "experiment": experiments })
 
 
@@ -334,13 +322,12 @@ def getPublisher(row, varName="cvisb_data"):
         }])
 
 
-def getDNAseq(all_seq, df, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan, data_type = "ViralSeqData"):
+def getDNAseq(all_seq, df, verbose, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan, data_type = "ViralSeqData"):
     for seq in all_seq:
         id = seq.id.split("|")[0]
         if(sum(df[df_id] == id) == 0):
-            log_notes.append(
-                f"no patient found in sequence metadata file for sequence {seq.id}")
-            log_notes.append("*" * 100)
+            helpers.log_msg(f"DATA ERROR: no patient found in sequence metadata file for sequence {seq.id}", verbose)
+            helpers.log_msg("-" * 50, verbose)
         seq_obj = [{seq_type: str(seq.seq).upper(), "@type": data_type,
                     "virus": virus, "segment": segment}]
         df.at[df[df_id] == id, 'data'] = seq_obj
