@@ -10,7 +10,7 @@ from .generate_hla_dataset import get_hla_dataset
 from .generate_hla_datadownload import get_hla_downloads
 
 def clean_hla(output_dir, filename, dateModified, version, updatedBy,
-exptCols, patientCols, sampleCols, downloadCols, saveJsons, datasetID="hla"):
+exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="hla"):
     # [Static vars] -----------------------------------------------------------------------------------------
     hla_cols = ["A", "A.1", "B", "B.1", "C", "C.1", "DPA1", "DRB4", "DRB4.1", "DRB5","DRB5.1", "DPA1.1", "DPB1", "DPB1.1", "DQA1", "DQA1.1", "DQB1", "DQB1.1", "DRB1", "DRB1.1", "DRB3", "DRB3.1"]
 
@@ -30,30 +30,38 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, datasetID="hla"):
     experiments_path = f"{output_dir}/experiments/CViSB_v{version}__experiment_HLA_{dateModified}.json"
     patients_path = f"{output_dir}/patients/CViSB_v{version}__patient_HLA_{dateModified}.json"
     samples_path = f"{output_dir}/samples/CViSB_v{version}__sample_HLA_{dateModified}.json"
-    dupes_path = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/inconsistencies/experiments_HLA_duplicates_{dateModified}.csv"
+    dupes_path = f"{output_dir}/experiments/inconsistencies/experiments_HLA_duplicates_{dateModified}.csv"
 
     # [Import HLA dataset] ----------------------------------------------------------------------------------
     df = pd.read_csv(filename)
 
     # [Check for duplicates] --------------------------------------------------------------------------------
-
     # Multiple IDs have exactly the same HLA call...
     dupes = df.copy()
+
+    identical_ids = dupes[dupes.duplicated(keep=False, subset=["ID"])]
+    if(len(identical_ids) > 0):
+        helpers.log_msg(f"\tDATA ERROR: {len(identical_ids)} sequences have identical private patient IDs:", verbose)
+        helpers.log_msg(f"\t\t{pd.unique(identical_ids.ID)}", verbose)
+
+
     # Replace - with NA
     for col in hla_cols:
         dupes[col].replace(r'\-', pd.np.nan, regex=True, inplace=True)
-
-    exact_dupes = dupes[dupes.duplicated(keep=False, subset=hla_cols)]
-
-    exact_dupes
+    # exact_dupes = dupes[dupes.duplicated(keep=False, subset=hla_cols)]
 
     # Less conservative estimation of duplication:
     # Only looking at first four digits of call, plus sorting
-    dupes["genotype"] = dupes.apply(lambda x: simplifyAllele(x, hla_cols), axis = 1)
+    dupes["simplified_genotype"] = dupes.apply(lambda x: simplifyAllele(x, hla_cols), axis = 1)
 
-    dupes = dupes[dupes.duplicated(keep=False, subset=["genotype"])]
+    dupes = dupes[dupes.duplicated(keep=False, subset=["simplified_genotype"])]
+    if(len(dupes) > 0):
+        dupes['duplicate_type'] = "match in first four digits of all alleles"
+        dupes.loc[dupes.duplicated(keep=False, subset=hla_cols), "duplicate_type"] = "exact"
+        dupes.sort_values("simplified_genotype", inplace=True)
 
-    dupes.to_csv(dupes_path, index=False)
+        helpers.log_msg(f"\tDATA WARNING: {len(dupes)} sequences have similar HLA calls. See {dupes_path.split('/')[-1]}", verbose)
+        dupes.to_csv(dupes_path, index=False)
 
     # [Clean IDs, add generic properties] -------------------------------------------------------------------
     # rename columns
@@ -84,11 +92,12 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, datasetID="hla"):
     df['country'] = df['Location'].apply(lambda x: helpers.getCountry(x))
 
     # Check for duplicates
-    dupe_cols =  ["privatePatientID", "ID", "gID", "sID", "cohort", "outcome", "Typing Institution"]
-    dupe_cols.extend(hla_cols)
-
-    dupes = df.loc[df.duplicated(subset = ["privatePatientID"], keep=False), dupe_cols].sort_values("privatePatientID")
-    dupes.duplicated(subset=hla_cols)
+    # dupe_cols =  ["privatePatientID", "ID", "gID", "sID", "cohort", "outcome", "Typing Institution"]
+    # # dupe_cols =  ["privatePatientID", "ID", "gID", "sID", "cohort", "outcome", "Typing Institution"]
+    # dupe_cols.extend(hla_cols)
+    #
+    # dupes = df.loc[df.duplicated(subset = ["privatePatientID"], keep=False), dupe_cols].sort_values("privatePatientID")
+    # dupes.duplicated(subset=hla_cols)
 
     # [Conversion for database upload]  ----------------------------------------------------------------------------------------------------
     # experiment-specific properties
