@@ -28,6 +28,7 @@ SEROLOGY_VERSION = 0.1
 
 #  [OUPUTS] ----------------------------------------------------------------------------------------------
 EXPORTDIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data"
+LOGFILE = f"/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/log/{today}_cvisb-compliation.log"
 
 EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID',
             'measurementTechnique', 'measurementCategory', 'includedInDataset',
