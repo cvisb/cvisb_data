@@ -6,8 +6,13 @@ def getUnique(arr, field):
     unique_values = []
     for idx, row in arr.iterrows():
         if((row[field] == row[field]) & (row[field] is not None)):
-            if(row[field] not in unique_values):
-                unique_values.append(row[field])
+            if(type(row[field]) == list):
+                for value in row[field]:
+                    if(value not in unique_values):
+                        unique_values.append(value)
+            else:
+                if(row[field] not in unique_values):
+                    unique_values.append(row[field])
     if(len(unique_values) > 0):
         return(unique_values)
 

@@ -30,7 +30,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     experiments_path = f"{output_dir}/experiments/CViSB_v{version}__experiment_HLA_{dateModified}.json"
     patients_path = f"{output_dir}/patients/CViSB_v{version}__patient_HLA_{dateModified}.json"
     samples_path = f"{output_dir}/samples/CViSB_v{version}__sample_HLA_{dateModified}.json"
-    dupes_path = f"{output_dir}/experiments/inconsistencies/experiments_HLA_duplicates_{dateModified}.csv"
+    dupes_path = f"{output_dir}/log/inconsistencies/experiments_HLA_duplicates_{dateModified}.csv"
 
     # [Import HLA dataset] ----------------------------------------------------------------------------------
     df = pd.read_csv(filename)

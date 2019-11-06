@@ -144,6 +144,8 @@ def getPublisher(name):
         return(cvisb)
     if((name.lower() == "broad")):
         return(broad)
+    if((name.lower() == "patients")):
+        return(patientSource)
 
 def getAuthor(name):
     if((name.lower() == "tsri") | (name.lower() == "cvisb")):
