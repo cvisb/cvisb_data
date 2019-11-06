@@ -32,10 +32,11 @@
           <div class="dataset-description">
             {{dataset.description}}
           </div>
+          <app-dataset-citation [dataset]="dataset" id="citation"></app-dataset-citation>
         </div>
 
         <app-dataset-summary [dataset]="dataset" id="summary"></app-dataset-summary>
-        <app-dataset-citation [dataset]="dataset" id="citation"></app-dataset-citation>
+
       </div>
 
       <app-dataset-source [sources]="dataset.source"></app-dataset-source>
