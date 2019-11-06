@@ -17,3 +17,4 @@ export * from './citation';
 export * from './viral-seq-data';
 export * from './release-note';
 export * from './geojson';
+export * from './dataset';
