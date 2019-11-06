@@ -13,7 +13,6 @@ import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module'
 
 // --- components ---
 import { DatasetComponent } from './dataset.component'
-import { DatasetCitationComponent } from './dataset-citation/dataset-citation.component';
 
 // --- services ---
 import { getDatasetsService } from '../_services';
@@ -27,8 +26,7 @@ import { getDatasetsService } from '../_services';
     DatasetSummaryModule
   ],
   declarations: [
-    DatasetComponent,
-    DatasetCitationComponent
+    DatasetComponent
   ],
   providers: [
     getDatasetsService

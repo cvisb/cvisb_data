@@ -6,6 +6,7 @@ import { DatasetPageComponent } from './dataset-page.component';
 import { DatasetPageNavComponent } from './dataset-page-nav/dataset-page-nav.component';
 import { FileMetadataComponent } from '../dataset/file-metadata/file-metadata.component';
 import { MdObjectComponent } from '../dataset/file-metadata/md-object/md-object.component';
+import { DatasetCitationComponent } from './dataset-citation/dataset-citation.component';
 
 // --- modules ---
 import { FileListModule } from '../file-list/file-list.module';
@@ -35,7 +36,8 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
     DatasetPageNavComponent,
     FileMetadataComponent,
     MdObjectComponent,
-    DatasetSourceComponent
+    DatasetSourceComponent,
+    DatasetCitationComponent
   ],
   exports: [
     DatasetPageComponent
