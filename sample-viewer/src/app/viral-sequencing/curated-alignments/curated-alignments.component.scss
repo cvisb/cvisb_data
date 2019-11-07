@@ -1,0 +1,28 @@
+@import '../../../sass/variables.scss';
+
+.curation-explanation {
+  background: lighten($lassa-lt, 35%);
+  padding: 15px;
+
+  & h3 {
+    text-transform: uppercase;
+    font-weight: 400;
+    color: $ebola-md;
+    margin: 0;
+  }
+
+  & p {
+    margin-top: 0.25em;
+  }
+
+  & h5 {
+    margin: 0;
+    color: $grey-500;
+  }
+}
+
+.methodology-description {
+  font-size: 0.85em;
+  margin-bottom: 0;
+  color: $grey-600;
+}

@@ -12,6 +12,7 @@ import { DataDownload } from '../../_models';
 export class CuratedAlignmentsComponent implements OnInit {
   @Input() includedInDataset: string;
   curated: DataDownload[];
+  expansionPanelHeight: string = "35px";
 
   constructor(private datasetSvc: getDatasetsService) {
   }
