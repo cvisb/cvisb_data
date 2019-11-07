@@ -1,12 +1,12 @@
 @import "../../../sass/variables.scss";
 
 .warning-banner {
-  margin-top: 100px;
+  margin: -20px -80px 15px -25px;
   font-size: 0.85em;
   padding-left: 25px;
   padding-top: 15px;
   padding-bottom: 7px;
-  background: #0aaae438;
+  // background: #0aaae438;
   border-bottom: 2px dotted $cvisb-theme;
 
   & td {
@@ -17,6 +17,16 @@
     font-weight: 300;
     font-size: 0.9em;
   }
+}
+
+.warning-header {
+  color: white;
+  padding: 2px 5px 3px;
+  background: $cvisb-dark;
+  margin: -3px -80px 0 -25px;
+  font-size: 0.95em;
+  padding-left: 25px;
+  border-top: 2px solid white;
 }
 
 td.icon {
@@ -40,6 +50,10 @@ td.icon {
 }
 
 .header-icon {
-  font-size: 18px;
+  font-size: 15px;
   margin-right: 3px;
+}
+
+.data-status-icon {
+  height: 15px;
 }

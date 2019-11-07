@@ -11,14 +11,14 @@ import { AuthState } from "../../_models";
 
 export class PatientWarningComponent implements OnInit {
   @Input() expts: Object[];
-  embargoed: boolean;
+  embargoed: boolean = true;
   preliminary: boolean = true;
   privateData: boolean;
 
   constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
-    this.embargoed = this.expts.some((d: any) => d.embargoed === true);
+    // this.embargoed = this.expts.some((d: any) => d.embargoed === true);
     // this.preliminary = this.expts.some((d: any) => d.dataStatus === "preliminary");
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
