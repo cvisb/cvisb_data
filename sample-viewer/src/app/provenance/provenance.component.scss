@@ -72,9 +72,14 @@
   display: flex;
 }
 
+.data-status-container {
+  align-items: center;
+}
+
 .updated-container {
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  justify-content: center;
 }
 
 .preliminary {

@@ -1,6 +1,6 @@
 <div class="container patient-changelog">
   <div class="container-column">
-    <div class="updated updated-container">
+    <div class="container data-status-container">
       <div class="container embargoed" *ngIf="embargoed">
         <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
           <i class="fas fa-stopwatch"></i>
@@ -8,7 +8,7 @@
         </div>
       </div>
 
-      <div class="container-column updated-container">
+      <div class="updated container-column updated-container">
         {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
         <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
       </div>
