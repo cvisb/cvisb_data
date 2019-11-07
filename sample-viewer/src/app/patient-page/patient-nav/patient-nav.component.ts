@@ -11,13 +11,12 @@ import { AnchorService } from '../../_services';
 })
 export class PatientNavComponent {
   @Input() cohort: string;
+  @Input() expts: Object[];
   private patientID: string;
 
   links: any =
-    ['demographics', 'samples', 'symptoms',
-      { 'key': 'data', 'values': ['ELISA', 'HLA sequencing', "Viral Sequencing"] },
-      'citations'
-    ];
+    ['demographics', 'samples', 'symptoms']
+  links_end: any = ['citations'];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +33,8 @@ export class PatientNavComponent {
   }
 
   ngAfterViewInit() {
+
+    this.links.append({ 'key': 'data', 'values': this.expts.map((d:any) => d.measurementCategory) }).append(this.links_end);
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {

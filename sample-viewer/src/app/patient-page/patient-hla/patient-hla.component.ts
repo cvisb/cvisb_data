@@ -46,7 +46,7 @@ export class PatientHlaComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data)
-    this.publishers = this.data['publisher'].map(d => d.name).join(", ");
+    this.publishers = this.data.map(d => d['publisher']['name']).join(", ");
     this.dateModified = this.data['dateModified'];
 
     if (this.data['data'].length > 0) {
@@ -54,6 +54,7 @@ export class PatientHlaComponent implements OnInit {
     } else {
       this.genotype = null;
     }
+    console.log(this.genotype)
 
     // this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
     //   // console.log(res)
