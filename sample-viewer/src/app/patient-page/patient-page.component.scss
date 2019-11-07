@@ -123,6 +123,7 @@ $nav-width: 215px;
 .mat-expansion-panel-header,
 .panel-header {
   background: $grey-200 !important;
+  border-radius: 4px 4px 0px 0px !important;
 }
 
 :host ::ng-deep .mat-expansion-panel-body {
