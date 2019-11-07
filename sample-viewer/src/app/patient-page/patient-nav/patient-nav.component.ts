@@ -35,7 +35,7 @@ export class PatientNavComponent implements AfterViewInit, OnInit{
       let expt_names = this.expts.map((d: any) => d.dataset_name)
       expt_names.unshift("ELISA");
       this.links.push({ 'key': 'data', 'values': expt_names });
-      this.links.push(this.links_end);
+      this.links = this.links.concat(this.links_end);
     }
   }
 
