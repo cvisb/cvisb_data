@@ -13,14 +13,14 @@
   </div>
 
 
-  <div class="container dataset-source-container">
+  <div class="container dataset-sources-container">
     <div class="dataset-source-column" id="sources-left">
       <ng-container *ngFor="let source of sources_left">
         <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
         </ng-container>
       </ng-container>
     </div>
-    
+
     <div class="dataset-source-column" id="sources-right">
       <ng-container *ngFor="let source of sources_right">
         <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
