@@ -93,8 +93,9 @@ export class PatientPageComponent {
 
   getPrelim(dataset_id): boolean {
     console.log(this.expts)
-    return (this.expts.filter(d => d['includedInDataset'] === dataset_id).every((d: any) => d.dataStatus === "final")
-    )
+    let filtered_expts = this.expts.filter(d => d['includedInDataset'] === dataset_id);
+    let final = filtered_expts.every((d: any) => d.dataStatus === "fnal");
+    return (!final)
   }
 
   // returns T/F for if any of the experiments are embargoed.
