@@ -117,9 +117,9 @@
       </g>
     </symbol>
 
-    <symbol id="verified" viewBox="0 0 104.9 113.8" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="final" viewBox="0 0 104.9 113.8" preserveAspectRatio='xMidYMin meet'>
       <title>Verified data</title>
-      <g id="verified">
+      <g id="final">
         <path
           id="filled-hex"
           class="st4"

@@ -45,7 +45,6 @@ export class PatientHlaComponent implements OnInit {
     this.data.forEach(d => {
       d['genotype'] = d['data'].map((d: any) => d.allele);
     })
-    console.log(this.data)
   }
 
   sendLocus(event, locus: string) {

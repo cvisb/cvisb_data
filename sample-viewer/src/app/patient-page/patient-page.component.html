@@ -98,7 +98,7 @@ final<div class="container" id="patientID" *ngIf="patient">
           <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
               <mat-panel-title class="panel-title">
-                <app-provenance-title class="flex-grow1" [title]="expt.dataset_name" [icon]="expt.dataset_id" [embargoed]="true" dataStatus="final"></app-provenance-title>
+                <app-provenance-title class="flex-grow1" [title]="expt.dataset_name" [icon]="expt.dataset_id" [embargoed]="getEmbargoed(expt.dataset_id)" [dataStatus]="getPrelim(expt.dataset_id)"></app-provenance-title>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container [ngSwitch]="expt.dataset_id">
