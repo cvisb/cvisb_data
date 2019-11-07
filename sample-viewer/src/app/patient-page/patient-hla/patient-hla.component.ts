@@ -44,6 +44,7 @@ export class PatientHlaComponent implements OnInit {
   ngOnInit() {
     this.data.forEach(d => {
       d['genotype'] = d['data'].map((d: any) => d.allele);
+      d['source'] = d['publisher'] ? d['publisher']['name'] : null;
     })
   }
 

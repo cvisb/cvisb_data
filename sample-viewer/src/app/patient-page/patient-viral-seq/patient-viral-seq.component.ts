@@ -24,6 +24,7 @@ export class PatientViralSeqComponent implements OnChanges {
   ngOnChanges() {
     if (this.sequences) {
       this.sequences.forEach((seq: any) => {
+        seq['source'] = seq['publisher'] ? seq['publisher']['name'] : null;
         if (seq.data.quality) {
           seq['data']['good'] = new Array(seq.data.quality);
           seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
