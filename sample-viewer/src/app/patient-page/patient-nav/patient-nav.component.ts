@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { AnchorService } from '../../_services';
   templateUrl: './patient-nav.component.html',
   styleUrls: ['./patient-nav.component.scss']
 })
-export class PatientNavComponent {
+export class PatientNavComponent implements AfterViewInit, OnInit{
   @Input() cohort: string;
   @Input() expts: Object[];
   private patientID: string;
@@ -25,13 +25,17 @@ export class PatientNavComponent {
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
     })
-
-    this.links.append({ 'key': 'data', 'values': this.expts.map((d:any) => d.measurementCategory) }).append(this.links_end);
-    console.log(this.links)
   }
 
   public scroll(element: any) {
     element.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  ngOnInit() {
+    if (this.expts) {
+      this.links.append({ 'key': 'data', 'values': this.expts.map((d: any) => d.measurementCategory) }).append(this.links_end);
+    }
+    console.log(this.links)
   }
 
   ngAfterViewInit() {
