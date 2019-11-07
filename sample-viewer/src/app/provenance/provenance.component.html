@@ -8,14 +8,16 @@
         </div>
       </div>
 
-      {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
+      <div class="container-column updated-container">
+        {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
+        <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
+      </div>
 
       <div class="data-status">
         <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
         <div *ngIf="dataStatus === 'preliminary'" class="preliminary">preliminary data</div>
       </div>
 
-      <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>
 
   </div>
