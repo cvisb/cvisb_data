@@ -46,18 +46,27 @@ export class PatientHlaComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data)
-    this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
-      // console.log(res)
-      let hla_data = res['data'];
-      this.publishers = res['publisher'].map(d => d.name).join(", ");
-      this.dateModified = res['dateModified'];
+    this.publishers = this.data['publisher'].map(d => d.name).join(", ");
+    this.dateModified = this.data['dateModified'];
 
-      if (hla_data.length > 0) {
-        this.genotype = hla_data.map((d: any) => d.allele);
-      } else {
-        this.genotype = null;
-      }
-    });
+    if (this.data['data'].length > 0) {
+      this.genotype = this.data['data'].map((d: any) => d.allele);
+    } else {
+      this.genotype = null;
+    }
+
+    // this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
+    //   // console.log(res)
+    //   let hla_data = res['data'];
+    //   this.publishers = res['publisher'].map(d => d.name).join(", ");
+    //   this.dateModified = res['dateModified'];
+    //
+    //   if (hla_data.length > 0) {
+    //     this.genotype = hla_data.map((d: any) => d.allele);
+    //   } else {
+    //     this.genotype = null;
+    //   }
+    // });
   }
 
   sendLocus(event, locus: string) {

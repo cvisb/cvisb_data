@@ -67,6 +67,10 @@ export class PatientPageComponent {
       this.apiSvc.getData4Patient('experiment', this.patientID).subscribe(expts => {
         this.expts = expts['hits'];
 
+        this.expts.forEach(expt => {
+          expt['embargoed'] = new Date(expt['releaseDate']) <= this.today;
+        })
+
         let allExpts = this.exptObjPipe.exptDict;
         let dsIDs = this.expts.map(d => d['includedInDataset']);
         this.exptTypes = allExpts.filter(d => dsIDs.includes(d['dataset_id']));

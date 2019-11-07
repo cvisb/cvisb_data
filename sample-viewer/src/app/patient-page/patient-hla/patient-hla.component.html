@@ -8,7 +8,7 @@
         <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
 
         <div class="container-column">
-          <h3>Patient {{patient.patientID}} HLA Alleles</h3>
+          <h3>Patient {{patientID}} HLA Alleles</h3>
           <div class="container allele-container">
             <div *ngFor="let locus of alleleCount" class="allele-group" [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}" (mouseout)="clearLocus()">
               <div class="locus" (mouseover)="sendLocus($event, locus.key)">
@@ -26,7 +26,7 @@
 
       <div class="hla-files">
         <!-- <h5 class="patient-data">files</h5> -->
-        <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
+        <app-file-list datasetID="hla" [patientID]="patientID"></app-file-list>
       </div>
 
     </div>
