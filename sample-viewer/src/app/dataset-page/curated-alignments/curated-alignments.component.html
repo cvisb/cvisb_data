@@ -13,9 +13,9 @@
   </section>
 
   <mat-expansion-panel id="methodology">
-    <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" expanded="false">
+    <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="methodology-header">
       <mat-panel-title class="methodology-title">
-        <h5>Alignment methodology</h5>
+        <h5>{{panelOpenState ? "Alignment methodology" : "View alignment methodology"}}</h5>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="methodology-description">Sequences with lower quality (manual curation) and incomplete sequences (<95% of (GP+NP) or (Z+L) ORFs length) are excluded from the curated alignment. Remaining sequences are trimmed to their coding regions, codon aligned using
