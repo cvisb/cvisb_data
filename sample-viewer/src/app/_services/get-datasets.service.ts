@@ -28,12 +28,16 @@ export class getDatasetsService {
   ) {
   }
 
-  getFiles() {
-    this.apiSvc.fetchAll("datadownload", new HttpParams()
-      .set('q', "__all__")).subscribe(rs => {
-        // console.log(rs)
-        console.log("datadownload length: " + rs.length)
+  getFiles(qString: string): Observable<any> {
+    let params = new HttpParams()
+      .set('q', qString);
+
+    return this.apiSvc.fetchAll("datadownload", params).pipe(
+      map(rs => {
+        console.log(rs)
+        return (rs)
       })
+    )
   }
 
   getDatasets(id?: string, idVar?: string) {

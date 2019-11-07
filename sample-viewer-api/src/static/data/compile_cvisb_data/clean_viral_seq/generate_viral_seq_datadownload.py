@@ -7,17 +7,26 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 # Helper functions for cleanup...
 import helpers
 
+ALIGNMENTS = [{"virus": "Lassa",
+               "filename": "LASV_NP-GP_2019-09-11.fasta",
+               "description": "Lassa virus NP-GP alignment",
+               "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP-GP_2019-09-11.fasta"}]
+
 
 def get_viralseq_downloads(dateModified, downloads, experiments, version, datasetVirus):
-
     # Combine together curated lassa sequence, curated ebola sequence, and all the individual raw files (contained in downloads, a DataFrame)
-    lasv = get_lasv_curated(dateModified, "0.1", experiments, datasetVirus)
+    lasv = pd.DataFrame()
+
 
     # Make sure arrays are arrays
-    downloads['measurementTechnique'] = downloads.measurementTechnique.apply(helpers.listify)
+    downloads['measurementTechnique'] = downloads.measurementTechnique.apply(
+        helpers.listify)
     downloads['citation'] = downloads.citation.apply(helpers.listify)
+    ds = downloads
 
-    ds = downloads.append(lasv, ignore_index=True)
+    for file in ALIGNMENTS:
+        download = get_lasv_curated(dateModified, "0.1", experiments, datasetVirus, file['filename'], file['description'], file['url'])
+        ds = ds.append(download, ignore_index=True)
 
     return(pd.DataFrame(ds))
 
@@ -26,22 +35,21 @@ def get_viralseq_downloads(dateModified, downloads, experiments, version, datase
 """
 
 
-def get_lasv_curated(dateModified, version, experiments, datasetVirus="Lassa"):
+def get_lasv_curated(dateModified, version, experiments, datasetVirus, filename, description, url, virusSegment=None):
     ds = {}
 
-    lasv_filename = "LASV_NP-GP_2019-09-11.fasta"
-
  # Filter out only the experiments which are "curated" and for that particular virus
-    expts = experiments[(experiments.cohort == datasetVirus) & experiments.inAlignment]
+    expts = experiments[(experiments.cohort == datasetVirus)
+                        & experiments.inAlignment]
 
     # --- static variables ---
     # identifiers
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "DataDownload"
-    ds["name"] = lasv_filename
-    ds["identifier"] = lasv_filename
-    ds["description"] = "Sequences with lower quality (manual curation, 8 removed) and incomplete sequences (<95% of (GP+NP) or (Z+L) ORFs length, 289 removed) are excluded from the curated alignment. Remaining sequences are trimmed to their coding regions, codon aligned using mafft and inspected manually. ORFs are arranged in sense orientation as follows: S segment: NP -NNNNNN- GP; L segment: L -NNNNNN- Z. A maximum likelihood (ML) phylogeny is reconstructed with RAxML using the general time-reversible (GTR) nucleotide substitution model, gamma-distributed rates among sites and bootstrap resampling with 500 replicates."
-    ds["contentUrl"] = "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP-GP_2019-09-11.fasta"
+    ds["name"] = filename
+    ds["identifier"] = filename
+    ds["description"] = description
+    ds["contentUrl"] = url
     ds["url"] = "https://github.com/cvisb/curated-alignments"
 
     if(datasetVirus == "Ebola"):

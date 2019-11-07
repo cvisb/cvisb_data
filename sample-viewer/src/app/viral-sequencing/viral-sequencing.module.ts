@@ -20,6 +20,7 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
 
 // --- services ---
 import { DatasetResolver } from '../_services/get-datasets.resolver';
+import { CuratedAlignmentsComponent } from './curated-alignments/curated-alignments.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
   ],
   declarations: [
     ViralSequencingComponent,
+    CuratedAlignmentsComponent,
     // AlignedSequencesComponent,
     // AlignedSequencesFiltersComponent,
     // DownloadAlignedSequencesComponent,
