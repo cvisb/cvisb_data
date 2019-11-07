@@ -92,7 +92,7 @@ export class PatientPageComponent {
   }
 
   getPrelim(dataset_id): boolean {
-    return (this.expts.filter(d => d['includedInDataset'] === dataset_id).every((d: any) => d.dataStatus === "final")
+    return (this.expts.filter(d => d['includedInDataset'] === dataset_id).every((d: any) => d.dataStatus === "prelim")
     )
   }
 
