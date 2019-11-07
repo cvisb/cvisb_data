@@ -13,9 +13,7 @@ import * as d3 from 'd3';
 })
 
 export class PatientHlaComponent implements OnChanges {
-  @Input() patient: Patient;
   @Input() patientID: string;
-  @Input() datasetID: string;
   @Input() data: Object[];
   genotype: string[];
   alleleCount: any;
@@ -47,7 +45,9 @@ export class PatientHlaComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
+    console.log(this.data)
+    this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
+      console.log(res)
       let hla_data = res['data'];
       this.publishers = res['publisher'].map(d => d.name).join(", ");
       this.dateModified = res['dateModified'];
