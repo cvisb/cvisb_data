@@ -12,21 +12,27 @@
     <span class="text">percent of experiments from source</span>
   </div>
 
-  <div *ngFor="let source of sources" class="container dataset-source-container">
-    <div class="source-percent" [matTooltip]="source.count === 1 ? source.count + ' experiment' : source.count + ' experiments'"
-    [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
-      {{ source.percent | percent : 0 }}
+  <div *ngFor="let source of sources" class="container dataset-source-container" *ngTemplateOutlet="sources; context:source">
+  </div>
+  
+  <div class="container dataset-source-container">
+    <div *ngFor="let source of sources_left" class="container dataset-source-container" *ngTemplateOutlet="sources; context:source">
     </div>
-
-    <div [ngSwitch]="source.type" class="source">
-      <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'" verbosity="basic"></app-format-citation>
-      <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+    <div *ngFor="let source of sources_right" class="container dataset-source-container" *ngTemplateOutlet="sources; context:source">
     </div>
   </div>
+  </mat-expansion-panel>
 
-</mat-expansion-panel>
+<ng-template #source let-source="source">
+  <div class="source-percent" [matTooltip]="source.count === 1 ? source.count + ' experiment' : source.count + ' experiments'"
+  [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
+    {{ source.percent | percent : 0 }}
+  </div>
 
-<!-- <h2>How to cite</h2>
-<app-citation></app-citation> -->
+  <div [ngSwitch]="source.type" class="source">
+    <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'" verbosity="basic"></app-format-citation>
+    <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+    <app-format-publisher [publisher]="source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
+    <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+  </div>
+</ng-template>
