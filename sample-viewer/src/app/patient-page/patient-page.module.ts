@@ -28,6 +28,7 @@ import { PatientDatesComponent } from './patient-dates/patient-dates.component';
 import { PatientHlaComponent } from './patient-hla/patient-hla.component';
 import { PatientViralSeqComponent } from './patient-viral-seq/patient-viral-seq.component';
 import { PatientSerologyComponent } from './patient-serology/patient-serology.component';
+import { PatientWarningComponent } from './patient-warning/patient-warning.component';
 
 // --- services ---
 
@@ -58,7 +59,8 @@ import { PatientSerologyComponent } from './patient-serology/patient-serology.co
     PatientCitationsComponent,
     PatientHlaComponent,
     PatientViralSeqComponent,
-    PatientSerologyComponent
+    PatientSerologyComponent,
+    PatientWarningComponent
   ],
   providers: [
   ]

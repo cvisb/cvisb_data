@@ -34,7 +34,7 @@ import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
 
 // import { FiltersModule } from './filters/filters.module';
-// import { SvgIconModule } from './svg-icon/svg-icon.module';
+import { SvgIconModule } from './svg-icon/svg-icon.module';
 // import { ViralSequencingModule } from './viral-sequencing/viral-sequencing.module';
 // import { DownloadBtnModule } from './download-btn/download-btn.module';
 // import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -66,7 +66,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     Angulartics2Module.forRoot(), // Google Analytics
     EmbedJsonldModule,
     // FiltersModule,
-    // SvgIconModule,
+    SvgIconModule,
     // ViralSequencingModule,
     // DownloadBtnModule,
     // LeafletModule
