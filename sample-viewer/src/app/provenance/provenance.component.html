@@ -1,6 +1,13 @@
 <div class="container patient-changelog">
   <div class="container-column">
     <div class="updated updated-container">
+      <div class="container embargoed" *ngIf="embargoed">
+        <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
+          <i class="fas fa-stopwatch"></i>
+          embargoed
+        </div>
+      </div>
+      
       {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
 
       <div class="data-status">
@@ -11,12 +18,6 @@
       <button mat-button mat-stroked-button class="view-changes" *ngIf="changes">view changes</button>
     </div>
 
-    <div class="container embargoed" *ngIf="embargoed">
-      <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
-        <i class="fas fa-stopwatch"></i>
-        embargoed
-      </div>
-    </div>
   </div>
 
   <div class="container source-container">
