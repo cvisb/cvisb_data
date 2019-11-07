@@ -15,7 +15,7 @@ export class PatientNavComponent {
   private patientID: string;
 
   links: any =
-    ['demographics', 'samples', 'symptoms']
+    ['demographics', 'samples']
   links_end: any = ['citations'];
 
   constructor(
@@ -26,6 +26,8 @@ export class PatientNavComponent {
       this.patientID = params.pid;
     })
 
+    this.links.append({ 'key': 'data', 'values': this.expts.map((d:any) => d.measurementCategory) }).append(this.links_end);
+    console.log(this.links)
   }
 
   public scroll(element: any) {
@@ -33,8 +35,6 @@ export class PatientNavComponent {
   }
 
   ngAfterViewInit() {
-
-    this.links.append({ 'key': 'data', 'values': this.expts.map((d:any) => d.measurementCategory) }).append(this.links_end);
     // For anchor jumping
     // Needs to be in ngOnInit to make sure page exists before querying document
     this.route.fragment.subscribe(anchor_tag => {
