@@ -36,7 +36,7 @@ final<div class="container" id="patientID" *ngIf="patient">
         </mat-expansion-panel-header>
 
         <div class="container patient-metadata">
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" changes="initial data load" [embargoed]="true" class="provenance"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" changes="initial data load" source="Viral Hemorrhagic Fever Consortium / Kenema Government Hospital" [embargoed]="true" class="provenance"></app-provenance>
 
           <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
@@ -89,7 +89,7 @@ final<div class="container" id="patientID" *ngIf="patient">
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-provenance [dateModified]="patient.dateModified" class="provenance" dataStatus="preliminary"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" class="provenance" source="Viral Hemorrhagic Fever Consortium / Kenema Government Hospital" dataStatus="preliminary"></app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
         </mat-expansion-panel>
 
