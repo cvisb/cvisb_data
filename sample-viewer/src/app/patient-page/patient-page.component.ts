@@ -27,8 +27,7 @@ export class PatientPageComponent {
   elisaPanelState: boolean = true;
   hlaPanelState: boolean = true;
   viralSeqPanelState: boolean = true;
-  // today = new Date();
-  today = new Date("2019-10-16");
+  today = new Date();
 
   expansionPanelHeight: string = "42px";
   dataPanelHeight: string = "55px";
@@ -88,7 +87,6 @@ export class PatientPageComponent {
 
   getExpt(dataset_id) {
     if (this.expts.length > 0) {
-      console.log(this.expts.filter(d => d['includedInDataset'] === dataset_id))
       return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
