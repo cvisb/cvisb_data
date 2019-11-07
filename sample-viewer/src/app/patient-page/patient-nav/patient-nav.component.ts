@@ -33,7 +33,9 @@ export class PatientNavComponent implements AfterViewInit, OnInit{
 
   ngOnInit() {
     if (this.expts && this.expts.length > 0) {
-      this.links.push({ 'key': 'data', 'values': this.expts.map((d: any) => d.measurementCategory) }).append(this.links_end);
+      let expt_names = this.expts.map((d: any) => d.dataset_name)
+      expt_names.unshift("ELISA");
+      this.links.push({ 'key': 'data', 'values': expt_names }).append(this.links_end);
     }
   }
 
