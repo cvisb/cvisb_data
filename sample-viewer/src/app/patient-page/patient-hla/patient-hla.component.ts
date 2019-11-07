@@ -15,13 +15,10 @@ import * as d3 from 'd3';
 export class PatientHlaComponent implements OnInit {
   @Input() patientID: string;
   @Input() data: Object[];
-  genotype: string[];
   alleleCount: any;
   selectedLocus: string;
   selectedAllele: string;
   backgroundColor: string;
-  publishers: string;
-  dateModified: string;
 
   @Input() files: any[];
 
@@ -45,29 +42,10 @@ export class PatientHlaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.data.forEach(d => {
+      d['genotype'] = d['data'].map((d: any) => d.allele);
+    })
     console.log(this.data)
-    this.publishers = this.data.map(d => d['publisher']['name']).join(", ");
-    this.dateModified = this.data['dateModified'];
-
-    if (this.data['data'].length > 0) {
-      this.genotype = this.data['data'].map((d: any) => d.allele);
-    } else {
-      this.genotype = null;
-    }
-    console.log(this.genotype)
-
-    // this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
-    //   // console.log(res)
-    //   let hla_data = res['data'];
-    //   this.publishers = res['publisher'].map(d => d.name).join(", ");
-    //   this.dateModified = res['dateModified'];
-    //
-    //   if (hla_data.length > 0) {
-    //     this.genotype = hla_data.map((d: any) => d.allele);
-    //   } else {
-    //     this.genotype = null;
-    //   }
-    // });
   }
 
   sendLocus(event, locus: string) {
