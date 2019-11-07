@@ -13,7 +13,7 @@
   </div>
 
 
-  [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location, key: loc_key }"
+  <!-- [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location, key: loc_key }" -->
 
   <ng-container *ngFor="let source of sources" class="container dataset-source-container">
     <div *ngTemplateOutlet="sources; context:source">
