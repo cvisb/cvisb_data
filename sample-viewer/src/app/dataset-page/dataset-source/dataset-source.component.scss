@@ -16,10 +16,15 @@ $square-height: 2em;
   border: 1px solid $grey-400;
 }
 
-.dataset-source-container {
+.source-container {
   margin-bottom: 5px;
   align-items: center;
 }
+
+.dataset-source-column {
+  flex: 1;
+}
+
 
 .helper-text {
   font-size: 0.75em;
