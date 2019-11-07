@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { GetHlaDataService, HlaService } from '../../_services';
 import { Patient, HLA, D3Nested } from '../../_models';
@@ -12,7 +12,7 @@ import * as d3 from 'd3';
   // encapsulation: ViewEncapsulation.None
 })
 
-export class PatientHlaComponent implements OnChanges {
+export class PatientHlaComponent implements OnInit {
   @Input() patientID: string;
   @Input() data: Object[];
   genotype: string[];
@@ -44,10 +44,10 @@ export class PatientHlaComponent implements OnChanges {
 
   }
 
-  ngOnChanges() {
+  ngOnInit() {
     console.log(this.data)
     this.hlaSvc.getHLAdata(this.patientID).subscribe((res: Object[]) => {
-      console.log(res)
+      // console.log(res)
       let hla_data = res['data'];
       this.publishers = res['publisher'].map(d => d.name).join(", ");
       this.dateModified = res['dateModified'];

@@ -82,6 +82,7 @@ export class PatientPageComponent {
 
   getExpt(dataset_id) {
     if (this.expts.length > 0) {
+      console.log(this.expts.filter(d => d['includedInDataset'] === dataset_id))
       return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
     }
   }
