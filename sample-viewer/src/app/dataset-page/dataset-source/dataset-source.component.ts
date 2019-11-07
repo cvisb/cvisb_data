@@ -16,8 +16,8 @@ export class DatasetSourceComponent implements OnInit {
   sourcesPanelState: boolean = true;
   expansionPanelHeight: string = "42px";
   @Input() sources: Source[];
-  sources_left: Source[];
-  sources_right: Source[];
+  sources_left: Source[] = [];
+  sources_right: Source[] = [];
 
   constructor() { }
 

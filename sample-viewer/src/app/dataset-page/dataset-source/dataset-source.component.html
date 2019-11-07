@@ -13,26 +13,25 @@
   </div>
 
 
-  <!-- [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location, key: loc_key }" -->
 
   <ng-container *ngFor="let source of sources" class="container dataset-source-container">
-    <div *ngTemplateOutlet="sources; context:source">
+    <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
     </div>
   </ng-container>
 
   <div class="container dataset-source-container">
     <ng-container *ngFor="let source of sources_left" class="container dataset-source-container">
-      <div *ngTemplateOutlet="sources; context:source">
+      <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
       </div>
     </ng-container>
     <ng-container *ngFor="let source of sources_right" class="container dataset-source-container">
-      <div *ngTemplateOutlet="sources; context:source">
+      <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
       </div>
     </ng-container>
   </div>
 </mat-expansion-panel>
 
-<ng-template #source let-source="source">
+<ng-template #source_citation let-source="source">
   <div class="source-percent" [matTooltip]="source.count === 1 ? source.count + ' experiment' : source.count + ' experiments'"
     [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
     {{ source.percent | percent : 0 }}
