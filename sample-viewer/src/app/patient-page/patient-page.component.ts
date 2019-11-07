@@ -68,7 +68,9 @@ export class PatientPageComponent {
         this.expts = expts['hits'];
 
         this.expts.forEach(expt => {
-          expt['embargoed'] = new Date(expt['releaseDate']) <= this.today;
+          expt['embargoed'] = expt['releaseDate'] ?
+            new Date(expt['releaseDate']) <= this.today :
+            true;
         })
 
         let allExpts = this.exptObjPipe.exptDict;
