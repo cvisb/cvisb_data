@@ -1,11 +1,12 @@
 @import "../../../sass/variables.scss";
+@import '../../../sass/material-theme.scss';
 
 .warning-banner {
-  margin: -20px -80px 15px -25px;
+  margin: -0px -80px 15px -25px;
   font-size: 0.85em;
   padding-left: 25px;
   padding-top: 15px;
-  padding-bottom: 7px;
+  padding-bottom: 2px;
   // background: #0aaae438;
   border-bottom: 2px dotted $cvisb-theme;
 
