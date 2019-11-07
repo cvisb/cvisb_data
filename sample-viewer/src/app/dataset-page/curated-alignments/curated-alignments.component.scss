@@ -1,7 +1,7 @@
 @import '../../../sass/variables.scss';
 
 .curation-explanation {
-  background: lighten($lassa-md, 52%);
+  background: lighten($lassa-md, 35%);
   padding: 15px;
 
   & h3 {
@@ -28,7 +28,8 @@
 }
 
 .methodology-header {
-  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 10px !important;
 }
 
 #methodology {
