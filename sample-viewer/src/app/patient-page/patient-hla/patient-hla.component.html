@@ -1,7 +1,7 @@
 <div class="hla-container patient-data-container">
   <ng-container *ngFor="let hla_data of data">
     <ng-container *ngIf="hla_data['genotype'] && alleleCount && alleleCount.length > 1; else nodata">
-      <app-provenance [dateModified]="hla_data.dateModified" embargoLabel="HLA" [embargoed]="hla_data.embargoed" [source]="hla_data.publisher.name" dataStatus="hla_data.dataStatus" class="provenance"></app-provenance>
+      <app-provenance [dateModified]="hla_data.dateModified" embargoLabel="HLA" [embargoed]="hla_data.embargoed" [source]="hla_data.publisher.name" [dataStatus]="hla_data.dataStatus" class="provenance"></app-provenance>
       <div class="hla-genotype">
 
         <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">
