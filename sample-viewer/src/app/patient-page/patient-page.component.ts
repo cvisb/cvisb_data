@@ -64,14 +64,14 @@ export class PatientPageComponent {
         }
       });
 
-      this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
+      this.apiSvc.getData4Patient('experiment', this.patientID).subscribe(expts => {
         this.expts = expts['hits'];
 
         let allExpts = this.exptObjPipe.exptDict;
         let dsIDs = this.expts.map(d => d['includedInDataset']);
         this.exptTypes = allExpts.filter(d => dsIDs.includes(d['dataset_id']));
         // this.exptTypes = this.expts.map(d => d['includedInDataset']);
-        // console.log(this.expts)
+        console.log(this.expts)
         // console.log(this.exptTypes)
 
         this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);

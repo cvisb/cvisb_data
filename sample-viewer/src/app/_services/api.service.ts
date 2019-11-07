@@ -236,7 +236,7 @@ export class ApiService {
 
   // generic get function
   // assumes size = 1000 unless otherwise specified.
-  getPatient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
+  getData4Patient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
 
     // this.router.navigate(
     //   [],
