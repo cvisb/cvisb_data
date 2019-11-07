@@ -93,7 +93,7 @@ export class PatientPageComponent {
 
   getPrelim(dataset_id): string {
     let filtered_expts = this.expts.filter(d => d['includedInDataset'] === dataset_id);
-    let final = filtered_expts.every((d: any) => d.dataStatus === "fial");
+    let final = filtered_expts.every((d: any) => d.dataStatus === "final");
     return (final ? "final" : "preliminary")
   }
 
