@@ -14,13 +14,17 @@
 
 
   <div class="container dataset-source-container">
-    <div *ngFor="let source of sources_left" class="container dataset-source-container" id="sources-left">
-      <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
-      </div>
+    <div class="datset-source-column" id="sources-left">
+      <ng-container *ngFor="let source of sources_left" class="container dataset-source-container">
+        <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
+        </div>
+      </ng-container>
     </div>
-    <div *ngFor="let source of sources_right" class="container dataset-source-container" id="sources-right">
-      <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
-      </div>
+    <div class="datset-source-column" id="sources-right">
+      <ng-container *ngFor="let source of sources_right" class="container dataset-source-container">
+        <div [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
+        </div>
+      </ng-container>
     </div>
   </div>
 </mat-expansion-panel>

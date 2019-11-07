@@ -26,7 +26,7 @@ export class DatasetSourceComponent implements OnInit {
     let sources_length = this.sources.length;
     if(sources_length > 4) {
       this.sources_left = this.sources.slice(0, Math.ceil(sources_length/2));
-      this.sources_left = this.sources.slice(Math.floor(sources_length/2), sources_length);
+      this.sources_right = this.sources.slice(Math.floor(sources_length/2), sources_length);
     } else {
       this.sources_left = this.sources;
     }
