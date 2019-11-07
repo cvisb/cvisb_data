@@ -14,8 +14,7 @@ export class PatientNavComponent implements AfterViewInit, OnInit{
   @Input() expts: Object[];
   private patientID: string;
 
-  links: any =
-    ['demographics', 'samples']
+  links: any = ['demographics', 'samples']
   links_end: any = ['citations'];
 
   constructor(
@@ -35,7 +34,7 @@ export class PatientNavComponent implements AfterViewInit, OnInit{
     if (this.expts && this.expts.length > 0) {
       let expt_names = this.expts.map((d: any) => d.dataset_name)
       expt_names.unshift("ELISA");
-      this.links.push({ 'key': 'data', 'values': expt_names }).append(this.links_end);
+      this.links.push({ 'key': 'data', 'values': expt_names }).push(this.links_end);
     }
   }
 
