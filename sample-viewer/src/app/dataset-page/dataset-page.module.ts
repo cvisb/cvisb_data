@@ -7,6 +7,7 @@ import { DatasetPageNavComponent } from './dataset-page-nav/dataset-page-nav.com
 import { FileMetadataComponent } from '../dataset/file-metadata/file-metadata.component';
 import { MdObjectComponent } from '../dataset/file-metadata/md-object/md-object.component';
 import { DatasetCitationComponent } from './dataset-citation/dataset-citation.component';
+import { CuratedAlignmentsComponent } from './curated-alignments/curated-alignments.component';
 
 // --- modules ---
 import { FileListModule } from '../file-list/file-list.module';
@@ -37,7 +38,8 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
     FileMetadataComponent,
     MdObjectComponent,
     DatasetSourceComponent,
-    DatasetCitationComponent
+    DatasetCitationComponent,
+    CuratedAlignmentsComponent
   ],
   exports: [
     DatasetPageComponent
