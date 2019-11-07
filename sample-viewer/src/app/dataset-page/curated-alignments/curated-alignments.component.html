@@ -12,9 +12,8 @@
     </div>
   </section>
 
-  <mat-expansion-panel id="methodology">
-    <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight"
-    [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="methodology-header">
+  <mat-expansion-panel id="methodology" [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="methodology-header">
       <mat-panel-title class="methodology-title">
         <h5>{{ panelOpenState ? "Alignment methodology" : "View alignment methodology" }}</h5>
       </mat-panel-title>
