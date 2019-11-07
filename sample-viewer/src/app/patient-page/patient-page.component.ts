@@ -69,7 +69,7 @@ export class PatientPageComponent {
 
         this.expts.forEach(expt => {
           expt['embargoed'] = expt['releaseDate'] ?
-            new Date(expt['releaseDate']) <= this.today :
+            this.today < new Date(expt['releaseDate']) :
             true;
         })
 
@@ -77,7 +77,7 @@ export class PatientPageComponent {
         let dsIDs = this.expts.map(d => d['includedInDataset']);
         this.exptTypes = allExpts.filter(d => dsIDs.includes(d['dataset_id']));
         // this.exptTypes = this.expts.map(d => d['includedInDataset']);
-        console.log(this.expts)
+        // console.log(this.expts)
         // console.log(this.exptTypes)
 
         this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);
