@@ -34,7 +34,6 @@ export class getDatasetsService {
 
     return this.apiSvc.fetchAll("datadownload", params).pipe(
       map(rs => {
-        console.log(rs)
         return (rs)
       })
     )
