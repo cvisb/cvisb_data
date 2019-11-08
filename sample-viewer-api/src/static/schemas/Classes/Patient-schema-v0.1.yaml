@@ -186,6 +186,21 @@
   marginality:           recommended
   authenticated:         true
 
+- "@id":                 cvisb:dataStatus
+  "@type":               rdf:Property
+  rdfs:comment:          'description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified.'
+  rdfs:label:            dataStatus
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                        - preliminary
+                        - final
+
 - "@id":                 cvisb:sourceFiles
   "@type":               rdf:Property
   rdfs:comment:          Internal tracking of who / which file(s) supplied the patient metadata
