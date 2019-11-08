@@ -1,12 +1,12 @@
 <div class="container patient-changelog">
   <div class="container-column">
     <div class="container data-status-container">
-      <div class="container embargoed" *ngIf="embargoed">
+      <!-- <div class="container embargoed" *ngIf="embargoed">
         <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
           <i class="fas fa-stopwatch"></i>
           embargoed
         </div>
-      </div>
+      </div> -->
 
       <div class="updated container-column updated-container">
         {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
