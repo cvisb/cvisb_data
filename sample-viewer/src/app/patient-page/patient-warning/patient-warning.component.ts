@@ -10,6 +10,7 @@ import { AuthState } from "../../_models";
 })
 
 export class PatientWarningComponent implements OnInit {
+  @Input() patientStatus: string;
   @Input() expts: Object[];
   embargoed: boolean = true;
   preliminary: boolean = true;
@@ -19,7 +20,7 @@ export class PatientWarningComponent implements OnInit {
 
   ngOnInit() {
     // this.embargoed = this.expts.some((d: any) => d.embargoed === true);
-    // this.preliminary = this.expts.some((d: any) => d.dataStatus === "preliminary");
+    this.preliminary = (this.patientStatus === "preliminary") || (this.expts.some((d: any) => d.dataStatus === "preliminary"));
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       this.privateData = authState.authorized;

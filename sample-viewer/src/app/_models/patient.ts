@@ -129,7 +129,14 @@ export class PatientDownload {
 
 export class ELISA {
   ELISAresult: string;
+  ELISAvalue?: number;
   assayType: string;
   timepoint: string;
   virus: string;
+  "@type": string;
+  dataStatus: string;
+  publisher: Object;
+  citation: Object;
+  correction: string;
+  sourceFiles: string;
 }

@@ -7,6 +7,9 @@ import { GetPatientsService, ApiService, AnchorService } from '../_services/';
 import { Patient, DataDownload } from '../_models';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
+import { AuthService } from '../_services';
+import { AuthState } from "../_models";
+
 import { flatMapDeep } from 'lodash';
 
 @Component({
@@ -28,18 +31,24 @@ export class PatientPageComponent {
   hlaPanelState: boolean = true;
   viralSeqPanelState: boolean = true;
   today = new Date();
+  privateData: boolean;
 
   expansionPanelHeight: string = "42px";
   dataPanelHeight: string = "55px";
 
 
   constructor(
+    private authSvc: AuthService,
     private titleSvc: Title,
     private route: ActivatedRoute,
     private patientSvc: GetPatientsService,
     private apiSvc: ApiService,
     private exptObjPipe: ExperimentObjectPipe
   ) {
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
+      this.privateData = authState.authorized;
+    })
+
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
 
@@ -101,6 +110,20 @@ export class PatientPageComponent {
   getEmbargoed(dataset_id): boolean {
     return (this.expts.filter(d => d['includedInDataset'] === dataset_id).some((d: any) => d.embargoed === true)
     )
+  }
+
+// collapses array of ELISA results down.
+  getELISA(): Object {
+  let elisa = this.patient.elisa;
+  let summary = {};
+  let final = elisa.every((d: any) => d.dataStatus === "final");
+
+  summary['correction'] = elisa.map(d => d.correction);
+  summary['citation'] = elisa.map(d => d.citation);
+  summary['dataStatus'] = final ? "final" : "preliminary";
+
+  return(summary)
+
   }
 
 }
