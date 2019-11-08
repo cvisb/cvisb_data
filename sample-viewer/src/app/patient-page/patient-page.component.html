@@ -86,12 +86,12 @@
         <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
-              <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa" [dataStatus]="getELISA()['dataStatus']"></app-provenance-title>
+              <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa" [dataStatus]="getELISA('dataStatus')"></app-provenance-title>
 
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA()['correction']" [citation]="getELISA()['citation']" [dataStatus]="getElisa()['dataStatus']">
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getElisa('dataStatus')">
           </app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
         </mat-expansion-panel>
