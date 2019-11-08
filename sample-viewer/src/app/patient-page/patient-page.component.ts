@@ -121,6 +121,7 @@ export class PatientPageComponent {
     summary['correction'] = elisa.map(d => d.correction);
     summary['citation'] = elisa.map(d => d.citation);
     summary['dataStatus'] = final ? "final" : "preliminary";
+    console.log(summary)
 
     switch (returnVar) {
       case "correction":
