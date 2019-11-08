@@ -38,8 +38,8 @@ export class ProvenanceComponent implements OnInit {
     $event.stopPropagation();  // <- that will stop propagation on lower layers
 
     const dialogRef = this.dialog.open(CorrectionsComponent, {
-      width: '400px',
-      data: changes
+      width: '450px',
+      data: { correction: changes, label: this.embargoLabel}
     });
   }
 
