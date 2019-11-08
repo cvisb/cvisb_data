@@ -10,7 +10,7 @@
 
       <div class="updated container-column updated-container">
         {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
-        <button mat-button mat-stroked-button class="view-changes" *ngIf="changes" (click)="showCorrections(changes)">view changes</button>
+        <button mat-button mat-stroked-button class="view-changes" *ngIf="changes" (click)="showCorrections($event, changes)">view changes</button>
       </div>
 
       <div class="data-status">
