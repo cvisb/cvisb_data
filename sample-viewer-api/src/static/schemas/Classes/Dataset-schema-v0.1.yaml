@@ -201,6 +201,7 @@
                            - sensor-vitals
                            - rapid-diagnostics
                            - RT-PCR
+                           - clinical-observations
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property

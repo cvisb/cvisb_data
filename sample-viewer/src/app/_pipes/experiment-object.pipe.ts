@@ -57,10 +57,10 @@ export class ExperimentObjectPipe implements PipeTransform {
     { "measurementTechnique": "RT-PCR", "measurementCategory": "clinical measurements", "dataset_id": "RT-PCR", "dataset_name": "RT-PCR", "anchor_link": "RT-PCR" },
     { "measurementTechnique": "ELISA", "measurementCategory": "clinical measurements", "dataset_id": "ELISA", "dataset_name": "ELISA", "anchor_link": "ELISA" },
 
-    { "measurementTechnique": "acute symptoms", "measurementCategory": "clinical observations", "dataset_id": "acute-symptoms", "dataset_name": "acute symptoms", "anchor_link": "acute-symptoms" },
-    { "measurementTechnique": "sequelae", "measurementCategory": "clinical observations", "dataset_id": "sequelae", "dataset_name": "sequelae", "anchor_link": "sequelae" },
-    { "measurementTechnique": "coma score", "measurementCategory": "clinical observations", "dataset_id": "coma-score", "dataset_name": "coma score", "anchor_link": "coma-score" },
-    { "measurementTechnique": "medications", "measurementCategory": "clinical observations", "dataset_id": "medications", "dataset_name": "medications", "anchor_link": "medications" }
+    { "measurementTechnique": "acute symptoms", "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "dataset_name": "clinical observations", "anchor_link": "acute-symptoms" },
+    { "measurementTechnique": "sequelae", "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "dataset_name": "clinical observations", "anchor_link": "sequelae" },
+    { "measurementTechnique": "coma score", "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "dataset_name": "clinical observations", "anchor_link": "coma-score" },
+    { "measurementTechnique": "medications", "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "dataset_name": "clinical observations", "anchor_link": "medications" }
   ];
 
   transform(value: string, var2Search: string = "measurementTechnique"): any {

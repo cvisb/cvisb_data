@@ -92,6 +92,7 @@
                            - sensor-vitals
                            - rapid-diagnostics
                            - RT-PCR
+                           - clinical-observations
 
 # DOI
 - "@id":                 cvisb:identifier

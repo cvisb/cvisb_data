@@ -261,6 +261,7 @@
                            - sensor-vitals
                            - rapid-diagnostics
                            - RT-PCR
+                           - clinical-observations
 
 # when updated
 - "@id":                 cvisb:dateModified
