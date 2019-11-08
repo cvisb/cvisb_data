@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Citation } from '../_models/';
 
+import { CorrectionsComponent } from '../_dialogs/corrections/corrections.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 @Component({
   selector: 'app-provenance',
   templateUrl: './provenance.component.html',
@@ -19,7 +22,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() cvisb_data: boolean;
   @Input() citation: Citation[];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     // Search within any part of the string for CViSB
@@ -28,6 +31,16 @@ export class ProvenanceComponent implements OnInit {
     } else {
       this.cvisb_data = false;
     }
+  }
+
+  showCorrections($event: Event, changes): void {
+    $event.preventDefault();
+    $event.stopPropagation();  // <- that will stop propagation on lower layers
+
+    const dialogRef = this.dialog.open(CorrectionsComponent, {
+      width: '400px',
+      data: changes
+    });
   }
 
 }

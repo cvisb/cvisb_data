@@ -29,6 +29,7 @@ import { PatientHlaComponent } from './patient-hla/patient-hla.component';
 import { PatientViralSeqComponent } from './patient-viral-seq/patient-viral-seq.component';
 import { PatientSerologyComponent } from './patient-serology/patient-serology.component';
 import { PatientWarningComponent } from './patient-warning/patient-warning.component';
+import { CorrectionsComponent } from '../_dialogs/corrections/corrections.component';
 
 // --- services ---
 
@@ -60,7 +61,8 @@ import { PatientWarningComponent } from './patient-warning/patient-warning.compo
     PatientHlaComponent,
     PatientViralSeqComponent,
     PatientSerologyComponent,
-    PatientWarningComponent
+    PatientWarningComponent,
+    CorrectionsComponent
   ],
   providers: [
   ]
