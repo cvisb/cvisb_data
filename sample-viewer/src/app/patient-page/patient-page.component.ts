@@ -118,10 +118,12 @@ export class PatientPageComponent {
     let summary = {};
     let final = elisa.every((d: any) => d.dataStatus === "final");
 
-    summary['correction'] = elisa.map(d => d.correction);
-    summary['citation'] = elisa.map(d => d.citation);
+    summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+    if(summary['correction'].length === 0) {
+      summary['correction'] = null;
+    }
+    summary['citation'] = elisa.map(d => d.citation).filter(d => d);
     summary['dataStatus'] = final ? "final" : "preliminary";
-    console.log(summary)
 
     switch (returnVar) {
       case "correction":
