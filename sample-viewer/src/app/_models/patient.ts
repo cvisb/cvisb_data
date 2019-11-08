@@ -34,6 +34,7 @@ export class Patient {
   exposureType?: string;
   _version?: number;
   updatedBy?: string;
+  dataStatus: string;
 }
 
 

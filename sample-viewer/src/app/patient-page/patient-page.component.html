@@ -4,7 +4,7 @@
     <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
 
     <div class="patient-content">
-      <app-patient-warning [expts]="expts" [patientStatus]="patient.dataStatus"></app-patient-warning>
+      <app-patient-warning [expts]="expts" [patient]="patient"></app-patient-warning>
 
       <!-- HEADER: ID + cohort -->
       <div class="patient-header">
