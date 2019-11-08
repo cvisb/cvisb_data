@@ -41,7 +41,8 @@
   marginality:           required
   authenticated:         false
   schema:Enumeration:
-                           - SymptomList
+                        - Sequelae
+                        - AcuteSymptoms
 
 
 - "@id":                 cvisb:timepoint
