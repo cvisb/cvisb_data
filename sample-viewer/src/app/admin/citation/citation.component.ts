@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { GetDatacatalogService, getDatasetsService } from '../../_services';
+
+import { isPlatformBrowser } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
 
@@ -32,6 +34,7 @@ export class CitationComponent implements OnInit {
     private titleSvc: Title,
     private route: ActivatedRoute,
     private dataCatalogSvc: GetDatacatalogService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private datasetSvc: getDatasetsService
   ) {
     // set page title
@@ -41,18 +44,20 @@ export class CitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasetSvc.getAllSources().subscribe(sources => {
-      console.log(sources)
-      // this.experiments = sources.dataset;
-    })
-    this.datasetSvc.getDatasetSources().subscribe(sources => {
-      this.experiments = sources;
-      console.log(sources)
-    });
-    //
-    // this.datasetSvc.getPatientSources().subscribe(sources => {
+    // this.datasetSvc.getAllSources().subscribe(sources => {
     //   console.log(sources)
-    // });
+    //   // this.experiments = sources.dataset;
+    // })
+    if (isPlatformBrowser(this.platformId)) {
+      this.datasetSvc.getDatasetSources().subscribe(sources => {
+        this.experiments = sources;
+        // console.log(sources)
+      });
+
+      this.datasetSvc.getPatientSources().subscribe(sources => {
+        console.log(sources)
+      });
+    }
   }
 
 }
