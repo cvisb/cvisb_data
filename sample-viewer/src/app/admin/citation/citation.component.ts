@@ -368,7 +368,9 @@ export class CitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasetSvc.getDatasetSources();
+    this.datasetSvc.getDatasetSources().subscribe(sources => {
+      console.log(sources)
+    });
   }
 
 }
