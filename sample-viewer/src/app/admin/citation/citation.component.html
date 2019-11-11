@@ -19,7 +19,7 @@
     </p>
 
     <div class="citation-group" *ngIf="host_url">
-      <h4 class="data-type"><a [routerLink]="['/patient']">Patient Demographic & Clinical Data</a></h4>
+      <h4 class="data-type"><a [routerLink]="['/patient']">Patient demographic & clinical data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of patients.sources">
           <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/patient' }">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="citation-group" *ngFor="let expt of experiments">
-      <h4 class="data-type"><a [routerLink]="['/dataset', expt.includedInDataset]">{{expt.dataset_name}} Data</a></h4>
+      <h4 class="data-type"><a [routerLink]="['/dataset', expt.includedInDataset]">{{expt.dataset_name}} data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of expt.sources">
           <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/dataset/' + expt.includedInDataset }">

@@ -30,7 +30,7 @@
           </span>
         </span>
         <span id="journal"><i>{{citation.journalName}}</i></span>
-        <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>, <span id="vol">{{citation.volumeNumber}}</span>, <span id="issue">{{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
+        <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>, <span id="vol">{{citation.volumeNumber}}</span><span id="issue" *ngIf="issueNumber">, {{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
         <ng-container [ngTemplateOutlet]="links" [ngTemplateOutletContext]="{ citation: citation}"></ng-container>
       </ng-container>
 
