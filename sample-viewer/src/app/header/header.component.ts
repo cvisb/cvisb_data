@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   @Input() links: Object[];
   user: any;
   loggedIn: boolean;
+  authorized: boolean;
   prodEnvironment: boolean;
 
   constructor(public authSvc: AuthService) {
@@ -27,13 +28,11 @@ export class HeaderComponent implements OnInit {
 
     authSvc.userState$.subscribe((user: Object) => {
       this.user = user;
-      // console.log(this.user)
       this.loggedIn = Object.keys(this.user).length > 0 ? true : false;
-      // console.log(this.loggedIn)
+      this.authorized = user['read'];
     })
 
     this.prodEnvironment = environment.production;
-
   }
 
   ngOnInit() {
