@@ -9,7 +9,7 @@
 
 <ng-template #source_full let-publisher="publisher">
   <div *ngIf="publisher.type !== 'unknown'">
-    <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a>, {{source_year | date:"yyyy"}}<span *ngIf="source_url"> , {{source_url}}</span> <span class="unpublished-label">. (unpublished)</span>
+    <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a>, {{source_year | date:"yyyy"}}<span *ngIf="source_url">, {{source_url}}</span> <span class="unpublished-label">. (unpublished)</span>
   </div>
 </ng-template>
 
