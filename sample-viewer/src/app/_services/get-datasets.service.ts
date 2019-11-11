@@ -289,7 +289,6 @@ export class getDatasetsService {
       .set("fields", "citation,publisher");
 
     return this.apiSvc.fetchAll("patient", params).pipe(map(patients => {
-      console.log(patients)
       patients = this.getSource(patients);
 
       let flat_patients = flatMapDeep(patients, d => d.source).filter(d => d);
