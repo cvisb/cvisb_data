@@ -9,10 +9,14 @@ import { Source } from '../_models';
 })
 export class FormatPublisherComponent implements OnInit {
   @Input() publisher: Source;
+  @Input() verbosity: string = "simple";
+  @Input() source_year: Date = new Date();
+  @Input() source_url: string;
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.source_url)
   }
 
 }

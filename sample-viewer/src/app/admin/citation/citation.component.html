@@ -1,11 +1,51 @@
 <div class="about-text centered">
-  <h4>How to cite</h4>
+  <h3>Citing the CViSB Data Portal</h3>
 
-  <p>
-    To reference data from the Center for Viral Systems Biology, please cite the Center for Viral Systems Biology:
-  </p>
+  <section id="cvisb-data">
+    <p>
+      To reference data from the Center for Viral Systems Biology Data Portal, please cite the Center for Viral Systems Biology:
+    </p>
 
-  <p *ngIf="cvisbCatalog">
-    The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['_version'] }}.
-  </p>
+    <p *ngIf="cvisbCatalog">
+      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['_version'] }}.
+    </p>
+  </section>
+
+  <section id="individual-sources">
+    <h3>Citing individual data sources</h3>
+    <p>
+      The data in the CViSB Data Portal is a mixture of data collected by our consortium, data contributed by our partners, and publicly available data on Lassa Fever and Ebola. Some of the data has been published and others are works in
+      progress. Individual data sources can be cited as:
+    </p>
+
+    <div class="citation-group" *ngIf="host_url">
+      <h4 class="data-type"><a [routerLink]="['/patient']">Patient Demographic & Clinical Data</a></h4>
+      <div class="data-source-group">
+        <ng-container *ngFor="let source of patients.sources">
+          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/patient' }">
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="citation-group" *ngFor="let expt of experiments">
+      <h4 class="data-type"><a [routerLink]="['/dataset', expt.includedInDataset]">{{expt.dataset_name}} Data</a></h4>
+      <div class="data-source-group">
+        <ng-container *ngFor="let source of expt.sources">
+          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/dataset/' + expt.includedInDataset }">
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+
 </div>
+
+<ng-template #source_citation let-source="source" let-url="url">
+  <div [ngSwitch]="source.type" class="source">
+    <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'" verbosity="simple"></app-format-citation>
+    <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+    <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
+    <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="unknown-group" *ngSwithDefault></app-format-publisher>
+  </div>
+</ng-template>

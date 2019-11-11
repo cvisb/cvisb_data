@@ -249,6 +249,41 @@ export class getDatasetsService {
       )
   }
 
+  getDatasetSources(): Observable<any> {
+    let params = new HttpParams()
+      .set("q", `__all__`)
+      .set("fields", "citation,publisher,includedInDataset");
+
+    return this.apiSvc.fetchAll("experiment", params).pipe(map(expts => {
+      console.log(expts)
+      expts.forEach(d => {
+        d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
+        if (d.citation) {
+          d.source.forEach(inner =>
+            inner['type'] = 'citation'
+          )
+        } else {
+          d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
+        }
+      })
+      let sources = _(expts)
+        .groupBy('includedInDataset')
+        .map((items) => {
+          return {
+            source: items,
+            uniq: uniqWith(items, isEqual).filter(d => d),
+            count: items.length
+          };
+        }).value();
+
+      console.log(sources)
+
+      return(sources)
+
+    }))
+  }
+
+
   // Function to convert
   jsonify(arr: any[]): string {
     let json_arr = [];
