@@ -16,7 +16,6 @@ export class FormatPublisherComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.source_url)
   }
 
 }

@@ -249,12 +249,12 @@ export class getDatasetsService {
       )
   }
 
-  getDatasetSources(): Observable<any> {
+  getDatasetSources(endpoint: string): Observable<any> {
     let params = new HttpParams()
       .set("q", `__all__`)
       .set("fields", "citation,publisher,includedInDataset");
 
-    return this.apiSvc.fetchAll("experiment", params).pipe(map(expts => {
+    return this.apiSvc.fetchAll(endpoint, params).pipe(map(expts => {
       console.log(expts)
       expts.forEach(d => {
         d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
@@ -271,7 +271,7 @@ export class getDatasetsService {
         .map((items) => {
           return {
             source: items,
-            uniq: uniqWith(items, isEqual).filter(d => d),
+            uniq: uniqWith(items.map(d => d.source), isEqual).filter(d => d),
             count: items.length
           };
         }).value();
