@@ -268,11 +268,10 @@ export class getDatasetsService {
       })
       let sources = _(expts)
         .groupBy('includedInDataset')
-        .map((items) => {
+        .map((items, key) => {
           return {
-            source: items,
-            uniq: uniqWith(items.map(d => d.source), isEqual).filter(d => d),
-            count: items.length
+            sources: uniqWith(items.map(d => d.source), isEqual).filter(d => d),
+            includedInDataset: key
           };
         }).value();
 
