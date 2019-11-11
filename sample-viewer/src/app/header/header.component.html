@@ -4,7 +4,7 @@
       <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="authorized"/>
       <img src="/assets/img/cvisb_icon_600px.png" alt="CViSB logo" *ngIf="!authorized"/>
     </a>
-    <div class="dev-warning" *ngIf="!prodEnvironment">
+    <div class="dev-warning" *ngIf="!prodEnvironment && !authorized">
       Development version
     </div>
     <div class="authorized-warning" *ngIf="authorized">
