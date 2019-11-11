@@ -251,29 +251,21 @@ export class getDatasetsService {
       )
   }
 
-  getDatasetSources(endpoint: string): Observable<any> {
+  getDatasetSources(): Observable<any> {
     let params = new HttpParams()
       .set("q", `__all__`)
       .set("fields", "citation,publisher,includedInDataset");
 
-    return this.apiSvc.fetchAll(endpoint, params).pipe(map(expts => {
-      console.log(expts)
-      expts.forEach(d => {
-        d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
-        if (d.citation) {
-          d.source.forEach(inner =>
-            inner['type'] = 'citation'
-          )
-        } else {
-          d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
-        }
-      })
+    return this.apiSvc.fetchAll("experiment", params).pipe(map(expts => {
+      expts = this.getSource(expts);
+
       let sources = _(expts)
         .groupBy('includedInDataset')
         .map((items, key) => {
           return {
             sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
-            includedInDataset: key
+            includedInDataset: key,
+            count: items.length
           };
         }).value();
 
@@ -281,11 +273,48 @@ export class getDatasetsService {
         dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
       })
 
-      console.log(sources)
-
-      return(sources)
-
+      return (sources.sort((a, b) => b.count - a.count))
     }))
+  }
+
+  getPatientSources(): Observable<any> {
+    let params = new HttpParams()
+      .set("q", `__all__`)
+      .set("fields", "citation,publisher");
+
+    return this.apiSvc.fetchAll("patient", params).pipe(map(patients => {
+      console.log(patients)
+      patients = this.getSource(patients);
+
+      let flat_patients = flatMapDeep(patients, d => d.source).filter(d => d);
+
+      let sources = _(flat_patients)
+        .groupBy('name')
+        .map((items) => {
+          return {
+            source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
+            count: items.length
+          };
+        }).value();
+
+
+      return (sources.sort((a, b) => b.count - a.count))
+    }))
+  }
+
+  getSource(expts) {
+    expts.forEach(d => {
+      d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
+      if (d.citation) {
+        d.source.forEach(inner =>
+          inner['type'] = 'citation'
+        )
+      } else {
+        d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
+      }
+    })
+
+    return (expts)
   }
 
 
