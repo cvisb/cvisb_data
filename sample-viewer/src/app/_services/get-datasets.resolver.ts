@@ -19,6 +19,7 @@ export class DatasetResolver implements Resolve<any> {
   constructor(private datasetSvc: getDatasetsService,
     private readonly transferState: TransferState) { }
 
+  // Needed to fix endless fetchAll loop in SSR when multiple fetchAlls are called... scroll_id gets reused when it shouldn't
   // From https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
   // NOTE: could also set the conditions to be if(server): call API; if(client): get state.
   // BUT... this means that if you navigate between pages, the server-side wouldn't have necessarily been called,

@@ -2,6 +2,6 @@
   <h4>How to cite</h4>
 
   <p *ngIf="cvisbCatalog && dataset">
-    The {{ cvisbCatalog['publisher'][0]['name']}}, {{ dataset.dateModified | date:'yyyy' }}, "{{ dataset['name'] }}", {{ cvisbCatalog['url'] }}, V{{ dataset['version'] }}.
+    The {{ cvisbCatalog['publisher'][0]['name']}}, {{ dataset.dateModified | date:'yyyy' }}, "{{ dataset['name'] }}", {{ cvisbCatalog['url'] }}{{dataset['identifier']}}, V{{ dataset['version'] }}.
   </p>
 </div>

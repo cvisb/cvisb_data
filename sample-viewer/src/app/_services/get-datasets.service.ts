@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError, forkJoin } from 'rxjs';
-import { map, catchError, mergeMap } from "rxjs/operators";
+import { Observable, throwError, forkJoin, of } from 'rxjs';
+import { map, catchError, mergeMap, tap } from "rxjs/operators";
+import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { MyHttpClient } from './http-cookies.service';
 
@@ -14,17 +15,22 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
 
+const SOURCES_KEY = makeStateKey('datasets.sources_result');
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class getDatasetsService {
   schema_dataset: any;
+  private sources_result;
 
 
   constructor(
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
+    private readonly transferState: TransferState,
     private countryPipe: CountryObjectPipe,
     private exptObjPipe: ExperimentObjectPipe
   ) {
@@ -301,6 +307,39 @@ export class getDatasetsService {
       return (sources.sort((a, b) => b.count - a.count))
     }))
   }
+
+  getAllSources() {
+    const found = this.transferState.hasKey(SOURCES_KEY);
+
+    if (found) {
+      const res = of(this.transferState.get(SOURCES_KEY, null));
+      this.transferState.remove(SOURCES_KEY);
+      return res;
+    } else {
+      this.transferState.onSerialize(SOURCES_KEY, () => this.sources_result);
+      // Send result --> this.result, which saves it to transferState
+      return forkJoin(
+        this.getPatientSources(),
+        this.getDatasetSources()
+      )
+        .pipe(
+          tap(([patients, expts]) => this.sources_result = { patient: patients, dataset: expts })
+        );
+    }
+  }
+
+  //   return forkJoin(
+  //     this.getPatientSources(),
+  //     this.getDatasetSources()
+  //   )
+  //     .pipe(
+  //       map(([patients, expts]) => {
+  //         return ({ patient: patients, dataset: expts })
+  //       }
+  //       )
+  //     )
+  // }
+
 
   getSource(expts) {
     expts.forEach(d => {
