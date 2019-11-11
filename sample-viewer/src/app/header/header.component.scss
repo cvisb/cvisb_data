@@ -15,7 +15,11 @@
 }
 
 .dev {
-  background: white;
+  background: linear-gradient(45deg, #8c77bb5c, transparent);
+}
+
+.prod {
+  background: linear-gradient(45deg, #62c0e25c, transparent);
 }
 
 .authorized-warning,
@@ -23,7 +27,7 @@
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  color: $grey-250;
+  color: $grey-300;
   letter-spacing: 4.3px;
 }
 
@@ -125,7 +129,7 @@ img {
 }
 
 .menu-item > a {
-  color: $grey-300;
+  color: #999;
 
   &:hover {
     color: $grey-400;
