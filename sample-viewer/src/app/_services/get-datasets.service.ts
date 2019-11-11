@@ -279,7 +279,7 @@ export class getDatasetsService {
         dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
       })
 
-      return (sources.sort((a, b) => b.count - a.count))
+      return (sources.sort((a:any, b:any) => b.dataset_name < a.dataset_name ? -1 : 1))
     }))
   }
 
@@ -318,12 +318,14 @@ export class getDatasetsService {
     } else {
       this.transferState.onSerialize(SOURCES_KEY, () => this.sources_result);
       // Send result --> this.result, which saves it to transferState
-      return forkJoin(
-        this.getPatientSources(),
-        this.getDatasetSources()
-      )
+      return this.getPatientSources()
+      // return forkJoin(
+      //   this.getPatientSources(),
+      //   this.getDatasetSources()
+      // )
         .pipe(
-          tap(([patients, expts]) => this.sources_result = { patient: patients, dataset: expts })
+          tap(patients => this.sources_result = patients)
+          // tap(([patients, expts]) => this.sources_result = { patient: patients, dataset: expts })
         );
     }
   }
