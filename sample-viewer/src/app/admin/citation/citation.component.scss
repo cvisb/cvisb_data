@@ -1,3 +1,5 @@
+@import '../../../sass/variables.scss';
+
 .source {
   font-size: 0.85em;
 }
@@ -20,4 +22,12 @@ section {
 
 #individual-sources h4 {
   margin-top: 0;
+}
+
+.helper-text {
+  color: $grey-400;
+}
+
+.no-margin {
+  margin: 0;
 }

@@ -21,14 +21,8 @@ export class CitationComponent implements OnInit {
     sources: [
       {
         type: "publisher",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "technical support",
-          "email": "info@cvisb.org",
-          "url": "https://cvisb.org/"
-        },
-        "name": "Center for Viral Systems Biology",
-        "url": "https://cvisb.org/"
+        "name": "Viral Hemorrhagic Fever Consortium / Kenema Government Hospital",
+        "url": "https://vhfc.org/"
       }]
   }
 

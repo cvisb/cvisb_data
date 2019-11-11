@@ -9,6 +9,7 @@ import { MyHttpClient } from './http-cookies.service';
 import { ApiService } from './api.service';
 
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
 import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
@@ -24,7 +25,8 @@ export class getDatasetsService {
     public http: HttpClient,
     public myhttp: MyHttpClient,
     public apiSvc: ApiService,
-    private countryPipe: CountryObjectPipe
+    private countryPipe: CountryObjectPipe,
+    private exptObjPipe: ExperimentObjectPipe
   ) {
   }
 
@@ -270,10 +272,14 @@ export class getDatasetsService {
         .groupBy('includedInDataset')
         .map((items, key) => {
           return {
-            sources: uniqWith(items.map(d => d.source), isEqual).filter(d => d),
+            sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
             includedInDataset: key
           };
         }).value();
+
+      sources.forEach(dataset => {
+        dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
+      })
 
       console.log(sources)
 
