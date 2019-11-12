@@ -32,13 +32,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 //       - coma score
 //       - medications
 
-export interface ExperimentObject {
-  measurementTechnique: string[];
-  measurementCategory: string;
-  dataset_id: string;
-  dataset_name: string;
-  anchor_link: string;
-}
 
 export class ExperimentObjectPipe implements PipeTransform {
   exptDict: ExperimentObject[] = [
@@ -66,8 +59,15 @@ export class ExperimentObjectPipe implements PipeTransform {
   ];
 
   transform(value: string, var2Search: string = "dataset_id"): any {
+    let filtered: ExperimentObject[];
 
-    let filtered = this.exptDict.filter(d => d[var2Search] === value);
+    if (var2Search === "measurementTechnique") {
+      filtered = this.exptDict.filter(d => d[var2Search].includes(value));
+    }
+    else {
+      filtered = this.exptDict.filter(d => d[var2Search] === value);
+    }
+
     if (filtered.length === 1) {
       return (filtered[0]);
     }
