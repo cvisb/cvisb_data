@@ -10,7 +10,7 @@ def import_survivor_ids(filename):
     return(ids_raw)
 
 
-def clean_survivor_ids(filename, export_filename, export_weirdos):
+def clean_survivor_ids(filename):
     ids_raw = import_survivor_ids(filename)
 
     # Rename to agree w/ previous code
@@ -77,10 +77,10 @@ def clean_survivor_ids(filename, export_filename, export_weirdos):
 
     # --- Export ---
     # Export weird values-- anything w/ issue != NA
-    ids[ids.issue == ids.issue].to_csv(export_weirdos + ".csv", index=False)
+    # ids[ids.issue == ids.issue].to_csv(export_weirdos + ".csv", index=False)
 
     # Export everything-- including original, unmodified data
-    ids.to_csv(export_filename + ".csv", index=False)
+    # ids.to_csv(export_filename + ".csv", index=False)
 
     return(ids)
 

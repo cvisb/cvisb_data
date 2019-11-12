@@ -145,6 +145,7 @@ export class GetSamplesService {
               d['patientID'] = filtered[0].patientID;
               d['alternateIdentifier'] = filtered[0].alternateIdentifier;
               d['cohort'] = filtered[0].cohort;
+              d['gender'] = filtered[0].gender;
               d['outcome'] = filtered[0].outcome;
               d['country'] = filtered[0].country['identifier'];
               d['infectionYear'] = filtered[0].infectionYear;
