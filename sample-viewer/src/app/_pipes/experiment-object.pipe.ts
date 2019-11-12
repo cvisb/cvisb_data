@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { ExperimentObject } from '../_models';
+
 @Pipe({
   name: 'experimentObject'
 })
