@@ -3,7 +3,7 @@
     <mat-spinner></mat-spinner>
   </div>
 
-  <table mat-table [dataSource]="patientSource" matSort id="patients">
+  <table mat-table [dataSource]="patientSource" matSort id="patients" *ngIf="!patientSource.loadingState$ | async">
 
     <!-- ID Column -->
     <ng-container matColumnDef="patientID">
