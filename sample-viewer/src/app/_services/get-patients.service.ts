@@ -120,7 +120,7 @@ export class GetPatientsService {
         params: new HttpParams()
           .set("q", "__all__")
           .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-          .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+          .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
           .set("size", "0")
           .set("facet_size", "10000")
       }).pipe(
@@ -128,7 +128,7 @@ export class GetPatientsService {
           let patients = patientResults['body']['hits'];
 
           patients.forEach(patient => {
-            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["measurementTechnique.keyword"]["terms"]).map(d => d.term);
+            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
             patient['availableData'] = patientExpts;
           })
 
