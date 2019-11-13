@@ -109,7 +109,7 @@
 
 - "@id":                 cvisb:valueCategory
   "@type":               rdf:Property
-  rdfs:comment:          Assay result, grouped into qualitative groups: 'low_none', 'moderate', or 'high'
+  rdfs:comment:          "Assay result, grouped into qualitative groups: 'low_none', 'moderate', or 'high'"
   rdfs:label:            valueCategory
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
@@ -121,7 +121,7 @@
 
 - "@id":                 cvisb:valueCategoryNumeric
   "@type":               rdf:Property
-  rdfs:comment:          Assay result, grouped into qualitative groups: 'low_none' (1), 'moderate' (2), or 'high' (3)
+  rdfs:comment:          "Assay result, grouped into qualitative groups: 'low_none' (1), 'moderate' (2), or 'high' (3)"
   rdfs:label:            valueCategory
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
