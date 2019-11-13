@@ -3,6 +3,7 @@ ncbi_stub = 'https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id='
 import requests
 import numpy as np
 from .checks import getUnique
+from .logging import log_msg
 
 
 def dateArr2Str(arr):
@@ -28,7 +29,7 @@ def convertAuthor(authorObj):
             })
 
 
-def getCitation(pmid, ncbi_stub=ncbi_stub):
+def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
     if(pmid == pmid):
         if(isinstance(pmid, str)):
             pmid_string = pmid
@@ -59,11 +60,15 @@ def getCitation(pmid, ncbi_stub=ncbi_stub):
                 citation["name"] = citation_raw['title']
 
                 citation["pagination"] = citation_raw['page']
-
-                citation["volumeNumber"] = citation_raw['volume']
+                try:
+                    citation["volumeNumber"] = citation_raw['volume']
+                except:
+                    pass
                 citation['url'] = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + \
                     citation['pmid']
                 return(citation)
+            else:
+                helpers.log_msg(f"WARNING: no citation found for PMID: {pmid_string}", verbose)
 
 # getCitation("26276630")
 
@@ -80,6 +85,38 @@ def createCitationDict(df, pmidCol= "source_PMID"):
 def lookupCitation(id, citation_dict):
     if(id == id):
         return(citation_dict[id])
+
+def splitGetCitation(pubmed_string, citation_dict, verbose, delim=";"):
+    pmids = np.unique(pubmed_string.split(delim))
+    result = []
+    for id in pmids:
+        try:
+            result.append(citation_dict[id.strip()])
+        except:
+            helpers.log_msg(f"WARNING: citation not found for PMID: {id}", verbose)
+    return(result)
+
+
+def my_trim(str):
+    return(str.strip())
+
+
+def splitCreateCitationDict(df, pmidCol= "pubmedID", delim=";"):
+    # get unique values
+    id_list = df[pmidCol].unique()
+    id_string = delim.join(id_list)
+    np.unique(id_string.split(delim))
+
+    id_string.split(delim)
+    vfunc = np.vectorize(my_trim)
+
+    pmids = np.unique(vfunc(id_string.split(delim)))
+
+    citation_dict = {}
+    for id in pmids:
+        cite = getCitation(id)
+        citation_dict[id] = cite
+    return(citation_dict)
 
 
 def getLabAuthor(name):

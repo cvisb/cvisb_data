@@ -7,9 +7,8 @@ import json
 import helpers
 
 
-def get_serology_downloads(export_dir, dateModified, downloads, experiments, version, datasetID):
+def get_serology_downloads(dateModified, experiments, updatedBy, version, datasetID):
     ds = {}
-    export_file = f"{export_dir}/datadownloads/CViSB_v{version}__datadownload_serology_{dateModified}.json"
 
     # --- static variables ---
     # identifiers
@@ -30,15 +29,17 @@ def get_serology_downloads(export_dir, dateModified, downloads, experiments, ver
     ds['author'] = [helpers.getLabAuthor("Galit")]
     ds['publisher'] = [helpers.cvisb]
 
-
-# --- possibly variable, each time ---
+    # --- possibly variable, each time ---
     ds["version"] = version
     ds["dateModified"] = dateModified
-    # pulled from experiments
-    ds["measurementTechnique"] = ["ADNP"]
-    ds["experimentIDs"] = experiments
+    ds["updatedBy"] = updatedBy
 
-    with open(export_file, 'w') as outfile:
-        json.dump([ds], outfile)
+    # pulled from experiments
+    ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
+    ds["citation"] = helpers.getUnique(experiments, "citation")
+    ds["experimentIDs"] = experiments.experimentID
+
+    # with open(export_file, 'w') as outfile:
+    #     json.dump([ds], outfile)
 
     return(pd.DataFrame([ds]))

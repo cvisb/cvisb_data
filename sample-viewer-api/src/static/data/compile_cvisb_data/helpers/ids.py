@@ -51,107 +51,107 @@ def checkIDtype(id):
 
     gpublic = re.search("^(G\d\d\-\d\d\d\d\d\d)$", id)
     if(gpublic):
-        return("acute", gpublic[1])
+        return("acute", gpublic[1], None)
 
     spublic = re.search("^(S-\d\d\d\d\d\d\d)$", id)
     if(spublic):
-        return("survivor", spublic[1])
+        return("survivor", spublic[1], None)
 
     cpublic = re.search("^(C-\d\d\d\d\d\d\d)$", id)
     if(cpublic):
-        return("contact", cpublic[1])
+        return("contact", cpublic[1], None)
 
     g2 = re.search("^(G\-)(\d\d)$", id)
     if(g2):
-        return("acute", g2[1] + str(g2[2]).zfill(4))
+        return("acute", g2[1] + str(g2[2]).zfill(4), None)
 
     g2nohyphen = re.search("^(G)(\d\d)$", id)
     if(g2nohyphen):
-        return("acute", g2nohyphen[1] + "-" + str(g2nohyphen[2]).zfill(4))
+        return("acute", g2nohyphen[1] + "-" + str(g2nohyphen[2]).zfill(4), None)
 
     g3 = re.search("^(G\-)(\d\d\d)$", id)
     if(g3):
-        return("acute", g3[1] + str(g3[2]).zfill(4))
+        return("acute", g3[1] + str(g3[2]).zfill(4), None)
 
     g3nohyphen = re.search("^(G)(\d\d\d)$", id)
     if(g3nohyphen):
-        return("acute", g3nohyphen[1] + "-" + str(g3nohyphen[2]).zfill(4))
+        return("acute", g3nohyphen[1] + "-" + str(g3nohyphen[2]).zfill(4), None)
 
     g3timepoint = re.search("^(G)\-(\d\d\d)\-(\d)$", id)
     if(g3timepoint):
-        return("acute", g3timepoint[1] + "-" + str(g3timepoint[2]).zfill(4))
+        return("acute", g3timepoint[1] + "-" + str(g3timepoint[2]).zfill(4), g3timepoint[3])
 
     g3timepoint2 = re.search("^(G)(\d\d\d)\-(\d)$", id)
     if(g3timepoint2):
-        return("acute", g3timepoint2[1] + "-" + str(g3timepoint2[2]).zfill(4))
+        return("acute", g3timepoint2[1] + "-" + str(g3timepoint2[2]).zfill(4), g3_timepoint2[3])
 
     g3underscore = re.search("^(G)\_(\d\d\d)$", id)
     if(g3underscore):
-        return("acute", g3underscore[1] + "-" + str(g3underscore[2]).zfill(4))
+        return("acute", g3underscore[1] + "-" + str(g3underscore[2]).zfill(4), None)
 
     g3_timepoint = re.search("^(G)\_(\d\d\d)\-(\d)$", id)
     if(g3_timepoint):
-        return("acute", g3_timepoint[1] + "-" + str(g3_timepoint[2]).zfill(4))
+        return("acute", g3_timepoint[1] + "-" + str(g3_timepoint[2]).zfill(4), g3_timepoint[3])
 
     g4 = re.search("^(G\-)(\d\d\d\d)$", id)
     if(g4):
-        return("acute", g4[1] + g4[2])
+        return("acute", g4[1] + g4[2], None)
 
     g4nohyphen = re.search("^(G)(\d\d\d\d)$", id)
     if(g4nohyphen):
-        return("acute", g4nohyphen[1] + "-" + g4nohyphen[2])
+        return("acute", g4nohyphen[1] + "-" + g4nohyphen[2], None)
 
     g4underscore = re.search("^(G)\_(\d\d\d\d)$", id)
     if(g4underscore):
-        return("acute", g4underscore[1] + "-" + g4underscore[2])
+        return("acute", g4underscore[1] + "-" + g4underscore[2], None)
 
     g4timepoint = re.search("^(G)\-(\d\d\d\d)\-(\d)$", id)
     if(g4timepoint):
-        return("acute", g4timepoint[1] + "-" + g4timepoint[2])
+        return("acute", g4timepoint[1] + "-" + g4timepoint[2], g4timepoint[3])
 
     g4timepointunhyphen = re.search("^(G)(\d\d\d\d)(\d)$", id)
     if(g4timepointunhyphen):
-        return("acute", g4timepointunhyphen[1] + "-" + g4timepointunhyphen[2])
+        return("acute", g4timepointunhyphen[1] + "-" + g4timepointunhyphen[2], g4timepointunhyphen[3])
 
     g4timepoint2 = re.search("^(G)(\d\d\d\d)\-(\d)$", id)
     if(g4timepoint2):
-        return("acute", g4timepoint2[1] + "-" + g4timepoint2[2])
+        return("acute", g4timepoint2[1] + "-" + g4timepoint2[2], g4timepoint2[3])
 
     g4_timepoint = re.search("^(G)\_(\d\d\d\d)\-(\d)$", id)
     if(g4_timepoint):
-        return("acute", g4_timepoint[1] + "-" + g4_timepoint[2])
+        return("acute", g4_timepoint[1] + "-" + g4_timepoint[2], g4_timepoint[3])
 
     g4dottimepoint = re.search("^(G)(\d\d\d\d)\.(\d)$", id)
     if(g4dottimepoint):
-        return("acute", g4dottimepoint[1] + "-" + g4dottimepoint[2])
+        return("acute", g4dottimepoint[1] + "-" + g4dottimepoint[2], g4dottimepoint[3])
 
     g4dotdashtimepoint = re.search("^(G)\-(\d\d\d\d)\.(\d)$", id)
     if(g4dotdashtimepoint):
-        return("acute", g4dotdashtimepoint[1] + "-" + g4dotdashtimepoint[2])
+        return("acute", g4dotdashtimepoint[1] + "-" + g4dotdashtimepoint[2], g4dotdashtimepoint[3])
 
     s1 = re.search("^(S\-)(\d)$", id)
     if(s1):
-        return("survivor", s1[1] + "00" + s1[2])
+        return("survivor", s1[1] + "00" + s1[2], None)
 
     s2 = re.search("^(S\-)(\d\d)$", id)
     if(s2):
-        return("survivor", s2[1] + "0" + s2[2])
+        return("survivor", s2[1] + "0" + s2[2, None])
 
     s3 = re.search("^(S\-)(\d\d\d)$", id)
     if(s3):
-        return("survivor", s3[1] + s3[2])
+        return("survivor", s3[1] + s3[2], None)
 
     s3nohyphen = re.search("^(S)(\d\d\d)$", id)
     if(s3nohyphen):
-        return("survivor", s3nohyphen[1] + "-" + s3nohyphen[2])
+        return("survivor", s3nohyphen[1] + "-" + s3nohyphen[2], None)
 
     s3underscore = re.search("^(S)\_(\d\d\d)$", id)
     if(s3underscore):
-        return("survivor", s3underscore[1] + "-" + s3underscore[2])
+        return("survivor", s3underscore[1] + "-" + s3underscore[2], None)
 
     cnormal = re.search("^(C\-)(\d\d\d)(\-\d)$", id)
     if(cnormal):
-        return("contact", cnormal[1] + cnormal[2] + cnormal[3])
+        return("contact", cnormal[1] + cnormal[2] + cnormal[3], None)
 
 # Requires some interpretation.
     weirdC = re.match("^(C)([0-9])\-([0-9][0-9][0-9])\-([0-9])$", id)
@@ -159,28 +159,28 @@ def checkIDtype(id):
         # Contact numbers should only go from 1-3; if the "household number" is > 3, it's likely that's really the visit code.
         if(int(weirdC[4]) > 3):
             return(weirdC[1] + "-" + weirdC[3] + "-" + weirdC[2])
-        return("contact", weirdC[1] + "-" + weirdC[3] + "-" + weirdC[4])
+        return("contact", weirdC[1] + "-" + weirdC[3] + "-" + weirdC[4], weirdC[2])
     weirderC = re.match("^(C)([0-4])(\-[0-9][0-9][0-9])$", id)
     if weirderC:
         # Contact numbers should only go from 1-3; if the "household number" is > 3, it's likely that's really the visit code.
-        return("contact", weirderC[1] + weirderC[3] + "-" + weirderC[2])
+        return("contact", weirderC[1] + weirderC[3] + "-" + weirderC[2], None)
     # S-timepoint: assuming S-xxx-3 == S-xxx at visit 3.
     sTimepoint = re.match("^(S)(\-[0-9][0-9][0-9])\-([0-9])$", id)
     if sTimepoint:
-        return("survivor", sTimepoint[1] + sTimepoint[2])
+        return("survivor", sTimepoint[1] + sTimepoint[2], sTimepoint[3])
     # 3-digit SID: S-0xxx-3 --> S-xxx at visit 3
     sTimepoint2 = re.match("^(S\-)0([0-9][0-9][0-9])\-([0-9])$", id)
     if sTimepoint2:
-        return("survivor", sTimepoint2[1] + sTimepoint2[2])
+        return("survivor", sTimepoint2[1] + sTimepoint2[2], sTimepoint2[3])
     # S-timepoint in diff format: assuming S2-xxx == S-xxx at visit 2
     weirdS = re.match("^(S)([0-9])(\-[0-9][0-9][0-9])$", id)
     if weirdS:
-        return("survivor", weirdS[1] + weirdS[3])
+        return("survivor", weirdS[1] + weirdS[3], weirdS[2])
     nohyphen = re.match("^(S)([0-9][0-9][0-9])$", id)
     if nohyphen:
-        return("survivor", nohyphen[1] + "-" + nohyphen[2])
+        return("survivor", nohyphen[1] + "-" + nohyphen[2], None)
 
-    return("unknown", None)
+    return("unknown", None, None)
 
 def interpretID(id_raw):
     """
@@ -236,6 +236,11 @@ def interpretID(id_raw):
 
         return(str(id_raw).strip())
 
+def interpretTimepoint(id_raw):
+    id = str(id_raw).upper().strip()
+
+    checkedID = checkIDtype(id)
+    return(checkedID[2])
 
 def getPrivateContactGroup(id):
     """

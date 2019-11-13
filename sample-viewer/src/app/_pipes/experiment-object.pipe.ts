@@ -47,7 +47,7 @@ export class ExperimentObjectPipe implements PipeTransform {
     { "measurementTechnique": ["BCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "bcr", "dataset_name": "BCR sequencing", "anchor_link": "BCR-sequencing" },
     { "measurementTechnique": ["TCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "tcr", "dataset_name": "TCR sequencing", "anchor_link": "TCR-sequencing" },
 
-    { "measurementTechnique": ["ADCP", "ADCD", "ADNP", "NKD"], "measurementCategory": "Systems Serology", "dataset_id": "systems-serology", "dataset_name": "Systems Serology", "anchor_link": "Systems-Serology" },
+    { "measurementTechnique": ["ADNP","ADCD","ADCP","ADNKA_CD107a","ADNKA_IFNg","ADNKA_MIP1b"], "measurementCategory": "Systems Serology", "dataset_id": "systems-serology", "dataset_name": "Systems Serology", "anchor_link": "Systems-Serology" },
 
     { "measurementTechnique": ["metabolomics"], "measurementCategory": "clinical measurements", "dataset_id": "metabolomics", "dataset_name": "metabolomics", "anchor_link": "metabolomics" },
     { "measurementTechnique": ["blood chemistry"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "dataset_name": "blood chemistry", "anchor_link": "blood-chemistry" },

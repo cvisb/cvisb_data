@@ -76,6 +76,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     df['dateModified'] = dateModified
     df['updatedBy'] = updatedBy
     df['correction'] = None
+    df['version'] = version
 
     # Fish out / coerce to schema format.
     df['privatePatientID'] = df.ID.apply(helpers.interpretID)
@@ -104,6 +105,11 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     df['experimentID'] = df.apply(lambda x: f"HLA_{x.patientID}", axis=1)
     df['releaseDate'] = today
     df['dataStatus'] = "final"
+    # don't exist now...
+    df['experimentDate'] = None
+    df['visitCode'] = None
+    df['batchID'] = None
+    df['isControl'] = False
 
     # sample-specific properties
     df['sampleLabel'] = df.experimentID

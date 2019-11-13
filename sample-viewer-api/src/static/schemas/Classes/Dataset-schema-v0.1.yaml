@@ -111,10 +111,12 @@
                            - Lassa viral sequencing
                            - BCR sequencing
                            - TCR sequencing
-                           - ADCP
                            - ADNP
                            - ADCD
-                           - NKD
+                           - ADCP
+                           - ADNKA_CD107a
+                           - ADNKA_IFNg
+                           - ADNKA_MIP1b
                            - metabolomics
                            - blood chemistry
                            - vitals

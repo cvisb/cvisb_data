@@ -55,7 +55,7 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
 
@@ -72,6 +72,19 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         true
+
+- "@id":                 cvisb:visitCode
+  "@type":               rdf:Property
+  rdfs:comment:          "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)"
+  rdfs:label:            visitCode
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 # patient ID
 - "@id":                 cvisb:patientID
@@ -124,6 +137,18 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:isControl
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the experiment is a control experiment
+  rdfs:label:            isControl
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
@@ -196,10 +221,12 @@
                            - Lassa viral sequencing
                            - BCR sequencing
                            - TCR sequencing
-                           - ADCP
                            - ADNP
                            - ADCD
-                           - NKD
+                           - ADCP
+                           - ADNKA_CD107a
+                           - ADNKA_IFNg
+                           - ADNKA_MIP1b
                            - metabolomics
                            - blood chemistry
                            - vitals

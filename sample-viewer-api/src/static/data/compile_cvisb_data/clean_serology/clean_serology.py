@@ -13,16 +13,19 @@ import re
 from datetime import datetime
 from .generate_serology_dataset import get_serology_dataset
 from .generate_serology_datadownload import get_serology_downloads
+from .clean_immune_effector_funcs import clean_immune_effector_funcs
 
 # [Static values]  ----------------------------------------------------------------------------------------------------
-UPDATEDBY = "Bonnie Gunn"
 
-def clean_serology(export_dir, dateModified, version, datasetID="systems-serology"):
-    experiments = []
-    downloads = []
-    # [Get Dataset .json]  ----------------------------------------------------------------------------------------------------
-    ds = get_serology_dataset(dateModified, downloads, experiments, version, datasetID)
+def clean_serology(sero_file, expt_cols, updatedBy, dateModified, version, verbose, output_dir, datasetID="systems-serology"):
+    # All patients are from KGH; no need to add in paitents or samples
+    patients = pd.DataFrame()
+    samples = pd.DataFrame()
+    experiments = clean_immune_effector_funcs(sero_file, expt_cols, updatedBy, dateModified, version, verbose, output_dir)
     # [Get DataDownload .json]  ----------------------------------------------------------------------------------------------------
-    dwld = get_serology_downloads(export_dir, dateModified, downloads, experiments, version, datasetID)
+    dwld = get_serology_downloads(dateModified, experiments, updatedBy, version, datasetID)
+    # [Get Dataset .json]  ----------------------------------------------------------------------------------------------------
+    ds = get_serology_dataset(dateModified, dwld,
+                              experiments, version, datasetID)
 
-    return({ "patient": pd.DataFrame(), "sample": pd.DataFrame(), "dataset": ds, "datadownload": dwld, "experiment": pd.DataFrame() })
+    return({"patient": patients, "sample": samples, "dataset": ds, "datadownload": dwld, "experiment": experiments})
