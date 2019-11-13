@@ -26,8 +26,7 @@
   rdfs:comment:          A schema describing a Systems Serology Experiment in the Center for Viral Systems Biology
   rdfs:label:            SystemsSerology
   rdfs:subClassOf:
-    "@id":               cvisb:Experiment
-    "@id":               schema:Thing
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
