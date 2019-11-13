@@ -1,5 +1,5 @@
 @import "../../../sass/variables.scss";
-$expt-count-size: 1.75em;
+$expt-count-size: 1.55em;
 $container-margin: 10px;
 
 .count-pair {
@@ -14,11 +14,12 @@ $container-margin: 10px;
 .count-value {
   color: $lassa-lt;
   font-size: $expt-count-size;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .count-label {
   color: white;
+  font-size: 0.95em;
 }
 
 .dataset-summary {
