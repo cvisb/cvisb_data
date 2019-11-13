@@ -179,6 +179,12 @@ def checkIDtype(id):
     nohyphen = re.match("^(S)([0-9][0-9][0-9])$", id)
     if nohyphen:
         return("survivor", nohyphen[1] + "-" + nohyphen[2], None)
+    s434a = re.match("^(S-434-A)$", id)
+    if s434a:
+        return("survivor", "S-434", None)
+    s434b = re.match("^(S-434-B)$", id)
+    if s434b:
+        return("survivor", "S-435", None)
 
     return("unknown", None, None)
 
