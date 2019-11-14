@@ -20,12 +20,12 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # [File locations]  ----------------------------------------------------------------------------------------------------
     # Outputs
     log_dir = f"{output_dir}/log"
+    today = datetime.today().strftime('%Y-%m-%d')
 
     # Custom, extra properties specific to viral sequencing
     exptCols = exptCols_common.copy()
     exptCols.extend(['genbankID', 'inAlignment', 'cvisb_data'])
 
-    today = datetime.today().strftime('%Y-%m-%d')
 
     # [IDs from KGH]  ----------------------------------------------------------------------------------------------------
     ids = pd.read_json(id_dict)
@@ -161,50 +161,6 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # lasv_data[['countryName', 'year', 'outcome', 'data', 'privatePatientID']].to_json("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data/experiments/viral_seq/Sseg_lasv_aa_test.json", orient="records")
 
 
-    # [Ebola]  ----------------------------------------------------------------------------------------------------
-    # ebov = pd.read_csv(ebov_file)
-    #
-    # ebov.head()
-    # # Ebola: check IDs if they're from KGH. Most are not.
-    # ebov['privatePatientID'] = ebov.sample_id.apply(helpers.interpretID)
-    # ebov['KGH_id'] = ebov.sample_id.apply(
-    #     helpers.checkIDstructure).apply(lambda x: not x)
-    #
-    # ebov['outcome'] = ebov.outcome.apply(helpers.cleanOutcome)
-    # ebov['cohort'] = "Ebola"
-    # ebov['experimentID'] = ebov.apply(
-    #     lambda x: "ebov_seq" + str(x.name).zfill(3), axis=1)
-    # ebov['genbankID'] = ebov.ncbi_accession
-    # ebov['measurementTechnique'] = "viral sequencing"
-    # ebov['dateModified'] = today
-    # ebov['cvisb_data'] = False
-    # ebov['publisher'] = ebov.apply(getPublisher, axis=1)
-    # ebov['citation'] = ebov.publisher.apply(helpers.getCitation)
-    #
-    # # Read in Ebola sequence data
-    # ebov_seq = list(SeqIO.parse(
-    #     "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/expt_summary_data/viral_seq/ebola_wg_ntseq_names_02152019_orfs.fasta", "fasta"))
-    # ebov['data'] = None
-    # ebov = getDNAseq(ebov_seq, ebov, 'sample_id', "Ebola")
-    # sum(ebov.data.apply(lambda x: x is None))
-    #
-    # ebov[ebov.data.apply(lambda x: x is None)]
-    # ebov = pd.merge(ebov, ids, how="left", indicator=True,
-    #                right_on="ID", left_on="privatePatientID")
-    # ebov.columns
-    # ebov['mergeIssue'] = None
-    # ebov = helpers.checkMerge2(ebov,
-    #                           mergeCols2Check=['outcome', 'cohort'],
-    #                           df1_label="Ebola Viral Seq Data", df2_label="Tulane metadata",
-    #                           mergeCol="ID", dropMerge=False,
-    #                           errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
-    #
-    # ebov.mergeIssue.value_counts()
-    #
-    # ebov.loc[ebov.mergeIssue == ebov.mergeIssue, ['sample_id', 'ncbi_accession',
-    #                                            'outcome', 'outcome_x', 'outcome_y', 'cohort', 'cohort_x', 'cohort_y']]
-    # ebov.groupby('KGH_id')._merge.value_counts()
-
 
     # [Merge and export: experimental data]  ----------------------------------------------------------------------------------------------------
     # expts = pd.concat([ebov, lasv])
@@ -292,8 +248,8 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
         helpers.log_msg("-" * 50, verbose)
     # [Pull out the data we need]  ----------------------------------------------------------------------------------------------------
     experiments = expts[exptCols]
-    all_dwnlds = get_viralseq_downloads(today, dwnlds[downloadCols], expts, '0.1', "Lassa")
-    ds = get_viralseq_dataset(today, dwnlds, expts, '0.2', "Lassa")
+    all_dwnlds = get_viralseq_downloads(today, dwnlds[downloadCols], expts, version, "Lassa")
+    ds = get_viralseq_dataset(today, dwnlds, expts, version, "Lassa")
 
     # [Export]  ----------------------------------------------------------------------------------------------------
     if(saveFiles):
@@ -334,7 +290,7 @@ def getDNAseq(all_seq, df, verbose, df_id, virus, seq_type="DNAsequence", segmen
             helpers.log_msg(f"DATA ERROR: no patient found in sequence metadata file for sequence {seq.id}", verbose)
             helpers.log_msg("-" * 50, verbose)
         seq_obj = [{seq_type: str(seq.seq).upper(), "@type": data_type,
-                    "virus": virus, "segment": segment}]
+                    "virus": virus, "virusSegment": segment}]
         df.at[df[df_id] == id, 'data'] = seq_obj
     return(df)
 

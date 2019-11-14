@@ -12,7 +12,7 @@ import helpers
 """
 datsetVirus should be Ebola || Lassa
 """
-def get_viralseq_dataset(dateModified, downloads, experiments, version, datasetVirus):
+def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetVirus):
     ds = {}
 
     # --- static variables ---
@@ -21,6 +21,7 @@ def get_viralseq_dataset(dateModified, downloads, experiments, version, datasetV
     ds["@type"] = "Dataset"
     ds["includedInDataCatalog"]= ["https://data.cvisb.org/"]
     ds["measurementCategory"] = "viral sequencing"
+    ds["url"] = "https://github.com/cvisb/curated-alignments"
 
     if(datasetVirus == "Ebola"):
         ds["identifier"] = "ebola-viral-seq"
@@ -48,10 +49,9 @@ def get_viralseq_dataset(dateModified, downloads, experiments, version, datasetV
     # data downloads
     dwnld_ids = list(downloads.loc[downloads.includedInDataset == ds["identifier"], 'identifier'])
     ds["dataDownloadIDs"] = dwnld_ids
-    # pulled from experiments
-    expts = experiments[experiments.cohort == datasetVirus]
-    ds["spatialCoverage"] = helpers.getUnique(expts, "country")
-    ds["measurementTechnique"] = helpers.getUnique(expts, "measurementTechnique")
+    # pulled from metadata
+    ds["spatialCoverage"] = helpers.getUnique(metadata, "country")
+    ds["measurementTechnique"] = helpers.getUnique(metadata, "measurementTechnique")
 
     return(pd.DataFrame([ds]))
 

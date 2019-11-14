@@ -7,26 +7,31 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 # Helper functions for cleanup...
 import helpers
 
-ALIGNMENTS = [{"virus": "Lassa",
-               "filename": "LASV_NP-GP_2019-09-11.fasta",
-               "description": "Lassa virus NP-GP alignment",
-               "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP-GP_2019-09-11.fasta"}]
+ALIGNMENTS = [
+    {"virus": "Lassa",
+     "filename": "LASV_NP-GP_2019-09-11.fasta",
+     "description": "Lassa virus NP-GP alignment",
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP-GP_2019-09-11.fasta"},
+    {"virus": "Ebola",
+     "filename": "clean_ebola_orfs_aln_2019.11.12.fasta",
+     "description": "Ebola virus alignment",
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola"}
+]
 
 
 def get_viralseq_downloads(dateModified, downloads, experiments, version, datasetVirus):
     # Combine together curated lassa sequence, curated ebola sequence, and all the individual raw files (contained in downloads, a DataFrame)
     lasv = pd.DataFrame()
 
-
     # Make sure arrays are arrays
-    downloads['measurementTechnique'] = downloads.measurementTechnique.apply(
-        helpers.listify)
+    downloads['measurementTechnique'] = downloads.measurementTechnique.apply(helpers.listify)
     downloads['citation'] = downloads.citation.apply(helpers.listify)
     ds = downloads
 
     for file in ALIGNMENTS:
-        download = get_lasv_curated(dateModified, "0.1", experiments, datasetVirus, file['filename'], file['description'], file['url'])
-        ds = ds.append(download, ignore_index=True)
+        if(file['virus'] == datasetVirus):
+            download = get_curated(dateModified, version, experiments, datasetVirus, file['filename'], file['description'], file['url'])
+            ds = ds.append(download, ignore_index=True)
 
     return(pd.DataFrame(ds))
 
@@ -35,12 +40,11 @@ def get_viralseq_downloads(dateModified, downloads, experiments, version, datase
 """
 
 
-def get_lasv_curated(dateModified, version, experiments, datasetVirus, filename, description, url, virusSegment=None):
+def get_curated(dateModified, version, experiments, datasetVirus, filename, description, url, virusSegment=None):
     ds = {}
 
- # Filter out only the experiments which are "curated" and for that particular virus
-    expts = experiments[(experiments.cohort == datasetVirus)
-                        & experiments.inAlignment]
+ # Filter out only the experiments which are "curated"
+    expts = experiments[experiments.inAlignment]
 
     # --- static variables ---
     # identifiers
@@ -78,16 +82,8 @@ def get_lasv_curated(dateModified, version, experiments, datasetVirus, filename,
     ds['citation'] = helpers.getUnique(expts, "citation")
     # Flatten citations from list of lists to list
     # ds['citation'] = ds.citation.apply(lambda l: [item for sublist in l for item in sublist])
-    ds["measurementTechnique"] = helpers.getUnique(
-        expts, "measurementTechnique")
+    ds["measurementTechnique"] = helpers.getUnique(expts, "measurementTechnique")
     ds["experimentIDs"] = helpers.getUnique(expts, "experimentID")
 
     return(ds)
     return(pd.DataFrame(ds))
-
-
-# get_lasv_curated("2019-10-01", "1", [])
-#
-#
-#
-# get_lasv_curated("2019-10-01", "1", [])['identifier']

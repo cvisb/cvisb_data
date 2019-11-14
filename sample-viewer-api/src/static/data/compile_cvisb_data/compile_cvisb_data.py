@@ -8,17 +8,39 @@
 # @license:     Apache-2.0
 # @date:        31 October 2019
 # @use:         python compile_cvisb_data.py # imports / saves all
-# @use:         python compile_cvisb_data.py --sources patients hla lassa-viral-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa viral sequencing data (from Andersen lab)
+# @use:         python compile_cvisb_data.py -t patients hla lassa-viral-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa viral sequencing data (from Andersen lab)
 
 import pandas as pd
 import argparse
 import json
+import logging
+from helpers import setupLogging
+from helpers import log_msg
+from datetime import datetime
 
 # --- cleanup modules ---
 import clean_viral_seq as viralseq
 import clean_serology as serology
 import clean_hla as hla
+import clean_patients as patients
 import config
+
+"""
+Parser inputs
+"""
+# setup command line argument parser
+parser = argparse.ArgumentParser(description='Compile together data for CViSB from raw files')
+parser.add_argument('--nosave', '-n', default=False, action='store_true',
+                    help='supress saving all combined data as .jsons for upload')
+parser.add_argument('--export-sample', '-e', required=False, type=int, default=0,
+                    help='number of records to save a portion of as a test upload; 0 by default (as in, do not save a sample aside from the full download)')
+parser.add_argument("--types", "-t", required=False,
+                    # 0 or more values expected => creates a list
+                    help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-viral-seq', 'ebola-viral-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
+                    type=str, default=["patients", "hla", "lassa-viral-seq", "systems-serology"])
+                    # type=str, default=["patients", "hla", "lassa-viral-seq", "ebola-viral-seq", "systems-serology"])
+parser.add_argument('--verbose', '-v', default=False, action='store_true', help='whether to print log file to the console')
+
 
 """
 Function to call when fed the "types" argument.
@@ -26,25 +48,46 @@ Each function should return a dict of form:
 { "patient": [...], "sample": [...], "dataset": [...], "datadownload": [...], "experiment": [...] }
 """
 SWITCHER = {
-    "patients": lambda: random_msg("patients!!"),
-    "hla": lambda:  hla.clean_hla(config.EXPORTDIR, config.HLA_FILE, config.HLA_DATE, config.HLA_VERSION, config.HLA_UPDATEDBY, config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS, config.SAVEINIVIDUAL),
-    "systems-serology": lambda: serology.clean_serology(config.EXPORTDIR, config.SEROLOGY_DATE, config.SEROLOGY_VERSION),
+    "patient-dictionary": lambda: patients.compile_patient_roster(config.ACUTE_IDS_FILE, config.ACUTE_LASSA_FILE,
+    config.SURVIVOR_IDS, config.SURVIVOR_EBOLA_FILE, config.DICTCOLS,
+    config.PATIENTS_DATE, config.PATIENTS_UPDATEDBY, config.PATIENTS_VERSION, config.VERBOSE),
+    "patients": lambda: patients.compile_patients(config.ACUTE_IDS_FILE, config.ACUTE_LASSA_IDS, config.ACUTE_LASSA_FILE,
+    config.SURVIVOR_IDS, config.SURVIVOR_EBOLA_FILE, config.PATIENTCOLS, config.EXPTCOLS, config.DICTCOLS,
+    config.PATIENTS_DATE, config.PATIENTS_UPDATEDBY, config.PATIENTS_VERSION, config.VERBOSE),
+    "hla": lambda:  hla.clean_hla(config.EXPORTDIR, config.HLA_FILE, config.HLA_DATE, config.HLA_VERSION, config.HLA_UPDATEDBY, config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS, config.SAVEINIVIDUAL, config.VERBOSE),
+    "systems-serology": lambda: serology.clean_serology(config.SEROLOGY_FILE, config.EXPTCOLS,
+    config.SEROLOGY_UPDATEDBY, config.SEROLOGY_DATE, config.SEROLOGY_VERSION, config.VERBOSE, config.EXPORTDIR),
     "lassa-viral-seq": lambda: viralseq.clean_viral_seq(config.EXPORTDIR, config.LVIRAL_AAFILE, config.LVIRAL_ALIGNEDFILE,
                                                         config.LVIRAL_RAWFILE, config.LVIRAL_MDFILE, config.ID_DICT,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
-                                                        config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY, config.SAVEINIVIDUAL),
-    "ebola-viral-seq": lambda: random_msg("Eviral!!")
+                                                        config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
+                                                        config.SAVEINIVIDUAL, config.VERBOSE),
+    "ebola-viral-seq": lambda: viralseq.clean_ebola_viral_seq(config.EXPORTDIR, config.EVIRAL_ALIGNEDFILE,
+                                                        config.EVIRAL_MDFILE,
+                                                        config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
+                                                        config.EVIRAL_DATE, config.EVIRAL_VERSION, config.EVIRAL_UPDATEDBY,
+                                                        config.SAVEINIVIDUAL, config.VERBOSE)
 }
+
+
+def call_cleaning(type, *args):
+    result = SWITCHER.get(type, lambda *_: "ERROR: source type not valid")(*args)
+    return(result)
+
+"""
+Logging setup
+"""
+setupLogging(config.LOGFILE)
+
 
 """
 Compiles together all data after they have been cleaned, compiled, and coerced into
 the CViSB data schema format.  After each cleanup function has been called, the data
 are saved as a .json to be uploaded.
 """
-
-
 def compile_data(args):
-    print("compiling")
+    config.VERBOSE = args.verbose
+    log_msg(f"{datetime.today()}: starting CViSB data cleanup", args.verbose)
     # empty arrays to hold results
     patients = pd.DataFrame()
     samples = pd.DataFrame()
@@ -54,14 +97,17 @@ def compile_data(args):
 
     # clean, then combine.
     for type in args.types:
-        print(f"\ncleaning {type}")
+        log_msg(f"\n{'*'*150}", args.verbose)
+        log_msg(f"cleaning {type}", args.verbose)
 
         result = call_cleaning(type)
-        print(f"\t{len(result['patient'])} patients added.")
-        print(f"\t{len(result['sample'])} samples added.")
-        print(f"\t{len(result['experiment'])} experiments added.")
-        print(f"\t{len(result['dataset'])} datasets added.")
-        print(f"\t{len(result['datadownload'])} data downloads added.")
+        log_msg(f"\ncleaning for {type} finished.", args.verbose)
+        log_msg(f"\t{len(result['patient'])} patients added.", args.verbose)
+        log_msg(f"\t{len(result['sample'])} samples added.", args.verbose)
+        log_msg(f"\t{len(result['experiment'])} experiments added.", args.verbose)
+        log_msg(f"\t{len(result['dataset'])} datasets added.", args.verbose)
+        log_msg(f"\t{len(result['datadownload'])} data downloads added.", args.verbose)
+        log_msg(f"{'*'*150}\n", args.verbose)
 
         patients = pd.concat([patients, result["patient"]], ignore_index=True)
         samples = pd.concat([samples, result["sample"]], ignore_index=True)
@@ -71,12 +117,26 @@ def compile_data(args):
         datadownloads = pd.concat(
             [datadownloads, result["datadownload"]], ignore_index=True)
 
+    # check that there's no duplicate IDs!
+    log_msg("\n\nChecking IDs to ensure no duplicates...", args.verbose)
+    if(len(patients) > 0):
+        checkIDs(patients, 'patient', "patientID", args.verbose)
+    if(len(samples) > 0):
+        checkIDs(samples, 'sample', "sampleID", args.verbose)
+    if(len(experiments) > 0):
+        checkIDs(experiments, 'experiment', "experimentID", args.verbose)
+    if(len(datasets) > 0):
+        checkIDs(datasets, "dataset", "identifier", args.verbose)
+    if(len(datadownloads) > 0):
+        checkIDs(datadownloads, "datadownload", "identifier", args.verbose)
+    log_msg("done checking for duplicate IDs.", args.verbose)
+
     combined = {"patient": patients, "sample": samples, "dataset": datasets,
                 "datadownload": datadownloads, "experiment": experiments}
     # print(combined)
 
     # --- save jsons ---
-    if(args.save):
+    if(not args.nosave):
         saveJson(
             combined['patient'], f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}.json")
         saveJson(
@@ -116,18 +176,13 @@ def compile_data(args):
         else:
             esample = combined['experiment']
 
-        saveJson(psample, f"{config.EXPORTDIR}/patients/CViSB__patient-sample_{config.today}.json")
-        saveJson(ssample, f"{config.EXPORTDIR}/samples/CViSB__sample-sample_{config.today}.json")
-        saveJson(dssample, f"{config.EXPORTDIR}/datasets/CViSB__dataset-sample_{config.today}.json")
-        saveJson(dsample, f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload-sample_{config.today}.json")
-        saveJson(esample, f"{config.EXPORTDIR}/experiments/CViSB__experiment-sample_{config.today}.json")
+        saveJson(psample, f"{config.EXPORTDIR}/patients/CViSB__patient-randomsample_{config.today}.json")
+        saveJson(ssample, f"{config.EXPORTDIR}/samples/CViSB__sample-randomsample_{config.today}.json")
+        saveJson(dssample, f"{config.EXPORTDIR}/datasets/CViSB__dataset-randomsample_{config.today}.json")
+        saveJson(dsample, f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload-randomsample_{config.today}.json")
+        saveJson(esample, f"{config.EXPORTDIR}/experiments/CViSB__experiment-randomsample_{config.today}.json")
 
     return(combined)
-
-
-def call_cleaning(type, *args):
-    x = SWITCHER.get(type, lambda *_: "ERROR: source type not valid")(*args)
-    return(x)
 
 
 def saveJson(data, export_file):
@@ -136,28 +191,11 @@ def saveJson(data, export_file):
     data.to_json(export_file, orient="records")
 
 
-def random_msg(x):
-    print(x)
-    return({"patient": pd.DataFrame(), "sample": pd.DataFrame(), "dataset": pd.DataFrame(), "datadownload": pd.DataFrame(), "experiment": pd.DataFrame()})
-
-
-# setup command line argument parser
-parser = argparse.ArgumentParser(
-    description='Compile together data for CViSB from raw files')
-parser.add_argument('--save', '-s', required=False, type=bool, default=True,
-                    help='save all combined data as .jsons for upload; True by default')
-parser.add_argument('--export-sample', '-e', required=False, type=int, default=0,
-                    help='number of records to save a portion of as a test uploade; 0 by default (as in, do not save a sample aside from the full download)')
-# parser.add_argument('--output-schema-dir', '-o', required=True, help='output directory containing yaml files in schema.org style with jsonschema validation object embedded in root entity')
-# parser.add_argument('--error-file', '-e', required=True, help='path to output error log')
-# parser.add_argument('--auth-list-file', '-a', required=True, help='path to output file containing entity authentication information')
-# parser.add_argument('--dev', required=False, help='flag indicating that output schema references should be made using the dev server URL', action='store_true')
-# parser.add_argument('--verbose','-v', required=False, help='flag to log stuff to terminal', action='store_true')
-
-parser.add_argument("--types", "-t", required=False,
-                    # 0 or more values expected => creates a list
-                    help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-viral-seq', 'ebola-viral-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
-                    type=str, default=["patients", "hla", "lassa-viral-seq", "ebola-viral-seq", "systems-serology"])
+def checkIDs(df, type, variable, verbose):
+    dupes = df[df.duplicated(subset=[variable])]
+    if(len(dupes) > 0):
+        log_msg(f"\tDATA ERROR: {type} contains {len(dupes)} duplicate ids:", verbose)
+        log_msg("\t\t" + str(pd.unique(dupes[variable])), verbose)
 
 if __name__ == '__main__':
     compile_data(parser.parse_args())
