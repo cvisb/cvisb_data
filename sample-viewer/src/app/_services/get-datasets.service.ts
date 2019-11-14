@@ -70,7 +70,7 @@ export class getDatasetsService {
                 dataset['counts'] = summaryData[idx];
               })
               // console.log(datasets);
-              return datasets;
+              return datasets.sort((a,b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 1 : 0));
             }),
             catchError(e => {
               console.log(e)
