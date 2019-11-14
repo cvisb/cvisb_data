@@ -1,14 +1,16 @@
 <header class="container cvisb-header" [ngClass]="{'authorized': authorized, 'prod': prodEnvironment, 'dev': !prodEnvironment}" *ngIf="prodEnvironment === true || prodEnvironment === false">
   <div class="logo">
     <a routerLink="./home" alt="home link">
-      <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="authorized"/>
-      <img src="/assets/img/cvisb_icon_600px.png" alt="CViSB logo" *ngIf="!authorized"/>
+      <img src="/assets/img/vhfc_logo_bigger600px.svg" alt="VHFC logo" *ngIf="authorized"/>
+      <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="!authorized"/>
+      <!-- <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="authorized"/> -->
+      <!-- <img src="/assets/img/cvisb_icon_600px.png" alt="CViSB logo" *ngIf="!authorized"/> -->
     </a>
-    <div class="dev-warning" *ngIf="!prodEnvironment && !authorized">
+    <div class="dev-warning" *ngIf="!prodEnvironment">
       Development version
     </div>
     <div class="authorized-warning" *ngIf="authorized">
-      Authorized User
+      VHFC-Authorized Data Portal
     </div>
   </div>
 
