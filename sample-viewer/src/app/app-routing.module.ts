@@ -33,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'dataset/hla', loadChildren: () => import('./hla/hla.module').then(m => m.HlaModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
   { path: 'dataset/systems-serology', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
   { path: 'dataset/lassa-viral-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-viral-seq" } },
+  { path: 'dataset/ebola-viral-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "ebola-viral-seq" } },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
