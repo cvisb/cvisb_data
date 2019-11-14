@@ -268,7 +268,7 @@ export class getDatasetsService {
   Needs to be a POST call, to return a single object for a query.
    */
   getDatasetSources(dsid?: string): Observable<any> {
-    console.log("calling dataset sources")
+    // this.loadingSubject.next(true);
 
     let qstring: string;
     if (dsid) {
@@ -279,7 +279,7 @@ export class getDatasetsService {
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", "includedInDataset.keyword(citation.identifier.keyword)")
+      .set("facets", "includedInDataset.keyword(citation.pmid.keyword)")
       .set("size", "0")
       .set("facet_size", "10000");
 
@@ -287,10 +287,10 @@ export class getDatasetsService {
       .pipe(
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
-          let ids = counts.map(d => d["citation.identifier.keyword"]).flatMap(d => d.terms).map(d => d.term);
+          let ids = counts.map(d => d["citation.pmid.keyword"]).flatMap(d => d.terms).map(d => d.term);
           let id_string = `"${ids.join('","')}"`;
 
-          return this.apiSvc.post("experiment", id_string, "citation.indentifier", "citation").pipe(
+          return this.apiSvc.post("experiment", id_string, "citation.pmid", "citation").pipe(
             map(citations => {
               console.log(counts);
               console.log(citationCts)
