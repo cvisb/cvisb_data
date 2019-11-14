@@ -33,10 +33,10 @@
     </div>
 
     <div class="citation-group" *ngFor="let expt of experiments">
-      <h4 class="data-type"><a [routerLink]="['/dataset', expt.includedInDataset]">{{expt.dataset_name}} data</a></h4>
+      <h4 class="data-type"><a [routerLink]="['/dataset', expt.term]">{{expt.dataset_name}} data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of expt.sources">
-          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/dataset/' + expt.includedInDataset }">
+          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/dataset/' + expt.term }">
           </ng-container>
         </ng-container>
       </div>
@@ -46,9 +46,9 @@
 </div>
 
 <ng-template #source_citation let-source="source" let-url="url">
-  <div [ngSwitch]="source.type" class="source">
-    <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'" verbosity="simple"></app-format-citation>
-    <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
+  <div [ngSwitch]="source['@type']" class="source">
+    <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'ScholarlyArticle'" verbosity="simple"></app-format-citation>
+    <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="publisher-group" *ngSwitchCase="'Publisher'"></app-format-publisher>
     <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
     <app-format-publisher [publisher]="source" [source_url]="url" verbosity="full" class="unknown-group" *ngSwithDefault></app-format-publisher>
   </div>

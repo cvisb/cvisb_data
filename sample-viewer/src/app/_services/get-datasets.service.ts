@@ -308,6 +308,7 @@ export class getDatasetsService {
                     source['source'] = cite_objs[0];
                   }
                   source['percent'] = source.count / dataset_total;
+                  source['@type'] = "ScholarlyArticle";
                 })
 
               })
