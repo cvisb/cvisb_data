@@ -19,7 +19,7 @@ export class CuratedAlignmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasetSvc.getFiles(`additionalType:"curated data" AND includedInDataset:${this.includedInDataset}`).subscribe(files => {
+    this.datasetSvc.getFiles(`additionalType:"curated data" AND includedInDataset:"${this.includedInDataset}"`).subscribe(files => {
       this.curated = files;
     })
   }

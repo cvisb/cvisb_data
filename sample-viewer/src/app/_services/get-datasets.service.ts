@@ -165,7 +165,7 @@ export class getDatasetsService {
   getDataset(datasetID: string, idVar: string = "identifier"): Observable<any> {
     return forkJoin(
       this.apiSvc.fetchAll("datadownload", new HttpParams()
-        .set('q', `includedInDataset:${datasetID}`)
+        .set('q', `includedInDataset:"${datasetID}"`)
       ),
       this.getDatasets(datasetID, idVar),
       // this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
