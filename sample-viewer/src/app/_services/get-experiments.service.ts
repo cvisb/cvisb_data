@@ -37,7 +37,7 @@ export class GetExperimentsService {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['dataset_name'] = filtered['dataset_name'];
         })
-        return (expts);
+        return (expts.sort((a,b) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 1 : 0)));
       })
     );
   }
