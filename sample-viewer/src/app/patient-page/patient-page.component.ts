@@ -10,7 +10,7 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { AuthService } from '../_services';
 import { AuthState } from "../_models";
 
-import { flatMapDeep } from 'lodash';
+import { flatMapDeep, uniqWith, isEqual } from 'lodash';
 
 @Component({
   selector: 'app-patient-page',
@@ -88,7 +88,7 @@ export class PatientPageComponent {
         // console.log(this.expts)
         // console.log(this.exptTypes)
 
-        this.publications = flatMapDeep(expts['hits'], d => d.citation).filter(d => d);
+        this.publications = uniqWith(flatMapDeep(expts['hits'], d => d.citation).filter(d => d), isEqual);
       })
     })
 
