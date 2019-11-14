@@ -1,11 +1,12 @@
 .citation {
+  display: flex;
+  justify-content: space-between;
 }
 
-.links {
+.citation-links {
   font-size: 0.75em;
   margin-top: 3px;
-  justify-content: flex-end;
-
+  // justify-content: flex-end;
 }
 
 #authors {
