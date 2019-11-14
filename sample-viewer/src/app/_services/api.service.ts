@@ -72,10 +72,9 @@ export class ApiService {
       .set("fields", returnParams)
       .set("size", "1");
 
-    return this.myhttp.post<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+    return this.myhttp.post<any[]>(`${environment.api_url}/api/${endpoint}/query`, params, {
       observe: 'response',
-      headers: headers,
-      params: params
+      headers: headers
     }).pipe(
       map(data => {
         console.log(data)
