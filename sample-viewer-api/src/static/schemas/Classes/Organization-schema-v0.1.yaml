@@ -170,3 +170,15 @@
   owl:cardinality:       one
   marginality:           optional
   authenticated:         false
+
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          "Type, used for internal purposes: for instance, Publisher"
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:Organization
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
