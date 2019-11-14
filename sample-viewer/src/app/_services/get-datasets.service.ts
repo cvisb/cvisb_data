@@ -262,7 +262,7 @@ export class getDatasetsService {
 
   getDatasetSources(): Observable<any> {
     console.log("calling dataset sources")
-    return this.apiSvc.post("experiment", "31132351,26276630", "citation.pmid", "citation").pipe(
+    return this.apiSvc.post("experiment", "31132351,26276630", "citation.indentifier", "citation").pipe(
       map(citations => {
         console.log(citations)
       })
