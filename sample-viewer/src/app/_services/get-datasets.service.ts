@@ -298,6 +298,9 @@ export class getDatasetsService {
               let citation_dict = flatMapDeep(citations.body, d => d.citation);
 
               counts.forEach(dataset => {
+                let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
+                dataset['dataset_name'] = ds_obj['dataset_name'];
+                dataset['measurementCategory'] = ds_obj['measurementCategory'];
                 dataset['sources'] = cloneDeep(dataset['citation.pmid.keyword']['terms']);
                 delete dataset['citation.pmid.keyword'];
                 let dataset_total: number = dataset.sources.reduce((total: number, x) => total + x.count, 0);
@@ -306,13 +309,13 @@ export class getDatasetsService {
                   let cite_objs = citation_dict.filter(d => d.pmid == source.term);
                   if (cite_objs.length > 0) {
                     source['source'] = cite_objs[0];
+                    source['source']['@type'] = "ScholarlyArticle";
                   }
                   source['percent'] = source.count / dataset_total;
-                  source['@type'] = "ScholarlyArticle";
                 })
 
               })
-              return (counts);
+              return (counts.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
             }),
             catchError(e => {
               console.log(e)

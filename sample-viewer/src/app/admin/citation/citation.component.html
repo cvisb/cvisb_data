@@ -36,7 +36,7 @@
       <h4 class="data-type"><a [routerLink]="['/dataset', expt.term]">{{expt.dataset_name}} data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of expt.sources">
-          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source, url: host_url + '/dataset/' + expt.term }">
+          <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source.source, url: host_url + '/dataset/' + expt.term }">
           </ng-container>
         </ng-container>
       </div>
