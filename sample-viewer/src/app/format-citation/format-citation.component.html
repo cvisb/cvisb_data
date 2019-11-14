@@ -10,7 +10,7 @@
           </a>
         </span>
 
-        <span id="journal"><i>{{citation.journalNameAbbrev}}</i></span>
+        <span id="journal" *ngIf="citation.journalNameAbbrev"><i>{{citation.journalNameAbbrev}}</i></span>
 
         <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>
 
@@ -18,7 +18,7 @@
 
       <!-- VERBOSE -->
       <ng-container *ngSwitchCase="'verbose'">
-        <span id="title">
+        <span id="title" *ngIf="citation.name">
           <a [href]="citation.url" target="_blank" rel="noreferrer">
             <span [outerHTML]="citation.name"></span>
           </a>.
@@ -29,7 +29,7 @@
             {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
           </span>
         </span>
-        <span id="journal"><i>{{citation.journalName}}</i></span>
+        <span id="journal" *ngIf="citation.journalName"><i>{{citation.journalName}}</i></span>
         <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>
         <span id="vol" *ngIf="citation.volumeNumber">, {{citation.volumeNumber}}</span>
         <span id="issue" *ngIf="citation.issueNumber">, {{citation.issueNumber}}</span>
@@ -59,18 +59,18 @@
         <i>et al.</i>
       </a>
     </span>
-    <span id="journal"><i>{{citation.journalName}}</i></span>
+    <span id="journal" *ngIf="citation.journalName"><i>{{citation.journalName}}</i></span>
 
-    <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>, <span id="vol">{{citation.volumeNumber}}</span>, <span id="issue">{{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
+    <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span><span id="vol" *ngIf="citation.volumeNumber">, {{citation.volumeNumber}}</span><span id="issue" *ngIf="citation.issueNumber">, {{citation.issueNumber}}</span><span id="page" *ngIf="citation.pagination">, {{citation.pagination}}</span>.
 
   </ng-template>
 
   <ng-template #links let-citation="citation">
     <div class="links container">
-      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.pmid" target="_blank" rel="noreferrer">{{citation.pmid}}</a></span>
+      <span id="pmid" *ngIf="citation.pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.pmid" target="_blank" rel="noreferrer">{{citation.pmid}}</a></span>
 
-      <span class="data-separator"></span>
-      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">{{ citation.doi }}</a></span>
+      <span class="data-separator" *ngIf="citation.pmid && citation.doi"></span>
+      <span id="doi" *ngIf="citation.doi">DOI: <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">{{ citation.doi }}</a></span>
     </div>
   </ng-template>
 
