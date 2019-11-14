@@ -292,7 +292,6 @@ export class getDatasetsService {
           dataset['dataset_name'] = ds_obj['dataset_name'];
           dataset['measurementCategory'] = ds_obj['measurementCategory'];
         })
-        console.log(sources)
 
         return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
       }))

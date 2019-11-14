@@ -38,7 +38,6 @@ export class GetExperimentsService {
           d['dataset_name'] = filtered['dataset_name'];
           d['measurementCategory'] = filtered['measurementCategory'];
         })
-        console.log(expts)
         return (expts.sort((a,b) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
       })
     );
