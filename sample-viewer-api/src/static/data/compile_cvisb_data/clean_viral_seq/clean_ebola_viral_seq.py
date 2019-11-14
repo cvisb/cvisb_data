@@ -15,7 +15,8 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     log_dir = f"{export_dir}/log"
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
-    expt_cols.extend(['genbankID', 'inAlignment', 'cvisb_data'])
+    exptCols = expt_cols.copy()
+    exptCols.extend(['genbankID', 'inAlignment', 'cvisb_data'])
 
     # --- read in metadata ---
     md = pd.read_csv(metadata_file)
@@ -123,7 +124,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     # --- partition data to different endpoints ---
     patients = md.loc[~ md.KGH_id, patient_cols]
     samples = md.loc[~ md.KGH_id, sample_cols]
-    experiments = merged[expt_cols]
+    experiments = merged[exptCols]
 
     # --- Call to get data downloads, dataset ---
     dwnlds = md[download_cols]
