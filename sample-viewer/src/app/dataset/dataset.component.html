@@ -10,7 +10,7 @@
       <div class="dataset-count">
         {{datasets.length}} available datasets
       </div>
-      <a class="dataset-links" *ngFor="let dataset of datasets; idx = index" [routerLink]="['../']" [fragment]="dataset.identifer" (click)="scroll(target)">
+      <a class="dataset-links" *ngFor="let dataset of datasets; let idx = index" [routerLink]="['../']" [fragment]="dataset.identifer" (click)="scroll(target)">
         {{dataset.name}}
         <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
       </a>
