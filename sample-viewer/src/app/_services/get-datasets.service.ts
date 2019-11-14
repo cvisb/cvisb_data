@@ -73,7 +73,7 @@ export class getDatasetsService {
                 dataset['counts'] = summaryData[idx];
               })
               // console.log(datasets);
-              return datasets.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 1 : 0));
+              return datasets.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
             }),
             catchError(e => {
               console.log(e)
@@ -288,11 +288,13 @@ export class getDatasetsService {
           }).value();
 
         sources.forEach(dataset => {
-          dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
+          let ds_obj = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")
+          dataset['dataset_name'] = ds_obj['dataset_name'];
+          dataset['measurementCategory'] = ds_obj['measurementCategory'];
         })
         console.log(sources)
 
-        return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 1 : 0)));
+        return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
       }))
   }
 
