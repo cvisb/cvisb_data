@@ -268,7 +268,9 @@ export class getDatasetsService {
   Needs to be a POST call, to return a single object for a query.
    */
   getDatasetSources(dsid?: string): Observable<any> {
-    // this.loadingSubject.next(true);
+    this.loadingSubject.next(true);
+
+    let citation_variable = "citation.identifier";
 
     let qstring: string;
     if (dsid) {
@@ -279,7 +281,7 @@ export class getDatasetsService {
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", "includedInDataset.keyword(citation.pmid.keyword)")
+      .set("facets", `includedInDataset.keyword(${citation_variable}.keyword)`)
       .set("size", "0")
       .set("facet_size", "10000");
 
@@ -287,11 +289,11 @@ export class getDatasetsService {
       .pipe(
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
-          let ids = uniq(flatMapDeep(counts.map(d => d["citation.pmid.keyword"]), d => d.terms).map(d => d.term));
+          let ids = uniq(flatMapDeep(counts.map(d => d[`${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
           let id_string = ids.join(",");
           // let id_string = `"${ids.join('","')}"`;
 
-          return this.apiSvc.post("experiment", id_string, "citation.pmid", "citation").pipe(
+          return this.apiSvc.post("experiment", id_string, citation_variable, "citation").pipe(
             map(citations => {
               console.log(counts);
               console.log(citations)
@@ -301,12 +303,12 @@ export class getDatasetsService {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
                 dataset['dataset_name'] = ds_obj['dataset_name'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
-                dataset['sources'] = cloneDeep(dataset['citation.pmid.keyword']['terms']);
-                delete dataset['citation.pmid.keyword'];
+                dataset['sources'] = cloneDeep(dataset[`${citation_variable}.keyword`]['terms']);
+                delete dataset[`${citation_variable}.keyword`];
                 let dataset_total: number = dataset.sources.reduce((total: number, x) => total + x.count, 0);
 
                 dataset.sources.forEach(source => {
-                  let cite_objs = citation_dict.filter(d => d.pmid == source.term);
+                  let cite_objs = citation_dict.filter(d => d.identifier == source.term);
                   if (cite_objs.length > 0) {
                     source['source'] = cite_objs[0];
                     source['source']['@type'] = "ScholarlyArticle";
