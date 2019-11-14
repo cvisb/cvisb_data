@@ -6,12 +6,22 @@
       <h1>Datasets</h1>
     </div>
 
+    <div class="container dataset-count-container">
+      <div class="dataset-count">
+        {{datasets.length}} available datasets
+      </div>
+      <a class="dataset-links" *ngFor="let dataset of datasets; idx = index" [routerLink]="['../']" [fragment]="dataset.identifer" (click)="scroll(target)">
+        {{dataset.name}}
+        <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
+      </a>
+    </div>
+
     <!-- <app-filter-files [datasets]="datasets"></app-filter-files> -->
   </div>
 
   <div class="container dataset-list">
     <!-- DATASET LOOP -->
-    <div class="container dataset" *ngFor="let dataset of datasets">
+    <div class="container dataset" *ngFor="let dataset of datasets" [id]="dataset.identifier">
       <div class="dataset-header">
         <div class="container container-header">
 

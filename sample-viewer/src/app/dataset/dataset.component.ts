@@ -31,6 +31,10 @@ export class DatasetComponent implements OnInit {
 
   }
 
+  public scroll(element: any) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
   ngOnInit() {
   }
 

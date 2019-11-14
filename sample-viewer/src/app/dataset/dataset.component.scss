@@ -22,6 +22,16 @@ $icon-size: 50px;
   padding: 15px;
 }
 
+.dataset-count-container {
+  margin-bottom: 20px;
+  color: $grey-600;
+}
+
+.dataset-count {
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
 .dataset-list {
   // background: red;
   // grid-column: col-start 1 / span 8;
