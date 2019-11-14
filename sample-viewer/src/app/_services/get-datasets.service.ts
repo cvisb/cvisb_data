@@ -50,7 +50,7 @@ export class getDatasetsService {
   getDatasets(id?: string, idVar?: string) {
     let qstring: string;
     if (id && idVar) {
-      qstring = `${idVar}:${id}`;
+      qstring = `${idVar}:"${id}"`;
     } else {
       qstring = "__all__";
     }
