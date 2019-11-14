@@ -29,6 +29,18 @@ def convertAuthor(authorObj):
             })
 
 
+def getSource(row):
+    if((row.citation == row.citation) & row.citation is not None):
+        citation = row.citation.copy()
+        citation['@type'] = "ScholarlyArticle"
+        return(citation)
+    if((row.publisher == row.publisher) & row.publisher is not None):
+        publisher = row.publisher.copy()
+        publisher['@type'] = "Publisher"
+        return(publisher)
+    default = {"identifier": 'unknown', "@type": "unknown", "name": "unknown"}
+    return(default)
+
 def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
     if(pmid == pmid):
         if(isinstance(pmid, str)):
