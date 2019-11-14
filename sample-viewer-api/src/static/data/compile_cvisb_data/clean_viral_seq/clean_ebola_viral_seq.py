@@ -69,8 +69,9 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date
     md['species'] = md.host.apply(helpers.convertSpecies)
-    # index from 1, not 0, to align with KGH standards
-    md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x + 1))
+    # Raphaelle using patient_timepoint as a binary if there are multiple measurements / patient
+    md['visitCode'] = None
+    # md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
     # Note: not technically true; if a KGH patient, could have patient / survivor data.
     # But-- since only uploading the non-KGH patient data, should be fine.
     md['hasPatientData'] = False
