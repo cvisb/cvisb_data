@@ -288,7 +288,8 @@ export class getDatasetsService {
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
           let ids = counts.map(d => d["citation.pmid.keyword"]).flatMap(d => d.terms).map(d => d.term);
-          let id_string = `"${ids.join('","')}"`;
+          let id_string = ids.join(",");
+          // let id_string = `"${ids.join('","')}"`;
 
           return this.apiSvc.post("experiment", id_string, "citation.pmid", "citation").pipe(
             map(citations => {
