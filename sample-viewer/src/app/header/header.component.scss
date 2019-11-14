@@ -80,13 +80,15 @@ img {
     img {
       margin: 0;
       height: 32px;
-      border-left: 1px solid accent(50);
+      border-left: 1px solid $grey-250;
+      // border-left: 1px solid accent(50);
       padding: 3px 10px 3px 23px;
     }
   }
 
   .user-name {
-    color: white;
+    // color: white;
+    color: $cvisb-theme;
     font-size: 12px;
     text-decoration: none;
 
@@ -95,7 +97,8 @@ img {
     }
 
     &:hover {
-      color: accent(100);
+      color: $cvisb-bright;
+      // color: accent(100);
     }
   }
 }
