@@ -60,6 +60,36 @@ export class ApiService {
     )
   }
 
+
+  post(endpoint: string, searchString: string, searchParam: string, returnParams: string) {
+    let headers = new HttpHeaders()
+      // .set('Accept', 'application/json')
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+
+    let params = new HttpParams()
+      .set("q", searchString)
+      .set("scopes", searchParam)
+      .set("fields", returnParams)
+      .set("size", "1");
+
+    return this.myhttp.post<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+      observe: 'response',
+      headers: headers,
+      params: params
+    }).pipe(
+      map(data => {
+        console.log(data)
+        return (data)
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
+  }
+
+
   // Sorting function, to convert sort variable into the proper syntax for ES
   // numeric variables should return just their string'd name
   // string variables need to be {string}.keyword

@@ -261,40 +261,46 @@ export class getDatasetsService {
   }
 
   getDatasetSources(): Observable<any> {
-    this.loadingSubject.next(true);
-    let params = new HttpParams()
-      .set("q", `__all__`)
-      .set("fields", "citation,publisher,includedInDataset");
-
-    return this.apiSvc.fetchAll("experiment", params).pipe(
-      finalize(() => {
-        this.loadingSubject.next(false)
-      }),
-      catchError(() => {
-        console.log('error getting dataset sources')
-        return (of([]));
-      }),
-      map(expts => {
-        expts = this.getSource(expts);
-
-        let sources = _(expts)
-          .groupBy('includedInDataset')
-          .map((items, key) => {
-            return {
-              sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
-              includedInDataset: key,
-              count: items.length
-            };
-          }).value();
-
-        sources.forEach(dataset => {
-          let ds_obj = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")
-          dataset['dataset_name'] = ds_obj['dataset_name'];
-          dataset['measurementCategory'] = ds_obj['measurementCategory'];
-        })
-
-        return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
-      }))
+    console.log("calling dataset sources")
+    return this.apiSvc.post("experiment", "31132351,26276630", "citation.pmid", "citation").pipe(
+      map(citations => {
+        console.log(citations)
+      })
+    )
+    // this.loadingSubject.next(true);
+    // let params = new HttpParams()
+    //   .set("q", `__all__`)
+    //   .set("fields", "citation,publisher,includedInDataset");
+    //
+    // return this.apiSvc.fetchAll("experiment", params).pipe(
+    //   finalize(() => {
+    //     this.loadingSubject.next(false)
+    //   }),
+    //   catchError(() => {
+    //     console.log('error getting dataset sources')
+    //     return (of([]));
+    //   }),
+    //   map(expts => {
+    //     expts = this.getSource(expts);
+    //
+    //     let sources = _(expts)
+    //       .groupBy('includedInDataset')
+    //       .map((items, key) => {
+    //         return {
+    //           sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
+    //           includedInDataset: key,
+    //           count: items.length
+    //         };
+    //       }).value();
+    //
+    //     sources.forEach(dataset => {
+    //       let ds_obj = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")
+    //       dataset['dataset_name'] = ds_obj['dataset_name'];
+    //       dataset['measurementCategory'] = ds_obj['measurementCategory'];
+    //     })
+    //
+    //     return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
+    //   }))
   }
 
   getPatientSources(): Observable<any> {
