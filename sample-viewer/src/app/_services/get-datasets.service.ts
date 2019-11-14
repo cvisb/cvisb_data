@@ -12,7 +12,7 @@ import { ApiService } from './api.service';
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
-import { cloneDeep, uniqWith, isEqual, flatMapDeep } from 'lodash';
+import { cloneDeep, uniqWith, uniq, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
 
 const SOURCES_KEY = makeStateKey('datasets.sources_result');
@@ -287,15 +287,31 @@ export class getDatasetsService {
       .pipe(
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
-          let ids = counts.map(d => d["citation.pmid.keyword"]).flatMap(d => d.terms).map(d => d.term);
+          let ids = uniq(flatMapDeep(counts.map(d => d["citation.pmid.keyword"]), d => d.terms).map(d => d.term));
           let id_string = ids.join(",");
           // let id_string = `"${ids.join('","')}"`;
 
           return this.apiSvc.post("experiment", id_string, "citation.pmid", "citation").pipe(
             map(citations => {
               console.log(counts);
-              console.log(citationCts)
               console.log(citations)
+              let citation_dict = flatMapDeep(citations.body, d => d.citation);
+
+              counts.forEach(dataset => {
+                dataset['sources'] = cloneDeep(dataset['citation.pmid.keyword']['terms']);
+                delete dataset['citation.pmid.keyword'];
+                let dataset_total: number = dataset.sources.reduce((total: number, x) => total + x.count, 0);
+
+                dataset.sources.forEach(source => {
+                  let cite_objs = citation_dict.filter(d => d.pmid == source.term);
+                  if (cite_objs.length > 0) {
+                    source['source'] = cite_objs[0];
+                  }
+                  source['percent'] = source.count / dataset_total;
+                })
+
+              })
+              return (counts);
             }),
             catchError(e => {
               console.log(e)
