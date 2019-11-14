@@ -77,7 +77,6 @@ export class ApiService {
       headers: headers
     }).pipe(
       map(data => {
-        console.log(data)
         return (data)
       }),
       catchError(e => {
