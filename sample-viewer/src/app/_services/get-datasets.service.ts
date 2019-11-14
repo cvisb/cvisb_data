@@ -283,20 +283,27 @@ export class getDatasetsService {
       .set("size", "0")
       .set("facet_size", "10000");
 
-    return this.apiSvc.get("experiment", params, 1000)
+    return this.apiSvc.get("experiment", params, 0)
       .pipe(
-        mergeMap((citationCts: any) => this.apiSvc.post("experiment", "31132351,26276630", "citation.indentifier", "citation").pipe(
-          map(citations => {
-            console.log(citationCts)
-            console.log(citations)
-          }),
-          catchError(e => {
-            console.log(e)
-            throwError(e);
-            return (new Observable<any>())
-          }),
-          finalize(() => this.loadingSubject.next(false))
-        )
+        mergeMap((citationCts: any) => {
+          let counts = citationCts.facets["includedInDataset.keyword"].terms;
+          let ids = counts.map(d => d["citation.identifier.keyword"]).flatMap(d => d.terms).map(d => d.term);
+          let id_string = `"${ids.join('","')}"`;
+
+          return this.apiSvc.post("experiment", id_string, "citation.indentifier", "citation").pipe(
+            map(citations => {
+              console.log(counts);
+              console.log(citationCts)
+              console.log(citations)
+            }),
+            catchError(e => {
+              console.log(e)
+              throwError(e);
+              return (new Observable<any>())
+            }),
+            finalize(() => this.loadingSubject.next(false))
+          )
+        }
         )
       );
   }
