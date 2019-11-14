@@ -101,6 +101,13 @@ a {
 .variable-value {
   font-weight: 400;
 }
+
+.spinner-container.container {
+    position: fixed;
+    left: 50%;
+    top: calc(50% - 111px);
+}
+
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;

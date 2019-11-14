@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError, forkJoin, of } from 'rxjs';
-import { map, catchError, mergeMap, tap } from "rxjs/operators";
+import { Observable, throwError, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { map, catchError, mergeMap, tap, finalize } from "rxjs/operators";
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { MyHttpClient } from './http-cookies.service';
@@ -25,6 +25,9 @@ export class getDatasetsService {
   schema_dataset: any;
   private sources_result;
 
+  // Loading spinner
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
 
   constructor(
     public http: HttpClient,
@@ -70,7 +73,7 @@ export class getDatasetsService {
                 dataset['counts'] = summaryData[idx];
               })
               // console.log(datasets);
-              return datasets.sort((a,b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 1 : 0));
+              return datasets.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 1 : 0));
             }),
             catchError(e => {
               console.log(e)
@@ -258,29 +261,39 @@ export class getDatasetsService {
   }
 
   getDatasetSources(): Observable<any> {
+    this.loadingSubject.next(true);
     let params = new HttpParams()
       .set("q", `__all__`)
       .set("fields", "citation,publisher,includedInDataset");
 
-    return this.apiSvc.fetchAll("experiment", params).pipe(map(expts => {
-      expts = this.getSource(expts);
+    return this.apiSvc.fetchAll("experiment", params).pipe(
+      finalize(() => {
+        this.loadingSubject.next(false)
+      }),
+      catchError(() => {
+        console.log('error getting dataset sources')
+        return (of([]));
+      }),
+      map(expts => {
+        expts = this.getSource(expts);
 
-      let sources = _(expts)
-        .groupBy('includedInDataset')
-        .map((items, key) => {
-          return {
-            sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
-            includedInDataset: key,
-            count: items.length
-          };
-        }).value();
+        let sources = _(expts)
+          .groupBy('includedInDataset')
+          .map((items, key) => {
+            return {
+              sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
+              includedInDataset: key,
+              count: items.length
+            };
+          }).value();
 
-      sources.forEach(dataset => {
-        dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
-      })
+        sources.forEach(dataset => {
+          dataset['dataset_name'] = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")['dataset_name'];
+        })
+        console.log(sources)
 
-      return (sources.sort((a:any, b:any) =>  a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 1 : 0)));
-    }))
+        return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 1 : 0)));
+      }))
   }
 
   getPatientSources(): Observable<any> {
@@ -318,10 +331,10 @@ export class getDatasetsService {
       this.transferState.onSerialize(SOURCES_KEY, () => this.sources_result);
       // Send result --> this.result, which saves it to transferState
       return this.getPatientSources()
-      // return forkJoin(
-      //   this.getPatientSources(),
-      //   this.getDatasetSources()
-      // )
+        // return forkJoin(
+        //   this.getPatientSources(),
+        //   this.getDatasetSources()
+        // )
         .pipe(
           tap(patients => this.sources_result = patients)
           // tap(([patients, expts]) => this.sources_result = { patient: patients, dataset: expts })

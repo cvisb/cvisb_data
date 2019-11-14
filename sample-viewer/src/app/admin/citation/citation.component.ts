@@ -16,6 +16,7 @@ export class CitationComponent implements OnInit {
   currentYear: Date = new Date();
   cvisbCatalog: Object;
   host_url: string = environment.host_url;
+  loading: boolean = false;
 
   patients = {
     sources: [
@@ -38,6 +39,10 @@ export class CitationComponent implements OnInit {
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
+
+    this.datasetSvc.loadingState$.subscribe(loading => {
+      this.loading = loading;
+    })
   }
 
   ngOnInit() {
