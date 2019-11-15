@@ -51,7 +51,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:ReleaseNote
   schema:rangeIncludes:
-    - "@id":             schema:ReleaseComment
+    - "@id":             schema:Text
   owl:cardinality:       many
   marginality:           required
   authenticated:         false
