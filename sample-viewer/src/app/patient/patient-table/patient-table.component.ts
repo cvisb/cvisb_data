@@ -49,7 +49,6 @@ export class PatientTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('initiating')
     this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
