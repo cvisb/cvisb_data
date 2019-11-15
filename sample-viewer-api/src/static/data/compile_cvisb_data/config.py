@@ -54,14 +54,16 @@ LOGFILE = f"{DATADIR}/output_data/log/{today}_cvisb-compliation.log"
 
 EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchID', 'experimentDate',
             'measurementTechnique', 'measurementCategory', 'includedInDataset', 'isControl',
-            'publisher', 'citation', 'author', 'data', 'correction', 'version',
+            'publisher', 'citation', 'author',
+            'data', 'correction', 'version',
             'updatedBy', 'dateModified', 'releaseDate', 'sourceFiles', 'dataStatus']
 
 
 # for non-KGH patients: what info should be
 PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
                "dateModified", "updatedBy", "cohort", "outcome", "country",
-               "infectionYear", "species", 'sourceFiles', 'correction', 'publisher']
+               "infectionYear", "species", 'sourceFiles', 'correction',
+               'publisher', 'citation']
 
 # For all experiments, to relate sample <--> experiment
 SAMPLECOLS = ["creatorInitials", "sampleLabel",

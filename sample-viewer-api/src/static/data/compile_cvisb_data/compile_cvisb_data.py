@@ -14,8 +14,7 @@ import pandas as pd
 import argparse
 import json
 import logging
-from helpers import setupLogging
-from helpers import log_msg
+from helpers import setupLogging, log_msg, getSource
 from datetime import datetime
 
 # --- cleanup modules ---
@@ -131,8 +130,8 @@ def compile_data(args):
         checkIDs(datadownloads, "datadownload", "identifier", args.verbose)
     log_msg("done checking for duplicate IDs.", args.verbose)
 
-    combined = {"patient": patients, "sample": samples, "dataset": datasets,
-                "datadownload": datadownloads, "experiment": experiments}
+
+    combined = cleanCombined(patients, samples, experiments, datasets, datadownloads)
     # print(combined)
 
     # --- save jsons ---
@@ -184,6 +183,18 @@ def compile_data(args):
 
     return(combined)
 
+"""
+Function to handle combining all the data into a single object; also allows for
+any global changes that need to be made at the end.
+For example: creating `sourceCitation`, which is `row.citation ? row.citation : rowpublisher;`
+"""
+def cleanCombined(patients, samples, experiments, datasets, datadownloads):
+    experiments['sourceCitation'] = experiments.apply(getSource, axis = 1)
+    patients['sourceCitation'] = patients.apply(getSource, axis = 1)
+
+    combined = {"patient": patients, "sample": samples, "dataset": datasets,
+                "datadownload": datadownloads, "experiment": experiments}
+    return(combined)
 
 def saveJson(data, export_file):
     # with open(export_file, 'w') as outfile:

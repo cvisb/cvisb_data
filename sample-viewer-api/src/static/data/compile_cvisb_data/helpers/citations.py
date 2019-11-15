@@ -30,13 +30,20 @@ def convertAuthor(authorObj):
 
 
 def getSource(row):
-    if((row.citation == row.citation) & row.citation is not None):
+    if((row.citation == row.citation) & (row.citation is not None)):
         citation = row.citation.copy()
-        citation['@type'] = "ScholarlyArticle"
+        if(type(citation) == list):
+            for cite in citation:
+                cite["@type"] = "ScholarlyArticle"
+        else:
+            citation['@type'] = "ScholarlyArticle"
         return(citation)
-    if((row.publisher == row.publisher) & row.publisher is not None):
+    if((row.publisher == row.publisher) & (row.publisher is not None)):
         publisher = row.publisher.copy()
-        publisher['@type'] = "Publisher"
+        if(type(publisher) == list):
+            for pub in publisher:
+                pub["@type"] = "Organization"
+        publisher['@type'] = "Organization"
         return(publisher)
     default = {"identifier": 'unknown', "@type": "unknown", "name": "unknown"}
     return(default)
