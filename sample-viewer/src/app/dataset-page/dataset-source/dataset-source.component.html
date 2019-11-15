@@ -38,11 +38,11 @@
       {{ source.percent | percent : 0 }}
     </div>
 
-    <div [ngSwitch]="source.type" class="source">
-      <app-format-citation [citations]="[source]" class="citation-group" *ngSwitchCase="'citation'" verbosity="basic"></app-format-citation>
-      <app-format-publisher [publisher]="source" class="publisher-group" *ngSwitchCase="'publisher'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
-      <app-format-publisher [publisher]="source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+    <div [ngSwitch]="source.source['@type']" class="source">
+      <app-format-citation [citations]="[source.source]" class="citation-group" *ngSwitchCase="'ScholarlyArticle'" verbosity="basic"></app-format-citation>
+      <app-format-publisher [publisher]="source.source" class="publisher-group" *ngSwitchCase="'Organization'"></app-format-publisher>
+      <app-format-publisher [publisher]="source.source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
+      <app-format-publisher [publisher]="source.source" class="unknown-group" *ngSwithDefault></app-format-publisher>
     </div>
   </div>
 </ng-template>

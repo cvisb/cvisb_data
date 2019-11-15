@@ -245,12 +245,10 @@ export class getDatasetsService {
             dataset["@type"] = "Dataset";
             // dataset["publisher"] = publishers;
             // dataset["citation"] = citations;
-            // if (expts.length === 0) {
+            if (expts.length === 1) {
               dataset["source"] = expts[0].sources;
               dataset["citation"] = expts[0].sources.map(d => d.source);
-            // }
-            console.log(expts.length)
-            console.log(dataset)
+            }
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
