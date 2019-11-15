@@ -35,7 +35,6 @@ export class PatientTableComponent implements OnInit {
     private patientSvc: GetPatientsService,
     private authSvc: AuthService
   ) {
-    console.log('constructing')
     this.route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
     });
