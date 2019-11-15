@@ -171,26 +171,12 @@ export class getDatasetsService {
         .set('q', `includedInDataset:"${datasetID}"`)
       ),
       this.getDatasets(datasetID, idVar),
-      // this.myhttp.get<any[]>(environment.api_url + "/api/dataset/query", {
-      //   observe: 'response',
-      //   headers: new HttpHeaders()
-      //     .set('Accept', 'application/json'),
-      //   params: new HttpParams()
-      //     .set('q', `${idVar}:${id}`)
-      // }),
-      //   this.apiSvc.fetchAll("experiment",
-      //     new HttpParams()
-      //       .set("q", `includedInDataset:"${datasetID}"`)
-      //       .set("fields", "citation,publisher"))
-      // )
       this.getDatasetSources(datasetID))
       .pipe(
         map(([downloads, data, expts]) => {
-          // console.log("GET DATASET")
           // console.log(data)
           // console.log(downloads)
-          console.log(expts)
-          // downloads = downloads['hits'];
+          // console.log(expts)
           if (data.length === 1) {
             // One result found, as expected.
             let dataset = data[0];
@@ -203,41 +189,6 @@ export class getDatasetsService {
 
             delete dataset._id;
             delete dataset._score;
-
-            // let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
-            // let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
-            //
-            // expts.forEach(d => {
-            //   d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
-            //   if (d.citation) {
-            //     d.source.forEach(inner =>
-            //       inner['type'] = 'citation'
-            //     )
-            //   } else {
-            //     d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
-            //   }
-            //
-            // })
-            //
-            // let expt_flat = flatMapDeep(expts, d => d.source)
-            //
-            // let sources = _(expt_flat)
-            //   .groupBy('name')
-            //   .map((items) => {
-            //     return {
-            //       source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
-            //       count: items.length,
-            //       percent: items.length / expt_flat.length
-            //     };
-            //   }).value();
-            //
-            // // flatten sources
-            // sources.forEach(d => {
-            //   d.source['count'] = d.count;
-            //   d.source['percent'] = d.percent;
-            // })
-            //
-            // sources = sources.map(d => d.source)
 
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = downloads;
@@ -277,7 +228,7 @@ export class getDatasetsService {
 
     let qstring: string;
     if (dsid) {
-      qstring = `includedInDataset:${dsid}`;
+      qstring = `includedInDataset:"${dsid}"`;
     } else {
       qstring = "__all__";
     }
@@ -309,9 +260,11 @@ export class getDatasetsService {
 
                 dataset.sources.forEach(source => {
                   let cite_objs = citation_dict.filter(d => d[citation_variable] == source.term);
+                  // NOTE: since `citation` is an array, it's possible that a single call to POST to get
+                  // the citation objects will return multiple copies of the same citation.
+                  // I'm assuming they're all the same, since they have the same identifier... so just grabbing the first one.
                   if (cite_objs.length > 0) {
                     source['source'] = cite_objs[0];
-                    source['source']['@type'] = "ScholarlyArticle";
                   }
                   source['percent'] = source.count / dataset_total;
                 })
