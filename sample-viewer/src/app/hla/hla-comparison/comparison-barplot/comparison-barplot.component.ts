@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, ViewEncapsulation, ViewChild, Input, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 
 import { isPlatformBrowser } from '@angular/common';
 
@@ -11,8 +11,8 @@ import { HLAsummary, CohortSelectOptions } from '../../../_models';
   styleUrls: ['./comparison-barplot.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ComparisonBarplotComponent implements OnInit {
-  @ViewChild('comparison') private chartContainer: ElementRef;
+export class ComparisonBarplotComponent implements AfterViewInit {
+  @ViewChild('comparison', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
 
   private creationPromise: Promise<any>;
@@ -28,6 +28,7 @@ export class ComparisonBarplotComponent implements OnInit {
   private margin: any = { top: 25, bottom: 35, beg: 5, middle: 0, end: 100 };
   private width: number = 400;
   private height: number = 300;
+  private bar_height: number = 10;
 
   // --- Selectors ---
   private left: any; // left plot
@@ -52,7 +53,7 @@ export class ComparisonBarplotComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.creationPromise = this.createPlot();
 
@@ -161,9 +162,11 @@ export class ComparisonBarplotComponent implements OnInit {
     if (this.creationPromise) {
 
       this.locus = this.data.data_right[0].key.split("\*")[0];
+      if (this.locus === "null" && this.data.data_right.length > 1) {
+        // locus was null; select the next one
+        this.locus = this.data.data_right[1].key.split("\*")[0];
+      }
 
-      this.svg_right.classed(this.locus, true);
-      this.svg_left.classed(this.locus, true);
 
       var t = d3.transition()
         .duration(500);
@@ -191,16 +194,35 @@ export class ComparisonBarplotComponent implements OnInit {
       // this.combined.sort((a:any, b:any) => b.key > a.key ? 1 : -1);
       let alleles = this.combined.map((d: any) => d.key);
 
+      // --- update height based on length of data ---
+      this.height = Math.min(this.bar_height * alleles.length, 400);
+
+      this.svg_right
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .classed(this.locus, true);
+
+      this.svg_left
+        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .classed(this.locus, true);
+
       // --- Update domains of x & y axes --
       this.x_left.domain([0, pct_max]);
 
       this.x_right.domain([0, pct_max]);
 
-      this.y.domain(alleles);
+      this.y.domain(alleles)
+        .rangeRound([0, this.height]);
+
+      this.xLeftAxis
+        .tickSize(-this.height);
+
+      this.xRightAxis
+        .tickSize(-this.height);
 
 
       // --- Create axes ---
       this.svg_left.selectAll('.axis--x.axis--left')
+        .attr('transform', `translate(${this.margin.end}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.xLeftAxis)
 
@@ -210,6 +232,7 @@ export class ComparisonBarplotComponent implements OnInit {
         .call(this.yLeftAxis);
 
       this.svg_right.selectAll('.axis--x')
+        .attr('transform', `translate(${this.margin.middle}, ${this.margin.top + this.height})`)
         .transition(t)
         .call(this.xRightAxis);
 
@@ -219,7 +242,7 @@ export class ComparisonBarplotComponent implements OnInit {
 
       // --- Create tooltip div ---
       let ttips = d3.select("body").append("div")
-        .attr("class", "tooltip")
+        .attr("class", "tooltip hla-comparison-tooltip")
         .style("display", "none");
 
 

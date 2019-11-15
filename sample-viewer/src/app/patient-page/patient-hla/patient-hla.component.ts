@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { GetHlaDataService, HlaService } from '../../_services';
 import { Patient, HLA, D3Nested } from '../../_models';
@@ -12,14 +12,13 @@ import * as d3 from 'd3';
   // encapsulation: ViewEncapsulation.None
 })
 
-export class PatientHlaComponent implements OnChanges {
-  @Input() patient: Patient;
-  genotype: string[];
+export class PatientHlaComponent implements OnInit {
+  @Input() patientID: string;
+  @Input() data: Object[];
   alleleCount: any;
   selectedLocus: string;
   selectedAllele: string;
   backgroundColor: string;
-  publishers: Object[];
 
   @Input() files: any[];
 
@@ -42,17 +41,11 @@ export class PatientHlaComponent implements OnChanges {
 
   }
 
-  ngOnChanges() {
-    this.hlaSvc.getHLAdata(this.patient.patientID).subscribe((res: Object[]) => {
-      let hla_data = res['data'];
-      this.publishers = res['publisher'];
-
-      if (hla_data.length > 0) {
-        this.genotype = hla_data.map((d: any) => d.allele);
-      } else {
-        this.genotype = null;
-      }
-    });
+  ngOnInit() {
+    this.data.forEach(d => {
+      d['genotype'] = d['data'].map((d: any) => d.allele);
+      d['source'] = d['publisher'] ? d['publisher']['name'] : null;
+    })
   }
 
   sendLocus(event, locus: string) {

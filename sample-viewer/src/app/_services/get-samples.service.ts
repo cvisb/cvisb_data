@@ -7,6 +7,7 @@ import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } 
 import { ActivatedRoute } from '@angular/router';
 
 import * as d3 from 'd3';
+import { flattenDeep } from 'lodash';
 
 import { environment } from "../../environments/environment";
 import { Sample, SampleWide, AuthState, RequestParamArray, Patient, ESFacetTerms } from '../_models/';
@@ -64,14 +65,12 @@ export class GetSamplesService {
       let empties = params.filter(d => d.field === "location.numAliquots");
       this.excludeEmptySamples = (empties.length > 0 && empties[0].value[0] === "[1 TO *]") ? true : false;
 
-      console.log(this.excludeEmptySamples)
       // this.getSamples(params);
     })
   }
 
   // Main function to get the samples + associated patient-level metadata
   getSamples(qParamArray: RequestParamArray, sortVar, sortDirection, pageIdx, pageSize): Observable<any> {
-    console.log('calling get samples')
     if (this.samplePatientMD.length === 0) {
       // samplePatientMD stores the patient metadata (cohort, outcome, etc.)
       // for ALL samples currently in the database at load time.
@@ -108,16 +107,12 @@ export class GetSamplesService {
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.apiSvc.sortFunc(sortVar)}` : this.apiSvc.sortFunc(sortVar);
 
-    console.log("Calling prep samples")
     let params = this.requestSvc.reduceSampleParams(filterParamArray);
     params = params
       .append("sort", sortString)
       .append('size', '1000');
     // .append('size', pageSize.toString())
     // .append('from', (pageSize * pageIdx).toString())
-
-    console.log('sample params:')
-    console.log(params)
 
     return this.myhttp.get<any[]>(`${environment.api_url}/api/sample/query`, {
       observe: 'response',
@@ -127,7 +122,6 @@ export class GetSamplesService {
     }).pipe(
       map(data => {
         let samples = data['body']['hits'];
-        console.log(data)
         if (samples) {
 
           samples.forEach(d => {
@@ -144,6 +138,8 @@ export class GetSamplesService {
               d['patientID'] = filtered[0].patientID;
               d['alternateIdentifier'] = filtered[0].alternateIdentifier;
               d['cohort'] = filtered[0].cohort;
+              d['species'] = filtered[0].species;
+              d['gender'] = filtered[0].gender;
               d['outcome'] = filtered[0].outcome;
               d['country'] = filtered[0].country['identifier'];
               d['infectionYear'] = filtered[0].infectionYear;
@@ -151,13 +147,9 @@ export class GetSamplesService {
               // d['elisa'] = filtered[0].elisa;
             }
           })
-          console.log("merge complete.")
-
           this.samplesSubject.next(samples);
 
           this.sampleSummarySubject.next(this.getSampleSummary(samples));
-          console.log('samples long')
-          console.log(samples)
 
           // Grab the sample locations and data and reshape to display in the table.
           this.nestSamples(samples);
@@ -193,7 +185,6 @@ export class GetSamplesService {
       params: params
     }).pipe(
       map(res => {
-        console.log(res);
         this.samplePatientMD = res["body"]["hits"];
         return (res["body"]["hits"])
       }),
@@ -232,10 +223,8 @@ export class GetSamplesService {
 
     // Make sure to remove nulls-- ngSelect can't have nulls as options
     // Should also remove duplicates, since there are multiple samples / patient
-    summary['patients'] = samples.map((d: any) => d.alternateIdentifier).flat().filter(d => d).sort((a, b) => a < b ? -1 : 1);
+    summary['patients'] = flattenDeep(samples.map((d: any) => d.alternateIdentifier)).filter(d => d).sort((a, b) => a < b ? -1 : 1);
     summary['patients'] = Array.from(new Set(summary['patients']));
-
-    console.log(summary)
 
     return (summary)
   }
@@ -309,8 +298,6 @@ export class GetSamplesService {
       })
       .entries(samples)
       .map((d) => d.value);
-
-    console.log(this.samples_wide)
   }
 
 }

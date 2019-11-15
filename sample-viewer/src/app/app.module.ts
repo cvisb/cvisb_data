@@ -5,8 +5,8 @@ import { NgModule } from '@angular/core';
 
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http'; // Though outdated, required as per https://github.com/angular/angular/issues/20101 to remove "StaticInjector" error
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -19,21 +19,25 @@ import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 // Services
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
+import { DatasetResolver } from './_services/get-datasets.resolver';
 
 // Dialogue boxes
 import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
 
-import { DatasetResolver } from './_services/get-datasets.resolver';
 
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
 import { SchemaComponent } from './schema/schema.component';
-
 import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
+
+// import { FiltersModule } from './filters/filters.module';
+import { SvgIconModule } from './svg-icon/svg-icon.module';
+// import { ViralSequencingModule } from './viral-sequencing/viral-sequencing.module';
+// import { DownloadBtnModule } from './download-btn/download-btn.module';
+// import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -44,13 +48,12 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     SampleMetadataComponent,
     SpinnerPopupComponent,
     SchemaComponent,
-    FooterComponent,
-    HomeComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
+    BrowserTransferStateModule,
     TransferHttpCacheModule,
-    HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -61,7 +64,12 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
     AdminModule,
     FormatCitationModule,
     Angulartics2Module.forRoot(), // Google Analytics
-    EmbedJsonldModule
+    EmbedJsonldModule,
+    // FiltersModule,
+    SvgIconModule,
+    // ViralSequencingModule,
+    // DownloadBtnModule,
+    // LeafletModule
   ],
   exports: [
   ],

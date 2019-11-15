@@ -1,0 +1,22 @@
+@import '../../sass/variables.scss';
+
+.basemap {
+  fill: $grey-50;
+  stroke: $grey-300;
+  stroke-width: 0.25;
+}
+
+.choropleth-path {
+  stroke: $grey-600;
+  stroke-width: 0.5;
+}
+
+.ocean {
+  background: #D6E1F2;
+}
+
+.africa {
+  stroke: #98AED4;
+  stroke-width: 6;
+  fill: none;
+}

@@ -20,8 +20,8 @@ export class ReleaseNotesComponent implements OnInit {
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
     if (this.cvisbCatalog) {
       this.releaseVersion = this.cvisbCatalog['releaseVersion'];
+      this.releaseNotes = this.cvisbCatalog['releaseNotes'];
     }
-    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
   }
 
   ngOnInit() {

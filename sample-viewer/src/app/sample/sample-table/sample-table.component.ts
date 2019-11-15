@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
+import { HttpParams } from '@angular/common/http'
+
 // import { HttpParams } from '@angular/common/http';
 
 import { SamplesDataSource, ApiService, GetSamplesService, RequestParametersService } from '../../_services/';
@@ -21,8 +23,8 @@ import { SampleMetadataComponent } from '../../_dialogs';
 })
 
 export class SampleTableComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   samplePatientMD: Patient[];
   params: RequestParamArray;
   // dataSource: MatTableDataSource<any>;
@@ -58,7 +60,6 @@ export class SampleTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new SamplesDataSource(this.sampleSvc, this.apiSvc);
     this.dataSource.loadSamples([], "", null, 0, 10);
-    // this.dataSource.loadSamples(new HttpParams().set("q", "__all__"));
   }
 
   ngAfterViewInit() {

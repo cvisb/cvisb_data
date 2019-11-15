@@ -1,11 +1,12 @@
 <div class="container" id="patientID" *ngIf="patient">
   <div class="patient-container">
 
-    <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort"></app-patient-nav>
+    <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
 
     <div class="patient-content">
+      <app-patient-warning [expts]="expts" [patient]="patient"></app-patient-warning>
 
-      <!-- NAV: ID + cohort -->
+      <!-- HEADER: ID + cohort -->
       <div class="patient-header">
         <div class="page-header" [ngClass]="patient.cohort">
           <h1>Patient {{ patient.patientLabel }}</h1>
@@ -19,77 +20,116 @@
 
       <!-- IDS -->
       <div class="container patient-ids">
-        <div class="container-column column-left">
-          <div class="updated">
-            updated: {{patient.dateModified ? (patient.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-          </div>
-
-          <div class="altIDs">
-            public ID: <span class="altID variable-value">{{ patientID }}</span>
-          </div>
-
-          <div class="altIDs" *ngIf="patient.alternateIdentifier">
-            all IDs:
-            <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">
-              {{ id }}
-            </span>
-          </div>
+        <div class="altIDs">
+          public ID: <span class="altID variable-value">{{ patientID }}</span>
         </div>
 
-        <!-- DATES -->
-        <div class="container-column column-right">
-          <app-patient-dates [patient]="patient"></app-patient-dates>
+        <div class="altIDs" *ngIf="patient.alternateIdentifier">all IDs: <span class="altID variable-value" *ngFor="let id of patient.alternateIdentifier.sort()">{{ id }}</span>
         </div>
-
       </div>
 
-      <!-- METADATA -->
-      <div class="container patient-metadata">
-        <div class="container-column patient-demographics">
-          <app-patient-demographics [patient]="patient"></app-patient-demographics>
-          <app-patient-relationships [patient]="patient"></app-patient-relationships>
-          <app-patient-related [patient]="patient"></app-patient-related>
+      <!-- DEMOGRAPHICS -->
+      <mat-expansion-panel class="panel-group" id="demographics" [expanded]="demographicsPanelState" (opened)="demographicsPanelState = true" (closed)="demographicsPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
+          <mat-panel-title class="panel-title">
+            <app-provenance-title class="flex-grow1" title="Demographics" [private]="privateData"></app-provenance-title>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="container patient-metadata">
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [changes]="patient.correction" [source]="patient.publisher" class="provenance"></app-provenance>
+
+          <div class="container patient-demographics">
+            <app-patient-demographics [patient]="patient"></app-patient-demographics>
+            <app-patient-relationships [patient]="patient"></app-patient-relationships>
+            <app-patient-related [patient]="patient"></app-patient-related>
+            <app-patient-dates [patient]="patient"></app-patient-dates>
+          </div>
+
         </div>
+      </mat-expansion-panel>
+
+      <!-- SAMPLES  -->
+      <mat-expansion-panel class="panel-group" id="samples" [expanded]="samplesPanelState" (opened)="samplesPanelState = true" (closed)="samplesPanelState = false">
+        <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+          <mat-panel-title class="panel-title">
+            <app-provenance-title class="flex-grow1" title="Samples"></app-provenance-title>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
         <app-patient-samples [patient]="patient"></app-patient-samples>
+      </mat-expansion-panel>
 
+      <!-- SYMPTOMS  -->
+      <ng-container *ngIf="patient.symptoms && privateData">
+        <mat-expansion-panel class="panel-group" id="symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              <app-provenance-title class="flex-grow1" title="Clinical observations" [embargoed]="true" [private]="true"></app-provenance-title>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-        <app-patient-elisas [patient]="patient"></app-patient-elisas>
-
-        <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
-
-      </div>
-
-      <!-- CITATIONS -->
-      <div class="patient-citations">
-        <h4 class="patient" id="citations">Cited in</h4>
-        <app-patient-citations [publications]="publications"></app-patient-citations>
-      </div>
+          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true" source="Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"></app-provenance>
+          <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
+        </mat-expansion-panel>
+      </ng-container>
 
 
       <!-- DATA -->
-      <div class="patient-data">
-        <h4 class="patient" id="data">Data</h4>
-        <!-- icons of available experiments -->
-        <div class="expt-type mat-shadow" [ngClass]="expt.identifier" *ngFor="let expt of exptTypes" [matTooltip]="expt.name" matTooltipPosition="above">
-          <a [routerLink]="['../', patient.patientID]" [fragment]="expt.name | stripWhitespace">
-            <svg-icon [icon]="expt.identifier" [ngClass]="expt.identifier + '-icon'" ></svg-icon>
-          </a>
-        </div>
-
-        <div id="HLA-sequencing">
-          <app-patient-hla [patient]="patient" [files]="HLAFiles"></app-patient-hla>
-        </div>
-
-        <div id="viral-sequencing">
-          <app-patient-viral-seq [sequences]="viralSeq" [files]="viralFiles" [patientID]="patient.patientID"></app-patient-viral-seq>
-        </div>
-
-        <!-- <div id="Systems-Serology">
-          <app-patient-serology [patient]="patient"></app-patient-serology>
-        </div> -->
-
+      <div class="patient-data-header">
+        <h3 class="data-title" id="data">Data</h3>
       </div>
+
+      <div class="patient-data">
+
+        <!-- ELISAS -->
+        <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+            <mat-panel-title class="panel-title">
+              <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa" [dataStatus]="getELISA('dataStatus')"></app-provenance-title>
+
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <app-provenance *ngIf="patient.elisa" [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getELISA('dataStatus')">
+          </app-provenance>
+          <app-patient-elisas [patient]="patient"></app-patient-elisas>
+        </mat-expansion-panel>
+
+        <!-- Experimental Data -->
+        <ng-container *ngFor="let expt of exptTypes">
+          <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
+            <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
+              <mat-panel-title class="panel-title">
+                <app-provenance-title class="flex-grow1" [title]="expt.dataset_name" [icon]="expt.dataset_id" [embargoed]="getEmbargoed(expt.dataset_id)" [dataStatus]="getPrelim(expt.dataset_id)"></app-provenance-title>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container [ngSwitch]="expt.dataset_id">
+              <app-patient-hla *ngSwitchCase="'hla'" [data]="getExpt(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-hla>
+              <app-patient-viral-seq *ngSwitchCase="'ebola-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="'lassa-viral-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
+            </ng-container>
+          </mat-expansion-panel>
+        </ng-container>
+      </div>
+
+
+      <!-- CITATIONS -->
+      <ng-container *ngIf="publications && publications.length > 0">
+        <mat-expansion-panel class="panel-group" id="citations" [expanded]="citationsPanelState" (opened)="citationsPanelState = true" (closed)="citationsPanelState = false">
+          <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
+            <mat-panel-title class="panel-title">
+              <app-provenance-title class="flex-grow1" title="Citations"></app-provenance-title>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="patient-citations">
+            <h4 class="patient">Cited in</h4>
+            <app-patient-citations [publications]="publications"></app-patient-citations>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
     </div>
   </div>
 

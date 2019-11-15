@@ -1,0 +1,46 @@
+<div class="container patient-changelog">
+  <div class="container-column">
+    <div class="container data-status-container">
+      <!-- <div class="container embargoed" *ngIf="embargoed">
+        <div class="embargoed-icon" [matTooltip]="embargoLabel ? embargoLabel + ' data embargoed for public release; do not share' : 'Data embargoed for public release; do not share'">
+          <i class="fas fa-stopwatch"></i>
+          embargoed
+        </div>
+      </div> -->
+
+      <div class="updated container-column updated-container">
+        {{ dateModified ? 'updated ' + (dateModified | date: 'd MMMM yyyy') : 'updated: unknown'}}
+        <button mat-button mat-stroked-button class="view-changes" *ngIf="changes" (click)="showCorrections($event, changes)">view changes</button>
+      </div>
+
+      <div class="data-status">
+        <svg-icon [icon]="dataStatus" class="data-status-icon" [matTooltip]="dataStatus + ' data'" *ngIf="dataStatus"></svg-icon>
+        <div *ngIf="dataStatus === 'preliminary'" class="preliminary">preliminary data</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container source-container">
+    <div class="container-column source-group">
+      <div class="source" *ngIf="source">
+        <span class="variable-label">source: </span>
+        <span class="variable-value">{{source}}</span>
+      </div>
+
+      <app-format-citation [citations]="citation" verbosity="basic" class="citation" *ngIf="citation"></app-format-citation>
+    </div>
+
+    <div class="source-icon container" *ngIf="cvisb_data || public_data" [ngClass]="cvisb_data ? 'cvisb-data' : public_data ? 'public-data' : ''">
+      <ng-container *ngIf="cvisb_data; else public_data">
+        <svg-icon icon="cvisb" class="cvisb-icon"></svg-icon>
+        <span class="source-tag">data</span>
+      </ng-container>
+      <ng-template #public_data>
+        <span class="source-tag">public data</span>
+      </ng-template>
+    </div>
+  </div>
+
+</div>

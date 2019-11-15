@@ -23,7 +23,6 @@ import { MaterialModule } from '../material.module';
 import { FiltersModule } from '../filters/filters.module';
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
 import { DatasetResolver } from '../_services/get-datasets.resolver';
 import { HlaResolver } from '../_services/hla.resolver';
 
@@ -57,7 +56,6 @@ import { PipesModule } from '../pipes/pipes.module';
     AlleleBarComponent
   ],
   providers: [
-    MyHttpClient,
     DatasetResolver,
     HlaResolver
   ]

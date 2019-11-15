@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 
-import { StripWhitespacePipe } from '../../_pipes';
+import { StripWhitespacePipe } from '../../_pipes/strip-whitespace.pipe';
 
 // Event listeners to update the search query
 import { RequestParametersService } from '../../_services';
@@ -15,22 +15,23 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniBarplotComponent implements OnInit {
-  @ViewChild('barplot') private chartContainer: ElementRef;
+export class MiniBarplotComponent implements AfterViewInit {
+  @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private options: string[];
   @Input() private endpoint: any;
-  @Input() private height: number;
   @Input() private spacing: number;
-  @Input() private name_var: string;
+  @Input() private name_var: string = "term";
   @Input() private filterable: boolean = true;
 
   private selectedOutcomes: string[];
 
   // plot sizes
   private element: any;
-  private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
-  private width: number = 70;
+  @Input() private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
+
+  @Input() private height: number;
+  @Input() private width: number = 70;
   // private height: number = 70;
 
   // --- Selectors ---
@@ -55,14 +56,13 @@ export class MiniBarplotComponent implements OnInit {
   }
 
 
-  // constructor() { }
   constructor(private strip: StripWhitespacePipe,
     private requestSvc: RequestParametersService,
     // Whether to be rendered server-side or client-side
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.getSVGDims();
       this.createPlot();
@@ -133,7 +133,7 @@ export class MiniBarplotComponent implements OnInit {
       .append("g")
       .attr("class", 'y-label');
 
-    // --- call function to add data, with transition time = 0 ---
+    // ---  function to add data, with transition time = 0 ---
     this.updatePlot(0);
   }
 

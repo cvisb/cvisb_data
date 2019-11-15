@@ -24,8 +24,8 @@ export class PreviewDifferencesComponent implements OnChanges {
 
   columnOrder = ["sampleID", "sampleLabel", "privatePatientID", "visitCode", "location", "sampleType", "isolationDate", "_id"];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private uploadSvc: SampleUploadService, public dialog: MatDialog, ) {
     uploadSvc.previewDifferencesState$.subscribe((mergedObj: any) => {

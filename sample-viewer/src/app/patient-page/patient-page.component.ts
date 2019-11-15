@@ -1,41 +1,58 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute } from '@angular/router';
 
 import { GetPatientsService, ApiService, AnchorService } from '../_services/';
-import { Patient, ViralSeqObj } from '../_models';
-import { ExperimentObjectPipe } from '../_pipes';
+import { Patient, DataDownload } from '../_models';
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
+
+import { AuthService } from '../_services';
+import { AuthState } from "../_models";
+
+import { flatMapDeep, uniqWith, isEqual } from 'lodash';
 
 @Component({
   selector: 'app-patient-page',
   templateUrl: './patient-page.component.html',
   styleUrls: ['./patient-page.component.scss']
 })
-export class PatientPageComponent implements OnInit {
+export class PatientPageComponent {
   patientID: string;
   patient: Patient;
-  viralSeq: ViralSeqObj[];
-  viralFiles: Object[];
-  HLA: any[];
-  HLAFiles: any[];
   publications: any[];
-  allExpts: Object[];
+  expts: Object[] = [];
   exptTypes: Object[];
+  demographicsPanelState: boolean = true;
+  symptomsPanelState: boolean = true;
+  samplesPanelState: boolean = true;
+  citationsPanelState: boolean = true;
+  elisaPanelState: boolean = true;
+  hlaPanelState: boolean = true;
+  viralSeqPanelState: boolean = true;
+  today = new Date();
+  privateData: boolean;
+
+  expansionPanelHeight: string = "42px";
+  dataPanelHeight: string = "55px";
 
 
   constructor(
+    private authSvc: AuthService,
     private titleSvc: Title,
     private route: ActivatedRoute,
     private patientSvc: GetPatientsService,
     private apiSvc: ApiService,
-    private anchorSvc: AnchorService,
     private exptObjPipe: ExperimentObjectPipe
   ) {
+    this.authSvc.authState$.subscribe((authState: AuthState) => {
+      this.privateData = authState.authorized;
+    })
+
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
 
-      titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
+      this.titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
 
       this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
         this.patient = patient;
@@ -55,41 +72,73 @@ export class PatientPageComponent implements OnInit {
         }
       });
 
-      this.apiSvc.getPatient('experiment', this.patientID).subscribe(expts => {
-        this.allExpts = this.exptObjPipe.exptDict;
-        let exptData = expts['hits'].map(d => d.measurementTechnique);
-        this.exptTypes = this.allExpts.filter(d => exptData.includes(d['name']));
+      this.apiSvc.getData4Patient('experiment', this.patientID).subscribe(expts => {
+        this.expts = expts['hits'];
 
-        this.viralSeq = expts['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
+        this.expts.forEach(expt => {
+          expt['embargoed'] = expt['releaseDate'] ?
+            this.today < new Date(expt['releaseDate']) :
+            true;
+        })
 
-        this.HLA = expts['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
+        let allExpts = this.exptObjPipe.exptDict;
+        let dsIDs = this.expts.map(d => d['includedInDataset']);
+        this.exptTypes = allExpts.filter(d => dsIDs.includes(d['dataset_id']));
+        // this.exptTypes = this.expts.map(d => d['includedInDataset']);
+        // console.log(this.expts)
+        // console.log(this.exptTypes)
 
-        this.publications = expts['hits'].map(d => d.citation).filter(d => d).flat();
-      })
-
-      this.apiSvc.getPatient('datadownload', this.patientID).subscribe(files => {
-        this.viralFiles = files['hits'].filter(d => d.measurementTechnique === 'viral sequencing');
-
-        this.HLAFiles = files['hits'].filter(d => d.measurementTechnique === 'HLA sequencing');
+        this.publications = uniqWith(flatMapDeep(expts['hits'], d => d.citation).filter(d => d), isEqual);
       })
     })
 
   }
 
-  ngOnInit() {
-    // For anchor jumping
-    // Needs to be in ngOnInit to make sure page exists before querying document
-    this.route.fragment.subscribe(anchor_tag => {
-      this.anchorSvc.clickAnchor(anchor_tag);
-    })
+  getExpt(dataset_id) {
+    if (this.expts.length > 0) {
+      return (this.expts.filter(d => d['includedInDataset'] === dataset_id));
+    }
   }
 
-  ngAfterViewInit() {
-    // For anchor jumping
-    // Needs to be in ngOnInit to make sure page exists before querying document
-    this.route.fragment.subscribe(anchor_tag => {
-      this.anchorSvc.clickAnchor(anchor_tag);
-    })
+  getPrelim(dataset_id): string {
+    let filtered_expts = this.expts.filter(d => d['includedInDataset'] === dataset_id);
+    let final = filtered_expts.every((d: any) => d.dataStatus === "final");
+    return (final ? "final" : "preliminary")
+  }
+
+  // returns T/F for if any of the experiments are embargoed.
+  getEmbargoed(dataset_id): boolean {
+    return (this.expts.filter(d => d['includedInDataset'] === dataset_id).some((d: any) => d.embargoed === true)
+    )
+  }
+
+  // collapses array of ELISA results down.
+  getELISA(returnVar: string): Object {
+    let elisa = this.patient.elisa;
+    if (elisa) {
+      let summary = {};
+      let final = elisa.every((d: any) => d.dataStatus === "final");
+
+      summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+      if (summary['correction'].length === 0) {
+        summary['correction'] = null;
+      }
+      summary['citation'] = elisa.map(d => d.citation).filter(d => d);
+      summary['dataStatus'] = final ? "final" : "preliminary";
+
+      switch (returnVar) {
+        case "correction":
+          return (summary["correction"]);
+        case "citation":
+          return (summary["citation"]);
+        case "dataStatus":
+          return (summary["dataStatus"]);
+        default:
+          return (summary)
+      }
+    }
+    return (null)
+
   }
 
 }

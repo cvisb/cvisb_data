@@ -2,6 +2,11 @@ export class ESResponse {
   body: ESResult;
   status: number;
   url: string;
+  type?: any;
+  clone?: any;
+  headers?: any;
+  statusText?: any;
+  ok?: any;
 }
 
 export class ESResult {

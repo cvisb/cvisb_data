@@ -28,3 +28,19 @@
   width: 12em;
   overflow-x: hidden;
 }
+
+.container-dataset-name {
+  align-items: center;
+}
+
+.dataset-description, .dataset-name {
+  flex: 1;
+}
+
+h2.container-title {
+  margin-top: 0;
+}
+
+.dataset-header {
+  margin-top: 0.75em;
+}

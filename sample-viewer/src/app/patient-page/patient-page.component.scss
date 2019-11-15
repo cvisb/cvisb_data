@@ -1,6 +1,8 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss'; // --- structural elements ---
 
+$nav-width: 215px;
+
 .patient-header {
   flex: 100%;
   max-width: 1150px;
@@ -17,11 +19,11 @@
 
 .patient-content {
   flex: 1;
-  margin-left: 9.5em;
+  margin-left: 175px;
 }
 
 .patient-nav {
-  flex: 0 0 12em;
+  flex: 0 0 $nav-width;
   order: -1;
   // margin: -18px 2em -18px -63px;
   // padding-top: 149px;
@@ -31,7 +33,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  width: 12em;
+  width: $nav-width;
   overflow-x: hidden;
 }
 
@@ -40,6 +42,7 @@
 }
 
 .patient-demographics {
+  width: 100%;
   justify-content: space-between;
 }
 // --- right side nav pane ---
@@ -81,14 +84,14 @@
   }
 
   &.Control {
-    color: $grey-300;
-    -webkit-text-stroke-color: $grey-400;
+    color: $grey-400;
+    -webkit-text-stroke-color: $grey-600;
     -webkit-text-stroke-width: 1px;
   }
 
   &.Unknown {
-    color: $grey-400;
-    -webkit-text-stroke-color: $grey-600;
+    color: $grey-200;
+    -webkit-text-stroke-color: $grey-400;
     -webkit-text-stroke-width: 1px;
   }
 }
@@ -102,4 +105,47 @@
   color: $grey-400;
   font-size: 1.25em;
   text-transform: uppercase;
+  margin-bottom: 0.5em;
+
+  &:not(:first-of-type) {
+    margin-left: 50px;
+  }
+}
+
+.provenance {
+  flex-grow: 1;
+}
+
+.panel-group {
+  margin-bottom: 10px !important;
+}
+
+.mat-expansion-panel-header,
+.panel-header {
+  background: $grey-200 !important;
+  border-radius: 4px 4px 0px 0px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  background: $grey-50 !important;
+  padding-top: 5px !important;
+}
+
+
+.panel-title {
+  // padding: 5px 15px;
+  // margin-top: 10px;
+  text-transform: uppercase;
+  color: $grey-500;
+  font-weight: 300;
+  font-size: 1.15em;
+  align-items: center;
+}
+
+.data-title {
+  margin-bottom: 0.5em;
+}
+
+.header-icon {
+  margin-right: 25px;
 }

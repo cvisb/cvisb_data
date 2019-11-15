@@ -294,6 +294,8 @@
     - "@id":             cvisb:DataCatalog
   schema:rangeIncludes:
     - "@id":             cvisb:ReleaseSummary
+  schema:sameAs:
+    - "@id":             schema:releaseNotes
   owl:cardinality:       many
   marginality:           required
   authenticated:         false
@@ -313,7 +315,7 @@
   authenticated:         false
 
 
-  # Funding. For CViSB:   NIH award U19AI135995
+  # Funding. For CViSB:  NIH award U19AI135995
 - "@id":                 cvisb:funding
   "@type":               rdf:Property
   rdfs:comment:          Funding that supports (sponsors) the collection of this dataset through some kind of financial contribution

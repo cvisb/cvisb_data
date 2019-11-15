@@ -248,7 +248,7 @@ class QueryHandler(UserAuth, QueryHandler):
 
         self.entity = entity
         self.op = 'r'
-
+        
         super(QueryHandler, self).post()
 
 

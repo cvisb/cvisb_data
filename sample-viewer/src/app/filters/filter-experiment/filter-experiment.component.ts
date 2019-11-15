@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 // import { D3Nested } from '../../_models';
 //
-import { RequestParametersService } from '../../_services';
+import { GetExperimentsService, RequestParametersService } from '../../_services';
 
 @Component({
   selector: 'app-filter-experiment',
@@ -13,14 +13,21 @@ export class FilterExperimentComponent implements OnInit {
   @Input() endpoint: string;
   expts: any[];
 
-  constructor(private requestSvc: RequestParametersService) { }
+  constructor(
+    private exptSvc: GetExperimentsService,
+    private requestSvc: RequestParametersService
+  ) { }
 
   ngOnInit() {
-    this.expts = [
-      { key: "hla", name: "HLA sequencing", disabled: true },
-      { key: "viralseq", name: "viral sequencing", disabled: true },
-      // { key: "systemsserology", name: "systems serology", disabled: true },
-    ];
+
+    this.exptSvc.getExptCounts().subscribe(expts => {
+      this.expts = expts;
+      if (this.expts && this.expts.length > 0) {
+        this.expts.forEach(d => {
+          d['disabled'] = true;
+        })
+      }
+    })
 
     switch (this.endpoint) {
       case "patient":
@@ -40,14 +47,14 @@ export class FilterExperimentComponent implements OnInit {
   filterExpt(idx) {
     this.expts[idx].disabled = !this.expts[idx].disabled;
 
-    let exptNames = this.expts.filter(d => !d.disabled).map(d => d.name);
+    let exptNames = this.expts.filter(d => !d.disabled).map(d => d.term);
 
-    this.requestSvc.updateParams(this.endpoint, { field: "measurementTechnique", value: exptNames });
+    this.requestSvc.updateParams(this.endpoint, { field: "includedInDataset", value: exptNames });
   }
 
   // Used to reset, when the filters are cleared.
   checkParams(params) {
-    if (params.length === 0) {
+    if (params.length === 0 && this.expts && this.expts.length > 0) {
       this.expts.forEach(d => d.disabled = true);
     }
   }

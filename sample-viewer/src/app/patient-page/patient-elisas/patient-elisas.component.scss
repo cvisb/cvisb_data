@@ -38,3 +38,7 @@ th.mat-header-cell:last-of-type {
 .patient-elisa {
   margin-bottom: 10px !important;
 }
+
+.mat-table, .mat-paginator {
+  background: inherit !important;
+}

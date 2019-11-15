@@ -56,13 +56,13 @@
 
       <div class="counts" id="dataset-counts" *ngIf="experimentCount.length > 0">
         <ng-container *ngFor="let expt of experimentCount">
-          <a [routerLink]="['/dataset', expt.link]">
+          <a [routerLink]="['/dataset', expt.term]">
             <div class="container count-pair">
               <div class="count-value">
                 {{expt.count}}
               </div>
               <div class="count-label">
-                {{expt.term}} experiments
+                {{expt.dataset_name}} experiments
               </div>
             </div>
           </a>
@@ -173,7 +173,10 @@
         More about our data
       </div>
       <div class="description">
-        <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].dateReleased | date: "d MMMM y"}}. See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
+        <ng-container *ngIf="releaseVersion && releaseNotes && releaseNotes.length > 0">
+          <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].datePublished | date: "d MMMM y"}}.
+        </ng-container>
+        See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
         our data and their limitations.
       </div>
     </div>
@@ -192,21 +195,3 @@
     </div>
 
   </div>
-
-  <!-- <app-compare-cohorts></app-compare-cohorts>
-
-<div class="main-graph">
-  <app-allele-circle-packing [data]="alleleCount" [scale]="1" class="main-packing"></app-allele-circle-packing>
-</div>
-<div class="main-graph">
-  <app-allele-circle-packing [data]="alleleCount" [scale]="0.5" class="unique-alleles"></app-allele-circle-packing>
-</div>
-<div class="main-graph">
-  <app-allele-circle-packing [data]="alleleCount" [scale]="0.5" class="novel-alleles"></app-allele-circle-packing>
-</div>
-
-<app-download-btn [data]="test" filenamePart="Ebola" filetype="viral sequences"></app-download-btn>
-
-<app-download-aligned-sequences></app-download-aligned-sequences> -->
-
-  <!-- <app-beeswarm></app-beeswarm> -->

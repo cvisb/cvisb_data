@@ -6,7 +6,7 @@
   flex-direction: column;
   // .axis--x line,
   .axis--x line {
-    display: none;
+    stroke: $grey-300;
   }
 
   rect {
@@ -14,10 +14,13 @@
     shape-rendering: crispedges;
     fill: $grey-300;
     stroke: $grey-400;
-    cursor: pointer;
+
+    &.selectable {
+      cursor: pointer;
+    }
   }
 
-  rect:hover {
+  rect.selectable:hover {
     fill: $cvisb-dark;
     stroke: primary(900);
   }

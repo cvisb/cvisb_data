@@ -1,0 +1,44 @@
+<div class="grid-container dataset-summary" *ngIf="dataset">
+  <div class="grid-item grid-column-container">
+    <div class="container count-pair">
+      <div class="count-value">
+        {{dataset.counts.expt_count}}
+      </div>
+      <div class="count-label">
+        experiments
+      </div>
+    </div>
+
+    <div id="cohort-count">
+      <h4 class="filter-label">cohort</h4>
+      <app-mini-donut [data]="dataset.counts.cohorts" [height]="65"
+      [margin]="{ top: 2, bottom: 2, left: 2, right: 110 }" [cohorts]="dataset.counts.all_cohorts" [filterable]="false"></app-mini-donut>
+    </div>
+  </div>
+
+  <div class="grid-item grid-column-container" id="country-count">
+    <h4 class="filter-label">country</h4>
+    <div class="grid-row-container">
+      <app-choropleth [data]="dataset.counts.countries" [width]="150"></app-choropleth>
+      <app-dot-plot [data]="dataset.counts.countries"></app-dot-plot>
+    </div>
+  </div>
+
+  <div class="grid-item grid-column-container" id="outcome-count">
+    <h4 class="filter-label">outcome</h4>
+    <app-mini-barplot [data]="dataset.counts.outcomes" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 30, right: 70 }"
+    [options]="dataset.counts.all_outcomes" [filterable]="false"></app-mini-barplot>
+  </div>
+
+  <div class="grid-item grid-row-container" id="year-file-count">
+    <div id="year-count" class="grid-column-container">
+      <h4 class="filter-label">year</h4>
+      <app-filterable-histogram [data]="dataset.counts.years" [xDomain]="dataset.counts.yearDomain" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
+    </div>
+
+    <div id="file-count" class="grid-column-container">
+      <h4 class="filter-label">file type</h4>
+      <app-mini-barplot [data]="dataset.counts.files" [height]="40" [width]="40" [options]="dataset.counts.all_files" [filterable]="false"></app-mini-barplot>
+    </div>
+  </div>
+</div>

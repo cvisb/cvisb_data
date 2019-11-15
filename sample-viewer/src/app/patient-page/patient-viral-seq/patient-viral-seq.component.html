@@ -1,44 +1,29 @@
-<h4 class="patient-data">Viral Sequencing</h4>
-
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
-  <div class="sequence-group" *ngFor="let seq of sequences">
-    <ng-container *ngFor="let data of seq.data">
+  <ng-container *ngFor="let seq of sequences">
+    <app-provenance [dateModified]="seq.dateModified" embargoLabel="Viral Sequence" [source]="seq.source"
+    [public_data]="seq.citation" [changes]="seq.correction"
+    [citation]="seq.citation" [dataStatus]="seq.dataStatus" class="provenance"></app-provenance>
 
-      <div class="container sequence-header">
+    <div class="sequence-group">
+      <ng-container *ngFor="let data of seq.data">
+        <div class="container sequence-header">
+          <h4 class="virus">{{ data.virus }} sequence</h4>
 
-        <h4 class="virus">{{ data.virus }} sequence</h4>
+          <div class="quality-rating" *ngIf="data && data.quality">
+            quality:
+            <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
+            <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
+          </div>
 
-        <div class="quality-rating" *ngIf="data && data.quality">
-          quality:
-          <i class="fas fa-star" *ngFor="let filled of seq.data.good"></i>
-          <i class="far fa-star" *ngFor="let unfilled of seq.data.bad"></i>
+          <div class="NCBI-link" *ngIf="seq.genbankID">
+            <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
+              GenBank ID {{seq.genbankID}}
+            </a>
+          </div>
         </div>
 
-        <div class="source container" [ngClass]="seq.cvisb_data ? 'cvisb-data' : 'public-data'">
-          <ng-container *ngIf="seq.cvisb_data; else public_data">
-            <svg-icon icon="cvisb" class="cvisb-icon"></svg-icon>
-            <span class="source-tag">data</span>
-          </ng-container>
-          <ng-template #public_data>
-            <span class="source-tag">public data</span>
-          </ng-template>
-        </div>
 
-        <app-format-citation [citations]="seq.citation" class="citation"></app-format-citation>
-
-        <div class="NCBI-link" *ngIf="seq.genbankID">
-          <a [href]="ncbiAccessionStub + seq.genbankID" rel="noreferrer" target="_blank">
-            GenBank ID {{seq.genbankID}}
-          </a>
-        </div>
-
-        <div class="updated">
-          updated: {{ seq.dateModified ? (seq.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-        </div>
-      </div>
-
-
-      <!-- <div class="aligned-sequence">
+        <!-- <div class="aligned-sequence">
       <div class="container sequence-header">
         <p class="sequence-label">
           aligned sequence
@@ -52,29 +37,30 @@
     </div> -->
 
 
-      <div class="raw-sequence">
-        <div class="container sequence-header">
-          <p class="sequence-label">
-            raw sequence
+        <div class="raw-sequence">
+          <div class="container sequence-header">
+            <p class="sequence-label">
+              raw sequence
+            </p>
+
+            <!-- Dummy so the document has something to select with the data bound -->
+            <input class="no-show" type="text" [value]="data.DNAsequence" #rawseq>
+            <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
+          </div>
+
+
+          <p class="sequence DNA-sequence">
+            {{ data.DNAsequence }}
           </p>
-
-          <!-- Dummy so the document has something to select with the data bound -->
-          <input class="no-show" type="text" [value]="data.DNAsequence" #rawseq>
-          <i class="far fa-copy copy-icon" matTooltip="copy raw sequence to clipboard" (click)="copySeq(rawseq, 'raw')"></i>
         </div>
+      </ng-container>
+    </div>
 
-
-        <p class="sequence DNA-sequence">
-          {{ data.DNAsequence }}
-        </p>
-      </div>
-    </ng-container>
-  </div>
-
-  <div class="viralseq-files">
-    <h5 class="patient-data">files</h5>
-    <app-file-list datasetID="viralseq" [patientID]="patientID"></app-file-list>
-  </div>
+    <div class="viralseq-files">
+      <!-- <h5 class="patient-data">files</h5> -->
+      <app-file-list [datasetID]="datasetID" [patientID]="patientID"></app-file-list>
+    </div>
+  </ng-container>
 </ng-container>
 
 <ng-template #nodata>

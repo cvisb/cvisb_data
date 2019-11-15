@@ -1,0 +1,70 @@
+@import '../../../sass/variables.scss';
+$square-width: 2.5em;
+$square-height: 2em;
+
+.source {
+  flex: 1;
+}
+
+.source-percent {
+  width: $square-width;
+  height: $square-height;
+  padding: 5px;
+  text-align: center;
+  line-height: $square-height;
+  margin-right: 10px;
+  border: 1px solid $grey-400;
+}
+
+.source-container {
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.dataset-source-column {
+  flex: 1;
+}
+
+
+.helper-text {
+  font-size: 0.75em;
+  margin-left: $square-width/2;
+  color: $grey-400;
+  margin-bottom: 5px;
+  display: flex;
+  height: 1.7em;
+
+  & .text {
+    margin-left: 5px;
+  }
+}
+
+.helper-arrow {
+  transform: rotate(180deg);
+  color: $grey-300;
+}
+// mat-expansion-panel
+.panel-group {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.mat-expansion-panel-header,
+.panel-header {
+  background: $grey-200 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  background: $grey-50 !important;
+  padding-top: 5px !important;
+}
+
+.panel-title {
+  // padding: 5px 15px;
+  // margin-top: 10px;
+  text-transform: uppercase;
+  color: $grey-500;
+  font-weight: 300;
+  font-size: 1.15em;
+  align-items: center;
+}

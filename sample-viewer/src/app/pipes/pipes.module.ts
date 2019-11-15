@@ -7,6 +7,7 @@ import { GetKeysPipe } from '../_pipes/get-keys.pipe';
 import { DateRangePipe } from '../_pipes/date-range.pipe';
 import { FilterByAltIDPipe } from '../_pipes/filter-by-alt-id.pipe';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
+import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 import { SloppyMarkdownPipe } from '../_pipes/sloppy-markdown.pipe';
 
 @NgModule({
@@ -14,13 +15,16 @@ import { SloppyMarkdownPipe } from '../_pipes/sloppy-markdown.pipe';
     CommonModule
   ],
   declarations: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe, SloppyMarkdownPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe,
+    ExperimentObjectPipe, CountryObjectPipe, SloppyMarkdownPipe
   ],
   providers: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe, SloppyMarkdownPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe,
+    ExperimentObjectPipe, CountryObjectPipe, SloppyMarkdownPipe
   ],
   exports: [
-    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe, ExperimentObjectPipe, SloppyMarkdownPipe
+    StripWhitespacePipe, FilterLocusPipe, GetKeysPipe, DateRangePipe, FilterByAltIDPipe,
+    ExperimentObjectPipe, CountryObjectPipe, SloppyMarkdownPipe
   ]
 })
 

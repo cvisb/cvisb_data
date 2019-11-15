@@ -1,49 +1,40 @@
 <div class="hla-container patient-data-container">
-  <h4 class="patient-data">HLA Sequencing</h4>
+  <ng-container *ngFor="let hla_data of data">
+    <ng-container *ngIf="hla_data['genotype'] && alleleCount && alleleCount.length > 1; else nodata">
+      <app-provenance [dateModified]="hla_data.dateModified" embargoLabel="HLA" [embargoed]="hla_data.embargoed"
+      [source]="hla_data.source" [dataStatus]="hla_data.dataStatus" [changes]="hla_data.correction" class="provenance"></app-provenance>
+      <div class="hla-genotype">
 
-  <ng-container *ngIf="genotype && alleleCount && alleleCount.length > 1; else nodata">
-    <div class="hla-files">
-      <h5 class="patient-data">files</h5>
-      <app-file-list datasetID="hla" [patientID]="patient.patientID"></app-file-list>
-    </div>
+        <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">
+          <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="hla_data.genotype" class="patients"></app-allele-circle-packing>
 
-    <div class="hla-genotype">
-      <h5 class="patient-data">data</h5>
-
-
-      <div class="publisher" *ngIf="publishers">
-        <span class="variable-label">sequencing institution: </span>
-        <span class="variable-value" *ngFor="let publisher of publishers">{{publisher.name}}</span>
-      </div>
-
-      <div class="updated">
-        updated: {{genotype.dateModified ? (genotype.dateModified | date: 'd MMMM yyyy') : 'unknown'}}
-      </div>
-
-      <div class="hla-data" *ngIf="alleleCount && alleleCount.length > 0">
-        <app-allele-circle-packing [data]="alleleCount" [scale]="0.65" [genotype]="genotype" class="patients"></app-allele-circle-packing>
-
-        <div class="container-column">
-          <h3>Patient {{patient.patientID}} HLA Alleles</h3>
-          <div class="container allele-container">
-            <div *ngFor="let locus of alleleCount" class="allele-group" [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}" (mouseout)="clearLocus()">
-              <div class="locus" (mouseover)="sendLocus($event, locus.key)">
-                {{ locus.key }}
+          <div class="container-column">
+            <h3>Patient {{patientID}} HLA Alleles</h3>
+            <div class="container allele-container">
+              <div *ngFor="let locus of alleleCount" class="allele-group" [ngStyle]="{'background': locus.key === selectedLocus ? backgroundColor + '33': 'none'}" (mouseout)="clearLocus()">
+                <div class="locus" (mouseover)="sendLocus($event, locus.key)">
+                  {{ locus.key }}
+                </div>
+                <div *ngFor="let allele of hla_data.genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}"
+                  (mouseover)="sendAllele($event, allele)" (mouseout)="clearAllele()">
+                  {{ allele }}
+                </div>
               </div>
-              <div *ngFor="let allele of genotype | filterLocus: locus.key" class="allele" [ngClass]="{'highlight' : allele === selectedAllele}" [ngStyle]="{'color' : allele === selectedAllele ? backgroundColor : '#212529'}"
-                (mouseover)="sendAllele($event, allele)" (mouseout)="clearAllele()">
-                {{ allele }}
-              </div>
+
             </div>
-
           </div>
         </div>
       </div>
-
-    </div>
+    </ng-container>
   </ng-container>
 
-  <ng-template #nodata>
-    <span class="nodata">not available</span>
-  </ng-template>
+  <div class="hla-files">
+    <!-- <h5 class="patient-data">files</h5> -->
+    <app-file-list datasetID="hla" [patientID]="patientID"></app-file-list>
+  </div>
+
 </div>
+
+<ng-template #nodata>
+  <span class="nodata">not available</span>
+</ng-template>

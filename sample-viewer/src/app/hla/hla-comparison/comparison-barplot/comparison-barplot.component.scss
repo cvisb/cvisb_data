@@ -7,10 +7,9 @@
   fill: none;
   stroke: $default-color;
 }
-
 // #gridlines
 .barplot--comparison .axis--x line {
-    stroke: #ddd;
+  stroke: #ddd;
 }
 
 .barplot--comparison .axis--y path {
@@ -21,9 +20,9 @@
   fill: $grey-300;
 }
 
-#right  {
+#right {
   // fill: $sierraleone-green;
-  fill: $cvisb-dark;
+  fill: $cvisb-theme;
 }
 
 .title {
@@ -35,7 +34,6 @@
 .title--left {
   text-anchor: end;
 }
-
 // number of observation annotations
 .n {
   font-weight: 700;
@@ -44,31 +42,38 @@
 #right .n {
   text-anchor: end;
 }
-
-
 // tooltips
-.tooltip {
+.hla-comparison-tooltip {
   position: absolute;
   text-align: center;
-  width: 80px;
+  width: 125px;
   padding: 8px;
   margin-top: -20px;
-  font: 10px sans-serif;
   background: #ddd;
   pointer-events: none;
+  border-top: 4px solid $cvisb-theme;
+  background: lighten($cvisb-theme, 45%);
+  font-family: "Open Sans", "Helvetica Neue", "Font Awesome 5 Free", sans-serif;
+
+  & .title--allele {
+    font-size: 16px;
+    color: $cvisb-theme;
+    font-weight: 700;
+    border: none;
+  }
+
+  & .label--freq {
+    margin-top: 5px;
+    font-size: 14px;
+  }
 }
 
 .hover--allele {
   opacity: 0.2;
 }
 
-.title--allele {
-  font-size: 1.25em;
-  font-weight: 400;
-}
-
 .right {
-  border-left: 2px solid $default-color;
+  border-left: 2px solid $grey-300;
   padding-left: 10px;
   margin-left: 5px;
 }

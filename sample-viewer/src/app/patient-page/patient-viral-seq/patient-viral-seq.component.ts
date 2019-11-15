@@ -14,8 +14,8 @@ import { ViralSeqObj } from '../../_models';
 export class PatientViralSeqComponent implements OnChanges {
   maxStars: number = 5;
   @Input() sequences: ViralSeqObj[];
-  @Input() files: any[];
   @Input() patientID: string;
+  @Input() datasetID: string;
   ncbiAccessionStub: string = "https://www.ncbi.nlm.nih.gov/nuccore/"; // website to link accession numbers, like https://www.ncbi.nlm.nih.gov/nuccore/LN823982
 
   constructor(
@@ -24,6 +24,7 @@ export class PatientViralSeqComponent implements OnChanges {
   ngOnChanges() {
     if (this.sequences) {
       this.sequences.forEach((seq: any) => {
+        seq['source'] = seq['publisher'] ? seq['publisher']['name'] : null;
         if (seq.data.quality) {
           seq['data']['good'] = new Array(seq.data.quality);
           seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);

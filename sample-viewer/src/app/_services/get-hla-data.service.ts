@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { nest } from 'd3';
 import * as d3 from 'd3';
-import * as _ from 'lodash';
-import { HLA, D3Nested } from '../_models';
+import { countBy, flatMapDeep } from 'lodash';
+import { HLA, D3Nested, HLAnested, HLAsummary, CohortSelectOptions } from '../_models';
 
 import { HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { map, catchError, mergeMap } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError, mergeMap, finalize } from "rxjs/operators";
 
 import { ApiService } from './api.service';
-import { ESResponse } from '../_models';
+import { ESResult } from '../_models';
 
 
 @Injectable({
@@ -39,16 +39,20 @@ export class GetHlaDataService {
   public patientCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public patientCountState$ = this.patientCountSubject.asObservable();
 
+  // Loading spinner
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
+
 
   constructor(private apiSvc: ApiService) {
     this.summarizeHLA().subscribe(_ => {
     });;
   }
 
-  getHLAdata(patientID?: string): Observable<Object[]> {
+  getHLAdata(patientID?: string): Observable<Object> {
     let params = new HttpParams()
       .set("q", 'measurementTechnique:"HLA sequencing"')
-      .set("fields", "data, publisher");
+      .set("fields", "data, publisher, dateModified");
 
     if (patientID) {
       params = params.append("patientID", `"${patientID}"`);
@@ -56,13 +60,51 @@ export class GetHlaDataService {
 
     // TODO: change to fetchAll
     return this.apiSvc.get("experiment", params, 1000).pipe(
-      map((res: ESResponse) => {
+      map((res: any) => {
         // collapse the data down to a single long array of each allele
         // make sure to remove any expts which lack a data object
-        let data = res['hits'].flatMap(d => d.data).filter(d => d);
-        let publisher = res['hits'].flatMap(d => d.publisher).filter(d => d);
+        let data = flatMapDeep(res['hits'], d => d.data).filter(d => d);
+        let publisher = flatMapDeep(res['hits'], d => d.publisher).filter(d => d);
+        let dateModified = res['hits'].map(d => d.dateModified).join();
 
-        return ({ data: data, publisher: publisher })
+        return ({ data: data, publisher: publisher, dateModified: dateModified })
+      }
+      ))
+  }
+
+  getLRFiltered(leftOptions, rightOptions): Observable<Object[]> {
+    this.loadingSubject.next(true);
+
+    return this.getFilteredHLA(leftOptions).pipe(
+      mergeMap(leftResults => this.getFilteredHLA(rightOptions).pipe(
+        map(rightResults => {
+          return ({ left: leftResults, right: rightResults });
+        }),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (new Observable<any>())
+        }),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      )
+    )
+  }
+
+  getFilteredHLA(patientOptions): Observable<Object[]> {
+    let pQuery = `cohort:${patientOptions.cohort.join(",")} AND outcome:${patientOptions.outcome.join(",")}`;
+
+    let params = new HttpParams()
+      .set("q", 'measurementTechnique:"HLA sequencing"')
+      .set("fields", "data")
+      .set("patientQuery", pQuery);
+
+
+    // TODO: change to fetchAll
+    return this.apiSvc.fetchAll("experiment", params).pipe(
+      map((res) => {
+        let data = flatMapDeep(res, d => d.data).filter(d => d);;
+        return (this.getComparisonCounts(data))
       }
       ))
   }
@@ -140,6 +182,29 @@ export class GetHlaDataService {
     return (alleleCount);
   }
 
+  getComparisonCounts(data: HLA[]): HLAnested[] {
+    // nest data
+    let nested_hla = d3.nest()
+      .key((d: HLA) => d.locus)
+      .key((d: HLA) => d.allele)
+      .rollup((values: any) => values.length)
+      .entries(data);
+
+    nested_hla.forEach((element: HLAnested) => {
+      // calculate total per locus.
+      element.total = d3.sum(element.values.map((d: HLAsummary) => d.value))
+
+      let locus_total = element.total;
+
+      // calc allelic frequency
+      element.values.forEach(locus_allele => {
+        locus_allele.pct = locus_allele.value / locus_total;
+      })
+    })
+
+    return (nested_hla);
+  }
+
   getUniqueCounts(hla_data) {
     let novelAlleles = nest()
       .key((d: HLA) => d.locus)
@@ -149,7 +214,7 @@ export class GetHlaDataService {
           data: values,
           alleles: values.map((patient: HLA) => patient.allele),
           unique_alleles: d3.map(values, (patient: HLA) => patient.allele).keys(),
-          unique_summary: _.countBy(values, 'allele'),
+          unique_summary: countBy(values, 'allele'),
           unique_total: d3.map(values, (patient: HLA) => patient.allele).keys().length
         }
       })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as _ from 'lodash';
+import { union, intersection, difference, uniq, cloneDeep, flatMapDeep } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -83,21 +83,21 @@ export class MergeService {
 
     switch (how) {
       case 'left':
-        ids = _.intersection(left_ids, right_ids);
-        ids = ids.concat(_.difference(left_ids, right_ids));
+        ids = intersection(left_ids, right_ids);
+        ids = ids.concat(difference(left_ids, right_ids));
         break;
       case 'right':
-        ids = _.intersection(left_ids, right_ids);
-        ids = ids.concat(_.difference(right_ids, left_ids));
+        ids = intersection(left_ids, right_ids);
+        ids = ids.concat(difference(right_ids, left_ids));
         break;
       case 'outer':
-        ids = _.union(left_ids, right_ids);
+        ids = union(left_ids, right_ids);
         break;
       case 'inner':
-        ids = _.intersection(left_ids, right_ids);
+        ids = intersection(left_ids, right_ids);
         break;
       default:
-        ids = _.intersection(left_ids, right_ids);
+        ids = intersection(left_ids, right_ids);
     }
 
     return (ids)
@@ -131,11 +131,11 @@ export class MergeService {
 
     let displayedColumns = this.getAllCols(left_data, right_data);
     // sort displayedColumns
-    displayedColumns = _.uniq(['sampleID'].concat(displayedColumns.sort()));
+    displayedColumns = uniq(['sampleID'].concat(displayedColumns.sort()));
     // remove cols to ignore-- namely _id-- since it's used internalyl and shouldn't be shown.
-    displayedColumns = _.difference(displayedColumns, ignoreCols);
+    displayedColumns = difference(displayedColumns, ignoreCols);
 
-    let locationColumns = this.getAllCols(left_data.map(d => d.location).flat(), right_data.map(d => d.location).flat());
+    let locationColumns = this.getAllCols(flatMapDeep(left_data, d => d.location), flatMapDeep(right_data, d => d.location));
 
     return ({ merged: merged, displayedColumns: displayedColumns, locationColumns: locationColumns });
   }
@@ -144,7 +144,7 @@ export class MergeService {
   // Outer function to actually merge _x properties with _y.
   compressMergedSamples(merged) {
     // First, replace the 'location' with the consolidated form
-    let compressed = _.cloneDeep(merged);
+    let compressed = cloneDeep(merged);
 
     compressed.forEach(sample => {
       // Location is weird; want to concatenate together the results
@@ -162,14 +162,14 @@ export class MergeService {
 
   compressMergedData(merged, method = "replace_left") {
     // Create a deep copy of merged so we can edit it as we like.
-    // let compressed = _.cloneDeep(merged);
+    // let compressed = cloneDeep(merged);
 
     merged.forEach(sample => {
       let cols = Object.keys(sample);
 
       let merged_cols = cols.filter(d => d.includes("_x") || d.includes("_y"));
 
-      let col_pairs = _.uniq(merged_cols.map(d => d.replace("_x", "").replace("_y", "")));
+      let col_pairs = uniq(merged_cols.map(d => d.replace("_x", "").replace("_y", "")));
 
       for (let column of col_pairs) {
         // Update with the new value: the left, the right, or (default) an array of both.

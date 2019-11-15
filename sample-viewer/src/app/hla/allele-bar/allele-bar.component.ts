@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef, Input } from '@angular/core';
 
 import * as d3 from 'd3';
 
@@ -10,8 +10,8 @@ import { HlaService } from '../../_services';
   styleUrls: ['./allele-bar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlleleBarComponent implements OnInit {
-  @ViewChild('barplot') private chartContainer: ElementRef;
+export class AlleleBarComponent implements AfterViewInit {
+  @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
   @Input() data: any;
   // @Input() title: string;
   // @Input() subtitle: string;
@@ -59,7 +59,7 @@ export class AlleleBarComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.drawChart();
   }
 

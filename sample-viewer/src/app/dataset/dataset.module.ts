@@ -7,6 +7,7 @@ import { DatasetRoutingModule } from './dataset-routing.module';
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
+import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
 // import { MaterialModule } from '../material.module';
 // import { DownloadBtnModule } from '../download-btn/download-btn.module';
 
@@ -14,20 +15,21 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { DatasetComponent } from './dataset.component'
 
 // --- services ---
-import { MyHttpClient } from '../_services/http-cookies.service';
+import { getDatasetsService } from '../_services';
 
 @NgModule({
   imports: [
     CommonModule,
     DatasetRoutingModule,
     RouterModule,
-    SvgIconModule
+    SvgIconModule,
+    DatasetSummaryModule
   ],
   declarations: [
     DatasetComponent
   ],
   providers: [
-    MyHttpClient
+    getDatasetsService
   ]
 })
 export class DatasetModule { }

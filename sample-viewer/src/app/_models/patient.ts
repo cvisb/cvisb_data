@@ -1,4 +1,6 @@
-import { DateRangePipe } from "../_pipes";
+import { DateRangePipe } from "../_pipes/date-range.pipe";
+import { Citation } from './citation';
+import { Organization } from './organization';
 
 export class Patient {
   // TODO: resort location based on inverse specificity
@@ -34,6 +36,9 @@ export class Patient {
   exposureType?: string;
   _version?: number;
   updatedBy?: string;
+  dataStatus: string;
+  citation: Citation[];
+  publisher: Organization;
 }
 
 
@@ -75,6 +80,8 @@ export class PatientDownload {
   evalDate: string;
   infectionDate: string;
   infectionYear: number;
+  citation: string;
+  source: string;
 
   constructor(patient: Patient, datePipe: DateRangePipe) {
     this.patientID = patient.patientID;
@@ -99,7 +106,8 @@ export class PatientDownload {
     this.relatedTo = patient.relatedTo ? patient.relatedTo.join(", ") : null;
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
-
+    this.citation = patient.citation ? patient.citation.map(d => d.url).join("; ") : null;
+    this.source = patient.publisher ? patient.publisher.name : null;
 
 
     if (patient.symptoms && patient.symptoms[0]) {
@@ -129,7 +137,14 @@ export class PatientDownload {
 
 export class ELISA {
   ELISAresult: string;
+  ELISAvalue?: number;
   assayType: string;
   timepoint: string;
   virus: string;
+  "@type": string;
+  dataStatus: string;
+  publisher: Organization;
+  citation: Citation[];
+  correction: string;
+  sourceFiles: string;
 }

@@ -1,0 +1,27 @@
+<div class="curation-explanation" id="alignments" *ngIf="curated && curated.length > 0">
+  <h3>Curated alignments</h3>
+  <p>
+    Our viral sequencing datasets combine genomic sequences generated as part of our consortium with publicly available sequences. In addition to providing the raw data, we also curate sequences and provide the alignments to the
+    broader community for downstream analyses.
+  </p>
+
+  <section id="download-alignments">
+    <h5>Download the alignments</h5>
+    <div class="download-data" *ngFor="let download of curated">
+      <a [href]="download.contentUrl" target="_blank" rel="noreferrer">{{ download.description }}</a>
+    </div>
+  </section>
+
+  <mat-expansion-panel id="methodology" [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="methodology-header">
+      <mat-panel-title class="methodology-title">
+        <h5>{{ panelOpenState ? "Alignment methodology" : "View alignment methodology" }}</h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="methodology-description">Sequences with lower quality (manual curation) and incomplete sequences (<95% of (GP+NP) or (Z+L) ORFs length) are excluded from the curated alignment. Remaining sequences are trimmed to their coding regions, codon aligned using
+        mafft and inspected manually. ORFs are arranged in sense orientation as follows: S segment: NP -NNNNNN- GP L segment: L -NNNNNN- Z A maximum likelihood (ML) phylogeny is reconstructed with RAxML using the general time-reversible (GTR)
+        nucleotide substitution model, gamma-distributed rates among sites and bootstrap resampling with 500 replicates.
+      </div>
+      </mat-expansion-panel>
+
+    </div>

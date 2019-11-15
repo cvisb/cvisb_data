@@ -2,7 +2,7 @@ import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import * as _ from 'lodash';
+import { uniq, flatMap, difference } from 'lodash';
 
 @Component({
   selector: 'app-preview-samples',
@@ -19,8 +19,8 @@ export class PreviewSamplesComponent implements OnChanges {
 
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 
@@ -29,13 +29,13 @@ export class PreviewSamplesComponent implements OnChanges {
   ngOnChanges() {
 
     if (!this.displayedColumns || this.displayedColumns.length === 0) {
-      this.displayedColumns = _.uniq(_.flatMap(this.data, Object.keys));
+      this.displayedColumns = uniq(flatMap(this.data, Object.keys));
       // sort the columns in a sensible order
       this.displayedColumns.sort((a, b) => this.sortingFunc(a) - this.sortingFunc(b));
     }
 
     if(this.ignoredColumns) {
-      this.displayedColumns = _.difference(this.displayedColumns, this.ignoredColumns);
+      this.displayedColumns = difference(this.displayedColumns, this.ignoredColumns);
     }
 
     if (this.data && this.data.length === 0) {

@@ -1,24 +1,41 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
-$icon-size: 35px;
+$icon-size: 50px;
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: repeat(12, [col-start] 1fr);
+//   grid-gap: 20px;
+//   // background-color: #2196F3;
+//   padding: 10px;
+//   margin-top: 25px;
+// }
+//
+// .grid-item {
+//   padding: 5px;
+// }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(12, [col-start] 1fr);
-  grid-gap: 20px;
-  // background-color: #2196F3;
-  padding: 10px;
-  margin-top: 25px;
+.dataset-header {
+  flex: 1;
+  margin-right: 15px;
+  background: $grey-50;
+  border-right: $grey-200 7px solid;
+  padding: 15px;
 }
 
-.grid-item {
-  padding: 5px;
+.dataset-count-container {
+  margin-bottom: 20px;
+  color: $grey-600;
+}
+
+.dataset-count {
+    text-transform: uppercase;
+    font-weight: 300;
 }
 
 .dataset-list {
   // background: red;
-  grid-column: col-start 1 / span 8;
-  grid-row: 1;
+  // grid-column: col-start 1 / span 8;
+  // grid-row: 1;
 }
 
 .metadata {
@@ -31,24 +48,6 @@ $icon-size: 35px;
   color: $lassa-md;
   -webkit-text-stroke-color: $lassa-color;
   -webkit-text-stroke-width: 1px;
-}
-
-.count-pair {
-  background: $lassa-dk;
-  align-items: center;
-  padding: 0 10px;
-  border-radius: 5px;
-  height: 3.25em;
-}
-
-.count-value {
-  color: $lassa-lt;
-  font-size: 2.5em;
-  margin-right: 15px;
-}
-
-.count-label {
-  color: white;
 }
 
 .dataset {
@@ -64,13 +63,24 @@ svg-icon {
   height: $icon-size;
   width: $icon-size;
   vertical-align: middle;
+  margin: 0 !important;
 }
 
 h4 {
-  margin-top: 8px;
-  margin-left: 13px;
+  // margin-top: 8px;
+  // margin-left: 13px;
+  margin: 0;
+}
+
+.dataset-icon {
+  // margin-top: auto;
 }
 
 .container-title {
   align-items: center;
+}
+
+
+h4.container-column {
+   flex: 1;
 }

@@ -1,48 +1,82 @@
 <ng-container *ngIf="citations && citations.length >  0">
   <div *ngFor="let citation of citations" class="container" [ngClass]="{'container-column': !simplifiedCitation}">
-    <div class="citation">
-      <span id="title" *ngIf="simplifiedCitation === false">
-        <a [href]="citation.url" target="_blank" rel="noreferrer">
-          <span [outerHTML]="citation.name"></span>
-        </a>.
-      </span>
-      <ng-container *ngIf="allAuthors === true; else firstAuthor">
-        <span id="authors">
-          <span *ngFor="let author of citation.author; let i=index" class="author">
-            {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
+    <div class="citation" [ngSwitch]="verbosity">
+      <!-- SHORTEST -->
+      <ng-container *ngSwitchCase="'basic'">
+        <div class="citation-article">
+          <span id="authors">
+            <a [href]="citation.url" target="_blank" rel="noreferrer">
+              {{citation.author[0].givenName}} {{citation.author[0].familyName}}
+              <i>et al.</i>
+            </a>
           </span>
-        </span>
-        <span id="journal"><i>{{citation.journalName}}</i></span>
+
+          <span id="journal" *ngIf="citation.journalNameAbbrev"><i>{{citation.journalNameAbbrev}}</i></span>
+
+          <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>
+        </div>
       </ng-container>
 
-      <ng-template #firstAuthor>
-        <span id="authors" *ngIf="simplifiedCitation === true">
-          <a [href]="citation.url" target="_blank" rel="noreferrer">
-            {{citation.author[0].givenName}} {{citation.author[0].familyName}}
-            <i>et al.</i>
-          </a>
-        </span>
-        <span id="authors" *ngIf="simplifiedCitation === false">
-          {{citation.author[0].givenName}} {{citation.author[0].familyName}}
-          <i>et al.</i>
-        </span>
+      <!-- VERBOSE -->
+      <ng-container *ngSwitchCase="'verbose'">
+        <div class="citation-article">
+          <span id="title" *ngIf="citation.name">
+            <a [href]="citation.url" target="_blank" rel="noreferrer">
+              <span [outerHTML]="citation.name"></span>
+            </a>.
+          </span>
 
-        <span id="journal" *ngIf="simplifiedCitation === false"><i>{{citation.journalName}}</i></span>
-        <span id="journal" *ngIf="simplifiedCitation === true"><i>{{citation.journalNameAbbrev}}</i></span>
-      </ng-template>
+          <span id="authors">
+            <span *ngFor="let author of citation.author; let i=index" class="author">
+              {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
+            </span>
+          </span>
+          <span id="journal" *ngIf="citation.journalName"><i>{{citation.journalName}}</i></span>
+          <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span>
+          <span id="vol" *ngIf="citation.volumeNumber">, {{citation.volumeNumber}}</span>
+          <span id="issue" *ngIf="citation.issueNumber">, {{citation.issueNumber}}</span>
+          <span id="page" *ngIf="citation.pagination">, {{citation.pagination}}</span>.
+        </div>
+        <ng-container [ngTemplateOutlet]="links" [ngTemplateOutletContext]="{ citation: citation}"></ng-container>
+      </ng-container>
 
+      <!-- WITH LINKS -->
+      <ng-container *ngSwitchCase="'links'">
+        <ng-container [ngTemplateOutlet]="basic_citation" [ngTemplateOutletContext]="{ citation: citation}"></ng-container>
+        <ng-container [ngTemplateOutlet]="links" [ngTemplateOutletContext]="{ citation: citation}"></ng-container>
+      </ng-container>
 
-      <span id="date" *ngIf="citation.datePublished">{{citation.datePublished}}</span>,
+      <!-- DEFAULT -->
+      <ng-container *ngSwitchDefault>
+        <ng-container [ngTemplateOutlet]="basic_citation" [ngTemplateOutletContext]="{ citation: citation}"></ng-container>
+      </ng-container>
 
-      <span id="vol">{{citation.volumeNumber}}</span>, <span id="issue">{{citation.issueNumber}}</span>, <span id="page">{{citation.pagination}}</span>.
-    </div>
-
-    <div class="links container" *ngIf="simplifiedCitation === false">
-      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.pmid" target="_blank" rel="noreferrer">{{citation.pmid}}</a></span>
-
-      <span class="data-separator"></span>
-      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">{{ citation.doi }}</a></span>
     </div>
 
   </div>
+
+  <ng-template #basic_citation let-citation="citation">
+    <div class="citation-article">
+      <span id="authors">
+        <a [href]="citation.url" target="_blank" rel="noreferrer">
+          {{citation.author[0].givenName}} {{citation.author[0].familyName}}
+          <i>et al.</i>
+        </a>
+      </span>
+      <span id="journal" *ngIf="citation.journalName"><i>{{citation.journalName}}</i></span>
+
+      <span id="date" *ngIf="citation.datePublished">{{ citation.datePublished | date: "yyyy" }}</span><span id="vol" *ngIf="citation.volumeNumber">, {{citation.volumeNumber}}</span><span id="issue" *ngIf="citation.issueNumber">,
+        {{citation.issueNumber}}</span><span id="page" *ngIf="citation.pagination">, {{citation.pagination}}</span>.
+    </div>
+  </ng-template>
+
+  <ng-template #links let-citation="citation">
+    <div class="citation-links container">
+      <span id="pmid" *ngIf="citation.pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.pmid" target="_blank" rel="noreferrer">{{citation.pmid}}</a></span>
+
+      <span class="data-separator" *ngIf="citation.pmid && citation.doi"></span>
+      <span id="doi" *ngIf="citation.doi">DOI: <a [href]="'https://doi.org/' + citation.doi" target="_blank" rel="noreferrer">{{ citation.doi }}</a></span>
+    </div>
+  </ng-template>
+
 </ng-container>

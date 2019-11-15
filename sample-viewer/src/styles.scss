@@ -1,8 +1,7 @@
 // Custom color specifications
-@import '/sass/variables'; // custom variables, usually colors
+@import './sass/variables.scss'; // custom variables, usually colors
 // @import 'sass/variables'; // custom variables, usually colors
-@import '/sass/styles';
-@import '/sass/material-theme'; // @import 'custom_colors';
+@import './sass/material-theme.scss'; // @import 'custom_colors';
 @import "~@ng-select/ng-select/themes/default.theme.css"; // Fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800|Material+Icons'); // --- Basics ---
 
@@ -18,10 +17,20 @@ body {
   flex-wrap: wrap;
 }
 
+.container-justified {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .container-column {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+}
+
+.flex-grow1 {
+  flex-grow: 1;
 }
 
 .centered {
@@ -78,8 +87,7 @@ a {
     font-weight: 800;
     text-transform: uppercase;
     font-size: 4.5em;
-    margin-top: 0.15em;
-    margin-bottom: 0.15em;
+    margin: 0;
     letter-spacing: 0.15em;
     word-spacing: 0.15em;
     text-shadow: 5px 5px 7px $grey-200;
@@ -93,6 +101,13 @@ a {
 .variable-value {
   font-weight: 400;
 }
+
+.spinner-container.container {
+    position: fixed;
+    left: 50%;
+    top: calc(50% - 111px);
+}
+
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
@@ -205,6 +220,12 @@ a {
   border-color: accent-redder(900);
 }
 
+.curated-data {
+  background: lighten($cvisb-bright, 50%);
+  color: $cvisb-dark;
+  border-color: $cvisb-dark;
+}
+
 .unknown-type {
   background-color: #f3f3f3;
 }
@@ -226,6 +247,7 @@ a {
 
 .keyword {
   background: $grey-50;
+  background: $grey-150;
   margin: 0 5px 3px;
   font-size: x-small;
   padding: 3px 5px;
@@ -281,6 +303,20 @@ svg-icon.country-icon {
   }
 }
 
+.final-icon {
+  fill: url("#cvisb_gradient") $cvisb-dark;
+}
+
+.preliminary-icon {
+  fill: url("#cvisb_gradient") $cvisb-theme;
+  // stroke-width: 10;
+}
+
+.data-status-icon {
+  width: 18px;
+  height: 20px;
+}
+
 .hla-icon,
 .hla-icon {
   stroke: $default-color;
@@ -288,8 +324,8 @@ svg-icon.country-icon {
   fill: $grey-300;
 }
 
-.systemsserology-icon {
-  fill: $grey-200;
+.systems-serology-icon {
+  fill: url("#grey_radial_gradient") $grey-200;
   stroke: $nigeria-green;
 }
 // --- filters ---
@@ -370,9 +406,13 @@ svg-icon.country-icon {
   color: white;
 }
 
-.cohort.Unknown,
+.cohort.Unknown {
+  background-color: $grey-100;
+  border: $grey-600 1px solid;
+}
+
 .cohort.Control {
-  background-color: $grey-400;
+  background-color: $grey-600;
   color: white;
   border: $grey-600 1px solid;
 }
@@ -387,19 +427,25 @@ svg-icon.country-icon {
   font-weight: 400;
   // border-left: whitesmoke solid 3px;
   &.control {
-    background-color: $grey-200;
-    color: $default-color;
+    background-color: $grey-500;
+    color: white;
     border-color: $grey-600;
   }
 
-  &.contact.Ebola {
-    background-color: lighten($ebola-lt, 12%);
-    color: $ebola-color;
-  }
+  &.contact {
+    &.Ebola {
+      background-color: lighten($ebola-lt, 12%);
+      color: $ebola-color;
+    }
 
-  &.contact.Lassa {
-    background-color: lighten($lassa-lt, 15%);
-    color: $lassa-color;
+    &.Lassa {
+      background-color: lighten($lassa-lt, 15%);
+      color: $lassa-color;
+    }
+
+    &.Unknown {
+      background-color: $grey-50;
+    }
   }
 
   &.unknown {
@@ -413,32 +459,44 @@ svg-icon.country-icon {
       color: $ebola-dk;
     }
 
-    &.control {
+    &.Unknown {
       color: $default-color;
     }
   }
-}
 
-.dead.Lassa,
-.died.Lassa {
-  background-color: $lassa-lt;
-  color: $default-color;
-}
+  &.dead {
+    &.Lassa {
+      background-color: $lassa-lt;
+      color: $default-color;
+    }
 
-.survivor.Lassa {
-  background-color: $lassa-md;
-  color: $default-color;
-}
+    &.Ebola {
+      background-color: $ebola-lt;
+      color: $default-color;
+    }
 
-.dead.Ebola,
-.died.Ebola {
-  background-color: $ebola-lt;
-  color: $default-color;
-}
+    &.Unknown {
+      background-color: $grey-225;
+      color: $default-color;
+    }
+  }
 
-.survivor.Ebola {
-  background-color: $ebola-md;
-  color: $default-color;
+  &.survivor {
+    &.Lassa {
+      background-color: $lassa-md;
+      color: $default-color;
+    }
+
+    &.Ebola {
+      background-color: $ebola-md;
+      color: $default-color;
+    }
+
+    &.Unknown {
+      background-color: $grey-300;
+      color: $default-color;
+    }
+  }
 }
 // --- alternate IDs ---
 
@@ -455,6 +513,7 @@ svg-icon.country-icon {
 
 h4.patient {
   margin-bottom: 0;
+  margin-top: 0.5em;
   text-transform: capitalize;
   border-bottom: 1px solid $default-color;
 }
@@ -531,8 +590,9 @@ button.stepper-button {
 
 .expt-type {
   display: inline-block;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
   margin: 0.5em 1.5em 0.5em 0;
-  padding: 5px 8px 5px 5px;
+  padding: 5px;
   border-radius: 5px;
 
   & svg-icon {
@@ -540,27 +600,27 @@ button.stepper-button {
     width: 35px;
     vertical-align: middle;
   }
+}
 
-  &:hover {
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, .5), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
-  }
+.expt-type-hover:hover {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, .5), 0 1px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
 .hla {
-  background: lighten($female-color, 41%);
+  background: lighten($female-color, 38%);
   stroke: $default-color;
   stroke-width: 0.75;
 }
 
 .tcr {
-  background: accent(50);
+  background: #fef3d9;
 }
 
 .bcr {
-  background: lighten($cvisb-bright, 50%);
+  background: lighten($cvisb-bright, 48%);
 }
 
-.systemsserology {
+.systems-serology {
   // background: lighten($lassa-lt, 20%);
   background: #e3ffe2;
 }
@@ -570,15 +630,32 @@ button.stepper-button {
   background: #faffd7;
 }
 
-.rt_pcr {
-  background: #fff8fb;
+.RT-PCR {
+  background: lighten($ebola-lt, 11%);
 }
 
-.rdt {
-  background: lighten($sierraleone-blue, 56%);
+.rapid-diagnostics {
+  // background: lighten($sierraleone-blue, 56%);
+  background: #e8eaf6;
 }
 
-.viralseq {
+.sensor-vitals {
+  background: #edffc7;
+  background: #e4ffca;
+}
+
+.vitals {
+  background: #fadcff;
+  background: #fbe6ff;
+}
+
+.blood-chemistry {
+  background: #ffe7c7;
+}
+
+.ebola-viral-seq,
+.lassa-viral-seq,
+.viral-seq {
   background: #e4fffc;
 }
 
@@ -595,6 +672,41 @@ th.mat-header-cell {
   margin-left: 9.5em;
 }
 
-.header, .footer {
-    z-index: 1000;
+.footer,
+.header {
+  z-index: 1000;
+}
+// common tags for data
+
+.private-icon {
+  background: $grey-225;
+  padding: 5px;
+  color: $grey-400;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  border-radius: 4px;
+}
+
+.embargoed-icon {
+  background: $grey-400;
+  background: accent-redder(A400);
+  padding: 5px;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8em;
+  display: flex;
+  margin: 5px 0;
+
+  & i {
+    color: $grey-100;
+    color: accent-redder(300);
+    margin-right: 4px;
+    font-size: 18px;
+  }
+}
+
+i.embargoed-icon {
+  color: accent-redder(300);
+  font-size: 18px;
 }

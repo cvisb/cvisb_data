@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
@@ -13,9 +13,9 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniDonutComponent implements OnInit, OnChanges {
+export class MiniDonutComponent implements AfterViewInit, OnChanges {
 
-  @ViewChild('donut') private chartContainer: ElementRef;
+  @ViewChild('donut', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private endpoint: string;
   @Input() private height: number;
@@ -28,7 +28,8 @@ export class MiniDonutComponent implements OnInit, OnChanges {
 
   // --- plot sizes ---
   private element: any; // selector for SVG DIV
-  private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
+  // @Input() right_margin: number;
+  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
   private width: number;
   private hole_frac: number = 0.5;
   private checkboxX: number = 110;
@@ -62,7 +63,7 @@ export class MiniDonutComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.createPlot();
 

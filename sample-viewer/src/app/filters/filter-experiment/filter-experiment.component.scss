@@ -20,14 +20,14 @@ svg-icon {
   flex-wrap: wrap;
 }
 
-.expt-type {
+.filter-expt {
   display: inline-block;
   // margin-right: 3em;
   margin-right: 1.5em;
   margin-bottom: 1em;
   // background: #f7ffcd;
-  background-color: lighten($grey-200, 10%);
-  padding: 5px 8px 5px 5px;
+  // background-color: lighten($grey-200, 10%);
+  // padding: 5px 8px 5px 5px;
   border-radius: 5px;
   &:hover {
     background-color: $grey-100;

@@ -34,8 +34,9 @@ export class DownloadsDataSource implements DataSource<DataDownload> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(files => {
+        let downloads = files['hits'];
         this.resultCountSubject.next(files['total'])
-        this.downloadsSubject.next(files['hits'])
+        this.downloadsSubject.next(downloads)
       });
 
   }

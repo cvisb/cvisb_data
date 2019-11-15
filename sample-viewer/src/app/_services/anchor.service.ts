@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 
-import { StripWhitespacePipe } from '../_pipes';
+import { StripWhitespacePipe } from '../_pipes/strip-whitespace.pipe';
 
 import { isPlatformBrowser } from '@angular/common';
 

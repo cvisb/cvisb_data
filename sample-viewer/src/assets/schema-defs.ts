@@ -7,7 +7,7 @@ export abstract class SchemaDefs {
     "gID",
     "sID",
     "contactGroupIdentifier",
-    "_source",
+    "sourceFiles",
     "cohort",
     "outcome",
     "country.name",
@@ -72,6 +72,7 @@ export abstract class SchemaDefs {
 
 
   static exptProperties: string[] = [
+    "includedInDataset",
     "experimentID",
     "batchID",
     "SRA_ID",

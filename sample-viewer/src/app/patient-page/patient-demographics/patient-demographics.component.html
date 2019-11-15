@@ -1,4 +1,4 @@
-<h4 class="patient" id="demographics">demographics</h4>
+<h4 class="patient">demographics</h4>
 
 <div class="species" *ngIf="patient.species">
   <span class="variable-label">species: </span>
@@ -30,12 +30,14 @@
 </div>
 
 
-<div class="pregnant" *ngIf="patient.gender == 'Female'">
+<div class="pregnant" *ngIf="patient.pregnant === true || patient.pregnant === false">
+  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
   <span class="variable-label">pregnant:</span>
-  <span class="variable-value">{{ patient.pregnant ? patient.pregnant : "unknown"}}</span>
+  <span class="variable-value">{{ patient.pregnant === "false" ? "no" : patient.pregnant === "true" ? "yes" : "unknown" }}</span>
 </div>
 
 <div class="occupation" *ngIf="patient.occupation">
+  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
   <span class="variable-label">occupation:</span>
   <span class="variable-value">{{ patient.occupation }}</span>
 </div>

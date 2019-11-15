@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,14 +9,13 @@ import { AnchorService } from '../../_services';
   templateUrl: './patient-nav.component.html',
   styleUrls: ['./patient-nav.component.scss']
 })
-export class PatientNavComponent {
+export class PatientNavComponent implements AfterViewInit, OnInit{
   @Input() cohort: string;
+  @Input() expts: Object[];
   private patientID: string;
 
-  links: any =
-    ['samples', 'demographics', 'related patients', 'citations',
-      { 'key': 'data', 'values': ['HLA sequencing', 'Systems Serology', "viral sequencing"] }
-    ];
+  links: any = ['demographics', 'samples']
+  links_end: any = ['citations'];
 
   constructor(
     private route: ActivatedRoute,
@@ -25,12 +24,29 @@ export class PatientNavComponent {
     this.route.params.subscribe(params => {
       this.patientID = params.pid;
     })
-
   }
 
-  onAnchorClick(anchor_tag: string) {
-    this.anchorSvc.clickAnchor(anchor_tag);
+  public scroll(element: any) {
+    element.scrollIntoView({ behavior: 'smooth' });
   }
+
+  ngOnInit() {
+    if (this.expts && this.expts.length > 0) {
+      let expt_names = this.expts.map((d: any) => d.dataset_name)
+      expt_names.unshift("ELISA");
+      this.links.push({ 'key': 'data', 'values': expt_names });
+      this.links = this.links.concat(this.links_end);
+    }
+  }
+
+  ngAfterViewInit() {
+    // For anchor jumping
+    // Needs to be in ngOnInit to make sure page exists before querying document
+    this.route.fragment.subscribe(anchor_tag => {
+      this.anchorSvc.clickAnchor(anchor_tag);
+    })
+  }
+
 
   isObject(value) {
     // necessary b/c can't use typeof in html in Angular...

@@ -1,6 +1,6 @@
 // Structural directive to embed json-ld object as a <script> tag within the body of the document.
 import { Directive, Renderer2, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { isPlatformServer } from '@angular/common';
 
 @Directive({

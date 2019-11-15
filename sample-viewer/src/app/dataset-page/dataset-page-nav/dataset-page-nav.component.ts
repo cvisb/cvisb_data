@@ -13,20 +13,27 @@ export class DatasetPageNavComponent implements OnInit {
   links: Object =
     {
       hla: [
-        { key: "description", name: "about HLA" },
-        { key: "summary", name: "summary" },
+        { key: "description", name: "overview" },
+        { key: "sources", name: "sources" },
+        { key: "summary", name: "data summary" },
         { key: "compare", name: "compare allelic frequencies" },
-        { key: "files", name: "view files / metadata" },
+        { key: "files", name: "download data" },
       ],
-      viralsequencing: [
-        { key: "description", name: "about Viral Sequencing" },
-        { key: "summary", name: "summary" },
-        { key: "files", name: "view files / metadata" },
+      "lassa-viral-seq": [
+        { key: "description", name: "overview" },
+        { key: "alignments", name: "curated alignments" },
+        { key: "sources", name: "sources" },
+        { key: "files", name: "download data" },
       ],
-      systemsserology: [
-        { key: "description", name: "about Systems Serology" },
-        { key: "summary", name: "summary" },
-        { key: "files", name: "view files / metadata" },
+      "ebola-viral-seq": [
+        { key: "description", name: "overview" },
+        { key: "alignments", name: "curated alignments" },
+        { key: "sources", name: "sources" },
+        { key: "files", name: "download data" },
+      ],
+      "systems-serology": [
+        { key: "description", name: "overview" },
+        { key: "files", name: "download data" },
       ]
     };
 

@@ -3,11 +3,11 @@
 $new-color: darken($sierraleone-green, 10%);
 $old-color: accent-redder(600);
 
-/deep/ .sample-combine .mat-row td.mat-cell:first-of-type, .row-delete {
+:host ::ng-deep .sample-combine .mat-row td.mat-cell:first-of-type, .row-delete {
     border-left: 5px lighten($old-color, 25%) solid;
 }
 
-/deep/ .sample-combine .mat-row-0 td.mat-cell:first-of-type, .row-keep {
+:host ::ng-deep .sample-combine .mat-row-0 td.mat-cell:first-of-type, .row-keep {
     border-left: 5px #cfe9d4 solid;
 }
 

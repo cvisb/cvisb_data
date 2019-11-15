@@ -12,7 +12,7 @@ import { catchError, finalize } from "rxjs/operators";
 
 import { Sample, SampleWide, RequestParamArray } from '../_models';
 
-import { uniq, difference } from 'lodash';
+import { uniq, difference, flatMapDeep } from 'lodash';
 
 export class SamplesDataSource implements DataSource<SampleWide> {
   private samplesSubject = new BehaviorSubject<SampleWide[]>([]);
@@ -60,7 +60,7 @@ export class SamplesDataSource implements DataSource<SampleWide> {
           this.samplesSubject.next(filteredSamples);
 
           // get the column names to display in the table
-          let cols = uniq(sampleList.sampleWide.flatMap(d => Object.keys(d)));
+          let cols = uniq(flatMapDeep(sampleList.sampleWide, d => Object.keys(d)));
           // remove any columns we want to ignore
           cols = difference(cols, this.staticColumns2Ignore);
           // sort columns in particular order

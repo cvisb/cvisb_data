@@ -22,7 +22,7 @@
 # "@graph":
 - "@id":                 cvisb:ScholarlyArticle
   "@type":               rdfs:Class
-  rdfs:comment:          A schema describing a ScholarlyArticle (a.k.a a paper) in the Center for Viral Systems Biology
+  rdfs:comment:          A schema describing a ScholarlyArticle (a.k.a. a paper) in the Center for Viral Systems Biology
   rdfs:label:            ScholarlyArticle
   rdfs:subClassOf:
     "@id":               schema:ScholarlyArticle
@@ -32,6 +32,20 @@
     "@id":               schema:ScholarlyArticle
 
 # identifier
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type, used for internal purposes. Should be ScholarlyArticle
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:ScholarlyArticle
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                         - ScholarlyArticle
+
 - "@id":                 cvisb:identifier
   "@type":               rdf:Property
   rdfs:comment:          Identifier or DOI for publication
@@ -43,7 +57,7 @@
   schema:sameAs:
     "@id":               schema:identifier
   owl:cardinality:       one
-  marginality:           recommended
+  marginality:           required
   authenticated:         false
 
 - "@id":                 cvisb:issn

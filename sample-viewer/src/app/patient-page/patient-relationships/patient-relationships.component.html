@@ -1,11 +1,13 @@
 <div class="survivor-relationship" *ngIf="patient.outcome === 'contact'">
   <h4 class="patient" id="related-patients">Relationship to Survivor</h4>
   <div class="how-related">
+    <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
     <span class="variable-field">relationship to survivor: </span>
     <span class="variable-value">{{ patient.contactSurvivorRelationship ? patient.contactSurvivorRelationship : "unknown" }}</span>
   </div>
 
   <div class="how-exposed">
+    <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
     <span class="variable-field">exposure type: </span>
     <span class="variable-value">{{ patient.exposureType ? patient.exposureType : "unknown" }}</span>
   </div>

@@ -16,3 +16,6 @@ export * from './patient-timepoints';
 export * from './citation';
 export * from './viral-seq-data';
 export * from './release-note';
+export * from './geojson';
+export * from './dataset';
+export * from './experiment-object';

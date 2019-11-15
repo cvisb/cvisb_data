@@ -6,43 +6,51 @@
       <h1>Datasets</h1>
     </div>
 
+    <div class="container dataset-count-container">
+      <div class="dataset-count">
+        {{datasets.length}} available datasets:
+      </div>
+      <ng-container *ngFor="let dataset of datasets; let idx = index">
+        <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
+          {{dataset.name}}
+        <!-- </a> -->
+        <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
+      </ng-container>
+    </div>
+
     <!-- <app-filter-files [datasets]="datasets"></app-filter-files> -->
   </div>
 
-  <div class="grid-container">
+  <div class="container dataset-list">
+    <!-- DATASET LOOP -->
+    <div class="container dataset" *ngFor="let dataset of datasets" [id]="dataset.identifier">
+      <div class="dataset-header">
+        <div class="container container-header">
 
-    <div class="grid-item dataset-list">
-      <!-- DATASET LOOP -->
-      <div class="dataset" *ngFor="let dataset of datasets">
-        <div class="dataset-header">
-          <div class="container container-header">
-
-            <div class="container container-title">
-              <svg-icon [icon]="dataset.identifier" [class]="dataset.identifier + '-icon'"></svg-icon>
-
-              <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
-                <div class="keyword-container container">
-                  <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
-                </div>
-              </h4>
+          <div class="container container-title">
+            <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+              <a [routerLink]="['/dataset', dataset.identifier]">
+                <svg-icon [icon]="dataset.identifier"></svg-icon>
+              </a>
             </div>
 
-            <div class="container count-pair">
-              <div class="count-value">
-                {{dataset.expt_count}}
+            <h4 class="container-column"><a [routerLink]="['/dataset', dataset.identifier]">{{dataset.name}}</a>
+              <div class="keyword-container container">
+                <span class="keyword" *ngFor="let keyword of dataset.keywords">{{keyword}}</span>
               </div>
-              <div class="count-label">
-                experiments
-              </div>
-            </div>
-          </div>
-
-
-          <div class="dataset-description">
-            {{dataset.description}}
+            </h4>
           </div>
         </div>
+
+        <div class="updated">
+          updated {{dataset.dateModified ? (dataset.dateModified | date: 'd MMMM yyyy') : ': unknown'}}
+        </div>
+        <div class="dataset-description">
+          {{dataset.description}}
+        </div>
       </div>
+
+      <app-dataset-summary [dataset]="dataset"></app-dataset-summary>
     </div>
 
   </div>

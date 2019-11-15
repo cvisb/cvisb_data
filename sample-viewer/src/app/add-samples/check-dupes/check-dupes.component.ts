@@ -2,7 +2,7 @@ import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import * as _ from 'lodash';
+import { uniq, flatMap } from 'lodash';
 
 @Component({
   selector: 'app-check-dupes',
@@ -15,8 +15,8 @@ export class CheckDupesComponent implements OnChanges {
   @Input() data: Object[];
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   displayedColumns: string[] = ["sampleID", "disagreements", "samples"];
   flatColumns: string[];
@@ -33,7 +33,7 @@ export class CheckDupesComponent implements OnChanges {
     // Filter out the non-sample columns; these are all flat objects which can be displayed within a loop in the table
     this.flatColumns = this.displayedColumns.filter(d => !["samples", "disagreements"].includes(d));
 
-    this.sampleColumns =  _.uniq(_.flatMap(_.flatMap(this.data, 'samples'), Object.keys));
+    this.sampleColumns =  uniq(flatMap(flatMap(this.data, 'samples'), Object.keys));
 
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.paginator = this.paginator;

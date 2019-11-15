@@ -19,7 +19,7 @@ export class FilterPatientIdComponent implements OnInit {
   bufferSize = 50;
   numberOfItemsFromEndBeforeFetchingMore = 10;
   loading = false;
-  @ViewChild('selectpatients') public ngSelect: any;
+  @ViewChild('selectpatients', { static: false }) public ngSelect: any;
   authorized: boolean;
 
   selectedPatients: string[] = [];
@@ -38,8 +38,10 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loaded_patients = this.all_patients.slice(0, this.bufferSize);
-
+    if (this.all_patients && this.all_patients.length > 0) {
+      this.loaded_patients = this.all_patients.slice(0, this.bufferSize);
+    }
+    
     switch (this.endpoint) {
       case "patient":
         this.requestSvc.patientParamsState$.subscribe(params => {
@@ -129,7 +131,7 @@ export class FilterPatientIdComponent implements OnInit {
       // this.ngSelect.filterValue = null;
       // this.ngSelect.active = [];
 
-            // this.ngSelect.remove(input);
+      // this.ngSelect.remove(input);
       this.filterPatientIDs(this.selectedPatients);
     }
   }

@@ -1,3 +1,16 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-     <use attr.xlink:href="/assets/icons/icon-defs.svg#{{icon}}"></use>
+  <!-- Because icon defs are being used leading to a shadow root, can't define the gradients within the icon-defs file. Must be defined here and called using css -->
+  <defs>
+    <linearGradient id="cvisb_gradient" gradientUnits="userSpaceOnUse" x1="52.5288" y1="113.8294" x2="52.5288" y2="0.1044">
+      <stop offset="0" style="stop-color:#456EB5" />
+      <stop offset="0.5175" style="stop-color:#0080C5" />
+      <stop offset="1" style="stop-color:#00ABE5" />
+    </linearGradient>
+
+    <radialGradient id="grey_radial_gradient" cx="20" cy="31.0369" r="7.4801" gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#D9D9D9" />
+      <stop offset="1" style="stop-color:#73797d" />
+    </radialGradient>
+  </defs>
+  <use attr.xlink:href="/assets/icons/icon-defs.svg#{{icon}}" [ngClass]="icon + '-icon'"></use>
 </svg>

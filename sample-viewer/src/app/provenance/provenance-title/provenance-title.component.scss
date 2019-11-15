@@ -1,0 +1,29 @@
+@import '../../../sass/variables.scss';
+
+.provenance-title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.container-title {
+  align-items: center;
+}
+
+.container-icons i {
+  margin: 0 10px 0 0 !important;
+  font-size: 1em !important;
+}
+
+.container-icons {
+  align-items: center;
+}
+
+.preliminary {
+  margin-right: 3px;
+  color: $cvisb-theme;
+  text-transform: none;
+  font-size: 0.85em;
+}

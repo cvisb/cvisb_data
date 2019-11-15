@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource, MatSortable } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 
 import { HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";
 
-import { getDatasetsService, FileMetadataService, ApiService, DownloadsDataSource } from '../_services';
+import { FileMetadataService, ApiService, DownloadsDataSource } from '../_services';
 
 @Component({
   selector: 'app-file-list',
@@ -19,31 +19,19 @@ export class FileListComponent implements OnInit {
   @Input() patientID: string;
 
   // MatPaginator
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  measurementTechnique: string;
   downloads: any[];
   anything_selected: boolean;
   qParams: HttpParams;
   selectedRow;
-  displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download'];
+  displayedColumns: string[] = ['name', 'additionalType', 'description', 'dateModified', 'download'];
   // displayedColumns: string[] = ['name', 'additionalType', 'dateModified', 'download', 'metadata'];
   dataSource: DownloadsDataSource;
 
-  id2MeasurementTechnique: Object = {
-    'hla': 'HLA sequencing',
-    'viralseq': 'viral sequencing',
-    'systemsserology': 'Systems Serology',
-    'metagenomeseq': 'metagenome sequencing',
-    'bcr': 'BCR sequencing',
-    'tcr': 'TCR sequencing',
-    'metabolomics': "metabolomics"
-  };
-
   constructor(
     private apiSvc: ApiService,
-    private datasetSvc: getDatasetsService,
     private mdSvc: FileMetadataService
   ) {
     mdSvc.fileClicked$.subscribe(status => {
@@ -53,31 +41,20 @@ export class FileListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.measurementTechnique = this.id2MeasurementTechnique[this.datasetID];
-
     if (this.patientID) {
       this.qParams = new HttpParams()
-        .set("q", `measurementTechnique:"${this.measurementTechnique}"`)
+        .set("q", `includedInDataset:"${this.datasetID}"`)
         .set("patientID", `"${this.patientID}"`);
     } else {
       this.qParams = new HttpParams()
-        .set("q", `measurementTechnique:"${this.measurementTechnique}"`);
+        .set("q", `includedInDataset:"${this.datasetID}"`);
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);
-    this.dataSource.loadDownloads(this.qParams, 0, 5, "additionalType", "desc");
+    this.dataSource.loadDownloads(this.qParams, 0, 5, "additionalType", "asc");
   }
 
   ngAfterViewInit() {
-    // set initial conditions
-    this.sort.sort(<MatSortable>{
-      id: 'additionalType',
-      start: 'desc'
-    }
-    );
-    // this.sort.active = "additionalType";
-    // this.sort.direction = "desc";
-
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 

@@ -31,7 +31,9 @@ $grey-350: #8a9095;
 $grey-300: #a2a8ac;
 $grey-250: #bac0c5;
 $grey-200: #d3d9de;
+$grey-225: mix($grey-250, $grey-200);
 $grey-100: lighten(#d3d9de, 5%);
+$grey-150: mix($grey-200, $grey-100);
 $grey-50: #eef1f4;
 
 

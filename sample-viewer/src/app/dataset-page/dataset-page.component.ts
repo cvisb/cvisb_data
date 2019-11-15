@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { getDatasetsService, FileMetadataService } from '../_services';
-
-
 @Component({
   selector: 'app-dataset-page',
   templateUrl: './dataset-page.component.html',
@@ -12,16 +9,11 @@ import { getDatasetsService, FileMetadataService } from '../_services';
 })
 
 export class DatasetPageComponent implements OnInit {
-  // private dsid: string; // file ID
-  private datasets: any[];
   dataset: any;
-  // schema_dataset: any;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
-    private titleSvc: Title,
-    // private datasetSvc: getDatasetsService,
-    // private mdSvc: FileMetadataService,
+    private titleSvc: Title
   ) {
   }
 
@@ -30,7 +22,9 @@ export class DatasetPageComponent implements OnInit {
     this.dataset = this.route.snapshot.data['datasetData'];
 
     // Set page name
-    this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
+    if (this.route.snapshot.data['datasetData']) {
+      this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
+    }
   }
 
 

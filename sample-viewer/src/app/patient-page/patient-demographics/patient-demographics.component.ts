@@ -10,8 +10,7 @@ import { Patient } from '../../_models';
 export class PatientDemographicsComponent implements OnInit {
   @Input() patient: Patient;
 
-  constructor(
-  ) {
+  constructor() {
   }
 
   ngOnInit() {

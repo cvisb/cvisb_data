@@ -12,7 +12,9 @@ import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
-import { DateRangePipe } from "../_pipes";
+import { DateRangePipe } from "../_pipes/date-range.pipe";
+
+import { flatMapDeep } from 'lodash';
 
 // import PATIENTS from '../../assets/data/patients.json';
 
@@ -118,7 +120,7 @@ export class GetPatientsService {
         params: new HttpParams()
           .set("q", "__all__")
           .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-          .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
+          .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
           .set("size", "0")
           .set("facet_size", "10000")
       }).pipe(
@@ -126,7 +128,7 @@ export class GetPatientsService {
           let patients = patientResults['body']['hits'];
 
           patients.forEach(patient => {
-            let patientExpts = expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
+            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
             patient['availableData'] = patientExpts;
           })
 
@@ -220,7 +222,7 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      map((res: ESResponse) => {
+      map((res: any) => {
         // console.log(res);
         let summary = new PatientSummary(res.body)
         // console.log(summary)
@@ -243,6 +245,7 @@ export class GetPatientsService {
   fetchAll(qParams): Observable<any[]> {
     return this.fetchOne(qParams).pipe(
       expand((data, _) => {
+        console.log(data)
         return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
       }),
       reduce((acc, data: any) => {
@@ -254,6 +257,8 @@ export class GetPatientsService {
         return (new Observable<any>())
       }),
       map((patients) => {
+        console.log("end of API")
+        console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
         patients = patients.filter(d => d).map(patient => {
@@ -271,6 +276,7 @@ export class GetPatientsService {
       params = params.append('scroll_id', scrollID);
 
     }
+    console.log(params)
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
@@ -278,6 +284,7 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map(response => {
+          console.log(response)
         return {
           next: response['body']['_scroll_id'],
           results: response['body']['hits']

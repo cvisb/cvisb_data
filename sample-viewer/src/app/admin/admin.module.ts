@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 // --- modules ---
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
+import { FormatCitationModule } from '../format-citation/format-citation.module';
+import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 
 // --- components
 import { AboutComponent } from './about/about.component';
@@ -23,7 +25,9 @@ import { ReleaseNotesComponent } from './release-notes/release-notes.component';
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    FormatCitationModule,
+    FormatPublisherModule
   ],
   declarations: [
     AboutComponent,

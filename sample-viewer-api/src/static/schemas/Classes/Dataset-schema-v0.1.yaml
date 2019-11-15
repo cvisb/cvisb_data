@@ -70,6 +70,27 @@
   authenticated:         false
 
 # measurement type
+- "@id":                 cvisb:measurementCategory
+  "@type":               rdf:Property
+  rdfs:comment:          A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)
+  rdfs:label:            measurementCategory
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - HLA sequencing
+                           - viral sequencing
+                           - metagenome sequencing
+                           - immune repertoire sequencing
+                           - Systems Serology
+                           - clinical measurements
+                           - clinical observations
+
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
   rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
@@ -81,18 +102,32 @@
     - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:measurementTechnique
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           required
   schema:Enumeration:
                            - HLA sequencing
-                           - viral sequencing
                            - metagenome sequencing
+                           - Ebola viral sequencing
+                           - Lassa viral sequencing
                            - BCR sequencing
                            - TCR sequencing
-                           - Systems Serology
+                           - ADNP
+                           - ADCD
+                           - ADCP
+                           - ADNKA_CD107a
+                           - ADNKA_IFNg
+                           - ADNKA_MIP1b
                            - metabolomics
                            - blood chemistry
                            - vitals
+                           - sensor vitals
+                           - rapid diagnostics
+                           - RT-PCR
+                           - ELISA
+                           - acute symptoms
+                           - sequelae
+                           - coma score
+                           - medications
                            - other
   authenticated:         false
 
@@ -157,12 +192,18 @@
   authenticated:         false
   schema:Enumeration:
                            - hla
-                           - viralseq
-                           - metagenomeseq
+                           - metagenome-seq
+                           - ebola-viral-seq
+                           - lassa-viral-seq
                            - bcr
                            - tcr
-                           - systemsserology
+                           - systems-serology
                            - metabolomics
+                           - blood-chemistry
+                           - sensor-vitals
+                           - rapid-diagnostics
+                           - RT-PCR
+                           - clinical-observations
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property

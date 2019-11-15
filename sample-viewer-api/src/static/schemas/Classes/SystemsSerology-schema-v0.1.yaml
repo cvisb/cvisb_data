@@ -3,7 +3,7 @@
 # Verified structure using:
 #
 
----
+# ---
 # "@context":
 #   dct:                 "http://purl.org/dc/terms/"
 #   owl:                 "http://www.w3.org/2002/07/owl#"
@@ -26,30 +26,43 @@
   rdfs:comment:          A schema describing a Systems Serology Experiment in the Center for Viral Systems Biology
   rdfs:label:            SystemsSerology
   rdfs:subClassOf:
-    "@id":               cvisb:Experiment
-    "@id":               schema:Thing
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
+
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - SystemsSerology
 
 
 - "@id":                 cvisb:assayType
   "@type":               rdf:Property
-  rdfs:comment:          "Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, NKD-CD107a, NKD-IFNg, NKD-MIP-1b"
+  rdfs:comment:          "Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, ADNKA_CD107a, ADNKA_IFNg, ADNKA_MIP1b"
   rdfs:label:            assayType
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           required
-  # schema:Enumeration:
-  #                       - ADNP
-  #                       - ADCD
-  #                       - ADCP
-  #                       - NKD-CD107a
-  #                       - NKD-IFNg
-  #                       - NKD-MIP-1b
+  schema:Enumeration:
+                        - ADNP
+                        - ADCD
+                        - ADCP
+                        - ADNKA_CD107a
+                        - ADNKA_IFNg
+                        - ADNKA_MIP1b
   authenticated:         false
 
 - "@id":                 cvisb:assayReadout
@@ -61,7 +74,7 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   # schema:Enumeration:
   #                       - phagocytic score
@@ -77,19 +90,82 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:assayResult
+# --- Result ---
+- "@id":                 cvisb:value
   "@type":               rdf:Property
   rdfs:comment:          Assay result
-  rdfs:label:            assayResult
+  rdfs:label:            value
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
   schema:rangeIncludes:
-    - "@id":             xsd:string
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:valueCategory
+  "@type":               rdf:Property
+  rdfs:comment:          "Assay result, grouped into qualitative groups: 'low_none', 'moderate', or 'high'"
+  rdfs:label:            valueCategory
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:valueCategoryNumeric
+  "@type":               rdf:Property
+  rdfs:comment:          "Assay result, grouped into qualitative groups: 'low_none' (1), 'moderate' (2), or 'high' (3)"
+  rdfs:label:            valueCategory
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:antigen
+  "@type":               rdf:Property
+  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa virus or Ebola virus
+  rdfs:label:            antigen
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:antigenVirus
+  "@type":               rdf:Property
+  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa or Ebola
+  rdfs:label:            antigenVirus
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                        - Ebola
+                        - Lassa
+
+- "@id":                 cvisb:antigenSource
+  "@type":               rdf:Property
+  rdfs:comment:          Source (URL) where the antigen can be acquired.
+  rdfs:label:            antigen
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:URL
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false

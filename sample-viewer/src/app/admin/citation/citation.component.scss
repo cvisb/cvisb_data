@@ -1,0 +1,33 @@
+@import '../../../sass/variables.scss';
+
+.source {
+  font-size: 0.85em;
+}
+
+h3 {
+  margin-bottom: 0.25em;
+}
+
+section {
+  margin-bottom: 2em;
+}
+
+.citation-group:first-of-type {
+  margin-top: 0 !important;
+}
+
+.citation-group {
+  margin-top: 1.33em;
+}
+
+#individual-sources h4 {
+  margin-top: 0;
+}
+
+.helper-text {
+  color: $grey-400;
+}
+
+.no-margin {
+  margin: 0;
+}

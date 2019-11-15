@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as d3 from 'd3';
 import { mix, hex } from 'chroma-js';
@@ -12,11 +12,11 @@ import { HlaService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class AlleleCirclePackingComponent implements OnInit {
+export class AlleleCirclePackingComponent implements AfterViewInit {
   @Input() data: any;
   @Input() scale: number;
   @Input() genotype: string[];
-  @ViewChild('allele_count') private chartContainer: ElementRef;
+  @ViewChild('allele_count', { static: false }) private chartContainer: ElementRef;
 
   // plot sizes
   private element: any;
@@ -40,54 +40,54 @@ export class AlleleCirclePackingComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private hlaSvc: HlaService
   ) {
-    // Cross-plot mouseover behaviors: highlight locus and/or allele
-    // Listen for the selection of a locus
-    hlaSvc.selectedLocusState$.subscribe((locus: string) => {
-      if (locus) {
-        d3.selectAll(".node--leaf")
-          .classed("masked", (d: any) => d.data.locus !== locus)
-          .classed("enabled", (d: any) => d.data.locus === locus);
-
-        d3.selectAll(".node--locus")
-          .classed("locus-masked", (d: any) => d.data.locus !== locus)
-          .classed("locus-enabled", (d: any) => d.data.name === locus);
-      } else {
-        d3.selectAll(".node--leaf")
-          .classed("masked", false)
-          .classed("enabled", false);
-
-        d3.selectAll(".node--locus")
-          .classed("locus-masked", false)
-          .classed("locus-enabled", false);
-      }
-    })
-
-    // Listen for the selection of a specific allele
-    hlaSvc.selectedAlleleState$.subscribe((allele: string) => {
-      if (allele) {
-        d3.selectAll(".node--leaf")
-          .classed("allele-masked", (d: any) => d.data.name !== allele)
-          .classed("allele-enabled", (d: any) => d.data.name === allele);
-
-        d3.selectAll(".node--leaf circle.circle-stroke")
-          .classed("allele-masked", (d: any) => d.data.name !== allele)
-          .classed("allele-enabled", (d: any) => d.data.name === allele);
-
-      } else {
-        d3.selectAll(".node--leaf")
-          .classed("allele-masked", false)
-          .classed("allele-enabled", false);
-
-      }
-    })
-
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (!this.genotype) {
       this.genotype = [];
     }
     if (isPlatformBrowser(this.platformId)) {
+      // Cross-plot mouseover behaviors: highlight locus and/or allele
+      // Listen for the selection of a locus
+      this.hlaSvc.selectedLocusState$.subscribe((locus: string) => {
+        if (locus) {
+          d3.selectAll(".node--leaf")
+            .classed("masked", (d: any) => d.data.locus !== locus)
+            .classed("enabled", (d: any) => d.data.locus === locus);
+
+          d3.selectAll(".node--locus")
+            .classed("locus-masked", (d: any) => d.data.locus !== locus)
+            .classed("locus-enabled", (d: any) => d.data.name === locus);
+        } else {
+          d3.selectAll(".node--leaf")
+            .classed("masked", false)
+            .classed("enabled", false);
+
+          d3.selectAll(".node--locus")
+            .classed("locus-masked", false)
+            .classed("locus-enabled", false);
+        }
+      })
+
+      // Listen for the selection of a specific allele
+      this.hlaSvc.selectedAlleleState$.subscribe((allele: string) => {
+        if (allele) {
+          d3.selectAll(".node--leaf")
+            .classed("allele-masked", (d: any) => d.data.name !== allele)
+            .classed("allele-enabled", (d: any) => d.data.name === allele);
+
+          d3.selectAll(".node--leaf circle.circle-stroke")
+            .classed("allele-masked", (d: any) => d.data.name !== allele)
+            .classed("allele-enabled", (d: any) => d.data.name === allele);
+
+        } else {
+          d3.selectAll(".node--leaf")
+            .classed("allele-masked", false)
+            .classed("allele-enabled", false);
+
+        }
+      })
+
       this.getSVGDims();
       this.createPlot();
     }

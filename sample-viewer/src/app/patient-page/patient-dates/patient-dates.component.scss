@@ -2,16 +2,20 @@
 @import '../../../sass/material-theme.scss';
 
 .patient-dates {
-  margin-left: 100px;
+  // margin-left: 100px;
 }
 
 .date-summary {
-  margin-right: 15px;
+  // margin-right: 15px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
 }
 
 .header-label {
   color: $grey-400;
-  font-size: 1.25em;
+  // font-size: 1.25em;
+  font-size: 0.95em;
   text-transform: uppercase;
   text-align: center;
   padding: 3px;
@@ -21,7 +25,7 @@
 
 .infection-year {
   padding: 3px 15px;
-  font-size: 1.25em;
+  font-size: 1.15em;
   text-transform: uppercase;
   font-weight: 400;
   text-align: center;
@@ -51,7 +55,8 @@
 }
 
 .hospital-dates {
-  margin-right: 15px;
+  margin-left: 20px;
+  align-items: flex-end;
 }
 
 .variable-label {
@@ -65,3 +70,8 @@
 .missing-date {
   font-weight: 300 !important;
 }
+
+.mat-expansion-panel-body {
+    padding-top: 5px;
+    background: #eef1f4;
+  }

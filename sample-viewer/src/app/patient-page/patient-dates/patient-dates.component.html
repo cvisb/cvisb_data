@@ -1,5 +1,6 @@
-<div class="container patient-dates" *ngIf="patient">
-  <div class="container-column container-left date-summary">
+<div class="container-column patient-dates" *ngIf="patient">
+  <h4 class="patient">Dates</h4>
+  <div class="container container-left date-summary">
     <div class="header-label" *ngIf="patient.outcome !== 'contact'">
       Initial Symptoms
     </div>
@@ -14,33 +15,12 @@
   </div>
 
   <div class="container container-right date-group">
-    <div class="container-column container-left hospital-dates" *ngIf="authorized && patient.outcome !== 'contact'">
-
-      <div id="infection-date">
-        <span class="variable-label">onset of symptoms:
-        </span>
-        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange) : "unknown"}}</span>
-      </div>
-
-      <div id="evaluation-date">
-        <span class="variable-label">hospital evaluation:</span>
-        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange) : "unknown"}}</span>
-      </div>
-
-      <div id="discharge-date">
-        <span class="variable-label">hospital discharge:</span>
-        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange) : "unknown"}}</span>
-      </div>
-
-    </div>
-
-
-    <div class="container-column container-right hospital-spans">
+    <div class="container-column container-left hospital-spans">
 
       <ng-container *ngIf="patient.outcome !== 'contact'">
         <div id="days-onset">
           <span class="variable-label">days onset:
-        </span>
+          </span>
           <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.daysOnset}">{{ patient.daysOnset ? (patient.daysOnset) : "unknown"}}</span>
         </div>
 
@@ -56,6 +36,31 @@
       </div>
 
     </div>
+
+    <div class="container-column container-right hospital-dates" *ngIf="authorized && patient.outcome !== 'contact'">
+
+      <div id="infection-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+        <span class="variable-label">onset of symptoms:
+        </span>
+        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.infectionDate}">{{ patient.infectionDate ? (patient.infectionDate | dateRange) : "unknown"}}</span>
+      </div>
+
+      <div id="evaluation-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+        <span class="variable-label">hospital evaluation:</span>
+        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.evalDate}">{{ patient.evalDate ? (patient.evalDate | dateRange) : "unknown"}}</span>
+      </div>
+
+      <div id="discharge-date">
+        <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+        <span class="variable-label">hospital discharge:</span>
+        <span class="variable-value" [ngClass]="{'nodata missing-date': !patient.dischargeDate}">{{ patient.dischargeDate ? (patient.dischargeDate | dateRange) : "unknown"}}</span>
+      </div>
+
+    </div>
+
+
   </div>
 
 </div>

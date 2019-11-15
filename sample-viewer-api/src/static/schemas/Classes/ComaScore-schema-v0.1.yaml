@@ -25,21 +25,26 @@
   rdfs:comment:          A schema describing a series of observations about a patient, to calculate a Glasgow Coma Score in the Center for Viral Systems Biology experiments
   rdfs:label:            ComaScore
   rdfs:subClassOf:
-    "@id":               schema:Thing
+    "@id":               cvisb:Data
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
-- "@id":                 cvisb:daysSinceAdmit
+
+
+- "@id":                 cvisb:@type
   "@type":               rdf:Property
-  rdfs:comment:          Number of days between the admission date and when when the coma score was evaluated. At initial clinical presentation, daysSinceAdmit = 0
-  rdfs:label:            daysSinceAdmit
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
   schema:domainIncludes:
     - "@id":             cvisb:ComaScore
   schema:rangeIncludes:
-    - "@id":             schema:Integer
+    - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         true
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - ComaScore
+
 
 - "@id":                 cvisb:glasgowComaScore
   "@type":               rdf:Property

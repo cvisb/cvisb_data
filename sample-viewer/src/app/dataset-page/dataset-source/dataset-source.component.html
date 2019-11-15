@@ -1,0 +1,48 @@
+<mat-expansion-panel class="panel-group" id="sources" [expanded]="sourcesPanelState" (opened)="sourcesPanelState = true" (closed)="sourcesPanelState = false" *ngIf="sources">
+  <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight" class="panel-header">
+    <mat-panel-title class="panel-title">
+      Sources
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+
+  <div class="helper-text">
+    <!-- <i class="fas fa-arrow-down"></i>  -->
+    <i class="fas fa-level-up-alt helper-arrow"></i>
+    <span class="text">percent of experiments cited in source</span>
+  </div>
+
+
+  <div class="container dataset-sources-container">
+    <div class="dataset-source-column" id="sources-left">
+      <ng-container *ngFor="let source of sources_left">
+        <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="dataset-source-column" id="sources-right">
+      <ng-container *ngFor="let source of sources_right">
+        <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source }">
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</mat-expansion-panel>
+
+<ng-template #source_citation let-source="source">
+  <div class="container source-container">
+
+    <div class="source-percent" [matTooltip]="source.count === 1 ? source.count + ' experiment' : source.count + ' experiments'"
+      [ngStyle]="{ 'background': colorScale(source.percent), 'color': source.percent > textColorThreshold ? 'white' : '#212529' }">
+      {{ source.percent | percent : 0 }}
+    </div>
+
+    <div [ngSwitch]="source.source['@type']" class="source">
+      <app-format-citation [citations]="[source.source]" class="citation-group" *ngSwitchCase="'ScholarlyArticle'" verbosity="basic"></app-format-citation>
+      <app-format-publisher [publisher]="source.source" class="publisher-group" *ngSwitchCase="'Organization'"></app-format-publisher>
+      <app-format-publisher [publisher]="source.source" class="unknown-group" *ngSwitchCase="'unknown'"></app-format-publisher>
+      <app-format-publisher [publisher]="source.source" class="unknown-group" *ngSwithDefault></app-format-publisher>
+    </div>
+  </div>
+</ng-template>

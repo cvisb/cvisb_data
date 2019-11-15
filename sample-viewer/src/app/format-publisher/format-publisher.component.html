@@ -1,0 +1,23 @@
+<ng-container *ngIf="publisher">
+  <ng-container [ngSwitch]="verbosity">
+    <ng-container [ngTemplateOutlet]="source_full" [ngTemplateOutletContext]="{ publisher: publisher }" *ngSwitchCase="'full'"></ng-container>
+    <ng-container [ngTemplateOutlet]="source_simple" [ngTemplateOutletContext]="{ publisher: publisher }" *ngSwitchCase="'simple'"></ng-container>
+    <ng-container [ngTemplateOutlet]="source_simple" [ngTemplateOutletContext]="{ publisher: publisher }" *ngSwithDefault></ng-container>
+  </ng-container>
+
+</ng-container>
+
+<ng-template #source_full let-publisher="publisher">
+  <div *ngIf="publisher.type !== 'unknown'">
+    <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a>, {{source_year | date:"yyyy"}}<span *ngIf="source_url">, {{source_url}}</span> <span class="unpublished-label">. (unpublished)</span>
+  </div>
+</ng-template>
+
+<ng-template #source_simple let-publisher="publisher">
+  <div *ngIf="publisher.type !== 'unknown'">
+    <a [href]="publisher.url" rel="noreferrer" target="_blank">{{publisher.name}}</a><span class="unpublished-label"> (unpublished)</span>
+  </div>
+  <div *ngIf="publisher.type === 'unknown'">
+    unknown
+  </div>
+</ng-template>

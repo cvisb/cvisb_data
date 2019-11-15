@@ -1,0 +1,60 @@
+@import "../../../sass/variables.scss";
+@import '../../../sass/material-theme.scss';
+
+.warning-banner {
+  margin: -30px -80px 15px -25px;
+  font-size: 0.85em;
+  padding-left: 25px;
+  padding-top: 15px;
+  padding-bottom: 2px;
+  // background: #0aaae438;
+  border-bottom: 2px dotted $cvisb-theme;
+
+  & td {
+    margin: 0 !important;
+  }
+
+  & table {
+    font-weight: 300;
+    font-size: 0.9em;
+  }
+}
+
+.warning-header {
+  color: white;
+  padding: 2px 5px 3px;
+  background: $cvisb-dark;
+  margin: -3px -80px 0 -25px;
+  font-size: 0.95em;
+  padding-left: 25px;
+  border-top: 2px solid white;
+}
+
+td.icon {
+  text-align: center;
+}
+
+.preliminary {
+  color: $cvisb-dark;
+}
+
+.embargoed {
+  color: accent-redder(A400) !important;
+}
+
+.private {
+  color: $grey-400;
+}
+
+.warning-label {
+  font-weight: 400;
+}
+
+.header-icon {
+  font-size: 15px;
+  margin-right: 3px;
+}
+
+.data-status-icon {
+  height: 15px;
+}

@@ -28,6 +28,11 @@ export class DatasetComponent implements OnInit {
     this.datasetSvc.getDatasets().subscribe((datasets) => {
       this.datasets = datasets;
     });
+
+  }
+
+  public scroll(element: any) {
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
   ngOnInit() {

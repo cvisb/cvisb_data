@@ -4,14 +4,14 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler } from 'rxjs';
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
 // services
 import { MyHttpClient } from './http-cookies.service';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, flattenDeep } from 'lodash';
 
 import { nest } from 'd3';
 
@@ -59,6 +59,34 @@ export class ApiService {
       })
     )
   }
+
+
+  post(endpoint: string, searchString: string, searchParam: string, returnParams: string) {
+    let headers = new HttpHeaders()
+      // .set('Accept', 'application/json')
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+
+    let params = new HttpParams()
+      .set("q", searchString)
+      .set("scopes", searchParam)
+      .set("fields", returnParams)
+      .set("size", "1");
+
+    return this.myhttp.post<any[]>(`${environment.api_url}/api/${endpoint}/query`, params, {
+      observe: 'response',
+      headers: headers
+    }).pipe(
+      map(data => {
+        return (data)
+      }),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      })
+    )
+  }
+
 
   // Sorting function, to convert sort variable into the proper syntax for ES
   // numeric variables should return just their string'd name
@@ -236,7 +264,7 @@ export class ApiService {
 
   // generic get function
   // assumes size = 1000 unless otherwise specified.
-  getPatient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
+  getData4Patient(endpoint, patientID, pageSize: number = 1000): Observable<any[]> {
 
     // this.router.navigate(
     //   [],
@@ -265,77 +293,89 @@ export class ApiService {
     );
   }
 
-  // Generic getAll, which calls fetchAll. Results will not be sorted.
-  // getAll(endpoint: string, qString) {
-  //   // console.log('starting get all')
-  //   let scrollID = null;
-  //   let done = false;
-  //
-  //   let results = [];
-  //
-  //   for (let i = 0; i < 3; i++) {
-  //     // while (!done) {
-  //     console.log("still going!")
-  //     console.log(i);
-  //
-  //     this.fetchAll(endpoint, qString, scrollID).pipe(
-  //       catchError(e => {
-  //         console.log('error!')
-  //         console.log(e)
-  //         done = true;
-  //         return (new Observable<any>())
-  //       }),
-  //       // finalize(() => this.loadingSubject.next(false))
-  //     )
-  //       .subscribe((result) => {
-  //         console.log('samples from call to backend')
-  //         done = true;
-  //         console.log(result);
-  //
-  //         // Remove ES variables that we won't need.
-  //         let resultArr = this.dropCols(result['hits'], ['_score', '_version'], false);
-  //         scrollID = result['_scroll_id'];
-  //
-  //         results = results.concat(resultArr);
-  //         console.log(results)
-  //         console.log(results.length / result.total);
-  //
-  //       });
-  //   }
-  //
-  //   return (results)
-  // }
+  /*
+    Using MyGene fetch_all to grab all the data, unscored:
+    https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
+    subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
+    If no more results to be found, "success": false
 
-  fetchAll(endpoint: string, qString, scrollID: string = null): Observable<any[]> {
+    Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
 
-    let params = new HttpParams()
-      .set('q', qString)
+    NOTE: 2019-10-04 Seems to create some problems when fetchAll is called simultaneously on server-side and client-side
+    Some sort of weird cache shared settings?
+
+    *Original problem*: calling `getDataset` from `get-datasets.service` in `get-datasets.resolver` makes three API calls: one get to `/dataset`,
+    one fetchAll to `/datadownload` and one fetchAll to `/experiment`. Also triggered by calling `fetchAll` in constructor of `get-datasets.resolver`.
+
+    *Behavior*: in at least one of the client- or server-side of things, will lead to an infinite loop of API calls
+    when there are more than 1000 results. `_scroll_id` never turns into null, and will lead to an error:
+    `RangeError: Maximum call stack size exceeded`. Seems to be an issue where both client-side and server-side
+    have the same `_scroll_id`, leading to conflicts where they never seem to exit the fetch next behavior.
+    But... not totally clear, since
+
+    *Solution*:
+    * 1) have the API call execute only *once* (server-side) à la :
+    *    https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
+    *    (which is good anyway, since it eliminates redundant calls)
+    * 2) transfer the state (data from server-side call to API, in `get-datasets.resolver`)
+    * 3) set `concurrent` = 1 and added `queueScheduler` to `expand`, as suggested in the comments:
+    *    https://blog.angularindepth.com/rxjs-understanding-expand-a5f8b41a3602
+    *    Note: seems like this shouldn't be necessary, but it'll definitely lead to an infinite state
+    *    on the server-side, which doesn't resolve; therefore within the resolver, client-side gets called
+    *    as well, and it ends up being a big ole mess. Setting `concurrent=1` isn't sufficient to fix the problem.
+
+    */
+  fetchAll(endpoint: string, qParams: HttpParams): Observable<any[]> {
+    return this.fetchOne(endpoint, qParams).pipe(
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
+      ),
+      // expand((data, _) => {
+      //   console.log(data.ct)
+      //   console.log(data.next)
+      //   // console.log(data)
+      //   return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
+      // }),
+      // concatMap(({ results }) => {
+      //   console.log(results)
+      //   return(results)
+      // }),
+      reduce((acc, data: any) => {
+        return acc.concat(data.results);
+      }, []),
+      catchError(e => {
+        console.log(e)
+        throwError(e);
+        return (new Observable<any>())
+      }),
+      map((all_data) => {
+        // last iteration returns undefined; filter out
+        all_data = all_data.filter(d => d);
+
+        return (all_data);
+      })
+    )
+  }
+
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string | null, results: any[] }> {
+    let params = qParams
       .append('fetch_all', "true");
-
     if (scrollID) {
-      params = params.append("scroll_id", scrollID);
-      console.log(params)
+      params = params.append('scroll_id', scrollID);
     }
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(data => {
-        console.log('getAll Backend call:');
-        console.log(data);
-
-        // let result = data['body']['hits'];
-        return (data['body']);
+    return this.get(endpoint, params).pipe(
+      map(response => {
+        return {
+          next: response['_scroll_id'],
+          results: response['hits']
+        };
       }),
       catchError(e => {
         console.log(e)
         throwError(e);
-        return (of(e))
+        return (new Observable<any>())
       })
-    )
+    );
   }
 
   // Generic function to pull out the ES `_ids` for all entries in an endpoint.
@@ -531,7 +571,7 @@ export class ApiService {
       let msgArray = errs.filter(d => d.error.error).map(d => d.error.error);
       errorMsg = msgArray.length > 0 ? msgArray.join("; ") : "Dunno why-- are you logged in? Check the developer console. Sorry :("
 
-      errorObj = errs.filter(d => d.error.error_list).map(d => d.error.error_list).flat();
+      errorObj = flattenDeep(errs.filter(d => d.error.error_list).map(d => d.error.error_list));
       //
       if (errorObj.length > 0) {
         errorObj = this.tidyBackendErrors(errorObj)

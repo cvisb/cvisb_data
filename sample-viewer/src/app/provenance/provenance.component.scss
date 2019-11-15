@@ -1,0 +1,87 @@
+@import '../../sass/variables.scss';
+
+.updated-container {
+  align-items: center;
+}
+
+.view-changes {
+  font-size: 1em;
+  padding: 0;
+  line-height: 2em;
+  // margin-left: 5px;
+  color: $ebola-md;
+  background: lighten($ebola-lt, 12%);
+}
+
+.patient-changelog {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.source-container {
+  align-items: center;
+}
+
+.source-group {
+  margin-right: 5px;
+    font-size: 0.9em;
+}
+
+.cvisb-icon {
+  height: 30px;
+  width: 30px;
+  margin-right: 7px;
+}
+
+.source-tag {
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.source-icon {
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
+
+  &.cvisb-data {
+    background: lighten($cvisb-bright, 47%);
+    color: darken(#0080C5, 5%);
+  }
+
+  &.public-data {
+    padding: 5px 10px;
+    color: $dev-dark;
+    background: lighten($dev-theme, 30%);
+  }
+}
+
+.citation {
+  font-size: 0.85em;
+  margin: 0;
+}
+
+.embargoed {
+  margin-right: 10px;
+}
+
+.data-status {
+  color: $cvisb-theme;
+  margin-left: 10px;
+  display: flex;
+}
+
+.data-status-container {
+  align-items: center;
+}
+
+.updated-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.preliminary {
+  margin-left: 3px;
+}
