@@ -60,7 +60,7 @@
   schema:sameAs:
     "@id":               schema:identifier
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:alternateName
