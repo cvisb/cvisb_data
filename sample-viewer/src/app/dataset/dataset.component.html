@@ -11,9 +11,9 @@
         {{datasets.length}} available datasets:
       </div>
       <ng-container *ngFor="let dataset of datasets; let idx = index">
-        <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)">
+        <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
           {{dataset.name}}
-        </a>
+        <!-- </a> -->
         <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
       </ng-container>
     </div>

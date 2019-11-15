@@ -267,6 +267,9 @@ export class getDatasetsService {
                   source['percent'] = source.count / dataset_total;
                 })
 
+                // sort dataset sources by prevalence within the dataset
+                dataset.sources.sort((a,b) => b.count - a.count);
+
               })
               return (counts.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
             }),
