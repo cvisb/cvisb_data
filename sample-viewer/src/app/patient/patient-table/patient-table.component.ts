@@ -35,6 +35,7 @@ export class PatientTableComponent implements OnInit {
     private patientSvc: GetPatientsService,
     private authSvc: AuthService
   ) {
+    console.log('constructing')
     this.route.data.subscribe(params => {
       this.selectedLength = params.patients.total;
     });
@@ -49,7 +50,6 @@ export class PatientTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('initiating')
     this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
   }
