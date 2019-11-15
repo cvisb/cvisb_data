@@ -233,7 +233,7 @@ export class getDatasetsService {
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", `includedInDataset.keyword(sourceCitation${citation_variable}.keyword)`)
+      .set("facets", `includedInDataset.keyword(sourceCitation.${citation_variable}.keyword)`)
       .set("size", "0")
       .set("facet_size", "10000");
 
@@ -242,10 +242,10 @@ export class getDatasetsService {
         mergeMap((citationCts: any) => {
           console.log(citationCts)
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
-          let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
+          let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation.${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
           let id_string = ids.join(",");
 
-          return this.apiSvc.post("experiment", id_string, `sourceCitation${citation_variable}`, "sourceCitation").pipe(
+          return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
               console.log(citations)
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
@@ -254,8 +254,8 @@ export class getDatasetsService {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
                 dataset['dataset_name'] = ds_obj['dataset_name'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
-                dataset['sources'] = cloneDeep(dataset[`sourceCitation${citation_variable}.keyword`]['terms']);
-                delete dataset[`sourceCitation${citation_variable}.keyword`];
+                dataset['sources'] = cloneDeep(dataset[`sourceCitation.${citation_variable}.keyword`]['terms']);
+                delete dataset[`sourceCitation.${citation_variable}.keyword`];
                 let dataset_total: number = dataset.sources.reduce((total: number, x) => total + x.count, 0);
 
                 dataset.sources.forEach(source => {
