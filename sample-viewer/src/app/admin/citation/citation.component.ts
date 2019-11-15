@@ -21,7 +21,8 @@ export class CitationComponent implements OnInit {
   patients = {
     sources: [
       {
-        type: "Publisher",
+        "@type": "Organization",
+        identifier: "VHFC",
         "name": "Viral Hemorrhagic Fever Consortium / Kenema Government Hospital",
         "url": "https://vhfc.org/"
       }]

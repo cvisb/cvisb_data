@@ -272,6 +272,7 @@ def getPublisher(row, varName="cvisb_data"):
     if(row[varName]):
         return([{
             "@type": "Organization",
+            "identifier": "CViSB",
             "url": "https://cvisb.org/",
             "name": "Center for Viral Systems Biology",
             "contactPoint": {

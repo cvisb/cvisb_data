@@ -48,6 +48,21 @@
   marginality:           required
   authenticated:         false
 
+- "@id":                 cvisb:identifier
+  "@type":               rdf:Property
+  rdfs:comment:          Unique identifier of the Organization
+  rdfs:label:            identifier
+  schema:domainIncludes:
+    - "@id":             cvisb:Organization
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:identifier
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
   rdfs:comment:          Alternate name of the Organization
@@ -173,7 +188,7 @@
 
 - "@id":                 cvisb:@type
   "@type":               rdf:Property
-  rdfs:comment:          "Type, used for internal purposes: for instance, Publisher"
+  rdfs:comment:          "Type, used for internal purposes; should be Organization"
   rdfs:label:            "@type"
   schema:domainIncludes:
     - "@id":             cvisb:Organization
@@ -182,3 +197,5 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+  schema:Enumeration:
+                           - Organization

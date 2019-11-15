@@ -135,12 +135,14 @@ def getLabAuthor(name):
     if((name == "Galit") | (name == "Alter") | (name == "Galit Alter")):
         return({
             "@type": "Organization",
+            "identifier": "AlterLab",
             "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
             "name": "Galit Alter laboratory"
         })
     elif((name == "KGA") | (name == "Kristian") | (name == "Andersen")):
         return({
             "@type": "Organization",
+            "identifier": "AndersenLab",
             "url": "https://andersen-lab.com/",
             "name": "Kristian Andersen laboratory",
             "contactPoint": {
@@ -154,6 +156,8 @@ def getLabAuthor(name):
 
 # Publisher Institution
 cvisb = {
+    "@type": "Organization",
+    "identifier": "CViSB",
     "url": "https://cvisb.org/",
     "name": "Center for Viral Systems Biology",
     "contactPoint": {
@@ -178,11 +182,15 @@ cvisb_funding = [{
 
 # Publisher Institution
 patientSource = {
+    "@type": "Organization",
+    "identifier": "VHFC",
     "url": "https://vhfc.org",
     "name": "Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"
 }
 
 broad = {
+    "@type": "Organization",
+    "identifier": "Broad",
     "url": "https://www.broadinstitute.org/",
     "name": "Broad Institute"
 }
