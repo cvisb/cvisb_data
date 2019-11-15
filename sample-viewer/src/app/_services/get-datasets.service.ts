@@ -299,8 +299,9 @@ export class getDatasetsService {
       .pipe(
         mergeMap((citationCts: any) => {
           console.log(citationCts)
-          console.log(counts)
+
           let counts = citationCts.facets[`sourceCitation.${citation_variable}.keyword`]['terms'];
+          console.log(counts)
           let ids = uniq(counts.map(d => d.term));
           let id_string = ids.join(",");
 
