@@ -194,8 +194,6 @@ export class getDatasetsService {
             dataset['distribution'] = downloads;
             dataset["@context"] = "http://schema.org/";
             dataset["@type"] = "Dataset";
-            // dataset["publisher"] = publishers;
-            // dataset["citation"] = citations;
             if (expts.length === 1) {
               dataset["source"] = expts[0].sources;
               dataset["citation"] = expts[0].sources.map(d => d.source);
@@ -242,12 +240,14 @@ export class getDatasetsService {
     return this.apiSvc.get("experiment", params, 0)
       .pipe(
         mergeMap((citationCts: any) => {
+          console.log(citationCts)
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
           let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
           let id_string = ids.join(",");
 
           return this.apiSvc.post("experiment", id_string, `sourceCitation${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
+              console.log(citations)
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
 
               counts.forEach(dataset => {
