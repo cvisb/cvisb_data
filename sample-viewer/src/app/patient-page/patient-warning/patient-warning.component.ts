@@ -20,9 +20,12 @@ export class PatientWarningComponent implements OnInit {
 
   ngOnInit() {
     // this.embargoed = this.expts.some((d: any) => d.embargoed === true);
-    this.preliminary = (this.patient.dataStatus === "preliminary") ||
-      !(this.patient.elisa.every((d: any) => d.dataStatus == "final")) ||
-      !(this.expts.every((d: any) => d.dataStatus === "final"));
+    let patient_prelim = (this.patient.dataStatus === "preliminary");
+    let elisa_prelim = this.patient.elisa ? !(this.patient.elisa.every((d: any) => d.dataStatus == "final")) : false;
+    let expt_prelim = !(this.expts.every((d: any) => d.dataStatus === "final"));
+    this.preliminary = patient_prelim ||
+      elisa_prelim ||
+      expt_prelim;
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
       this.privateData = authState.authorized;
