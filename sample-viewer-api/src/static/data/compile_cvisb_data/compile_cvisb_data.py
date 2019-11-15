@@ -14,7 +14,7 @@ import pandas as pd
 import argparse
 import json
 import logging
-from helpers import setupLogging, log_msg, getSource
+from helpers import setupLogging, log_msg, getSource, listify
 from datetime import datetime
 
 # --- cleanup modules ---
@@ -189,8 +189,10 @@ any global changes that need to be made at the end.
 For example: creating `sourceCitation`, which is `row.citation ? row.citation : rowpublisher;`
 """
 def cleanCombined(patients, samples, experiments, datasets, datadownloads):
-    experiments['sourceCitation'] = experiments.apply(getSource, axis = 1)
-    patients['sourceCitation'] = patients.apply(getSource, axis = 1)
+    if(len(experiments) > 0):
+        experiments['sourceCitation'] = experiments.apply(getSource, axis = 1)
+    if(len(patients) > 0):
+        patients['sourceCitation'] = patients.apply(getSource, axis = 1)
 
     combined = {"patient": patients, "sample": samples, "dataset": datasets,
                 "datadownload": datadownloads, "experiment": experiments}
