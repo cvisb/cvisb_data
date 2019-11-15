@@ -26,7 +26,7 @@
   rdfs:comment:          A schema describing the ReleaseSummary for the Center for Viral Systems Biology experiments
   rdfs:label:            ReleaseSummary
   rdfs:subClassOf:
-    "@id":               schema:ReleaseSummary
+    "@id":               schema:Thing
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
   schema:sameAs:

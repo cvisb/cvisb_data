@@ -26,11 +26,9 @@
   rdfs:comment:          A schema describing the ReleaseNote for the Center for Viral Systems Biology experiments
   rdfs:label:            ReleaseNote
   rdfs:subClassOf:
-    "@id":               schema:ReleaseNote
+    "@id":               schema:Thing
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
-  schema:sameAs:
-    "@id":               schema:ReleaseNote
 
 # name
 - "@id":                 cvisb:endpoint
@@ -46,14 +44,14 @@
   authenticated:         false
 
 # name
-- "@id":                 cvisb:description
+- "@id":                 cvisb:note
   "@type":               rdf:Property
   rdfs:comment:          Explanation of what was changed in the release
-  rdfs:label:            description
+  rdfs:label:            note
   schema:domainIncludes:
     - "@id":             cvisb:ReleaseNote
   schema:rangeIncludes:
-    - "@id":             schema:Text
+    - "@id":             schema:ReleaseComment
   owl:cardinality:       many
   marginality:           required
   authenticated:         false
