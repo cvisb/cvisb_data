@@ -293,18 +293,18 @@ export class getDatasetsService {
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", `sourceCitation${citation_variable}.keyword`)
+      .set("facets", `sourceCitation.${citation_variable}.keyword`)
       .set("size", "0")
       .set("facet_size", "10000");
 
     return this.apiSvc.get("patient", params, 0)
       .pipe(
         mergeMap((citationCts: any) => {
-          let counts = citationCts.facets[`sourceCitation${citation_variable}.keyword`]['terms'];
+          let counts = citationCts.facets[`sourceCitation.${citation_variable}.keyword`]['terms'];
           let ids = uniq(counts.map(d => d.term));
           let id_string = ids.join(",");
 
-          return this.apiSvc.post("patient", id_string, `sourceCitation${citation_variable}`, "sourceCitation").pipe(
+          return this.apiSvc.post("patient", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
               console.log(citations)
               console.log(citationCts)
