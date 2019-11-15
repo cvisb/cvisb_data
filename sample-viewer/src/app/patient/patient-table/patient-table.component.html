@@ -3,7 +3,7 @@
     <mat-spinner></mat-spinner>
   </div>
 
-  <table mat-table [dataSource]="patientSource" matSort id="patients" *ngIf="patientSource">
+  <table mat-table [dataSource]="patientSource" matSort id="patients" [hidden]="!patientSource">
 
     <!-- ID Column -->
     <ng-container matColumnDef="patientID">
