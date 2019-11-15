@@ -298,6 +298,8 @@ export class getDatasetsService {
     return this.apiSvc.get("patient", params, 0)
       .pipe(
         mergeMap((citationCts: any) => {
+          console.log(citationCts)
+          console.log(counts)
           let counts = citationCts.facets[`sourceCitation.${citation_variable}.keyword`]['terms'];
           let ids = uniq(counts.map(d => d.term));
           let id_string = ids.join(",");
