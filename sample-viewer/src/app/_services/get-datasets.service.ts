@@ -245,10 +245,11 @@ export class getDatasetsService {
             dataset["@type"] = "Dataset";
             // dataset["publisher"] = publishers;
             // dataset["citation"] = citations;
-            if (expts.length === 0) {
+            // if (expts.length === 0) {
               dataset["source"] = expts[0].sources;
               dataset["citation"] = expts[0].sources.map(d => d.source);
-            }
+            // }
+            console.log(expts.length)
             console.log(dataset)
             return (dataset)
           } else {
@@ -298,8 +299,6 @@ export class getDatasetsService {
 
           return this.apiSvc.post("experiment", id_string, `citation.${citation_variable}`, "citation").pipe(
             map(citations => {
-              console.log(counts);
-              console.log(citations)
               let citation_dict = flatMapDeep(citations.body, d => d.citation);
 
               counts.forEach(dataset => {
