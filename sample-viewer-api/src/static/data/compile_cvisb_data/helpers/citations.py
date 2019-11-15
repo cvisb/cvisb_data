@@ -4,6 +4,7 @@ import requests
 import numpy as np
 from .checks import getUnique
 from .logging import log_msg
+from copy import deepcopy
 
 
 def dateArr2Str(arr):
@@ -31,7 +32,7 @@ def convertAuthor(authorObj):
 
 def getSource(row):
     if((row.citation == row.citation) & (row.citation is not None)):
-        citation = row.citation.copy()
+        citation = deepcopy(row.citation)
         if(type(citation) == list):
             for cite in citation:
                 cite["@type"] = "ScholarlyArticle"
@@ -39,7 +40,7 @@ def getSource(row):
             citation['@type'] = "ScholarlyArticle"
         return(citation)
     if((row.publisher == row.publisher) & (row.publisher is not None)):
-        publisher = row.publisher.copy()
+        publisher = deepcopy(row.publisher)
         if(type(publisher) == list):
             for pub in publisher:
                 pub["@type"] = "Organization"
