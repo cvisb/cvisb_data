@@ -91,7 +91,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getELISA('dataStatus')">
+          <app-provenance *ngIf="patient.elisa" [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getELISA('dataStatus')">
           </app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
         </mat-expansion-panel>

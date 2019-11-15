@@ -115,27 +115,29 @@ export class PatientPageComponent {
   // collapses array of ELISA results down.
   getELISA(returnVar: string): Object {
     let elisa = this.patient.elisa;
-    let summary = {};
-    let final = elisa.every((d: any) => d.dataStatus === "final");
+    if (elisa) {
+      let summary = {};
+      let final = elisa.every((d: any) => d.dataStatus === "final");
 
-    summary['correction'] = elisa.map(d => d.correction).filter(d => d);
-    if(summary['correction'].length === 0) {
-      summary['correction'] = null;
+      summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+      if (summary['correction'].length === 0) {
+        summary['correction'] = null;
+      }
+      summary['citation'] = elisa.map(d => d.citation).filter(d => d);
+      summary['dataStatus'] = final ? "final" : "preliminary";
+
+      switch (returnVar) {
+        case "correction":
+          return (summary["correction"]);
+        case "citation":
+          return (summary["citation"]);
+        case "dataStatus":
+          return (summary["dataStatus"]);
+        default:
+          return (summary)
+      }
     }
-    summary['citation'] = elisa.map(d => d.citation).filter(d => d);
-    summary['dataStatus'] = final ? "final" : "preliminary";
-
-    switch (returnVar) {
-      case "correction":
-        return (summary["correction"]);
-      case "citation":
-        return (summary["citation"]);
-      case "dataStatus":
-        return (summary["dataStatus"]);
-      default:
-        return (summary)
-    }
-
+    return (null)
 
   }
 
