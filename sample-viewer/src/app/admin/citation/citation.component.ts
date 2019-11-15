@@ -51,9 +51,10 @@ export class CitationComponent implements OnInit {
       this.experiments = sources;
     });
 
-    this.datasetSvc.getPatientSources().subscribe(sources => {
-      console.log(sources)
-    });
+    // 2019-11-14 seems to be working, but no sources in index so actually fails in POST request...
+    // this.datasetSvc.getPatientSources().subscribe(sources => {
+    //   console.log(sources)
+    // });
   }
 
 }
