@@ -61,7 +61,7 @@
       </mat-expansion-panel>
 
       <!-- SYMPTOMS  -->
-      <ng-container *ngIf="patient.symptoms">
+      <ng-container *ngIf="patient.symptoms && privateData">
         <mat-expansion-panel class="panel-group" id="symptoms" [expanded]="symptomsPanelState" (opened)="symptomsPanelState = true" (closed)="symptomsPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeight" [expandedHeight]="expansionPanelHeight">
             <mat-panel-title class="panel-title">
