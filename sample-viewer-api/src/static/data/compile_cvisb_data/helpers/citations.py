@@ -36,17 +36,20 @@ def getSource(row):
         if(type(citation) == list):
             for cite in citation:
                 cite["@type"] = "ScholarlyArticle"
+            return(citation)
         else:
             citation['@type'] = "ScholarlyArticle"
-        return(citation)
+            return([citation])
     if((row.publisher == row.publisher) & (row.publisher is not None)):
         publisher = deepcopy(row.publisher)
         if(type(publisher) == list):
             for pub in publisher:
                 pub["@type"] = "Organization"
-        publisher['@type'] = "Organization"
-        return(publisher)
-    default = {"identifier": 'unknown', "@type": "unknown", "name": "unknown"}
+            return(publisher)
+        else:
+            publisher['@type'] = "Organization"
+            return([publisher])
+    default = [{"identifier": 'unknown', "@type": "unknown", "name": "unknown"}]
     return(default)
 
 def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
