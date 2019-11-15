@@ -178,17 +178,18 @@ export class getDatasetsService {
       //   params: new HttpParams()
       //     .set('q', `${idVar}:${id}`)
       // }),
-      this.apiSvc.fetchAll("experiment",
-        new HttpParams()
-          .set("q", `includedInDataset:"${datasetID}"`)
-          .set("fields", "citation,publisher"))
-    )
+      //   this.apiSvc.fetchAll("experiment",
+      //     new HttpParams()
+      //       .set("q", `includedInDataset:"${datasetID}"`)
+      //       .set("fields", "citation,publisher"))
+      // )
+      this.getDatasetSources(datasetID))
       .pipe(
         map(([downloads, data, expts]) => {
           // console.log("GET DATASET")
           // console.log(data)
           // console.log(downloads)
-          // console.log(expts)
+          console.log(expts)
           // downloads = downloads['hits'];
           if (data.length === 1) {
             // One result found, as expected.
@@ -203,49 +204,52 @@ export class getDatasetsService {
             delete dataset._id;
             delete dataset._score;
 
-            let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
-            let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
-
-            expts.forEach(d => {
-              d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
-              if (d.citation) {
-                d.source.forEach(inner =>
-                  inner['type'] = 'citation'
-                )
-              } else {
-                d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
-              }
-
-            })
-
-            let expt_flat = flatMapDeep(expts, d => d.source)
-
-            let sources = _(expt_flat)
-              .groupBy('name')
-              .map((items) => {
-                return {
-                  source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
-                  count: items.length,
-                  percent: items.length / expt_flat.length
-                };
-              }).value();
-
-            // flatten sources
-            sources.forEach(d => {
-              d.source['count'] = d.count;
-              d.source['percent'] = d.percent;
-            })
-
-            sources = sources.map(d => d.source)
+            // let publishers = uniqWith(expts.map(d => d.publisher), isEqual).filter(d => d);
+            // let citations = uniqWith(flatMapDeep(expts, d => d.citation), isEqual).filter(d => d);
+            //
+            // expts.forEach(d => {
+            //   d['source'] = d.citation ? cloneDeep(d.citation) : (d.publisher ? cloneDeep(d.publisher) : {}); // safeguard against nulls
+            //   if (d.citation) {
+            //     d.source.forEach(inner =>
+            //       inner['type'] = 'citation'
+            //     )
+            //   } else {
+            //     d['source']['type'] = d.publisher ? 'publisher' : 'unknown';
+            //   }
+            //
+            // })
+            //
+            // let expt_flat = flatMapDeep(expts, d => d.source)
+            //
+            // let sources = _(expt_flat)
+            //   .groupBy('name')
+            //   .map((items) => {
+            //     return {
+            //       source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
+            //       count: items.length,
+            //       percent: items.length / expt_flat.length
+            //     };
+            //   }).value();
+            //
+            // // flatten sources
+            // sources.forEach(d => {
+            //   d.source['count'] = d.count;
+            //   d.source['percent'] = d.percent;
+            // })
+            //
+            // sources = sources.map(d => d.source)
 
             // save DataDownloads to 'distribution' within dataset
             dataset['distribution'] = downloads;
             dataset["@context"] = "http://schema.org/";
             dataset["@type"] = "Dataset";
-            dataset["publisher"] = publishers;
-            dataset["citation"] = citations;
-            dataset["source"] = sources;
-            // console.log(dataset)
+            // dataset["publisher"] = publishers;
+            // dataset["citation"] = citations;
+            if (expts.length === 0) {
+              dataset["source"] = expts[0].sources;
+              dataset["citation"] = expts[0].sources.map(d => d.source);
+            }
+            console.log(dataset)
             return (dataset)
           } else {
             console.log("More than one dataset returned. Check if your ID is unique!")
