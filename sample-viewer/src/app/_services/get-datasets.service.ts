@@ -284,63 +284,56 @@ export class getDatasetsService {
       );
   }
 
-  // this.loadingSubject.next(true);
-  // let params = new HttpParams()
-  //   .set("q", `__all__`)
-  //   .set("fields", "citation,publisher,includedInDataset");
-  //
-  // return this.apiSvc.fetchAll("experiment", params).pipe(
-  //   finalize(() => {
-  //     this.loadingSubject.next(false)
-  //   }),
-  //   catchError(() => {
-  //     console.log('error getting dataset sources')
-  //     return (of([]));
-  //   }),
-  //   map(expts => {
-  //     expts = this.getSource(expts);
-  //
-  //     let sources = _(expts)
-  //       .groupBy('includedInDataset')
-  //       .map((items, key) => {
-  //         return {
-  //           sources: uniqWith(flatMapDeep(items, d => d.source), isEqual).filter(d => d),
-  //           includedInDataset: key,
-  //           count: items.length
-  //         };
-  //       }).value();
-  //
-  //     sources.forEach(dataset => {
-  //       let ds_obj = this.exptObjPipe.transform(dataset.includedInDataset, "dataset_id")
-  //       dataset['dataset_name'] = ds_obj['dataset_name'];
-  //       dataset['measurementCategory'] = ds_obj['measurementCategory'];
-  //     })
-  //
-  //     return (sources.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
-  //   }))
-
   getPatientSources(): Observable<any> {
+    this.loadingSubject.next(true);
+
+    let citation_variable = "identifier";
+
+    let qstring: string = "__all__";
+
     let params = new HttpParams()
-      .set("q", `__all__`)
-      .set("fields", "citation,publisher");
+      .set("q", qstring)
+      .set("facets", `sourceCitation${citation_variable}.keyword`)
+      .set("size", "0")
+      .set("facet_size", "10000");
 
-    return this.apiSvc.fetchAll("patient", params).pipe(map(patients => {
-      patients = this.getSource(patients);
+    return this.apiSvc.get("patient", params, 0)
+      .pipe(
+        mergeMap((citationCts: any) => {
+          let counts = citationCts.facets[`sourceCitation${citation_variable}.keyword`]['terms'];
+          let ids = uniq(counts.map(d => d.term));
+          let id_string = ids.join(",");
 
-      let flat_patients = flatMapDeep(patients, d => d.source).filter(d => d);
+          return this.apiSvc.post("patient", id_string, `sourceCitation${citation_variable}`, "sourceCitation").pipe(
+            map(citations => {
+              console.log(citations)
+              console.log(citationCts)
+              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
 
-      let sources = _(flat_patients)
-        .groupBy('name')
-        .map((items) => {
-          return {
-            source: items[0], // !!!! being slightly lazy here. Assyming all source's are unique and contain redundant data.
-            count: items.length
-          };
-        }).value();
+              let total_citations =  counts.reduce((total: number, x) => total + x.count, 0);
 
-
-      return (sources.sort((a, b) => b.count - a.count))
-    }))
+              counts.forEach(source => {
+                let cite_objs = citation_dict.filter(d => d[citation_variable] == source.term);
+                // NOTE: since `citation` is an array, it's possible that a single call to POST to get
+                // the citation objects will return multiple copies of the same sourceCitation
+                // I'm assuming they're all the same, since they have the same identifier... so just grabbing the first one.
+                if (cite_objs.length > 0) {
+                  source['source'] = cite_objs[0];
+                }
+                source['percent'] = source.count / total_citations;
+              })
+              return (counts);
+            }),
+            catchError(e => {
+              console.log(e)
+              throwError(e);
+              return (new Observable<any>())
+            }),
+            finalize(() => this.loadingSubject.next(false))
+          )
+        }
+        )
+      );
   }
 
   getAllSources() {

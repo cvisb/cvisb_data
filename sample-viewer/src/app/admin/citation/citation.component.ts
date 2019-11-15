@@ -47,20 +47,13 @@ export class CitationComponent implements OnInit {
   }
 
   ngOnInit() {
-    // BUG: for some reason, server-side on the first call, the fetchAll stops after 3000 results (e.g. three calls)
-    // Something about the scroll_ids getting mixed up, I suspect.  Putting aside till we have patient citations.
-    // this.datasetSvc.getAllSources().subscribe(sources => {
-    //   console.log(sources)
-    //   // this.experiments = sources.dataset;
-    // })
     this.datasetSvc.getDatasetSources().subscribe(sources => {
       this.experiments = sources;
-      // console.log(sources)
     });
 
-    //     this.datasetSvc.getPatientSources().subscribe(sources => {
-    //       console.log(sources)
-    //     });
+    this.datasetSvc.getPatientSources().subscribe(sources => {
+      console.log(sources)
+    });
   }
 
 }
