@@ -22,6 +22,7 @@ def getData(row):
 # DATADIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
 # filename = f"{DATADIR}/input_data/expt_summary_data/systems_serology/CViSB_SystemsSerology_2019Nov12_BG.xlsx"
 
+# df.loc[df.value.isnull(), ['assay', 'antigen', 'sampleID', 'experimentID', 'batchID', 'value', 'category']]
 
 def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, version, verbose, output_dir):
     today =  datetime.today().strftime('%Y-%m-%d')
@@ -81,11 +82,21 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     id_converts = df.loc[df.idConverted, ['sampleID', 'privatePatientID', 'visitCode']].drop_duplicates().sort_values("sampleID")
 
     if(len(id_converts) > 0):
+        helpers.log_msg(f"{'-'*50}", verbose)
         helpers.log_msg(f"\tDATA WARNING: {len(id_converts)} Sample IDs were converted to privatePatientID and visitCode. Check that this was done properly in {id_changed_path.split('/')[-1]}", verbose)
+        helpers.log_msg(f"{'-'*50}", verbose)
         id_converts.to_csv(id_changed_path, index=False)
+        
     # --- checks ---
     # Experiment ID is unique
-
+    # Check if data is null
+    null_data = df[df['value'].isnull()]
+    if(len(null_data) > 0):
+        helpers.log_msg(f"{'-'*50}", verbose)
+        helpers.log_msg(f"\tDATA ERROR: {len(null_data)} experiments were removed because they had a null data value", verbose)
+        helpers.log_msg(null_data[['sampleID', 'experimentID', 'batchID']], verbose)
+        df.dropna(subset=["value"], inplace=True)
+        helpers.log_msg(f"{'-'*50}", verbose)
 
     #  Check for:
     # 1) non-duplicate values

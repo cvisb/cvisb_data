@@ -37,7 +37,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds['license'] = "https://creativecommons.org/share-your-work/public-domain/cc0/"
 
 # --- possibly variable, each time ---
-    ds["spatialCoverage"] = helpers.getCountry("SLE")
+    ds["spatialCoverage"] = [helpers.getCountry("SLE")]
     ds["version"] = version
     ds["dateModified"] = dateModified
     # data downloads

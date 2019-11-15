@@ -50,7 +50,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:locus
@@ -62,7 +62,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:novel
@@ -74,7 +74,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 
