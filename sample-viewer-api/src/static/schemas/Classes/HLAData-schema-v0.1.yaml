@@ -41,167 +41,241 @@
   schema:Enumeration:
                            - HLAData
 
-- "@id":                 cvisb:A
+- "@id":                 cvisb:allele
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the A locus of HLA
-  rdfs:label:            A
+  rdfs:comment:          Allele call
+  rdfs:label:            "allele"
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:B
+- "@id":                 cvisb:locus
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the B locus of HLA
-  rdfs:label:            B
+  rdfs:comment:          Locus of the allele
+  rdfs:label:            "locus"
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:C
+- "@id":                 cvisb:novel
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the C locus of HLA
-  rdfs:label:            C
+  rdfs:comment:          Whether the allele is a novel mutation
+  rdfs:label:            novel
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           required
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DPA1
-  "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DPA1 locus of HLA
-  rdfs:label:            DPA1
-  schema:domainIncludes:
-    - "@id":             cvisb:HLAData
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DPB1
+- "@id":                 cvisb:cohort
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DPB1 locus of HLA
-  rdfs:label:            DPB1
+  rdfs:comment:          Cohort of the patient
+  rdfs:label:            cohort
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DQA1
+- "@id":                 cvisb:outcome
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DQA1 locus of HLA
-  rdfs:label:            DQA1
+  rdfs:comment:          Outcome of the patient
+  rdfs:label:            outcome
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DQB1
+- "@id":                 cvisb:patientID
   "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DQB1 locus of HLA
-  rdfs:label:            DQB1
+  rdfs:comment:          Public patientID of the patient
+  rdfs:label:            patientID
   schema:domainIncludes:
     - "@id":             cvisb:HLAData
   schema:rangeIncludes:
-    - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       many
+  owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DRB1
-  "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DRB1 locus of HLA
-  rdfs:label:            DRB1
-  schema:domainIncludes:
-    - "@id":             cvisb:HLAData
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-  minItems:              2
-  maxItems:              2
 
-- "@id":                 cvisb:DRB3
-  "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DRB3 locus of HLA
-  rdfs:label:            DRB3
-  schema:domainIncludes:
-    - "@id":             cvisb:HLAData
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-  minItems:              2
-  maxItems:              2
-
-- "@id":                 cvisb:DRB4
-  "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DRB4 locus of HLA
-  rdfs:label:            DRB4
-  schema:domainIncludes:
-    - "@id":             cvisb:HLAData
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-  minItems:              2
-  maxItems:              2
-
-- "@id":                 cvisb:DRB5
-  "@type":               rdf:Property
-  rdfs:comment:          Genotype call for the DRB5 locus of HLA
-  rdfs:label:            DRB5
-  schema:domainIncludes:
-    - "@id":             cvisb:HLAData
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-  minItems:              2
-  maxItems:              2
+# - "@id":                 cvisb:A
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the A locus of HLA
+#   rdfs:label:            A
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:B
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the B locus of HLA
+#   rdfs:label:            B
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:C
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the C locus of HLA
+#   rdfs:label:            C
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DPA1
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DPA1 locus of HLA
+#   rdfs:label:            DPA1
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DPB1
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DPB1 locus of HLA
+#   rdfs:label:            DPB1
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DQA1
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DQA1 locus of HLA
+#   rdfs:label:            DQA1
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DQB1
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DQB1 locus of HLA
+#   rdfs:label:            DQB1
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DRB1
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DRB1 locus of HLA
+#   rdfs:label:            DRB1
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DRB3
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DRB3 locus of HLA
+#   rdfs:label:            DRB3
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DRB4
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DRB4 locus of HLA
+#   rdfs:label:            DRB4
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
+#
+# - "@id":                 cvisb:DRB5
+#   "@type":               rdf:Property
+#   rdfs:comment:          Genotype call for the DRB5 locus of HLA
+#   rdfs:label:            DRB5
+#   schema:domainIncludes:
+#     - "@id":             cvisb:HLAData
+#   schema:rangeIncludes:
+#     - "@id":             xsd:string
+#     - "@id":             schema:Text
+#   owl:cardinality:       many
+#   marginality:           recommended
+#   authenticated:         false
+#   minItems:              2
+#   maxItems:              2
