@@ -1,7 +1,6 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
-$icon-size: 50px;
-// .grid-container {
+$icon-size: 50px; // .grid-container {
 //   display: grid;
 //   grid-template-columns: repeat(12, [col-start] 1fr);
 //   grid-gap: 20px;
@@ -28,8 +27,9 @@ $icon-size: 50px;
 }
 
 .dataset-count {
-    text-transform: uppercase;
-    font-weight: 300;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-right: 10px;
 }
 
 .dataset-list {
@@ -80,7 +80,6 @@ h4 {
   align-items: center;
 }
 
-
 h4.container-column {
-   flex: 1;
+  flex: 1;
 }
