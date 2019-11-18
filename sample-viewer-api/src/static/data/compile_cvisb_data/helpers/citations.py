@@ -49,7 +49,7 @@ def getSource(row):
         else:
             publisher['@type'] = "Organization"
             return([publisher])
-    default = [{"identifier": 'unknown', "@type": "unknown", "name": "unknown"}]
+    default = [{"identifier": 'unknown', "@type": "Organization", "name": "unknown"}]
     return(default)
 
 def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
