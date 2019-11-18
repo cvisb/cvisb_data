@@ -47,11 +47,6 @@
               "src/assets/schema",
               "src/assets/data",
               "src/assets/geo"
-              /* {
-                "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images",
-                "output": "leaflet/"
-              } */
             ],
             "styles": [
               "src/styles.scss",
@@ -106,7 +101,6 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.scss"
-              /* "./node_modules/leaflet/dist/leaflet.css" */
             ],
             "scripts": [],
             "assets": [
@@ -117,11 +111,6 @@
               "src/assets/schema",
               "src/assets/data",
               "src/assets/geo"
-              /* {
-                "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images",
-                "output": "leaflet/"
-              } */
             ]
           }
         },
