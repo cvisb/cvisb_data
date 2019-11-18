@@ -46,7 +46,7 @@ def prep_id_data(filename):
 
     return(ids)
 
-# Run a series of checks to make sure the
+# Run a series of checks to make sure the years are within the proper range
 def runIDChecks(ids, expectedYearRange = [2008, datetime.datetime.now().year], errorCol="issue"):
     # --- missing IDs ---
     # Missing G ID or Study Specific Number
