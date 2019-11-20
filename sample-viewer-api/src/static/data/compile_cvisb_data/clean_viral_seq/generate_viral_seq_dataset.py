@@ -20,27 +20,27 @@ def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetViru
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "Dataset"
     ds["includedInDataCatalog"]= ["https://data.cvisb.org/"]
-    ds["measurementCategory"] = "viral sequencing"
+    ds["measurementCategory"] = "virus sequencing"
     ds["url"] = "https://github.com/cvisb/curated-alignments"
 
     if(datasetVirus == "Ebola"):
-        ds["identifier"] = "ebola-viral-seq"
-        ds["name"] = "Ebola Viral Sequencing"
+        ds["identifier"] = "ebola-virus-seq"
+        ds["name"] = "Ebola Virus Sequencing"
         ds["variableMeasured"] = ["Ebola virus sequence"]
-        ds["description"] = "Viral Sequencing of acute EBOV patients from Sierra Leone, Liberia, Guinea, and other countries generated using Illumina Platform sequencing technology. Viral sequencing data will be used to determine potential correlations between the specific infecting virus genome and patient survival and development of sequelae."
-        ds["keywords"] = ["viral sequencing", "Ebola", "Ebola virus", "EBOV"]
+            ds["description"] = "Virus sequencing of acute Ebola patients from Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae."
+        ds["keywords"] = ["virus sequencing", "Ebola", "Ebola virus", "EBOV"]
     elif(datasetVirus == "Lassa"):
-        ds["identifier"] = "lassa-viral-seq"
-        ds["name"] = "Lassa Viral Sequencing"
+        ds["identifier"] = "lassa-virus-seq"
+        ds["name"] = "Lassa Virus Sequencing"
         ds["variableMeasured"] = ["Lassa virus sequence"]
-        ds["description"] = "Viral Sequencing of acute LASV patients from Sierra Leone, Nigeria, Liberia, Guinea, and other countries generated using Illumina Platform sequencing technology. Viral sequencing data will be used to determine potential correlations between the specific infecting virus genome and patient survival and development of sequelae."
-        ds["keywords"] = ["viral sequencing", "Lassa", "Lassa virus", "LASV"]
+        ds["description"] = "Virus sequencing of Lassa-infected humans and rodents from Nigeria, Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae."
+        ds["keywords"] = ["virus sequencing", "Lassa", "Lassa virus", "LASV"]
 
     # credit
     ds['author'] = [helpers.getLabAuthor("KGA")]
     ds['publisher'] = [helpers.cvisb]
     ds['funding'] = helpers.cvisb_funding
-    ds['license'] = "https://creativecommons.org/share-your-work/public-domain/cc0/"
+    ds['license'] = "https://creativecommons.org/licenses/by/4.0/"
 
 
 # --- possibly variable, each time ---
