@@ -15,7 +15,7 @@ def get_serology_downloads(dateModified, experiments, updatedBy, version, datase
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "DataDownload"
     ds["includedInDataset"] = datasetID
-    ds["name"] = "CViSB_SystemsSerology.csv"
+    ds["name"] = "CViSB-SystemsSerology.csv"
     ds["description"] = "Summary of systems serology measurements"
     ds["identifier"] = "CViSB_SystemsSerology.csv"
 
@@ -23,7 +23,7 @@ def get_serology_downloads(dateModified, experiments, updatedBy, version, datase
     ds["measurementCategory"] = "Systems Serology"
     ds["additionalType"] = "summary data"
     ds["encodingFormat"] = "text/csv"
-    ds["contentUrl"] = f"https://data.cvisb.org/dataset/{datasetID}"
+    ds["contentUrl"] = f"https://data.cvisb.org/dataset/{ds['name']}"
 
     # credit
     ds['author'] = [helpers.getLabAuthor("Galit")]
