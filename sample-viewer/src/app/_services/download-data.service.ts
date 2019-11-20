@@ -8,10 +8,12 @@ import { AuthService } from './auth.service';
 import { RequestParametersService } from './request-parameters.service';
 import { GetPatientsService } from './get-patients.service';
 import { Nested2longService } from './nested2long.service';
+import { GetExperimentsService } from './get-experiments.service';
 
 // --- models ---
 import { AuthState, RequestParamArray, Patient } from '../_models';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 // --- functions ---
 import { uniq, flatMapDeep } from 'lodash';
@@ -25,7 +27,6 @@ import { SpinnerPopupComponent } from '../_dialogs';
 })
 
 export class DownloadDataService {
-  filename: string;
   auth_stub: string;
   today: string;
   dialogRef: MatDialogRef<any>;
@@ -33,12 +34,17 @@ export class DownloadDataService {
   qParams: HttpParams;
   sampleSortCols: string[] = ["sampleID", "creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
 
+  // Loading spinner
+  private loadingCompleteSubject = new BehaviorSubject<boolean>(false);
+  public loadingCompleteState$ = this.loadingCompleteSubject.asObservable();
+
   constructor(
     private authSvc: AuthService,
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
+    private exptSvc: GetExperimentsService,
     private longSvc: Nested2longService,
   ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
@@ -59,33 +65,34 @@ export class DownloadDataService {
   }
 
   // Exterior function to call download, trigger dialog popup
-  triggerDownload(filetype: string, data: any[]) {
+  triggerDownload(filetype: string, data: any[], filename?: string) {
+    this.loadingCompleteSubject.next(false);
     this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
-      width: '300px',
-      data: `downloading data for selected ${filetype}...`,
+      width: '500px',
+      data: `Downloading selected ${filetype} data...`,
       disableClose: true
     });
 
-    this.downloadData(filetype, data);
+    this.getDownloadableData(filetype, data, filename);
   }
 
 
   // Main switch function to call the downloading of data
-  downloadData(filetype: string, data: any[]) {
+  getDownloadableData(filetype: string, data: any[], filename?: string) {
     switch (filetype) {
       // --- patients ---
       case ("patients"):
-        this.filename = `${this.today}_cvisb_${filetype}${this.auth_stub}.tsv`;
+        filename = `${this.today}_cvisb_${filetype}${this.auth_stub}.tsv`;
 
         this.patientSvc.fetchAll(this.qParams).subscribe((patients: Patient[]) => {
           data = patients;
-          this.parseData(patients, filetype, this.filename);
+          this.parseData(patients, filetype, filename);
         });
         break;
 
       // --- samples ---
       case ("samples"):
-        this.filename = `${this.today}_cvisb_${filetype}${this.auth_stub}.tsv`;
+        filename = `${this.today}_cvisb_${filetype}${this.auth_stub}.tsv`;
         data = this.longSvc.prep4download(data, ['location'], ['_score', '_version', '_id']);
 
         // sort of a hack; since location data is nested in the ES index, it will return *all* samples, regardless of location
@@ -96,13 +103,24 @@ export class DownloadDataService {
           labs = labs[0].value;
           data = data.filter(d => labs.includes(d.lab))
         }
-        this.parseData(data, filetype, this.filename);
+        this.parseData(data, filetype, filename);
         break;
 
       // --- Viral sequencing ---
       case ("viral sequences"):
         // this.filename = `${this.today}_cvisb_${this.filenamePart}-viral-sequences`;
-        this.downloadFasta(data, filetype, this.filename);
+        this.downloadFasta(data, filetype, filename);
+        break;
+      case ("systems-serology"):
+        try {
+          filename = filename.split("/").slice(-1)[0]
+          filename = `${this.today}_${filename.replace(".csv", "")}${this.auth_stub}.csv`
+        } catch (error) {
+          filename = `${this.today}_CViSB-SystemsSerology${this.auth_stub}.csv`
+        }
+        this.exptSvc.getExptsPatients(filetype);
+
+        this.parseData(["data"], filetype, filename, ",");
         break;
       default:
         this.parseData(data, filetype, `${this.today}_cvisb_data${this.auth_stub}.tsv`);
@@ -110,8 +128,9 @@ export class DownloadDataService {
     }
   }
 
-  saveData(dwnld_data: string, filename: string) {
-    var blob = new Blob([dwnld_data], { type: 'text/csv' });
+  saveData(dwnld_data: string, filename: string, encodingFormat: string) {
+    this.loadingCompleteSubject.next(true);
+    var blob = new Blob([dwnld_data], { type: encodingFormat });
     var hiddenElement = document.createElement('a');
     hiddenElement.href = window.URL.createObjectURL(blob);
     // hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
@@ -121,12 +140,13 @@ export class DownloadDataService {
     // https://support.mozilla.org/en-US/questions/968992
     document.body.appendChild(hiddenElement);
     hiddenElement.click();
+
     this.dialogRef.close();
   }
 
-  // data ==> string
-  parseData(data: any[], filetype: string, filename: string) {
-    const columnDelimiter = '\t'; // technically, tab-separated, since some things have commas in names.
+  // General function to convert an array into a tab-delimited string for download.
+  parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t') {
+    // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
     if (data && data.length > 0) {
@@ -152,7 +172,19 @@ export class DownloadDataService {
         dwnld_data += lineDelimiter;
       });
 
-      this.saveData(dwnld_data, filename);
+      let encodingFormat: string;
+      switch (columnDelimiter) {
+        case ("\t"):
+          encodingFormat = "text/tab-separated-values";
+          break;
+        case (","):
+          encodingFormat = "text/csv";
+          break;
+        default:
+          encodingFormat = "text/csv";
+          break;
+      }
+      this.saveData(dwnld_data, filename, encodingFormat);
     }
   }
 
@@ -170,8 +202,7 @@ export class DownloadDataService {
     })
 
     // Sequences in .fasta format
-    this.saveData(dwnld_data, `${filename}.fasta`);
-    // patient metadata
+    this.saveData(dwnld_data, `${filename}.fasta`, "text/fasta");    // patient metadata
     this.parseData(data, filetype, `${filename}_patient-data.tsv`);
     // this.parseData(data.patients, `${filename}-patientData.tsv`);
   }
