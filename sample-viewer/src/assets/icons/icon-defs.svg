@@ -233,9 +233,9 @@
       <circle stroke="none" class="bead" cx="20" cy="31" r="7.5"/>
     </symbol>
 
-    <!-- viral sequencing -->
-    <symbol id="viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-      <title>Viral Sequencing</title>
+    <!-- virus sequencing -->
+    <symbol id="virus-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+      <title>Virus Sequencing</title>
 
       <g id="ebola">
         <g>
@@ -394,9 +394,9 @@
       </g>
     </symbol>
 
-    <!-- viral sequencing -->
-    <symbol id="lassa-viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-      <title>Lassa Viral Sequencing</title>
+    <!-- virus sequencing -->
+    <symbol id="lassa-virus-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+      <title>Lassa Virus Sequencing</title>
       <g id="lassa">
         <defs>
           <rect id="LASV_rect_mask" width="40" height="40"/>
@@ -496,9 +496,9 @@
         </g>
       </g>
     </symbol>
-    <!-- EBOV viral sequencing -->
-    <symbol id="ebola-viral-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-      <title>Ebola Viral Sequencing</title>
+    <!-- EBOV virus sequencing -->
+    <symbol id="ebola-virus-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+      <title>Ebola Virus Sequencing</title>
 
       <g id="ebola">
       	<defs>

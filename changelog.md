@@ -21,10 +21,10 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - `/experiment`
 6. Uploaded new versions of:
 - `/datacatalog`
-- HLA, Ebola Viral Seq, Lassa Viral Seq, Systems Serology `/dataset`
-- HLA, Ebola Viral Seq, Lassa Viral Seq `/datadownload`
-- HLA, Ebola Viral Seq, Lassa Viral Seq, Systems Serology `/experiment`
-- Ebola Viral Seq `/patient`
+- HLA, Ebola Virus Seq, Lassa Virus Seq, Systems Serology `/dataset`
+- HLA, Ebola Virus Seq, Lassa Virus Seq `/datadownload`
+- HLA, Ebola Virus Seq, Lassa Virus Seq, Systems Serology `/experiment`
+- Ebola Virus Seq `/patient`
 
 
 ### v 0.1: 2019-09-13

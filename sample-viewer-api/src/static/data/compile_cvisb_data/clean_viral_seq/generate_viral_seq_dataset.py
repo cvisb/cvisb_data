@@ -27,7 +27,7 @@ def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetViru
         ds["identifier"] = "ebola-virus-seq"
         ds["name"] = "Ebola Virus Sequencing"
         ds["variableMeasured"] = ["Ebola virus sequence"]
-            ds["description"] = "Virus sequencing of acute Ebola patients from Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae."
+        ds["description"] = "Virus sequencing of acute Ebola patients from Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae."
         ds["keywords"] = ["virus sequencing", "Ebola", "Ebola virus", "EBOV"]
     elif(datasetVirus == "Lassa"):
         ds["identifier"] = "lassa-virus-seq"

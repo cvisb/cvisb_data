@@ -111,8 +111,8 @@ export class DownloadDataService {
         break;
 
       // --- Viral sequencing ---
-      case ("viral sequences"):
-        // this.filename = `${this.today}_cvisb_${this.filenamePart}-viral-sequences`;
+      case ("virus sequences"):
+        // this.filename = `${this.today}_cvisb_${this.filenamePart}-virus-sequences`;
         this.downloadFasta(data, filetype, filename);
         break;
       case ("systems-serology"):

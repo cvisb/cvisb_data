@@ -9,9 +9,9 @@ import { ExperimentObject } from '../_models';
 // Current groups:
 // - HLA sequencing
 // - metagenome sequencing
-// - viral sequencing
-//       - Ebola viral sequencing
-//       - Lassa viral sequencing
+// - virus sequencing
+//       - Ebola virus sequencing
+//       - Lassa virus sequencing
 // - immune repetoire sequencing
 //       - BCR sequencing
 //       - TCR sequencing
@@ -41,8 +41,8 @@ export class ExperimentObjectPipe implements PipeTransform {
 
     { "measurementTechnique": ["metagenome sequencing"], "measurementCategory": "metagenome sequencing", "dataset_id": "metagenome-seq", "dataset_name": "metagenome sequencing", "anchor_link": "metagenome-sequencing" },
 
-    { "measurementTechnique": ["Ebola viral sequencing"], "measurementCategory": "viral sequencing", "dataset_id": "ebola-viral-seq", "dataset_name": "Ebola viral sequencing", "anchor_link": "Ebola-viral-sequencing" },
-    { "measurementTechnique": ["Lassa viral sequencing"], "measurementCategory": "viral sequencing", "dataset_id": "lassa-viral-seq", "dataset_name": "Lassa viral sequencing", "anchor_link": "Lassa-viral-sequencing" },
+    { "measurementTechnique": ["Ebola virus sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "ebola-virus-seq", "dataset_name": "Ebola virus sequencing", "anchor_link": "Ebola-virus-sequencing" },
+    { "measurementTechnique": ["Lassa virus sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "lassa-virus-seq", "dataset_name": "Lassa virus sequencing", "anchor_link": "Lassa-virus-sequencing" },
 
     { "measurementTechnique": ["BCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "bcr", "dataset_name": "BCR sequencing", "anchor_link": "BCR-sequencing" },
     { "measurementTechnique": ["TCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "tcr", "dataset_name": "TCR sequencing", "anchor_link": "TCR-sequencing" },

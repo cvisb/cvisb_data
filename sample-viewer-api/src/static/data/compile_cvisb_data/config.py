@@ -24,7 +24,7 @@ HLA_DATE = today
 HLA_VERSION = 0.2
 HLA_UPDATEDBY = "Matthias Pauthner"
 
-# --- lassa viral seq ---
+# --- lassa virus seq ---
 LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
 LVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
 LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
@@ -33,7 +33,7 @@ LVIRAL_DATE = today
 LVIRAL_VERSION = 0.1
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
-# --- ebola viral seq ---
+# --- ebola virus seq ---
 EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/clean_ebola_orfs_aln_2019.11.12.fasta"
 EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_public_2019.11.12.csv"
 EVIRAL_DATE = today

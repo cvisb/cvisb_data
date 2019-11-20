@@ -28,7 +28,7 @@ Note: things that should exist but don't currently are listed in parentheses.
   - (Dataset:ClinicalObservations objects)
   - (DataDownload:ClinicalObservations objects)
 
-### Lassa/Ebola viral sequencing data: mainly from publications
+### Lassa/Ebola virus sequencing data: mainly from publications
 - Lassa metadata file
 - Lassa aligned sequences
 - Lassa raw sequences
@@ -37,11 +37,11 @@ Note: things that should exist but don't currently are listed in parentheses.
 - Ebola aligned sequences
 - Ebola raw sequences
 - Ebola translated amino acid sequences
-#### viral sequencing outputs:
+#### virus sequencing outputs:
   - patients who aren't in KGH registry
   - sample objects, for the patients not in the KGH registry
-  - Experiment:(lassa/ebola-)viral-seq objects
-  - Dataset:(lassa/ebola-)viral-seq object
+  - Experiment:(lassa/ebola-)virus-seq objects
+  - Dataset:(lassa/ebola-)virus-seq object
   - DataDownload objects
 
 ### HLA data
@@ -71,4 +71,4 @@ Note: things that should exist but don't currently are listed in parentheses.
 
 ## Usage
 * `python compile_cvisb_data.py`: imports all files, saves 6 separate .jsons
-* `python compile_cvisb_data.py -t patients hla lassa-viral-seq -s False -e 5`:  only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa viral sequencing data (from Andersen lab), doesn't save the full .jsons, but does save a sample of 5 records for each data type as a .json
+* `python compile_cvisb_data.py -t patients hla lassa-virus-seq -s False -e 5`:  only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab), doesn't save the full .jsons, but does save a sample of 5 records for each data type as a .json

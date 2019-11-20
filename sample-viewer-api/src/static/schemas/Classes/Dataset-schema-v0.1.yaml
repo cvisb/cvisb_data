@@ -84,7 +84,7 @@
   authenticated:         false
   schema:Enumeration:
                            - HLA sequencing
-                           - viral sequencing
+                           - virus sequencing
                            - metagenome sequencing
                            - immune repertoire sequencing
                            - Systems Serology
@@ -107,8 +107,8 @@
   schema:Enumeration:
                            - HLA sequencing
                            - metagenome sequencing
-                           - Ebola viral sequencing
-                           - Lassa viral sequencing
+                           - Ebola virus sequencing
+                           - Lassa virus sequencing
                            - BCR sequencing
                            - TCR sequencing
                            - ADNP
@@ -193,8 +193,8 @@
   schema:Enumeration:
                            - hla
                            - metagenome-seq
-                           - ebola-viral-seq
-                           - lassa-viral-seq
+                           - ebola-virus-seq
+                           - lassa-virus-seq
                            - bcr
                            - tcr
                            - systems-serology

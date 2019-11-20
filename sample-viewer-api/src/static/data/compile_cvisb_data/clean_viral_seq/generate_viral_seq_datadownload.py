@@ -57,16 +57,16 @@ def get_curated(dateModified, version, experiments, datasetVirus, filename, desc
     ds["url"] = "https://github.com/cvisb/curated-alignments"
 
     if(datasetVirus == "Ebola"):
-        ds["includedInDataset"] = "ebola-viral-seq"
+        ds["includedInDataset"] = "ebola-virus-seq"
         ds["variableMeasured"] = ["Ebola virus sequence"]
-        ds["keywords"] = ["viral sequencing", "Ebola", "Ebola virus", "EBOV"]
+        ds["keywords"] = ["virus sequencing", "Ebola", "Ebola virus", "EBOV"]
     elif(datasetVirus == "Lassa"):
-        ds["includedInDataset"] = "lassa-viral-seq"
+        ds["includedInDataset"] = "lassa-virus-seq"
         ds["variableMeasured"] = ["Lassa virus sequence"]
-        ds["keywords"] = ["viral sequencing", "Lassa", "Lassa virus", "LASV"]
+        ds["keywords"] = ["virus sequencing", "Lassa", "Lassa virus", "LASV"]
 
     # properties
-    ds["measurementCategory"] = "viral sequencing"
+    ds["measurementCategory"] = "virus sequencing"
     ds["additionalType"] = "curated data"
     ds["encodingFormat"] = "text/fasta"
 

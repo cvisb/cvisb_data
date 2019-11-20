@@ -1,9 +1,7 @@
-# Imports and cleans viral sequencing data, to throw into Angular app.
+# Imports and cleans serology data, to throw into Angular app.
 # Does a bunch of things:
 # 1) standardizes all inputs to conform with schema
 # 2) creates a series of Experiment objects to store the experimental data with experiment IDs
-# 3) creates a series of Patient objects for patients who are not in the KGH roster.
-# 4) creates a series of Samples for all the experiments.
 # 5) creates a series of data download objects
 # 6) creates a serology dataset
 

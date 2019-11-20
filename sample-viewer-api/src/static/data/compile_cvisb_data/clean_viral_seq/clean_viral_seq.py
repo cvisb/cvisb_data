@@ -47,13 +47,13 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # Check for duplicates
     num_dupes = sum(lasv.duplicated(subset="privatePatientID", keep=False))
     if(num_dupes > 0):
-        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate privatePatientIDs found in viral sequences:", verbose)
+        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate privatePatientIDs found in virus sequences:", verbose)
         helpers.log_msg(lasv.loc[lasv.duplicated(subset="privatePatientID", keep=False), [
                          'id', 'privatePatientID']].sort_values("privatePatientID"), verbose)
         helpers.log_msg("-" * 50, verbose)
     num_dupes = sum(lasv.duplicated(subset="id", keep=False))
     if(num_dupes > 0):
-        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate ids found in viral sequences:", verbose)
+        helpers.log_msg(f"DATA ERROR: {num_dupes} duplicate ids found in virus sequences:", verbose)
         helpers.log_msg(lasv.loc[lasv.duplicated(subset="id", keep=False), [
                          'id', 'privatePatientID']].sort_values("privatePatientID"), verbose)
         helpers.log_msg("-" * 50, verbose)
@@ -64,8 +64,8 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
 
     # static vars
     lasv['cohort'] = "Lassa"
-    lasv['measurementTechnique'] = "Lassa viral sequencing"
-    lasv['includedInDataset'] = "lassa-viral-seq"
+    lasv['measurementTechnique'] = "Lassa virus sequencing"
+    lasv['includedInDataset'] = "lassa-virus-seq"
     lasv['author'] = None
     lasv['correction'] = None
     lasv['sourceFiles'] = "; ".join([lassaS_AAfile.split("/")[-1], lassaS_Alignedfile.split("/")[-1], lassaS_Rawfile.split("/")[-1], lassa_MDfile.split("/")[-1], id_dict.split("/")[-1] ])
@@ -104,7 +104,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     # lasv['mergeIssue'] = None
     # lasv = helpers.checkMerge2(lasv,
     #                             mergeCols2Check=['outcome', 'cohort'],
-    #                             df1_label="Ebola Viral Seq Data", df2_label="Tulane metadata",
+    #                             df1_label="Ebola virus Seq Data", df2_label="Tulane metadata",
     #                             mergeCol="ID", dropMerge=False,
     #                             errorCol="mergeIssue", leftErrorMsg="", rightErrorMsg="")
     # merge issue wrong
@@ -143,7 +143,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
 
     num_dupes_expt = sum(lasv_data.duplicated(subset="experimentID", keep=False))
     if(num_dupes_expt > 0):
-        helpers.log_msg(f"DATA ERROR: {num_dupes_expt} duplicate experimentIDs found in viral sequences:", verbose)
+        helpers.log_msg(f"DATA ERROR: {num_dupes_expt} duplicate experimentIDs found in virus sequences:", verbose)
         helpers.log_msg(lasv_data.loc[lasv_data.duplicated(subset="experimentID", keep=False), [
                          'id', 'privatePatientID', "experimentID"]].sort_values("privatePatientID"), verbose)
         helpers.log_msg("-" * 50, verbose)
@@ -167,7 +167,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     expts = lasv_data
 
     # combined, common properties
-    expts['measurementCategory'] = "viral sequencing"
+    expts['measurementCategory'] = "virus sequencing"
     expts['dateModified'] = dateModified
     expts['updatedBy'] = updatedBy
     expts['releaseDate'] = today
@@ -207,7 +207,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
         lambda x: x.patientID + "_" + x.accession, axis=1)
     dwnlds['contentUrl'] = dwnlds.apply(
         lambda x: "https://www.ncbi.nlm.nih.gov/nuccore/" + x.accession, axis=1)
-    dwnlds['includedInDataset'] = 'lassa-viral-seq'
+    dwnlds['includedInDataset'] = 'lassa-virus-seq'
     dwnlds['additionalType'] = 'raw data'
     dwnlds['experimentIDs'] = dwnlds.experimentID.apply(lambda x: [x])
     dwnlds['contentUrlRepository'] = "GenBank"
@@ -255,14 +255,14 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     if(saveFiles):
         # --- experiments ---
         experiments.to_json(
-            f"{output_dir}/experiments/viral_seq_experiments_{today}.json", orient="records")
+            f"{output_dir}/experiments/virus_seq_experiments_{today}.json", orient="records")
 
         # --- patients ---
         patients.to_json(
-            f"{output_dir}/patients/viral_seq_patients_{today}.json", orient="records")
+            f"{output_dir}/patients/virus_seq_patients_{today}.json", orient="records")
         # --- samples ---
         samples.to_json(
-            f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
+            f"{output_dir}/samples/virus_seq_samples_{today}.json", orient="records")
 
     return({ "patient": patients, "sample": samples, "dataset": ds, "datadownload": all_dwnlds, "experiment": experiments })
 
@@ -284,7 +284,7 @@ def getPublisher(row, varName="cvisb_data"):
         }])
 
 
-def getDNAseq(all_seq, df, verbose, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan, data_type = "ViralSeqData"):
+def getDNAseq(all_seq, df, verbose, df_id, virus, seq_type="DNAsequence", segment=pd.np.nan, data_type = "VirusSeqData"):
     for seq in all_seq:
         id = seq.id.split("|")[0]
         if(sum(df[df_id] == id) == 0):

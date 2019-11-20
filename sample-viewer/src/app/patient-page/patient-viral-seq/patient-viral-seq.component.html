@@ -1,6 +1,6 @@
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
   <ng-container *ngFor="let seq of sequences">
-    <app-provenance [dateModified]="seq.dateModified" embargoLabel="Viral Sequence" [source]="seq.source"
+    <app-provenance [dateModified]="seq.dateModified" embargoLabel="Virus Sequence" [source]="seq.source"
     [public_data]="seq.citation" [changes]="seq.correction"
     [citation]="seq.citation" [dataStatus]="seq.dataStatus" class="provenance"></app-provenance>
 
