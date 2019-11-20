@@ -23,7 +23,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "Dataset"
     ds["identifier"] = datasetID
-    ds["name"] = "Systems Serology"
+    ds["name"] = "Systems Serology Measurements of Ebola/Lassa Patients and Survivors"
     ds["measurementCategory"] = "Systems Serology"
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
 
@@ -34,7 +34,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds['author'] = [helpers.getLabAuthor("Galit")]
     ds['publisher'] = [helpers.cvisb]
     ds['funding'] = helpers.cvisb_funding
-    ds['license'] = "https://creativecommons.org/share-your-work/public-domain/cc0/"
+    ds['license'] = "https://creativecommons.org/licenses/by/4.0/"
 
 # --- possibly variable, each time ---
     ds["spatialCoverage"] = [helpers.getCountry("SLE")]
