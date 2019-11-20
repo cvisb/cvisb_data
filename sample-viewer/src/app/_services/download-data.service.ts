@@ -120,8 +120,8 @@ export class DownloadDataService {
         }
         this.exptSvc.getExptsPatients(filetype).subscribe(data => {
           console.log(data)
-          this.parseData(data['patient'], filetype, `${filename}_PatientData_${this.auth_stub}.csv`, ",");
-          this.parseData(data['experiment'], filetype, `${filename}_${this.auth_stub}.csv`, ",");
+          this.parseData(data['patient'], filetype, `${filename}_PatientData_${this.auth_stub}.tsv`);
+          this.parseData(data['experiment'], filetype, `${filename}_${this.auth_stub}.tsv`);
         });
 
         break;
