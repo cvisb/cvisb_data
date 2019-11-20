@@ -118,7 +118,9 @@ export class DownloadDataService {
         } catch (error) {
           filename = `${this.today}_CViSB-SystemsSerology${this.auth_stub}.csv`
         }
-        this.exptSvc.getExptsPatients(filetype);
+        this.exptSvc.getExptsPatients(filetype).subscribe(data => {
+          console.log(data)
+        });
 
         this.parseData(["data"], filetype, filename, ",");
         break;
