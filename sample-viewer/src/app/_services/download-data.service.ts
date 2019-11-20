@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 // --- pipes ---
 import { DatePipe } from '@angular/common';
@@ -46,6 +47,7 @@ export class DownloadDataService {
     private patientSvc: GetPatientsService,
     private exptSvc: GetExperimentsService,
     private longSvc: Nested2longService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
@@ -73,7 +75,9 @@ export class DownloadDataService {
       disableClose: true
     });
 
-    this.getDownloadableData(filetype, data, filename);
+    if (isPlatformBrowser(this.platformId)) {
+      this.getDownloadableData(filetype, data, filename);
+    }
   }
 
 
@@ -133,18 +137,20 @@ export class DownloadDataService {
 
   saveData(dwnld_data: string, filename: string, encodingFormat: string) {
     this.loadingCompleteSubject.next(true);
-    var blob = new Blob([dwnld_data], { type: encodingFormat });
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = window.URL.createObjectURL(blob);
-    // hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = filename;
-    // Gotta actually append the hidden element to the DOM for the click to work in Firefox
-    // https://support.mozilla.org/en-US/questions/968992
-    document.body.appendChild(hiddenElement);
-    hiddenElement.click();
+    if (isPlatformBrowser(this.platformId)) {
+      var blob = new Blob([dwnld_data], { type: encodingFormat });
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = window.URL.createObjectURL(blob);
+      // hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = filename;
+      // Gotta actually append the hidden element to the DOM for the click to work in Firefox
+      // https://support.mozilla.org/en-US/questions/968992
+      document.body.appendChild(hiddenElement);
+      hiddenElement.click();
 
-    this.dialogRef.close();
+      this.dialogRef.close();
+    }
   }
 
   // General function to convert an array into a tab-delimited string for download.
