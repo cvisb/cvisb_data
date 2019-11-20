@@ -114,15 +114,16 @@ export class DownloadDataService {
       case ("systems-serology"):
         try {
           filename = filename.split("/").slice(-1)[0]
-          filename = `${this.today}_${filename.replace(".csv", "")}${this.auth_stub}.csv`
+          filename = `${this.today}_${filename.replace(".csv", "")}`
         } catch (error) {
-          filename = `${this.today}_CViSB-SystemsSerology${this.auth_stub}.csv`
+          filename = `${this.today}_CViSB-SystemsSerology`
         }
         this.exptSvc.getExptsPatients(filetype).subscribe(data => {
           console.log(data)
+          this.parseData(data['patient'], filetype, `${filename}_PatientData_${this.auth_stub}.csv`, ",");
+          this.parseData(data['experiment'], filetype, `${filename}_${this.auth_stub}.csv`, ",");
         });
 
-        this.parseData(["data"], filetype, filename, ",");
         break;
       default:
         this.parseData(data, filetype, `${this.today}_cvisb_data${this.auth_stub}.tsv`);
