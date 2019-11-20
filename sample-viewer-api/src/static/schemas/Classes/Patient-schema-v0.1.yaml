@@ -626,7 +626,7 @@
 
 - "@id":                 cvisb:LassaExposed
   "@type":               rdf:Property
-  rdfs:comment:          Whether the patient was exposed to another person who had Lassa fever
+  rdfs:comment:          Whether the patient was exposed to another person who had Lassa
   rdfs:label:            LassaExposed
   schema:domainIncludes:
     - "@id":             cvisb:Patient
