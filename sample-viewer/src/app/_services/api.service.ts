@@ -364,16 +364,16 @@ export class ApiService {
     }
 
     if(count) {
-      count += 1;
+      count = count + 1;
     } else {
       count = 0
     }
-
+    console.log(count)
     console.log("scrollID: " + scrollID)
 
     return this.get(endpoint, params).pipe(
       map(response => {
-        console.log(count)
+
         console.log(response)
         return {
           next: response['_scroll_id'],

@@ -131,7 +131,9 @@ export class DownloadDataService {
         } catch (error) {
           filename = `${this.today}_CViSB-SystemsSerology`
         }
-        this.exptSvc.getExptsPatients(filetype).subscribe(data => {
+        
+        this.exptSvc.getExptsPatients("lassa-viral-seq").subscribe(data => {
+        // this.exptSvc.getExptsPatients(filetype).subscribe(data => {
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
