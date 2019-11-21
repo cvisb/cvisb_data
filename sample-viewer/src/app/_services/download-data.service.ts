@@ -176,8 +176,6 @@ export class DownloadDataService {
     if (data && data.length > 0) {
       let colnames = uniq(flatMapDeep(data, d => Object.keys(d)));
       console.log(colnames)
-      console.log(this.patientSortCols)
-      console.log(this.seroSortCols)
 
       // sort the columns in a logical order
       if (filetype === "samples") {
@@ -185,15 +183,24 @@ export class DownloadDataService {
       }
 
       if (filetype === "patients") {
+        console.log('sorting pateint columns')
+        console.log(this.patientSortCols)
         colnames.sort((a, b) => this.sortingFunc(a, this.patientSortCols) - this.sortingFunc(b, this.sampleSortCols))
+        console.log('colnames after sort:')
+        console.log(colnames)
       }
 
       if (filetype === "systems-serology") {
+        console.log('sorting sero columns')
+        console.log(this.seroSortCols)
         colnames.sort((a, b) => this.sortingFunc(a, this.seroSortCols) - this.sortingFunc(b, this.sampleSortCols))
+        console.log('colnames after sort:')
+        console.log(colnames)
       }
 
       var dwnld_data = '';
       dwnld_data += colnames.join(columnDelimiter);
+      console.log(dwnld_data)
       dwnld_data += lineDelimiter;
 
       data.forEach(function(item) {
