@@ -36,10 +36,10 @@ export class GetExperimentsService {
 
         expts.forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
-          d['dataset_name'] = filtered['dataset_name'];
+          d['datasetName'] = filtered['datasetName'];
           d['measurementCategory'] = filtered['measurementCategory'];
         })
-        return (expts.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
+        return (expts.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.datasetName < b.datasetName ? 0 : 1)));
       })
     );
   }

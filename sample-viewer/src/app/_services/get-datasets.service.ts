@@ -250,7 +250,7 @@ export class getDatasetsService {
 
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
-                dataset['dataset_name'] = ds_obj['dataset_name'];
+                dataset['datasetName'] = ds_obj['datasetName'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
                 dataset['sources'] = cloneDeep(dataset[`sourceCitation.${citation_variable}.keyword`]['terms']);
                 delete dataset[`sourceCitation.${citation_variable}.keyword`];
@@ -271,7 +271,7 @@ export class getDatasetsService {
                 dataset.sources.sort((a,b) => b.count - a.count);
 
               })
-              return (counts.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.dataset_name < b.dataset_name ? 0 : 1)));
+              return (counts.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.datasetName < b.datasetName ? 0 : 1)));
             }),
             catchError(e => {
               console.log(e)
