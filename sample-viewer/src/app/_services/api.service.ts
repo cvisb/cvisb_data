@@ -296,6 +296,7 @@ export class ApiService {
 // testing different method of fetching all, using takeWhile: https://stackoverflow.com/questions/50079052/rxjs-recursively-call-api-until-all-items-are-fetched
   fetchAll2(endpoint: string, qParams: HttpParams): Observable<any[]> {
 
+
     return this.fetchOne(endpoint, qParams).pipe(
       concatMap((data:any) => {
         console.log(data)
@@ -304,6 +305,10 @@ export class ApiService {
       takeWhile((results:any) => {
         console.log(results);
         return(results.next)
+      }),
+      map(x =>  {
+        console.log(x)
+        return(x)
       })
     )
   }
@@ -380,7 +385,7 @@ export class ApiService {
     console.log(scrollID)
 
     return this.get(endpoint, params).pipe(
-      delay(2000),
+      delay(100),
       map(response => {
 
         console.log(response)
