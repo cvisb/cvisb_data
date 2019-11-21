@@ -60,6 +60,7 @@ export class DownloadDataService {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
+      console.log(authState)
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
     })
 
@@ -138,8 +139,8 @@ export class DownloadDataService {
           let seroData = data['experiment'].map((expt: SystemsSerology) => {
             return (new SerologyDownload(expt))
           })
-          this.parseData(patientData, 'patients', `${filename}_PatientData_${this.auth_stub}.tsv`);
-          this.parseData(seroData, filetype, `${filename}_${this.auth_stub}.tsv`);
+          this.parseData(patientData, 'patients', `${filename}_PatientData${this.auth_stub}.tsv`);
+          this.parseData(seroData, filetype, `${filename}${this.auth_stub}.tsv`);
         });
 
         break;
