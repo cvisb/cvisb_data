@@ -52,11 +52,9 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       // Read in whether terms have been accepted
       let termsAccepted = localStorage.getItem("terms-accepted");
-      console.log("cookie value: " + termsAccepted)
       this.termsAcceptedSubject.next(Boolean(termsAccepted))
 
       this.termsAcceptedState$.subscribe(accepted => {
-        console.log("term state within auth service:" + accepted)
         localStorage.setItem("terms-accepted", String(accepted));
       })
     }
@@ -104,13 +102,11 @@ export class AuthService {
   }
 
   popupTerms() {
-    console.log("calling popup terms")
+    // Only call terms popup if the platform is client-side
+    // If server-side, can't read the client's localStorage to check if they've already accepted the terms.
     if (isPlatformBrowser(this.platformId)) {
-      console.log('client-side')
       let accepted = this.termsAcceptedSubject.getValue();
-      console.log("Current terms accepted value: " + accepted)
       if (!accepted) {
-        console.log('popping up terms!')
         this.termsDialogRef = this.dialog.open(
           TermsPopupComponent, {
             width: '500px',
