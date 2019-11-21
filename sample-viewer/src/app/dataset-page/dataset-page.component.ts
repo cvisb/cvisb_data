@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
+import { AuthService } from '../_services/auth.service';
+
 @Component({
   selector: 'app-dataset-page',
   templateUrl: './dataset-page.component.html',
@@ -13,7 +15,8 @@ export class DatasetPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
-    private titleSvc: Title
+    private titleSvc: Title,
+    private authSvc: AuthService
   ) {
   }
 
@@ -25,6 +28,9 @@ export class DatasetPageComponent implements OnInit {
     if (this.route.snapshot.data['datasetData']) {
       this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
     }
+
+    // Show terms, if they haven't been displayed before:
+    this.authSvc.popupTerms();
   }
 
 

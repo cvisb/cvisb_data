@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { getDatasetsService } from '../_services';
+import { getDatasetsService, AuthService } from '../_services';
 
 @Component({
   selector: 'app-dataset',
@@ -20,7 +20,8 @@ export class DatasetComponent implements OnInit {
   constructor(
     private datasetSvc: getDatasetsService,
     private titleSvc: Title,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authSvc: AuthService
   ) {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
@@ -29,6 +30,8 @@ export class DatasetComponent implements OnInit {
       this.datasets = datasets;
     });
 
+    // Show terms, if they haven't been displayed before:
+    this.authSvc.popupTerms();
   }
 
   public scroll(element: any) {

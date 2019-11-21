@@ -7,7 +7,7 @@ import { MaterialModule } from '../material.module';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 
-// --- components
+// --- components ---
 import { AboutComponent } from './about/about.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
@@ -20,6 +20,11 @@ import { FundingComponent } from './funding/funding.component';
 import { AboutDataComponent } from './about-data/about-data.component';
 import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 import { ReleaseNotesComponent } from './release-notes/release-notes.component';
+import { DataTermsComponent } from './data-terms/data-terms.component';
+import { SpinnerPopupComponent } from '../_dialogs/spinner-popup/spinner-popup.component';
+
+import { SvgIconModule } from '../svg-icon/svg-icon.module';
+import { TermsPopupComponent } from '../_dialogs/terms-popup/terms-popup.component';
 
 @NgModule({
   imports: [
@@ -27,7 +32,8 @@ import { ReleaseNotesComponent } from './release-notes/release-notes.component';
     RouterModule,
     MaterialModule,
     FormatCitationModule,
-    FormatPublisherModule
+    FormatPublisherModule,
+    SvgIconModule
   ],
   declarations: [
     AboutComponent,
@@ -41,6 +47,14 @@ import { ReleaseNotesComponent } from './release-notes/release-notes.component';
     FundingComponent,
     AboutDataComponent,
     DisclaimerComponent,
-    ReleaseNotesComponent,],
+    ReleaseNotesComponent,
+    DataTermsComponent,
+    SpinnerPopupComponent,
+    TermsPopupComponent
+  ],
+  entryComponents: [
+    SpinnerPopupComponent,
+    TermsPopupComponent
+  ]
 })
 export class AdminModule { }

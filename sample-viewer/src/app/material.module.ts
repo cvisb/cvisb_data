@@ -5,7 +5,7 @@ import {
   MatAutocompleteModule, MatFormFieldModule, MatInputModule,
   MatChipsModule, MatTabsModule, MatTableModule, MatSelectModule,
   MatCheckboxModule, MatIconModule, MatSortModule, MatButtonModule,
-  MatSnackBarModule, MatPaginatorModule, MatExpansionModule,
+  MatSnackBarModule, MatPaginatorModule, MatExpansionModule, MatDialogModule,
   MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatStepperModule,
   MatCardModule, MatTooltipModule,  MatProgressSpinnerModule, MatRadioModule,
   MatProgressBarModule
@@ -16,7 +16,7 @@ import {
     MatAutocompleteModule, MatFormFieldModule, MatInputModule,
     MatChipsModule, MatTabsModule, MatTableModule, MatSelectModule,
     MatCheckboxModule, MatIconModule, MatSortModule, MatButtonModule,
-    MatSnackBarModule, MatPaginatorModule, MatExpansionModule,
+    MatSnackBarModule, MatPaginatorModule, MatExpansionModule, MatDialogModule,
     MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatStepperModule,
     MatCardModule, MatTooltipModule,  MatProgressSpinnerModule, MatRadioModule,
     MatProgressBarModule
@@ -25,7 +25,7 @@ import {
     MatAutocompleteModule, MatFormFieldModule, MatInputModule,
     MatChipsModule, MatTabsModule, MatTableModule, MatSelectModule,
     MatCheckboxModule, MatIconModule, MatSortModule, MatButtonModule,
-    MatSnackBarModule, MatPaginatorModule, MatExpansionModule,
+    MatSnackBarModule, MatPaginatorModule, MatExpansionModule, MatDialogModule,
     MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatStepperModule,
     MatCardModule, MatTooltipModule,  MatProgressSpinnerModule, MatRadioModule,
     MatProgressBarModule
