@@ -131,7 +131,6 @@ export class DownloadDataService {
           filename = `${this.today}_CViSB-SystemsSerology`
         }
         this.exptSvc.getExptsPatients(filetype).subscribe(data => {
-          console.log(data)
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
@@ -139,8 +138,6 @@ export class DownloadDataService {
           let seroData = data['experiment'].map((expt: SystemsSerology) => {
             return (new SerologyDownload(expt))
           })
-          console.log(patientData);
-          console.log(seroData);
           this.parseData(patientData, 'patients', `${filename}_PatientData_${this.auth_stub}.tsv`);
           this.parseData(seroData, filetype, `${filename}_${this.auth_stub}.tsv`);
         });
@@ -172,11 +169,15 @@ export class DownloadDataService {
 
   // General function to convert an array into a tab-delimited string for download.
   parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t') {
+  console.log(filetype)
     // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
     if (data && data.length > 0) {
       let colnames = uniq(flatMapDeep(data, d => Object.keys(d)));
+      console.log(colnames)
+      console.log(this.patientSortCols)
+      console.log(this.seroSortCols)
 
       // sort the columns in a logical order
       if (filetype === "samples") {
