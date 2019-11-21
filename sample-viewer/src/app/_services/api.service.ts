@@ -296,8 +296,8 @@ export class ApiService {
 // testing different method of fetching all, using takeWhile: https://stackoverflow.com/questions/50079052/rxjs-recursively-call-api-until-all-items-are-fetched
   fetchAll2(endpoint: string, qParams: HttpParams): Observable<any[]> {
 
-    return range(0, 1000000).pipe(
-      concatMap((data:any) => this.fetchOne(endpoint, qParams, data.next, data.ct)),
+    return range(0, 2).pipe(
+      concatMap((data:any) => this.fetchOne(endpoint, qParams, data.next)),
       takeWhile((results:any) => {
         console.log(results);
         return(results.next)
@@ -339,7 +339,7 @@ export class ApiService {
     */
   fetchAll(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams).pipe(
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY, 1, queueScheduler
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
       ),
       // expand((data, _) => {
       //   console.log(data.ct)
@@ -368,18 +368,13 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, count?: number): Observable<{ next: string | null, results: any[], ct: number }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string | null, results: any[] }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
-
-    if (count) {
-      count = count + 1;
-    } else {
-      count = 0
-    }
+    console.log(scrollID)
 
     return this.get(endpoint, params).pipe(
       map(response => {
@@ -387,8 +382,7 @@ export class ApiService {
         console.log(response)
         return {
           next: response['_scroll_id'],
-          results: response['hits'],
-          ct: count
+          results: response['hits']
         };
       }),
       catchError(e => {
