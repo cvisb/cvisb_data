@@ -161,11 +161,23 @@
 - "@id":                 cvisb:antigenSource
   "@type":               rdf:Property
   rdfs:comment:          Source (URL) where the antigen can be acquired.
-  rdfs:label:            antigen
+  rdfs:label:            antigenSource
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
   schema:rangeIncludes:
     - "@id":             schema:URL
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:controlType
+  "@type":               rdf:Property
+  rdfs:comment:          If the sample was a control sample, indicates what type of control (positive control, negative control, no absorbance control, etc.)
+  rdfs:label:            controlType
+  schema:domainIncludes:
+    - "@id":             cvisb:SystemsSerology
+  schema:rangeIncludes:
+    - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false

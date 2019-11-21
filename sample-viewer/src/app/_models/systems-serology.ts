@@ -12,6 +12,7 @@ export class SystemsSerology {
   dateModified: string;
   experimentDate: string;
   experimentID: string;
+  isControl: boolean;
   privatePatientID: string;
   publisher: Organization;
   sampleID?: string;
@@ -26,6 +27,7 @@ export class SerologyData {
   value: number;
   valueCategory: string;
   valueCategoryNumeric: number;
+  controlType: string;
 }
 
 export class SerologyDownload {
@@ -34,6 +36,8 @@ export class SerologyDownload {
   sampleID: string;
   experimentID: string;
   batchID: string;
+  isControl: boolean;
+  controlType: string;
   assayType: string;
   antigenVirus: string;
   antigen: string;
@@ -55,9 +59,11 @@ export class SerologyDownload {
     this.sampleID = experiment.sampleID;
     this.experimentID = experiment.experimentID;
     this.batchID = experiment.batchID;
+    this.isControl = experiment.isControl;
 
     // Data should be an array of length 1.
     // Just to be sure, joining everything together, concatted by ";"
+    this.controlType = experiment.data.map(d => d.controlType).join("; ")
     this.assayType = experiment.data.map(d => d.assayType).join("; ")
     this.antigenVirus = experiment.data.map(d => d.antigenVirus).join("; ")
     this.antigen = experiment.data.map(d => d.antigen).join("; ")
