@@ -49,6 +49,10 @@ export class AuthService {
       this.redirectUrl = url;
     })
 
+    this.authState$.subscribe((authState: AuthState) => {
+      console.log(authState)
+    })
+
     if (isPlatformBrowser(this.platformId)) {
       // Read in whether terms have been accepted
       let termsAccepted = localStorage.getItem("terms-accepted");
@@ -74,6 +78,7 @@ export class AuthService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
       }).subscribe((r) => {
+        console.log(r)
         this.user = r.body;
         this.userSubject.next(this.user);
 
