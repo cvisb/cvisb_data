@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler, range } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile } from "rxjs/operators";
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile, delay } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -303,7 +303,7 @@ export class ApiService {
       }),
       takeWhile((results:any) => {
         console.log(results);
-        return(results.next)
+        return(true)
       })
     )
   }
@@ -380,6 +380,7 @@ export class ApiService {
     console.log(scrollID)
 
     return this.get(endpoint, params).pipe(
+      delay(2000),
       map(response => {
 
         console.log(response)
