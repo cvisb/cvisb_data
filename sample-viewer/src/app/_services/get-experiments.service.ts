@@ -78,7 +78,7 @@ export class GetExperimentsService {
     // }
     if (isPlatformBrowser(this.platformId)) {
     console.log("client")
-    return this.apiSvc.fetchAll("experiment", expt_params
+    return this.apiSvc.fetchAll2("experiment", expt_params
     ).pipe(
       map(expts => {
         console.log(expts)
