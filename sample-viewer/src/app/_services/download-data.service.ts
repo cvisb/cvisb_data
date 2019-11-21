@@ -60,7 +60,7 @@ export class DownloadDataService {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
-      console.log(authState)
+      // console.log(authState)
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
     })
 
