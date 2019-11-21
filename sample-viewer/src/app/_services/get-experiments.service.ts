@@ -57,14 +57,28 @@ export class GetExperimentsService {
       .set('fields', patientCols.join(","))
       .set('experimentQuery', `includedInDataset:"${dataset_id}"`);
 
-    return forkJoin(
-      this.apiSvc.fetchAll("experiment", expt_params),
-      this.apiSvc.fetchAll("patient", patient_params)
+  //   return forkJoin(
+  //     this.apiSvc.fetchAll("experiment", expt_params),
+  //     this.apiSvc.fetchAll("patient", patient_params)
+  //   ).pipe(
+  //     map(([expts, patients]) => {
+  //       console.log(expts)
+  //       console.log(patients)
+  //       return ({ patient: patients, experiment: expts });
+  //     }
+  //     ),
+  //     catchError(e => {
+  //       console.log(e)
+  //       throwError(e);
+  //       return (new Observable<any>())
+  //     })
+  //   )
+  // }
+    return this.apiSvc.fetchAll("experiment", expt_params
     ).pipe(
-      map(([expts, patients]) => {
+      map(expts => {
         console.log(expts)
-        console.log(patients)
-        return ({ patient: patients, experiment: expts });
+        return ({ patient: null, experiment: expts });
       }
       ),
       catchError(e => {
