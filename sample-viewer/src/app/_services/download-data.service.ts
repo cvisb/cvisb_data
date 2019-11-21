@@ -70,7 +70,7 @@ export class DownloadDataService {
   triggerDownload(filetype: string, data: any[], filename?: string) {
     this.loadingCompleteSubject.next(false);
     this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
-      width: '500px',
+      width: '535px',
       data: `Downloading selected ${filetype} data...`,
       disableClose: true
     });
