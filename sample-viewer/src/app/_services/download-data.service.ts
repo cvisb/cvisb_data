@@ -35,11 +35,11 @@ export class DownloadDataService {
   qParamArray: RequestParamArray;
   qParams: HttpParams;
   sampleSortCols: string[] = ["sampleID", "creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
-  patientSortCols: string[] = [
-    'patientID', 'alternateIdentifier', 'cohort', 'outcome', 'gender', 'age',
-    'country', 'admin2', 'admin3',
-    'infectionYear', 'infectionDate', 'admitDate', 'evalDate', 'dischargeDate', 'daysInHospital', 'daysOnset',
-    'elisa', 'citation', 'source', 'dataStatus', 'correction'];
+  // patientSortCols: string[] = [
+  //   'patientID', 'alternateIdentifier', 'cohort', 'outcome', 'gender', 'age',
+  //   'country', 'admin2', 'admin3',
+  //   'infectionYear', 'infectionDate', 'admitDate', 'evalDate', 'dischargeDate', 'daysInHospital', 'daysOnset',
+  //   'elisa', 'citation', 'source', 'dataStatus', 'correction'];
   // seroSortCols: string[] = ["patientID", "visitCode", "sampleID", "experimentID", "batchID", "assayType", "antigenVirus", "antigen", "antigenSource", "value", "valueCategory", "valueCategoryNumeric", "experimentDate", "source", "citation", "publisher", "dataStatus", "dateModified", "correction"];
 
   // Loading spinner
@@ -168,7 +168,7 @@ export class DownloadDataService {
   }
 
   // General function to convert an array into a tab-delimited string for download.
-  parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t') {
+  parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t', filterBlank: boolean = true) {
     // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
@@ -187,6 +187,11 @@ export class DownloadDataService {
       // if (filetype === "systems-serology") {
       //   colnames.sort((a, b) => this.sortingFunc(a, this.seroSortCols) - this.sortingFunc(b, this.sampleSortCols))
       // }
+
+      //  Remove columns where all the info is blank:
+      if (filterBlank) {
+        colnames = this.removeBlanks(data, colnames);
+      }
 
       var dwnld_data = '';
       dwnld_data += colnames.join(columnDelimiter);
@@ -246,6 +251,16 @@ export class DownloadDataService {
       return (1000);
     }
     return (idx);
+  }
+
+  removeBlanks(data: Object[], colnames: string[]) {
+    let nonzeroCols = []
+    colnames.forEach(column => {
+      if (data.some(d => d[column])) {
+        nonzeroCols.push(column)
+      }
+    })
+    return (nonzeroCols)
   }
 
 }
