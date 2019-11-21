@@ -305,10 +305,6 @@ export class ApiService {
       takeWhile((results:any) => {
         console.log(results);
         return(results.next)
-      }),
-      map(x =>  {
-        console.log(x)
-        return(x)
       })
     )
   }
@@ -385,7 +381,6 @@ export class ApiService {
     console.log(scrollID)
 
     return this.get(endpoint, params).pipe(
-      delay(100),
       map(response => {
 
         console.log(response)
