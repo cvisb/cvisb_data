@@ -104,23 +104,26 @@ export class AuthService {
   }
 
   popupTerms() {
-    let accepted = this.termsAcceptedSubject.getValue();
-    console.log("Current terms accepted value: " + accepted)
-    if (!accepted) {
-      console.log('popping up terms!')
-      this.termsDialogRef = this.dialog.open(
-        TermsPopupComponent, {
-          width: '500px',
-          disableClose: true
-        });
-    }
+    console.log("calling popup terms")
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('client-side')
+      let accepted = this.termsAcceptedSubject.getValue();
+      console.log("Current terms accepted value: " + accepted)
+      if (!accepted) {
+        console.log('popping up terms!')
+        this.termsDialogRef = this.dialog.open(
+          TermsPopupComponent, {
+            width: '500px',
+            disableClose: true
+          });
+      }
 
-    if (this.termsDialogRef) {
-      this.termsDialogRef.afterClosed().subscribe(result => {
-        this.termsAcceptedSubject.next(result);
-      })
+      if (this.termsDialogRef) {
+        this.termsDialogRef.afterClosed().subscribe(result => {
+          this.termsAcceptedSubject.next(result);
+        })
+      }
     }
   }
-
 
 }
