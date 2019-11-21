@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 // --- pipes ---
 import { DatePipe } from '@angular/common';
+import { DateRangePipe } from '../_pipes/date-range.pipe';
 
 // --- services ---
 import { AuthService } from './auth.service';
@@ -48,6 +49,7 @@ export class DownloadDataService {
   constructor(
     private authSvc: AuthService,
     private datePipe: DatePipe,
+    private dateRangePipe: DateRangePipe,
     public dialog: MatDialog,
     private requestSvc: RequestParametersService,
     private patientSvc: GetPatientsService,
@@ -131,7 +133,7 @@ export class DownloadDataService {
         this.exptSvc.getExptsPatients(filetype).subscribe(data => {
           console.log(data)
           let patientData = data['patient'].map((patient: Patient) => {
-            return (new PatientDownload(patient, this.datePipe));
+            return (new PatientDownload(patient, this.dateRangePipe));
           });
 
           let seroData = data['experiment'].map((expt: SystemsSerology) => {
