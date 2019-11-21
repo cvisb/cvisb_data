@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 
@@ -7,12 +7,14 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError } from 'rxjs/';
 import { map, catchError } from 'rxjs/operators';
 
+import { isPlatformBrowser } from '@angular/common';
+
 @Injectable({
   providedIn: 'root'
 })
 export class GetExperimentsService {
 
-  constructor(private apiSvc: ApiService, private exptPipe: ExperimentObjectPipe) { }
+  constructor(private apiSvc: ApiService, private exptPipe: ExperimentObjectPipe, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getExpt(patientID: string, dataset_id: string) {
     let qString = `includedInDataset:"${dataset_id}"`;
@@ -74,6 +76,8 @@ export class GetExperimentsService {
     //     })
     //   )
     // }
+    if (isPlatformBrowser(this.platformId)) {
+    console.log("client")
     return this.apiSvc.fetchAll("experiment", expt_params
     ).pipe(
       map(expts => {
@@ -87,6 +91,9 @@ export class GetExperimentsService {
         return (new Observable<any>())
       })
     )
+  } else {
+    console.log('server')
   }
+}
 
 }
