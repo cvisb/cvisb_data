@@ -44,10 +44,13 @@ export class GetExperimentsService {
     );
   }
 
-  getExptsPatients(dataset_id: string, patientCols: string[] = ['patientID', 'alternateIdentifier', 'cohort', 'outcome', 'age', 'gender']): Observable<any> {
-    console.log("getting experiments with id "+ dataset_id)
+  getExptsPatients(dataset_id: string,
+    exptCols: string[] = ["author", "batchID", "citation", "correction", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"],
+    patientCols: string[] = ['patientID', 'alternateIdentifier', 'cohort', 'outcome', 'age', 'gender', 'country', 'admin2', 'admin3', 'infectionYear', 'infectionDate', 'evalDate', 'admitDate', 'dischargeDate', 'daysInHospital', 'daysOnset', 'elisa', 'publisher', 'citation', 'dataStatus', 'correction']): Observable<any> {
+    console.log("getting experiments with id " + dataset_id)
     let expt_params = new HttpParams()
-      .set('q', `includedInDataset:"${dataset_id}"`);
+      .set('q', `includedInDataset:"${dataset_id}"`)
+      .set('fields', exptCols.join(","));
 
     let patient_params = new HttpParams()
       .set('q', "__all__")

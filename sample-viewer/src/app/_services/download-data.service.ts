@@ -12,7 +12,7 @@ import { Nested2longService } from './nested2long.service';
 import { GetExperimentsService } from './get-experiments.service';
 
 // --- models ---
-import { AuthState, RequestParamArray, Patient } from '../_models';
+import { AuthState, RequestParamArray, Patient, PatientDownload, SystemsSerology, SerologyDownload } from '../_models';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
@@ -34,6 +34,12 @@ export class DownloadDataService {
   qParamArray: RequestParamArray;
   qParams: HttpParams;
   sampleSortCols: string[] = ["sampleID", "creatorInitials", "sampleLabel", "sampleType", "isolationDate", "lab", "numAliquots"];
+  patientSortCols: string[] = [
+    'patientID', 'alternateIdentifier', 'cohort', 'outcome', 'gender', 'age',
+    'country', 'admin2', 'admin3',
+    'infectionYear', 'infectionDate', 'admitDate', 'evalDate', 'dischargeDate', 'daysInHospital', 'daysOnset',
+    'elisa', 'citation', 'source', 'dataStatus', 'correction'];
+  seroSortCols: string[] = ["patientID", "visitCode", "sampleID", "experimentID", "batchID", "assayType", "antigenVirus", "antigen", "antigenSource", "value", "valueCategory", "valueCategoryNumeric", "experimentDate", "source", "citation", "publisher", "dataStatus", "dateModified", "correction"];
 
   // Loading spinner
   private loadingCompleteSubject = new BehaviorSubject<boolean>(false);
@@ -124,8 +130,17 @@ export class DownloadDataService {
         }
         this.exptSvc.getExptsPatients(filetype).subscribe(data => {
           console.log(data)
-          this.parseData(data['patient'], filetype, `${filename}_PatientData_${this.auth_stub}.tsv`);
-          this.parseData(data['experiment'], filetype, `${filename}_${this.auth_stub}.tsv`);
+          let patientData = data['patient'].map((patient: Patient) => {
+            return (new PatientDownload(patient, this.datePipe));
+          });
+
+          let seroData = data['experiment'].map((expt: SystemsSerology) => {
+            return (new SerologyDownload(expt))
+          })
+          console.log(patientData);
+          console.log(seroData);
+          this.parseData(patientData, 'patients', `${filename}_PatientData_${this.auth_stub}.tsv`);
+          this.parseData(seroData, filetype, `${filename}_${this.auth_stub}.tsv`);
         });
 
         break;
@@ -161,8 +176,17 @@ export class DownloadDataService {
     if (data && data.length > 0) {
       let colnames = uniq(flatMapDeep(data, d => Object.keys(d)));
 
+      // sort the columns in a logical order
       if (filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
+      }
+
+      if (filetype === "patients") {
+        colnames.sort((a, b) => this.sortingFunc(a, this.patientSortCols) - this.sortingFunc(b, this.sampleSortCols))
+      }
+
+      if (filetype === "systems-serology") {
+        colnames.sort((a, b) => this.sortingFunc(a, this.seroSortCols) - this.sortingFunc(b, this.sampleSortCols))
       }
 
       var dwnld_data = '';
