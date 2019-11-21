@@ -82,7 +82,7 @@ export class GetExperimentsService {
     ).pipe(
       map(expts => {
         console.log(expts)
-        return ({ patient: null, experiment: expts });
+        return ({ patient: [], experiment: expts['results'] });
       }
       ),
       catchError(e => {

@@ -298,7 +298,10 @@ export class ApiService {
 
     return range(0, 1000000).pipe(
       concatMap((data:any) => this.fetchOne(endpoint, qParams, data.next, data.ct)),
-      takeWhile((results:any) => results.next)
+      takeWhile((results:any) => {
+        console.log(results);
+        return(results.next)
+      })
     )
   }
 
