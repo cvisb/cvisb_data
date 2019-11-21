@@ -40,7 +40,7 @@ export class DownloadDataService {
     'country', 'admin2', 'admin3',
     'infectionYear', 'infectionDate', 'admitDate', 'evalDate', 'dischargeDate', 'daysInHospital', 'daysOnset',
     'elisa', 'citation', 'source', 'dataStatus', 'correction'];
-  seroSortCols: string[] = ["patientID", "visitCode", "sampleID", "experimentID", "batchID", "assayType", "antigenVirus", "antigen", "antigenSource", "value", "valueCategory", "valueCategoryNumeric", "experimentDate", "source", "citation", "publisher", "dataStatus", "dateModified", "correction"];
+  // seroSortCols: string[] = ["patientID", "visitCode", "sampleID", "experimentID", "batchID", "assayType", "antigenVirus", "antigen", "antigenSource", "value", "valueCategory", "valueCategoryNumeric", "experimentDate", "source", "citation", "publisher", "dataStatus", "dateModified", "correction"];
 
   // Loading spinner
   private loadingCompleteSubject = new BehaviorSubject<boolean>(false);
@@ -169,38 +169,27 @@ export class DownloadDataService {
 
   // General function to convert an array into a tab-delimited string for download.
   parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t') {
-  console.log(filetype)
     // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
     if (data && data.length > 0) {
       let colnames = uniq(flatMapDeep(data, d => Object.keys(d)));
-      console.log(colnames)
 
       // sort the columns in a logical order
       if (filetype === "samples") {
         colnames.sort((a, b) => this.sortingFunc(a, this.sampleSortCols) - this.sortingFunc(b, this.sampleSortCols))
       }
 
-      if (filetype === "patients") {
-        console.log('sorting pateint columns')
-        console.log(this.patientSortCols)
-        colnames.sort((a, b) => this.sortingFunc(a, this.patientSortCols) - this.sortingFunc(b, this.sampleSortCols))
-        console.log('colnames after sort:')
-        console.log(colnames)
-      }
-
-      if (filetype === "systems-serology") {
-        console.log('sorting sero columns')
-        console.log(this.seroSortCols)
-        colnames.sort((a, b) => this.sortingFunc(a, this.seroSortCols) - this.sortingFunc(b, this.sampleSortCols))
-        console.log('colnames after sort:')
-        console.log(colnames)
-      }
+      // if (filetype === "patients") {
+      //   colnames.sort((a, b) => this.sortingFunc(a, this.patientSortCols) - this.sortingFunc(b, this.sampleSortCols))
+      // }
+      //
+      // if (filetype === "systems-serology") {
+      //   colnames.sort((a, b) => this.sortingFunc(a, this.seroSortCols) - this.sortingFunc(b, this.sampleSortCols))
+      // }
 
       var dwnld_data = '';
       dwnld_data += colnames.join(columnDelimiter);
-      console.log(dwnld_data)
       dwnld_data += lineDelimiter;
 
       data.forEach(function(item) {

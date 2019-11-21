@@ -55,13 +55,6 @@ export class SerologyDownload {
     this.sampleID = experiment.sampleID;
     this.experimentID = experiment.experimentID;
     this.batchID = experiment.batchID;
-    this.experimentDate = experiment.experimentDate;
-    this.source = experiment.author ? experiment.author.name : null;
-    this.citation = experiment.citation ? experiment.citation.map(d => d.url).join("; ") : null;
-    this.publisher = experiment.publisher ? experiment.publisher.name : null;
-    this.dataStatus = experiment.dataStatus;
-    this.dateModified = experiment.dateModified;
-    this.correction = experiment.correction;
 
     // Data should be an array of length 1.
     // Just to be sure, joining everything together, concatted by ";"
@@ -72,5 +65,14 @@ export class SerologyDownload {
     this.value = experiment.data.map(d => d.value).join("; ")
     this.valueCategory = experiment.data.map(d => d.valueCategory).join("; ")
     this.valueCategoryNumeric = experiment.data.map(d => d.valueCategoryNumeric).join("; ")
+
+    this.experimentDate = experiment.experimentDate;
+    this.source = experiment.author ? experiment.author.name : null;
+    this.citation = experiment.citation ? experiment.citation.map(d => d.url).join("; ") : null;
+    this.publisher = experiment.publisher ? experiment.publisher.name : null;
+    this.dataStatus = experiment.dataStatus;
+    this.dateModified = experiment.dateModified;
+    this.correction = experiment.correction;
+
   }
 }
