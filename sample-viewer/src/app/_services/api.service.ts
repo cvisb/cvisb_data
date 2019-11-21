@@ -356,7 +356,7 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, count?: number): Observable<{ next: string | null, results: any[] }> {
+  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string, count?: number): Observable<{ next: string | null, results: any[], ct: number }> {
     let params = qParams
       .append('fetch_all', "true");
     if (scrollID) {
