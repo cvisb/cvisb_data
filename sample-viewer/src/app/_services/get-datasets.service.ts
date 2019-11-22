@@ -405,6 +405,8 @@ export class getDatasetsService {
 
   removeNonSchema(ds: Dataset): DatasetSchema {
     this.dataset_schema = cloneDeep(ds); // create copy
+    console.log(this.schemaorg_dataset)
+    console.log(this.schemaorg_datadownload)
 
     // remove stuff from the dataset object
     // removes "sourceCode" -- different name in schema.org
