@@ -59,7 +59,7 @@ def get_hla_dataset(dateModified, downloadIDs, experiments, countries, version, 
     else:
         raise Exception("More than one measurementCategory found.  Should only be one per dataset.")
     ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
-    ds['author'] = helpers.getUnique(experiments, "author")
+    ds['creator'] = helpers.getUnique(experiments, "creator")
     ds['publisher'] = helpers.getUnique(experiments, "publisher")
 
     return(pd.DataFrame([ds]))

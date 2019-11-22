@@ -26,7 +26,7 @@ def get_serology_downloads(dateModified, experiments, updatedBy, version, datase
     ds["contentUrl"] = f"https://data.cvisb.org/dataset/{ds['name']}"
 
     # credit
-    ds['author'] = [helpers.getLabAuthor("Galit")]
+    ds['creator'] = [helpers.getLabAuthor("Galit")]
     ds['publisher'] = [helpers.cvisb]
 
     # --- possibly variable, each time ---

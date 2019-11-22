@@ -66,7 +66,7 @@ def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfil
     lasv['cohort'] = "Lassa"
     lasv['measurementTechnique'] = "Lassa virus sequencing"
     lasv['includedInDataset'] = "lassa-virus-seq"
-    lasv['author'] = None
+    lasv['creator'] = None
     lasv['correction'] = None
     lasv['sourceFiles'] = "; ".join([lassaS_AAfile.split("/")[-1], lassaS_Alignedfile.split("/")[-1], lassaS_Rawfile.split("/")[-1], lassa_MDfile.split("/")[-1], id_dict.split("/")[-1] ])
     lasv['version'] = version

@@ -37,7 +37,7 @@ def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetViru
         ds["keywords"] = ["virus sequencing", "Lassa", "Lassa virus", "LASV"]
 
     # credit
-    ds['author'] = [helpers.getLabAuthor("KGA")]
+    ds['creator'] = [helpers.getLabAuthor("KGA")]
     ds['publisher'] = [helpers.cvisb]
     ds['funding'] = helpers.cvisb_funding
     ds['license'] = "https://creativecommons.org/licenses/by/4.0/"

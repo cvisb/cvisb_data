@@ -3,7 +3,7 @@ import { Organization } from './organization';
 import { Citation } from './citation';
 
 export class SystemsSerology {
-  author: Organization;
+  creator: Organization;
   batchID: string;
   citation: Citation[];
   correction: string;
@@ -73,7 +73,7 @@ export class SerologyDownload {
     this.valueCategoryNumeric = experiment.data.map(d => d.valueCategoryNumeric).join("; ")
 
     this.experimentDate = experiment.experimentDate;
-    this.source = experiment.author ? experiment.author.name : null;
+    this.source = experiment.creator ? experiment.creator.name : null;
     this.citation = experiment.citation ? experiment.citation.map(d => d.url).join("; ") : null;
     this.publisher = experiment.publisher ? experiment.publisher.name : null;
     this.dataStatus = experiment.dataStatus;

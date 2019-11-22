@@ -322,16 +322,16 @@
   authenticated:         false
 
 # Author
-- "@id":                 cvisb:author
+- "@id":                 cvisb:creator
   "@type":               rdf:Property
-  rdfs:comment:          Author of this dataset, can be a person or an organization
-  rdfs:label:            author
+  rdfs:comment:          Author/creator of this dataset, should be an organization
+  rdfs:label:            creator
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
     - "@id":             "cvisb:Organization"
   schema:sameAs:
-    "@id":               "schema:author"
+    "@id":               "schema:creator"
   owl:cardinality:       many
   marginality:           required
   authenticated:         false

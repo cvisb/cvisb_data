@@ -335,16 +335,16 @@
   authenticated:         false
 
 # Citation and other link identifiers
-- "@id":                 cvisb:author
+- "@id":                 cvisb:creator
   "@type":               rdf:Property
-  rdfs:comment:          Author of this experiment
-  rdfs:label:            author
+  rdfs:comment:          Author/creator of this experiment
+  rdfs:label:            creator
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             "cvisb:Organization"
   schema:sameAs:
-    "@id":               "schema:author"
+    "@id":               "schema:creator"
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false

@@ -19,7 +19,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
         "version": "https://github.com/andersen-lab/lassa-ebola-hla/commit/ea4f9e10fd569c9a21b06d0ab310a7157f1eedd0",
         "codeRepository": "https://github.com/andersen-lab/lassa-ebola-hla",
         "license": "https://opensource.org/licenses/MIT",
-        "author": helpers.getLabAuthor("KGA")
+        "creator": helpers.getLabAuthor("KGA")
     }
 
     today =  datetime.today().strftime('%Y-%m-%d')
@@ -83,7 +83,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     df['patientID'] = df.privatePatientID # with new data, HLA data has already been joined w/ public IDs
     df['analysisCode'] = df.apply(lambda x: hla_code, axis = 1)
     df['publisher'] = df["Typing Institution"].apply(helpers.getPublisher)
-    df['author'] = df["Typing Institution"].apply(helpers.getAuthor)
+    df['creator'] = df["Typing Institution"].apply(helpers.getAuthor)
     df['KGH_id'] = df.ID.apply(helpers.checkIDstructure).apply(lambda x: not x)
     df['alternateIdentifier'] = df.patientID.apply(lambda x: [x])
 

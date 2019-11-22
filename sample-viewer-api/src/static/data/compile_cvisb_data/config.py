@@ -54,7 +54,7 @@ LOGFILE = f"{DATADIR}/output_data/log/{today}_cvisb-compliation.log"
 
 EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchID', 'experimentDate',
             'measurementTechnique', 'measurementCategory', 'includedInDataset', 'isControl',
-            'publisher', 'citation', 'author',
+            'publisher', 'citation', 'creator',
             'data', 'correction', 'version',
             'updatedBy', 'dateModified', 'releaseDate', 'sourceFiles', 'dataStatus']
 
@@ -72,7 +72,7 @@ SAMPLECOLS = ["creatorInitials", "sampleLabel",
 # All data download properties, from experiments
 DOWNLOADCOLS = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType",
                 "measurementTechnique", "measurementCategory", "dateModified", "experimentIDs",
-                "contentUrlRepository", "contentUrlIdentifier", "citation", "updatedBy", 'publisher', "author"]
+                "contentUrlRepository", "contentUrlIdentifier", "citation", "updatedBy", 'publisher', "creator"]
 
 # Properties to export in patient ID dictionary
 DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",

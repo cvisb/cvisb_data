@@ -41,7 +41,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     # --- clean up common properties, across patient/expt/sample/downloads/dataset ---
     md['measurementTechnique'] = f"{virus} virus sequencing"
     md['includedInDataset'] = f"{virus.lower()}-virus-seq"
-    md['author'] = None
+    md['creator'] = None
     md['correction'] = None
     md['sourceFiles'] = "; ".join(
         [alignment_file.split("/")[-1], metadata_file.split("/")[-1]])

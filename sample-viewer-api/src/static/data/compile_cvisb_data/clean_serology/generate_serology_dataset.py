@@ -31,7 +31,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity."
 
     # credit
-    ds['author'] = [helpers.getLabAuthor("Galit")]
+    ds['creator'] = [helpers.getLabAuthor("Galit")]
     ds['publisher'] = [helpers.cvisb]
     ds['funding'] = helpers.cvisb_funding
     ds['license'] = "https://creativecommons.org/licenses/by/4.0/"

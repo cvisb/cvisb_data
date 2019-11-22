@@ -63,7 +63,7 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     df['measurementTechnique'] = df.assay
 
     # --- Credit ---
-    df['author'] = df["sampleID"].apply(lambda x: helpers.getLabAuthor("Alter"))
+    df['creator'] = df["sampleID"].apply(lambda x: helpers.getLabAuthor("Alter"))
     df['publisher'] = df["sampleID"].apply(lambda x: helpers.cvisb)
     # Split and clean pubmedIDs
     citation_dict = helpers.splitCreateCitationDict(df, pmidCol= "pubmedID", delim=";")

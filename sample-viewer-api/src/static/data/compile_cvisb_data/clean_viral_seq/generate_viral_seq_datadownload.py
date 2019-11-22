@@ -71,7 +71,7 @@ def get_curated(dateModified, version, experiments, datasetVirus, filename, desc
     ds["encodingFormat"] = "text/fasta"
 
     # credit
-    ds['author'] = [helpers.getLabAuthor("KGA")]
+    ds['creator'] = [helpers.getLabAuthor("KGA")]
     ds['publisher'] = [helpers.cvisb]
 
     # --- possibly variable, each time ---
