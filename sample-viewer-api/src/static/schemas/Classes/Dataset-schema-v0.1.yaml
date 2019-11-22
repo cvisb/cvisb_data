@@ -351,10 +351,10 @@
   authenticated:         false
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version of dataset, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:comment:          Version of dataset
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:

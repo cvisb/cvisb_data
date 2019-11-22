@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { AuthService } from '../_services/auth.service';
+import { AuthService, getDatasetsService } from '../_services/';
+
+
+import { Dataset, DatasetSchema } from '../_models';
 
 @Component({
   selector: 'app-dataset-page',
@@ -11,18 +14,24 @@ import { AuthService } from '../_services/auth.service';
 })
 
 export class DatasetPageComponent implements OnInit {
-  dataset: any;
+  dataset: Dataset;
+  datasetSchema: DatasetSchema;
 
   constructor(private route: ActivatedRoute,
     private meta: Meta,
     private titleSvc: Title,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private datasetSvc: getDatasetsService
   ) {
   }
 
   ngOnInit() {
     // fetch dataset data from resolver.
     this.dataset = this.route.snapshot.data['datasetData'];
+
+    this.datasetSchema = this.datasetSvc.removeNonSchema(this.dataset);
+    console.log(this.dataset)
+    console.log(this.datasetSchema)
 
     // Set page name
     if (this.route.snapshot.data['datasetData']) {

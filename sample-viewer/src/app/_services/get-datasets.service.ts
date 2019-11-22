@@ -24,6 +24,9 @@ const SOURCES_KEY = makeStateKey('datasets.sources_result');
 export class getDatasetsService {
   schema_dataset: any;
   private sources_result;
+  schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
+  schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
+  ;
 
   // Loading spinner
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -268,7 +271,7 @@ export class getDatasetsService {
                 })
 
                 // sort dataset sources by prevalence within the dataset
-                dataset.sources.sort((a,b) => b.count - a.count);
+                dataset.sources.sort((a, b) => b.count - a.count);
 
               })
               return (counts.sort((a: any, b: any) => a.measurementCategory < b.measurementCategory ? -1 : (a.datasetName < b.datasetName ? 0 : 1)));
@@ -311,7 +314,7 @@ export class getDatasetsService {
               console.log(citationCts)
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
 
-              let total_citations =  counts.reduce((total: number, x) => total + x.count, 0);
+              let total_citations = counts.reduce((total: number, x) => total + x.count, 0);
 
               counts.forEach(source => {
                 let cite_objs = citation_dict.filter(d => d[citation_variable] == source.term);
@@ -402,10 +405,9 @@ export class getDatasetsService {
     this.schema_dataset = cloneDeep(ds); // create copy
 
     // remove stuff from the dataset object
-    let schemaorg = ["@context", "@type", "identifier", "name", "description", "url", "@id", "keywords", "measurementTechnique", "variableMeasured", "datePublished", "dateModified", "temporalCoverage", "spatialCoverage", "includedInDataCatalog", "author", "publisher", "version", "schemaVersion", "distribution"];
     // removes "sourceCode" -- different name in schema.org
     for (let key of Object.keys(this.schema_dataset)) {
-      if (!schemaorg.includes(key)) {
+      if (!this.schemaorg_dataset.includes(key)) {
         // console.log('deleting ' + key)
         delete this.schema_dataset[key];
       }
@@ -413,12 +415,11 @@ export class getDatasetsService {
     }
 
     // remove stuff from individual files
-    let schemaorg_distrib = ["@type", "name", "description", "keywords", "version", "additionalType", "encodingFormat", "measurementTechnique", "datePublished", "dateModified", "@id", "contentUrl"];
     for (let file of this.schema_dataset['distribution']) {
       let keys = Object.keys(file);
 
       for (let key of keys) {
-        if (!schemaorg_distrib.includes(key)) {
+        if (!this.schemaorg_datadownload.includes(key)) {
           delete file[key];
         }
       }
