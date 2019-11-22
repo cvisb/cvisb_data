@@ -15,6 +15,8 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { cloneDeep, uniqWith, uniq, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
 
+import { Dataset, DatasetSchema } from '../_models';
+
 const SOURCES_KEY = makeStateKey('datasets.sources_result');
 
 @Injectable({
@@ -401,14 +403,14 @@ export class getDatasetsService {
     return (json_arr.join("\n"))
   }
 
-  removeNonSchema(ds) {
+  removeNonSchema(ds: Dataset): DatasetSchema {
     this.schema_dataset = cloneDeep(ds); // create copy
 
     // remove stuff from the dataset object
     // removes "sourceCode" -- different name in schema.org
     for (let key of Object.keys(this.schema_dataset)) {
       if (!this.schemaorg_dataset.includes(key)) {
-        // console.log('deleting ' + key)
+        console.log('deleting ' + key)
         delete this.schema_dataset[key];
       }
       return (this.schema_dataset)
@@ -420,6 +422,7 @@ export class getDatasetsService {
 
       for (let key of keys) {
         if (!this.schemaorg_datadownload.includes(key)) {
+          console.log('deleting distribution: ' + key)
           delete file[key];
         }
       }

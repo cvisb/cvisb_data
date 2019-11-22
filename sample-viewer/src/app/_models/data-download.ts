@@ -7,6 +7,7 @@ export class DataDownload {
   "additionalType": string;
   "encodingFormat": string;
   "measurementTechnique": string;
+  "variableMeasured": string;
   "dateModified": string;
   "experimentIDs": string[];
   "version": string;
