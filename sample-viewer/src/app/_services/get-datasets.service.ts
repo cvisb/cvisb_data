@@ -24,7 +24,7 @@ const SOURCES_KEY = makeStateKey('datasets.sources_result');
 })
 
 export class getDatasetsService {
-  schema_dataset: any;
+  dataset_schema: any;
   private sources_result;
   schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
   schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
@@ -404,20 +404,20 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds: Dataset): DatasetSchema {
-    this.schema_dataset = cloneDeep(ds); // create copy
+    this.dataset_schema = cloneDeep(ds); // create copy
 
     // remove stuff from the dataset object
     // removes "sourceCode" -- different name in schema.org
-    for (let key of Object.keys(this.schema_dataset)) {
+    for (let key of Object.keys(this.dataset_schema)) {
       if (!this.schemaorg_dataset.includes(key)) {
         console.log('deleting ' + key)
-        delete this.schema_dataset[key];
+        delete this.dataset_schema[key];
       }
-      return (this.schema_dataset)
+      return (this.dataset_schema)
     }
 
     // remove stuff from individual files
-    for (let file of this.schema_dataset['distribution']) {
+    for (let file of this.dataset_schema['distribution']) {
       let keys = Object.keys(file);
 
       for (let key of keys) {
