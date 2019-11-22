@@ -405,6 +405,7 @@ export class getDatasetsService {
 
   removeNonSchema(ds: Dataset): DatasetSchema {
     this.dataset_schema = cloneDeep(ds); // create copy
+    console.log(this.dataset_schema)
     console.log(this.schemaorg_dataset)
     console.log(this.schemaorg_datadownload)
 
@@ -415,7 +416,6 @@ export class getDatasetsService {
         console.log('deleting ' + key)
         delete this.dataset_schema[key];
       }
-      return (this.dataset_schema)
     }
 
     // remove stuff from individual files
@@ -429,6 +429,7 @@ export class getDatasetsService {
         }
       }
     }
+    return (this.dataset_schema)
   }
 
 }
