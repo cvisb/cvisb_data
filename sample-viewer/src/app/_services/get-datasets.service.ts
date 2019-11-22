@@ -405,15 +405,11 @@ export class getDatasetsService {
 
   removeNonSchema(ds: Dataset): DatasetSchema {
     this.dataset_schema = cloneDeep(ds); // create copy
-    console.log(this.dataset_schema)
-    console.log(this.schemaorg_dataset)
-    console.log(this.schemaorg_datadownload)
 
     // remove stuff from the dataset object
     // removes "sourceCode" -- different name in schema.org
     for (let key of Object.keys(this.dataset_schema)) {
       if (!this.schemaorg_dataset.includes(key)) {
-        console.log('deleting ' + key)
         delete this.dataset_schema[key];
       }
     }
@@ -424,7 +420,6 @@ export class getDatasetsService {
 
       for (let key of keys) {
         if (!this.schemaorg_datadownload.includes(key)) {
-          console.log('deleting distribution: ' + key)
           delete file[key];
         }
       }
