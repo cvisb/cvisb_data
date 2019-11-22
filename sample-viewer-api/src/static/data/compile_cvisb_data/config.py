@@ -43,7 +43,7 @@ EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
 #  --- serology ---
-SEROLOGY_FILE = f"{DATADIR}/input_data/expt_summary_data/systems_serology/CViSB_SystemsSerology_2019Nov12_BG.xlsx"
+SEROLOGY_FILE = f"{DATADIR}/input_data/expt_summary_data/systems_serology/CViSB_SystemsSerology_v0.2_2019Nov22_LH.xlsx"
 SEROLOGY_DATE = today
 SEROLOGY_VERSION = 0.1
 SEROLOGY_UPDATEDBY = "Bonnie Gunn"

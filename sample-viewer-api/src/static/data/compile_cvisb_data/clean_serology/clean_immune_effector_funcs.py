@@ -104,7 +104,7 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     null_data = df[df['value'].isnull()]
     if(len(null_data) > 0):
         helpers.log_msg(f"{'-'*50}", verbose)
-        helpers.log_msg(f"\tDATA WARNING: {len(null_data)} experiments were have null data value"s, verbose)
+        helpers.log_msg(f"\tDATA WARNING: {len(null_data)} experiments have null data values", verbose)
         helpers.log_msg(null_data[['sampleID', 'experimentID', 'batchID']], verbose)
         helpers.log_msg(f"{'-'*50}", verbose)
 
