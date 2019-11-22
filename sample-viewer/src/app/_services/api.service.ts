@@ -378,12 +378,10 @@ export class ApiService {
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
-    console.log(scrollID)
 
     return this.get(endpoint, params).pipe(
       map(response => {
 
-        console.log(response)
         return {
           next: response['_scroll_id'],
           results: response['hits']
