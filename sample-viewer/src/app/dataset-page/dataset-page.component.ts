@@ -30,8 +30,6 @@ export class DatasetPageComponent implements OnInit {
     this.dataset = this.route.snapshot.data['datasetData'];
 
     this.datasetSchema = this.datasetSvc.removeNonSchema(this.dataset);
-    console.log(this.dataset)
-    console.log(this.datasetSchema)
 
     // Set page name
     if (this.route.snapshot.data['datasetData']) {
