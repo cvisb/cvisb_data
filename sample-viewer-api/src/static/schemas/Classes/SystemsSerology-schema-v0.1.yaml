@@ -97,14 +97,14 @@
 # --- Result ---
 - "@id":                 cvisb:value
   "@type":               rdf:Property
-  rdfs:comment:          Assay result
+  rdfs:comment:          Assay result. Should be available in almost all cases; however, due to material limitations, controls are occasionally null.
   rdfs:label:            value
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
   schema:rangeIncludes:
     - "@id":             schema:Float
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:valueCategory
