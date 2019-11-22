@@ -27,7 +27,8 @@ export class getDatasetsService {
   dataset_schema: any;
   private sources_result;
   schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
-  schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
+  schemaorg_datadownload: string[] = ["contentUrl"];
+  // schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
   ;
 
   // Loading spinner
