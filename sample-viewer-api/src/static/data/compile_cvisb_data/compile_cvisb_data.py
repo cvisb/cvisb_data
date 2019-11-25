@@ -149,8 +149,10 @@ def compile_data(args):
             combined['dataset'], f"{config.EXPORTDIR}/datasets/CViSB__dataset_ALL_{config.today}.json")
         saveJson(combined['datadownload'],
                  f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload_ALL_{config.today}.json")
-        saveJson(combined['experiment'],
+        saveJson(combined['experiment'].iloc[0:2500],
                  f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}.json")
+        saveJson(combined['experiment'].iloc[2500:],
+                 f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}_2.json")
 
     # --- save a sample of the data ---
     sample_n = args.export_sample
