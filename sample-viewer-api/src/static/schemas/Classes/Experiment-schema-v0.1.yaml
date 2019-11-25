@@ -200,9 +200,45 @@
 
 
 # measurementTechnique
+- "@id":                 cvisb:variableMeasured
+  "@type":               rdf:Property
+  rdfs:comment:          The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).
+  rdfs:label:            variableMeasured
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:variableMeasured
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - HLA genotype
+                           - metagenome sequence
+                           - Ebola virus sequence
+                           - Lassa virus sequence
+                           - BCR sequence
+                           - TCR sequence
+                           - ADNP
+                           - ADCD
+                           - ADCP
+                           - ADNKA_CD107a
+                           - ADNKA_IFNg
+                           - ADNKA_MIP1b
+                           - metabolomics
+                           - blood chemistry
+                           - vitals
+                           - virus level
+                           - patient antibody response
+                           - acute symptoms
+                           - sequelae
+                           - coma score
+                           - medications
+
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
-  rdfs:comment:          A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
+  rdfs:comment:          A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.
   rdfs:label:            measurementTechnique
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
@@ -215,30 +251,16 @@
   marginality:           required
   authenticated:         false
   schema:Enumeration:
-                           - HLA sequencing
-                           - metagenome sequencing
-                           - Ebola virus sequencing
-                           - Lassa virus sequencing
-                           - BCR sequencing
-                           - TCR sequencing
-                           - ADNP
-                           - ADCD
-                           - ADCP
-                           - ADNKA_CD107a
-                           - ADNKA_IFNg
-                           - ADNKA_MIP1b
-                           - metabolomics
-                           - blood chemistry
-                           - vitals
-                           - sensor vitals
-                           - rapid diagnostics
-                           - RT-PCR
+                           - Nucleic Acid Sequencing
+                           - RNA sequencing
+                           - Immune Repertoire Deep Sequencing
+                           - serology
+                           - Chemistry Test
+                           - Vital Signs Measurement
+                           - Rapid Antigen Test
+                           - Reverse Transcriptase-Polymerase Chain Reaction
                            - ELISA
-                           - acute symptoms
-                           - sequelae
-                           - coma score
-                           - medications
-                           - other
+                           - Clinical Observation
 
 - "@id":                 cvisb:measurementCategory
   "@type":               rdf:Property

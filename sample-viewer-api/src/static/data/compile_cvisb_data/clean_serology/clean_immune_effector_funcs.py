@@ -60,7 +60,8 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     # --- experiment classifications ---
     df['includedInDataset'] = "systems-serology"
     df['measurementCategory'] = "Systems Serology"
-    df['measurementTechnique'] = df.assay
+    df['measurementTechnique'] = "serology"
+    df['variableMeasured'] = df.assay
 
     # --- Credit ---
     df['creator'] = df["sampleID"].apply(lambda x: helpers.getLabAuthor("Alter"))

@@ -15,7 +15,7 @@ ALIGNMENTS = [
      "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP_GPC_2019.11.21.fasta"},
     {"virus": "Lassa",
      "segment": "L",
-     "filename": "LASV_NP-GP_2019-09-11.fasta",
+     "filename": "LASV_L_Z_2019.11.22.fasta",
      "description": "Lassa virus L-Z curated alignment",
      "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2019.11.22.fasta"},
     {"virus": "Ebola",
@@ -39,7 +39,7 @@ def get_viralseq_downloads(dateModified, downloads, experiments, version, datase
     for file in ALIGNMENTS:
         if(file['virus'] == datasetVirus):
             download = get_curated(dateModified, version, experiments, datasetVirus,
-                                   file['segment'], file['filename'], file['description'], file['url'])
+                                    file['filename'], file['description'], file['url'], file['segment'])
             ds = ds.append(download, ignore_index=True)
 
     return(pd.DataFrame(ds))

@@ -93,7 +93,7 @@
 
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
-  rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
+  rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.
   rdfs:label:            measurementTechnique
   schema:domainIncludes:
     - "@id":             cvisb:Dataset
@@ -105,12 +105,38 @@
   owl:cardinality:       many
   marginality:           required
   schema:Enumeration:
-                           - HLA sequencing
-                           - metagenome sequencing
-                           - Ebola virus sequencing
-                           - Lassa virus sequencing
-                           - BCR sequencing
-                           - TCR sequencing
+                           - Nucleic Acid Sequencing
+                           - RNA sequencing
+                           - Immune Repertoire Deep Sequencing
+                           - serology
+                           - Chemistry Test
+                           - Vital Signs Measurement
+                           - Rapid Antigen Test
+                           - Reverse Transcriptase-Polymerase Chain Reaction
+                           - ELISA
+                           - Clinical Observation
+  authenticated:         false
+
+- "@id":                 cvisb:variableMeasured
+  "@type":               rdf:Property
+  rdfs:comment:          The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).
+  rdfs:label:            variableMeasured
+  schema:domainIncludes:
+    - "@id":             cvisb:Dataset
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:variableMeasured
+  owl:cardinality:       many
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - HLA genotype
+                           - metagenome sequence
+                           - Ebola virus sequence
+                           - Lassa virus sequence
+                           - BCR sequence
+                           - TCR sequence
                            - ADNP
                            - ADCD
                            - ADCP
@@ -120,31 +146,12 @@
                            - metabolomics
                            - blood chemistry
                            - vitals
-                           - sensor vitals
-                           - rapid diagnostics
-                           - RT-PCR
-                           - ELISA
+                           - virus level
+                           - patient antibody response
                            - acute symptoms
                            - sequelae
                            - coma score
                            - medications
-                           - other
-  authenticated:         false
-
-- "@id":                 cvisb:variableMeasured
-  "@type":               rdf:Property
-  rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
-  rdfs:label:            variableMeasured
-  schema:domainIncludes:
-    - "@id":             cvisb:Dataset
-  schema:rangeIncludes:
-    - "@id":             xsd:string
-    - "@id":             schema:Text
-  schema:sameAs:
-    "@id":               schema:variableMeasured
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
 
 # URL
 - "@id":                 cvisb:url

@@ -70,7 +70,8 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     # Static, common properties
     df['sourceFiles'] = filename.split("/")[-1]
     df['citation'] = None
-    df['measurementTechnique'] = "HLA sequencing"
+    df['variableMeasured'] = "HLA genotype"
+    df['measurementTechnique'] = "Nucleic Acid Sequencing"
     df['measurementCategory'] = "HLA sequencing"
     df['includedInDataset'] = "hla"
     df['dateModified'] = dateModified

@@ -48,6 +48,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     keywords.extend(measTechs)
     ds["keywords"] = keywords
     ds["measurementTechnique"] = measTechs
+    ds["variableMeasured"] = helpers.getUnique(experiments, "variableMeasured")
 
     ds["citation"] = helpers.getUnique(experiments, "citation")
 

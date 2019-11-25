@@ -29,7 +29,7 @@ HLA_UPDATEDBY = "Matthias Pauthner"
 LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
 LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
 # LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
-LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.22.csv"
+LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.25.csv"
 LVIRAL_DATE = today
 LVIRAL_VERSION = 0.2
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
@@ -72,7 +72,7 @@ SAMPLECOLS = ["creatorInitials", "sampleLabel",
 
 # All data download properties, from experiments
 DOWNLOADCOLS = ["name", "includedInDataset", "identifier", "contentUrl", "additionalType",
-                "measurementTechnique", "measurementCategory", "dateModified", "experimentIDs",
+                "variableMeasured", "measurementTechnique", "measurementCategory", "dateModified", "experimentIDs",
                 "contentUrlRepository", "contentUrlIdentifier", "citation", "updatedBy", 'publisher', "creator"]
 
 # Properties to export in patient ID dictionary

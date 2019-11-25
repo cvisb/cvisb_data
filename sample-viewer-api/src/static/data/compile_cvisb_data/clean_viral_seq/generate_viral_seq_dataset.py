@@ -52,6 +52,7 @@ def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetViru
     # pulled from metadata
     ds["spatialCoverage"] = helpers.getUnique(metadata, "country")
     ds["measurementTechnique"] = helpers.getUnique(metadata, "measurementTechnique")
+    ds["variableMeasured"] = helpers.getUnique(metadata, "measurementTechnique")
 
     return(pd.DataFrame([ds]))
 

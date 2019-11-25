@@ -36,6 +36,7 @@ def get_serology_downloads(dateModified, experiments, updatedBy, version, datase
 
     # pulled from experiments
     ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
+    ds["variableMeasured"] = helpers.getUnique(experiments, "variableMeasured")
     ds["citation"] = helpers.getUnique(experiments, "citation")
     ds["experimentIDs"] = experiments.experimentID
 
