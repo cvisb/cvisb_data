@@ -6,7 +6,6 @@ from .checks import getUnique
 from .logging import log_msg
 from copy import deepcopy
 
-
 def dateArr2Str(arr):
     if(len(arr) == 3):
         return(f"{str(arr[0])}-{str(arr[1]).zfill(2)}-{str(arr[2]).zfill(2)}")
@@ -64,7 +63,10 @@ def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
             if(res.status_code == 200):
                 citation_raw = res.json()
                 # reformat to schema.org format.
-                citation['doi'] = citation_raw['DOI']
+                try:
+                    citation['doi'] = citation_raw['DOI']
+                except:
+                    pass
                 citation['pmid'] = citation_raw['PMID']
                 citation["identifier"] = citation_raw['id']
                 citation["issn"] = citation_raw['ISSN']
@@ -91,7 +93,7 @@ def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
                     citation['pmid']
                 return(citation)
             else:
-                helpers.log_msg(f"WARNING: no citation found for PMID: {pmid_string}", verbose)
+                log_msg(f"WARNING: no citation found for PMID: {pmid_string}", verbose)
 
 # getCitation("26276630")
 
@@ -116,7 +118,7 @@ def splitGetCitation(pubmed_string, citation_dict, verbose, delim=";"):
         try:
             result.append(citation_dict[id.strip()])
         except:
-            helpers.log_msg(f"WARNING: citation not found for PMID: {id}", verbose)
+            log_msg(f"WARNING: citation not found for PMID: {id}", verbose)
     return(result)
 
 

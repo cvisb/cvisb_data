@@ -25,12 +25,13 @@ HLA_VERSION = 0.2
 HLA_UPDATEDBY = "Matthias Pauthner"
 
 # --- lassa virus seq ---
-LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
-LVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
-LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
-LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_dataset.2019.09.06.csv"
+# LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
+LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
+LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
+# LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
+LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.22.csv"
 LVIRAL_DATE = today
-LVIRAL_VERSION = 0.1
+LVIRAL_VERSION = 0.2
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
@@ -45,7 +46,7 @@ EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 #  --- serology ---
 SEROLOGY_FILE = f"{DATADIR}/input_data/expt_summary_data/systems_serology/CViSB_SystemsSerology_v0.2_2019Nov22_LH.xlsx"
 SEROLOGY_DATE = today
-SEROLOGY_VERSION = 0.1
+SEROLOGY_VERSION = 0.2
 SEROLOGY_UPDATEDBY = "Bonnie Gunn"
 
 #  [OUPUTS] ----------------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ EXPORTDIR = f"{DATADIR}/output_data"
 LOGFILE = f"{DATADIR}/output_data/log/{today}_cvisb-compliation.log"
 
 EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchID', 'experimentDate',
-            'measurementTechnique', 'measurementCategory', 'includedInDataset', 'isControl',
+            'measurementTechnique', 'measurementCategory', 'variableMeasured', 'includedInDataset', 'isControl',
             'publisher', 'citation', 'creator',
             'data', 'correction', 'version',
             'updatedBy', 'dateModified', 'releaseDate', 'sourceFiles', 'dataStatus']

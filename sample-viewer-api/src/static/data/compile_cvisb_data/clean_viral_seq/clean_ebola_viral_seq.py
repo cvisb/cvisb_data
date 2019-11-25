@@ -12,7 +12,6 @@ metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_data
 
 def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
     # --- constants ---
-    log_dir = f"{export_dir}/log"
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
     exptCols = expt_cols.copy()
@@ -23,11 +22,11 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
 
     # --- Initial checks ---
     dupe_patientID = md[md.duplicated(
-        subset=["patientID", "patient_timepoint"], keep=False)]
+        subset=["patientID"], keep=False)]
     if(len(dupe_patientID) > 0):
         helpers.log_msg(
             f"DATA ERROR: {len(dupe_patientID)} duplicate patient ids found in virus sequences:", verbose)
-        helpers.log_msg(dupe_patientID[['patientID', 'patient_timepoint']].sort_values(
+        helpers.log_msg(dupe_patientID[['patientID']].sort_values(
             "patientID"), verbose)
         helpers.log_msg("-" * 50, verbose)
     dupe_accession = md[md.duplicated(subset=["accession"], keep=False)]

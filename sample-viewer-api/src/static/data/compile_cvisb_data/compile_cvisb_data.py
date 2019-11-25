@@ -56,8 +56,13 @@ SWITCHER = {
     "hla": lambda:  hla.clean_hla(config.EXPORTDIR, config.HLA_FILE, config.HLA_DATE, config.HLA_VERSION, config.HLA_UPDATEDBY, config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS, config.SAVEINIVIDUAL, config.VERBOSE),
     "systems-serology": lambda: serology.clean_serology(config.SEROLOGY_FILE, config.EXPTCOLS,
     config.SEROLOGY_UPDATEDBY, config.SEROLOGY_DATE, config.SEROLOGY_VERSION, config.VERBOSE, config.EXPORTDIR),
-    "lassa-virus-seq": lambda: viralseq.clean_viral_seq(config.EXPORTDIR, config.LVIRAL_AAFILE, config.LVIRAL_ALIGNEDFILE,
-                                                        config.LVIRAL_RAWFILE, config.LVIRAL_MDFILE, config.ID_DICT,
+    # "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_AAFILE, config.LVIRAL_ALIGNEDFILE,
+    #                                                     config.LVIRAL_RAWFILE, config.LVIRAL_MDFILE, config.ID_DICT,
+    #                                                     config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
+    #                                                     config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
+    #                                                     config.SAVEINIVIDUAL, config.VERBOSE),
+    "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_LFILE, config.LVIRAL_SFILE,
+                                                        config.LVIRAL_MDFILE,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE),
@@ -120,8 +125,8 @@ def compile_data(args):
     log_msg("\n\nChecking IDs to ensure no duplicates...", args.verbose)
     if(len(patients) > 0):
         checkIDs(patients, 'patient', "patientID", args.verbose)
-    if(len(samples) > 0):
-        checkIDs(samples, 'sample', "sampleID", args.verbose)
+    # if(len(samples) > 0):
+    #     checkIDs(samples, 'sample', "sampleID", args.verbose)
     if(len(experiments) > 0):
         checkIDs(experiments, 'experiment', "experimentID", args.verbose)
     if(len(datasets) > 0):
