@@ -33,6 +33,8 @@ def get_viralseq_downloads(dateModified, downloads, experiments, version, datase
     # Make sure arrays are arrays
     downloads['measurementTechnique'] = downloads.measurementTechnique.apply(
         helpers.listify)
+    downloads['variableMeasured'] = downloads.variableMeasured.apply(
+        helpers.listify)
     downloads['citation'] = downloads.citation.apply(helpers.listify)
     ds = downloads
 
@@ -94,6 +96,8 @@ def get_curated(dateModified, version, experiments, datasetVirus, filename, desc
     ds['citation'] = helpers.getUnique(expts, "citation")
     # Flatten citations from list of lists to list
     # ds['citation'] = ds.citation.apply(lambda l: [item for sublist in l for item in sublist])
+    ds["measurementTechnique"] = helpers.getUnique(
+        expts, "measurementTechnique")
     ds["measurementTechnique"] = helpers.getUnique(
         expts, "measurementTechnique")
     ds["experimentIDs"] = helpers.getUnique(expts, "experimentID")

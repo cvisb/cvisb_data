@@ -57,6 +57,7 @@ def get_hla_summary(dateModified, experiments, version, datasetID, fileName = "H
     ds['creator'] = helpers.getUnique(experiments, "creator")
     ds['publisher'] = helpers.getUnique(experiments, "publisher")
     ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
+    ds["variableMeasured"] = helpers.getUnique(experiments, "variableMeasured")
     ds["experimentIDs"] = list(experiments.experimentID)
 
     return(pd.DataFrame([ds]))
@@ -98,6 +99,7 @@ def get_bam_file(dateModified, expt, version, datasetID, fileDescription="raw .b
         ds['creator'] = [expt.creator]
     ds['publisher'] = [expt.publisher]
     ds["measurementTechnique"] = [expt.measurementTechnique]
+    ds["variableMeasured"] = [expt.variableMeasured]
     ds["measurementCategory"] = expt.measurementCategory
     ds["experimentIDs"] = [expt.experimentID]
 
