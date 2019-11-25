@@ -71,7 +71,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
 
         # --- clean up common properties, across patient/expt/sample/downloads/dataset ---
     md['variableMeasured'] = f"{virus} virus sequence"
-    md['measurementTechnique'] = "RNA sequencing"
+    md['measurementTechnique'] = "Nucleic Acid Sequencing"
     md['measurementCategory'] = "virus sequencing"
     md['includedInDataset'] = f"{virus.lower()}-virus-seq"
     md['creator'] = None
