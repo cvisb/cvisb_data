@@ -34,7 +34,7 @@ def get_hla_summary(dateModified, experiments, version, datasetID, fileName = "H
     ds["datePublished"] = "2017-08-11"
 
     # credit
-    ds['author'] = [helpers.getLabAuthor("Galit")]
+    ds['creator'] = [helpers.getLabAuthor("KGA")]
     ds['publisher'] = [helpers.cvisb]
 
 
@@ -54,9 +54,10 @@ def get_hla_summary(dateModified, experiments, version, datasetID, fileName = "H
             raise Exception("includedInDataset doesn't match between experiments and dataDownloads")
     else:
         raise Exception("More than one includedInDataset found.  Should only be one per dataset.")
-    ds['author'] = helpers.getUnique(experiments, "author")
+    ds['creator'] = helpers.getUnique(experiments, "creator")
     ds['publisher'] = helpers.getUnique(experiments, "publisher")
     ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
+    ds["variableMeasured"] = helpers.getUnique(experiments, "variableMeasured")
     ds["experimentIDs"] = list(experiments.experimentID)
 
     return(pd.DataFrame([ds]))
@@ -93,11 +94,12 @@ def get_bam_file(dateModified, expt, version, datasetID, fileDescription="raw .b
     ds["version"] = version
     ds["dateModified"] = dateModified
     # pulled from experiments
-    author = expt.author
-    if(author is not None):
-        ds['author'] = [expt.author]
+    creator = expt.creator
+    if(creator is not None):
+        ds['creator'] = [expt.creator]
     ds['publisher'] = [expt.publisher]
     ds["measurementTechnique"] = [expt.measurementTechnique]
+    ds["variableMeasured"] = [expt.variableMeasured]
     ds["measurementCategory"] = expt.measurementCategory
     ds["experimentIDs"] = [expt.experimentID]
 

@@ -259,6 +259,20 @@ def getPrivateContactGroup(id):
     if(c3):
         return(c3[2])
 
+def checkPrivateID(id):
+    s3 = re.search("(S\-)(\d\d\d)", id)
+    if(s3):
+        return(True)
+    g4 = re.search("(G\-)(\d\d\d\d)", id)
+    if(g4):
+        return(True)
+    g4nohyphen = re.search("(G)(\d\d\d\d)", id)
+    if(g4nohyphen):
+        return(True)
+    cnormal = re.search("^(C\-)(\d\d\d)(\-\d)$", id)
+    if(cnormal):
+        return(True)
+    return(False)
 
 def assignOutcome(id):
     """

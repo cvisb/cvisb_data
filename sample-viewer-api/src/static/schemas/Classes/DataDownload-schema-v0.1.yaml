@@ -82,8 +82,8 @@
   schema:Enumeration:
                            - hla
                            - metagenome-seq
-                           - ebola-viral-seq
-                           - lassa-viral-seq
+                           - ebola-virus-seq
+                           - lassa-virus-seq
                            - bcr
                            - tcr
                            - systems-serology
@@ -291,16 +291,52 @@
   authenticated:         false
   schema:Enumeration:
                            - HLA sequencing
-                           - viral sequencing
+                           - virus sequencing
                            - metagenome sequencing
                            - immune repertoire sequencing
                            - Systems Serology
                            - clinical measurements
                            - clinical observations
 
+- "@id":                 cvisb:variableMeasured
+  "@type":               rdf:Property
+  rdfs:comment:          The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).
+  rdfs:label:            variableMeasured
+  schema:domainIncludes:
+    - "@id":             cvisb:DataDownload
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  schema:sameAs:
+    "@id":               schema:variableMeasured
+  owl:cardinality:       many
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - HLA genotype
+                           - metagenome sequence
+                           - Ebola virus sequence
+                           - Lassa virus sequence
+                           - BCR sequence
+                           - TCR sequence
+                           - ADNP
+                           - ADCD
+                           - ADCP
+                           - ADNKA_CD107a
+                           - ADNKA_IFNg
+                           - ADNKA_MIP1b
+                           - metabolomics
+                           - blood chemistry
+                           - vitals
+                           - virus level
+                           - patient antibody response
+                           - acute symptoms
+                           - sequelae
+                           - coma score
+                           - medications
+
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
-  rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).
+  rdfs:comment:          A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.
   rdfs:label:            measurementTechnique
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
@@ -312,30 +348,16 @@
   owl:cardinality:       many
   marginality:           required
   schema:Enumeration:
-                           - HLA sequencing
-                           - metagenome sequencing
-                           - Ebola viral sequencing
-                           - Lassa viral sequencing
-                           - BCR sequencing
-                           - TCR sequencing
-                           - ADNP
-                           - ADCD
-                           - ADCP
-                           - ADNKA_CD107a
-                           - ADNKA_IFNg
-                           - ADNKA_MIP1b
-                           - metabolomics
-                           - blood chemistry
-                           - vitals
-                           - sensor vitals
-                           - rapid diagnostics
-                           - RT-PCR
+                           - Nucleic Acid Sequencing
+                           - RNA sequencing
+                           - Immune Repertoire Deep Sequencing
+                           - serology
+                           - Chemistry Test
+                           - Vital Signs Measurement
+                           - Rapid Antigen Test
+                           - Reverse Transcriptase-Polymerase Chain Reaction
                            - ELISA
-                           - acute symptoms
-                           - sequelae
-                           - coma score
-                           - medications
-                           - other
+                           - Clinical Observation
   authenticated:         false
 
 # file extension
@@ -428,16 +450,16 @@
   authenticated:         true
 
 # Author
-- "@id":                 cvisb:author
+- "@id":                 cvisb:creator
   "@type":               rdf:Property
-  rdfs:comment:          Author of this DataDownload, can be a person or an organization. Usually specified in Dataset object.
-  rdfs:label:            author
+  rdfs:comment:          Author/creator of this DataDownload, can be a person or an organization. Usually specified in Dataset object.
+  rdfs:label:            creator
   schema:domainIncludes:
     - "@id":             cvisb:DataDownload
   schema:rangeIncludes:
     - "@id":             "cvisb:Organization"
   schema:sameAs:
-    "@id":               "schema:author"
+    "@id":               "schema:creator"
   owl:cardinality:       many
   marginality:           optional
   authenticated:         false

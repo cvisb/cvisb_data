@@ -126,17 +126,17 @@
   authenticated:         false
 
 # author
-- "@id":                 cvisb:author
+- "@id":                 cvisb:creator
   "@type":               rdf:Property
-  rdfs:comment:          Author(s) of the code repository
-  rdfs:label:            author
+  rdfs:comment:          Author/creator(s) of the code repository
+  rdfs:label:            creator
   schema:domainIncludes:
     - "@id":             cvisb:SoftwareSourceCode
   schema:rangeIncludes:
     - "@id":             cvisb:Person
     - "@id":             cvisb:Organization
   schema:sameAs:
-    "@id":               schema:author
+    "@id":               schema:creator
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

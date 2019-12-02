@@ -19,13 +19,13 @@ export class DatasetPageNavComponent implements OnInit {
         { key: "compare", name: "compare allelic frequencies" },
         { key: "files", name: "download data" },
       ],
-      "lassa-viral-seq": [
+      "lassa-virus-seq": [
         { key: "description", name: "overview" },
         { key: "alignments", name: "curated alignments" },
         { key: "sources", name: "sources" },
         { key: "files", name: "download data" },
       ],
-      "ebola-viral-seq": [
+      "ebola-virus-seq": [
         { key: "description", name: "overview" },
         { key: "alignments", name: "curated alignments" },
         { key: "sources", name: "sources" },

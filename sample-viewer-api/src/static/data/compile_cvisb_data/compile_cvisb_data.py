@@ -8,7 +8,7 @@
 # @license:     Apache-2.0
 # @date:        31 October 2019
 # @use:         python compile_cvisb_data.py # imports / saves all
-# @use:         python compile_cvisb_data.py -t patients hla lassa-viral-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa viral sequencing data (from Andersen lab)
+# @use:         python compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
 
 import pandas as pd
 import argparse
@@ -35,9 +35,9 @@ parser.add_argument('--export-sample', '-e', required=False, type=int, default=0
                     help='number of records to save a portion of as a test upload; 0 by default (as in, do not save a sample aside from the full download)')
 parser.add_argument("--types", "-t", required=False,
                     # 0 or more values expected => creates a list
-                    help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-viral-seq', 'ebola-viral-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
-                    type=str, default=["patients", "hla", "lassa-viral-seq", "systems-serology"])
-                    # type=str, default=["patients", "hla", "lassa-viral-seq", "ebola-viral-seq", "systems-serology"])
+                    help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-virus-seq', 'ebola-virus-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
+                    type=str, default=["patients", "hla", "lassa-virus-seq", "systems-serology"])
+                    # type=str, default=["patients", "hla", "lassa-virus-seq", "ebola-virus-seq", "systems-serology"])
 parser.add_argument('--verbose', '-v', default=False, action='store_true', help='whether to print log file to the console')
 
 
@@ -56,12 +56,17 @@ SWITCHER = {
     "hla": lambda:  hla.clean_hla(config.EXPORTDIR, config.HLA_FILE, config.HLA_DATE, config.HLA_VERSION, config.HLA_UPDATEDBY, config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS, config.SAVEINIVIDUAL, config.VERBOSE),
     "systems-serology": lambda: serology.clean_serology(config.SEROLOGY_FILE, config.EXPTCOLS,
     config.SEROLOGY_UPDATEDBY, config.SEROLOGY_DATE, config.SEROLOGY_VERSION, config.VERBOSE, config.EXPORTDIR),
-    "lassa-viral-seq": lambda: viralseq.clean_viral_seq(config.EXPORTDIR, config.LVIRAL_AAFILE, config.LVIRAL_ALIGNEDFILE,
-                                                        config.LVIRAL_RAWFILE, config.LVIRAL_MDFILE, config.ID_DICT,
+    # "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_AAFILE, config.LVIRAL_ALIGNEDFILE,
+    #                                                     config.LVIRAL_RAWFILE, config.LVIRAL_MDFILE, config.ID_DICT,
+    #                                                     config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
+    #                                                     config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
+    #                                                     config.SAVEINIVIDUAL, config.VERBOSE),
+    "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_LFILE, config.LVIRAL_SFILE,
+                                                        config.LVIRAL_MDFILE,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE),
-    "ebola-viral-seq": lambda: viralseq.clean_ebola_viral_seq(config.EXPORTDIR, config.EVIRAL_ALIGNEDFILE,
+    "ebola-virus-seq": lambda: viralseq.clean_ebola_viral_seq(config.EXPORTDIR, config.EVIRAL_ALIGNEDFILE,
                                                         config.EVIRAL_MDFILE,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.EVIRAL_DATE, config.EVIRAL_VERSION, config.EVIRAL_UPDATEDBY,
@@ -120,8 +125,8 @@ def compile_data(args):
     log_msg("\n\nChecking IDs to ensure no duplicates...", args.verbose)
     if(len(patients) > 0):
         checkIDs(patients, 'patient', "patientID", args.verbose)
-    if(len(samples) > 0):
-        checkIDs(samples, 'sample', "sampleID", args.verbose)
+    # if(len(samples) > 0):
+    #     checkIDs(samples, 'sample', "sampleID", args.verbose)
     if(len(experiments) > 0):
         checkIDs(experiments, 'experiment', "experimentID", args.verbose)
     if(len(datasets) > 0):
@@ -144,8 +149,10 @@ def compile_data(args):
             combined['dataset'], f"{config.EXPORTDIR}/datasets/CViSB__dataset_ALL_{config.today}.json")
         saveJson(combined['datadownload'],
                  f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload_ALL_{config.today}.json")
-        saveJson(combined['experiment'],
+        saveJson(combined['experiment'].iloc[0:2500],
                  f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}.json")
+        saveJson(combined['experiment'].iloc[2500:],
+                 f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}_2.json")
 
     # --- save a sample of the data ---
     sample_n = args.export_sample

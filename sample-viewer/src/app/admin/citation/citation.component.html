@@ -18,7 +18,7 @@
   <section id="individual-sources">
     <h3>Citing individual data sources</h3>
     <p class="helper-text">
-      The data in the CViSB Data Portal is a mixture of data collected by our consortium, data contributed by our partners, and publicly available data on Lassa Fever and Ebola. Some of the data has been published and others are works in
+      The data in the CViSB Data Portal is a mixture of data collected by our consortium, data contributed by our partners, and publicly available data on Lassa and Ebola. Some of the data has been published and others are works in
       progress. Individual data sources can be cited as:
     </p>
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="citation-group" *ngFor="let expt of experiments">
-      <h4 class="data-type"><a [routerLink]="['/dataset', expt.term]">{{expt.dataset_name}} data</a></h4>
+      <h4 class="data-type"><a [routerLink]="['/dataset', expt.term]">{{expt.datasetName}} data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of expt.sources">
           <ng-container [ngTemplateOutlet]="source_citation" [ngTemplateOutletContext]="{ source: source.source, url: host_url + '/dataset/' + expt.term }">

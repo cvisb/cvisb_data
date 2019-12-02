@@ -16,16 +16,16 @@ import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
 
-// Services
+// --- Services ---
 import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { DatasetResolver } from './_services/get-datasets.resolver';
 
-// Dialogue boxes
-import { SampleMetadataComponent, SpinnerPopupComponent } from './_dialogs/index';
+// --- Dialogue boxes ---
+import { SampleMetadataComponent } from './_dialogs/index';
 
 
-// Components
+// --- Components ---
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -46,7 +46,6 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     BulkEditComponent,
     FilterFilesComponent,
     SampleMetadataComponent,
-    SpinnerPopupComponent,
     SchemaComponent,
     FooterComponent
   ],
@@ -84,8 +83,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     }
   ],
   entryComponents: [
-    SampleMetadataComponent,
-    SpinnerPopupComponent
+    SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })

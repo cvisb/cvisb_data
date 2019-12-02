@@ -9,9 +9,9 @@ import { ExperimentObject } from '../_models';
 // Current groups:
 // - HLA sequencing
 // - metagenome sequencing
-// - viral sequencing
-//       - Ebola viral sequencing
-//       - Lassa viral sequencing
+// - virus sequencing
+//       - Ebola virus sequencing
+//       - Lassa virus sequencing
 // - immune repetoire sequencing
 //       - BCR sequencing
 //       - TCR sequencing
@@ -37,27 +37,27 @@ import { ExperimentObject } from '../_models';
 
 export class ExperimentObjectPipe implements PipeTransform {
   exptDict: ExperimentObject[] = [
-    { "measurementTechnique": ["HLA sequencing"], "measurementCategory": "HLA sequencing", "dataset_id": "hla", "dataset_name": "HLA sequencing", "anchor_link": "HLA-sequencing" },
+    { "variableMeasured": ["HLA genotype"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "HLA sequencing", "dataset_id": "hla", "datasetName": "HLA sequencing", "anchor_link": "HLA-sequencing" },
 
-    { "measurementTechnique": ["metagenome sequencing"], "measurementCategory": "metagenome sequencing", "dataset_id": "metagenome-seq", "dataset_name": "metagenome sequencing", "anchor_link": "metagenome-sequencing" },
+    { "variableMeasured": ["metagenome sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "metagenome sequencing", "dataset_id": "metagenome-seq", "datasetName": "metagenome sequencing", "anchor_link": "metagenome-sequencing" },
 
-    { "measurementTechnique": ["Ebola viral sequencing"], "measurementCategory": "viral sequencing", "dataset_id": "ebola-viral-seq", "dataset_name": "Ebola viral sequencing", "anchor_link": "Ebola-viral-sequencing" },
-    { "measurementTechnique": ["Lassa viral sequencing"], "measurementCategory": "viral sequencing", "dataset_id": "lassa-viral-seq", "dataset_name": "Lassa viral sequencing", "anchor_link": "Lassa-viral-sequencing" },
+    { "variableMeasured": ["Ebola virus sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "ebola-virus-seq", "datasetName": "Ebola virus sequencing", "anchor_link": "Ebola-virus-sequencing" },
+    { "variableMeasured": ["Lassa virus sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "lassa-virus-seq", "datasetName": "Lassa virus sequencing", "anchor_link": "Lassa-virus-sequencing" },
 
-    { "measurementTechnique": ["BCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "bcr", "dataset_name": "BCR sequencing", "anchor_link": "BCR-sequencing" },
-    { "measurementTechnique": ["TCR sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "tcr", "dataset_name": "TCR sequencing", "anchor_link": "TCR-sequencing" },
+    { "variableMeasured": ["BCR sequence"], "measurementTechnique": ["Immune Repertoire Deep Sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "bcr", "datasetName": "BCR sequencing", "anchor_link": "BCR-sequencing" },
+    { "variableMeasured": ["TCR sequence"], "measurementTechnique": ["Immune Repertoire Deep Sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "tcr", "datasetName": "TCR sequencing", "anchor_link": "TCR-sequencing" },
 
-    { "measurementTechnique": ["ADNP","ADCD","ADCP","ADNKA_CD107a","ADNKA_IFNg","ADNKA_MIP1b"], "measurementCategory": "Systems Serology", "dataset_id": "systems-serology", "dataset_name": "Systems Serology", "anchor_link": "Systems-Serology" },
+    { "variableMeasured": ["ADNP","ADCD","ADCP","ADNKA_CD107a","ADNKA_IFNg","ADNKA_MIP1b"], "measurementTechnique": ["serology"], "measurementCategory": "Systems Serology", "dataset_id": "systems-serology", "datasetName": "Systems Serology", "anchor_link": "Systems-Serology" },
 
-    { "measurementTechnique": ["metabolomics"], "measurementCategory": "clinical measurements", "dataset_id": "metabolomics", "dataset_name": "metabolomics", "anchor_link": "metabolomics" },
-    { "measurementTechnique": ["blood chemistry"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "dataset_name": "blood chemistry", "anchor_link": "blood-chemistry" },
-    { "measurementTechnique": ["vitals"], "measurementCategory": "clinical measurements", "dataset_id": "vitals", "dataset_name": "vitals", "anchor_link": "vitals" },
-    { "measurementTechnique": ["sensor vitals"], "measurementCategory": "clinical measurements", "dataset_id": "sensor-vitals", "dataset_name": "sensor vitals", "anchor_link": "sensor-vitals" },
-    { "measurementTechnique": ["rapid diagnostics"], "measurementCategory": "clinical measurements", "dataset_id": "rapid-diagnostics", "dataset_name": "rapid diagnostics", "anchor_link": "rapid-diagnostics" },
-    { "measurementTechnique": ["RT-PCR"], "measurementCategory": "clinical measurements", "dataset_id": "RT-PCR", "dataset_name": "RT-PCR", "anchor_link": "RT-PCR" },
-    { "measurementTechnique": ["ELISA"], "measurementCategory": "clinical measurements", "dataset_id": "ELISA", "dataset_name": "ELISA", "anchor_link": "ELISA" },
+    { "variableMeasured": ["metabolomics"], "measurementTechnique": ["Metabolomics"], "measurementCategory": "clinical measurements", "dataset_id": "metabolomics", "datasetName": "metabolomics", "anchor_link": "metabolomics" },
+    { "variableMeasured": ["blood chemistry"], "measurementTechnique": ["Chemistry Test"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "datasetName": "blood chemistry", "anchor_link": "blood-chemistry" },
+    { "variableMeasured": ["vitals"], "measurementTechnique": ["Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "vitals", "datasetName": "vitals", "anchor_link": "vitals" },
+    { "variableMeasured": ["vitals"], "measurementTechnique": ["Sensor Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "sensor-vitals", "datasetName": "sensor vitals", "anchor_link": "sensor-vitals" },
+    { "variableMeasured": ["virus level"], "measurementTechnique": ["Rapid Antigen Test"], "measurementCategory": "clinical measurements", "dataset_id": "rapid-diagnostics", "datasetName": "rapid diagnostics", "anchor_link": "rapid-diagnostics" },
+    { "variableMeasured": ["virus level"], "measurementTechnique": ["Reverse Transcriptase-Polymerase Chain Reaction"], "measurementCategory": "clinical measurements", "dataset_id": "RT-PCR", "datasetName": "RT-PCR", "anchor_link": "RT-PCR" },
+    { "variableMeasured": ["patient antibody response"], "measurementTechnique": ["ELISA"], "measurementCategory": "clinical measurements", "dataset_id": "ELISA", "datasetName": "ELISA", "anchor_link": "ELISA" },
 
-    { "measurementTechnique": ["acute symptoms", "sequelae", "coma score", "medications"], "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "dataset_name": "clinical observations", "anchor_link": "clinical-observations" }
+    { "variableMeasured": ["acute symptoms", "sequelae", "coma score", "medications"], "measurementTechnique": ["Clinical Observation"], "measurementCategory": "clinical observations", "dataset_id": "clinical-symptoms", "datasetName": "clinical observations", "anchor_link": "clinical-observations" }
   ];
 
   transform(value: string, var2Search: string = "dataset_id"): any {

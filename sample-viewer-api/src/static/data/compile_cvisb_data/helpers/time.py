@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import pandas as pd
+import re
 
 def convertExcelDateNum(row):
     """
@@ -100,7 +101,6 @@ def calcOnsetDischargeGap(row):
     if((row.converted_onsetDate == row.converted_onsetDate) & (row.converted_dischargeDate == row.converted_dischargeDate)):
         return((row.converted_dischargeDate - row.converted_onsetDate).days)
     return(None)
-
 
 def date2Range(date_string):
     if(date_string == date_string):

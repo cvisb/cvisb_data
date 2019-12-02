@@ -29,14 +29,16 @@ export class Patient {
   pregnant: boolean;
   species: string;
   admin2: Object;
+  admin3: Object;
   occupation: string;
   symptoms?: Object[];
   sID?: string;
   gID?: string[];
   exposureType?: string;
-  _version?: number;
+  version?: string;
   updatedBy?: string;
   dataStatus: string;
+  correction: string;
   citation: Citation[];
   publisher: Organization;
 }
@@ -44,7 +46,7 @@ export class Patient {
 
 // Constructor to de-nest nested objects for download.
 export class PatientDownload {
-  _version?: number;
+  version?: string;
   age?: number;
   alternateIdentifier?: string;
   cohort?: string;
@@ -52,6 +54,7 @@ export class PatientDownload {
   contactSurvivorRelationship?: string;
   country?: string;
   admin2?: string;
+  admin3?: string;
   dateModified?: string;
   elisa?: string;
   exposureType?: string;
@@ -82,6 +85,8 @@ export class PatientDownload {
   infectionYear: number;
   citation: string;
   source: string;
+  correction: string;
+  dataStatus: string;
 
   constructor(patient: Patient, datePipe: DateRangePipe) {
     this.patientID = patient.patientID;
@@ -90,25 +95,33 @@ export class PatientDownload {
     this.gID = patient.gID ? patient.gID.join(", ") : null;
     this.cohort = patient.cohort;
     this.outcome = patient.outcome;
-    this.country = patient.country ? patient.country['name'] : null;
-    this.admin2 = patient.admin2 ? patient.admin2['name'] : null;
-    this.species = patient.species;
     this.gender = patient.gender;
     this.age = patient.age;
+    this.species = patient.species;
+    this.country = patient.country ? patient.country['name'] : null;
+    this.admin2 = patient.admin2 ? patient.admin2['name'] : null;
+    this.admin3 = patient.admin3 ? patient.admin3['name'] : null;
+
+
     this.infectionYear = patient.infectionYear;
     this.infectionDate = datePipe.transform(patient.infectionDate);
-    this.daysInHospital = patient.daysInHospital;
-    this.dischargeDate = datePipe.transform(patient.dischargeDate);
     this.evalDate = datePipe.transform(patient.evalDate);
+    this.dischargeDate = datePipe.transform(patient.dischargeDate);
     this.daysOnset = patient.daysOnset;
+    this.daysInHospital = patient.daysInHospital;
 
     this.contactGroupIdentifier = `"${patient.contactGroupIdentifier}"`; // encapsulate in quotes to retain as strings
     this.relatedTo = patient.relatedTo ? patient.relatedTo.join(", ") : null;
     this.contactSurvivorRelationship = patient.contactSurvivorRelationship;
     this.exposureType = patient.exposureType;
+
     this.citation = patient.citation ? patient.citation.map(d => d.url).join("; ") : null;
     this.source = patient.publisher ? patient.publisher.name : null;
-
+    this.dataStatus = patient.dataStatus;
+    this.version = patient.version;
+    this.dateModified = datePipe.transform(patient.dateModified);
+    this.updatedBy = patient.updatedBy;
+    this.correction = patient.correction;
 
     if (patient.symptoms && patient.symptoms[0]) {
       this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'];
@@ -127,11 +140,6 @@ export class PatientDownload {
     if (patient.elisa && patient.elisa[0]) {
       this.elisa = JSON.stringify(patient.elisa);
     }
-
-    this._version = patient._version;
-    this.dateModified = datePipe.transform(patient.dateModified);
-    this.updatedBy = patient.updatedBy;
-
   }
 }
 

@@ -16,10 +16,10 @@
 #
 # "@graph":
 
-- "@id":                 cvisb:ViralSeqData
+- "@id":                 cvisb:VirusSeqData
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing viral sequencing data in the Center for Viral Systems Biology.
-  rdfs:label:            ViralSeqData
+  rdfs:label:            VirusSeqData
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
@@ -32,21 +32,21 @@
   rdfs:comment:          Type of data
   rdfs:label:            "@type"
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
   authenticated:         false
   schema:Enumeration:
-                           - ViralSeqData
+                           - VirusSeqData
 
 - "@id":                 cvisb:virus
   "@type":               rdf:Property
   rdfs:comment:          Virus sequenced
   rdfs:label:            virus
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -62,7 +62,7 @@
   rdfs:comment:          "Segment of the virus sequenced, for Lassa (S or L)"
   rdfs:label:            virusSegment
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -78,7 +78,7 @@
   rdfs:comment:          reference sequence used for alignment.
   rdfs:label:            referenceSeq
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -91,7 +91,7 @@
   rdfs:comment:          Whether the data is a reference sequence
   rdfs:label:            isReferenceSeq
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             schema:Boolean
   owl:cardinality:       one
@@ -104,7 +104,7 @@
   rdfs:comment:          DNA sequence for the virus
   rdfs:label:            DNAsequence
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -117,7 +117,7 @@
   rdfs:comment:          Aligned, curated DNA sequence for the virus
   rdfs:label:            alignedDNAsequence
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -130,7 +130,7 @@
   rdfs:comment:          Raw amino acid sequence for the virus
   rdfs:label:            AAsequence
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -143,7 +143,7 @@
   rdfs:comment:          Aligned, curated amino acid sequence for the virus
   rdfs:label:            alignedAAsequence
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
@@ -156,7 +156,7 @@
   rdfs:comment:          single nucleotide polymorphisms for the virus
   rdfs:label:            SNPsequence
   schema:domainIncludes:
-    - "@id":             cvisb:ViralSeqData
+    - "@id":             cvisb:VirusSeqData
   schema:rangeIncludes:
     - "@id":             cvisb:SNPData
   owl:cardinality:       many

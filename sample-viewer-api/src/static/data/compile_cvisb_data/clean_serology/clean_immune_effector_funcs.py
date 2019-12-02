@@ -1,6 +1,8 @@
 import pandas as pd
 import helpers
 from datetime import datetime
+import re
+
 
 def getData(row):
     obj = {}
@@ -9,6 +11,7 @@ def getData(row):
     obj['value'] = row.value
     obj['valueCategory'] = row['category.1']
     obj['valueCategoryNumeric'] = row['category']
+
     if(row.antigen == "LASVGP_trimer_KH"):
         obj['antigen'] = row.antigen
         obj['antigenVirus'] = "Lassa"
@@ -16,6 +19,14 @@ def getData(row):
         obj['antigen'] = "Recombinant EBOV GPDTM (Sf9)"
         obj['antigenVirus'] = "Ebola"
         obj['antigenSource'] = "https://www.ibtbioservices.com/product/0501-016/"
+    # Add in a pseudo-binary if the sample is a control experiment
+    if(re.search("control", row.sampleID.lower())):
+        obj['controlType'] = row.sampleID
+    elif(re.search("negative", row.sampleID.lower())):
+        obj['controlType'] = row.sampleID
+    elif(re.search("positive", row.sampleID.lower())):
+        obj['controlType'] = row.sampleID
+
 
     return([obj])
 
@@ -49,10 +60,11 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     # --- experiment classifications ---
     df['includedInDataset'] = "systems-serology"
     df['measurementCategory'] = "Systems Serology"
-    df['measurementTechnique'] = df.assay
+    df['measurementTechnique'] = "serology"
+    df['variableMeasured'] = df.assay
 
     # --- Credit ---
-    df['author'] = df["sampleID"].apply(lambda x: helpers.getLabAuthor("Alter"))
+    df['creator'] = df["sampleID"].apply(lambda x: helpers.getLabAuthor("Alter"))
     df['publisher'] = df["sampleID"].apply(lambda x: helpers.cvisb)
     # Split and clean pubmedIDs
     citation_dict = helpers.splitCreateCitationDict(df, pmidCol= "pubmedID", delim=";")
@@ -86,16 +98,15 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
         helpers.log_msg(f"\tDATA WARNING: {len(id_converts)} Sample IDs were converted to privatePatientID and visitCode. Check that this was done properly in {id_changed_path.split('/')[-1]}", verbose)
         helpers.log_msg(f"{'-'*50}", verbose)
         id_converts.to_csv(id_changed_path, index=False)
-        
+
     # --- checks ---
     # Experiment ID is unique
     # Check if data is null
     null_data = df[df['value'].isnull()]
     if(len(null_data) > 0):
         helpers.log_msg(f"{'-'*50}", verbose)
-        helpers.log_msg(f"\tDATA ERROR: {len(null_data)} experiments were removed because they had a null data value", verbose)
+        helpers.log_msg(f"\tDATA WARNING: {len(null_data)} experiments have null data values", verbose)
         helpers.log_msg(null_data[['sampleID', 'experimentID', 'batchID']], verbose)
-        df.dropna(subset=["value"], inplace=True)
         helpers.log_msg(f"{'-'*50}", verbose)
 
     #  Check for:

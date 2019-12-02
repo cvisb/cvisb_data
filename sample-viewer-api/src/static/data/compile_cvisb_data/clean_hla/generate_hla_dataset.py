@@ -24,13 +24,13 @@ def get_hla_dataset(dateModified, downloadIDs, experiments, countries, version, 
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "Dataset"
     ds["identifier"] = datasetID
-    ds["name"] = "HLA Genotype Sequencing of Hemorrhagic Fever Survivors"
+    ds["name"] = "HLA Genotype Sequencing of Ebola/Lassa Patients and Survivors"
 
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
     ds["url"] = "https://github.com/andersen-lab/lassa-ebola-hla"
 
     # descriptions
-    ds["description"] = "Human leukocyte antigen (HLA) Genotype Sequencing of EBOV/LASV survivors, non-survivors, contacts and healthy controls from Sierra Leone and Nigeria using Illumina TruSight HLA v2 Sequencing Panel. HLA data will be used to determine potential risk alleles for EBOV/LASV infection, survival and development of sequelae."
+    ds["description"] = "Human leukocyte antigen (HLA) Genotype Sequencing of Ebola/Lassa survivors, non-survivors, contacts and healthy controls from Sierra Leone and Nigeria using Illumina TruSight HLA v2 Sequencing Panel. HLA data will be used to determine potential risk alleles for Ebola/Lassa infection, survival and development of sequelae."
     ds["keywords"] = ["HLA",
                       "human leukocyte antigen",
                       "Ebola",
@@ -43,7 +43,7 @@ def get_hla_dataset(dateModified, downloadIDs, experiments, countries, version, 
 
     # credit
     ds['funding'] = helpers.cvisb_funding
-    ds['license'] = "https://creativecommons.org/share-your-work/public-domain/cc0/"
+    ds['license'] = "https://creativecommons.org/licenses/by/4.0/"
 
 # --- possibly variable, each time ---
     ds["version"] = version
@@ -59,7 +59,8 @@ def get_hla_dataset(dateModified, downloadIDs, experiments, countries, version, 
     else:
         raise Exception("More than one measurementCategory found.  Should only be one per dataset.")
     ds["measurementTechnique"] = helpers.getUnique(experiments, "measurementTechnique")
-    ds['author'] = helpers.getUnique(experiments, "author")
+    ds["variableMeasured"] = helpers.getUnique(experiments, "variableMeasured")
+    ds['creator'] = helpers.getUnique(experiments, "creator")
     ds['publisher'] = helpers.getUnique(experiments, "publisher")
 
     return(pd.DataFrame([ds]))

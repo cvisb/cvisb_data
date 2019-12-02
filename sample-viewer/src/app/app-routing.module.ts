@@ -14,6 +14,7 @@ import { AboutComponent } from './admin/about/about.component';
 import { AboutDataComponent } from './admin/about-data/about-data.component';
 import { SchemaComponent } from './schema/schema.component';
 import { ReleaseNotesComponent } from './admin/release-notes/release-notes.component';
+// import { TestComponent } from './test/test.component';
 
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -32,9 +33,15 @@ const appRoutes: Routes = [
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset/hla', loadChildren: () => import('./hla/hla.module').then(m => m.HlaModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
   { path: 'dataset/systems-serology', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
-  { path: 'dataset/lassa-viral-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-viral-seq" } },
-  { path: 'dataset/ebola-viral-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "ebola-viral-seq" } },
+  { path: 'dataset/viralseq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
+  { path: 'dataset/viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
+  { path: 'dataset/lassa-viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
+  { path: 'dataset/lassa-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-virus-seq" } },
+  { path: 'dataset/ebola-viral-seq', pathMatch: 'full', redirectTo: "/dataset/ebola-virus-seq" },
+  { path: 'dataset/ebola-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "ebola-virus-seq" } },
+  { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology"  } },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
+  // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
@@ -48,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), pathMatch: 'full', data: { title: 'CViSB Data' } },
   { path: 'sitemap.xml', pathMatch: 'full', redirectTo: "/assets/sitemap.xml" },
   { path: 'robots.txt', pathMatch: 'full', redirectTo: "/assets/robots.txt" },
+  // { path: 'test', pathMatch: 'full', component: TestComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

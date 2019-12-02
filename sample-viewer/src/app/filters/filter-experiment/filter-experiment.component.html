@@ -5,7 +5,7 @@
     <div class="filter-pair expt-type filter-expt" [class]="expt.term" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
     [ngClass]="{'disabled' : expt.disabled}">
       <svg-icon [icon]="expt.term"></svg-icon>
-      <div class="expt-name">{{ expt.dataset_name }}</div>
+      <div class="expt-name">{{ expt.datasetName }}</div>
       <!-- <div class="file-count">{{ expt.value }}</div> -->
     </div>
   </div>

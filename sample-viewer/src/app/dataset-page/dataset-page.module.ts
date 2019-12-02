@@ -19,6 +19,7 @@ import { FormatCitationModule } from '../format-citation/format-citation.module'
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
+import { AdminModule } from '../admin/admin.module';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
     FormatPublisherModule,
     DatasetSummaryModule,
     EmbedJsonldModule,
-    SvgIconModule
+    SvgIconModule,
+    AdminModule
   ],
   declarations: [
     DatasetPageComponent,

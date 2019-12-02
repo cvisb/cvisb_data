@@ -1,2 +1,3 @@
 from .clean_viral_seq import clean_viral_seq
 from .clean_ebola_viral_seq import clean_ebola_viral_seq
+from .clean_lassa_viral_seq import clean_lassa_viral_seq

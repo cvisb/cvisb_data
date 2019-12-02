@@ -10,6 +10,7 @@ import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
 // import { MaterialModule } from '../material.module';
 // import { DownloadBtnModule } from '../download-btn/download-btn.module';
+import { AdminModule } from '../admin/admin.module';
 
 // --- components ---
 import { DatasetComponent } from './dataset.component'
@@ -23,7 +24,8 @@ import { getDatasetsService } from '../_services';
     DatasetRoutingModule,
     RouterModule,
     SvgIconModule,
-    DatasetSummaryModule
+    DatasetSummaryModule,
+    AdminModule
   ],
   declarations: [
     DatasetComponent

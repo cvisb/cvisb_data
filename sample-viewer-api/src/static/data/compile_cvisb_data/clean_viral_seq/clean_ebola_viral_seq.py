@@ -12,7 +12,6 @@ metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_data
 
 def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
     # --- constants ---
-    log_dir = f"{export_dir}/log"
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
     exptCols = expt_cols.copy()
@@ -23,30 +22,31 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
 
     # --- Initial checks ---
     dupe_patientID = md[md.duplicated(
-        subset=["patientID", "patient_timepoint"], keep=False)]
+        subset=["patientID"], keep=False)]
     if(len(dupe_patientID) > 0):
         helpers.log_msg(
-            f"DATA ERROR: {len(dupe_patientID)} duplicate patient ids found in viral sequences:", verbose)
-        helpers.log_msg(dupe_patientID[['patientID', 'patient_timepoint']].sort_values(
+            f"DATA ERROR: {len(dupe_patientID)} duplicate patient ids found in virus sequences:", verbose)
+        helpers.log_msg(dupe_patientID[['patientID']].sort_values(
             "patientID"), verbose)
         helpers.log_msg("-" * 50, verbose)
     dupe_accession = md[md.duplicated(subset=["accession"], keep=False)]
     if(len(dupe_accession) > 0):
         helpers.log_msg(
-            f"DATA ERROR: {len(dupe_accession)} duplicate accession IDs found in viral sequences:", verbose)
+            f"DATA ERROR: {len(dupe_accession)} duplicate accession IDs found in virus sequences:", verbose)
         helpers.log_msg(dupe_patientID[[
                         'patientID', 'patient_timepoint', 'accession']].sort_values("accession"), verbose)
         helpers.log_msg("-" * 50, verbose)
 
     # --- clean up common properties, across patient/expt/sample/downloads/dataset ---
-    md['measurementTechnique'] = f"{virus} viral sequencing"
-    md['includedInDataset'] = f"{virus.lower()}-viral-seq"
-    md['author'] = None
+    md['variableMeasured'] = f"{virus} virus sequence"
+    md['measurementTechnique'] = "Nucleic Acid Sequencing"
+    md['measurementCategory'] = "virus sequencing"
+    md['includedInDataset'] = f"{virus.lower()}-virus-seq"
+    md['creator'] = None
     md['correction'] = None
     md['sourceFiles'] = "; ".join(
         [alignment_file.split("/")[-1], metadata_file.split("/")[-1]])
     md['version'] = version
-    md['measurementCategory'] = "viral sequencing"
     md['dateModified'] = dateModified
     md['updatedBy'] = updatedBy
     md['releaseDate'] = today
@@ -136,14 +136,14 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     if(saveFiles):
         # --- experiments ---
         experiments.to_json(
-            f"{output_dir}/experiments/viral_seq_experiments_{today}.json", orient="records")
+            f"{output_dir}/experiments/virus_seq_experiments_{today}.json", orient="records")
 
         # --- patients ---
         patients.to_json(
-            f"{output_dir}/patients/viral_seq_patients_{today}.json", orient="records")
+            f"{output_dir}/patients/virus_seq_patients_{today}.json", orient="records")
         # --- samples ---
         samples.to_json(
-            f"{output_dir}/samples/viral_seq_samples_{today}.json", orient="records")
+            f"{output_dir}/samples/virus_seq_samples_{today}.json", orient="records")
 
     return({"patient": patients, "sample": samples, "dataset": ds, "datadownload": all_dwnlds, "experiment": experiments})
 # sum(md.duplicated(subset = "accession"))
@@ -161,7 +161,7 @@ def getExptID(row, virus):
         expt_stub = "LASV_seq_"
     return(expt_stub + row.patientID)
 
-def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="ViralSeqData"):
+def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
 
     df = pd.DataFrame()

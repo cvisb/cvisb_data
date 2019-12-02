@@ -4,8 +4,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap } from "rxjs/operators";
+import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler, range } from 'rxjs';
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile, delay } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -293,6 +293,22 @@ export class ApiService {
     );
   }
 
+// testing different method of fetching all, using takeWhile: https://stackoverflow.com/questions/50079052/rxjs-recursively-call-api-until-all-items-are-fetched
+  fetchAll2(endpoint: string, qParams: HttpParams): Observable<any[]> {
+
+
+    return this.fetchOne(endpoint, qParams).pipe(
+      concatMap((data:any) => {
+        console.log(data)
+        return this.fetchOne(endpoint, qParams, data.next)
+      }),
+      takeWhile((results:any) => {
+        console.log(results);
+        return(results.next)
+      })
+    )
+  }
+
   /*
     Using MyGene fetch_all to grab all the data, unscored:
     https://dev.cvisb.org/api/patient/query?q=__all__&fetch_all=true
@@ -365,6 +381,7 @@ export class ApiService {
 
     return this.get(endpoint, params).pipe(
       map(response => {
+
         return {
           next: response['_scroll_id'],
           results: response['hits']

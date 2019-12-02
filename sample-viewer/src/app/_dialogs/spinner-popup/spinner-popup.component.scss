@@ -1,8 +1,14 @@
-.spinner-container {
+.spinner-group {
   & h2 {
     margin-top: 0;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-weight: 300;
     color: #39a6d8;
   }
+}
+
+.reminder {
+  font-weight: 300;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
