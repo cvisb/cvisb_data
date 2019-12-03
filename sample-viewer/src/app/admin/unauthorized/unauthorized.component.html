@@ -1,7 +1,7 @@
 <section>
   <h2>Unauthorized User</h2>
   <p>
-    To view {{page$ === "/" ? "this section" : page$ | async}}, you must be a member of the Center for Viral and Systems Biology consortium and be logged in.
+    To view {{page$ === "/" | async ? "this section" : page$ | async}}, you must be a member of the Center for Viral and Systems Biology consortium and be logged in.
   </p>
   <p>
     If you are a CViSB or VHFC member and would like access, please contact <a href="mailto:info@cvisb.org?subject=CViSB data access">info@cvisb.org</a>.
