@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { GetDatacatalogService, getDatasetsService } from '../../_services';
+import { Subscription } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
@@ -12,11 +13,13 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./citation.component.scss']
 })
 
-export class CitationComponent implements OnInit {
+export class CitationComponent implements OnInit, OnDestroy {
   currentYear: Date = new Date();
   cvisbCatalog: Object;
   host_url: string = environment.host_url;
   loading: boolean = false;
+  loadingSubscription: Subscription;
+  sourceSubscription: Subscription;
 
   patients = {
     sources: [
@@ -41,13 +44,13 @@ export class CitationComponent implements OnInit {
 
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
 
-    this.datasetSvc.loadingState$.subscribe(loading => {
+    this.loadingSubscription = this.datasetSvc.loadingState$.subscribe(loading => {
       this.loading = loading;
     })
   }
 
   ngOnInit() {
-    this.datasetSvc.getDatasetSources().subscribe(sources => {
+    this.sourceSubscription = this.datasetSvc.getDatasetSources().subscribe(sources => {
       this.experiments = sources;
     });
 
@@ -56,5 +59,11 @@ export class CitationComponent implements OnInit {
     //   console.log(sources)
     // });
   }
+
+  ngOnDestroy() {
+    this.sourceSubscription.unsubscribe();
+    this.loadingSubscription.unsubscribe();
+  }
+
 
 }
