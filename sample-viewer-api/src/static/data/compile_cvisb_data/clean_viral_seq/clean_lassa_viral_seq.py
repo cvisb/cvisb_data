@@ -10,6 +10,7 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 # DATADIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
 # alignment_file_S = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
 # alignment_file_L = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
+# alignment_file_L_uncurated = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2019.11.26.fasta"
 # metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.22.csv"
 #
 # import os
@@ -24,17 +25,20 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 #             'publisher', 'citation', 'creator',
 #             'data', 'correction', 'version',
 #             'updatedBy', 'dateModified', 'releaseDate', 'sourceFiles', 'dataStatus']
-#     verbose = True
-#     virus="Lassa"
-#     version="0.2"
-#     dateModified= today
-#     updatedBy='raph'
-def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, onlyCurated = True, virus="Lassa"):
+# verbose = True
+# virus="Lassa"
+# version="0.2"
+# today = datetime.today().strftime('%Y-%m-%d')
+# dateModified= today
+# updatedBy='raph'
+
+def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, output_dir, onlyCurated = False, virus="Lassa"):
     # --- constants ---
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
     exptCols = expt_cols.copy()
     exptCols.extend(['genbankID', 'inAlignment', 'cvisb_data', 'segment'])
+    dupes_path = f"{output_dir}/log/inconsistencies/experiments_LassaViralSeq_duplicatePatients_{dateModified}.csv"
 
     # --- read in metadata ---
     md = pd.read_csv(metadata_file)
@@ -85,12 +89,13 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
     md['batchID'] = None
     md['isControl'] = False
     md['experimentDate'] = md.date.apply(getExptDate)
-    md['sourceFiles'] = md.apply(lambda row: getSourceFiles(row, alignment_file_L, alignment_file_S, metadata_file), axis = 1)
+    md['sourceFiles'] = md.apply(lambda row: getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file), axis = 1)
 
     # --- clean up patient metadata ---
     # NOTE: SUPER IMPORTANT!
     # Nigeria recycles patient ID numbers (ugh), so `patientID` should be ignored.
     # Instead, use label, which concat's patientID, year, location
+    # For KGH ids, need to pull out the KGH part.
     md["rawID"] = md.label.apply(lambda x: "_".join(x.split("_")[0:-2]))
     md['KGH_id'] = md.rawID.apply(
         helpers.checkIDstructure).apply(lambda x: not x)
@@ -148,9 +153,8 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
     md['contentUrlIdentifier'] = md.accession
 
     # --- Merge together data and metadata ---
-    # TODO
-    Lseqs = getDNAseq(alignment_file_L, virus, segment="L")
-    Sseqs = getDNAseq(alignment_file_S, virus, segment="S")
+    Lseqs = getDNAseq(alignment_file_L, alignment_file_L_uncurated, virus, segment="L")
+    Sseqs = getDNAseq(alignment_file_S, None, virus, segment="S")
 
     seqs = pd.concat([Lseqs, Sseqs], ignore_index=True)
 
@@ -159,7 +163,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
     seq_only = merged[merged._merge == "right_only"]
     if(len(no_seq) > 0):
         helpers.log_msg(f"\tDATA ERROR: no sequence found in sequence alignment file for {len(no_seq)} patients:", verbose)
-        helpers.log_msg(no_seq  ['label'], verbose)
+        helpers.log_msg(no_seq[['label', 'segment']], verbose)
         helpers.log_msg("-" * 50, verbose)
     if(len(seq_only) > 0):
         helpers.log_msg(f"\tDATA ERROR: no patient found in sequence metadata file for {len(seq_only)} sequences:", verbose)
@@ -167,7 +171,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
         helpers.log_msg("-" * 50, verbose)
 
     # Make sure arrays are arrays
-    merged['data'] = merged.data.apply(helpers.listify)
+    # merged['data'] = merged.data.apply(helpers.listify)
 
     # --- partition data to different endpoints ---
     # Patient and sample data is a bit special; since Lassa has both S and L, there will be duplicate entries.  Remove them.
@@ -189,14 +193,16 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
             helpers.log_msg(dupeSegments, verbose)
         helpers.log_msg("-" * 50, verbose)
     else:
-        patients = md.loc[~ md.KGH_id, patient_cols]
+        patients = new_patients[patient_cols]
     # Double check all patient IDs are unique
     patients_dupePatientID = patients[patients.duplicated(subset = ['patientID'], keep=False)]
     if(len(patients_dupePatientID) > 0):
         helpers.log_msg(
-            f"DATA ERROR: {len(patients_dupePatientID)} duplicate patient IDs exist in the datat to be uploaded.", verbose)
-        helpers.log_msg(patients_dupePatientID, verbose)
+            f"DATA ERROR: {len(patients_dupePatientID)} duplicate patient IDs exist in the data to be uploaded. Saved to {dupes_path}", verbose)
+        dupe_patients4save = new_patients.loc[new_patients.patientID.isin(patients_dupePatientID.patientID), ["patientID", "label", "segment", "countryName", "infectionYear", "cohort", "outcome", "species", 'source_PMID']]
+        helpers.log_msg(dupe_patients4save, verbose)
         helpers.log_msg("-" * 50, verbose)
+        dupe_patients4save.sort_values("patientID").to_csv(dupes_path, index=False)
 
     samples = md.loc[~ md.KGH_id, sample_cols]
 
@@ -226,7 +232,6 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, metada
 # sum(md.duplicated(subset = "accession"))
 
 
-
 def getPrivateID(row):
     if(row.KGH_id):
         return(helpers.interpretID(row.rawID))
@@ -251,22 +256,54 @@ def getExptDate(date_str):
             return(date_str)
     return None
 
-def getSourceFiles(row, alignment_file_L, alignment_file_S, metadata_file):
+def getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file):
     if(row.segment == "S"):
         return("; ".join([alignment_file_S.split("/")[-1], metadata_file.split("/")[-1]]))
     if(row.segment == "L"):
-        return("; ".join([alignment_file_L.split("/")[-1], metadata_file.split("/")[-1]]))
+        if(row.curated):
+            return("; ".join([alignment_file_L.split("/")[-1], alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]]))
+        else:
+            return("; ".join([alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]]))
 
+def combineSeqs(row):
+    if(row.uncurated == row.uncurated):
+        if(row.curated == row.curated):
+            return([row.curated, row.uncurated])
+        else:
+            return([row.uncurated])
+    else:
+        return([row.curated])
 
-def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
+def getDNAseq(alignment_file, uncurated_alignment, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
+    if(uncurated_alignment is not None):
+        uncurated_seq = list(SeqIO.parse(uncurated_alignment, "fasta"))
+    else:
+        uncurated_seq = list()
 
-    df = pd.DataFrame()
+    # curated sequences
+    curated = pd.DataFrame(columns=['sequenceID', 'curated'])
     for seq in all_seq:
         seq_obj = [{
         seq_type: str(seq.seq).upper(),
         "@type": data_type,
         "virus": virus,
+        "curated": True,
         "virusSegment": segment}]
-        df = df.append(pd.DataFrame({'sequenceID': seq.id, 'data': seq_obj}))
-    return(df)
+        curated = curated.append(pd.DataFrame({'sequenceID': seq.id, 'curated': seq_obj}))
+
+    uncurated = pd.DataFrame(columns=['sequenceID', 'uncurated'])
+    for seq in uncurated_seq:
+        seq_obj = [{
+        seq_type: str(seq.seq).upper(),
+        "@type": data_type,
+        "virus": virus,
+        "curated": False,
+        "virusSegment": segment}]
+        uncurated = uncurated.append(pd.DataFrame({'sequenceID': seq.id, 'uncurated': seq_obj}))
+
+    # Merge together curated and uncurated
+    df = pd.merge(curated, uncurated, how="outer", on="sequenceID", indicator=True)
+    df['data'] = df.apply(combineSeqs, axis=1)
+    cols2return = ['sequenceID', 'data']
+    return(df[cols2return])
