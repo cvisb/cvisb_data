@@ -35,6 +35,7 @@ import { FilterFilesComponent } from './dataset/filter-files/filter-files.compon
 
 // import { FiltersModule } from './filters/filters.module';
 import { SvgIconModule } from './svg-icon/svg-icon.module';
+// import { TestComponent } from './test/test.component';
 // import { ViralSequencingModule } from './viral-sequencing/viral-sequencing.module';
 // import { DownloadBtnModule } from './download-btn/download-btn.module';
 // import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -47,7 +48,8 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     FilterFilesComponent,
     SampleMetadataComponent,
     SchemaComponent,
-    FooterComponent
+    FooterComponent,
+    // TestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
