@@ -363,16 +363,3 @@ def findInDict(id_dict, val, col2Return):
         return(id_dict[val][col2Return])
     except:
         pass
-
-
-
-def addError(df, condition, newError, errorCol="issue"):
-    df.loc[condition, errorCol] = df.loc[condition, errorCol].apply(lambda x: updateError(x, newError))
-    return(df)
-
-def updateError(origError, newError):
-    if((newError == "") | pd.isnull(newError)):
-        return(origError)
-    if((origError == origError) & pd.notnull(origError)):
-        return(origError + "; " + newError)
-    return(newError)
