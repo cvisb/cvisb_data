@@ -14,7 +14,7 @@
         <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
           {{dataset.name}}
         <!-- </a> -->
-        <span class="data-separator" *ngIf="idx < datasets$.length | async - 1"></span>
+        <span class="data-separator" *ngIf="idx < datasets$.length - 1 | async"></span>
       </ng-container>
     </div>
 
