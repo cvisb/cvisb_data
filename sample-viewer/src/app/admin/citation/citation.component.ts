@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { GetDatacatalogService, getDatasetsService } from '../../_services';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
@@ -13,13 +13,11 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./citation.component.scss']
 })
 
-export class CitationComponent implements OnInit, OnDestroy {
+export class CitationComponent implements OnInit {
   currentYear: Date = new Date();
   cvisbCatalog: Object;
   host_url: string = environment.host_url;
-  loading: boolean = false;
-  loadingSubscription: Subscription;
-  sourceSubscription: Subscription;
+  loading$: Observable<boolean>;
 
   patients = {
     sources: [
@@ -31,7 +29,7 @@ export class CitationComponent implements OnInit, OnDestroy {
       }]
   }
 
-  experiments: Object[];
+  experiments$: Observable<Object[]>;
 
   constructor(
     private titleSvc: Title,
@@ -44,26 +42,16 @@ export class CitationComponent implements OnInit, OnDestroy {
 
     this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
 
-    this.loadingSubscription = this.datasetSvc.loadingState$.subscribe(loading => {
-      this.loading = loading;
-    })
+    this.loading$ = this.datasetSvc.loadingState$;
   }
 
   ngOnInit() {
-    this.sourceSubscription = this.datasetSvc.getDatasetSources().subscribe(sources => {
-      this.experiments = sources;
-    });
+    this.experiments$ = this.datasetSvc.getDatasetSources();
 
     // 2019-11-14 seems to be working, but no sources in index so actually fails in POST request...
     // this.datasetSvc.getPatientSources().subscribe(sources => {
     //   console.log(sources)
     // });
   }
-
-  ngOnDestroy() {
-    this.sourceSubscription.unsubscribe();
-    this.loadingSubscription.unsubscribe();
-  }
-
 
 }
