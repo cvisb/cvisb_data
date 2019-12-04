@@ -19,7 +19,8 @@ export class FilterPatientIdComponent implements OnInit, OnDestroy {
   numberOfItemsFromEndBeforeFetchingMore = 10;
   loading = false;
   @ViewChild('selectpatients', { static: false }) public ngSelect: any;
-  authorized$: Observable<AuthState>;
+  // authorized$: Observable<AuthState>;
+  authorized$: Observable<any>;
 
   selectedPatients: string[] = [];
   inclContacts: boolean;
