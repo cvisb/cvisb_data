@@ -12,7 +12,7 @@ import { flatMapDeep } from 'lodash';
 
 export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
   @Input() countries: any[];
-  @Input() all_countries: AnalyserOptions[];
+  @Input() all_countries: any[];
   @Input() endpoint: string;
   patientSubscription: Subscription;
   sampleSubscription: Subscription;
@@ -79,7 +79,7 @@ export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
   addMissing() {
     let keys = this.countries.map(d => d.term);
     if (this.all_countries) {
-      let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
+      let missing_data = this.all_countries.filter((d:any) => !keys.includes(d.term));
 
       missing_data.forEach(d => {
         this.countries.push({ term: d.term, count: 0, disabled: true });
