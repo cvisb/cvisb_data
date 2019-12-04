@@ -17,11 +17,13 @@
     <!-- <mat-checkbox class="include-contacts" [(ngModel)]="inclContacts" (ngModelChange)="filterContacts($event)">include patient contacts</mat-checkbox> -->
   </div>
 
-  <div id="S-G-ids" class="container-column" *ngIf="authorized$.authorized | async">
+  <ng-container *ngIf="authorized$ | async as authorizedObj">
+  <div id="S-G-ids" class="container-column" *ngIf="authorizedObj.authorized">
     <mat-checkbox class="include-sid" [(ngModel)]="inclSID" (ngModelChange)="filterID($event, 'sID')">has S- or C-id</mat-checkbox>
 
     <mat-checkbox class="include-gid" [(ngModel)]="inclGID" (ngModelChange)="filterID($event, 'gID')">has G-id</mat-checkbox>
 
   </div>
+</ng-container>
 
 </div>
