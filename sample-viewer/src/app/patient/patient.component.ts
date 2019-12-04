@@ -1,37 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { AuthService, GetPatientsService } from '../_services';
-import { PatientArray } from '../_models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.scss']
 })
-export class PatientComponent implements OnInit {
-  patients: PatientArray;
+
+export class PatientComponent implements OnDestroy {
+  titleSubscription: Subscription;
 
   constructor(
     // private router: Router,
     private route: ActivatedRoute,
-    private authSvc: AuthService,
-    private patientSvc: GetPatientsService,
     private titleSvc: Title) {
-    route.data.subscribe(params => {
-      // change the title of the page
-      titleSvc.setTitle(params.title);
-    });
 
-    this.patientSvc.patientsState$.subscribe((pList: PatientArray) => {
-      // console.log(pList)
-      this.patients = pList;
-    })
+    this.titleSubscription = this.route.data.subscribe(params => {
+      // change the title of the page
+      this.titleSvc.setTitle(params.title);
+    });
 
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.titleSubscription.unsubscribe();
   }
 
 }
