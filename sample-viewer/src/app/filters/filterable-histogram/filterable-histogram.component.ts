@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, OnChanges, Inject, PLATFORM_ID, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, Inject, PLATFORM_ID, Input, ViewEncapsulation, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import * as d3 from 'd3';
 
-import { Observable, Subject, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, Subscription, Subject, BehaviorSubject, throwError } from 'rxjs';
 
 import { RequestParametersService, FilterTimepointsService } from '../../_services';
 import { D3Nested, RequestParam, RequestParamArray } from '../../_models';
@@ -79,7 +79,8 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
   yearLimits: Object;
   @Input() filterSubject: BehaviorSubject<Object>;
   @Input() filterState$: Observable<Object>;
-
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -121,13 +122,13 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
       if (this.filterable) {
         switch (this.endpoint) {
           case "patient":
-            this.requestSvc.patientParamsState$.subscribe(params => {
+            this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
               this.checkParams(params);
             })
             break;
 
           case "sample":
-            this.requestSvc.sampleParamsState$.subscribe(params => {
+            this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
               this.checkParams(params);
             })
             break;
@@ -139,6 +140,11 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
       // Wait till everything is loaded; then set the initial limits
       this.filterSubject.next({ lower: 0, upper: 3000, unknown: true });
     }
+  }
+
+  ngOnDestroy() {
+    this.sampleSubscription.unsubscribe();
+    this.patientSubscription.unsubscribe();
   }
 
   checkParams(params) {

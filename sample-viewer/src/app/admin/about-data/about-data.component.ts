@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GetDatacatalogService, AnchorService } from '../../_services';
 import { ActivatedRoute } from '@angular/router';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about-data',
@@ -13,6 +13,7 @@ export class AboutDataComponent implements OnInit {
   dataModified: string;
   releaseVersion: string;
   cvisbCatalog: Object;
+  routeSubscription: Subscription;
 
   constructor(private dataCatalogSvc: GetDatacatalogService,
     private route: ActivatedRoute,
@@ -29,9 +30,13 @@ export class AboutDataComponent implements OnInit {
 
   ngOnInit() {
     // # anchor tag handling
-    this.route.fragment.subscribe((anchor_tag) => {
+    this.routeSubscription = this.route.fragment.subscribe((anchor_tag) => {
       this.anchorSvc.clickAnchor(anchor_tag);
     })
+  }
+
+  ngOnDestroy() {
+    this.routeSubscription.unsubscribe();
   }
 
 }

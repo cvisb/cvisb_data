@@ -1,7 +1,7 @@
-import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { RequestParametersService } from '../../_services';
-
+import { Subscription } from 'rxjs';
 import { flatMapDeep } from 'lodash';
 
 @Component({
@@ -10,10 +10,12 @@ import { flatMapDeep } from 'lodash';
   styleUrls: ['./filter-location.component.scss']
 })
 
-export class FilterLocationComponent implements OnChanges {
-  @Input() countries;
-  @Input() all_countries;
+export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() countries: any[];
+  @Input() all_countries: AnalyserOptions[];
   @Input() endpoint: string;
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   params;
 
@@ -23,13 +25,13 @@ export class FilterLocationComponent implements OnChanges {
   ngOnInit() {
     switch (this.endpoint) {
       case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
+        this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
           this.params = params;
         })
         break;
 
       case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
+        this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
           this.params = params;
         })
         break;
@@ -41,7 +43,11 @@ export class FilterLocationComponent implements OnChanges {
       this.addMissing();
       this.updateCountrySelections(this.params)
     }
+  }
 
+  ngOnDestroy() {
+    this.patientSubscription.unsubscribe();
+    this.sampleSubscription.unsubscribe();
   }
 
   updateCountrySelections(params, fieldName = "country.identifier") {

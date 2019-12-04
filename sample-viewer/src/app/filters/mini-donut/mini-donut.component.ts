@@ -1,6 +1,7 @@
-import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, OnChanges, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+import { Subscription } from 'rxjs';
 import * as d3 from 'd3';
 
 // Event listeners to update the search query
@@ -13,8 +14,7 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniDonutComponent implements AfterViewInit, OnChanges {
-
+export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('donut', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private endpoint: string;
@@ -22,6 +22,8 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges {
   // Expected domain
   @Input() private cohorts: string[];
   @Input() private filterable: boolean = true;
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   // --- selected cohorts ---
   selectedCohorts: string[];
@@ -69,13 +71,13 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges {
 
       switch (this.endpoint) {
         case "patient":
-          this.requestSvc.patientParamsState$.subscribe(params => {
+          this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
             this.selectedCohorts = this.getSelected(params);
           })
           break;
 
         case "sample":
-          this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
             this.selectedCohorts = this.getSelected(params);
           })
           break;
@@ -86,6 +88,11 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges() {
     this.updatePlot();
+  }
+
+  ngOnDestroy() {
+    this.sampleSubscription.unsubscribe();
+    this.patientSubscription.unsubscribe();
   }
 
   createPlot() {

@@ -1,5 +1,6 @@
-import { Component, AfterViewInit, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, Input, ViewEncapsulation, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import * as d3 from 'd3';
 
@@ -15,7 +16,7 @@ import { RequestParametersService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MiniBarplotComponent implements AfterViewInit {
+export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
   @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private options: string[];
@@ -25,6 +26,8 @@ export class MiniBarplotComponent implements AfterViewInit {
   @Input() private filterable: boolean = true;
 
   private selectedOutcomes: string[];
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   // plot sizes
   private element: any;
@@ -69,13 +72,13 @@ export class MiniBarplotComponent implements AfterViewInit {
 
       switch (this.endpoint) {
         case "patient":
-          this.requestSvc.patientParamsState$.subscribe(params => {
+          this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
             this.selectedOutcomes = this.getSelected(params);
           })
           break;
 
         case "sample":
-          this.requestSvc.sampleParamsState$.subscribe(params => {
+          this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
             this.selectedOutcomes = this.getSelected(params);
           })
           break;
@@ -96,6 +99,11 @@ export class MiniBarplotComponent implements AfterViewInit {
 
   ngOnChanges() {
     this.updatePlot(1000);
+  }
+
+  ngOnDestroy() {
+    this.patientSubscription.unsubscribe();
+    this.sampleSubscription.unsubscribe();
   }
 
   createPlot() {
