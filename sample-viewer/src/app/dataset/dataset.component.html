@@ -1,4 +1,4 @@
-<div *ngIf="datasets$ | async">
+<div *ngIf="datasets$ | async as datasets">
 
   <div>
 
@@ -8,13 +8,13 @@
 
     <div class="container dataset-count-container">
       <div class="dataset-count">
-        {{datasets$.length | async }} available datasets:
+        {{datasets.length  }} available datasets:
       </div>
-      <ng-container *ngFor="let dataset of datasets$ | async; let idx = index">
+      <ng-container *ngFor="let dataset of datasets; let idx = index">
         <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
           {{dataset.name}}
         <!-- </a> -->
-        <span class="data-separator" *ngIf="idx < datasets$.length - 1 | async"></span>
+        <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
       </ng-container>
     </div>
 
@@ -23,7 +23,7 @@
 
   <div class="container dataset-list">
     <!-- DATASET LOOP -->
-    <div class="container dataset" *ngFor="let dataset of datasets$ | async" [id]="dataset.identifier">
+    <div class="container dataset" *ngFor="let dataset of datasets" [id]="dataset.identifier">
       <div class="dataset-header">
         <div class="container container-header">
 
