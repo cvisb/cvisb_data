@@ -32,7 +32,7 @@ ALIGNMENTS = [
      "filename": "EBOV_ORFS_2019.11.22.fasta",
      "curated": True,
      "description": "Ebola virus curated alignment",
-     "url": "https://github.com/cvisb/curated-alignments/blob/master/ebola/EBOV_ORFS_2019.11.22.fasta"}
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFS_2019.11.22.fasta"}
 ]
 
 
