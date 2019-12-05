@@ -47,9 +47,15 @@ export class FilterExperimentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.exptsSubscription.unsubscribe();
-    this.patientSubscription.unsubscribe();
-    this.sampleSubscription.unsubscribe();
+
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
+
 
   filterExpt(idx: number) {
     this.expts[idx].disabled = !this.expts[idx].disabled;

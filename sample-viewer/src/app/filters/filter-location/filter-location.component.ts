@@ -46,9 +46,14 @@ export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.patientSubscription.unsubscribe();
-    this.sampleSubscription.unsubscribe();
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
+
 
   updateCountrySelections(params, fieldName = "country.identifier") {
     if (params) {
@@ -79,7 +84,7 @@ export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
   addMissing() {
     let keys = this.countries.map(d => d.term);
     if (this.all_countries) {
-      let missing_data = this.all_countries.filter((d:any) => !keys.includes(d.term));
+      let missing_data = this.all_countries.filter((d: any) => !keys.includes(d.term));
 
       missing_data.forEach(d => {
         this.countries.push({ term: d.term, count: 0, disabled: true });

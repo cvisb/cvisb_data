@@ -102,8 +102,12 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.patientSubscription.unsubscribe();
-    this.sampleSubscription.unsubscribe();
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
 
   createPlot() {

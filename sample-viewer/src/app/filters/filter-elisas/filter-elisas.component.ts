@@ -58,11 +58,16 @@ export class FilterElisasComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.formSubscription.unsubscribe();
+ngOnDestroy() {
+  this.formSubscription.unsubscribe();
+  
+  if (this.patientSubscription) {
     this.patientSubscription.unsubscribe();
+  }
+  if (this.sampleSubscription) {
     this.sampleSubscription.unsubscribe();
   }
+}
 
   // Get method to grab the formArray within formGroup
   // https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698

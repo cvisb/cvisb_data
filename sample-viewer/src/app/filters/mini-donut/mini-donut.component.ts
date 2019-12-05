@@ -91,9 +91,14 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sampleSubscription.unsubscribe();
-    this.patientSubscription.unsubscribe();
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
+
 
   createPlot() {
     this.element = this.chartContainer.nativeElement;

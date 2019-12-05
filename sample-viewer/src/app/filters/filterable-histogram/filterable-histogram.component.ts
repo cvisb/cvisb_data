@@ -143,8 +143,12 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnDestroy() {
-    this.sampleSubscription.unsubscribe();
-    this.patientSubscription.unsubscribe();
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
 
   checkParams(params) {

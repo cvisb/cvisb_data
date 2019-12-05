@@ -57,9 +57,14 @@ export class FilterPatientIdComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.patientSubscription.unsubscribe();
-    this.sampleSubscription.unsubscribe();
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
   }
+
 
   // Used to reset, when the filters are cleared.
   checkParams(params) {
