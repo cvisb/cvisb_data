@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap, expand, reduce } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject, throwError, EMPTY } from 'rxjs';
+import { map, catchError, mergeMap } from "rxjs/operators";
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, PatientDownload, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { RequestParametersService } from './request-parameters.service';
@@ -38,28 +38,25 @@ export class GetPatientsService {
 
   constructor(
     public myhttp: MyHttpClient,
-    private route: ActivatedRoute,
-    private router: Router,
+    // private route: ActivatedRoute,
+    // private router: Router,
     private apiSvc: ApiService,
-    private requestSvc: RequestParametersService,
+    // private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
-    private authSvc: AuthService) {
+    // private authSvc: AuthService
+  ) {
 
-    // this.apiSvc.put('patient', [this.fakePatients[1]]);
-
-    this.authSvc.authState$.subscribe((authState: AuthState) => {
-      if (authState.authorized) {
-        // this.getPatients();
-      }
-    })
+    // this.authSvc.authState$.subscribe((authState: AuthState) => {
+    //   if (authState.authorized) {
+    //     // this.getPatients();
+    //   }
+    // })
 
     // this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
     //   console.log(params)
     //   this.request_params = params;
     //   // this.getPatients();
     // })
-
-
 
     // this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
     // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
@@ -142,66 +139,6 @@ export class GetPatientsService {
       )
       )
     )
-
-
-
-    // QUERY 1: get patients
-    // return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-    //   observe: 'response',
-    //   headers: new HttpHeaders()
-    //     .set('Accept', 'application/json'),
-    //   params: qParams.append("size", "10")
-    // }).pipe(
-    //   // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
-    //   mergeMap(patientResults =>
-    //     // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-    //     // QUERY 2: get expts associated with those patients
-    //     this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-    //       observe: 'response',
-    //       headers: new HttpHeaders()
-    //         .set('Accept', 'application/json'),
-    //       params: new HttpParams()
-    //         .set("q", "__all__")
-    //         .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
-    //         .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
-    //     })
-    //
-    //       // mergeMap(patientResults => {
-    //       //   let patients = patientResults['body']['hits'];
-    //       //   // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-    //       //   // QUERY 2: get expts associated with those patients
-    //       //   let patientIDs = patients.map(d => d.patientID);
-    //       //   console.log(patientIDs);
-    //       //
-    //       //   let exptParams = new HttpParams()
-    //       //     .set("q", "__all__")
-    //       //     .set("patientID", `"${patientIDs.join('","')}"`)
-    //       //     .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)");
-    //       //
-    //       //   return this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-    //       //     observe: 'response',
-    //       //     headers: new HttpHeaders()
-    //       //       .set('Accept', 'application/json'),
-    //       //     params: exptParams
-    //       //   })
-    //       .pipe(
-    //         map(expts => {
-    //           let patients = patientResults['body']['hits'];
-    //
-    //           patients.forEach(patient => {
-    //             let patientExpts = expts["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-    //             console.log(patientExpts);
-    //             patient['availableData'] = patientExpts;
-    //           })
-    //
-    //           console.log(patients)
-    //           console.log(expts)
-    //
-    //           return patients;
-    //         })
-    //       )
-    //   )
-    // )
   }
 
 
@@ -242,56 +179,19 @@ export class GetPatientsService {
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
-  fetchAll(qParams): Observable<any[]> {
-    return this.fetchOne(qParams).pipe(
-      expand((data, _) => {
-        console.log(data)
-        return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
-      }),
-      reduce((acc, data: any) => {
-        return acc.concat(data.results);
-      }, []),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (new Observable<any>())
-      }),
+  fetchAllPatients(qParams): Observable<PatientDownload[]> {
+    return this.apiSvc.fetchAll("patient", qParams).pipe(
       map((patients) => {
         // console.log("end of API")
-        console.log(patients)
+        // console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
-        patients = patients.filter(d => d).map(patient => {
+        patients = patients.map(patient => {
           return (new PatientDownload(patient, this.datePipe));
         })
         return (patients);
       })
     )
-  }
-
-  fetchOne(qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
-    let params = qParams
-      .append('fetch_all', "true");
-    if (scrollID) {
-      params = params.append('scroll_id', scrollID);
-
-    }
-    // console.log(params)
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(response => {
-          console.log(response)
-        return {
-          next: response['body']['_scroll_id'],
-          results: response['body']['hits']
-        };
-      }
-      )
-    );
   }
 
 }

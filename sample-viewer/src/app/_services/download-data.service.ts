@@ -97,7 +97,7 @@ export class DownloadDataService {
       case ("patients"):
         filename = `${this.today}_cvisb_${filetype}${this.auth_stub}.tsv`;
 
-        this.patientSvc.fetchAll(this.qParams).subscribe((patients: Patient[]) => {
+        this.patientSvc.fetchAllPatients(this.qParams).subscribe((patients: Patient[]) => {
           data = patients;
           this.parseData(patients, filetype, filename);
         });
