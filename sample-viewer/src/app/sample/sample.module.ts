@@ -4,12 +4,10 @@ import { CommonModule } from '@angular/common';
 import { SampleRoutingModule } from './sample-routing.module';
 
 // --- common helper modules ---
-import { MaterialModule } from '../material.module';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
-// import { PipesModule } from '../pipes/pipes.module';
-// import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
+import { MatButtonModule, MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
 
 // --- services ---
 import { SamplesResolver } from '../_services/samples.resolver';
@@ -23,7 +21,12 @@ import { SampleTableComponent } from './sample-table/sample-table.component';
   imports: [
     CommonModule,
     SampleRoutingModule,
-    MaterialModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTooltipModule,
     FiltersModule,
     DownloadBtnModule,
     SvgIconModule

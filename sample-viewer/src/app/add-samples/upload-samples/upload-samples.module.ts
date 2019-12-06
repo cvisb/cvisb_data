@@ -4,7 +4,14 @@ import { CommonModule } from '@angular/common';
 import { UploadSamplesRoutingModule } from './upload-samples-routing.module';
 
 // --- modules ---
-import { MaterialModule } from '../../material.module';
+import {
+  MatFormFieldModule,
+  MatTableModule, MatSelectModule,
+  MatCheckboxModule, MatSortModule, MatButtonModule,
+  MatPaginatorModule, MatStepperModule,
+  MatTooltipModule, MatRadioModule,
+  MatProgressBarModule
+} from '@angular/material';
 import { PipesModule } from '../../pipes/pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
@@ -18,14 +25,24 @@ import { PreviewDifferencesComponent } from '../preview-differences/preview-diff
 import { SubmitSamplesComponent } from '../submit-samples/submit-samples.component';
 import { CheckIdsComponent } from '../check-ids/check-ids.component';
 import { PreviewSamplesComponent } from '../preview-samples/preview-samples.component';
-import { CheckDupesComponent} from '../check-dupes/check-dupes.component';
-import { CombineDupesComponent} from '../combine-dupes/combine-dupes.component';
+import { CheckDupesComponent } from '../check-dupes/check-dupes.component';
+import { CombineDupesComponent } from '../combine-dupes/combine-dupes.component';
 
 @NgModule({
   imports: [
     CommonModule,
     UploadSamplesRoutingModule,
-    MaterialModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatStepperModule,
+    MatTooltipModule,
+    MatRadioModule,
+    MatProgressBarModule,
     PipesModule,
     FormsModule,
     ReactiveFormsModule

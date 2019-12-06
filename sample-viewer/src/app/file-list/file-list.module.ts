@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // --- modules ---
-import { MaterialModule } from '../material.module';
+import { MatTableModule, MatSortModule, MatPaginatorModule, MatProgressSpinnerModule } from '@angular/material';
 import { PipesModule } from '../pipes/pipes.module';
 
 // --- components ---
@@ -11,7 +11,10 @@ import { FileListComponent } from './file-list.component';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule,
     PipesModule
   ],
   declarations: [

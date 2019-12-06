@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { PatientTimepointsComponent } from './patient-timepoints.component';
 
-import { MaterialModule } from '../material.module';
+import { MatTooltipModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MatTooltipModule
   ],
   declarations: [PatientTimepointsComponent],
   exports: [PatientTimepointsComponent]

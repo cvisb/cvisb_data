@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UploadDataRoutingModule } from './upload-data-routing.module';
 
 // --- modules ---
-import { MaterialModule } from '../../material.module';
+import { MatSelectModule } from '@angular/material';
 
 // --- components ---
 import { AddDataComponent } from '../add-data/add-data.component';
@@ -13,8 +13,8 @@ import { DataUploadComponent } from '../data-upload/data-upload.component';
 @NgModule({
   imports: [
     CommonModule,
-    UploadDataRoutingModule,
-    MaterialModule
+    MatSelectModule,
+    UploadDataRoutingModule
   ],
   declarations: [
     AddDataComponent,

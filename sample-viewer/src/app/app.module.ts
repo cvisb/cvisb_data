@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
-import { MaterialModule } from './material.module';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { AdminModule, PipesModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
@@ -30,7 +30,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SchemaComponent } from './schema/schema.component';
-import { BulkEditComponent } from './sample/bulk-edit/bulk-edit.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
 
 // import { FiltersModule } from './filters/filters.module';
@@ -44,9 +43,8 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    BulkEditComponent,
     FilterFilesComponent,
-    SampleMetadataComponent,
+    // SampleMetadataComponent,
     SchemaComponent,
     FooterComponent,
     // TestComponent
@@ -59,7 +57,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MatProgressSpinnerModule,
     PipesModule,
     AppRoutingModule,
     AdminModule,
@@ -85,7 +83,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     }
   ],
   entryComponents: [
-    SampleMetadataComponent
+    // SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })

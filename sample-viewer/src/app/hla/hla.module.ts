@@ -17,10 +17,10 @@ import { ComparisonBarplotComponent } from './hla-comparison/comparison-barplot/
 
 // --- modules ---
 import { DatasetPageModule } from '../dataset-page/dataset-page.module';
-import { AlleleCirclePackingModule} from '../hla/allele-circle-packing/allele-circle-packing.module';
+import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { FiltersModule } from '../filters/filters.module';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 // --- services ---
 import { DatasetResolver } from '../_services/get-datasets.resolver';
@@ -34,7 +34,9 @@ import { PipesModule } from '../pipes/pipes.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
     FiltersModule,
     HlaRoutingModule,
     DatasetPageModule,

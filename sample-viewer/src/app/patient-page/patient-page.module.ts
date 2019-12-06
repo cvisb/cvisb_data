@@ -5,7 +5,6 @@ import { PatientPageRoutingModule } from './patient-page-routing.module';
 
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
@@ -13,6 +12,7 @@ import { FormatCitationModule } from '../format-citation/format-citation.module'
 import { FileListModule } from '../file-list/file-list.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { ProvenanceModule } from '../provenance/provenance.module';
+import { MatExpansionModule, MatTooltipModule, MatSnackBarModule } from '@angular/material';
 
 // --- components ---
 import { PatientPageComponent } from './patient-page.component';
@@ -38,8 +38,10 @@ import { CorrectionsComponent } from '../_dialogs/corrections/corrections.compon
     CommonModule,
     PatientPageRoutingModule,
     RouterModule,
-    MaterialModule,
     SvgIconModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     PipesModule,
     PatientTimepointsModule,
     FormatCitationModule,
