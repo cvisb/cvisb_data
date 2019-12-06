@@ -82,7 +82,7 @@ export class getDatasetsService {
           let summaryCalls = datasetResults.map((d: Dataset) => d.identifier).map((id: string) => this.getDatasetCounts(id));
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
-              let datasets = datasetResults['hits'];
+              let datasets = datasetResults;
               datasets.forEach((dataset: Dataset, idx: number) => {
                 dataset['counts'] = summaryData[idx];
               })
