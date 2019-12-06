@@ -58,14 +58,19 @@ export class getDatasetsService {
 
   getDatasets(id?: string, idVar?: string) {
     let qstring: string;
+    let fieldString: string = "";
+
     if (id && idVar) {
       qstring = `${idVar}:"${id}"`;
     } else {
+      // Get list of datasets
       qstring = "__all__";
+      fieldString = "name,description,identifer, keywords,dateModified"
     }
 
     let params = new HttpParams()
       .set("q", qstring)
+      .set("fields", fieldString);
 
     return this.apiSvc.get("dataset", params, 1000)
       .pipe(
