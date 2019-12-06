@@ -331,12 +331,14 @@ export class ApiService {
     *
     *   What seems to be the problem is that Angular is caching the results of the http call and will return that ad infinitim.
     *   It sees https://dev.cvisb.org/api/experiment/query?q=__all__&fetch_all=true&scroll_id=<SCROLLID> as being the same... so returns the results.
-    *   `scroll_id` is always the same and always exists, so the expand recursive loop never ends.
+    *   `scroll_id` is always the same and always exists, so the expand recursive loop never ends.  Issue with the headers:
+    *   key: "cache-control" value: ["max-age=604800, public"]
     *
     *   FIX: a bit of a hack, but adding in a `pageNum` parameter to the http call to trick Angular into thinking it's a new call.
     *   This param will be ignored by Biothings, so it passes the same query, but Angular will recognize it as a new call and trigger a request.
-
+    *   Decided to deal with it this way rather than changing the caching, since caching can be useful, of course.
     */
+
   fetchAll(endpoint: string, qParams: HttpParams): Observable<any[]> {
     return this.fetchOne(endpoint, qParams, 0).pipe(
       expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.counter, data.next) : EMPTY),
@@ -347,7 +349,7 @@ export class ApiService {
       catchError(e => {
         console.log(e)
         throwError(e);
-        return (new Observable<any>())
+        return (of(e))
       }),
       map((all_data) => {
         // last iteration returns undefined; filter out

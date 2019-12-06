@@ -257,7 +257,7 @@ export class GetPatientsService {
         return (new Observable<any>())
       }),
       map((patients) => {
-        console.log("end of API")
+        // console.log("end of API")
         console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
@@ -276,7 +276,7 @@ export class GetPatientsService {
       params = params.append('scroll_id', scrollID);
 
     }
-    console.log(params)
+    // console.log(params)
     return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
