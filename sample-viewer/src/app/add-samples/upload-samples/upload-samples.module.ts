@@ -8,7 +8,7 @@ import {
   MatFormFieldModule,
   MatTableModule, MatSelectModule,
   MatCheckboxModule, MatSortModule, MatButtonModule,
-  MatPaginatorModule, MatStepperModule,
+  MatPaginatorModule, MatStepperModule, MatExpansionModule,
   MatTooltipModule, MatRadioModule, MatIconModule,
   MatProgressBarModule
 } from '@angular/material';
@@ -41,6 +41,7 @@ import { CombineDupesComponent } from '../combine-dupes/combine-dupes.component'
     MatPaginatorModule,
     MatStepperModule,
     MatTooltipModule,
+    MatExpansionModule,
     MatIconModule,
     MatRadioModule,
     MatProgressBarModule,
