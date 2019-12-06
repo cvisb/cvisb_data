@@ -10,10 +10,10 @@ import { MatTooltipModule, MatExpansionModule } from '@angular/material';
   imports: [
     CommonModule,
     MatTooltipModule,
-    MatExpansionModule,
-    SampleMetadataComponent
+    MatExpansionModule
   ],
-  declarations: [PatientTimepointsComponent],
+  declarations: [PatientTimepointsComponent,
+    SampleMetadataComponent],
   exports: [PatientTimepointsComponent],
   entryComponents: [
     SampleMetadataComponent
