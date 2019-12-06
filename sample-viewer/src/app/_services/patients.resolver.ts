@@ -6,17 +6,17 @@ import { HttpParams } from '@angular/common/http';
 
 import { Observable } from "rxjs";
 
-import { Patient } from '../_models';
+import { PatientSummary } from '../_models';
 
 import { GetPatientsService } from './get-patients.service';
 
 @Injectable()
-export class PatientsResolver implements Resolve<Patient[]> {
+export class PatientsResolver implements Resolve<PatientSummary> {
 
   constructor(private patientSvc: GetPatientsService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PatientSummary> {
     let qparams = route.queryParams;
     let qstring = qparams.q ? qparams.q : new HttpParams().set("q", "__all__");
     // console.log("resolving with qparams = " + qstring);
