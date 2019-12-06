@@ -9,7 +9,7 @@ import {
   MatTableModule, MatSelectModule,
   MatCheckboxModule, MatSortModule, MatButtonModule,
   MatPaginatorModule, MatStepperModule,
-  MatTooltipModule, MatRadioModule,
+  MatTooltipModule, MatRadioModule, MatIconModule,
   MatProgressBarModule
 } from '@angular/material';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -41,6 +41,7 @@ import { CombineDupesComponent } from '../combine-dupes/combine-dupes.component'
     MatPaginatorModule,
     MatStepperModule,
     MatTooltipModule,
+    MatIconModule,
     MatRadioModule,
     MatProgressBarModule,
     PipesModule,
