@@ -11,7 +11,6 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
-import { latLng, tileLayer } from 'leaflet';
 
 import * as d3 from 'd3';
 
@@ -30,18 +29,6 @@ export class HomeComponent implements OnInit {
   releaseVersion: string;
   cvisbCatalog: Object;
   releaseNotes: ReleaseNote[];
-
-  // options = {
-  //   layers: [
-  //     tileLayer(
-  //       'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png',
-  //       // 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  //       // 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-  //       { minZoom: 5, maxZoom: 18, attribution: '...' })
-  //   ],
-  //   zoom: 5,
-  //   center: latLng(10.9281311, -0.518234)
-  // };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
