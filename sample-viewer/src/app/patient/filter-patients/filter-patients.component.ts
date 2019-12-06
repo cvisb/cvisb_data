@@ -14,7 +14,8 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray } fro
 })
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
-  public patientSummary$: Observable<PatientArray>;
+  public patientSummary: PatientArray;
+  // public patientSummary$: Observable<PatientArray>;
   public searchQuery: string = null;
   private authenticated: boolean;
   panelOpenState: boolean = true;
@@ -38,18 +39,18 @@ export class FilterPatientsComponent implements OnInit {
     // Check if the route contains parameters for filtering
     // ex: "q=country.identifier:(%22SL%22%20%22SL%22)%20AND%20cohort:(%22Lassa%22)%20AND%20patientID:(%22C-fakePatient-0001-1%22)%20OR%20relatedTo:(%22C-fakePatient-0001-1%22)"
     // "q=cohort:(%22Lassa%22%20%22Ebola%22)%20AND%20country.identifier:(%22SL%22)%20AND%20patientID:(%22C-fakePatient-0001-1%22%20%22G-fakePatient-0002%22)%20OR%20relatedTo:(%22C-fakePatient-0001-1%22%20%22G-fakePatient-0002%22)"
-    this.route.queryParams
-      .subscribe(params => {
-        // console.log(params)
-        if (params.hasOwnProperty("q")) {
-          // parse query string into an array.
-          let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.requestSvc.splitQuery(params.q);
-
-          // console.log(paramArray)
-          // announce new parameters
-          this.requestSvc.patientParamsSubject.next(paramArray);
-        }
-      })
+    // this.route.queryParams
+    //   .subscribe(params => {
+    //     // console.log(params)
+    //     if (params.hasOwnProperty("q")) {
+    //       // parse query string into an array.
+    //       let paramArray: RequestParamArray = params.q === "__all__" ? [] : this.requestSvc.splitQuery(params.q);
+    //
+    //       // console.log(paramArray)
+    //       // announce new parameters
+    //       this.requestSvc.patientParamsSubject.next(paramArray);
+    //     }
+    //   })
 
     // listen for changes in the request parameters.
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
