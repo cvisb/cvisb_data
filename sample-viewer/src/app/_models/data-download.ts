@@ -11,4 +11,6 @@ export class DataDownload {
   "dateModified": string;
   "experimentIDs": string[];
   "version": string;
+  _id?: string;
+  _score?: number;
 }
