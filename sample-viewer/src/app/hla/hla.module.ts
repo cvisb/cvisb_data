@@ -20,7 +20,7 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FiltersModule } from '../filters/filters.module';
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 
 // --- services ---
 import { DatasetResolver } from '../_services/get-datasets.resolver';
@@ -36,6 +36,7 @@ import { PipesModule } from '../pipes/pipes.module';
     ReactiveFormsModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     FiltersModule,
     HlaRoutingModule,
