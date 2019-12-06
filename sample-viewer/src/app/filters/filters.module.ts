@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // --- modules ---
-import { MaterialModule } from '../material.module';
+import {
+  MatAutocompleteModule, MatFormFieldModule, MatInputModule,
+  MatSelectModule, MatCheckboxModule, MatIconModule, MatButtonModule, MatTooltipModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { RouterModule } from '@angular/router';
+// import { PipesModule } from '../pipes/pipes.module';
 
 // --- components ---
 import { FilterSearchComponent } from './filter-search/filter-search.component';
@@ -26,6 +30,7 @@ import { FilterSampleGroupComponent } from './filter-sample-group/filter-sample-
 import { MiniDonutComponent } from './mini-donut/mini-donut.component';
 import { MiniBarplotComponent } from './mini-barplot/mini-barplot.component';
 import { FilterableHistogramComponent } from './filterable-histogram/filterable-histogram.component';
+// import { FilterExperimentUpsetComponent } from './filter-experiment-upset/filter-experiment-upset.component';
 
 @NgModule({
   imports: [
@@ -34,7 +39,14 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    MaterialModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatAutocompleteModule,
     SvgIconModule,
   ],
   declarations: [
@@ -43,6 +55,7 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
     FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
     FilterSampleTimepointsComponent, FilterableHistogramComponent, FilterSampleGroupComponent
+    //, FilterExperimentUpsetComponent
   ],
   exports: [
     FilterElisasComponent, FilterExperimentComponent, FilterFileTypeComponent,
@@ -50,6 +63,7 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     FilterSampleYearComponent, MiniBarplotComponent, MiniDonutComponent, FilterSearchComponent,
     FilterLabComponent, FilterSpeciesComponent, FilterSampleTypeComponent, FilterOrganizationComponent,
     FilterSampleTimepointsComponent, FilterableHistogramComponent, FilterSampleGroupComponent
+    //, FilterExperimentUpsetComponent
   ]
 })
 export class FiltersModule { }
