@@ -75,10 +75,8 @@ export class getDatasetsService {
     return this.apiSvc.get("dataset", params, 1000)
       .pipe(
         pluck("hits"),
-        tap(x => console.log(x)),
         // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
         mergeMap((datasetResults: any) => {
-          // console.log(datasetResults)
           let summaryCalls = datasetResults.map((d: Dataset) => d.identifier).map((id: string) => this.getDatasetCounts(id));
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
@@ -86,7 +84,6 @@ export class getDatasetsService {
               datasets.forEach((dataset: Dataset, idx: number) => {
                 dataset['counts'] = summaryData[idx];
               })
-              // console.log(datasets);
               return datasets.sort((a: Dataset, b: Dataset) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
             }),
             catchError(e => {
@@ -325,8 +322,8 @@ export class getDatasetsService {
 
           return this.apiSvc.post("patient", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
-              console.log(citations)
-              console.log(citationCts)
+              // console.log(citations)
+              // console.log(citationCts)
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
 
               let total_citations = counts.reduce((total: number, x) => total + x.count, 0);
