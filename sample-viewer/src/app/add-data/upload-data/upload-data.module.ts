@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UploadDataRoutingModule } from './upload-data-routing.module';
 
 // --- modules ---
-import { MatSelectModule } from '@angular/material';
+import { MatSelectModule, MatProgressBarModule } from '@angular/material';
 
 // --- components ---
 import { AddDataComponent } from '../add-data/add-data.component';
@@ -14,6 +14,7 @@ import { DataUploadComponent } from '../data-upload/data-upload.component';
   imports: [
     CommonModule,
     MatSelectModule,
+    MatProgressBarModule,
     UploadDataRoutingModule
   ],
   declarations: [
