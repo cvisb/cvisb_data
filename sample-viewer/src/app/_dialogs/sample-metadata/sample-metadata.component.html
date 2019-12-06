@@ -1,0 +1,56 @@
+<h4>{{ data['sampleID'] ? "Metadata for " + data['sampleID'] : "Metadata for sample in " + data['lab'] }}</h4>
+
+<div class="container">
+
+  <div *ngFor="let key of sample_vars" class="metadata-pair">
+    <ng-container [ngTemplateOutlet]="key === 'location' ? locations : flatData" [ngTemplateOutletContext]="{ data: data, key: key }"></ng-container>
+
+    <ng-template #flatData let-data="data" let-key="key">
+      <div class="metadata-key">
+        {{ key }}
+      </div>
+      <div class="metadata-value">
+        {{ data[key] || 'n/a' }}
+      </div>
+    </ng-template>
+
+
+    <ng-template #flatData let-data="data" let-key="key">
+      <div class="metadata-key">
+        {{ key }}
+      </div>
+      <div class="metadata-value">
+        {{ data[key] || 'n/a' }}
+      </div>
+    </ng-template>
+
+    <!-- LOCATION DATA -->
+    <ng-template #locations let-key="key" let-data="data">
+      <div class="metadata-key">
+        {{ key }}
+      </div>
+
+      <div *ngFor="let location of data[key]; let idx = index" class="location-group">
+        <mat-expansion-panel class="location-panel">
+          <mat-expansion-panel-header class="metadata-key">
+            <mat-panel-title>
+              {{ location.lab }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ location.numAliquots === 1 ? location.numAliquots + " aliquot" : location.numAliquots + " aliquots"}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <ng-container *ngFor="let loc_key of location | getKeys">
+            <div [ngTemplateOutlet]="flatData" [ngTemplateOutletContext]="{ data: location, key: loc_key }">
+            </div>
+          </ng-container>
+
+        </mat-expansion-panel>
+
+      </div>
+
+    </ng-template>
+  </div>
+
+</div>

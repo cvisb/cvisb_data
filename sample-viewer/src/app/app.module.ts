@@ -21,9 +21,6 @@ import { MyHttpClient } from './_services/http-cookies.service';
 import { DatePipe } from '@angular/common';
 import { DatasetResolver } from './_services/get-datasets.resolver';
 
-// --- Dialogue boxes ---
-import { SampleMetadataComponent } from './_dialogs/index';
-
 
 // --- Components ---
 import { AppComponent } from './app.component';
@@ -44,7 +41,6 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     AppComponent,
     HeaderComponent,
     FilterFilesComponent,
-    // SampleMetadataComponent,
     SchemaComponent,
     FooterComponent,
     // TestComponent
@@ -81,9 +77,6 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
       useClass: EncodeHttpParamsInterceptor,
       multi: true
     }
-  ],
-  entryComponents: [
-    // SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })

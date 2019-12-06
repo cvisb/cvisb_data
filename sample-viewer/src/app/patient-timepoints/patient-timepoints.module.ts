@@ -2,15 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PatientTimepointsComponent } from './patient-timepoints.component';
+import { SampleMetadataComponent } from '../_dialogs/sample-metadata/sample-metadata.component';
 
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule, MatExpansionModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule
   ],
   declarations: [PatientTimepointsComponent],
-  exports: [PatientTimepointsComponent]
+  exports: [PatientTimepointsComponent],
+  entryComponents: [
+    SampleMetadataComponent
+  ]
 })
 export class PatientTimepointsModule { }
