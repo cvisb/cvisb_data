@@ -4,18 +4,18 @@ import { Injectable } from "@angular/core";
 
 import { Observable } from "rxjs";
 
-import { Patient } from '../_models';
+import { PatientSummary } from '../_models';
 
 import { GetPatientsService } from './get-patients.service';
 
 @Injectable()
-export class AllPatientsResolver implements Resolve<Patient[]> {
+export class AllPatientsResolver implements Resolve<PatientSummary> {
 
     constructor(private patientSvc: GetPatientsService) {
 
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<any[]> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<PatientSummary> {
         return this.patientSvc.getAllPatientsSummary();
     }
 

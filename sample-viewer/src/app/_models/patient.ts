@@ -43,7 +43,6 @@ export class Patient {
   publisher: Organization;
 }
 
-
 // Constructor to de-nest nested objects for download.
 export class PatientDownload {
   version?: string;

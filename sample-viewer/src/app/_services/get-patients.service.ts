@@ -145,7 +145,7 @@ export class GetPatientsService {
   /*
   Gets summary, facetted stats for patients
    */
-  getPatientSummary(params: HttpParams): Observable<any> {
+  getPatientSummary(params: HttpParams): Observable<PatientSummary> {
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -169,7 +169,7 @@ export class GetPatientsService {
     );
   }
 
-  getAllPatientsSummary(): Observable<any> {
+  getAllPatientsSummary(): Observable<PatientSummary> {
     return (this.getPatientSummary(new HttpParams().set("q", "__all__")));
   }
 
