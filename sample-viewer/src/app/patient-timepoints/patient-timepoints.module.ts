@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PatientTimepointsComponent } from './patient-timepoints.component';
 import { SampleMetadataComponent } from '../_dialogs/sample-metadata/sample-metadata.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { MatTooltipModule, MatExpansionModule } from '@angular/material';
 
@@ -10,7 +11,8 @@ import { MatTooltipModule, MatExpansionModule } from '@angular/material';
   imports: [
     CommonModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    PipesModule
   ],
   declarations: [PatientTimepointsComponent,
     SampleMetadataComponent],
