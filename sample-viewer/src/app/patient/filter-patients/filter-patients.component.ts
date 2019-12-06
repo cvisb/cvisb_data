@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { tap, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
 import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray } from '../../_models';
@@ -14,7 +14,7 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray } fro
 })
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
-  public patientSummary: PatientArray;
+  public patientSummary$: Observable<PatientArray>;
   public searchQuery: string = null;
   private authenticated: boolean;
   panelOpenState: boolean = true;
@@ -60,9 +60,9 @@ export class FilterPatientsComponent implements OnInit {
       // console.log(http_params)
       // let param_string: string = this.requestSvc.reduceParams(qParams);
       // console.log(param_string)
-      this.patientSvc.getPatientSummary(http_params).subscribe(x => {
+      this.patientSvc.getPatientSummary(http_params).subscribe(summary => {
         // console.log(x)
-        this.patientSummary = x;
+        this.patientSummary = summary;
       })
     })
 
