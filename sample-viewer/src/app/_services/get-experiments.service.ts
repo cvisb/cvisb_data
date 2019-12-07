@@ -36,7 +36,7 @@ export class GetExperimentsService {
 
     return this.apiSvc.get('experiment', params, 0).pipe(
       pluck("facets"),
-      pluck("includedInDataset"),
+      pluck("includedInDataset.keyword"),
       pluck("terms"),
       map((expts: ExperimentCount[]) => {
         expts.forEach(d => {
