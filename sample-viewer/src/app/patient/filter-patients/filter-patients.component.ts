@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, of, pipe } from 'rxjs';
+import { mergeMap, map } from 'rxjs/operators';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
 import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, PatientSummary, ResolverPatientSummary } from '../../_models';
@@ -15,22 +16,11 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, Pati
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
   allPatientSummary: PatientSummary;
-  public patientSummary: PatientArray;
-  // public patientSummary$: Observable<PatientArray>;
+  public patientSummary$: Observable<PatientSummary>;
   public searchQuery: string = null;
   private authenticated: boolean;
   panelOpenState: boolean = true;
   qString: string;
-
-  // Parameters to set on the first call to the backend (e.g. max values, etc.)
-  first_call: boolean = true;
-  total_patients: number;
-  all_cohorts: string[];
-  all_patients: string[];
-  all_outcomes: string[];
-  all_years: number[];
-  all_countries: Object[];
-
 
   constructor(private patientSvc: GetPatientsService,
     private requestSvc: RequestParametersService,
@@ -92,33 +82,6 @@ export class FilterPatientsComponent implements OnInit {
     //   this.patientSvc.getPatientSummary(param_string);
     // })
 
-    // route.data.subscribe(params => {
-    //   // console.log('Filter getting new summarized data!')
-    //   // console.log(params)
-    //   let pList = params.all;
-    //   this.total_patients = pList.total;
-    //   this.all_patients = pList.patientIDs;
-    //   this.all_cohorts = pList.patientTypes.map(d => d.term);
-    //   this.all_outcomes = pList.patientOutcomes.map(d => d.term);
-    //
-    //   let years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
-    //
-    //   if (years.length === 0) {
-    //     this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
-    //   } else {
-    //     let minYear = Math.min(...years); // Majority of our data is before 2007; windsorize to < 2007
-    //     let maxYear = Math.max(...years);
-    //     this.all_years = [minYear, maxYear];
-    //   }
-    //
-    //   this.all_countries = pList.patientCountries;
-    //
-    //   this.patientSummary = params.patients;
-    //   // console.log(this.patientSummary)
-    //   // console.log(pList)
-    //
-    // });
-
     this.authSvc.authState$.subscribe((status: AuthState) => {
       this.authenticated = status.authorized;
     })
@@ -127,9 +90,20 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.route.snapshot.data)
-    console.log(this.route.data)
-    // this.route.snapshot.data.get()
+    let initial_data: ResolverPatientSummary = this.route.snapshot.data.patients;
+    this.allPatientSummary = initial_data.allPatientSummary;
+    this.patientSummary$ = of(initial_data.selectedPatientSummary);
+
+
+    // listen for changes in the request parameters.
+    this.patientSummary$ = this.requestSvc.patientParamsState$.pipe(
+      mergeMap((qParams: RequestParamArray) => {
+        let http_params = this.requestSvc.reducePatientParams(qParams);
+        return this.patientSvc.getPatientSummary(http_params);
+      })
+    ).pipe(
+      map(expts => expts)
+    )
   }
 
   clearFilters() {

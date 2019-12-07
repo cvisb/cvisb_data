@@ -3,6 +3,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GetExperimentsService, RequestParametersService } from '../../_services';
 
+import { ExperimentCount } from '../../_models/';
+
 @Component({
   selector: 'app-filter-experiment',
   templateUrl: './filter-experiment.component.html',
@@ -10,7 +12,7 @@ import { GetExperimentsService, RequestParametersService } from '../../_services
 })
 export class FilterExperimentComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
-  @Input() expts: any[];
+  @Input() expts: ExperimentCount[];
   exptsSubscription: Subscription;
   patientSubscription: Subscription;
   sampleSubscription: Subscription;

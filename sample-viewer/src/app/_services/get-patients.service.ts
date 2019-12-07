@@ -175,6 +175,8 @@ export class GetPatientsService {
         let minYear = Math.min(...years);
         let maxYear = Math.max(...years);
         patientSummary["yearDomain"] = [minYear, maxYear];
+        patientSummary["cohortDomain"] = patientSummary.patientTypes.map(d => d.term);
+        patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
         return (patientSummary)
       }),
       tap(x => console.log(x))

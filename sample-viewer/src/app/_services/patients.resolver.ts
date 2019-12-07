@@ -29,12 +29,10 @@ export class PatientsResolver implements Resolve<ResolverPatientSummary> {
         tap(x => console.log(x))
       );
     } else {
-      console.log("nothing selected!  calling the patient summary 1x.")
       return this.patientSvc.getAllPatientsSummary().pipe(
         map(patientSummary => {
           return ({ allPatientSummary: patientSummary, selectedPatientSummary: patientSummary })
-        }),
-        tap(x => console.log(x))
+        })
       );
     }
 

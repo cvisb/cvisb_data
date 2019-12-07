@@ -14,4 +14,5 @@ export class ExperimentCount {
   measurementCategory?: string;
   term: string;
   datasetName?: string;
+  disabled?: boolean;
 }

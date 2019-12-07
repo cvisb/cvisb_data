@@ -64,6 +64,8 @@ export class PatientSummary {
   patientCountries: ESFacetTerms[];
   patientYears: ESFacetTerms[];
   yearDomain?: number[];
+  cohortDomain?: string[];
+  outcomeDomain?: string[];
   exptTypes: ESFacetTerms[];
   experiments?: ExperimentCount[];
 
