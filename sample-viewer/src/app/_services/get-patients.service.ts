@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, PatientSummary } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { GetExperimentsService } from './get-experiments.service';
