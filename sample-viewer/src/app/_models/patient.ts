@@ -1,6 +1,8 @@
 import { DateRangePipe } from "../_pipes/date-range.pipe";
 import { Citation } from './citation';
 import { Organization } from './organization';
+import { ExperimentCount } from './experiment-object';
+import { ESFacetTerms, ESResult } from './es-result';
 
 export class Patient {
   // TODO: resort location based on inverse specificity
@@ -43,14 +45,63 @@ export class Patient {
   publisher: Organization;
 }
 
-export class NewPatientSummary {
+export class UnknownCount {
+  term: string;
+  count: number;
 
+  constructor(count: number) {
+    this.term = "unknown";
+    this.count = count;
+  }
+}
+
+export class PatientSummary {
+  total: number;
+  patientIDs: string[];
+  relatedIDs?: string[];
+  patientTypes: ESFacetTerms[];
+  patientOutcomes: ESFacetTerms[];
+  patientCountries: ESFacetTerms[];
+  patientYears: ESFacetTerms[];
+  yearDomain?: number[];
+  exptTypes: ESFacetTerms[];
+  experiments?: ExperimentCount[];
+
+  constructor(patients: ESResult) {
+    let facet_obj = patients.facets;
+    this.total = patients.total;
+
+    this.patientIDs = facet_obj["patientID.keyword"].terms.map((d: ESFacetTerms) => d.term);
+    this.patientTypes = facet_obj["cohort.keyword"].terms;
+    this.patientOutcomes = facet_obj["outcome.keyword"].terms;
+    this.patientYears = facet_obj["infectionYear"].terms;
+    this.patientCountries = facet_obj["country.identifier.keyword"].terms;
+
+    // Check for null values.
+    if (facet_obj["cohort.keyword"].total < this.total) {
+      this.patientTypes.push(new UnknownCount(this.total - facet_obj["cohort.keyword"].total));
+    }
+
+    if (facet_obj["outcome.keyword"].total < this.total) {
+      this.patientOutcomes.push(new UnknownCount(this.total - facet_obj["outcome.keyword"].total));
+    }
+
+    if (facet_obj["infectionYear"].total < this.total) {
+      this.patientYears.push(new UnknownCount(this.total - facet_obj["infectionYear"].total));
+    }
+
+    if (facet_obj["country.identifier.keyword"].total < this.total) {
+      this.patientCountries.push(new UnknownCount(this.total - facet_obj["country.identifier.keyword"].total));
+    }
+
+  }
 }
 
 export class ResolverPatientSummary {
-  allPatientSummary: NewPatientSummary;
-  selectedPatientSummary: NewPatientSummary;
+  allPatientSummary: PatientSummary;
+  selectedPatientSummary: PatientSummary;
 }
+
 
 // Constructor to de-nest nested objects for download.
 export class PatientDownload {

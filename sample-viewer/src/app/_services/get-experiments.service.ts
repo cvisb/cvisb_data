@@ -5,9 +5,9 @@ import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError } from 'rxjs/';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, pluck } from 'rxjs/operators';
 
-import { ExperimentObject } from "../_models";
+import { ExperimentCount } from "../_models";
 
 import { isPlatformBrowser } from '@angular/common';
 
@@ -28,16 +28,17 @@ export class GetExperimentsService {
     return (this.apiSvc.get('experiment', params));
   }
 
-  getExptCounts(): Observable<ExperimentObject[]> {
+  getExptCounts(): Observable<ExperimentCount[]> {
     let params = new HttpParams()
       .set('q', '__all__')
       .set('facets', 'includedInDataset.keyword')
       .set('facet_size', '1000')
 
     return this.apiSvc.get('experiment', params, 0).pipe(
-      map(results => {
-        let expts = results['facets']['includedInDataset.keyword']['terms'];
-
+      pluck("facets"),
+      pluck("includedInDataset"),
+      pluck("terms"),
+      map((expts: ExperimentCount[]) => {
         expts.forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['datasetName'] = filtered['datasetName'];

@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, NewPatientSummary } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, PatientSummary } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { GetExperimentsService } from './get-experiments.service';
@@ -144,7 +144,7 @@ export class GetPatientsService {
   /*
   Gets summary, facetted stats for patients
    */
-  getPatientSummary(params: HttpParams): Observable<NewPatientSummary> {
+  getPatientSummary(params: HttpParams): Observable<PatientSummary> {
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -159,19 +159,22 @@ export class GetPatientsService {
       params: params
     }).pipe(
       map((res: any) => {
-        // console.log(res);
         let summary = new PatientSummary(res.body)
-        // console.log(summary)
         return (summary);
       }
       )
     );
   }
 
-  getAllPatientsSummary(): Observable<NewPatientSummary> {
+  getAllPatientsSummary(): Observable<PatientSummary> {
     return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
       map(([patientSummary, expts]) => {
-        patientSummary["experiment_list"] = expts;
+        patientSummary["experiments"] = expts;
+
+        let years = patientSummary.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+        let minYear = Math.min(...years);
+        let maxYear = Math.max(...years);
+        patientSummary["yearDomain"] = [minYear, maxYear];
         return (patientSummary)
       }),
       tap(x => console.log(x))

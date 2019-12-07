@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
-import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, NewPatientSummary, ResolverPatientSummary } from '../../_models';
+import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, PatientSummary, ResolverPatientSummary } from '../../_models';
 
 @Component({
   selector: 'app-filter-patients',
@@ -14,7 +14,7 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, NewP
 })
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
-  allPatientSummary: NewPatientSummary;
+  allPatientSummary: PatientSummary;
   public patientSummary: PatientArray;
   // public patientSummary$: Observable<PatientArray>;
   public searchQuery: string = null;
@@ -92,32 +92,32 @@ export class FilterPatientsComponent implements OnInit {
     //   this.patientSvc.getPatientSummary(param_string);
     // })
 
-    route.data.subscribe(params => {
-      // console.log('Filter getting new summarized data!')
-      // console.log(params)
-      let pList = params.all;
-      this.total_patients = pList.total;
-      this.all_patients = pList.patientIDs;
-      this.all_cohorts = pList.patientTypes.map(d => d.term);
-      this.all_outcomes = pList.patientOutcomes.map(d => d.term);
-
-      let years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
-
-      if (years.length === 0) {
-        this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
-      } else {
-        let minYear = Math.min(...years); // Majority of our data is before 2007; windsorize to < 2007
-        let maxYear = Math.max(...years);
-        this.all_years = [minYear, maxYear];
-      }
-
-      this.all_countries = pList.patientCountries;
-
-      this.patientSummary = params.patients;
-      // console.log(this.patientSummary)
-      // console.log(pList)
-
-    });
+    // route.data.subscribe(params => {
+    //   // console.log('Filter getting new summarized data!')
+    //   // console.log(params)
+    //   let pList = params.all;
+    //   this.total_patients = pList.total;
+    //   this.all_patients = pList.patientIDs;
+    //   this.all_cohorts = pList.patientTypes.map(d => d.term);
+    //   this.all_outcomes = pList.patientOutcomes.map(d => d.term);
+    //
+    //   let years = pList.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+    //
+    //   if (years.length === 0) {
+    //     this.all_years = [2013, 2014, 2015, 2016, 2017, 2018, 2019];
+    //   } else {
+    //     let minYear = Math.min(...years); // Majority of our data is before 2007; windsorize to < 2007
+    //     let maxYear = Math.max(...years);
+    //     this.all_years = [minYear, maxYear];
+    //   }
+    //
+    //   this.all_countries = pList.patientCountries;
+    //
+    //   this.patientSummary = params.patients;
+    //   // console.log(this.patientSummary)
+    //   // console.log(pList)
+    //
+    // });
 
     this.authSvc.authState$.subscribe((status: AuthState) => {
       this.authenticated = status.authorized;
