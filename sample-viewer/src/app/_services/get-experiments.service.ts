@@ -7,7 +7,7 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError } from 'rxjs/';
 import { map, catchError } from 'rxjs/operators';
 
-import { ExperimentObject } from "_models";
+import { ExperimentObject } from "../_models";
 
 import { isPlatformBrowser } from '@angular/common';
 
