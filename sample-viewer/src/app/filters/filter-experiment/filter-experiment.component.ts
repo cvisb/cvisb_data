@@ -10,7 +10,7 @@ import { GetExperimentsService, RequestParametersService } from '../../_services
 })
 export class FilterExperimentComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
-  expts: any[];
+  @Input() expts: any[];
   exptsSubscription: Subscription;
   patientSubscription: Subscription;
   sampleSubscription: Subscription;
@@ -21,14 +21,11 @@ export class FilterExperimentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.exptsSubscription = this.exptSvc.getExptCounts().subscribe(expts => {
-      this.expts = expts;
-      if (this.expts && this.expts.length > 0) {
-        this.expts.forEach(d => {
-          d['disabled'] = true;
-        })
-      }
-    })
+    if (this.expts && this.expts.length > 0) {
+      this.expts.forEach(d => {
+        d['disabled'] = true;
+      })
+    }
 
     switch (this.endpoint) {
       case "patient":

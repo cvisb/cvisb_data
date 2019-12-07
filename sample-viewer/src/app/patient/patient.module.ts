@@ -21,7 +21,6 @@ import { PatientTableComponent } from './patient-table/patient-table.component';
 
 // --- services ---
 import { PatientsResolver } from '../_services/patients.resolver';
-import { AllPatientsResolver } from '../_services/allpatients.resolver';
 
 @NgModule({
   imports: [
@@ -47,8 +46,7 @@ import { AllPatientsResolver } from '../_services/allpatients.resolver';
     PatientTableComponent
   ],
   providers: [
-    PatientsResolver,
-    AllPatientsResolver
+    PatientsResolver
   ]
 })
 export class PatientModule { }
