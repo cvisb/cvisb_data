@@ -6,7 +6,7 @@ import { PatientRoutingModule } from './patient-routing.module';
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
 import {
-  MatExpansionModule, MatTableModule, MatIconModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressSpinnerModule
+  MatExpansionModule, MatTableModule, MatIconModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressSpinnerModule, MatButtonModule
 } from '@angular/material';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
@@ -33,6 +33,7 @@ import { PatientsResolver } from '../_services/patients.resolver';
     MatSortModule,
     MatTooltipModule,
     MatIconModule,
+    MatButtonModule,
     MatExpansionModule,
     FiltersModule,
     DownloadBtnModule,
