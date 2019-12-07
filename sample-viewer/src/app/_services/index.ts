@@ -7,7 +7,6 @@ export * from './patients.datasource';
 export * from './patients.datasource';
 export * from './samples.datasource';
 export * from './datadownloads.datasource';
-export * from './allpatients.resolver';
 export * from './patients.resolver';
 export * from './samples.resolver';
 export * from './file-metadata.service';
