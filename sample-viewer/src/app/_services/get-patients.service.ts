@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap } from "rxjs/operators";
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { map, catchError, mergeMap, tap } from "rxjs/operators";
+import { Observable, BehaviorSubject, throwError, forkJoin, pipe } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, NewPatientSummary } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
+import { GetExperimentsService } from './get-experiments.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
 
 import { flatMapDeep } from 'lodash';
-
-// import PATIENTS from '../../assets/data/patients.json';
-
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +39,7 @@ export class GetPatientsService {
     // private route: ActivatedRoute,
     // private router: Router,
     private apiSvc: ApiService,
+    private exptSvc: GetExperimentsService,
     // private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
     // private authSvc: AuthService
@@ -145,7 +144,7 @@ export class GetPatientsService {
   /*
   Gets summary, facetted stats for patients
    */
-  getPatientSummary(params: HttpParams): Observable<PatientSummary> {
+  getPatientSummary(params: HttpParams): Observable<NewPatientSummary> {
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -169,8 +168,14 @@ export class GetPatientsService {
     );
   }
 
-  getAllPatientsSummary(): Observable<PatientSummary> {
-    return (this.getPatientSummary(new HttpParams().set("q", "__all__")));
+  getAllPatientsSummary(): Observable<NewPatientSummary> {
+    return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
+      map(([patientSummary, expts]) => {
+        patientSummary["experiment_list"] = expts;
+        return (patientSummary)
+      }),
+      tap(x => console.log(x))
+    )
   }
 
 

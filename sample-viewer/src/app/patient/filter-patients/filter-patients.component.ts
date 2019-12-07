@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
-import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray } from '../../_models';
+import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, NewPatientSummary, ResolverPatientSummary } from '../../_models';
 
 @Component({
   selector: 'app-filter-patients',
@@ -14,6 +14,7 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray } fro
 })
 export class FilterPatientsComponent implements OnInit {
   public patients: Patient[];
+  allPatientSummary: NewPatientSummary;
   public patientSummary: PatientArray;
   // public patientSummary$: Observable<PatientArray>;
   public searchQuery: string = null;
@@ -126,6 +127,9 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log(this.route.snapshot.data)
+    console.log(this.route.data)
+    // this.route.snapshot.data.get()
   }
 
   clearFilters() {

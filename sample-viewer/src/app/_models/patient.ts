@@ -44,7 +44,12 @@ export class Patient {
 }
 
 export class NewPatientSummary {
-  
+
+}
+
+export class ResolverPatientSummary {
+  allPatientSummary: NewPatientSummary;
+  selectedPatientSummary: NewPatientSummary;
 }
 
 // Constructor to de-nest nested objects for download.

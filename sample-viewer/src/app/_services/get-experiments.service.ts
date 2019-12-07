@@ -7,6 +7,8 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError } from 'rxjs/';
 import { map, catchError } from 'rxjs/operators';
 
+import { ExperimentObject } from "_models";
+
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -26,7 +28,7 @@ export class GetExperimentsService {
     return (this.apiSvc.get('experiment', params));
   }
 
-  getExptCounts() {
+  getExptCounts(): Observable<ExperimentObject[]> {
     let params = new HttpParams()
       .set('q', '__all__')
       .set('facets', 'includedInDataset.keyword')

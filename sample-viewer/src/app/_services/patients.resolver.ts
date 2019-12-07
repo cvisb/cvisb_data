@@ -7,34 +7,32 @@ import { HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, pipe } from "rxjs";
 import { map, tap } from "rxjs/operators";
 
-import { NewPatientSummary } from '../_models';
+import { ResolverPatientSummary } from '../_models';
 
 import { GetPatientsService } from './get-patients.service';
 
 @Injectable()
-export class PatientsResolver implements Resolve<NewPatientSummary> {
+export class PatientsResolver implements Resolve<ResolverPatientSummary> {
 
   constructor(private patientSvc: GetPatientsService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NewPatientSummary> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ResolverPatientSummary> {
     let route_params = route.queryParams;
 
-    let all_params = new HttpParams().set("q", "__all__");
-
-    if(route_params.q) {
+    if (route_params.q) {
       console.log("different parameters selected!  calling the selected filtered patients + all the patients")
-      return forkJoin([this.patientSvc.getPatientSummary(all_params), this.patientSvc.getPatientSummary(route_params.q)]).pipe(
+      return forkJoin([this.patientSvc.getAllPatientsSummary(), this.patientSvc.getPatientSummary(route_params.q)]).pipe(
         map(([allSummary, selectedSummary]) => {
-          return({allPatientSummary: allSummary, selectedPatientSummary: selectedSummary})
+          return ({ allPatientSummary: allSummary, selectedPatientSummary: selectedSummary })
         }),
         tap(x => console.log(x))
       );
     } else {
       console.log("nothing selected!  calling the patient summary 1x.")
-      return this.patientSvc.getPatientSummary(route_params.q).pipe(
+      return this.patientSvc.getAllPatientsSummary().pipe(
         map(patientSummary => {
-          return({allPatientSummary: patientSummary, selectedPatientSummary: patientSummary})
+          return ({ allPatientSummary: patientSummary, selectedPatientSummary: patientSummary })
         }),
         tap(x => console.log(x))
       );
