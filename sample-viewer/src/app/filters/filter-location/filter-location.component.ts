@@ -4,6 +4,8 @@ import { RequestParametersService } from '../../_services';
 import { Subscription } from 'rxjs';
 import { flatMapDeep } from 'lodash';
 
+import { ESFacetTerms } from '../../_models';
+
 @Component({
   selector: 'app-filter-location',
   templateUrl: './filter-location.component.html',
@@ -11,8 +13,8 @@ import { flatMapDeep } from 'lodash';
 })
 
 export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() countries: any[];
-  @Input() all_countries: any[];
+  @Input() countries: ESFacetTerms[];
+  @Input() all_countries: ESFacetTerms[];
   @Input() endpoint: string;
   patientSubscription: Subscription;
   sampleSubscription: Subscription;
