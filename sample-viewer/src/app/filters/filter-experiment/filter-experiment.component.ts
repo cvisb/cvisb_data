@@ -13,7 +13,6 @@ import { ExperimentCount } from '../../_models/';
 export class FilterExperimentComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
   @Input() expts: ExperimentCount[];
-  exptsSubscription: Subscription;
   patientSubscription: Subscription;
   sampleSubscription: Subscription;
 
@@ -45,8 +44,6 @@ export class FilterExperimentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.exptsSubscription.unsubscribe();
-
     if (this.patientSubscription) {
       this.patientSubscription.unsubscribe();
     }
