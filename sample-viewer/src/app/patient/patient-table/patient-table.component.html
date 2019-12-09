@@ -17,9 +17,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">gID</th>
       <td mat-cell *matCellDef="let element">
         <span *ngIf="element.gID">
-        <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
-          {{id}} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
-        </span>
+          <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
+            {{id}} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
+          </span>
         </span>
       </td>
     </ng-container>
@@ -79,8 +79,12 @@
       <td mat-cell *matCellDef="let element">
 
         <span class="sex-icon" [ngClass]="element.gender">
-          <span *ngIf="element.gender === 'Female'"><i class="fas fa-venus"></i></span>
-        <span *ngIf="element.gender === 'Male'"><i class="fas fa-mars"></i></span>
+          <span *ngIf="element.gender === 'Female'">
+            <fa-icon [icon]="faVenus"></fa-icon>
+          </span>
+          <span *ngIf="element.gender === 'Male'">
+            <fa-icon [icon]="faMars"></fa-icon></i>
+          </span>
         </span>
 
       </td>
@@ -121,13 +125,13 @@
           {{elisa.virus}} {{elisa.assayType}}
           <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
             <mat-icon>control_point</mat-icon>
-            </span>
+          </span>
           <span id="negative" *ngIf="elisa.ELISAresult === 'negative'">
             <mat-icon>remove_circle_outline</mat-icon>
-            </span>
+          </span>
           <span id="unknown" *ngIf="!elisa.ELISAresult">
             <mat-icon>help_outline</mat-icon>
-            </span>
+          </span>
 
         </div>
 

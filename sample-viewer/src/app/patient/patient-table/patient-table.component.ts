@@ -7,6 +7,7 @@ import { merge } from "rxjs/";
 import { PatientsDataSource, RequestParametersService, AuthService, GetPatientsService } from '../../_services/';
 import { AuthState, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
+import{ faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-patient-table',
@@ -27,6 +28,10 @@ export class PatientTableComponent implements OnInit {
   // MatPaginator
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  // FontAwesome icons
+  faVenus = faVenus;
+  faMars = faMars;
 
   constructor(
     private router: Router,

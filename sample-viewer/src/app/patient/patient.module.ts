@@ -13,6 +13,7 @@ import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // --- components ---
 import { PatientComponent } from './patient.component';
@@ -39,7 +40,8 @@ import { PatientsResolver } from '../_services/patients.resolver';
     DownloadBtnModule,
     SvgIconModule,
     PipesModule,
-    PatientTimepointsModule
+    PatientTimepointsModule,
+    FontAwesomeModule
   ],
   declarations: [
     PatientComponent,

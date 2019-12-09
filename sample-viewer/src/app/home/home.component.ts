@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
+import { faDna, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 import * as d3 from 'd3';
 
@@ -29,6 +30,9 @@ export class HomeComponent implements OnInit {
   releaseVersion: string;
   cvisbCatalog: Object;
   releaseNotes: ReleaseNote[];
+  faDna = faDna;
+  faTable = faTable;
+  faUsers = faUsers;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

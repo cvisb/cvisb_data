@@ -142,7 +142,7 @@ a {
 }
 
 .patient {
-  background: $ebola-md;
+  background: lighten($ebola-md, 5%);
 }
 
 .samples {
@@ -207,7 +207,7 @@ a {
   margin: 7px 0;
 }
 
-i.section-icon {
+.section-icon {
   display: flex;
   justify-content: center;
   font-size: 3em;
