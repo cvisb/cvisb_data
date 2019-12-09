@@ -31,13 +31,13 @@
 
 
 <div class="pregnant" *ngIf="patient.pregnant === true || patient.pregnant === false">
-  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+  <fa-icon class="fas fa-lock private-icon" [icon]="faLock" matTooltip="private data; do not share"></fa-icon>
   <span class="variable-label">pregnant:</span>
   <span class="variable-value">{{ patient.pregnant === "false" ? "no" : patient.pregnant === "true" ? "yes" : "unknown" }}</span>
 </div>
 
 <div class="occupation" *ngIf="patient.occupation">
-  <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>
+  <fa-icon class="fas fa-lock private-icon" [icon]="faLock" matTooltip="private data; do not share"></fa-icon>
   <span class="variable-label">occupation:</span>
   <span class="variable-value">{{ patient.occupation }}</span>
 </div>

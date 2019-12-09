@@ -3,6 +3,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../../_services';
 import { AuthState, Patient } from "../../_models";
 
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-patient-warning',
   templateUrl: './patient-warning.component.html',
@@ -15,6 +17,7 @@ export class PatientWarningComponent implements OnInit {
   embargoed: boolean = false;
   preliminary: boolean = true;
   privateData: boolean;
+  faLock = faLock;
 
   constructor(private authSvc: AuthService) { }
 

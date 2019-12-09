@@ -13,6 +13,7 @@ import { FileListModule } from '../file-list/file-list.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { ProvenanceModule } from '../provenance/provenance.module';
 import { MatExpansionModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatIconModule } from '@angular/material';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // --- components ---
 import { PatientPageComponent } from './patient-page.component';
@@ -49,7 +50,8 @@ import { CorrectionsComponent } from '../_dialogs/corrections/corrections.compon
     FormatCitationModule,
     FileListModule,
     AlleleCirclePackingModule,
-    ProvenanceModule
+    ProvenanceModule,
+    FontAwesomeModule
   ],
   declarations: [
     PatientPageComponent,
