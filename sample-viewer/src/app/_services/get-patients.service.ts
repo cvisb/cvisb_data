@@ -104,7 +104,7 @@ export class GetPatientsService {
       .append('fields', fields.join(","))
       .append("sort", sortString);
 
-    return this.myhttp.get(`${environment.api_url}/api/patient}/query`, {
+    return this.myhttp.get(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
