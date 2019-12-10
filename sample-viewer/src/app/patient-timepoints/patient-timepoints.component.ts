@@ -14,7 +14,7 @@ import { Sample } from '../_models';
 
 export class PatientTimepointsComponent {
   @Input() showMissing: boolean = false;
-  samples: Sample[];
+  @Input() samples: Sample[];
 
   constructor(public dialog: MatDialog) { }
 
