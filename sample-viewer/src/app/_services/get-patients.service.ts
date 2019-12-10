@@ -91,12 +91,11 @@ export class GetPatientsService {
     console.log('calling patient data')
 
     let patientParams = qParams
-      .append('size', pageSize.toString())
       .append('from', (pageSize * pageNum).toString())
       .append('fields', fields.join(","))
       .append("sort", sortString);
 
-    return this.apiSvc.get('patient', patientParams).pipe(
+    return this.apiSvc.get('patient', patientParams, pageSize).pipe(
       pluck("hits"),
       tap(results => console.log(results)),
       mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
