@@ -125,7 +125,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
-    this.patientSvc.patientsSummarySubject.complete();
+    // this.patientSvc.patientsSummarySubject.complete();
     // this.requestSvc.patientParamsSubject.complete();
   }
 
