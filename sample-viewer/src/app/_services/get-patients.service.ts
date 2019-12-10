@@ -250,6 +250,7 @@ export class GetPatientsService {
             patient['patientLabel'] = patient.patientID;
           }
         }
+        console.log(patient)
         return(patient)
       })
     )
