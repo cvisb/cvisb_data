@@ -138,11 +138,15 @@ export class GetPatientsService {
       .append('facet_size', "10000");
 
     return this.apiSvc.get("patient", params, 0).pipe(
+      tap(x => console.log(x)),
       map((res: any) => {
         let summary = new PatientSummary(res)
         return (summary);
-      }
-      )
+      }),
+      catchError(e => {
+        console.log(e);
+        return (of(e))
+      })
     );
   }
 
@@ -162,7 +166,7 @@ export class GetPatientsService {
       }),
       catchError(e => {
         console.log(e);
-        return(of(e))
+        return (of(e))
       })
     )
   }
