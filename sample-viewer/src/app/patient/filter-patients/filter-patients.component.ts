@@ -25,7 +25,7 @@ export class FilterPatientsComponent implements OnInit {
   constructor(
     private patientSvc: GetPatientsService,
     private requestSvc: RequestParametersService,
-    // private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private authSvc: AuthService
   ) {
     // Listen for data changes from patient.dataSource
@@ -99,7 +99,9 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
-    //   let initial_data: ResolverPatientSummary = this.route.snapshot.data.patients;
+    console.log(this.route.snapshot.data);
+    let allPatientSummary: PatientSummary = this.route.snapshot.data.patients;
+    console.log(allPatientSummary);
     //   this.allPatientSummary = initial_data.allPatientSummary;
     //   this.patientSummary$ = of(initial_data.selectedPatientSummary);
     //

@@ -188,6 +188,7 @@ export class GetPatientsService {
         patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
         return (patientSummary)
       }),
+      tap(x => console.log(x)),
       catchError(e => {
         console.log(e);
         return (of(e))
