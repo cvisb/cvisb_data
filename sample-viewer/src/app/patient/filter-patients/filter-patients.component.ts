@@ -24,7 +24,7 @@ export class FilterPatientsComponent implements OnInit {
 
   constructor(
     private patientSvc: GetPatientsService,
-    // private requestSvc: RequestParametersService,
+    private requestSvc: RequestParametersService,
     // private route: ActivatedRoute,
     private authSvc: AuthService
   ) {
