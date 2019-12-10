@@ -23,10 +23,6 @@ export class PatientsDataSource implements DataSource<Patient> {
   private resultCountSubject = new BehaviorSubject<number>(0);
   public resultCountState$ = this.resultCountSubject.asObservable();
 
-  // Patient summary counts count
-  private patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
-  public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
-
   constructor(
     private patientSvc: GetPatientsService
   ) {
@@ -52,7 +48,7 @@ export class PatientsDataSource implements DataSource<Patient> {
         console.log(patientList)
         this.resultCountSubject.next(patientList['total']);
         this.patientsSubject.next(patientList['hits']);
-        this.patientsSummarySubject.next(patientList['summary']);
+        this.patientSvc.patientsSummarySubject.next(patientList['summary']);
       });
 
     // Working version, with single call to only get patients, not experiments
@@ -75,7 +71,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
-    this.patientsSummarySubject.complete();
+    this.patientSvc.patientsSummarySubject.complete();
   }
 
 }

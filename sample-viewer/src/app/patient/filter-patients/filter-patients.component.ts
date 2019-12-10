@@ -7,7 +7,6 @@ import { mergeMap, map } from 'rxjs/operators';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
 import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, PatientSummary, ResolverPatientSummary } from '../../_models';
-import { PatientsDataSource } from '../../_services/patients.datasource';
 
 @Component({
   selector: 'app-filter-patients',
@@ -23,16 +22,16 @@ export class FilterPatientsComponent implements OnInit {
   panelOpenState: boolean = true;
   qString: string;
 
-  constructor(private patientSvc: GetPatientsService,
+  constructor(
+    private patientSvc: GetPatientsService,
     private requestSvc: RequestParametersService,
     private route: ActivatedRoute,
-    private authSvc: AuthService,
-    private dataSource: PatientsDataSource
+    private authSvc: AuthService
   ) {
     // Listen for data changes from patient.dataSource
-    this.patientSummary$ = this.dataSource.patientsSummaryState$;
+    this.patientSummary$ = this.patientSvc.patientsSummaryState$;
 
-    this.dataSource.patientsSummaryState$.subscribe(data => {
+    this.patientSvc.patientsSummaryState$.subscribe(data => {
       console.log(data)
       this.allPatientSummary = data;
     })
@@ -100,20 +99,20 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
-  //   let initial_data: ResolverPatientSummary = this.route.snapshot.data.patients;
-  //   this.allPatientSummary = initial_data.allPatientSummary;
-  //   this.patientSummary$ = of(initial_data.selectedPatientSummary);
-  //
-  //
-  //   // listen for changes in the request parameters.
-  //   this.patientSummary$ = this.requestSvc.patientParamsState$.pipe(
-  //     mergeMap((qParams: RequestParamArray) => {
-  //       let http_params = this.requestSvc.reducePatientParams(qParams);
-  //       return this.patientSvc.getPatientSummary(http_params);
-  //     })
-  //   ).pipe(
-  //     map(expts => expts)
-  //   )
+    //   let initial_data: ResolverPatientSummary = this.route.snapshot.data.patients;
+    //   this.allPatientSummary = initial_data.allPatientSummary;
+    //   this.patientSummary$ = of(initial_data.selectedPatientSummary);
+    //
+    //
+    //   // listen for changes in the request parameters.
+    //   this.patientSummary$ = this.requestSvc.patientParamsState$.pipe(
+    //     mergeMap((qParams: RequestParamArray) => {
+    //       let http_params = this.requestSvc.reducePatientParams(qParams);
+    //       return this.patientSvc.getPatientSummary(http_params);
+    //     })
+    //   ).pipe(
+    //     map(expts => expts)
+    //   )
   }
 
   clearFilters() {

@@ -27,6 +27,10 @@ export class GetPatientsService {
 
   all_data;
 
+  // Patient summary counts count
+  public patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
+  public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
+
   // Event listener for the patient array.
   public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
   public patientsState$ = this.patientsSubject.asObservable();
