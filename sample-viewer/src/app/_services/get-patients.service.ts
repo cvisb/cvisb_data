@@ -233,9 +233,11 @@ export class GetPatientsService {
       tap(data => console.log(data)),
       map(data => {
         if(data.total !== 1){
+          console.log("More than one patient returned!")
           throwError(of("More than one patient returned!"))
         } else {
-          let patient = data.hits[0];
+          console.log("One patient returned!")
+          patient = data.hits[0];
 
           // Double check that altID is an array
           if (!Array.isArray(patient.alternateIdentifier)) {
@@ -249,6 +251,7 @@ export class GetPatientsService {
           } else {
             patient['patientLabel'] = patient.patientID;
           }
+          console.log(patient)
         }
         console.log(patient)
         return(patient)
