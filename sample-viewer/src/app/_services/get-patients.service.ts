@@ -31,10 +31,6 @@ export class GetPatientsService {
   public patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
   public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
 
-  // Event listener for the patient array.
-  public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
-  public patientsState$ = this.patientsSubject.asObservable();
-
   // Array of variables to calculate the summary stats for.
   summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "country.identifier.keyword", "infectionYear"];
 
