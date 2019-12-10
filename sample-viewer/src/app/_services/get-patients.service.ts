@@ -96,20 +96,20 @@ export class GetPatientsService {
       .append("sort", sortString);
 
     return this.apiSvc.get('patient', patientParams, pageSize).pipe(
-      pluck("hits"),
       tap(results => console.log(results)),
       mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
         tap(associatedData => console.log(associatedData)),
         map(associatedData => {
           console.log(patientResults)
+          let patientData = patientResults['hits'];
 
-          patientResults.forEach(patient => {
+          patientData.forEach(patient => {
             let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
             patient['availableData'] = patientExpts;
             patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
           })
 
-          return ({ hits: patientResults, total: patientResults['total'] });
+          return ({ hits: patientData, total: patientResults['total'] });
         }),
         tap(d => console.log(d)),
         catchError(e => {
