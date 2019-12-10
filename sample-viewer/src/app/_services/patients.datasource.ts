@@ -4,7 +4,7 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { GetPatientsService } from './get-patients.service';
 import { RequestParametersService } from './request-parameters.service';
-import { catchError, finalize, tap } from "rxjs/operators";
+import { catchError, finalize, tap, switchMap, map } from "rxjs/operators";
 
 import { Patient, PatientSummary } from '../_models';
 
@@ -12,7 +12,6 @@ import { intersectionWith, isEqual } from 'lodash';
 
 
 export class PatientsDataSource implements DataSource<Patient> {
-
   private patientsSubject = new BehaviorSubject<Patient[]>([]);
 
   // Loading spinner
@@ -41,20 +40,69 @@ export class PatientsDataSource implements DataSource<Patient> {
     2) Use those patientIDs to query /experiment
     3) Merge the two results together.
      */
-    this.patientSvc.loadPatients(pageNum, pageSize, sortVar, sortDirection).pipe(
-      catchError(() => of([])),
+    this.requestSvc.patientParamsState$.pipe(
+      tap(params => console.log(params)),
+      map(params => this.requestSvc.reducePatientParams(params)),
+      tap(params => console.log(params)),
+      catchError(e => {
+        console.log(e)
+        return (of(e))
+      }),
       finalize(() => {
-        console.log("finished loading patients")
+        console.log("finished outer subscription to patientParamsState")
         this.loadingSubject.next(false)
       }),
-      tap(x => console.log(x))
-    )
-      .subscribe(patientList => {
-        this.resultCountSubject.next(patientList['total']);
-        this.patientsSubject.next(patientList['hits']);
-        this.patientSvc.patientsSummarySubject.next(patientList['summary']);
-        this.loadingSubject.next(false)
-      });
+      // debounce(() => interval(5000)),
+      switchMap(params => this.patientSvc.getPatients(params, pageNum, pageSize, sortVar, sortDirection).pipe(
+        catchError(e => {
+          console.log(e)
+          return (of(e))
+        }),
+        finalize(() => {
+          console.log("finished loading patients inner function")
+          this.loadingSubject.next(false)
+        }),
+        tap(x => console.log(x))
+      ))
+    ).subscribe(patientList => {
+      console.log(patientList)
+      this.resultCountSubject.next(patientList['total']);
+      this.patientsSubject.next(patientList['hits']);
+      this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+      this.loadingSubject.next(false)
+    })
+    //   .pipe(
+    //     catchError(e => {
+    //       console.log(e)
+    //       return(of(e))
+    //     }),
+    //     finalize(() => {
+    //       console.log("finished loading patients")
+    //       this.loadingSubject.next(false)
+    //     }),
+    //     tap(x => console.log(x))
+    //   )
+    //     .subscribe(patientList => {
+    //       this.resultCountSubject.next(patientList['total']);
+    //       this.patientsSubject.next(patientList['hits']);
+    //       this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+    //       this.loadingSubject.next(false)
+    //     });
+    // )
+    // this.patientSvc.loadPatients(pageNum, pageSize, sortVar, sortDirection).pipe(
+    //   catchError(() => of([])),
+    //   finalize(() => {
+    //     console.log("finished loading patients")
+    //     this.loadingSubject.next(false)
+    //   }),
+    //   tap(x => console.log(x))
+    // )
+    //   .subscribe(patientList => {
+    //     this.resultCountSubject.next(patientList['total']);
+    //     this.patientsSubject.next(patientList['hits']);
+    //     this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+    //     this.loadingSubject.next(false)
+    //   });
 
     // Working version, with single call to only get patients, not experiments
     // this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
@@ -77,7 +125,7 @@ export class PatientsDataSource implements DataSource<Patient> {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
     this.patientSvc.patientsSummarySubject.complete();
-    this.requestSvc.patientParamsSubject.complete();
+    // this.requestSvc.patientParamsSubject.complete();
   }
 
 }
