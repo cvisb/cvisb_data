@@ -132,9 +132,8 @@ export class GetPatientsService {
       .append('size', "0");
 
     return this.apiSvc.get("patient", params, 0).pipe(
-      tap(res => console.log(res)),
       map((res: any) => {
-        let summary = new PatientSummary(res.body)
+        let summary = new PatientSummary(res)
         return (summary);
       }
       )
