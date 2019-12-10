@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap, tap } from "rxjs/operators";
-import { Observable, BehaviorSubject, throwError, forkJoin, pipe } from 'rxjs';
+import { Observable, BehaviorSubject, throwError, forkJoin, pipe, of } from 'rxjs';
+import { map, catchError, mergeMap, tap, pluck, switchMap } from "rxjs/operators";
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, Patient, Sample, ESFacetTerms } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { GetExperimentsService } from './get-experiments.service';
@@ -36,32 +36,13 @@ export class GetPatientsService {
 
   constructor(
     public myhttp: MyHttpClient,
-    // private route: ActivatedRoute,
-    // private router: Router,
     private apiSvc: ApiService,
     private exptSvc: GetExperimentsService,
-    // private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
-    // private authSvc: AuthService
   ) {
-
-    // this.authSvc.authState$.subscribe((authState: AuthState) => {
-    //   if (authState.authorized) {
-    //     // this.getPatients();
-    //   }
-    // })
-
-    // this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-    //   console.log(params)
-    //   this.request_params = params;
-    //   // this.getPatients();
-    // })
-
-    // this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
-    // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
   }
 
-  sortFunc(sortVar): string {
+  sortFunc(sortVar: string): string {
     // Sorting func for ES.
 
     let numericVars = ["age"];
@@ -79,67 +60,65 @@ export class GetPatientsService {
     return (`${sortVar}.keyword`);
   }
 
+  /*
+  getPatients()
 
-  getPatient(id: string): any {
-    // temp hard-coded shim.
-    // return (this.patients.filter((d: any) => d.patientID === id)[0]);
-    return this.apiSvc.getOne('patient', id, 'patientID')
+  Combo function that forkJoins (calls both asynchronously) getPatientData and getPatientSummary
+  to simultaneously trigger a call to the paginated data function and the summarized facetted object.
+   */
+  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
+    return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
+      map(([patientData, patientSummary]) => {
+        patientData['summary'] = patientSummary;
+        return (<any>patientData)
+      })
+    )
   }
 
+
   /*
-  Call to get both patients and their associated experiments.
+  Call to get both patients and their associated experiments/samples.
   1) Get paginated results for patients.
-  2) Use those patientIDs to query /experiment
+  2) Use those patientIDs to query /experiment and /sample
   3) Merge the two results together.
    */
-  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string) {
-
+  getPatientData(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "",
+    sortDirection: string, fields: string[] = ["gID", "sID", "patientID", "alternateIdentifier", "cohort", "outcome", "elisa", "country", "age", "gender", "relatedTo"]): Observable<{ hits: Patient[], total: number }> {
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
-    let params = qParams
+    let patientParams = qParams
       .append('size', pageSize.toString())
       .append('from', (pageSize * pageNum).toString())
+      .append('fields', fields.join(","))
       .append("sort", sortString);
 
-    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set("q", "__all__")
-          .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-          .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
-          .set("size", "0")
-          .set("facet_size", "10000")
-      }).pipe(
-        map(expts => {
-          let patients = patientResults['body']['hits'];
+    return this.apiSvc.get('patient', patientParams).pipe(
+      pluck("hits"),
+      mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
+        tap(associatedData => console.log(associatedData)),
+        map(associatedData => {
+          console.log(patientResults)
 
-          patients.forEach(patient => {
-            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
+          patientResults.forEach(patient => {
+            let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
             patient['availableData'] = patientExpts;
+            patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
           })
 
-          return ({ hits: patients, total: patientResults['body']['total'] });
+          return ({ hits: patientResults, total: patientResults['body']['total'] });
         }),
+        tap(d => console.log(d)),
         catchError(e => {
           console.log(e)
           throwError(e);
-          return (new Observable<any>())
+          return (of(e))
         })
       )
       )
     )
   }
-
 
   /*
   Gets summary, facetted stats for patients
@@ -152,12 +131,7 @@ export class GetPatientsService {
       .append('facet_size', "10000")
       .append('size', "0");
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
+    return this.apiSvc.get("patient", params, 0).pipe(
       map((res: any) => {
         let summary = new PatientSummary(res.body)
         return (summary);
@@ -178,8 +152,26 @@ export class GetPatientsService {
         patientSummary["cohortDomain"] = patientSummary.patientTypes.map(d => d.term);
         patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
         return (patientSummary)
-      }),
-      tap(x => console.log(x))
+      })
+    )
+  }
+
+  getPatientAssociatedData(ids: string[]): Observable<{ experiments: ESFacetTerms[], samples: Sample[] }> {
+    let exptParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${ids.join('","')}"`)
+      .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
+      .set("size", "0")
+      .set("facet_size", "10000");
+
+    let sampleParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${ids.join('","')}"`);
+
+    return forkJoin([this.apiSvc.get("experiment", exptParams, 0), this.apiSvc.get("samples", sampleParams)]).pipe(
+      map(([expts, samples]) => {
+        return ({ experiments: expts['facets']['privatePatientID.keyword']['terms'], samples: samples['hits'] })
+      })
     )
   }
 

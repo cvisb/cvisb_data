@@ -1,22 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { SampleMetadataComponent } from '../_dialogs';
 
 import { Sample } from '../_models';
-import { ApiService } from '../_services';
-
-import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin } from 'rxjs';
-import { map, catchError } from "rxjs/operators";
-
-import { environment } from "../../environments/environment";
-
-// services
-import { MyHttpClient } from '../_services/http-cookies.service';
-
-
 
 @Component({
   selector: 'app-patient-timepoints',
@@ -24,27 +12,11 @@ import { MyHttpClient } from '../_services/http-cookies.service';
   styleUrls: ['./patient-timepoints.component.scss']
 })
 
-export class PatientTimepointsComponent implements OnInit {
-  @Input() alternateIDs: string[];
+export class PatientTimepointsComponent {
   @Input() showMissing: boolean = false;
-  samples: Object[] = [];
+  samples: Sample[];
 
-  constructor(private apiSvc: ApiService,
-    public dialog: MatDialog,
-    private myhttp: MyHttpClient) { }
-
-  ngOnInit() {
-    let params = new HttpParams()
-      .set("patientID", this.alternateIDs[0])
-      .set("q", "__all__");
-
-    this.apiSvc.getPaginated('sample', params).subscribe(res => {
-      this.samples = res['hits'];
-      this.samples.sort((a: any, b: any) => +a.visitCode - +b.visitCode)
-    })
-
-
-  }
+  constructor(public dialog: MatDialog) { }
 
   showSampleMD($event: Event, sample): void {
     $event.preventDefault();

@@ -29,28 +29,13 @@ export class PatientsDataSource implements DataSource<Patient> {
 
   }
 
-  loadPatients(qParams, pageNum: number, pageSize: number, sortVar, sortDirection) {
+  loadPatients(qParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
     // console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
-    // this.apiSvc.getMultipleRequests('patient', qParams, sortVar, sortDirection).pipe(
-    //   catchError(() => of([])),
-    //   finalize(() => this.loadingSubject.next(false))
-    // )
-    //   .subscribe(patientArray => {
-    //     console.log(patientArray);
-    //
-    //     let patientList = intersectionWith(... patientArray.map(d => d['hits']), isEqual);
-    //     console.log(patientList)
-    //     // this.resultCountSubject.next(patientList['total'])
-    //     // this.patientsSubject.next(patientList['hits'])
-    //     this.resultCountSubject.next(patientList.length)
-    //     this.patientsSubject.next(patientList)
-    //   });
-
     /*
-    Call to get both patients and their associated experiments.
+    Call to get both patients and their associated samples/experiments.
     1) Get paginated results for patients.
     2) Use those patientIDs to query /experiment
     3) Merge the two results together.
@@ -60,9 +45,9 @@ export class PatientsDataSource implements DataSource<Patient> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(patientList => {
-        // console.log(patientList)
-        this.resultCountSubject.next(patientList['total'])
-        this.patientsSubject.next(patientList['hits'])
+        console.log(patientList)
+        this.resultCountSubject.next(patientList['total']);
+        this.patientsSubject.next(patientList['hits']);
       });
 
     // Working version, with single call to only get patients, not experiments
