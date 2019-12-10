@@ -114,6 +114,11 @@ export class GetPatientsService {
         tap(results => console.log(results)),
         pluck("body"),
         pluck("hits"),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (of(e))
+        }),
         mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
           tap(associatedData => console.log(associatedData)),
           map(associatedData => {
@@ -193,7 +198,6 @@ export class GetPatientsService {
 
   getPatientAssociatedData(ids: string[]): Observable<{ experiments: ESFacetTerms[], samples: Sample[] }> {
     console.log('calling getting associated data')
-    console.log(ids)
     let exptParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`)
