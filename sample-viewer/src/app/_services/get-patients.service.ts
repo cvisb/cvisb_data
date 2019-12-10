@@ -77,7 +77,7 @@ export class GetPatientsService {
 
 
   /*
-  Call to get both patients and their associated experiments/samples.
+  Call to get both patients and their associated experiments/samples for display in the patient table.
   1) Get paginated results for patients.
   2) Use those patientIDs to query /experiment and /sample
   3) Merge the two results together.

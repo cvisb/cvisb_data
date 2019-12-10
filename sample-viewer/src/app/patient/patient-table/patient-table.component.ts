@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { tap } from 'rxjs/operators';
-import { merge } from "rxjs/";
+import { merge, Observable } from "rxjs/";
 
 import { PatientsDataSource, RequestParametersService, AuthService, GetPatientsService } from '../../_services/';
 import { AuthState, RequestParamArray } from '../../_models';
@@ -17,7 +17,7 @@ import{ faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
 
 export class PatientTableComponent implements OnInit {
   patientSource: PatientsDataSource;
-  selectedLength: number;
+  selectedLength$: Observable<number>;
   qParams: HttpParams;
 
   displayedColumns: string[];
@@ -40,9 +40,9 @@ export class PatientTableComponent implements OnInit {
     private patientSvc: GetPatientsService,
     private authSvc: AuthService
   ) {
-    this.route.data.subscribe(params => {
-      this.selectedLength = params.patients.total;
-    });
+    // this.route.data.subscribe(params => {
+    //   this.selectedLength = params.patients.total;
+    // });
 
     this.authSvc.authState$.subscribe((status: AuthState) => {
       if (status.authorized) {
@@ -79,9 +79,7 @@ export class PatientTableComponent implements OnInit {
       this.loadPatientPage();
     })
 
-    this.patientSource.resultCountState$.subscribe(ct => {
-      this.selectedLength = ct;
-    });
+    this.selectedLength$ = this.patientSource.resultCountState$;
 
   }
 

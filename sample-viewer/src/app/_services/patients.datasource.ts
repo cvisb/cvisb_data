@@ -6,7 +6,7 @@ import { ApiService } from "./api.service";
 import { GetPatientsService } from './get-patients.service';
 import { catchError, finalize } from "rxjs/operators";
 
-import { Patient } from '../_models';
+import { Patient, PatientSummary } from '../_models';
 
 import { intersectionWith, isEqual } from 'lodash';
 
@@ -22,6 +22,10 @@ export class PatientsDataSource implements DataSource<Patient> {
   // Patient count
   private resultCountSubject = new BehaviorSubject<number>(0);
   public resultCountState$ = this.resultCountSubject.asObservable();
+
+  // Patient summary counts count
+  private patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
+  public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
 
   constructor(
     private patientSvc: GetPatientsService
@@ -48,6 +52,7 @@ export class PatientsDataSource implements DataSource<Patient> {
         console.log(patientList)
         this.resultCountSubject.next(patientList['total']);
         this.patientsSubject.next(patientList['hits']);
+        this.patientsSummarySubject.next(patientList['summary']);
       });
 
     // Working version, with single call to only get patients, not experiments
@@ -70,6 +75,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
+    this.patientsSummarySubject.complete();
   }
 
 }
