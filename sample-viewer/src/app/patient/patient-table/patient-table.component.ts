@@ -55,7 +55,7 @@ export class PatientTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.patientSource = new PatientsDataSource(this.patientSvc);
+    this.patientSource = new PatientsDataSource(this.patientSvc, this.requestSvc);
     this.patientSource.loadPatients(0, 10, "", null);
 
     // can't use an async pipe, because need to initialize the paginator at some point.

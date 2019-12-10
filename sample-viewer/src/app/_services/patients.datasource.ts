@@ -3,6 +3,7 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { GetPatientsService } from './get-patients.service';
+import { RequestParametersService } from './request-parameters.service';
 import { catchError, finalize, tap } from "rxjs/operators";
 
 import { Patient, PatientSummary } from '../_models';
@@ -23,7 +24,8 @@ export class PatientsDataSource implements DataSource<Patient> {
   public resultCountState$ = this.resultCountSubject.asObservable();
 
   constructor(
-    private patientSvc: GetPatientsService
+    private patientSvc: GetPatientsService,
+    private requestSvc: RequestParametersService
   ) {
 
   }
@@ -51,6 +53,7 @@ export class PatientsDataSource implements DataSource<Patient> {
         this.resultCountSubject.next(patientList['total']);
         this.patientsSubject.next(patientList['hits']);
         this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+        this.loadingSubject.next(false)
       });
 
     // Working version, with single call to only get patients, not experiments
@@ -74,6 +77,7 @@ export class PatientsDataSource implements DataSource<Patient> {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
     this.patientSvc.patientsSummarySubject.complete();
+    this.requestSvc.patientParamsSubject.complete();
   }
 
 }

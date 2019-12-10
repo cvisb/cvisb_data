@@ -8,7 +8,9 @@
 
             <div class="container clear-filter">
               <button mat-stroked-button (click)="clearFilters()">clear filters</button>
-              <app-filter-search endpoint="patient" *ngIf="authenticated"></app-filter-search>
+              <ng-container *ngIf="authenticated$ | async as loggedIn">
+                <app-filter-search endpoint="patient" *ngIf="loggedIn.authorized"></app-filter-search>
+              </ng-container>
             </div>
           </div>
         </mat-panel-title>
@@ -19,7 +21,8 @@
 
       <div class="filter-container">
         <div class="filter-item filter-patient-types">
-          <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" [all_cohorts]="allPatientSummary.cohortDomain" [all_outcomes]="allPatientSummary.outcomeDomain" endpoint="patient"></app-filter-patient-type>
+          <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" [all_cohorts]="allPatientSummary.cohortDomain" [all_outcomes]="allPatientSummary.outcomeDomain" endpoint="patient">
+          </app-filter-patient-type>
         </div>
 
         <div>

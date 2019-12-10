@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { Observable, of, pipe } from 'rxjs';
+import { Observable, Subscription, of, pipe } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 
 import { GetPatientsService, RequestParametersService, AuthService } from '../../_services/';
@@ -18,7 +18,7 @@ export class FilterPatientsComponent implements OnInit {
   allPatientSummary: PatientSummary;
   public patientSummary$: Observable<PatientSummary>;
   public searchQuery: string = null;
-  private authenticated: boolean;
+  private authenticated$: Observable<AuthState>;
   panelOpenState: boolean = true;
   // qString: string;
 
@@ -86,17 +86,18 @@ export class FilterPatientsComponent implements OnInit {
     //   this.patientSvc.getPatientSummary(param_string);
     // })
 
-    this.authSvc.authState$.subscribe((status: AuthState) => {
-      this.authenticated = status.authorized;
-    })
-
+    this.authenticated$ = this.authSvc.authState$;
   }
 
 
   ngOnInit() {
+    console.log(this.route.snapshot.data)
     this.route.data.subscribe(data => {
+      console.log(this.route.data)
       this.allPatientSummary = data.patients;
     })
+
+    console.log(this.allPatientSummary)
 
     // let allPatientSummary: PatientSummary = this.route.snapshot.data.patients;
     // console.log(allPatientSummary);

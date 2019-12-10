@@ -80,7 +80,7 @@ export class GetPatientsService {
       tap(params => {
         this.qParams = this.requestSvc.reducePatientParams(params);
       }),
-      debounce(() => interval(5000)),
+      // debounce(() => interval(5000)),
       switchMap(params => this.getPatients(this.qParams, pageNum, pageSize, sortVar, sortDirection)),
       finalize(() => console.log("finished with get patients service!"))
     )
