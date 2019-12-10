@@ -76,7 +76,7 @@ export class GetPatientsService {
 
   loadPatients(pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
     return this.requestSvc.patientParamsState$.pipe(
-      tap(params => console.log(params)),
+      // tap(params => console.log(params)),
       tap(params => {
         this.qParams = this.requestSvc.reducePatientParams(params);
       }),

@@ -42,15 +42,15 @@ export class PatientsDataSource implements DataSource<Patient> {
      */
     this.requestSvc.patientParamsState$.pipe(
       tap(() => this.loadingSubject.next(true)),
-      tap(params => console.log(params)),
+      // tap(params => console.log(params)),
       map(params => this.requestSvc.reducePatientParams(params)),
-      tap(params => console.log(params)),
+      // tap(params => console.log(params)),
       catchError(e => {
         console.log(e)
         return (of(e))
       }),
       finalize(() => {
-        console.log("finished outer subscription to patientParamsState")
+        // console.log("finished outer subscription to patientParamsState")
         this.loadingSubject.next(false)
       }),
       // debounce(() => interval(5000)),
@@ -60,10 +60,10 @@ export class PatientsDataSource implements DataSource<Patient> {
           return (of(e))
         }),
         finalize(() => {
-          console.log("finished loading patients inner function")
+          // console.log("finished loading patients inner function")
           this.loadingSubject.next(false)
-        }),
-        tap(x => console.log(x))
+        })
+        // tap(x => console.log(x))
       ))
     ).subscribe(patientList => {
       console.log(patientList)

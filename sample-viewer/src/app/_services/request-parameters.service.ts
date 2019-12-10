@@ -71,8 +71,8 @@ export class RequestParametersService {
 
   // --- Communal update search parameters function ---
   updateParams(endpoint: string, newParam: RequestParam) {
-    console.log('newParam')
-    console.log(newParam)
+    // console.log('newParam')
+    // console.log(newParam)
 
     // if key already exists, replace the data.
     // otherwise push to the array of endpoints
