@@ -30,7 +30,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   }
 
   loadPatients(qParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
-    // console.log('calling patients.dataSource:loadPatients')
+    console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
@@ -49,7 +49,7 @@ export class PatientsDataSource implements DataSource<Patient> {
         console.log(patientList)
         this.resultCountSubject.next(patientList['total']);
         this.patientsSubject.next(patientList['hits']);
-        this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+        // this.patientSvc.patientsSummarySubject.next(patientList['summary']);
       });
 
     // Working version, with single call to only get patients, not experiments

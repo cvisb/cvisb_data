@@ -70,13 +70,15 @@ export class GetPatientsService {
   Combo function that forkJoins (calls both asynchronously) getPatientData and getPatientSummary
   to simultaneously trigger a call to the paginated data function and the summarized facetted object.
    */
-  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
+  // getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
+  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
+  console.log("calling fork join")
     return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
       tap(([patientData, patientSummary]) => console.log(patientData)),
       tap(([patientData, patientSummary]) => console.log(patientSummary)),
       map(([patientData, patientSummary]) => {
         patientData['summary'] = patientSummary;
-        return (<any>patientData)
+        return (patientData)
       })
     )
   }
