@@ -94,8 +94,6 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.route.snapshot.data);
-
     this.route.data.subscribe(data => {
       this.allPatientSummary = data.patients;
     })

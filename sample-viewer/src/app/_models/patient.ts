@@ -72,7 +72,6 @@ export class PatientSummary {
   experiments?: ExperimentCount[];
 
   constructor(patients: ESResult) {
-    console.log(patients)
     let facet_obj = patients.facets;
     this.total = patients.total;
 

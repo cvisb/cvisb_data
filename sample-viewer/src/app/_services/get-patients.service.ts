@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError, forkJoin, pipe, of } from 'rxjs';
-import { map, catchError, mergeMap, tap, pluck, switchMap } from "rxjs/operators";
+import { Observable, BehaviorSubject, throwError, forkJoin, pipe, of, interval } from 'rxjs';
+import { map, catchError, mergeMap, tap, pluck, switchMap, debounce } from "rxjs/operators";
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
@@ -80,6 +80,7 @@ export class GetPatientsService {
       tap(params => {
         this.qParams = this.requestSvc.reducePatientParams(params);
       }),
+      debounce(() => interval(5000)),
       switchMap(params => this.getPatients(this.qParams, pageNum, pageSize, sortVar, sortDirection))
     )
   }

@@ -48,7 +48,6 @@ export class PatientsDataSource implements DataSource<Patient> {
       tap(x => console.log(x))
     )
       .subscribe(patientList => {
-        console.log(patientList)
         this.resultCountSubject.next(patientList['total']);
         this.patientsSubject.next(patientList['hits']);
         this.patientSvc.patientsSummarySubject.next(patientList['summary']);
