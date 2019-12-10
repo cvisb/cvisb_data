@@ -123,7 +123,7 @@ export class GetPatientsService {
           tap(associatedData => console.log(associatedData)),
           map(associatedData => {
             console.log(patientResults)
-            let patientData = patientResults['hits'];
+            let patientData = patientResults;
 
             patientData.forEach(patient => {
               let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
