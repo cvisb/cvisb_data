@@ -226,10 +226,11 @@ export class GetPatientsService {
    */
   getPatientPage(patientID: string, fields: string[] = [""]): Observable<Patient> {
     let patientParams = new HttpParams()
-    .set("q", `patientID:"patientID"`);
+    .set("q", `patientID:"${patientID}"`);
     let patient: Patient;
 
     return this.getPatientData(patientParams, 0, 2, "", null, fields).pipe(
+      tap(data => console.log(data)),
       map(data => {
         if(data.total !== 1){
           throwError(of("More than one patient returned!"))
