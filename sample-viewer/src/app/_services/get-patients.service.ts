@@ -109,7 +109,7 @@ export class GetPatientsService {
             patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
           })
 
-          return ({ hits: patientResults, total: patientResults['body']['total'] });
+          return ({ hits: patientResults, total: patientResults['total'] });
         }),
         tap(d => console.log(d)),
         catchError(e => {
