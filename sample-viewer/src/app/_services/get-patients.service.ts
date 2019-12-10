@@ -88,6 +88,8 @@ export class GetPatientsService {
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
+    console.log('calling patient data')
+
     let patientParams = qParams
       .append('size', pageSize.toString())
       .append('from', (pageSize * pageNum).toString())
@@ -96,6 +98,7 @@ export class GetPatientsService {
 
     return this.apiSvc.get('patient', patientParams).pipe(
       pluck("hits"),
+      tap(results => console.log(results)),
       mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
         tap(associatedData => console.log(associatedData)),
         map(associatedData => {
@@ -124,6 +127,7 @@ export class GetPatientsService {
   Gets summary, facetted stats for patients
    */
   getPatientSummary(params: HttpParams): Observable<PatientSummary> {
+    console.log('calling patient summary')
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -141,6 +145,7 @@ export class GetPatientsService {
   }
 
   getAllPatientsSummary(): Observable<PatientSummary> {
+    console.log('calling ALL patient summary')
     return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
       map(([patientSummary, expts]) => {
         patientSummary["experiments"] = expts;
@@ -157,6 +162,8 @@ export class GetPatientsService {
   }
 
   getPatientAssociatedData(ids: string[]): Observable<{ experiments: ESFacetTerms[], samples: Sample[] }> {
+    console.log('calling getting associated data')
+    console.log(ids)
     let exptParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`)
@@ -168,13 +175,18 @@ export class GetPatientsService {
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`);
 
-    return forkJoin([this.apiSvc.get("experiment", exptParams, 0), this.apiSvc.get("samples", sampleParams)]).pipe(
+    return forkJoin([this.apiSvc.get("experiment", exptParams, 0), this.apiSvc.get("sample", sampleParams)]).pipe(
+      tap(([expts, samples]) => console.log(expts)),
+      tap(([expts, samples]) => console.log(samples)),
       map(([expts, samples]) => {
         return ({ experiments: expts['facets']['privatePatientID.keyword']['terms'], samples: samples['hits'] })
       })
     )
   }
 
+  /*
+  Returns data for an individual patient, to display on its own page.
+   */
   getPatientPage(patientID: string) {
 
   }
