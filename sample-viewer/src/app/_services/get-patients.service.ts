@@ -22,10 +22,7 @@ import { flatMapDeep } from 'lodash';
 })
 
 export class GetPatientsService {
-  // patients: Patient[];
-  request_params: RequestParamArray;
-
-  all_data;
+  qParams: HttpParams;
 
   // Patient summary counts count
   public patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
@@ -38,6 +35,7 @@ export class GetPatientsService {
     public myhttp: MyHttpClient,
     private apiSvc: ApiService,
     private exptSvc: GetExperimentsService,
+    private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
   ) {
   }
@@ -76,6 +74,16 @@ export class GetPatientsService {
         patientData['summary'] = patientSummary;
         return (patientData)
       })
+    )
+  }
+
+  loadPatients(pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
+    return this.requestSvc.patientParamsState$.pipe(
+      tap(params => console.log(params)),
+      tap(params => {
+        this.qParams = this.requestSvc.reducePatientParams(params);
+      }),
+      switchMap(params => this.getPatients(this.qParams, pageNum, pageSize, sortVar, sortDirection))
     )
   }
 

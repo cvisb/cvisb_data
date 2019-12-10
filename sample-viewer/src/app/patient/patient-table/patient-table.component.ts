@@ -56,7 +56,7 @@ export class PatientTableComponent implements OnInit {
 
   ngOnInit() {
     this.patientSource = new PatientsDataSource(this.patientSvc);
-    this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
+    this.patientSource.loadPatients(0, 10, "", null);
 
     // can't use an async pipe, because need to initialize the paginator at some point.
     this.patientSource.resultCountState$.subscribe(ct => {
@@ -77,19 +77,19 @@ export class PatientTableComponent implements OnInit {
         .subscribe();
     }
 
-    // listen for changes in the request parameters, update data source
-    this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
-      // console.log("qParams heard in patient-table")
-      // console.log(qParams)
-
-      this.qParams = this.requestSvc.reducePatientParams(qParams);
-      // console.log(this.qParams);
-      this.loadPatientPage();
-    })
+    // // listen for changes in the request parameters, update data source
+    // this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
+    //   // console.log("qParams heard in patient-table")
+    //   // console.log(qParams)
+    //
+    //   this.qParams = this.requestSvc.reducePatientParams(qParams);
+    //   // console.log(this.qParams);
+    //   this.loadPatientPage();
+    // })
   }
 
   loadPatientPage() {
-    this.patientSource.loadPatients(this.qParams, this.paginator.pageIndex, this.paginator.pageSize,
+    this.patientSource.loadPatients(this.paginator.pageIndex, this.paginator.pageSize,
       this.sort.active, this.sort.direction);
   }
 

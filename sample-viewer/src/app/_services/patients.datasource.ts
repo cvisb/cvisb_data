@@ -29,7 +29,7 @@ export class PatientsDataSource implements DataSource<Patient> {
 
   }
 
-  loadPatients(qParams, pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
+  loadPatients(pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
     console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
@@ -40,7 +40,7 @@ export class PatientsDataSource implements DataSource<Patient> {
     2) Use those patientIDs to query /experiment
     3) Merge the two results together.
      */
-    this.patientSvc.getPatients(qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
+    this.patientSvc.loadPatients(pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false)),
       tap(x => console.log(x))
