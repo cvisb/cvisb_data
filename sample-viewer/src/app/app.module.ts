@@ -28,6 +28,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SchemaComponent } from './schema/schema.component';
 import { FilterFilesComponent } from './dataset/filter-files/filter-files.component';
+import { SampleMetadataComponent } from "./_dialogs/sample-metadata/sample-metadata.component";
 
 // import { FiltersModule } from './filters/filters.module';
 import { SvgIconModule } from './svg-icon/svg-icon.module';
@@ -43,6 +44,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     FilterFilesComponent,
     SchemaComponent,
     FooterComponent,
+    SampleMetadataComponent
     // TestComponent
   ],
   imports: [
@@ -77,6 +79,9 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
       useClass: EncodeHttpParamsInterceptor,
       multi: true
     }
+  ],
+  entryComponents: [
+    SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })
