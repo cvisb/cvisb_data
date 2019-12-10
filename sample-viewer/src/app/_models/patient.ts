@@ -3,6 +3,7 @@ import { Citation } from './citation';
 import { Organization } from './organization';
 import { ExperimentCount } from './experiment-object';
 import { ESFacetTerms, ESResult } from './es-result';
+import { Sample } from './sample';
 
 export class Patient {
   // TODO: resort location based on inverse specificity
@@ -26,6 +27,7 @@ export class Patient {
   homeLocation?: Object[];
   associatedSamples?: string[];
   availableData?: Object[];
+  samples?: Sample[];
   relatedTo?: string[];
   elisa?: ELISA[];
   pregnant: boolean;
