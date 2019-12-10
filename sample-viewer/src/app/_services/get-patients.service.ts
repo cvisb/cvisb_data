@@ -113,6 +113,7 @@ export class GetPatientsService {
       .pipe(
         tap(results => console.log(results)),
         pluck("body"),
+        pluck("hits"),
         mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
           tap(associatedData => console.log(associatedData)),
           map(associatedData => {
