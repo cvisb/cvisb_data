@@ -135,8 +135,7 @@ export class GetPatientsService {
 
     params = params
       .append('facets', facet_string)
-      .append('facet_size', "10000")
-      .append('size', "0");
+      .append('facet_size', "10000");
 
     return this.apiSvc.get("patient", params, 0).pipe(
       map((res: any) => {
@@ -171,7 +170,6 @@ export class GetPatientsService {
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`)
       .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
-      .set("size", "0")
       .set("facet_size", "10000");
 
     let sampleParams = new HttpParams()

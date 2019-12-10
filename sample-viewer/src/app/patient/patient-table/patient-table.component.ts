@@ -58,6 +58,7 @@ export class PatientTableComponent implements OnInit {
     this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
 
+    // can't use an async pipe, because need to initialize the paginator at some point.
     this.patientSource.resultCountState$.subscribe(ct => {
       this.selectedLength = ct;
     });
