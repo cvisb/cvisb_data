@@ -1,5 +1,11 @@
+filters
+<ng-container *ngIf='patientSummary$ | async as patientSummary'>
+  PATIENT SUMMARY
+</ng-container>
 <ng-container *ngIf="allPatientSummary">
+  ALL PATIENT EXISTS
   <ng-container *ngIf='patientSummary$ | async as patientSummary'>
+    PATIENT SUMMARY
     <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="filter-expansion-panel">
       <mat-expansion-panel-header>
         <mat-panel-title>

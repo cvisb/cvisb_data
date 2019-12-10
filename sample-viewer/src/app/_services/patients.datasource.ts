@@ -41,6 +41,7 @@ export class PatientsDataSource implements DataSource<Patient> {
     3) Merge the two results together.
      */
     this.requestSvc.patientParamsState$.pipe(
+      tap(() => this.loadingSubject.next(true)),
       tap(params => console.log(params)),
       map(params => this.requestSvc.reducePatientParams(params)),
       tap(params => console.log(params)),
