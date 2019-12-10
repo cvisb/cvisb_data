@@ -72,6 +72,8 @@ export class GetPatientsService {
    */
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
     return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
+      tap(([patientData, patientSummary]) => console.log(patientData)),
+      tap(([patientData, patientSummary]) => console.log(patientSummary)),
       map(([patientData, patientSummary]) => {
         patientData['summary'] = patientSummary;
         return (<any>patientData)
