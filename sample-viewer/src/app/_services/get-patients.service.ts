@@ -72,7 +72,7 @@ export class GetPatientsService {
    */
   // getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
-  console.log("calling fork join")
+    console.log("calling fork join")
     return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
       tap(([patientData, patientSummary]) => console.log(patientData)),
       tap(([patientData, patientSummary]) => console.log(patientSummary)),
@@ -100,34 +100,42 @@ export class GetPatientsService {
 
     let patientParams = qParams
       .append('from', (pageSize * pageNum).toString())
+      .append('size', pageSize.toString())
       .append('fields', fields.join(","))
       .append("sort", sortString);
 
-    return this.apiSvc.get('patient', patientParams, pageSize).pipe(
-      tap(results => console.log(results)),
-      mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
-        tap(associatedData => console.log(associatedData)),
-        map(associatedData => {
-          console.log(patientResults)
-          let patientData = patientResults['hits'];
+    return this.myhttp.get(`${environment.api_url}/api/patient}/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: patientParams
+    })
+      .pipe(
+        tap(results => console.log(results)),
+        pluck("body"),
+        mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
+          tap(associatedData => console.log(associatedData)),
+          map(associatedData => {
+            console.log(patientResults)
+            let patientData = patientResults['hits'];
 
-          patientData.forEach(patient => {
-            let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
-            patient['availableData'] = patientExpts;
-            patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
+            patientData.forEach(patient => {
+              let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
+              patient['availableData'] = patientExpts;
+              patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
+            })
+
+            return ({ hits: patientData, total: patientResults['total'] });
+          }),
+          tap(d => console.log(d)),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (of(e))
           })
-
-          return ({ hits: patientData, total: patientResults['total'] });
-        }),
-        tap(d => console.log(d)),
-        catchError(e => {
-          console.log(e)
-          throwError(e);
-          return (of(e))
-        })
+        )
+        )
       )
-      )
-    )
   }
 
   /*
@@ -139,10 +147,17 @@ export class GetPatientsService {
 
     params = params
       .append('facets', facet_string)
+      .append("size", "0")
       .append('facet_size', "10000");
 
-    return this.apiSvc.get("patient", params, 0).pipe(
+    return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: params
+    }).pipe(
       tap(x => console.log(x)),
+      pluck("body"),
       map((res: any) => {
         let summary = new PatientSummary(res)
         return (summary);
@@ -182,19 +197,33 @@ export class GetPatientsService {
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`)
       .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
+      .set("size", "0")
       .set("facet_size", "10000");
 
     let sampleParams = new HttpParams()
       .set("q", "__all__")
+      .set("size", "1000")
       .set("patientID", `"${ids.join('","')}"`);
 
-    return forkJoin([this.apiSvc.get("experiment", exptParams, 0), this.apiSvc.get("sample", sampleParams)]).pipe(
-      tap(([expts, samples]) => console.log(expts)),
-      tap(([expts, samples]) => console.log(samples)),
-      map(([expts, samples]) => {
-        return ({ experiments: expts['facets']['privatePatientID.keyword']['terms'], samples: samples['hits'] })
-      })
-    )
+    return forkJoin([
+      this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: exptParams
+      }),
+      this.myhttp.get<any[]>(environment.api_url + "/api/sample/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: sampleParams
+      })]).pipe(
+        tap(([expts, samples]) => console.log(expts)),
+        tap(([expts, samples]) => console.log(samples)),
+        map(([expts, samples]) => {
+          return ({ experiments: expts['body']['facets']['privatePatientID.keyword']['terms'], samples: samples['body']['hits'] })
+        })
+      )
   }
 
   /*
