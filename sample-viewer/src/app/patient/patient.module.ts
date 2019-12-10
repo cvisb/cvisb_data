@@ -22,7 +22,6 @@ import { PatientTableComponent } from './patient-table/patient-table.component';
 
 // --- services ---
 import { PatientsResolver } from '../_services/patients.resolver';
-import { PatientsDataSource } from '../_services/patients.datasource';
 
 @NgModule({
   imports: [

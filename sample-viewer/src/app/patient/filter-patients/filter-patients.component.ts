@@ -29,12 +29,12 @@ export class FilterPatientsComponent implements OnInit {
     private authSvc: AuthService
   ) {
     // Listen for data changes from patient.dataSource
-    // this.patientSummary$ = this.patientSvc.patientsSummaryState$;
-    //
-    // this.patientSvc.patientsSummaryState$.subscribe(data => {
-    //   console.log(data)
-    //   this.allPatientSummary = data;
-    // })
+    this.patientSummary$ = this.patientSvc.patientsSummaryState$;
+
+    this.patientSvc.patientsSummaryState$.subscribe(data => {
+      console.log(data)
+      this.allPatientSummary = data;
+    })
 
     // Check if the route contains parameters for filtering
     // ex: "q=country.identifier:(%22SL%22%20%22SL%22)%20AND%20cohort:(%22Lassa%22)%20AND%20patientID:(%22C-fakePatient-0001-1%22)%20OR%20relatedTo:(%22C-fakePatient-0001-1%22)"
