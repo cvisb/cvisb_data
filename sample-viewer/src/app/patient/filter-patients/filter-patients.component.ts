@@ -95,12 +95,13 @@ export class FilterPatientsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.route.snapshot.data);
-    let allPatientSummary: PatientSummary = this.route.snapshot.data.patients;
-    console.log(allPatientSummary);
-    //   this.allPatientSummary = initial_data.allPatientSummary;
-    //   this.patientSummary$ = of(initial_data.selectedPatientSummary);
-    //
-    //
+
+    this.route.data.subscribe(data => {
+      this.allPatientSummary = data.patients;
+    })
+
+    // let allPatientSummary: PatientSummary = this.route.snapshot.data.patients;
+    // console.log(allPatientSummary);
     //   // listen for changes in the request parameters.
     //   this.patientSummary$ = this.requestSvc.patientParamsState$.pipe(
     //     mergeMap((qParams: RequestParamArray) => {
