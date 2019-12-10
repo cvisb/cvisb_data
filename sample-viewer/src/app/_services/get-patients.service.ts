@@ -224,8 +224,34 @@ export class GetPatientsService {
   /*
   Returns data for an individual patient, to display on its own page.
    */
-  getPatientPage(patientID: string) {
+  getPatientPage(patientID: string, fields: string[] = [""]): Observable<Patient> {
+    let patientParams = new HttpParams()
+    .set("q", `patientID:"patientID"`);
+    let patient: Patient;
 
+    return this.getPatientData(patientParams, 0, 2, "", null, fields).pipe(
+      map(data => {
+        if(data.total !== 1){
+          throwError(of("More than one patient returned!"))
+        } else {
+          let patient = data.hits[0];
+
+          // Double check that altID is an array
+          if (!Array.isArray(patient.alternateIdentifier)) {
+            patient.alternateIdentifier = [patient.alternateIdentifier];
+          }
+
+          if (patient.gID && patient.gID.length > 0) {
+            patient['patientLabel'] = patient.gID[0];
+          } else if (patient.sID) {
+            patient['patientLabel'] = patient.sID;
+          } else {
+            patient['patientLabel'] = patient.patientID;
+          }
+        }
+        return(patient)
+      })
+    )
   }
 
 
