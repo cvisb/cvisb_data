@@ -39,11 +39,11 @@ export class PatientComponent implements OnDestroy {
     //   console.log(x)
     // })
 
-    console.log("calling patient.component:getData")
-    this.patientSvc.getPatientData(params, 0, 50, "age", "desc").subscribe(x => {
-      console.log("getPatientData repsonse:")
-      console.log(x)
-    })
+    // console.log("calling patient.component:getData")
+    // this.patientSvc.getPatientData(params, 0, 50, "age", "desc").subscribe(x => {
+    //   console.log("getPatientData repsonse:")
+    //   console.log(x)
+    // })
 
     this.patientSvc.getPatients(params, 0, 50, "age", "desc").subscribe(x => {
       console.log("getPatients response:")

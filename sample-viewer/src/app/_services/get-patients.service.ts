@@ -113,17 +113,16 @@ export class GetPatientsService {
       .pipe(
         tap(results => console.log(results)),
         pluck("body"),
-        pluck("hits"),
         catchError(e => {
           console.log(e)
           throwError(e);
           return (of(e))
         }),
-        mergeMap((patientResults: Patient[]) => this.getPatientAssociatedData(patientResults.map(d => d.patientID)).pipe(
+        mergeMap((patientResults: any[]) => this.getPatientAssociatedData(patientResults['hits'].map(d => d.patientID)).pipe(
           tap(associatedData => console.log(associatedData)),
           map(associatedData => {
             console.log(patientResults)
-            let patientData = patientResults;
+            let patientData = patientResults['hits'];
 
             patientData.forEach(patient => {
               let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
