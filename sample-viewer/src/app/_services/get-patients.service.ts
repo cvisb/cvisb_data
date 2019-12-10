@@ -66,10 +66,7 @@ export class GetPatientsService {
    */
   // getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
   getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
-    console.log("calling fork join")
     return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
-      tap(([patientData, patientSummary]) => console.log(patientData)),
-      tap(([patientData, patientSummary]) => console.log(patientSummary)),
       map(([patientData, patientSummary]) => {
         patientData['summary'] = patientSummary;
         return (patientData)
@@ -100,8 +97,6 @@ export class GetPatientsService {
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
-    console.log('calling patient data')
-
     let patientParams = qParams
       .append('from', (pageSize * pageNum).toString())
       .append('size', pageSize.toString())
@@ -115,7 +110,6 @@ export class GetPatientsService {
       params: patientParams
     })
       .pipe(
-        tap(results => console.log(results)),
         pluck("body"),
         catchError(e => {
           console.log(e)
@@ -123,9 +117,7 @@ export class GetPatientsService {
           return (of(e))
         }),
         mergeMap((patientResults: any[]) => this.getPatientAssociatedData(patientResults['hits'].map(d => d.patientID)).pipe(
-          tap(associatedData => console.log(associatedData)),
           map(associatedData => {
-            console.log(patientResults)
             let patientData = patientResults['hits'];
 
             patientData.forEach(patient => {
@@ -136,7 +128,6 @@ export class GetPatientsService {
 
             return ({ hits: patientData, total: patientResults['total'] });
           }),
-          tap(d => console.log(d)),
           catchError(e => {
             console.log(e)
             throwError(e);
@@ -151,7 +142,6 @@ export class GetPatientsService {
   Gets summary, facetted stats for patients
    */
   getPatientSummary(params: HttpParams): Observable<PatientSummary> {
-    console.log('calling patient summary')
     let facet_string = this.summaryVar.join(",");
 
     params = params
@@ -165,7 +155,6 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      tap(x => console.log(x)),
       pluck("body"),
       map((res: any) => {
         let summary = new PatientSummary(res)
@@ -179,7 +168,6 @@ export class GetPatientsService {
   }
 
   getAllPatientsSummary(): Observable<PatientSummary> {
-    console.log('calling ALL patient summary')
     return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
       map(([patientSummary, expts]) => {
         patientSummary["experiments"] = expts;
@@ -192,7 +180,6 @@ export class GetPatientsService {
         patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
         return (patientSummary)
       }),
-      tap(x => console.log(x)),
       catchError(e => {
         console.log(e);
         return (of(e))
@@ -201,7 +188,6 @@ export class GetPatientsService {
   }
 
   getPatientAssociatedData(ids: string[]): Observable<{ experiments: ESFacetTerms[], samples: Sample[] }> {
-    console.log('calling getting associated data')
     let exptParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${ids.join('","')}"`)
@@ -227,8 +213,6 @@ export class GetPatientsService {
           .set('Accept', 'application/json'),
         params: sampleParams
       })]).pipe(
-        tap(([expts, samples]) => console.log(expts)),
-        tap(([expts, samples]) => console.log(samples)),
         map(([expts, samples]) => {
           return ({ experiments: expts['body']['facets']['privatePatientID.keyword']['terms'], samples: samples['body']['hits'] })
         })

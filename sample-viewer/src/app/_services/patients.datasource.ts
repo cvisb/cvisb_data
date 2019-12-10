@@ -2,7 +2,6 @@
 // For server-side filtering
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { ApiService } from "./api.service";
 import { GetPatientsService } from './get-patients.service';
 import { catchError, finalize, tap } from "rxjs/operators";
 
@@ -42,7 +41,10 @@ export class PatientsDataSource implements DataSource<Patient> {
      */
     this.patientSvc.loadPatients(pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false)),
+      finalize(() => {
+        console.log("finished loading patients")
+        this.loadingSubject.next(false)
+      }),
       tap(x => console.log(x))
     )
       .subscribe(patientList => {
