@@ -132,6 +132,7 @@ export class GetPatientsService {
       .append('size', "0");
 
     return this.apiSvc.get("patient", params, 0).pipe(
+      tap(res => console.log(res)),
       map((res: any) => {
         let summary = new PatientSummary(res.body)
         return (summary);
@@ -173,6 +174,10 @@ export class GetPatientsService {
         return ({ experiments: expts['facets']['privatePatientID.keyword']['terms'], samples: samples['hits'] })
       })
     )
+  }
+
+  getPatientPage(patientID: string) {
+
   }
 
 
