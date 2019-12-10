@@ -20,12 +20,12 @@ export class FilterPatientsComponent implements OnInit {
   public searchQuery: string = null;
   private authenticated: boolean;
   panelOpenState: boolean = true;
-  qString: string;
+  // qString: string;
 
   constructor(
     private patientSvc: GetPatientsService,
-    private requestSvc: RequestParametersService,
-    private route: ActivatedRoute,
+    // private requestSvc: RequestParametersService,
+    // private route: ActivatedRoute,
     private authSvc: AuthService
   ) {
     // Listen for data changes from patient.dataSource

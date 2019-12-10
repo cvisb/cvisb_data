@@ -50,8 +50,7 @@ import { PatientsDataSource } from '../_services/patients.datasource';
     PatientTableComponent
   ],
   providers: [
-    PatientsResolver,
-    PatientsDataSource
+    PatientsResolver
   ]
 })
 export class PatientModule { }
