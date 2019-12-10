@@ -143,8 +143,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
   </table>
 
-  <ng-container *ngIf="selectedLength$ | async as selectedLength">
+  <!-- <ng-container *ngIf="selectedLength$ | async as selectedLength"> -->
     <mat-paginator [length]="selectedLength" [pageSizeOptions]="[10, 25, 50]" [pageSize]="10" showFirstLastButtons [hidden]="!patientSource"></mat-paginator>
-  </ng-container>
+  <!-- </ng-container> -->
   <!-- <mat-paginator [length]="patientList?.patientCount" [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator> -->
 </div>

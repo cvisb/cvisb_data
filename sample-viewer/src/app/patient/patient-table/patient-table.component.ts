@@ -17,6 +17,7 @@ import{ faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
 
 export class PatientTableComponent implements OnInit {
   patientSource: PatientsDataSource;
+  selectedLength: number;
   selectedLength$: Observable<number>;
   qParams: HttpParams;
 
@@ -80,7 +81,7 @@ export class PatientTableComponent implements OnInit {
     })
 
     this.selectedLength$ = this.patientSource.resultCountState$;
-
+    this.patientSource.resultCountState$.subscribe(ct => this.selectedLength = ct);
   }
 
   loadPatientPage() {
