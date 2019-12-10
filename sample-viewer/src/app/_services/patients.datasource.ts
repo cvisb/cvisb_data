@@ -4,7 +4,7 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
 import { ApiService } from "./api.service";
 import { GetPatientsService } from './get-patients.service';
-import { catchError, finalize } from "rxjs/operators";
+import { catchError, finalize, tap } from "rxjs/operators";
 
 import { Patient, PatientSummary } from '../_models';
 
@@ -42,7 +42,8 @@ export class PatientsDataSource implements DataSource<Patient> {
      */
     this.patientSvc.getPatients(qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
       catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
+      finalize(() => this.loadingSubject.next(false)),
+      tap(x => console.log(x))
     )
       .subscribe(patientList => {
         console.log(patientList)

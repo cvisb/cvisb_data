@@ -7,7 +7,7 @@ import { merge, Observable } from "rxjs/";
 import { PatientsDataSource, RequestParametersService, AuthService, GetPatientsService } from '../../_services/';
 import { AuthState, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
-import{ faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
+import { faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-patient-table',
@@ -57,6 +57,10 @@ export class PatientTableComponent implements OnInit {
   ngOnInit() {
     this.patientSource = new PatientsDataSource(this.patientSvc);
     this.patientSource.loadPatients(new HttpParams().set("q", "__all__"), 0, 10, "", null);
+
+    this.patientSource.resultCountState$.subscribe(ct => {
+      this.selectedLength = ct;
+    });
   }
 
 
@@ -64,11 +68,13 @@ export class PatientTableComponent implements OnInit {
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadPatientPage())
-      )
-      .subscribe();
+    if (this.paginator && this.paginator.page) {
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+          tap(() => this.loadPatientPage())
+        )
+        .subscribe();
+    }
 
     // listen for changes in the request parameters, update data source
     this.requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
@@ -79,9 +85,6 @@ export class PatientTableComponent implements OnInit {
       // console.log(this.qParams);
       this.loadPatientPage();
     })
-
-    this.selectedLength$ = this.patientSource.resultCountState$;
-    this.patientSource.resultCountState$.subscribe(ct => this.selectedLength = ct);
   }
 
   loadPatientPage() {
