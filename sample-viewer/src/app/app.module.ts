@@ -15,6 +15,7 @@ import { AdminModule, PipesModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
+import { MatTooltipModule, MatExpansionModule } from '@angular/material';
 
 // --- Services ---
 import { MyHttpClient } from './_services/http-cookies.service';
@@ -64,6 +65,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     EmbedJsonldModule,
     // FiltersModule,
     SvgIconModule,
+    MatTooltipModule, MatExpansionModule
     // ViralSequencingModule,
     // DownloadBtnModule,
     // LeafletModule
