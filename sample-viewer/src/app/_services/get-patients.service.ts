@@ -159,6 +159,10 @@ export class GetPatientsService {
         patientSummary["cohortDomain"] = patientSummary.patientTypes.map(d => d.term);
         patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
         return (patientSummary)
+      }),
+      catchError(e => {
+        console.log(e);
+        return(of(e))
       })
     )
   }
