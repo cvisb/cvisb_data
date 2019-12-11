@@ -20,11 +20,11 @@ import { flatMapDeep, uniqWith, isEqual } from 'lodash';
 })
 export class PatientPageComponent {
   patientID: string;
-  patient$: Observable<Patient>;
-  patient: Patient;
+  patientData$: Observable<any>;
   publications: any[];
   expts: Object[] = [];
   exptTypes: Object[];
+
   demographicsPanelState: boolean = true;
   symptomsPanelState: boolean = true;
   samplesPanelState: boolean = true;
@@ -56,7 +56,7 @@ export class PatientPageComponent {
   //
   //     this.titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
   //
-  //     // this.patient$ = this.patientSvc.getPatientPage(this.patientID);
+  //     // this.patientData$ = this.patientSvc.getPatientPage(this.patientID);
   //
   //     // this.patientSvc.getPatient(this.patientID).subscribe((patient) => {
   //     //   this.patient = patient;
@@ -100,7 +100,7 @@ export class PatientPageComponent {
 }
   ngOnInit() {
     this.patientID = this.route.snapshot.params.pid;
-    this.patient$ = this.patientSvc.getPatientPage(this.patientID);
+    this.patientData$ = this.patientSvc.getPatientPage(this.patientID);
 
     this.titleSvc.setTitle(this.route.snapshot.data.titleStart + this.patientID + this.route.snapshot.data.titleEnd);
   }
@@ -124,31 +124,31 @@ export class PatientPageComponent {
   }
 
   // collapses array of ELISA results down.
-  getELISA(returnVar: string): Object {
-    let elisa = this.patient.elisa;
-    if (elisa) {
-      let summary = {};
-      let final = elisa.every((d: any) => d.dataStatus === "final");
-
-      summary['correction'] = elisa.map(d => d.correction).filter(d => d);
-      if (summary['correction'].length === 0) {
-        summary['correction'] = null;
-      }
-      summary['citation'] = elisa.map(d => d.citation).filter(d => d);
-      summary['dataStatus'] = final ? "final" : "preliminary";
-
-      switch (returnVar) {
-        case "correction":
-          return (summary["correction"]);
-        case "citation":
-          return (summary["citation"]);
-        case "dataStatus":
-          return (summary["dataStatus"]);
-        default:
-          return (summary)
-      }
-    }
-    return (null)
+  // getELISA(returnVar: string): Object {
+  //   // let elisa = this.patient.elisa;
+  //   // if (elisa) {
+  //   //   let summary = {};
+  //   //   let final = elisa.every((d: any) => d.dataStatus === "final");
+  //   //
+  //   //   summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+  //   //   if (summary['correction'].length === 0) {
+  //   //     summary['correction'] = null;
+  //   //   }
+  //   //   summary['citation'] = elisa.map(d => d.citation).filter(d => d);
+  //   //   summary['dataStatus'] = final ? "final" : "preliminary";
+  //
+  //     // switch (returnVar) {
+  //     //   case "correction":
+  //     //     return (summary["correction"]);
+  //     //   case "citation":
+  //     //     return (summary["citation"]);
+  //     //   case "dataStatus":
+  //     //     return (summary["dataStatus"]);
+  //     //   default:
+  //     //     return (summary)
+  //     // }
+  //   }
+  //   return (null)
 
   }
 

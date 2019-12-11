@@ -1,5 +1,5 @@
-<div class="container" id="patientID" *ngIf="patient$ | async as patient">
-  <div class="patient-container">
+<div class="container" id="patientID" *ngIf="patientData$ | async as patient">
+  <div class="patient-container" *ngIf="patientData.patient as patient">
 
     <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
 
@@ -83,7 +83,7 @@
       <div class="patient-data">
 
         <!-- ELISAS -->
-        <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
+        <!-- <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa" [dataStatus]="getELISA('dataStatus')"></app-provenance-title>
@@ -94,10 +94,10 @@
           <app-provenance *ngIf="patient.elisa" [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getELISA('dataStatus')">
           </app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
         <!-- Experimental Data -->
-        <ng-container *ngFor="let expt of exptTypes">
+        <!-- <ng-container *ngFor="let expt of exptTypes">
           <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
               <mat-panel-title class="panel-title">
@@ -112,7 +112,7 @@
             </ng-container>
           </mat-expansion-panel>
         </ng-container>
-      </div>
+      </div> -->
 
 
       <!-- CITATIONS -->

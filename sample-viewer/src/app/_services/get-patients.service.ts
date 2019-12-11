@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError, forkJoin, pipe, of, interval } from 'rxjs';
 import { map, catchError, mergeMap, tap, pluck, switchMap, debounce, finalize } from "rxjs/operators";
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from "../../environments/environment";
 
-import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, Patient, Sample, ESFacetTerms } from '../_models';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, Patient, Sample, ESFacetTerms, ESResult, Experiment } from '../_models';
 import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { GetExperimentsService } from './get-experiments.service';
@@ -223,27 +222,52 @@ export class GetPatientsService {
 
   /*
   Returns data for an individual patient, to display on its own page.
+  Combo of three queries, plus some processing:
+  1. patient: get the patient result.
+  2. sample: get associated samples
+  3. experiment: get assocated experimental data
+  ... and then process the lot.
+  Since I already know the patent ID, can run all of them together at the same time.
    */
-  getPatientPage(patientID: string, fields: string[] = [""]): Observable<Patient> {
-    let patientParams = new HttpParams()
-    .set("q", `patientID:"${patientID}"`);
-    let patient: Patient;
-
-    return this.getPatientData(patientParams, 0, 2, "", null, fields).pipe(
+  getPatientPage(patientID: string): Observable<{ patient: Patient, experiments: Experiment[], samples: Sample[] }> {
+    return forkJoin([
+      this.getIndividualPatient(patientID),
+      this.getIndividualExpts(patientID),
+      this.getIndividualSamples(patientID)
+    ]).pipe(
       tap(data => console.log(data)),
-      map(data => {
-        if(data.total !== 1){
+      map(([patientData, exptData, sampleData]) => {
+        return ({ patient: patientData, experiments: exptData, samples: sampleData })
+      })
+    )
+  }
+
+  getIndividualPatient(patientID: string): Observable<Patient> {
+    let patientParams = new HttpParams()
+      .set("q", `patientID:"${patientID}"`)
+      .set("pageSize", "2");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: patientParams
+    }).pipe(
+      map(patientData => {
+        let patient: Patient;
+        if (patientData['body']['total'] !== 1) {
           console.log("More than one patient returned!")
           throwError(of("More than one patient returned!"))
         } else {
           console.log("One patient returned!")
-          patient = data.hits[0];
+          patient = patientData['body'].hits[0];
 
           // Double check that altID is an array
           if (!Array.isArray(patient.alternateIdentifier)) {
             patient.alternateIdentifier = [patient.alternateIdentifier];
           }
 
+          // pull out which ID to display
           if (patient.gID && patient.gID.length > 0) {
             patient['patientLabel'] = patient.gID[0];
           } else if (patient.sID) {
@@ -251,11 +275,71 @@ export class GetPatientsService {
           } else {
             patient['patientLabel'] = patient.patientID;
           }
-          console.log(patient)
+
+          // transform the ELISA data
+          let elisa = patient.elisa;
+          if (elisa) {
+            let summary = {};
+            let final = elisa.every((d: any) => d.dataStatus === "final");
+
+            summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+            if (summary['correction'].length === 0) {
+              summary['correction'] = null;
+            }
+            summary['citation'] = elisa.map(d => d.citation).filter(d => d);
+            summary['dataStatus'] = final ? "final" : "preliminary";
+            summary['data'] = elisa;
+
+            patient['elisaData'] = summary;
+          }
+
         }
-        console.log(patient)
-        return(patient)
-      })
+        console.log(patient);
+        return (patient);
+      }
+      )
+    )
+  }
+
+  getIndividualSamples(patientID: string): Observable<Sample[]> {
+    let sampleParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${patientID}"`)
+      .set("pageSize", "1000");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/sample/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: sampleParams
+    }).pipe(
+      pluck("body"),
+      pluck("hits"),
+      map(sampleData => {
+        return (sampleData);
+      }
+      )
+    )
+  }
+
+  getIndividualExpts(patientID: string): Observable<Experiment[]> {
+    let experimentParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${patientID}"`)
+      .set("pageSize", "1000");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/experiment/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: experimentParams
+    }).pipe(
+      pluck("body"),
+      pluck("hits"),
+      map(exptData => {
+        return (exptData);
+      }
+      )
     )
   }
 
