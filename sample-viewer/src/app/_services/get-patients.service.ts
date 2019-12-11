@@ -7,14 +7,13 @@ import { map, catchError, mergeMap, tap, pluck, switchMap, debounce, finalize } 
 import { environment } from "../../environments/environment";
 
 import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, Patient, Sample, ESFacetTerms, ESResult, Experiment } from '../_models';
-import { AuthService } from './auth.service';
 import { ApiService } from './api.service';
 import { GetExperimentsService } from './get-experiments.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
 
-import { flatMapDeep } from 'lodash';
+import { flatMapDeep, groupBy } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -337,6 +336,16 @@ export class GetPatientsService {
       pluck("body"),
       pluck("hits"),
       map(exptData => {
+
+        let x = groupBy(exptData, 'includedInDataset')
+        // .map((items, id) => {
+        //   return {
+        //     term: +id,
+        //     count: items.length
+        //   };
+        // }).value();
+
+        console.log(x)
         return (exptData);
       }
       )
