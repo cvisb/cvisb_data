@@ -321,7 +321,7 @@ export class GetPatientsService {
     )
   }
 
-  getIndividualExpts(patientID: string): Observable<Experiment[]> {
+  getIndividualExpts(patientID: string): Observable<any> {
     let experimentParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${patientID}"`)
@@ -337,17 +337,20 @@ export class GetPatientsService {
       pluck("hits"),
       map(exptData => {
 
-        let x = chain(exptData).groupBy('includedInDataset')
+        let groupedExpts = chain(exptData).groupBy('includedInDataset')
           .map((items, id) => {
             return {
-              includedInDataset: id,
+              dataset_id: id,
+              datasetName: id,
               data: items,
-              count: items.length
+              count: items.length,
+              embargoed: items.some((d: any) => d.embargoed === true),
+              dataStatus: items.every((d: any) => d.dataStatus === "final") ? "final" : "preliminary"
             };
           }).value();
 
-        console.log(x)
-        return (exptData);
+        console.log(groupedExpts)
+        return (groupedExpts);
       }
       )
     )
