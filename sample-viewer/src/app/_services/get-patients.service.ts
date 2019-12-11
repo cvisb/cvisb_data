@@ -13,7 +13,7 @@ import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
 
-import { flatMapDeep, groupBy } from 'lodash';
+import { flatMapDeep, groupBy, chain } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -337,13 +337,14 @@ export class GetPatientsService {
       pluck("hits"),
       map(exptData => {
 
-        let x = groupBy(exptData, 'includedInDataset')
-        // .map((items, id) => {
-        //   return {
-        //     term: +id,
-        //     count: items.length
-        //   };
-        // }).value();
+        let x = chain(exptData).groupBy('includedInDataset')
+          .map((items, id) => {
+            return {
+              includedInDataset: id,
+              data: items,
+              count: items.length
+            };
+          }).value();
 
         console.log(x)
         return (exptData);
