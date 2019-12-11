@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Patient } from '../../_models';
+import { Sample } from '../../_models';
 
 @Component({
   selector: 'app-patient-samples',
@@ -8,7 +8,7 @@ import { Patient } from '../../_models';
   styleUrls: ['./patient-samples.component.scss']
 })
 export class PatientSamplesComponent implements OnInit {
-  @Input() patient: Patient;
+  @Input() samples: Sample[];
 
   constructor() { }
 
