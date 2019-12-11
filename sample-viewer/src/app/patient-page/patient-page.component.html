@@ -1,4 +1,4 @@
-<div class="container" id="patientID" *ngIf="patientData$ | async as patient">
+<div class="container" id="patientID" *ngIf="patientData$ | async as patientData">
   <div class="patient-container" *ngIf="patientData.patient as patient">
 
     <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
