@@ -150,6 +150,5 @@ export class PatientPageComponent {
   //   }
   //   return (null)
 
-  }
 
 }
