@@ -1,0 +1,43 @@
+$chicletRadius: 4px;
+
+svg {
+  // background: purple;
+}
+
+// --- container ---
+missing-data-heatmap-container {
+
+}
+
+// --- heatmap ---
+.rect--missing-data {
+  stroke: white;
+  rx: $chicletRadius;
+  ry: $chicletRadius;
+}
+
+// --- axes ---
+#missing-data-heatmap {
+  & g.axis path {
+    display: none;
+  }
+}
+
+// --- legend ---
+.legend-gradient {
+  stroke-width: 0.25;
+}
+
+text.legend-title {
+  dominant-baseline: hanging;
+  font-size: 0.75em;
+}
+
+text.legend-label {
+  dominant-baseline: hanging;
+  font-size: 0.75em;
+
+  &.legend-label--max {
+    text-anchor: end;
+  }
+}

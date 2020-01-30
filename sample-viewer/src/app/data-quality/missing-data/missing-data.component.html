@@ -1,0 +1,37 @@
+<h1>How much data is missing?</h1>
+
+<div id="missing-data-heatmap-container" class="container-column">
+  <!-- legend -->
+  <svg id="missing-data-heatmap-legend" [attr.width]="legendWidth" [attr.height]="50">
+    <defs>
+      <linearGradient id="gradient-legend" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [attr.offset]="(n/10)*100 + '%'" [attr.stop-color]="colorScale(n/10)" stop-opacity="1" />
+      </linearGradient>
+    </defs>
+
+    <g id="color-legend">
+      <text x="0" y="0" class="legend-title">percent missing</text>
+      <rect [attr.width]="legendWidth" [attr.height]="legendHeight" x="0" y="1em" fill="url(#gradient-legend)" [attr.stroke]="colorScale(1)" class="legend-gradient"></rect>
+      <text [attr.x]="legendWidth" y="1em" [attr.dy]="legendHeight + 8" class="legend-label legend-label--max">100%</text>
+      <text x="0" y="1em" [attr.dy]="legendHeight + 8" class="legend-label legend-label--min">0</text>
+    </g>
+  </svg>
+
+  <div id="filter-heatmap">
+
+  </div>
+
+  <!-- heatmap -->
+  <svg id="missing-data-heatmap" [attr.width]="width + margin.left + margin.right" [attr.height]="height + margin.top + margin.bottom">
+    <g attr.transform="translate({{margin.left}}, {{margin.top}})">
+      <rect *ngFor="let variable of data" [attr.width]="rectWidth" [attr.height]="rectWidth" [attr.x]="x(variable.variable)" [attr.y]="y(variable.term)" [attr.fill]="colorScale(variable.percent)" class="rect--missing-data" [id]="variable.variable">
+      </rect>
+    </g>
+
+    <g id="x-axis" class="axis axis--x" attr.transform="translate({{margin.left}}, {{margin.top}})">
+    </g>
+    <g id="y-axis" class="axis axis--y" attr.transform="translate({{margin.left}}, {{margin.top}})">
+    </g>
+  </svg>
+
+</div>
