@@ -8,6 +8,8 @@ import { MyHttpClient } from './http-cookies.service';
 import { ESFacetTerms } from '../_models';
 import { cloneDeep } from 'lodash';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +46,7 @@ export class DataQualityService {
   }
 
   getTotal(): Observable<ESFacetTerms[]> {
-    return this.http.get("https://data.cvisb.org/api/patient/query", {
+    return this.http.get(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       params: new HttpParams()
         .set('q', `__all__`)
@@ -59,7 +61,7 @@ export class DataQualityService {
   getUnknowns(varName: string): Observable<any> {
     let facetString = `${this.facetVar}(${varName}.keyword)`;
 
-    return this.http.get("https://data.cvisb.org/api/patient/query", {
+    return this.http.get(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       params: new HttpParams()
         .set('q', `__all__`)
@@ -97,7 +99,7 @@ export class DataQualityService {
   }
 
   getExists(varName: string, totals: ESFacetTerms[]): Observable<any> {
-    return this.http.get("https://data.cvisb.org/api/patient/query", {
+    return this.http.get(`${environment.api_url}/api/patient/query`, {
       observe: 'response',
       params: new HttpParams()
         .set('q', `_exists_:${varName}`)
