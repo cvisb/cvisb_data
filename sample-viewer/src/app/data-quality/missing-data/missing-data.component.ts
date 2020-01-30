@@ -24,7 +24,7 @@ export class MissingDataComponent implements OnInit, OnDestroy {
   height: number = 200;
   legendWidth: number = 100;
   legendHeight: number = 15;
-  margin: Object = { top: 125, left: 50, right: 15, bottom: 40 };
+  margin = { top: 125, left: 50, right: 15, bottom: 40 };
   rectWidth: number = 25;
 
   // --- axes ---
