@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, tap, pluck, mergeMap } from 'rxjs/operators';
 
-import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import { MyHttpClient } from './http-cookies.service';
 import { ESFacetTerms } from '../_models';
 import { cloneDeep } from 'lodash';
 
@@ -30,7 +31,7 @@ export class DataQualityService {
   experimentVariables: string[] = ['elisa-ag'];
   essentialVariables: string[] = ['elisa-ag'];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: MyHttpClient) { }
 
   getMissing(): Observable<any> {
     return this.getTotal().pipe(
