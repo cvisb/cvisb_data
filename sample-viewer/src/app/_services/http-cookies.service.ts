@@ -42,25 +42,33 @@ export class MyHttpClient extends HttpClient {
   // Http caching intercepted according to https://stackoverflow.com/questions/37755782/prevent-ie11-caching-get-call-in-angular-2
   // Without this, backend/front-end are out of sync if the backend changes during client session.
   request(first: string | HttpRequest<any>, url?: string, options: IHttpOptions = {}): Observable<any> {
+    console.log('requesting')
+    console.log(options)
     // ensures headers properties are not null
     if (!options)
       options = {};
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        .set('Cache-Control', 'no-cache')
-        .set('Pragma', 'no-cache')
-        .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        .set('If-Modified-Since', '0');
+        // .set('With-Credentials', 'false')
+        // .set('Cache-Control', 'no-cache')
+        // .set("Access-Control-Allow-Origin", '*')
+        // .set('Pragma', 'no-cache')
+        // .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+        // .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        // .set('If-Modified-Since', '0');
     }
     else {
       options.headers = <HttpHeaders>options.headers;
-      options.headers = options.headers.append('Cache-Control', 'no-cache')
-        .append('Pragma', 'no-cache')
-        .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-        .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        .append('If-Modified-Since', '0')
+      options.headers = options.headers
+      // .set('With-Credentials', 'false')
+      // .append('Cache-Control', 'no-cache')
+      //   .append('Pragma', 'no-cache')
+      //   .set("Access-Control-Allow-Origin", '*')
+      //   .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+      //   .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+      //   .append('If-Modified-Since', '0')
     }
+    console.log(options)
 
     if (typeof first !== "string" && !first.headers)
       first = (first as HttpRequest<any>).clone({ headers: new HttpHeaders() });
@@ -68,9 +76,9 @@ export class MyHttpClient extends HttpClient {
     // xhr withCredentials flag
     if (typeof first !== "string")
       first = (first as HttpRequest<any>).clone({
-        withCredentials: true,
+        withCredentials: false,
       });
-    options.withCredentials = true;
+    options.withCredentials = false;
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
@@ -81,6 +89,10 @@ export class MyHttpClient extends HttpClient {
         first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
       options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
     }
+
+    console.log(first)
+    console.log(url)
+    console.log(options)
 
     return super.request(first as (any), url, options);
   }
