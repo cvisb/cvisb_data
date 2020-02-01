@@ -49,7 +49,6 @@ export class MyHttpClient extends HttpClient {
       options = {};
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        // .set('With-Credentials', 'false')
         // .set('Cache-Control', 'no-cache')
         // .set("Access-Control-Allow-Origin", '*')
         // .set('Pragma', 'no-cache')
@@ -60,7 +59,6 @@ export class MyHttpClient extends HttpClient {
     else {
       options.headers = <HttpHeaders>options.headers;
       options.headers = options.headers
-      // .set('With-Credentials', 'false')
       // .append('Cache-Control', 'no-cache')
       //   .append('Pragma', 'no-cache')
       //   .set("Access-Control-Allow-Origin", '*')
@@ -76,9 +74,11 @@ export class MyHttpClient extends HttpClient {
     // xhr withCredentials flag
     if (typeof first !== "string")
       first = (first as HttpRequest<any>).clone({
-        withCredentials: false,
+        // withCredentials needs to be true to allow cookie to be passed to the client
+        // ... but to get it to run on localhost (with only public data from the API), it needs to be false to allow CORS
+        withCredentials: (window.origin === "https://dev.cvisb.org" || window.origin === "https://data.cvisb.org"),
       });
-    options.withCredentials = false;
+    options.withCredentials = (window.origin === "https://dev.cvisb.org" || window.origin === "https://data.cvisb.org");
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
