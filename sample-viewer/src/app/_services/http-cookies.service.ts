@@ -66,7 +66,6 @@ export class MyHttpClient extends HttpClient {
       //   .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
       //   .append('If-Modified-Since', '0')
     }
-    console.log(options)
 
     if (typeof first !== "string" && !first.headers)
       first = (first as HttpRequest<any>).clone({ headers: new HttpHeaders() });
@@ -89,10 +88,6 @@ export class MyHttpClient extends HttpClient {
         first = (first as HttpRequest<any>).clone({ setHeaders: { 'cookie': rawCookies } });
       options.headers = (options.headers as HttpHeaders).set('cookie', rawCookies);
     }
-
-    console.log(first)
-    console.log(url)
-    console.log(options)
 
     return super.request(first as (any), url, options);
   }
