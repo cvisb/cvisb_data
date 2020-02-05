@@ -42,8 +42,6 @@ export class MyHttpClient extends HttpClient {
   // Http caching intercepted according to https://stackoverflow.com/questions/37755782/prevent-ie11-caching-get-call-in-angular-2
   // Without this, backend/front-end are out of sync if the backend changes during client session.
   request(first: string | HttpRequest<any>, url?: string, options: IHttpOptions = {}): Observable<any> {
-    console.log('requesting')
-    console.log(options)
     // ensures headers properties are not null
     if (!options)
       options = {};
