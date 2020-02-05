@@ -5,7 +5,7 @@
 // Injector Request error (`ERROR Error: No provider for InjectionToken REQUEST!`) solved via https://github.com/angular/universal/issues/709#issuecomment-429083563
 
 import { Injectable, Inject, PLATFORM_ID, Injector, Optional } from "@angular/core";
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpHandler } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
@@ -75,9 +75,9 @@ export class MyHttpClient extends HttpClient {
       first = (first as HttpRequest<any>).clone({
         // withCredentials needs to be true to allow cookie to be passed to the client
         // ... but to get it to run on localhost (with only public data from the API), it needs to be false to allow CORS
-        withCredentials: (window.origin === "https://dev.cvisb.org" || window.origin === "https://data.cvisb.org"),
+        withCredentials: true,
       });
-    options.withCredentials = (window.origin === "https://dev.cvisb.org" || window.origin === "https://data.cvisb.org");
+    options.withCredentials = true;
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {
