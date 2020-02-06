@@ -241,7 +241,7 @@ export class SampleUploadService {
   convert2Array() {
     this.data.forEach((d) => {
       this.arrayFields.forEach(col => {
-        d[col] = (d[col] && d[col] !== "") ? d[col].split(_.flatMapDeep(this.arrayDelim[0]), d => d.split(this.arrayDelim[1])) : null;
+        d[col] = (d[col] && d[col] !== "") ? _.flatMapDeep(d[col].split(this.arrayDelim[0]).map(d => d.split(this.arrayDelim[1]))) : null;
       })
     })
   }
