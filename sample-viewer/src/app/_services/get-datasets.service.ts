@@ -415,7 +415,6 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds: Dataset): DatasetSchema {
-    console.log(ds)
     if (ds) {
       this.dataset_schema = cloneDeep(ds); // create copy
 
