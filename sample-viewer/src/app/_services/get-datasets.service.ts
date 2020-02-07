@@ -414,27 +414,29 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds: Dataset): DatasetSchema {
-    this.dataset_schema = cloneDeep(ds); // create copy
+    if (ds) {
+      this.dataset_schema = cloneDeep(ds); // create copy
 
-    // remove stuff from the dataset object
-    // removes "sourceCode" -- different name in schema.org
-    for (let key of Object.keys(this.dataset_schema)) {
-      if (!this.schemaorg_dataset.includes(key)) {
-        delete this.dataset_schema[key];
-      }
-    }
-
-    // remove stuff from individual files
-    for (let file of this.dataset_schema['distribution']) {
-      let keys = Object.keys(file);
-
-      for (let key of keys) {
-        if (!this.schemaorg_datadownload.includes(key)) {
-          delete file[key];
+      // remove stuff from the dataset object
+      // removes "sourceCode" -- different name in schema.org
+      for (let key of Object.keys(this.dataset_schema)) {
+        if (!this.schemaorg_dataset.includes(key)) {
+          delete this.dataset_schema[key];
         }
       }
+
+      // remove stuff from individual files
+      for (let file of this.dataset_schema['distribution']) {
+        let keys = Object.keys(file);
+
+        for (let key of keys) {
+          if (!this.schemaorg_datadownload.includes(key)) {
+            delete file[key];
+          }
+        }
+      }
+      return (this.dataset_schema)
     }
-    return (this.dataset_schema)
   }
 
 }
