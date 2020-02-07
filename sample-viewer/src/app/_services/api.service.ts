@@ -623,10 +623,10 @@ export class ApiService {
 
   // --- DELETE ---
   // Generic function to delete a single record.
-  deleteObject(endpoint: string, id: string) {
+  deleteObject(endpoint: string, id: string, api_url: string = environment.api_url) {
     console.log("attempting to delete obj: " + id)
     // TODO: build-in dialoge box to confirm?
-    this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
+    this.myhttp.delete(`${api_url}/api/${endpoint}/${id}`)
       .subscribe(resp => {
         console.log(resp)
       },
