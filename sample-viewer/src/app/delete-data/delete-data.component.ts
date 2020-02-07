@@ -16,7 +16,7 @@ import { map, pluck, tap } from 'rxjs/operators';
 export class DeleteDataComponent implements OnDestroy {
   user: CvisbUser;
   endpoint: FormControl = new FormControl(null, [Validators.required]);
-  server: FormControl = new FormControl(null, [Validators.required]);
+  // server: FormControl = new FormControl(null, [Validators.required]);
   query: FormControl = new FormControl("__all__", [Validators.required]);
   // ids2Delete$: Observable<string[]>;
   ids2Delete: string[] = [];
@@ -36,7 +36,7 @@ export class DeleteDataComponent implements OnDestroy {
 
     this.deleteForm = this.fb.group({
       endpoint: this.endpoint,
-      server: this.server,
+      // server: this.server,
       query: this.query
     });
 
@@ -48,7 +48,7 @@ export class DeleteDataComponent implements OnDestroy {
       .set('q', opts['query'].replace(/\s/g, ""))
       .set('fields', '_id');
 
-    this.idSubscription = this.apiSvc.get(opts['endpoint'], qParams, 1000, opts['server']).pipe(
+    this.idSubscription = this.apiSvc.get(opts['endpoint'], qParams, 1000).pipe(
       tap(x => console.log(x)),
       pluck("hits"),
       map((ids: Object[]) => {
@@ -76,7 +76,7 @@ export class DeleteDataComponent implements OnDestroy {
     let opts = this.deleteForm.value;
 
     this.ids2Delete.forEach(id => {
-      this.apiSvc.deleteObject(opts['endpoint'], id, opts['server']);
+      this.apiSvc.deleteObject(opts['endpoint'], id);
     })
   }
 
