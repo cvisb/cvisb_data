@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, AfterViewInit } from '@angular/core';
 
 import { interpolateInferno } from 'd3-scale-chromatic';
 import * as d3 from 'd3';
@@ -24,7 +24,7 @@ export class MissingDataComponent implements OnInit, OnDestroy {
   height: number = 200;
   legendWidth: number = 100;
   legendHeight: number = 15;
-  margin = { top: 125, left: 50, right: 15, bottom: 40 };
+  margin = { top: 125, left: 50, right: 15, bottom: 140 };
   rectWidth: number = 25;
 
   // --- axes ---
@@ -46,6 +46,16 @@ export class MissingDataComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
+  }
+
+  activateTooltip(selected) {
+    d3.select(`#tooltip_${selected.variable}_${selected.term}`)
+      .style("display", "block");
+  }
+
+  deactivateTooltip() {
+    d3.selectAll(".missing-data-tooltip-group")
+      .style("display", "none");
   }
 
   drawChart() {
@@ -95,8 +105,53 @@ export class MissingDataComponent implements OnInit, OnDestroy {
       .style("text-anchor", "start");
 
     d3.select("#y-axis").call(this.yAxis);
+
+    let ttips = d3.selectAll("#missing-data-tooltips")
+      .selectAll(".missing-data-tooltip-group")
+      .data(this.data)
+      .enter().append("g")
+      .attr("class", "missing-data-tooltip-group")
+      .attr("id", variable => 'tooltip_' + variable.variable + '_' + variable.term)
+      .attr("display", "none");
+
+    ttips.append("rect")
+      .attr("x", variable => this.x(variable.variable))
+      .attr("y", variable => this.y(variable.term) + this.rectWidth / 4)
+      .attr("height", 58)
+      .attr("class", "tooltip-rect");
+
+    ttips.append("line")
+      .attr("x1", variable => this.x(variable.variable) + 10)
+      .attr("x2", variable => this.x(variable.variable) + 10)
+      .attr("y1", variable => this.y(variable.term) + this.rectWidth / 4 + 7)
+      .attr("y2", variable => this.y(variable.term) + this.rectWidth / 4 + 55)
+      .attr("class", "tooltip-border")
+      .attr("stroke", variable => this.colorScale(variable.percent));
+
+    ttips.append("text")
+      .attr("y", variable => this.y(variable.term) + this.rectWidth / 4)
+      .attr("class", "tooltip-text")
+      .append("tspan")
+      .attr("dx", "18")
+      .attr("dy", "5")
+      .attr("x", variable => this.x(variable.variable))
+      .text(variable => variable.variable)
+      .append("tspan")
+      .attr("class", "tooltip-value")
+      .attr("dx", "18")
+      .attr("dy", "1em")
+      .attr("x", variable => this.x(variable.variable))
+      .text(variable => d3.format(".0%")(variable.percent) + " missing")
+      .append("tspan")
+      .style("font-weight", "300")
+      .attr("dx", "18")
+      .attr("dy", "1em")
+      .attr("x", variable => this.x(variable.variable))
+      .text(variable => variable.term)
+
+
+    d3.selectAll('.tooltip-rect')
+      .attr("width", (d: any) => (document.getElementById(`tooltip_${d.variable}_${d.term}`) as any).getBBox().width + 15)
+
   }
-
-
-
 }
