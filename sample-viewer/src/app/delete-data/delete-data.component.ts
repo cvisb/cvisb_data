@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { CvisbUser } from '../_models';
 import { HttpParams } from '@angular/common/http';
 import { pipe, Subscription } from 'rxjs';
-import { map, pluck, tap } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-delete-data',
@@ -49,7 +49,6 @@ export class DeleteDataComponent implements OnDestroy {
       .set('fields', '_id');
 
     this.idSubscription = this.apiSvc.get(opts['endpoint'], qParams, 1000).pipe(
-      tap(x => console.log(x)),
       pluck("hits"),
       map((ids: Object[]) => {
         return ids.map(d => d['_id']);
