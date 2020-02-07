@@ -27,7 +27,7 @@ export class getDatasetsService {
   dataset_schema: any;
   private sources_result;
   schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
-  schemaorg_datadownload: string[] = ["contentUrl"];
+  schemaorg_datadownload: string[] = ["contentUrl", "encodingFormat", "@context", "@type", "dateModified"];
   // schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
   ;
 
@@ -225,7 +225,7 @@ export class getDatasetsService {
   getDownloads(datasetID: string): Observable<DataDownload[]> {
     return this.apiSvc.fetchAll("datadownload", new HttpParams()
       .set('q', `includedInDataset:"${datasetID}"`)
-      .set('fields', `@context, @type, additionalType, contentUrl, contentUrlIdentifier, contentUrlRepository, creator, dateModified, datePublished, description, encodingFormat, identifier, measurementCategory, measurementTechnique, name, publisher, variableMeasured, version`)
+      .set('fields', `@context, @type, contentUrl, creator, dateModified, datePublished, description, encodingFormat, name, version`)
     );
   }
   /*
