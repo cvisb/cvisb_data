@@ -440,7 +440,7 @@ export class getDatasetsService {
 
       // custom: get rid of the author list from citation, since they get long
       for (let citation of this.dataset_schema['citation']) {
-        if (citation['author'] {
+        if (citation['author']) {
           delete citation['author'];
         }
       }
