@@ -213,7 +213,7 @@ export class ApiService {
 
   // generic get function
   // assumes size = 1000 unless otherwise specified.
-  get(endpoint, qParams, pageSize: number = 1000): Observable<any[]> {
+  get(endpoint, qParams, pageSize: number = 1000, api_url: string = environment.api_url): Observable<any[]> {
 
     // this.router.navigate(
     //   [],
@@ -226,7 +226,7 @@ export class ApiService {
     let params = qParams
       .append('size', pageSize.toString());
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+    return this.myhttp.get<any[]>(`${api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),

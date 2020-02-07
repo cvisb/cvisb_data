@@ -1,0 +1,55 @@
+<div *ngIf="user.email === 'laura.d.hughes@gmail.com'; else not_auth">
+  <h1>WARNING WARNING WARNING!</h1>
+  <h2>This deletes data. Proceed with caution.</h2>
+
+  <div class="container">
+    <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select an endpoint</mat-label>
+        <mat-select [formControl]="endpoint" required>
+          <mat-option value="patient">patient</mat-option>
+          <mat-option value="sample">sample</mat-option>
+          <mat-option value="datacatalog">datacatalog</mat-option>
+          <mat-option value="dataset">dataset</mat-option>
+          <mat-option value="datadownload">datadownload</mat-option>
+          <mat-option value="experiment">experiment</mat-option>
+        </mat-select>
+        <mat-error *ngIf="endpoint.invalid">You must enter a value</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select a server</mat-label>
+        <mat-select [formControl]="server" required>
+          <mat-option value="https://data.cvisb.org">prod (data) server</mat-option>
+          <mat-option value="https://dev.cvisb.org">dev server</mat-option>
+        </mat-select>
+        <mat-error *ngIf="server.invalid">{{getRequiredMessage(server)}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter an ES query to delete</mat-label>
+        <input matInput placeholder="query" [formControl]="query" required>
+        <mat-error *ngIf="query.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!deleteForm.valid">Get IDs</button>
+    </form>
+  </div>
+
+  <div *ngIf="deleteForm.valid" id="ids2Delete">
+    <h1>{{ids2Delete.length}} Records will be deleted!</h1>
+    <div *ngFor="let id of ids2Delete">
+      {{id}}
+    </div>
+
+  </div>
+
+
+  <div>
+    <button type="button" mat-raised-button color="warn" (click)="deleteIDs()" [disabled]="!deleteForm.valid || !ids2Delete.length">DELETE! (be careful)</button>
+  </div>
+
+</div>
+<ng-template #not_auth>Hey! You're not Laura, so you're not allowed to delete stuff.</ng-template>

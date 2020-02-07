@@ -27,8 +27,8 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'upload/sample', loadChildren: () => import('./add-samples/upload-samples/upload-samples.module').then(m => m.UploadSamplesModule), pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/patient', loadChildren: () => import('./add-patients/upload-patients/upload-patients.module').then(m => m.UploadPatientsModule), pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/dataset', loadChildren: () => import('./add-data/upload-data/upload-data.module').then(m => m.UploadDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { canActivate: [AuthGuard], path: 'upload/delete', loadChildren: () => import('./delete-data/delete-data.module').then(m => m.DeleteDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload', loadChildren: () => import('./upload/upload.module').then(m => m.UploadModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
-
   { canActivate: [AuthGuard], path: 'sample', loadChildren: () => import('./sample/sample.module').then(m => m.SampleModule), pathMatch: 'full', data: { title: 'Samples | CViSB' } },
 
   // { path: 'epi', pathMatch: 'full', redirectTo: "/epidemiology" },
@@ -37,13 +37,13 @@ const appRoutes: Routes = [
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset/hla', loadChildren: () => import('./hla/hla.module').then(m => m.HlaModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
   { path: 'dataset/systems-serology', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
-  { path: 'dataset/viralseq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
-  { path: 'dataset/viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
-  { path: 'dataset/lassa-viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq"},
+  { path: 'dataset/viralseq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
+  { path: 'dataset/viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
+  { path: 'dataset/lassa-viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
   { path: 'dataset/lassa-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-virus-seq" } },
   { path: 'dataset/ebola-viral-seq', pathMatch: 'full', redirectTo: "/dataset/ebola-virus-seq" },
   { path: 'dataset/ebola-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "ebola-virus-seq" } },
-  { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology"  } },
+  { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
 
