@@ -19,7 +19,8 @@
           "options": {
             "outputPath": "dist/server",
             "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
+            "tsConfig": "src/tsconfig.server.json",
+            "sourceMap": false
           },
           "configurations": {
             "production": {
