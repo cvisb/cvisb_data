@@ -225,7 +225,8 @@ export class getDatasetsService {
   getDownloads(datasetID: string): Observable<DataDownload[]> {
     return this.apiSvc.fetchAll("datadownload", new HttpParams()
       .set('q', `includedInDataset:"${datasetID}"`)
-    )
+      .set('fields', `@context, @type, additionalType, contentUrl, contentUrlIdentifier, contentUrlRepository, creator, dateModified, datePublished, description, encodingFormat, identifier, measurementCategory, measurementTechnique, name, publisher, variableMeasured, version`)
+    );
   }
   /*
   Sequence of two calls to get citation/publisher/source object associated with experiments
@@ -414,6 +415,7 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds: Dataset): DatasetSchema {
+    console.log(ds)
     if (ds) {
       this.dataset_schema = cloneDeep(ds); // create copy
 
