@@ -151,7 +151,7 @@ export class MissingDataComponent implements OnInit, OnDestroy {
 
 
     d3.selectAll('.tooltip-rect')
-      .attr("width", (d: any) => (document.getElementById(`tooltip_${d.variable}_${d.term}`) as any).getBBox().width + 15)
+      .attr("width", (d: any) => (document.getElementById(`tooltip_${d.variable}_${d.term}`) as any).getBBox().width + 18)
 
   }
 }
