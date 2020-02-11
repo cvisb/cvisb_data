@@ -234,7 +234,7 @@ export class GetPatientsService {
       this.getIndividualExpts(patientID),
       this.getIndividualSamples(patientID)
     ]).pipe(
-      tap(data => console.log(data)),
+      // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
         return ({ patient: patientData, experiments: exptData, samples: sampleData })
       })
