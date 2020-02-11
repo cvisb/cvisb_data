@@ -1,5 +1,8 @@
 @import '../../sass/variables.scss';
 @import '../../sass/material-theme.scss';
+@include mat-table-theme($candy-app-theme);
+@include mat-paginator-theme($candy-app-theme);
+
 // --- Fonts ---
 h4 {
   margin: 0.5em 0 0.25em;

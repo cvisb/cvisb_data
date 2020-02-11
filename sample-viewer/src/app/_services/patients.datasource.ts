@@ -30,7 +30,7 @@ export class PatientsDataSource implements DataSource<Patient> {
   }
 
   loadPatients(pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
-    console.log('calling patients.dataSource:loadPatients')
+    // console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
