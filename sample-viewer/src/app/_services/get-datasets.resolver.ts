@@ -34,9 +34,7 @@ export class DatasetResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.data.dsid;
     // Send result --> this.result, which saves it to transferState
-    return this.datasetSvc.getDataset(dsid).pipe(
-      tap(result => this.result = result)
-    );
+    return this.datasetSvc.getDataset(dsid);
 
     // const found = this.transferState.hasKey(DATASET_KEY);
     //
