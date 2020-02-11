@@ -1,4 +1,7 @@
 @import '../../../sass/variables.scss';
+@import '../../../sass/material-theme.scss';
+@include mat-expansion-panel-theme($candy-app-theme);
+
 $square-width: 2.5em;
 $square-height: 2em;
 
@@ -52,6 +55,7 @@ $square-height: 2em;
 .mat-expansion-panel-header,
 .panel-header {
   background: $grey-200 !important;
+  border-radius: 4px 4px 0px 0px !important;
 }
 
 :host ::ng-deep .mat-expansion-panel-body {

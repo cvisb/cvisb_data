@@ -1,5 +1,6 @@
 @import '../../sass/variables.scss'; // vars
 @import '../../sass/material-theme.scss'; // Material variables
+@include mat-button-theme($candy-app-theme);
 
 .card-container {
   margin-bottom: 25px;

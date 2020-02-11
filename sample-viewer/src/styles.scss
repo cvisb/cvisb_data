@@ -3,7 +3,33 @@
 // @import 'sass/variables'; // custom variables, usually colors
 @import './sass/material-theme.scss'; // @import 'custom_colors';
 @import "~@ng-select/ng-select/themes/default.theme.css"; // Fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Material+Icons'); // --- Basics ---
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Material+Icons');
+
+// --- Material theme, common across the apps ---
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat-core-theme($candy-app-theme);
+@include mat-progress-spinner-theme($candy-app-theme);
+@include mat-tooltip-theme($candy-app-theme);
+@include mat-button-theme($candy-app-theme);
+// @include mat-chips-theme($candy-app-theme);
+// @include mat-table-theme($candy-app-theme);
+// @include mat-dialog-theme($candy-app-theme);
+// @include mat-expansion-panel-theme($candy-app-theme);
+// @include mat-form-field-theme($candy-app-theme);
+// @include mat-icon-theme($candy-app-theme);
+// @include mat-input-theme($candy-app-theme);
+// @include mat-paginator-theme($candy-app-theme);
+// @include mat-progress-bar-theme($candy-app-theme);
+// @include mat-radio-theme($candy-app-theme);
+// @include mat-select-theme($candy-app-theme);
+// @include mat-stepper-theme($candy-app-theme);
+// @include mat-sort-theme($candy-app-theme);
+// @include mat-snack-bar-theme($candy-app-theme);
+// @include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
+
 
 body {
   font-family: $font-default;
