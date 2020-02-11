@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { TransferHttpCacheModule } from '@nguniversal/common';
+// import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
@@ -51,7 +51,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
   imports: [
     BrowserModule.withServerTransition({ appId: 'sample-viewer' }),
     BrowserTransferStateModule,
-    TransferHttpCacheModule,
+    // TransferHttpCacheModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
