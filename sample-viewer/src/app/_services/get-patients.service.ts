@@ -12,6 +12,7 @@ import { GetExperimentsService } from './get-experiments.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
 import { flatMapDeep, groupBy, chain } from 'lodash';
 
@@ -35,6 +36,7 @@ export class GetPatientsService {
     private exptSvc: GetExperimentsService,
     private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
+    private exptPipe: ExperimentObjectPipe
   ) {
   }
 
@@ -340,9 +342,10 @@ export class GetPatientsService {
 
         let groupedExpts = chain(exptData).groupBy('includedInDataset')
           .map((items, id) => {
+            let filtered = this.exptPipe.transform(id, 'dataset_id');
             return {
               dataset_id: id,
-              datasetName: id,
+              datasetName: filtered['datasetName'],
               data: items,
               count: items.length,
               embargoed: items.some((d: any) => d.embargoed === true),
