@@ -262,7 +262,7 @@ export class getDatasetsService {
 
           return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
-              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
+              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation).filter(d => d);
 
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
