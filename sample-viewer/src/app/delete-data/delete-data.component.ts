@@ -58,7 +58,9 @@ export class DeleteDataComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.idSubscription.unsubscribe();
+    if(this.idSubscription) {
+      this.idSubscription.unsubscribe();
+    }
   }
 
   getErrorMessage() {
