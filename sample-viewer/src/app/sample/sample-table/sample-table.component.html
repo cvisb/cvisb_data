@@ -43,7 +43,7 @@
 
 
 <!-- TABLE -->
-<mat-table [dataSource]="dataSource" matSort class="sample-table">
+<mat-table [dataSource]="dataSource" matSort class="sample-table" [hidden]="!dataSource">
   <!-- Checkbox Column -->
   <!-- <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>

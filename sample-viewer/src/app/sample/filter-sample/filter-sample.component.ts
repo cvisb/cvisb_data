@@ -74,7 +74,7 @@ export class FilterSampleComponent implements OnInit {
           // this.all_years.sort();
           // this.all_countries = pList.patientCountries;
           // console.log(this.all_countries)
-          console.log(this.all_patients)
+          // console.log(this.all_patients)
           // console.log(this.all_outcomes)
         }
       }

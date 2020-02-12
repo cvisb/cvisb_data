@@ -65,8 +65,6 @@ export class SampleTableComponent implements OnInit {
   ngAfterViewInit() {
     // Listener for changes in query params
     this.requestSvc.sampleParamsState$.subscribe((params: RequestParamArray) => {
-      console.log("Sample table calling new request to update data")
-      console.log(params)
       this.params = params;
       this.loadSamples();
     })
