@@ -47,22 +47,22 @@ export class MyHttpClient extends HttpClient {
       options = {};
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        // .set('Cache-Control', 'no-cache')
-        // .set("Access-Control-Allow-Origin", '*')
-        // .set('Pragma', 'no-cache')
-        // .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-        // .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        // .set('If-Modified-Since', '0');
+        .set('Cache-Control', 'no-cache')
+        .set("Access-Control-Allow-Origin", '*')
+        .set('Pragma', 'no-cache')
+        .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        .set('If-Modified-Since', '0');
     }
     else {
       options.headers = <HttpHeaders>options.headers;
       options.headers = options.headers
-      // .append('Cache-Control', 'no-cache')
-      //   .append('Pragma', 'no-cache')
-      //   .set("Access-Control-Allow-Origin", '*')
-      //   .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-      //   .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-      //   .append('If-Modified-Since', '0')
+      .append('Cache-Control', 'no-cache')
+        .append('Pragma', 'no-cache')
+        .set("Access-Control-Allow-Origin", '*')
+        .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+        .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        .append('If-Modified-Since', '0')
     }
 
     if (typeof first !== "string" && !first.headers)
