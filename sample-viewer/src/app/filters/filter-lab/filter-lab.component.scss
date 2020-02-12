@@ -1,0 +1,2 @@
+@import "../../../sass/material-theme.scss";
+@include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));

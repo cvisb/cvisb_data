@@ -12,24 +12,16 @@
 // that you are using.
 @include mat-core-theme($candy-app-theme);
 @include mat-progress-spinner-theme($candy-app-theme);
+// not super universal, but if they're not included in the styles and added component-wide, they seem to be overriden by Chrome stylings.
+// seems to be the places where /deep/ styling is needed.
 @include mat-tooltip-theme($candy-app-theme);
 @include mat-button-theme($candy-app-theme);
-// @include mat-chips-theme($candy-app-theme);
-// @include mat-table-theme($candy-app-theme);
-// @include mat-dialog-theme($candy-app-theme);
-// @include mat-expansion-panel-theme($candy-app-theme);
-// @include mat-form-field-theme($candy-app-theme);
-// @include mat-icon-theme($candy-app-theme);
-// @include mat-input-theme($candy-app-theme);
-// @include mat-paginator-theme($candy-app-theme);
-// @include mat-progress-bar-theme($candy-app-theme);
-// @include mat-radio-theme($candy-app-theme);
-// @include mat-select-theme($candy-app-theme);
-// @include mat-stepper-theme($candy-app-theme);
-// @include mat-sort-theme($candy-app-theme);
-// @include mat-snack-bar-theme($candy-app-theme);
-// @include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
-
+@include mat-select-theme($candy-app-theme);
+@include mat-form-field-theme($candy-app-theme);
+@include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
+@include mat-snack-bar-theme($candy-app-theme);
+@include mat-stepper-theme($candy-app-theme);
+@include mat-dialog-theme($candy-app-theme);
 
 body {
   font-family: $font-default;

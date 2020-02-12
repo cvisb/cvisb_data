@@ -3,6 +3,11 @@
 $new-color: darken($sierraleone-green, 10%);
 $old-color: accent-redder(600);
 
+@include mat-sort-theme($candy-app-theme);
+@include mat-table-theme($candy-app-theme);
+@include mat-expansion-panel-theme($candy-app-theme);
+@include mat-paginator-theme($candy-app-theme);
+
 .new-old-container {
   flex-direction: column;
 }

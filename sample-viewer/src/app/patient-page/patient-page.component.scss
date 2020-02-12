@@ -1,6 +1,8 @@
 @import '../../sass/variables.scss';
-@import '../../sass/material-theme.scss'; // --- structural elements ---
+@import '../../sass/material-theme.scss';
+@include mat-expansion-panel-theme($candy-app-theme);
 
+// --- structural elements ---
 $nav-width: 215px;
 
 .patient-header {
