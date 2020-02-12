@@ -52,8 +52,8 @@
           <a [href]="'mailto:' + contactInfo.contactPoint.email">{{ contactInfo.contactPoint.email }}</a>
         </div>
 
-        <div class="updated">
-          data updated {{ dataModified ? (dataModified | date: "d MMMM yyyy") : ": unknown" }}
+        <div class="updated" *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+          data updated {{ cvisbCatalog.dateModified ? (cvisbCatalog.dateModified | date: "d MMMM yyyy") : ": unknown" }}
         </div>
 
       </div>

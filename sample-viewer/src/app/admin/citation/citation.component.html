@@ -10,8 +10,8 @@
       To reference data from the Center for Viral Systems Biology Data Portal, please cite the Center for Viral Systems Biology:
     </p>
 
-    <p *ngIf="cvisbCatalog">
-      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['_version'] }}.
+    <p *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['releaseVersion'] }}.
     </p>
   </section>
 

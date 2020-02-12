@@ -16,7 +16,7 @@ import { faDna, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 import * as d3 from 'd3';
 
 import { ApiService, GetDatacatalogService, GetExperimentsService } from '../_services';
-import { ReleaseNote } from '../_models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +27,7 @@ export class HomeComponent implements OnInit {
   patientCount: number;
   sampleCount: number;
   experimentCount: Object[] = [];
-  releaseVersion: string;
-  cvisbCatalog: Object;
-  releaseNotes: ReleaseNote[];
+  cvisbCatalog$: Observable<Object>;
   faDna = faDna;
   faTable = faTable;
   faUsers = faUsers;
@@ -41,11 +39,7 @@ export class HomeComponent implements OnInit {
     private dataCatalogSvc: GetDatacatalogService,
     private exptSvc: GetExperimentsService,
     public apiSvc: ApiService) {
-    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
-    if (this.cvisbCatalog) {
-      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
-    }
-    this.releaseNotes = this.dataCatalogSvc.releaseNotes;
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
 
     // set page title
     let title = environment.production ? this.route.snapshot.data.title : 'DEV:' + this.route.snapshot.data.title;

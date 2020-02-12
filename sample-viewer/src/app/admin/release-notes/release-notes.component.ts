@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { GetDatacatalogService } from '../../_services';
-import { ReleaseNote } from '../../_models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-release-notes',
@@ -10,18 +10,10 @@ import { ReleaseNote } from '../../_models';
 })
 
 export class ReleaseNotesComponent implements OnInit {
-  dataModified: string;
-  releaseVersion: string;
-  cvisbCatalog: Object;
-  releaseNotes: ReleaseNote[];
+  cvisbCatalog$: Observable<Object>;
 
   constructor(private dataCatalogSvc: GetDatacatalogService) {
-    this.dataModified = this.dataCatalogSvc.dataModified;
-    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
-    if (this.cvisbCatalog) {
-      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
-      this.releaseNotes = this.cvisbCatalog['releaseNotes'];
-    }
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
   }
 
   ngOnInit() {

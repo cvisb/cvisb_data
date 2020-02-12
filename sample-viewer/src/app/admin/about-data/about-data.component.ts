@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GetDatacatalogService, AnchorService } from '../../_services';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-about-data',
@@ -9,10 +9,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./about-data.component.scss']
 })
 
-export class AboutDataComponent implements OnInit {
-  dataModified: string;
-  releaseVersion: string;
-  cvisbCatalog: Object;
+export class AboutDataComponent implements OnInit, OnDestroy {
+  cvisbCatalog$: Observable<Object>;
   routeSubscription: Subscription;
 
   constructor(private dataCatalogSvc: GetDatacatalogService,
@@ -21,11 +19,7 @@ export class AboutDataComponent implements OnInit {
   ) {
 
     // get static data catalog params
-    this.dataModified = this.dataCatalogSvc.dataModified;
-    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
-    if (this.cvisbCatalog) {
-      this.releaseVersion = this.cvisbCatalog['releaseVersion'];
-    }
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
   }
 
   ngOnInit() {

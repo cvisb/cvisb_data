@@ -4,6 +4,8 @@ import { Organization } from '../_models';
 
 import { GetDatacatalogService } from '../_services';
 
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -46,12 +48,12 @@ export class FooterComponent implements OnInit {
     { name: "instagram", icon: "fa-instagram", url: "https://www.instagram.com/cvisb" }
   ];
 
-  dataModified: string;
   currentYear: number;
+  cvisbCatalog$: Observable<Object>;
 
 
   constructor(private dataCatalogSvc: GetDatacatalogService) {
-    this.dataModified = this.dataCatalogSvc.dataModified;
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
   }
 
   ngOnInit() {

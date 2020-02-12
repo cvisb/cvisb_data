@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
 
 export class CitationComponent implements OnInit {
   currentYear: Date = new Date();
-  cvisbCatalog: Object;
+  cvisbCatalog$: Observable<Object>;
   host_url: string = environment.host_url;
   loading$: Observable<boolean>;
 
@@ -40,7 +40,7 @@ export class CitationComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;
 
     this.loading$ = this.datasetSvc.loadingState$;
   }

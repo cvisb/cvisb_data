@@ -1,7 +1,9 @@
 <div class="how-to-cite">
   <h4>How to cite</h4>
 
-  <p *ngIf="cvisbCatalog && dataset">
-    The {{ cvisbCatalog['publisher'][0]['name']}}, {{ dataset.dateModified | date:'yyyy' }}, "{{ dataset['name'] }}", {{ cvisbCatalog['url'] }}{{dataset['identifier']}}, V{{ dataset['version'] }}.
-  </p>
+  <ng-container *ngIf="dataset">
+    <p *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ dataset.dateModified | date:'yyyy' }}, "{{ dataset['name'] }}", {{ cvisbCatalog['url'] }}{{dataset['identifier']}}, V{{ dataset['version'] }}.
+    </p>
+  </ng-container>
 </div>
