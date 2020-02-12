@@ -1,9 +1,6 @@
 @import '../../../sass/variables.scss';
 @import "../../../sass/material-theme.scss";
 
-@include mat-radio-theme($candy-app-theme);
-@include mat-stepper-theme($candy-app-theme);
-
 // Error banner
 .validation-error {
   background: accent-redder(500);
