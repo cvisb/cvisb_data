@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DeleteDataRoutingModule } from './delete-data-routing.module';
 import { DeleteDataComponent } from './delete-data.component';
 
-import { MatSelectModule, MatInputModule } from '@angular/material';
+import { MatSelectModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     CommonModule,
     DeleteDataRoutingModule,
     MatSelectModule,
+    MatButtonModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule
