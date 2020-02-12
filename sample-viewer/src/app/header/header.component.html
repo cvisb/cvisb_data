@@ -2,7 +2,7 @@
   <div class="logo">
     <a routerLink="./home" alt="home link">
       <img src="/assets/img/vhfc_logo_bigger600px.svg" alt="VHFC logo" *ngIf="authorized"/>
-      <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="!authorized"/>
+      <img src="/assets/img/cvisb_logo_white.svg" alt="CViSB logo" *ngIf="!authorized"/>
       <!-- <img src="/assets/img/cvisb_icon_transparent_600px.png" alt="CViSB logo" *ngIf="authorized"/> -->
       <!-- <img src="/assets/img/cvisb_icon_600px.png" alt="CViSB logo" *ngIf="!authorized"/> -->
     </a>
@@ -37,7 +37,7 @@
 
       <div class="user" *ngIf="loggedIn">
         <a routerLink="login" class="user-photo" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}">
-          <img [src]="user.picture"/>
+          <img [src]="user.picture + '=s40-c'"/>
         </a>
         <a routerLink="login" class="user-name">
           <span>{{user.given_name}}</span>

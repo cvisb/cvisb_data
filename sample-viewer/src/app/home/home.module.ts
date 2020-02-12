@@ -10,13 +10,19 @@ import { HomeComponent } from './home.component';
 // --- services ---
 import { GetExperimentsService } from '../_services/get-experiments.service';
 
+// --- modules ---
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatButtonModule } from '@angular/material';
+
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    FontAwesomeModule,
+    MatButtonModule
   ],
   providers: [
     GetExperimentsService

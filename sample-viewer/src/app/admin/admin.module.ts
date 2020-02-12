@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // --- modules ---
+import { MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
+
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 
@@ -30,7 +31,8 @@ import { TermsPopupComponent } from '../_dialogs/terms-popup/terms-popup.compone
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
     FormatCitationModule,
     FormatPublisherModule,
     SvgIconModule

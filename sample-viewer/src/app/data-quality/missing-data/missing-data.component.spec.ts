@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MdObjectComponent } from './md-object.component';
+import { MissingDataComponent } from './missing-data.component';
 
-describe('MdObjectComponent', () => {
-  let component: MdObjectComponent;
-  let fixture: ComponentFixture<MdObjectComponent>;
+describe('MissingDataComponent', () => {
+  let component: MissingDataComponent;
+  let fixture: ComponentFixture<MissingDataComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MdObjectComponent ]
+      declarations: [ MissingDataComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MdObjectComponent);
+    fixture = TestBed.createComponent(MissingDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

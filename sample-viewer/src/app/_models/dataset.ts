@@ -28,6 +28,8 @@ export class Dataset {
   sourceCode: Object[];
   citation: Object[];
   license: string;
+  _id?: string;
+  _score?: number;
 }
 
 // subset of dataset schema, to correspond with only the schema.org properties.

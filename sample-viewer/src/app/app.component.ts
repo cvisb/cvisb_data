@@ -1,16 +1,9 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer, DOCUMENT } from '@angular/common';
-import {
-  Event,
-  NavigationCancel,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  Router
-} from '@angular/router';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 import { AuthService } from './_services/auth.service';
-
+import { Subscription } from 'rxjs';
 import { environment } from '../environments/environment';
 
 // Google Analytics autotrack for tracking sites on single page application.
@@ -27,9 +20,10 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'sample-viewer';
   loading: boolean = false;
+  loadingSubscription: Subscription;
 
   links: Object[] = [
     // { 'path': 'home', 'label': 'home', 'selected': true },
@@ -49,7 +43,7 @@ export class AppComponent {
   ) {
     angulartics2GoogleAnalytics.startTracking();
 
-    this.router.events.subscribe((event: Event) => {
+    this.loadingSubscription = this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
           this.loading = true;
@@ -72,12 +66,15 @@ export class AppComponent {
   changeRoutes() {
   }
 
-
   ngOnInit() {
     this.authSvc.checkLogin();
     if (isPlatformServer(this.platformId)) {
       this.setGTagManager();
     }
+  }
+
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
   }
 
   // Adapted from https://github.com/angular/angular-cli/issues/4451#issuecomment-384992203

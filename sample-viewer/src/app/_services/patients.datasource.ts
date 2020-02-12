@@ -2,17 +2,16 @@
 // For server-side filtering
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { ApiService } from "./api.service";
 import { GetPatientsService } from './get-patients.service';
-import { catchError, finalize } from "rxjs/operators";
+import { RequestParametersService } from './request-parameters.service';
+import { catchError, finalize, tap, switchMap, map } from "rxjs/operators";
 
-import { Patient } from '../_models';
+import { Patient, PatientSummary } from '../_models';
 
 import { intersectionWith, isEqual } from 'lodash';
 
 
 export class PatientsDataSource implements DataSource<Patient> {
-
   private patientsSubject = new BehaviorSubject<Patient[]>([]);
 
   // Loading spinner
@@ -24,46 +23,86 @@ export class PatientsDataSource implements DataSource<Patient> {
   public resultCountState$ = this.resultCountSubject.asObservable();
 
   constructor(
-    private patientSvc: GetPatientsService
+    private patientSvc: GetPatientsService,
+    private requestSvc: RequestParametersService
   ) {
 
   }
 
-  loadPatients(qParams, pageNum: number, pageSize: number, sortVar, sortDirection) {
+  loadPatients(pageNum: number, pageSize: number, sortVar: string, sortDirection: string) {
     // console.log('calling patients.dataSource:loadPatients')
 
     this.loadingSubject.next(true);
 
-    // this.apiSvc.getMultipleRequests('patient', qParams, sortVar, sortDirection).pipe(
-    //   catchError(() => of([])),
-    //   finalize(() => this.loadingSubject.next(false))
-    // )
-    //   .subscribe(patientArray => {
-    //     console.log(patientArray);
-    //
-    //     let patientList = intersectionWith(... patientArray.map(d => d['hits']), isEqual);
-    //     console.log(patientList)
-    //     // this.resultCountSubject.next(patientList['total'])
-    //     // this.patientsSubject.next(patientList['hits'])
-    //     this.resultCountSubject.next(patientList.length)
-    //     this.patientsSubject.next(patientList)
-    //   });
-
     /*
-    Call to get both patients and their associated experiments.
+    Call to get both patients and their associated samples/experiments.
     1) Get paginated results for patients.
     2) Use those patientIDs to query /experiment
     3) Merge the two results together.
      */
-    this.patientSvc.getPatients(qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(patientList => {
-        // console.log(patientList)
-        this.resultCountSubject.next(patientList['total'])
-        this.patientsSubject.next(patientList['hits'])
-      });
+    this.requestSvc.patientParamsState$.pipe(
+      tap(() => this.loadingSubject.next(true)),
+      // tap(params => console.log(params)),
+      map(params => this.requestSvc.reducePatientParams(params)),
+      // tap(params => console.log(params)),
+      catchError(e => {
+        console.log(e)
+        return (of(e))
+      }),
+      finalize(() => {
+        // console.log("finished outer subscription to patientParamsState")
+        this.loadingSubject.next(false)
+      }),
+      // debounce(() => interval(5000)),
+      switchMap(params => this.patientSvc.getPatients(params, pageNum, pageSize, sortVar, sortDirection).pipe(
+        catchError(e => {
+          console.log(e)
+          return (of(e))
+        }),
+        finalize(() => {
+          // console.log("finished loading patients inner function")
+          this.loadingSubject.next(false)
+        })
+        // tap(x => console.log(x))
+      ))
+    ).subscribe(patientList => {
+      this.resultCountSubject.next(patientList['total']);
+      this.patientsSubject.next(patientList['hits']);
+      this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+      this.loadingSubject.next(false)
+    })
+    //   .pipe(
+    //     catchError(e => {
+    //       console.log(e)
+    //       return(of(e))
+    //     }),
+    //     finalize(() => {
+    //       console.log("finished loading patients")
+    //       this.loadingSubject.next(false)
+    //     }),
+    //     tap(x => console.log(x))
+    //   )
+    //     .subscribe(patientList => {
+    //       this.resultCountSubject.next(patientList['total']);
+    //       this.patientsSubject.next(patientList['hits']);
+    //       this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+    //       this.loadingSubject.next(false)
+    //     });
+    // )
+    // this.patientSvc.loadPatients(pageNum, pageSize, sortVar, sortDirection).pipe(
+    //   catchError(() => of([])),
+    //   finalize(() => {
+    //     console.log("finished loading patients")
+    //     this.loadingSubject.next(false)
+    //   }),
+    //   tap(x => console.log(x))
+    // )
+    //   .subscribe(patientList => {
+    //     this.resultCountSubject.next(patientList['total']);
+    //     this.patientsSubject.next(patientList['hits']);
+    //     this.patientSvc.patientsSummarySubject.next(patientList['summary']);
+    //     this.loadingSubject.next(false)
+    //   });
 
     // Working version, with single call to only get patients, not experiments
     // this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
@@ -85,6 +124,8 @@ export class PatientsDataSource implements DataSource<Patient> {
   disconnect(collectionViewer: CollectionViewer): void {
     this.patientsSubject.complete();
     this.loadingSubject.complete();
+    // this.patientSvc.patientsSummarySubject.complete();
+    // this.requestSvc.patientParamsSubject.complete();
   }
 
 }

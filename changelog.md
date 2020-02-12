@@ -39,6 +39,9 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2019-12-09
+- installed Angular FontAwesome module
+
 ### 2019-11-14
 - temp fix: in Biothings package, modify POST arguments to .pop `version` from query_kwargs in `ne ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py`
 - schema rebuilt, auth list updated.

@@ -13,7 +13,8 @@ export class UploadComponent implements OnInit {
   links: Object[] = [
     { label: "samples", path: "sample" },
     { label: "dataset", path: "dataset" },
-    { label: "patients", path: "patient" }
+    { label: "patients", path: "patient" },
+    { label: "delete", path: "delete" }
   ]
 
   constructor(

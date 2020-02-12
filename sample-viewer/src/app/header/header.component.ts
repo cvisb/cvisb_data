@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { AuthService } from '../_services';
+import { Subscription } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -9,13 +10,14 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnDestroy {
 
   @Input() links: Object[];
   user: any;
   loggedIn: boolean;
   authorized: boolean;
   prodEnvironment: boolean;
+  authSubscription: Subscription;
 
   constructor(public authSvc: AuthService) {
     // call authentication service to check if logged in
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
     //   console.log('Page loaded with authentication state: ' + loggedIn);
     // })
 
-    authSvc.userState$.subscribe((user: Object) => {
+    this.authSubscription = authSvc.userState$.subscribe((user: Object) => {
       this.user = user;
       this.loggedIn = Object.keys(this.user).length > 0 ? true : false;
       this.authorized = user['read'];
@@ -35,12 +37,8 @@ export class HeaderComponent implements OnInit {
     this.prodEnvironment = environment.production;
   }
 
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    // console.log("after view init");
-    // this.authSvc.checkLogin();
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
   }
 
   login() {

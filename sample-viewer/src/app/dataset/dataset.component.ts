@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { getDatasetsService, AuthService } from '../_services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dataset',
@@ -12,7 +13,8 @@ import { getDatasetsService, AuthService } from '../_services';
 })
 
 export class DatasetComponent implements OnInit {
-  datasets: any[];
+  datasets$: Observable<Object[]>;
+  // datasets: any[];
   metadata: Object;
   anything_selected: boolean = false;
 
@@ -26,9 +28,10 @@ export class DatasetComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    this.datasetSvc.getDatasets().subscribe((datasets) => {
-      this.datasets = datasets;
-    });
+    this.datasets$ = this.datasetSvc.getDatasets();
+    // this.datasetSvc.getDatasets().subscribe((datasets) => {
+    //   this.datasets = datasets;
+    // });
 
     // Show terms, if they haven't been displayed before:
     this.authSvc.popupTerms();

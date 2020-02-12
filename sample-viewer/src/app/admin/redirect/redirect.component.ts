@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../_services';
 
 @Component({
@@ -12,6 +12,7 @@ import { AuthService } from '../../_services';
 
 export class RedirectComponent implements OnInit {
   page_url: string;
+  urlSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,7 +20,7 @@ export class RedirectComponent implements OnInit {
     private authSvc: AuthService
   ) {
 
-    route.queryParams.subscribe(params => {
+    this.urlSubscription = route.queryParams.subscribe(params => {
       this.page_url = params['next']
     })
 
@@ -31,7 +32,10 @@ export class RedirectComponent implements OnInit {
         this.router.navigate([this.page_url])
       }
     })
+  }
 
+  ngOnDestroy() {
+    this.urlSubscription.unsubscribe();
   }
 
 }

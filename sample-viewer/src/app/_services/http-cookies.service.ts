@@ -5,7 +5,7 @@
 // Injector Request error (`ERROR Error: No provider for InjectionToken REQUEST!`) solved via https://github.com/angular/universal/issues/709#issuecomment-429083563
 
 import { Injectable, Inject, PLATFORM_ID, Injector, Optional } from "@angular/core";
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpHandler } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
@@ -48,6 +48,7 @@ export class MyHttpClient extends HttpClient {
     if (!options.headers) {
       options.headers = new HttpHeaders()
         .set('Cache-Control', 'no-cache')
+        .set("Access-Control-Allow-Origin", '*')
         .set('Pragma', 'no-cache')
         .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
         .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
@@ -55,8 +56,10 @@ export class MyHttpClient extends HttpClient {
     }
     else {
       options.headers = <HttpHeaders>options.headers;
-      options.headers = options.headers.append('Cache-Control', 'no-cache')
+      options.headers = options.headers
+      .append('Cache-Control', 'no-cache')
         .append('Pragma', 'no-cache')
+        .set("Access-Control-Allow-Origin", '*')
         .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
         .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
         .append('If-Modified-Since', '0')
@@ -68,6 +71,8 @@ export class MyHttpClient extends HttpClient {
     // xhr withCredentials flag
     if (typeof first !== "string")
       first = (first as HttpRequest<any>).clone({
+        // withCredentials needs to be true to allow cookie to be passed to the client
+        // ... but to get it to run on localhost (with only public data from the API), it needs to be false to allow CORS
         withCredentials: true,
       });
     options.withCredentials = true;

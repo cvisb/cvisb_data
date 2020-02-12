@@ -1,17 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
-// import { D3Nested } from '../../_models';
-//
+import { Subscription } from 'rxjs';
 import { GetExperimentsService, RequestParametersService } from '../../_services';
+
+import { ExperimentCount } from '../../_models/';
 
 @Component({
   selector: 'app-filter-experiment',
   templateUrl: './filter-experiment.component.html',
   styleUrls: ['./filter-experiment.component.scss']
 })
-export class FilterExperimentComponent implements OnInit {
+export class FilterExperimentComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
-  expts: any[];
+  @Input() expts: ExperimentCount[];
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   constructor(
     private exptSvc: GetExperimentsService,
@@ -19,32 +22,38 @@ export class FilterExperimentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.exptSvc.getExptCounts().subscribe(expts => {
-      this.expts = expts;
-      if (this.expts && this.expts.length > 0) {
-        this.expts.forEach(d => {
-          d['disabled'] = true;
-        })
-      }
-    })
+    if (this.expts && this.expts.length > 0) {
+      this.expts.forEach(d => {
+        d['disabled'] = true;
+      })
+    }
 
     switch (this.endpoint) {
       case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
+        this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
 
       case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
+        this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
     }
   }
 
-  filterExpt(idx) {
+  ngOnDestroy() {
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
+  }
+
+
+  filterExpt(idx: number) {
     this.expts[idx].disabled = !this.expts[idx].disabled;
 
     let exptNames = this.expts.filter(d => !d.disabled).map(d => d.term);
@@ -53,7 +62,7 @@ export class FilterExperimentComponent implements OnInit {
   }
 
   // Used to reset, when the filters are cleared.
-  checkParams(params) {
+  checkParams(params: Object[]) {
     if (params.length === 0 && this.expts && this.expts.length > 0) {
       this.expts.forEach(d => d.disabled = true);
     }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BulkEditComponent } from './bulk-edit.component';
+import { DataQualityComponent } from './data-quality.component';
 
-describe('BulkEditComponent', () => {
-  let component: BulkEditComponent;
-  let fixture: ComponentFixture<BulkEditComponent>;
+describe('DataQualityComponent', () => {
+  let component: DataQualityComponent;
+  let fixture: ComponentFixture<DataQualityComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkEditComponent ]
+      declarations: [ DataQualityComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BulkEditComponent);
+    fixture = TestBed.createComponent(DataQualityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

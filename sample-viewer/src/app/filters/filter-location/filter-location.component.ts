@@ -1,8 +1,10 @@
-import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { RequestParametersService } from '../../_services';
-
+import { Subscription } from 'rxjs';
 import { flatMapDeep } from 'lodash';
+
+import { ESFacetTerms } from '../../_models';
 
 @Component({
   selector: 'app-filter-location',
@@ -10,10 +12,12 @@ import { flatMapDeep } from 'lodash';
   styleUrls: ['./filter-location.component.scss']
 })
 
-export class FilterLocationComponent implements OnChanges {
-  @Input() countries;
-  @Input() all_countries;
+export class FilterLocationComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() countries: ESFacetTerms[];
+  @Input() all_countries: ESFacetTerms[];
   @Input() endpoint: string;
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
 
   params;
 
@@ -23,13 +27,13 @@ export class FilterLocationComponent implements OnChanges {
   ngOnInit() {
     switch (this.endpoint) {
       case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
+        this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
           this.params = params;
         })
         break;
 
       case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
+        this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
           this.params = params;
         })
         break;
@@ -41,8 +45,17 @@ export class FilterLocationComponent implements OnChanges {
       this.addMissing();
       this.updateCountrySelections(this.params)
     }
-
   }
+
+  ngOnDestroy() {
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
+  }
+
 
   updateCountrySelections(params, fieldName = "country.identifier") {
     if (params) {
@@ -73,7 +86,7 @@ export class FilterLocationComponent implements OnChanges {
   addMissing() {
     let keys = this.countries.map(d => d.term);
     if (this.all_countries) {
-      let missing_data = this.all_countries.filter(d => !keys.includes(d.term));
+      let missing_data = this.all_countries.filter((d: any) => !keys.includes(d.term));
 
       missing_data.forEach(d => {
         this.countries.push({ term: d.term, count: 0, disabled: true });

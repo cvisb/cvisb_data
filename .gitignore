@@ -45,3 +45,8 @@ sample-viewer-api/src/static/geo/SLE/whosonfirst-data-latest.db
 sample-viewer-api/src/static/data/clean_patients/exploratory_scripts/2019-10-10_IDsforBonnie.py
 notes/CViSB-data-portal_performance.xlsx
 notes/~$CViSB-data-portal_performance.xlsx
+sample-viewer/src/app/test/test.component.spec.ts
+sample-viewer/src/app/test/test.component.html
+sample-viewer/src/app/test/test.component.scss
+sample-viewer/src/app/test/test.component.ts
+antiquated_code/*

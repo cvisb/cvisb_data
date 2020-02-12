@@ -4,20 +4,21 @@ import { Injectable } from '@angular/core';
 import { of } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { TransferState, makeStateKey } from '@angular/platform-browser';
+// import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 import { getDatasetsService } from './get-datasets.service';
 
-const DATASET_KEY = makeStateKey('dataset_resolver.result');
+// const DATASET_KEY = makeStateKey('dataset_resolver.result');
 
 @Injectable()
 export class DatasetResolver implements Resolve<any> {
-  private result;
+  // private result;
 
   constructor(private datasetSvc: getDatasetsService,
-    private readonly transferState: TransferState) { }
+    // private readonly transferState: TransferState
+  ) { }
 
   // Needed to fix endless fetchAll loop in SSR when multiple fetchAlls are called... scroll_id gets reused when it shouldn't
   // From https://blog.angularindepth.com/using-transferstate-api-in-an-angular-5-universal-app-130f3ada9e5b
@@ -31,19 +32,23 @@ export class DatasetResolver implements Resolve<any> {
   // Since `get-datasets.resolver` is recycled and re-used between different datasets, need to clear it, so you don't have viral seq data saved when you call the HLA page.
   // Could create separate resolvers for each dataset type and cache the results...
   resolve(route: ActivatedRouteSnapshot) {
-    const found = this.transferState.hasKey(DATASET_KEY);
+    let dsid = route.data.dsid;
+    // Send result --> this.result, which saves it to transferState
+    return this.datasetSvc.getDataset(dsid);
 
-    if (found) {
-      const res = of(this.transferState.get(DATASET_KEY, null));
-      this.transferState.remove(DATASET_KEY);
-      return res;
-    } else {
-      this.transferState.onSerialize(DATASET_KEY, () => this.result);
-      let dsid = route.data.dsid;
-      // Send result --> this.result, which saves it to transferState
-      return this.datasetSvc.getDataset(dsid).pipe(
-        tap(result => this.result = result)
-      );
-    }
+    // const found = this.transferState.hasKey(DATASET_KEY);
+    //
+    // if (found) {
+    //   const res = of(this.transferState.get(DATASET_KEY, null));
+    //   this.transferState.remove(DATASET_KEY);
+    //   return res;
+    // } else {
+    //   this.transferState.onSerialize(DATASET_KEY, () => this.result);
+    //   let dsid = route.data.dsid;
+    //   // Send result --> this.result, which saves it to transferState
+    //   return this.datasetSvc.getDataset(dsid).pipe(
+    //     tap(result => this.result = result)
+    //   );
+    // }
   }
 }

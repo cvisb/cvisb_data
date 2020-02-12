@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../_services';
 import { AuthState } from '../../_models';
 import { environment } from '../../../environments/environment';
@@ -12,13 +13,16 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   message: string;
   page: string;
   loggedIn: boolean;
   prodEnvironment: boolean;
   user: Object;
+  redirectSubscription: Subscription;
+  authSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
     public authSvc: AuthService,
@@ -27,15 +31,15 @@ export class LoginComponent {
     public router: Router) {
     this.prodEnvironment = environment.production;
 
-    this.authSvc.redirectUrlState$.subscribe((url: string) => {
+    this.redirectSubscription = this.authSvc.redirectUrlState$.subscribe((url: string) => {
       this.page = url;
     });
 
-    authSvc.userState$.subscribe((user: Object) => {
+    this.userSubscription = authSvc.userState$.subscribe((user: Object) => {
       this.user = user;
     })
 
-    authSvc.authState$.subscribe((authState: AuthState) => {
+    this.authSubscription = authSvc.authState$.subscribe((authState: AuthState) => {
       this.loggedIn = authState.loggedIn;
     })
 
@@ -56,6 +60,12 @@ export class LoginComponent {
 
   logout() {
     this.authSvc.logout();
+  }
+
+  ngOnDestroy() {
+    this.redirectSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
 }

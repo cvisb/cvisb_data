@@ -1,5 +1,6 @@
 @import "../../sass/variables";
 @import '../../sass/material-theme.scss';
+@include mat-button-theme($candy-app-theme);
 
 .page-header {
   color: $grey-100;

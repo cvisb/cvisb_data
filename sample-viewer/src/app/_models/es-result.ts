@@ -27,4 +27,5 @@ export class ESFacet {
 export class ESFacetTerms {
   term: string;
   count: number;
+  disabled?: boolean;
 }

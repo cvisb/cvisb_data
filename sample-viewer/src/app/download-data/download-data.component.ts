@@ -20,7 +20,7 @@ export class DownloadDataComponent implements OnInit {
     private downloadSvc: DownloadDataService) {
     this.downloadSvc.loadingCompleteState$.subscribe((isDone:Boolean) => {
       if(isDone){
-        // window.top.close();
+        window.top.close();
       }
     })
   }

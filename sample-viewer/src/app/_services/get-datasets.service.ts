@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError, forkJoin, of, BehaviorSubject } from 'rxjs';
-import { map, catchError, mergeMap, tap, finalize } from "rxjs/operators";
+import { map, catchError, mergeMap, tap, finalize, pluck } from "rxjs/operators";
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { MyHttpClient } from './http-cookies.service';
@@ -15,7 +15,7 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { cloneDeep, uniqWith, uniq, isEqual, flatMapDeep } from 'lodash';
 import * as _ from 'lodash';
 
-import { Dataset, DatasetSchema } from '../_models';
+import { Dataset, DatasetSchema, DataDownload, Experiment } from '../_models';
 
 const SOURCES_KEY = makeStateKey('datasets.sources_result');
 
@@ -27,7 +27,7 @@ export class getDatasetsService {
   dataset_schema: any;
   private sources_result;
   schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
-  schemaorg_datadownload: string[] = ["contentUrl"];
+  schemaorg_datadownload: string[] = ["contentUrl", "encodingFormat", "@context", "@type", "dateModified"];
   // schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
   ;
 
@@ -56,30 +56,35 @@ export class getDatasetsService {
     )
   }
 
-  getDatasets(id?: string, idVar?: string) {
+  getDatasets(id?: string, idVar?: string): Observable<Dataset[]> {
     let qstring: string;
+    let fieldString: string = "";
+
     if (id && idVar) {
       qstring = `${idVar}:"${id}"`;
     } else {
+      // Get list of datasets
       qstring = "__all__";
+      fieldString = "name,description,identifier, keywords,dateModified"
     }
 
     let params = new HttpParams()
       .set("q", qstring)
+      .set("fields", fieldString);
 
     return this.apiSvc.get("dataset", params, 1000)
       .pipe(
+        pluck("hits"),
         // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
         mergeMap((datasetResults: any) => {
-          let summaryCalls = datasetResults['hits'].map(d => d.identifier).map(id => this.getDatasetCounts(id));
+          let summaryCalls = datasetResults.map((d: Dataset) => d.identifier).map((id: string) => this.getDatasetCounts(id));
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
-              let datasets = datasetResults['hits'];
-              datasets.forEach((dataset, idx) => {
+              let datasets = datasetResults;
+              datasets.forEach((dataset: Dataset, idx: number) => {
                 dataset['counts'] = summaryData[idx];
               })
-              // console.log(datasets);
-              return datasets.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
+              return datasets.sort((a: Dataset, b: Dataset) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
             }),
             catchError(e => {
               console.log(e)
@@ -173,9 +178,7 @@ export class getDatasetsService {
    */
   getDataset(datasetID: string, idVar: string = "identifier"): Observable<any> {
     return forkJoin(
-      this.apiSvc.fetchAll("datadownload", new HttpParams()
-        .set('q', `includedInDataset:"${datasetID}"`)
-      ),
+      this.getDownloads(datasetID),
       this.getDatasets(datasetID, idVar),
       this.getDatasetSources(datasetID))
       .pipe(
@@ -218,6 +221,13 @@ export class getDatasetsService {
       )
   }
 
+
+  getDownloads(datasetID: string): Observable<DataDownload[]> {
+    return this.apiSvc.fetchAll("datadownload", new HttpParams()
+      .set('q', `includedInDataset:"${datasetID}"`)
+      .set('fields', `@context, @type, contentUrl, creator, dateModified, datePublished, description, encodingFormat, name, version`)
+    );
+  }
   /*
   Sequence of two calls to get citation/publisher/source object associated with experiments
   Call 1: get IDs of the sources, grouped by the datasetIDs
@@ -225,7 +235,7 @@ export class getDatasetsService {
   Call 2: get the source objects associated with them.
   Needs to be a POST call, to return a single object for a query.
    */
-  getDatasetSources(dsid?: string): Observable<any> {
+  getDatasetSources(dsid?: string): Observable<Experiment[]> {
     this.loadingSubject.next(true);
 
     let citation_variable = "identifier";
@@ -252,7 +262,7 @@ export class getDatasetsService {
 
           return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
-              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
+              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation).filter(d => d);
 
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
@@ -313,8 +323,8 @@ export class getDatasetsService {
 
           return this.apiSvc.post("patient", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
-              console.log(citations)
-              console.log(citationCts)
+              // console.log(citations)
+              // console.log(citationCts)
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
 
               let total_citations = counts.reduce((total: number, x) => total + x.count, 0);
@@ -405,27 +415,37 @@ export class getDatasetsService {
   }
 
   removeNonSchema(ds: Dataset): DatasetSchema {
-    this.dataset_schema = cloneDeep(ds); // create copy
+    if (ds) {
+      this.dataset_schema = cloneDeep(ds); // create copy
 
-    // remove stuff from the dataset object
-    // removes "sourceCode" -- different name in schema.org
-    for (let key of Object.keys(this.dataset_schema)) {
-      if (!this.schemaorg_dataset.includes(key)) {
-        delete this.dataset_schema[key];
-      }
-    }
-
-    // remove stuff from individual files
-    for (let file of this.dataset_schema['distribution']) {
-      let keys = Object.keys(file);
-
-      for (let key of keys) {
-        if (!this.schemaorg_datadownload.includes(key)) {
-          delete file[key];
+      // remove stuff from the dataset object
+      // removes "sourceCode" -- different name in schema.org
+      for (let key of Object.keys(this.dataset_schema)) {
+        if (!this.schemaorg_dataset.includes(key)) {
+          delete this.dataset_schema[key];
         }
       }
+
+      // remove stuff from individual files
+      for (let file of this.dataset_schema['distribution']) {
+        let keys = Object.keys(file);
+
+        for (let key of keys) {
+          if (!this.schemaorg_datadownload.includes(key)) {
+            delete file[key];
+          }
+        }
+      }
+
+      // custom: get rid of the author list from citation, since they get long
+      for (let citation of this.dataset_schema['citation']) {
+        if (citation['author']) {
+          delete citation['author'];
+        }
+      }
+
+      return (this.dataset_schema)
     }
-    return (this.dataset_schema)
   }
 
 }

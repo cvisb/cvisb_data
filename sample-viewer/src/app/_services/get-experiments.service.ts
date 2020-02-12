@@ -5,7 +5,9 @@ import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError } from 'rxjs/';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, pluck } from 'rxjs/operators';
+
+import { ExperimentCount } from "../_models";
 
 import { isPlatformBrowser } from '@angular/common';
 
@@ -26,16 +28,17 @@ export class GetExperimentsService {
     return (this.apiSvc.get('experiment', params));
   }
 
-  getExptCounts() {
+  getExptCounts(): Observable<ExperimentCount[]> {
     let params = new HttpParams()
       .set('q', '__all__')
       .set('facets', 'includedInDataset.keyword')
       .set('facet_size', '1000')
 
     return this.apiSvc.get('experiment', params, 0).pipe(
-      map(results => {
-        let expts = results['facets']['includedInDataset.keyword']['terms'];
-
+      pluck("facets"),
+      pluck("includedInDataset.keyword"),
+      pluck("terms"),
+      map((expts: ExperimentCount[]) => {
         expts.forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['datasetName'] = filtered['datasetName'];
@@ -50,7 +53,7 @@ export class GetExperimentsService {
     exptCols: string[] = ["batchID", "citation", "correction", "creator", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"],
     patientCols: string[] = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome', 'species', 'age', 'gender', 'country', 'admin2', 'admin3', 'infectionYear', 'infectionDate', 'evalDate',
       'admitDate', 'dischargeDate', 'daysInHospital', 'daysOnset', 'elisa', 'publisher', 'citation', 'dataStatus', 'correction']): Observable<any> {
-    console.log("getting experiments with id " + dataset_id)
+    // console.log("getting experiments with id " + dataset_id)
     let expt_params = new HttpParams()
       .set('q', `includedInDataset:"${dataset_id}"`)
       .set('fields', exptCols.join(","));
@@ -65,8 +68,8 @@ export class GetExperimentsService {
       this.apiSvc.fetchAll("patient", patient_params)
     ).pipe(
       map(([expts, patients]) => {
-        console.log(expts)
-        console.log(patients)
+        // console.log(expts)
+        // console.log(patients)
         return ({ patient: patients, experiment: expts });
       }
       ),

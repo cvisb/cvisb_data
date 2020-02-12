@@ -5,12 +5,15 @@ import { PatientRoutingModule } from './patient-routing.module';
 
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
+import {
+  MatExpansionModule, MatTableModule, MatIconModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressSpinnerModule, MatButtonModule
+} from '@angular/material';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // --- components ---
 import { PatientComponent } from './patient.component';
@@ -19,19 +22,26 @@ import { PatientTableComponent } from './patient-table/patient-table.component';
 
 // --- services ---
 import { PatientsResolver } from '../_services/patients.resolver';
-import { AllPatientsResolver } from '../_services/allpatients.resolver';
 
 @NgModule({
   imports: [
     CommonModule,
     PatientRoutingModule,
     RouterModule,
-    MaterialModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
+    MatExpansionModule,
     FiltersModule,
     DownloadBtnModule,
     SvgIconModule,
     PipesModule,
-    PatientTimepointsModule
+    PatientTimepointsModule,
+    FontAwesomeModule
   ],
   declarations: [
     PatientComponent,
@@ -39,8 +49,7 @@ import { AllPatientsResolver } from '../_services/allpatients.resolver';
     PatientTableComponent
   ],
   providers: [
-    PatientsResolver,
-    AllPatientsResolver
+    PatientsResolver
   ]
 })
 export class PatientModule { }

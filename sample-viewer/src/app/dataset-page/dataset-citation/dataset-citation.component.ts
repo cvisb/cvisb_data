@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Dataset } from '../../_models';
 import { GetDatacatalogService } from '../../_services/';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dataset-citation',
@@ -11,12 +12,12 @@ import { GetDatacatalogService } from '../../_services/';
 
 export class DatasetCitationComponent implements OnInit {
   @Input() dataset: Dataset;
-  cvisbCatalog: Object;
+  cvisbCatalog$: Observable<Object>;
 
   constructor(private dataCatalogSvc: GetDatacatalogService) { }
 
   ngOnInit() {
-    this.cvisbCatalog = this.dataCatalogSvc.cvisbCatalog;
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
   }
 
 }

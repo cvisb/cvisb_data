@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { UploadPatientsRoutingModule } from './upload-patients-routing.module';
 
 // --- modules ---
-import { MaterialModule } from '../../material.module';
+import { MatButtonModule, MatProgressBarModule } from '@angular/material';
+
 
 // --- components ---
 import { AddPatientsComponent } from '../add-patients/add-patients.component';
@@ -14,7 +15,8 @@ import { PatientUploadComponent } from '../patient-upload/patient-upload.compone
   imports: [
     CommonModule,
     UploadPatientsRoutingModule,
-    MaterialModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   declarations: [
     AddPatientsComponent,

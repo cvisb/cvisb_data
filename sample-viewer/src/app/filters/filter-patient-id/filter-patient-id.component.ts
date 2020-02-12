@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 
-// import { SelectComponent } from '@ng-select/ng-select';
-
+import { Observable, Subscription } from 'rxjs';
 import { AuthState } from '../../_models';
 
 import { RequestParametersService, AuthService } from '../../_services';
@@ -11,7 +10,7 @@ import { RequestParametersService, AuthService } from '../../_services';
   templateUrl: './filter-patient-id.component.html',
   styleUrls: ['./filter-patient-id.component.scss']
 })
-export class FilterPatientIdComponent implements OnInit {
+export class FilterPatientIdComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
   @Input() patients: string[];
   @Input() all_patients: string[];
@@ -20,42 +19,52 @@ export class FilterPatientIdComponent implements OnInit {
   numberOfItemsFromEndBeforeFetchingMore = 10;
   loading = false;
   @ViewChild('selectpatients', { static: false }) public ngSelect: any;
-  authorized: boolean;
+  authorized$: Observable<AuthState>;
 
   selectedPatients: string[] = [];
   inclContacts: boolean;
   inclSID: boolean;
   inclGID: boolean;
 
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
+
   constructor(
     private requestSvc: RequestParametersService,
     private authSvc: AuthService
   ) {
-
-    this.authSvc.authState$.subscribe((authState: AuthState) => {
-      this.authorized = authState.authorized
-    })
+    this.authorized$ = this.authSvc.authState$;
   }
 
   ngOnInit() {
     if (this.all_patients && this.all_patients.length > 0) {
       this.loaded_patients = this.all_patients.slice(0, this.bufferSize);
     }
-    
+
     switch (this.endpoint) {
       case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
+        this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
 
       case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
+        this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
     }
   }
+
+  ngOnDestroy() {
+    if (this.patientSubscription) {
+      this.patientSubscription.unsubscribe();
+    }
+    if (this.sampleSubscription) {
+      this.sampleSubscription.unsubscribe();
+    }
+  }
+
 
   // Used to reset, when the filters are cleared.
   checkParams(params) {
@@ -65,8 +74,7 @@ export class FilterPatientIdComponent implements OnInit {
   }
 
 
-
-  filterPatientIDs(patientIDs) {
+  filterPatientIDs(patientIDs: string[]) {
     if (this.inclContacts) {
       this.requestSvc.updateParams(this.endpoint,
         {

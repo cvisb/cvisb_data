@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 from . import checkIDstructure, getPrivateContactGroup
+from .logging import addError, updateError
 
 def getUnique(arr, field):
     unique_values = []
@@ -16,31 +17,20 @@ def getUnique(arr, field):
     if(len(unique_values) > 0):
         return(unique_values)
 
-def addError(df, condition, newError, errorCol="issue"):
-    df.loc[condition, errorCol] = df.loc[condition, errorCol].apply(lambda x: updateError(x, newError))
-    return(df)
-
-def updateError(origError, newError, delim=";"):
-    if((newError == "") | pd.isnull(newError)):
-        return(origError)
-    if((origError == origError) & pd.notnull(origError)):
-        return(origError + f"{delim} " + newError)
-    return(newError)
-
 # --- ids ---
 # Make sure the GID follows a known pattern. Useful to detect off by one row copy errors, etc.
-def checkIDs(df, idVar = "gID", errorCol = "issue", errorMsg = "Unrecognized GID format"):
+def checkIDs(df, verbose, logCols, idVar = "gID", errorCol = "issue", errorMsg = "Unrecognized GID format"):
     df['idFlag'] = df[idVar].apply(checkIDstructure)
-    df = addError(df, df.idFlag == True, errorMsg, errorCol)
+    df = addError(df, df.idFlag == True, errorMsg, verbose, logCols, errorCol)
 
     return(df)
 
 # Make sure public survivor IDs are as expected.
-def checkPublicSurvivorIDs(ids, errorCol, idCol = "publicPatientID", expectedLen = 9, errorMsg = None):
+def checkPublicSurvivorIDs(ids, errorCol, verbose, idCol = "publicPatientID", expectedLen = 9, errorMsg = None):
     if errorMsg is None:
         errorMsg = f"Study Specific number isn't {expectedLen} characters long, as expected"
     # Check if the survivor ID is exactly 7 digits long + S- or C-.
-    ids = addError(ids, ids[idCol].apply(lambda x: len(str(x))) != expectedLen, errorMsg, errorCol)
+    ids = addError(ids, ids[idCol].apply(lambda x: len(str(x))) != expectedLen, errorMsg, verbose, [idCol], errorCol)
 
     # Check IDs are unique
     return(ids)
@@ -55,7 +45,7 @@ def checkBadFormat(pattern, id):
         else:
             return(True)
 
-def checkPublicAcuteIDs(ids, errorCol, idCol = "Study Specific #", expectedformat = "^\d\d\-\d\d\d\d\d\d$", errorMsg = None):
+def checkPublicAcuteIDs(ids, errorCol, verbose, idCol = "Study Specific #", expectedformat = "^\d\d\-\d\d\d\d\d\d$", errorMsg = None):
     """
     Make sure the raw input for study specific number is in the correct format.
     """
@@ -63,23 +53,23 @@ def checkPublicAcuteIDs(ids, errorCol, idCol = "Study Specific #", expectedforma
         errorMsg = f"Study Specific number isn't in the expected format: {expectedformat}"
 
 
-    ids = addError(ids, ids[idCol].apply(lambda x: checkBadFormat(expectedformat, x)), errorMsg, errorCol)
+    ids = addError(ids, ids[idCol].apply(lambda x: checkBadFormat(expectedformat, x)), errorMsg, verbose, [idCol], errorCol)
 
     return(ids)
 
 # --- duplicate IDs ---
-def idDupeRow(df, df_raw, errorMsg = "Duplicate row", errorCol = "issue"):
+def idDupeRow(df, df_raw, verbose, logCols, errorMsg = "Duplicate row", errorCol = "issue"):
     if(len(df) != len(df_raw)):
         raise ValueError("Some rows have been removed. Identified duplicate rows will not be correct.")
 
     dupe_idx = df_raw[df_raw.duplicated(keep=False)].index
 
-    df = addError(df, dupe_idx, errorMsg, errorCol)
+    df = addError(df, dupe_idx, errorMsg, verbose, logCols, errorCol)
     return(df)
 
-def idDupes(df, idCol = "sID", errorMsg = "Duplicate patient ID", errorCol = "issue", ignoreNA=True):
+def idDupes(df, verbose, idCol = "sID", errorMsg = "Duplicate patient ID", errorCol = "issue", ignoreNA=True):
     if any(df[idCol].apply(lambda x: isinstance(x, list))):
-        return(idDupesInArr(df, idCol, errorMsg, errorCol))
+        return(idDupesInArr(df, verbose, idCol, errorMsg, errorCol))
     elif(ignoreNA):
         dupe_idx = df[(df.duplicated(subset=[idCol], keep=False)) & (pd.notnull(df[idCol]))].index
 
@@ -87,11 +77,11 @@ def idDupes(df, idCol = "sID", errorMsg = "Duplicate patient ID", errorCol = "is
         dupe_idx = df[df.duplicated(subset=[idCol], keep=False)].index
 
     if(errorCol):
-        df = addError(df, dupe_idx, errorMsg, errorCol)
+        df = addError(df, dupe_idx, errorMsg, verbose, [idCol], errorCol)
     return(df)
 
 # Checks for duplicate G-ids within an array of G-ids
-def idDupesInArr(df, idCol = "gID", errorMsg = "Duplicate G-Number", errorCol = "issue"):
+def idDupesInArr(df, verbose, idCol = "gID", errorMsg = "Duplicate G-Number", errorCol = "issue"):
     gids = []
     dupe_ids = []
     for idx, row in df.iterrows():
@@ -104,7 +94,7 @@ def idDupesInArr(df, idCol = "gID", errorMsg = "Duplicate G-Number", errorCol = 
             else:
                 gids.extend(row[idCol])
     # Return if there's an intersection of the values-- to identify all the duplicate locations, not just second iteration
-    df = addError(df, df[idCol].apply(lambda x: idDupesArrRowwise(x, dupe_ids)), errorMsg, errorCol)
+    df = addError(df, df[idCol].apply(lambda x: idDupesArrRowwise(x, dupe_ids)), errorMsg, verbose, [idCol], errorCol)
     return(df)
 
 def idDupesArrRowwise(x, dupe_ids):
@@ -128,11 +118,11 @@ def filterDupes(df, idCols = ["gid"], errorMsg = "Duplicate patient ID"):
     df = df.drop(dupe_idx)
     return(df, dupes)
 
-def checkContactGroupIDs(df, errorCol, publicID_col = "contactGroupIdentifier", privateID_col = "sID", errorMsg = "Private and Public IDs have different contactGroupIdentifiers"):
+def checkContactGroupIDs(df, errorCol, verbose, logCols, publicID_col = "contactGroupIdentifier", privateID_col = "sID", errorMsg = "Private and Public IDs have different contactGroupIdentifiers"):
     df['contactGroupID_private'] = df[privateID_col].apply(getPrivateContactGroup)
     check_hhGroups = df.groupby("contactGroupID_private")[[publicID_col]].agg(lambda x: len(set(x)) == 1)
     weird_hhIDs = check_hhGroups[check_hhGroups[publicID_col] == False].index
-    df = addError(df, df.contactGroupID_private.isin(weird_hhIDs), errorMsg, errorCol)
+    df = addError(df, df.contactGroupID_private.isin(weird_hhIDs), errorMsg, verbose, logCols, errorCol)
     return(df)
 
 # --- age weirdness ---
@@ -163,12 +153,12 @@ def getAgeFlag(row):
     return(False)
 
 
-def checkAges(df, minAge = 0, maxAge = 100):
-    df = addError(df, (df.age < minAge) | (df.age > maxAge), f"age is < {minAge} or > {maxAge}")
+def checkAges(df, verbose, logCols, minAge = 0, maxAge = 100):
+    df = addError(df, (df.age < minAge) | (df.age > maxAge), f"age is < {minAge} or > {maxAge}", verbose, logCols)
 
     try:
         df['ageFlag'] = df.apply(getAgeFlag, axis = 1)
-        df = addError(df, df.ageFlag == True, "Agey, Agem, or Aged has a weird value")
+        df = addError(df, df.ageFlag == True, "Agey, Agem, or Aged has a weird value", verbose, logCols)
     # Survivor data lacks any info beyond Agey-- so don't bother to check months/days
     except:
         pass

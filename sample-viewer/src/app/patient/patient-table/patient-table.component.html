@@ -17,9 +17,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">gID</th>
       <td mat-cell *matCellDef="let element">
         <span *ngIf="element.gID">
-        <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
-          {{id}} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
-        </span>
+          <span class="alt-id" *ngFor="let id of element.gID.sort(); let idx=index">
+            {{id}} <span class="data-separator" *ngIf="idx < element.gID.length - 1"></span>
+          </span>
         </span>
       </td>
     </ng-container>
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="associatedSamples">
       <th mat-header-cell *matHeaderCellDef>samples</th>
       <td mat-cell *matCellDef="let element">
-        <app-patient-timepoints [alternateIDs]="element.alternateIdentifier"></app-patient-timepoints>
+        <app-patient-timepoints [samples]="element.samples"></app-patient-timepoints>
         <!-- <app-patient-timepoints [samples]="element.associatedSamples"></app-patient-timepoints> -->
         <!-- <mat-chip-list> -->
         <!-- <mat-chip class="timepoint" *ngFor="let timepoint of element.associatedSamples" [ngClass]="element.outcome"> -->
@@ -79,8 +79,12 @@
       <td mat-cell *matCellDef="let element">
 
         <span class="sex-icon" [ngClass]="element.gender">
-          <span *ngIf="element.gender === 'Female'"><i class="fas fa-venus"></i></span>
-        <span *ngIf="element.gender === 'Male'"><i class="fas fa-mars"></i></span>
+          <span *ngIf="element.gender === 'Female'">
+            <fa-icon [icon]="faVenus"></fa-icon>
+          </span>
+          <span *ngIf="element.gender === 'Male'">
+            <fa-icon [icon]="faMars"></fa-icon>
+          </span>
         </span>
 
       </td>
@@ -121,13 +125,13 @@
           {{elisa.virus}} {{elisa.assayType}}
           <span id="positive" *ngIf="elisa.ELISAresult === 'positive'">
             <mat-icon>control_point</mat-icon>
-            </span>
+          </span>
           <span id="negative" *ngIf="elisa.ELISAresult === 'negative'">
             <mat-icon>remove_circle_outline</mat-icon>
-            </span>
+          </span>
           <span id="unknown" *ngIf="!elisa.ELISAresult">
             <mat-icon>help_outline</mat-icon>
-            </span>
+          </span>
 
         </div>
 
@@ -139,6 +143,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow($event, row)"></tr>
   </table>
 
-  <mat-paginator [length]="selectedLength" [pageSizeOptions]="[10, 25, 50]" [pageSize]="10" showFirstLastButtons [hidden]="!patientSource"></mat-paginator>
-  <!-- <mat-paginator [length]="patientList?.patientCount" [pageSizeOptions]="[10, 20, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator> -->
+    <mat-paginator [length]="selectedLength" [pageSizeOptions]="[10, 25, 50]" [pageSize]="10" showFirstLastButtons [hidden]="!patientSource"></mat-paginator>
 </div>

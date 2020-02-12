@@ -1,0 +1,60 @@
+$chicletRadius: 4px;
+
+svg {
+  // background: purple;
+}
+// --- container ---
+
+missing-data-heatmap-container {}
+// --- heatmap ---
+
+.rect--missing-data {
+  stroke: white;
+  rx: $chicletRadius;
+  ry: $chicletRadius;
+}
+// --- axes ---
+
+#missing-data-heatmap {
+  & g.axis path {
+    display: none;
+  }
+}
+// --- legend ---
+
+.legend-gradient {
+  stroke-width: 0.25;
+}
+
+text.legend-title {
+  dominant-baseline: hanging;
+  font-size: 0.75em;
+}
+
+text.legend-label {
+  dominant-baseline: hanging;
+  font-size: 0.75em;
+
+  &.legend-label--max {
+    text-anchor: end;
+  }
+}
+// --- tooltip ---
+
+.missing-data-tooltip-group text {
+  font-weight: 300;
+  dominant-baseline: hanging;
+}
+
+.missing-data-tooltip-group rect {
+  fill: white;
+  opacity: 0.95;
+}
+
+.missing-data-tooltip-group .tooltip-value {
+  font-weight: 400;
+}
+
+.tooltip-border {
+  stroke-width: 7;
+}

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { AuthService } from '../../_services';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { AuthService } from '../../_services';
   styleUrls: ['./unauthorized.component.scss']
 })
 export class UnauthorizedComponent implements OnInit {
-  page: string;
+  page$: Observable<string>;
 
   constructor(
     private titleSvc: Title,
@@ -23,9 +24,7 @@ export class UnauthorizedComponent implements OnInit {
     // set page title
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
-    authSvc.redirectUrlState$.subscribe((url: string) => {
-      this.page = url;
-    })
+    this.page$ = authSvc.redirectUrlState$;
   }
 
   ngOnInit() {

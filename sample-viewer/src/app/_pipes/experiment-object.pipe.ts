@@ -50,7 +50,7 @@ export class ExperimentObjectPipe implements PipeTransform {
     { "variableMeasured": ["ADNP","ADCD","ADCP","ADNKA_CD107a","ADNKA_IFNg","ADNKA_MIP1b"], "measurementTechnique": ["serology"], "measurementCategory": "Systems Serology", "dataset_id": "systems-serology", "datasetName": "Systems Serology", "anchor_link": "Systems-Serology" },
 
     { "variableMeasured": ["metabolomics"], "measurementTechnique": ["Metabolomics"], "measurementCategory": "clinical measurements", "dataset_id": "metabolomics", "datasetName": "metabolomics", "anchor_link": "metabolomics" },
-    { "variableMeasured": ["blood chemistry"], "measurementTechnique": ["Chemistry Test"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "datasetName": "blood chemistry", "anchor_link": "blood-chemistry" },
+    { "variableMeasured": ["blood chemistry"], "measurementTechnique": ["Blood Chemistry Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "datasetName": "blood chemistry", "anchor_link": "blood-chemistry" },
     { "variableMeasured": ["vitals"], "measurementTechnique": ["Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "vitals", "datasetName": "vitals", "anchor_link": "vitals" },
     { "variableMeasured": ["vitals"], "measurementTechnique": ["Sensor Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "sensor-vitals", "datasetName": "sensor vitals", "anchor_link": "sensor-vitals" },
     { "variableMeasured": ["virus level"], "measurementTechnique": ["Rapid Antigen Test"], "measurementCategory": "clinical measurements", "dataset_id": "rapid-diagnostics", "datasetName": "rapid diagnostics", "anchor_link": "rapid-diagnostics" },

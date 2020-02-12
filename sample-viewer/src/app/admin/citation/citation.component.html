@@ -1,4 +1,4 @@
-<div class="spinner-container container" *ngIf="loading">
+<div class="spinner-container container" *ngIf="loading$ | async">
   <mat-spinner></mat-spinner>
 </div>
 
@@ -10,8 +10,8 @@
       To reference data from the Center for Viral Systems Biology Data Portal, please cite the Center for Viral Systems Biology:
     </p>
 
-    <p *ngIf="cvisbCatalog">
-      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['_version'] }}.
+    <p *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+      The {{ cvisbCatalog['publisher'][0]['name']}}, {{ currentYear | date:'yyyy' }}, "{{ cvisbCatalog['name'] }}", {{ cvisbCatalog['url'] }}, V{{ cvisbCatalog['releaseVersion'] }}.
     </p>
   </section>
 
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="citation-group" *ngFor="let expt of experiments">
+    <div class="citation-group" *ngFor="let expt of experiments$ | async">
       <h4 class="data-type"><a [routerLink]="['/dataset', expt.term]">{{expt.datasetName}} data</a></h4>
       <div class="data-source-group">
         <ng-container *ngFor="let source of expt.sources">

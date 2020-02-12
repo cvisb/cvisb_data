@@ -9,7 +9,6 @@ import { ViralSequencingComponent } from './viral-sequencing.component';
 // import { AlignedSequencesFiltersComponent } from './aligned-sequences-filters/aligned-sequences-filters.component';
 
 // -- Modules --
-import { MaterialModule } from '../material.module';
 import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +23,6 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
     ViralSequencingRoutingModule,
     DatasetPageModule,
     SvgIconModule,

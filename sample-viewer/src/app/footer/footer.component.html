@@ -10,7 +10,7 @@
           <img src="/assets/img/cvisb_icon_300px.png" class="logo" />
         </a>
 
-          <img src="/assets/img/kgh_400x110.png" class="logo" />
+          <img src="/assets/img/kgh_logo.png" class="logo" />
 
         <a href="http://health.gov.sl/" rel="noreferrer" target="_blank">
           <img src="/assets/img/SL_MOH.png" class="logo" />
@@ -52,8 +52,8 @@
           <a [href]="'mailto:' + contactInfo.contactPoint.email">{{ contactInfo.contactPoint.email }}</a>
         </div>
 
-        <div class="updated">
-          data updated {{ dataModified ? (dataModified | date: "d MMMM yyyy") : ": unknown" }}
+        <div class="updated" *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+          data updated {{ cvisbCatalog.dateModified ? (cvisbCatalog.dateModified | date: "d MMMM yyyy") : ": unknown" }}
         </div>
 
       </div>

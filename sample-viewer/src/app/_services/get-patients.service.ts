@@ -1,71 +1,46 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { map, catchError, mergeMap, expand, reduce } from "rxjs/operators";
-import { Observable, Subject, BehaviorSubject, throwError, EMPTY } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, BehaviorSubject, throwError, forkJoin, pipe, of, interval } from 'rxjs';
+import { map, catchError, mergeMap, tap, pluck, switchMap, debounce, finalize } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
-import { Patient, PatientArray, PatientDownload, AuthState, RequestParamArray, RequestParam, PatientSummary, ESResponse } from '../_models';
-import { AuthService } from './auth.service';
+import { PatientArray, PatientDownload, AuthState, RequestParamArray, PatientSummary, Patient, Sample, ESFacetTerms, ESResult, Experiment } from '../_models';
 import { ApiService } from './api.service';
+import { GetExperimentsService } from './get-experiments.service';
 import { RequestParametersService } from './request-parameters.service';
 import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
+import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
-import { flatMapDeep } from 'lodash';
-
-// import PATIENTS from '../../assets/data/patients.json';
-
+import { flatMapDeep, groupBy, chain } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class GetPatientsService {
-  // patients: Patient[];
-  request_params: RequestParamArray;
+  qParams: HttpParams;
 
-  all_data;
-
-  // Event listener for the patient array.
-  public patientsSubject: BehaviorSubject<PatientArray> = new BehaviorSubject<PatientArray>(null);
-  public patientsState$ = this.patientsSubject.asObservable();
+  // Patient summary counts count
+  public patientsSummarySubject = new BehaviorSubject<PatientSummary>(null);
+  public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
 
   // Array of variables to calculate the summary stats for.
   summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "country.identifier.keyword", "infectionYear"];
 
   constructor(
     public myhttp: MyHttpClient,
-    private route: ActivatedRoute,
-    private router: Router,
     private apiSvc: ApiService,
+    private exptSvc: GetExperimentsService,
     private requestSvc: RequestParametersService,
     private datePipe: DateRangePipe,
-    private authSvc: AuthService) {
-
-    // this.apiSvc.put('patient', [this.fakePatients[1]]);
-
-    this.authSvc.authState$.subscribe((authState: AuthState) => {
-      if (authState.authorized) {
-        // this.getPatients();
-      }
-    })
-
-    // this.requestSvc.patientParamsState$.subscribe((params: RequestParamArray) => {
-    //   console.log(params)
-    //   this.request_params = params;
-    //   // this.getPatients();
-    // })
-
-
-
-    // this.patients.sort((a: any, b: any) => (a.availableData && b.availableData) ? (b.availableData.length - a.availableData.length) : (a.patientID < b.patientID ? -1 : 1));
-    // this.patients.sort((a: any, b: any) => this.sortFunc(a, b));
+    private exptPipe: ExperimentObjectPipe
+  ) {
   }
 
-  sortFunc(sortVar): string {
+  sortFunc(sortVar: string): string {
     // Sorting func for ES.
 
     let numericVars = ["age"];
@@ -83,29 +58,98 @@ export class GetPatientsService {
     return (`${sortVar}.keyword`);
   }
 
+  /*
+  getPatients()
 
-  getPatient(id: string): any {
-    // temp hard-coded shim.
-    // return (this.patients.filter((d: any) => d.patientID === id)[0]);
-    return this.apiSvc.getOne('patient', id, 'patientID')
+  Combo function that forkJoins (calls both asynchronously) getPatientData and getPatientSummary
+  to simultaneously trigger a call to the paginated data function and the summarized facetted object.
+   */
+  // getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<{ patients: Patient[], summary: PatientSummary, total: number }> {
+  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
+    return forkJoin([this.getPatientData(qParams, pageNum, pageSize, sortVar, sortDirection), this.getPatientSummary(qParams)]).pipe(
+      map(([patientData, patientSummary]) => {
+        patientData['summary'] = patientSummary;
+        return (patientData)
+      })
+    )
   }
 
+  loadPatients(pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string): Observable<any> {
+    return this.requestSvc.patientParamsState$.pipe(
+      // tap(params => console.log(params)),
+      tap(params => {
+        this.qParams = this.requestSvc.reducePatientParams(params);
+      }),
+      // debounce(() => interval(5000)),
+      switchMap(params => this.getPatients(this.qParams, pageNum, pageSize, sortVar, sortDirection)),
+      finalize(() => console.log("finished with get patients service!"))
+    )
+  }
+
+
   /*
-  Call to get both patients and their associated experiments.
+  Call to get both patients and their associated experiments/samples for display in the patient table.
   1) Get paginated results for patients.
-  2) Use those patientIDs to query /experiment
+  2) Use those patientIDs to query /experiment and /sample
   3) Merge the two results together.
    */
-  getPatients(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "", sortDirection: string) {
-
+  getPatientData(qParams: HttpParams, pageNum: number, pageSize: number, sortVar: string = "",
+    sortDirection: string, fields: string[] = ["gID", "sID", "patientID", "alternateIdentifier", "cohort", "outcome", "elisa", "country", "age", "gender", "relatedTo"]): Observable<{ hits: Patient[], total: number }> {
     // ES syntax for sorting is `sort=variable:asc` or `sort=variable:desc`
     // BUT-- Biothings changes the syntax to be `sort=+variable` or `sort=-variable`. + is optional for asc sorts
     let sortString: string = sortDirection === "desc" ? `-${this.sortFunc(sortVar)}` : this.sortFunc(sortVar);
 
-    let params = qParams
-      .append('size', pageSize.toString())
+    let patientParams = qParams
       .append('from', (pageSize * pageNum).toString())
+      .append('size', pageSize.toString())
+      .append('fields', fields.join(","))
       .append("sort", sortString);
+
+    return this.myhttp.get(`${environment.api_url}/api/patient/query`, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: patientParams
+    })
+      .pipe(
+        pluck("body"),
+        catchError(e => {
+          console.log(e)
+          throwError(e);
+          return (of(e))
+        }),
+        mergeMap((patientResults: any[]) => this.getPatientAssociatedData(patientResults['hits'].map(d => d.patientID)).pipe(
+          map(associatedData => {
+            let patientData = patientResults['hits'];
+
+            patientData.forEach(patient => {
+              let patientExpts = flatMapDeep(associatedData['experiments'].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
+              patient['availableData'] = patientExpts;
+              patient['samples'] = associatedData['samples'].filter(d => patient.alternateIdentifier.includes(d.privatePatientID)).sort((a: Sample, b: Sample) => +a.visitCode - +b.visitCode);
+            })
+
+            return ({ hits: patientData, total: patientResults['total'] });
+          }),
+          catchError(e => {
+            console.log(e)
+            throwError(e);
+            return (of(e))
+          })
+        )
+        )
+      )
+  }
+
+  /*
+  Gets summary, facetted stats for patients
+   */
+  getPatientSummary(params: HttpParams): Observable<PatientSummary> {
+    let facet_string = this.summaryVar.join(",");
+
+    params = params
+      .append('facets', facet_string)
+      .append("size", "0")
+      .append('facet_size', "10000");
 
     return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
       observe: 'response',
@@ -113,127 +157,207 @@ export class GetPatientsService {
         .set('Accept', 'application/json'),
       params: params
     }).pipe(
-      mergeMap(patientResults => this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set("q", "__all__")
-          .set("patientID", `"${patientResults['body']['hits'].map(d => d.patientID).join('","')}"`)
-          .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
-          .set("size", "0")
-          .set("facet_size", "10000")
-      }).pipe(
-        map(expts => {
-          let patients = patientResults['body']['hits'];
-
-          patients.forEach(patient => {
-            let patientExpts = flatMapDeep(expts['body']["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)), d => d["includedInDataset.keyword"]["terms"]).map(d => d.term);
-            patient['availableData'] = patientExpts;
-          })
-
-          return ({ hits: patients, total: patientResults['body']['total'] });
-        }),
-        catchError(e => {
-          console.log(e)
-          throwError(e);
-          return (new Observable<any>())
-        })
-      )
-      )
-    )
-
-
-
-    // QUERY 1: get patients
-    // return this.myhttp.get<any[]>(environment.api_url + "/api/patient/query", {
-    //   observe: 'response',
-    //   headers: new HttpHeaders()
-    //     .set('Accept', 'application/json'),
-    //   params: qParams.append("size", "10")
-    // }).pipe(
-    //   // return this.apiSvc.getPaginated('patient', qParams, pageNum, pageSize, sortVar, sortDirection).pipe(
-    //   mergeMap(patientResults =>
-    //     // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-    //     // QUERY 2: get expts associated with those patients
-    //     this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-    //       observe: 'response',
-    //       headers: new HttpHeaders()
-    //         .set('Accept', 'application/json'),
-    //       params: new HttpParams()
-    //         .set("q", "__all__")
-    //         .set("patientID", `"${patientResults['body']['hits'].join('","')}"`)
-    //         .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)")
-    //     })
-    //
-    //       // mergeMap(patientResults => {
-    //       //   let patients = patientResults['body']['hits'];
-    //       //   // ex: https://dev.cvisb.org/api/experiment/query?q=__all__&size=0&patientID=%22G13-358327%22&facets=privatePatientID.keyword(measurementTechnique.keyword)
-    //       //   // QUERY 2: get expts associated with those patients
-    //       //   let patientIDs = patients.map(d => d.patientID);
-    //       //   console.log(patientIDs);
-    //       //
-    //       //   let exptParams = new HttpParams()
-    //       //     .set("q", "__all__")
-    //       //     .set("patientID", `"${patientIDs.join('","')}"`)
-    //       //     .set("facets", "privatePatientID.keyword(measurementTechnique.keyword)");
-    //       //
-    //       //   return this.myhttp.get<any[]>(`${environment.api_url}/api/experiment/query`, {
-    //       //     observe: 'response',
-    //       //     headers: new HttpHeaders()
-    //       //       .set('Accept', 'application/json'),
-    //       //     params: exptParams
-    //       //   })
-    //       .pipe(
-    //         map(expts => {
-    //           let patients = patientResults['body']['hits'];
-    //
-    //           patients.forEach(patient => {
-    //             let patientExpts = expts["facets"]["privatePatientID.keyword"]["terms"].filter(d => patient.alternateIdentifier.includes(d.term)).flatMap(d => d["measurementTechnique.keyword"]["terms"].map(d => d.term));
-    //             console.log(patientExpts);
-    //             patient['availableData'] = patientExpts;
-    //           })
-    //
-    //           console.log(patients)
-    //           console.log(expts)
-    //
-    //           return patients;
-    //         })
-    //       )
-    //   )
-    // )
-  }
-
-
-  /*
-  Gets summary, facetted stats for patients
-   */
-  getPatientSummary(params: HttpParams): Observable<any> {
-    let facet_string = this.summaryVar.join(",");
-
-    params = params
-      .append('facets', facet_string)
-      .append('facet_size', "10000")
-      .append('size', "0");
-
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
+      pluck("body"),
       map((res: any) => {
-        // console.log(res);
-        let summary = new PatientSummary(res.body)
-        // console.log(summary)
+        let summary = new PatientSummary(res)
         return (summary);
-      }
-      )
+      }),
+      catchError(e => {
+        console.log(e);
+        return (of(e))
+      })
     );
   }
 
-  getAllPatientsSummary(): Observable<any> {
-    return (this.getPatientSummary(new HttpParams().set("q", "__all__")));
+  getAllPatientsSummary(): Observable<PatientSummary> {
+    return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
+      map(([patientSummary, expts]) => {
+        patientSummary["experiments"] = expts;
+
+        let years = patientSummary.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
+        let minYear = Math.min(...years);
+        let maxYear = Math.max(...years);
+        patientSummary["yearDomain"] = [minYear, maxYear];
+        patientSummary["cohortDomain"] = patientSummary.patientTypes.map(d => d.term);
+        patientSummary["outcomeDomain"] = patientSummary.patientOutcomes.map(d => d.term);
+        return (patientSummary)
+      }),
+      catchError(e => {
+        console.log(e);
+        return (of(e))
+      })
+    )
+  }
+
+  getPatientAssociatedData(ids: string[]): Observable<{ experiments: ESFacetTerms[], samples: Sample[] }> {
+    let exptParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${ids.join('","')}"`)
+      .set("facets", "privatePatientID.keyword(includedInDataset.keyword)")
+      .set("size", "0")
+      .set("facet_size", "10000");
+
+    let sampleParams = new HttpParams()
+      .set("q", "__all__")
+      .set("size", "1000")
+      .set("patientID", `"${ids.join('","')}"`);
+
+    return forkJoin([
+      this.myhttp.get<any[]>(environment.api_url + "/api/experiment/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: exptParams
+      }),
+      this.myhttp.get<any[]>(environment.api_url + "/api/sample/query", {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json'),
+        params: sampleParams
+      })]).pipe(
+        map(([expts, samples]) => {
+          return ({ experiments: expts['body']['facets']['privatePatientID.keyword']['terms'], samples: samples['body']['hits'] })
+        })
+      )
+  }
+
+  /*
+  Returns data for an individual patient, to display on its own page.
+  Combo of three queries, plus some processing:
+  1. patient: get the patient result.
+  2. sample: get associated samples
+  3. experiment: get assocated experimental data
+  ... and then process the lot.
+  Since I already know the patent ID, can run all of them together at the same time.
+   */
+  getPatientPage(patientID: string): Observable<{ patient: Patient, experiments: Experiment[], samples: Sample[] }> {
+    return forkJoin([
+      this.getIndividualPatient(patientID),
+      this.getIndividualExpts(patientID),
+      this.getIndividualSamples(patientID)
+    ]).pipe(
+      // tap(data => console.log(data)),
+      map(([patientData, exptData, sampleData]) => {
+        return ({ patient: patientData, experiments: exptData, samples: sampleData })
+      })
+    )
+  }
+
+  getIndividualPatient(patientID: string): Observable<Patient> {
+    let patientParams = new HttpParams()
+      .set("q", `patientID:"${patientID}"`)
+      .set("pageSize", "2");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/patient/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: patientParams
+    }).pipe(
+      map(patientData => {
+        let patient: Patient;
+        if (patientData['body']['total'] !== 1) {
+          console.log("More than one patient returned!")
+          throwError(of("More than one patient returned!"))
+        } else {
+          console.log("One patient returned!")
+          patient = patientData['body'].hits[0];
+
+          // Double check that altID is an array
+          if (!Array.isArray(patient.alternateIdentifier)) {
+            patient.alternateIdentifier = [patient.alternateIdentifier];
+          }
+
+          // pull out which ID to display
+          if (patient.gID && patient.gID.length > 0) {
+            patient['patientLabel'] = patient.gID[0];
+          } else if (patient.sID) {
+            patient['patientLabel'] = patient.sID;
+          } else {
+            patient['patientLabel'] = patient.patientID;
+          }
+
+          // transform the ELISA data
+          let elisa = patient.elisa;
+          if (elisa) {
+            let summary = {};
+            let final = elisa.every((d: any) => d.dataStatus === "final");
+
+            summary['correction'] = elisa.map(d => d.correction).filter(d => d);
+            if (summary['correction'].length === 0) {
+              summary['correction'] = null;
+            }
+            summary['citation'] = elisa.map(d => d.citation).filter(d => d);
+            summary['dataStatus'] = final ? "final" : "preliminary";
+            summary['data'] = elisa;
+
+            patient['elisaData'] = summary;
+          }
+
+        }
+        console.log(patient);
+        return (patient);
+      }
+      )
+    )
+  }
+
+  getIndividualSamples(patientID: string): Observable<Sample[]> {
+    let sampleParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${patientID}"`)
+      .set("pageSize", "1000");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/sample/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: sampleParams
+    }).pipe(
+      pluck("body"),
+      pluck("hits"),
+      map(sampleData => {
+        return (sampleData);
+      }
+      )
+    )
+  }
+
+  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'genbankID', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'sourceCitation', 'variableMeasured']): Observable<any> {
+    let experimentParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", `"${patientID}"`)
+      .set("fields", fields.join(","))
+      .set("pageSize", "1000");
+
+    return this.myhttp.get<ESResult>(environment.api_url + "/api/experiment/query", {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      params: experimentParams
+    }).pipe(
+      pluck("body"),
+      pluck("hits"),
+      map(exptData => {
+
+        let groupedExpts = chain(exptData).groupBy('includedInDataset')
+          .map((items, id) => {
+            let filtered = this.exptPipe.transform(id, 'dataset_id');
+            return {
+              dataset_id: id,
+              datasetName: filtered['datasetName'],
+              data: items,
+              count: items.length,
+              embargoed: items.some((d: any) => d.embargoed === true),
+              dataStatus: items.every((d: any) => d.dataStatus === "final") ? "final" : "preliminary"
+            };
+          }).value();
+
+        console.log(groupedExpts)
+        return (groupedExpts);
+      }
+      )
+    )
   }
 
 
@@ -242,56 +366,19 @@ export class GetPatientsService {
   // subsequent calls: https://dev.cvisb.org/api/patient/query?scroll_id=DnF1ZXJ5VGhlbkZldGNoCgAAAAAAANr9FlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADa_hZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wUWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsGFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbABZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2v8WUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsBFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHcAAAAAAADbAhZQQlJFZEpJdVFCNkM3WlZSWEo4UVB3AAAAAAAA2wMWUEJSRWRKSXVRQjZDN1pWUlhKOFFQdwAAAAAAANsEFlBCUkVkSkl1UUI2QzdaVlJYSjhRUHc=
   // If no more results to be found, "success": false
   // Adapted from https://stackoverflow.com/questions/44097231/rxjs-while-loop-for-pagination
-  fetchAll(qParams): Observable<any[]> {
-    return this.fetchOne(qParams).pipe(
-      expand((data, _) => {
-        console.log(data)
-        return data.next ? this.fetchOne(qParams, data.next) : EMPTY;
-      }),
-      reduce((acc, data: any) => {
-        return acc.concat(data.results);
-      }, []),
-      catchError(e => {
-        console.log(e)
-        throwError(e);
-        return (new Observable<any>())
-      }),
+  fetchAllPatients(qParams): Observable<PatientDownload[]> {
+    return this.apiSvc.fetchAll("patient", qParams).pipe(
       map((patients) => {
-        console.log("end of API")
-        console.log(patients)
+        // console.log("end of API")
+        // console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
-        patients = patients.filter(d => d).map(patient => {
+        patients = patients.map(patient => {
           return (new PatientDownload(patient, this.datePipe));
         })
         return (patients);
       })
     )
-  }
-
-  fetchOne(qParams: any, scrollID?: string): Observable<{ next: string, results: any[] }> {
-    let params = qParams
-      .append('fetch_all', "true");
-    if (scrollID) {
-      params = params.append('scroll_id', scrollID);
-
-    }
-    console.log(params)
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/patient/query`, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: params
-    }).pipe(
-      map(response => {
-          console.log(response)
-        return {
-          next: response['body']['_scroll_id'],
-          results: response['body']['hits']
-        };
-      }
-      )
-    );
   }
 
 }

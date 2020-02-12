@@ -5,13 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { PatientComponent } from './patient.component';
 
 // --- Resolvers ---
-import { AllPatientsResolver, PatientsResolver } from '../_services';
+import { PatientsResolver } from '../_services';
 
 const routes: Routes = [
-  { path: '', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' }, resolve: {
-    patients: PatientsResolver,
-    all: AllPatientsResolver
-  }}
+  {
+    path: '', component: PatientComponent, pathMatch: 'full', data: { title: 'Patients | CViSB' }, resolve: {
+      patients: PatientsResolver
+    }
+  }
 ];
 
 @NgModule({

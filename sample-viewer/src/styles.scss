@@ -3,7 +3,26 @@
 // @import 'sass/variables'; // custom variables, usually colors
 @import './sass/material-theme.scss'; // @import 'custom_colors';
 @import "~@ng-select/ng-select/themes/default.theme.css"; // Fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800|Material+Icons'); // --- Basics ---
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Material+Icons');
+
+// --- Material theme, common across the apps ---
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat-core-theme($candy-app-theme);
+@include mat-progress-spinner-theme($candy-app-theme);
+// not super universal, but if they're not included in the styles and added component-wide, they seem to be overriden by Chrome stylings.
+// seems to be the places where /deep/ styling is needed.
+@include mat-tooltip-theme($candy-app-theme);
+@include mat-button-theme($candy-app-theme);
+@include mat-select-theme($candy-app-theme);
+@include mat-form-field-theme($candy-app-theme);
+@include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
+@include mat-snack-bar-theme($candy-app-theme);
+@include mat-stepper-theme($candy-app-theme);
+@include mat-radio-theme($candy-app-theme);
+@include mat-dialog-theme($candy-app-theme);
 
 body {
   font-family: $font-default;
@@ -84,11 +103,11 @@ a {
 
   h1 {
     font-family: 'Open Sans';
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 4.5em;
     margin: 0;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.05em;
     word-spacing: 0.15em;
     text-shadow: 5px 5px 7px $grey-200;
   }

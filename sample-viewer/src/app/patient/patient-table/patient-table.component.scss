@@ -1,6 +1,10 @@
 @import "../../../sass/variables.scss";
-@import "../../../sass/material-theme.scss"; // --- table ---
+@import "../../../sass/material-theme.scss";
+@include mat-sort-theme($candy-app-theme);
+@include mat-table-theme($candy-app-theme);
+@include mat-paginator-theme($candy-app-theme);
 
+// --- table ---
 .mat-cell,
 .mat-header-cell {
   padding: 15px;

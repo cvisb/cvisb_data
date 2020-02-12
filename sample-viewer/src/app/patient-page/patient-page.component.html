@@ -1,5 +1,5 @@
-<div class="container" id="patientID" *ngIf="patient">
-  <div class="patient-container">
+<div class="container" id="patientID" *ngIf="patientData$ | async as patientData">
+  <div class="patient-container" *ngIf="patientData.patient as patient">
 
     <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
 
@@ -57,7 +57,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <app-patient-samples [patient]="patient"></app-patient-samples>
+        <app-patient-samples [samples]="patientData.samples"></app-patient-samples>
       </mat-expansion-panel>
 
       <!-- SYMPTOMS  -->
@@ -80,10 +80,10 @@
         <h3 class="data-title" id="data">Data</h3>
       </div>
 
-      <div class="patient-data">
+      <div class="patient-data" *ngIf="patientData.experiments as experiments">
 
         <!-- ELISAS -->
-        <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
+        <!-- <mat-expansion-panel class="panel-group" id="ELISA" [expanded]="elisaPanelState" (opened)="elisaPanelState = true" (closed)="elisaPanelState = false">
           <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
             <mat-panel-title class="panel-title">
               <app-provenance-title class="flex-grow1" title="ELISA Data" icon="elisa" [dataStatus]="getELISA('dataStatus')"></app-provenance-title>
@@ -94,10 +94,10 @@
           <app-provenance *ngIf="patient.elisa" [dateModified]="patient.dateModified" embargoLabel="ELISA" class="provenance" [source]="patient.publisher" [changes]="getELISA('correction')" [citation]="getELISA('citation')" [dataStatus]="getELISA('dataStatus')">
           </app-provenance>
           <app-patient-elisas [patient]="patient"></app-patient-elisas>
-        </mat-expansion-panel>
+        </mat-expansion-panel>  -->
 
         <!-- Experimental Data -->
-        <ng-container *ngFor="let expt of exptTypes">
+         <ng-container *ngFor="let expt of experiments">
           <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
               <mat-panel-title class="panel-title">
@@ -105,10 +105,10 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container [ngSwitch]="expt.dataset_id">
-              <app-patient-hla *ngSwitchCase="'hla'" [data]="getExpt(expt.dataset_id)" [patientID]="patient.patientID"></app-patient-hla>
-              <app-patient-viral-seq *ngSwitchCase="'ebola-virus-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
-              <app-patient-viral-seq *ngSwitchCase="'lassa-virus-seq'" [sequences]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
-              <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="getExpt(expt.dataset_id)" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
+              <app-patient-hla *ngSwitchCase="'hla'" [data]="expt['data']" [patientID]="patient.patientID"></app-patient-hla>
+              <app-patient-viral-seq *ngSwitchCase="'ebola-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="'lassa-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
             </ng-container>
           </mat-expansion-panel>
         </ng-container>

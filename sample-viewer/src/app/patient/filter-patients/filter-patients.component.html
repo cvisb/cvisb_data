@@ -1,57 +1,60 @@
-<ng-container *ngIf='patientSummary'>
-  <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="filter-expansion-panel">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="container filter-header">
-          <h3>{{ patientSummary.total }} of {{ total_patients }} Patients Selected</h3>
+<ng-container *ngIf="allPatientSummary">
+  <ng-container *ngIf='patientSummary$ | async as patientSummary'>
+    <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="filter-expansion-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="container filter-header">
+            <h3>{{ patientSummary.total }} of {{ allPatientSummary.total }} Patients Selected</h3>
 
-          <div class="container clear-filter">
-            <button mat-stroked-button (click)="clearFilters()">clear filters</button>
-            <app-filter-search endpoint="patient" *ngIf="authenticated"></app-filter-search>
+            <div class="container clear-filter">
+              <button mat-stroked-button (click)="clearFilters()">clear filters</button>
+              <ng-container *ngIf="authenticated$ | async as loggedIn">
+                <app-filter-search endpoint="patient" *ngIf="loggedIn.authorized"></app-filter-search>
+              </ng-container>
+            </div>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState ? "hide" : "view"}} summary statistics and {{panelOpenState ? "" : "apply"}} filters
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="filter-container">
+        <div class="filter-item filter-patient-types">
+          <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" [all_cohorts]="allPatientSummary.cohortDomain" [all_outcomes]="allPatientSummary.outcomeDomain" endpoint="patient">
+          </app-filter-patient-type>
+        </div>
+
+        <div>
+          <div class="filter-item filter-patients">
+            <app-filter-patient-id [all_patients]="allPatientSummary.patientIDs" [patients]="patientSummary.patientIDs" endpoint="patient"></app-filter-patient-id>
+          </div>
+
+          <div class="filter-item filter-dates">
+            <app-filter-sample-year [data]="patientSummary.patientYears" [yearDomain]="allPatientSummary.yearDomain" endpoint="patient"></app-filter-sample-year>
           </div>
         </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{panelOpenState ? "hide" : "view"}} summary statistics and {{panelOpenState ? "" : "apply"}} filters
-      </mat-panel-description>
-    </mat-expansion-panel-header>
 
-    <div class="filter-container">
-      <div class="filter-item filter-patient-types">
-        <app-filter-patient-type [viruses]="patientSummary.patientTypes" [outcomes]="patientSummary.patientOutcomes" [all_cohorts]="all_cohorts" [all_outcomes]="all_outcomes" endpoint="patient"></app-filter-patient-type>
-      </div>
-
-      <div>
-        <div class="filter-item filter-patients">
-          <app-filter-patient-id [all_patients]="all_patients" [patients]="patientSummary.patientIDs" endpoint="patient"></app-filter-patient-id>
+        <div class="filter-item filter-ctry">
+          <app-filter-location [countries]="patientSummary.patientCountries" endpoint="patient" [all_countries]="allPatientSummary.patientCountries"></app-filter-location>
         </div>
 
-        <div class="filter-item filter-dates">
-          <app-filter-sample-year [data]="patientSummary.patientYears" [yearDomain]="all_years" endpoint="patient"></app-filter-sample-year>
-        </div>
-      </div>
-
-      <div class="filter-item filter-ctry">
-        <app-filter-location [countries]="patientSummary.patientCountries" endpoint="patient" [all_countries]="all_countries"></app-filter-location>
-      </div>
-
-
-
-      <!-- <div class="filter-item filter-timepoints">
+        <!-- <div class="filter-item filter-timepoints">
     <app-filter-sample-timepoints endpoint="patient"></app-filter-sample-timepoints>
   </div> -->
 
 
-      <div class="filter-wide-container container-column">
-        <div class="filter-item filter-elisas">
-          <app-filter-elisas endpoint="patient"></app-filter-elisas>
-        </div>
+        <div class="filter-wide-container container-column">
+          <div class="filter-item filter-elisas">
+            <app-filter-elisas endpoint="patient"></app-filter-elisas>
+          </div>
 
-        <div class="filter-item filter-expts">
-          <app-filter-experiment endpoint="patient"></app-filter-experiment>
+          <div class="filter-item filter-expts">
+            <app-filter-experiment endpoint="patient" [expts]="allPatientSummary.experiments"></app-filter-experiment>
+          </div>
         </div>
       </div>
-    </div>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
 
+  </ng-container>
 </ng-container>

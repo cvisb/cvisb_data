@@ -356,6 +356,18 @@
   marginality:           optional
   authenticated:         true
 
+- "@id":                 cvisb:presentationDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date of the first evaluation in the hospital; will be the minimum of the admitDate and evalDate
+  rdfs:label:            presentationDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
 # Approximate year of infection
 - "@id":                 cvisb:presentationWeek
   "@type":               rdf:Property
@@ -368,6 +380,8 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
+  minimum:               1
+  maximum:               52
 
 # Approximate year of infection
 - "@id":                 cvisb:infectionYear
@@ -390,7 +404,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:DateRange
+    - "@id":             cvisb:Date
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true

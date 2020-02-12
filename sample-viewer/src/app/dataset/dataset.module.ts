@@ -8,8 +8,6 @@ import { DatasetRoutingModule } from './dataset-routing.module';
 import { RouterModule } from '@angular/router';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
-// import { MaterialModule } from '../material.module';
-// import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { AdminModule } from '../admin/admin.module';
 
 // --- components ---

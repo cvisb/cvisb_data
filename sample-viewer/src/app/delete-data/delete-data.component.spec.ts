@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileMetadataComponent } from './file-metadata.component';
+import { DeleteDataComponent } from './delete-data.component';
 
-describe('FileMetadataComponent', () => {
-  let component: FileMetadataComponent;
-  let fixture: ComponentFixture<FileMetadataComponent>;
+describe('DeleteDataComponent', () => {
+  let component: DeleteDataComponent;
+  let fixture: ComponentFixture<DeleteDataComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FileMetadataComponent ]
+      declarations: [ DeleteDataComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileMetadataComponent);
+    fixture = TestBed.createComponent(DeleteDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

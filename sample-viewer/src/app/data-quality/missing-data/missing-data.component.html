@@ -1,0 +1,75 @@
+<h1>How much data is missing?</h1>
+
+<div id="missing-data-heatmap-container" class="container-column">
+  <!-- legend -->
+  <svg id="missing-data-heatmap-legend" [attr.width]="legendWidth" [attr.height]="50">
+    <defs>
+      <linearGradient id="gradient-legend" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [attr.offset]="(n/10)*100 + '%'" [attr.stop-color]="colorScale(n/10)" stop-opacity="1" />
+      </linearGradient>
+    </defs>
+
+    <g id="color-legend">
+      <text x="0" y="0" class="legend-title">percent missing</text>
+      <rect [attr.width]="legendWidth" [attr.height]="legendHeight" x="0" y="1em" fill="url(#gradient-legend)" [attr.stroke]="colorScale(1)" class="legend-gradient"></rect>
+      <text [attr.x]="legendWidth" y="1em" [attr.dy]="legendHeight + 8" class="legend-label legend-label--max">100%</text>
+      <text x="0" y="1em" [attr.dy]="legendHeight + 8" class="legend-label legend-label--min">0</text>
+    </g>
+  </svg>
+
+  <!-- filters -->
+  <div id="filter-heatmap">
+  </div>
+
+  <!-- heatmap -->
+    <svg id="missing-data-heatmap" [attr.width]="width + margin.left + margin.right" [attr.height]="height + margin.top + margin.bottom">
+      <!-- chiclets -->
+      <g attr.transform="translate({{margin.left}}, {{margin.top}})">
+        <rect *ngFor="let variable of data" [attr.width]="rectWidth" [attr.height]="rectWidth" [attr.x]="x(variable.variable)" [attr.y]="y(variable.term)"
+        (mouseover)="activateTooltip(variable)" (mouseout)="deactivateTooltip()"
+        [attr.fill]="colorScale(variable.percent)" class="rect--missing-data" [id]="variable.variable">
+        </rect>
+      </g>
+
+      <!-- axes -->
+      <g id="x-axis" class="axis axis--x" attr.transform="translate({{margin.left}}, {{margin.top}})">
+      </g>
+      <g id="y-axis" class="axis axis--y" attr.transform="translate({{margin.left}}, {{margin.top}})">
+      </g>
+
+<!-- heatmap tooltips -->
+      <g id="missing-data-tooltips" attr.transform="translate({{margin.left}}, {{margin.top + rectWidth }})" class="tooltip">
+        <!-- <g class="missing-data-tooltip-group" *ngFor="let variable of data" [id]="'tooltip' + '_' + variable.variable + '_' + variable.term" style = "display: none;">
+            <rect [attr.x]="x(variable.variable)" [attr.y]="y(variable.term) + rectWidth/4" width="10" height="58" class="tooltip-rect"></rect>
+            <line [attr.stroke]="colorScale(variable.percent)" [attr.x1]="x(variable.variable) + 10" [attr.x2]="x(variable.variable) + 10" [attr.y1]="y(variable.term) + rectWidth/4 + 7" [attr.y2]="y(variable.term) + rectWidth/4 + 55" class="tooltip-border"></line>
+            <text [attr.y]="y(variable.term) + rectWidth/4" class="tooltip-text">
+              <tspan dx="18" dy="5" [attr.x]="x(variable.variable)">{{ variable.variable }}</tspan>
+              <tspan dx="18" [attr.x]="x(variable.variable)" class="tooltip-value" dy="1em">{{ variable.percent | percent }} missing</tspan>
+              <tspan dx="18" [attr.x]="x(variable.variable)" dy="1em">{{ variable.term }}</tspan>
+            </text>
+            </g> -->
+          </g>
+    </svg>
+
+    <!-- heatmap tooltips -->
+    <!-- <div id="missing-data-tooltip" *ngIf="data.length > 0">
+      <div class="tooltip" [attr.top]="margin.top + 'px'" [attr.top]="x(data[0].variable) + 'px'">
+        <div>
+          {{ data[0].variable }}
+        </div>
+
+        <div>
+          <span class="tooltip-value">{{ data[0].percent | percent }} </span>
+          <span>missing</span>
+        </div>
+
+        <div>
+          {{ data[0].term }}
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+</div>

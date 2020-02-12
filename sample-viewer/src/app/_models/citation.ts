@@ -32,6 +32,7 @@ export class Source {
   count: number;
   percent: number;
   contactPoint: any;
+  source: string;
 }
 
 export class AuthorName {

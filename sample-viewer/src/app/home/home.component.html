@@ -40,7 +40,7 @@
     <div class="container-column link-container" id="dataset">
       <div class="data section-link">
         <a routerLink="/dataset">
-          <i class="section-icon fas fa-table"></i>
+          <fa-icon class="section-icon" [icon]="faTable"></fa-icon>
 
           <div class="section-title">
             Data
@@ -62,7 +62,7 @@
                 {{expt.count}}
               </div>
               <div class="count-label">
-                {{expt.dataset_name}} experiments
+                {{expt.datasetName}} experiments
               </div>
             </div>
           </a>
@@ -73,7 +73,7 @@
     <div class="container-column link-container" id="patient">
       <div class="patient section-link">
         <a routerLink="/patient">
-          <i class="section-icon fas fa-users"></i>
+          <fa-icon class="section-icon" [icon]="faUsers"></fa-icon>
 
           <div class="section-title">
             Patients
@@ -119,7 +119,7 @@
     <div class="container-column  link-container" id="sample">
       <div class="samples section-link">
         <a routerLink="/sample">
-          <i class="section-icon fas fa-dna"></i>
+          <fa-icon class="section-icon" [icon]="faDna"></fa-icon>
           <div class="section-title">
             Samples
           </div>
@@ -163,7 +163,7 @@
       </div>
       <div class="description">
         The majority of our data is provided to CViSB through a partnership with the Kenema Government hospital (KGH) in Sierra Leone.
-        KGH is home to Sierra Leone's only Lassa fever isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
+        KGH is home to Sierra Leone's only Lassa isolation ward, which was also used during the 2014-2016 West African Ebola outbreak to treat Ebola.
         We have also analyzed samples from our partners in Nigeria at the Irrua Specialist Teaching Hospital and have curated publically available data on patients in Liberia, Guinea, and other countries.
       </div>
     </div>
@@ -173,8 +173,8 @@
         More about our data
       </div>
       <div class="description">
-        <ng-container *ngIf="releaseVersion && releaseNotes && releaseNotes.length > 0">
-          <a routerLink="/release-notes" class="link">Version {{releaseVersion}}</a> was released on {{releaseNotes[0].datePublished | date: "d MMMM y"}}.
+        <ng-container *ngIf="cvisbCatalog$ | async as cvisbCatalog">
+          <a routerLink="/release-notes" class="link">Version {{cvisbCatalog.releaseVersion}}</a> was released on {{cvisbCatalog.releaseNotes[0].datePublished | date: "d MMMM y"}}.
         </ng-container>
         See our <a routerLink="/documentation" class="link">documentation</a> section for more info about
         our data and their limitations.

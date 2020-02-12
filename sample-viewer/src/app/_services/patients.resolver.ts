@@ -4,23 +4,40 @@ import { Injectable } from "@angular/core";
 
 import { HttpParams } from '@angular/common/http';
 
-import { Observable } from "rxjs";
+import { Observable, forkJoin, pipe, EMPTY } from "rxjs";
+import { map, tap } from "rxjs/operators";
 
-import { Patient } from '../_models';
+import { ResolverPatientSummary, PatientSummary } from '../_models';
 
 import { GetPatientsService } from './get-patients.service';
 
 @Injectable()
-export class PatientsResolver implements Resolve<Patient[]> {
+export class PatientsResolver implements Resolve<PatientSummary> {
 
   constructor(private patientSvc: GetPatientsService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any[]> {
-    let qparams = route.queryParams;
-    let qstring = qparams.q ? qparams.q : new HttpParams().set("q", "__all__");
-    // console.log("resolving with qparams = " + qstring);
-    return this.patientSvc.getPatientSummary(qstring);
+  // resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PatientSummary> {
+    // let route_params = route.queryParams;
+
+    // if (route_params.q) {
+    //   console.log("different parameters selected!  calling the selected filtered patients + all the patients")
+    //   return forkJoin([this.patientSvc.getAllPatientsSummary(), this.patientSvc.getPatientSummary(route_params.q)]).pipe(
+    //     map(([allSummary, selectedSummary]) => {
+    //       return ({ allPatientSummary: allSummary, selectedPatientSummary: selectedSummary })
+    //     }),
+    //     tap(x => console.log(x))
+    //   );
+    // } else {
+      return this.patientSvc.getAllPatientsSummary();
+      // .pipe(
+    //     map(patientSummary => {
+    //       return ({ allPatientSummary: patientSummary, selectedPatientSummary: patientSummary })
+    //     })
+    //   );
+    // }
+
   }
 
 }

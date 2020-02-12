@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler, range } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile, delay } from "rxjs/operators";
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile, pluck } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -213,7 +213,7 @@ export class ApiService {
 
   // generic get function
   // assumes size = 1000 unless otherwise specified.
-  get(endpoint, qParams, pageSize: number = 1000): Observable<any[]> {
+  get(endpoint, qParams, pageSize: number = 1000, api_url: string = environment.api_url): Observable<any[]> {
 
     // this.router.navigate(
     //   [],
@@ -226,7 +226,7 @@ export class ApiService {
     let params = qParams
       .append('size', pageSize.toString());
 
-    return this.myhttp.get<any[]>(`${environment.api_url}/api/${endpoint}/query`, {
+    return this.myhttp.get<any[]>(`${api_url}/api/${endpoint}/query`, {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
@@ -293,21 +293,6 @@ export class ApiService {
     );
   }
 
-// testing different method of fetching all, using takeWhile: https://stackoverflow.com/questions/50079052/rxjs-recursively-call-api-until-all-items-are-fetched
-  fetchAll2(endpoint: string, qParams: HttpParams): Observable<any[]> {
-
-
-    return this.fetchOne(endpoint, qParams).pipe(
-      concatMap((data:any) => {
-        console.log(data)
-        return this.fetchOne(endpoint, qParams, data.next)
-      }),
-      takeWhile((results:any) => {
-        console.log(results);
-        return(results.next)
-      })
-    )
-  }
 
   /*
     Using MyGene fetch_all to grab all the data, unscored:
@@ -340,28 +325,31 @@ export class ApiService {
     *    on the server-side, which doesn't resolve; therefore within the resolver, client-side gets called
     *    as well, and it ends up being a big ole mess. Setting `concurrent=1` isn't sufficient to fix the problem.
 
+    *    UPDATE 2019-12-06: still having problems. With fetchAll call to /experiment where there is more than one page of results,
+    *    the data returned ends up being the initial results, and then the second page of results either repeated 2x (with `expand params (.., 1, queueScheduler)`)
+    *    or infinitely till the browser poops out (with no additional `expand` params).
+    *
+    *   What seems to be the problem is that Angular is caching the results of the http call and will return that ad infinitim.
+    *   It sees https://dev.cvisb.org/api/experiment/query?q=__all__&fetch_all=true&scroll_id=<SCROLLID> as being the same... so returns the results.
+    *   `scroll_id` is always the same and always exists, so the expand recursive loop never ends.  Issue with the headers:
+    *   key: "cache-control" value: ["max-age=604800, public"]
+    *
+    *   FIX: a bit of a hack, but adding in a `pageNum` parameter to the http call to trick Angular into thinking it's a new call.
+    *   This param will be ignored by Biothings, so it passes the same query, but Angular will recognize it as a new call and trigger a request.
+    *   Decided to deal with it this way rather than changing the caching, since caching can be useful, of course.
     */
+
   fetchAll(endpoint: string, qParams: HttpParams): Observable<any[]> {
-    return this.fetchOne(endpoint, qParams).pipe(
-      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.next) : EMPTY, 1, queueScheduler
-      ),
-      // expand((data, _) => {
-      //   console.log(data.ct)
-      //   console.log(data.next)
-      //   // console.log(data)
-      //   return data.next ? this.fetchOne(endpoint, qParams, data.next, data.ct) : EMPTY;
-      // }),
-      // concatMap(({ results }) => {
-      //   console.log(results)
-      //   return(results)
-      // }),
+    return this.fetchOne(endpoint, qParams, 0).pipe(
+      expand((data, _) => data.next ? this.fetchOne(endpoint, qParams, data.counter, data.next) : EMPTY),
+      pluck("results"),
       reduce((acc, data: any) => {
-        return acc.concat(data.results);
+        return acc.concat(data);
       }, []),
       catchError(e => {
         console.log(e)
         throwError(e);
-        return (new Observable<any>())
+        return (of(e))
       }),
       map((all_data) => {
         // last iteration returns undefined; filter out
@@ -372,9 +360,11 @@ export class ApiService {
     )
   }
 
-  fetchOne(endpoint: string, qParams: HttpParams, scrollID?: string): Observable<{ next: string | null, results: any[] }> {
+  fetchOne(endpoint: string, qParams: HttpParams, counter: number, scrollID?: string): Observable<{ next: string | null, results: any[], counter: number }> {
     let params = qParams
-      .append('fetch_all', "true");
+      .append('fetch_all', "true")
+      .append('pageNum', String(counter)); // dummy parameter; added 2019-12-06 to trigger HttpClient to make a new API call to fetch the next results.
+
     if (scrollID) {
       params = params.append('scroll_id', scrollID);
     }
@@ -384,7 +374,8 @@ export class ApiService {
 
         return {
           next: response['_scroll_id'],
-          results: response['hits']
+          results: response['hits'],
+          counter: counter+1
         };
       }),
       catchError(e => {
@@ -632,10 +623,10 @@ export class ApiService {
 
   // --- DELETE ---
   // Generic function to delete a single record.
-  deleteObject(endpoint: string, id: string) {
+  deleteObject(endpoint: string, id: string, api_url: string = environment.api_url) {
     console.log("attempting to delete obj: " + id)
     // TODO: build-in dialoge box to confirm?
-    this.myhttp.delete(`${environment.api_url}/api/${endpoint}/${id}`)
+    this.myhttp.delete(`${api_url}/api/${endpoint}/${id}`)
       .subscribe(resp => {
         console.log(resp)
       },

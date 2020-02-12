@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 import { RequestParametersService } from '../../_services';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-filter-elisas',
@@ -11,7 +11,7 @@ import { RequestParametersService } from '../../_services';
   styleUrls: ['./filter-elisas.component.scss']
 })
 
-export class FilterElisasComponent implements OnInit {
+export class FilterElisasComponent implements OnInit, OnDestroy {
   @Input() endpoint: string;
 
   viruses: string[] = ["Ebola", "Lassa"];
@@ -25,12 +25,16 @@ export class FilterElisasComponent implements OnInit {
 
   elisaGrps: FormArray;
 
+  formSubscription: Subscription;
+  patientSubscription: Subscription;
+  sampleSubscription: Subscription;
+
   // expanded from https://alligator.io/angular/reactive-forms-formarray-dynamic-fields/
   // and https://medium.com/aubergine-solutions/add-push-and-remove-form-fields-dynamically-to-formarray-with-reactive-forms-in-angular-acf61b4a2afe
   constructor(
     private fb: FormBuilder,
     private requestSvc: RequestParametersService) {
-    this.elisaForm.valueChanges.subscribe(val => {
+    this.formSubscription = this.elisaForm.valueChanges.subscribe(val => {
       console.log(val.elisaGrps)
       // hard reset of params; otherwise ELISA has a "AND" issue
       // this.requestSvc.updateParams(this.endpoint, { field: 'elisa', value: [] });
@@ -41,18 +45,29 @@ export class FilterElisasComponent implements OnInit {
   ngOnInit() {
     switch (this.endpoint) {
       case "patient":
-        this.requestSvc.patientParamsState$.subscribe(params => {
+        this.patientSubscription = this.requestSvc.patientParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
 
       case "sample":
-        this.requestSvc.sampleParamsState$.subscribe(params => {
+        this.sampleSubscription = this.requestSvc.sampleParamsState$.subscribe(params => {
           this.checkParams(params);
         })
         break;
     }
   }
+
+ngOnDestroy() {
+  this.formSubscription.unsubscribe();
+  
+  if (this.patientSubscription) {
+    this.patientSubscription.unsubscribe();
+  }
+  if (this.sampleSubscription) {
+    this.sampleSubscription.unsubscribe();
+  }
+}
 
   // Get method to grab the formArray within formGroup
   // https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
