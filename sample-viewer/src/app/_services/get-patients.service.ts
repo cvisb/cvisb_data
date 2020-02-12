@@ -295,7 +295,7 @@ export class GetPatientsService {
           }
 
         }
-        console.log(patient);
+        // console.log(patient);
         return (patient);
       }
       )
@@ -353,7 +353,7 @@ export class GetPatientsService {
             };
           }).value();
 
-        console.log(groupedExpts)
+        // console.log(groupedExpts)
         return (groupedExpts);
       }
       )

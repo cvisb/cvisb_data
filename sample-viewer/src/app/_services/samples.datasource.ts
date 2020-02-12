@@ -43,8 +43,6 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   }
 
   loadSamples(qParamArray: RequestParamArray, sortVar: string, sortDir: string, pageIdx: number, pageSize: number) {
-    console.log('calling samples.dataSource:loadSamples')
-
     this.loadingSubject.next(true);
 
     this.sampleSvc.getSamples(qParamArray, sortVar, sortDir, pageIdx, pageSize).pipe(
@@ -52,7 +50,6 @@ export class SamplesDataSource implements DataSource<SampleWide> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(sampleList => {
-        console.log('sample list from data source:')
         console.log(sampleList)
         if (sampleList.sampleWide) {
           let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
@@ -75,7 +72,6 @@ export class SamplesDataSource implements DataSource<SampleWide> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<SampleWide[]> {
-    console.log("Connecting data source");
     return this.samplesSubject.asObservable();
   }
 
