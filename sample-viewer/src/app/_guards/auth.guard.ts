@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivateChild } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { AuthState } from '../_models';
 import { AuthService } from '../_services';
@@ -13,13 +13,15 @@ export class AuthGuard implements CanActivate {
   isLoggedIn: boolean;
   isAuthorized: boolean;
 
+  authSubsciption: Subscription;
+
   constructor(
     private authSvc: AuthService,
     private router: Router
   ) {
     authSvc.checkLogin();
 
-    authSvc.authState$.subscribe((authState: AuthState) => {
+    this.authSubsciption = authSvc.authState$.subscribe((authState: AuthState) => {
       this.isLoggedIn = authState.loggedIn;
       this.isAuthorized = authState.authorized;
     })
@@ -38,6 +40,10 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     return this.canActivate(route, state);
+  }
+
+  OnDestroy() {
+    this.authSubsciption.unsubscribe();
   }
 
   checkLogin(url: string): boolean {
