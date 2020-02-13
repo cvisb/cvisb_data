@@ -260,7 +260,6 @@ export class GetPatientsService {
           console.log("More than one patient returned!")
           throwError(of("More than one patient returned!"))
         } else {
-          console.log("One patient returned!")
           patient = patientData['body'].hits[0];
 
           // Double check that altID is an array
