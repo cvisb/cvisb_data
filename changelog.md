@@ -2,6 +2,8 @@
 ### v 0.3: 2020-02-12
 1. Pulled all changes from [dev](https://github.com/cvisb/cvisb_data/pull/39).
 2. ran `npm install` to update packages (and install FortAwesome Module)
+3. schema rebuilt
+4. Sync'd public/private ES indices
 
 ### v 0.2: 2019-11-15
 - temp fix: in Biothings package, modify POST arguments to .pop `version` from query_kwargs in `ne ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py`
@@ -70,6 +72,25 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
+
+2020-12-13
+- Upgraded to Angular 9, updated all packages.
+- followed https://update.angular.io/#8.0:9.0l3
+1. updated all Material import calls
+- remove hammer.js from package
+- remove import  'hammerjs' calls
+```
+ng update @angular/core@8 @angular/cli@8 --create-commits
+ng update @angular/cli @angular/core --create-commits
+```
+
+```
+ng update @angular/material --force
+ng update @nguniversal/express-engine
+ng update --> ng update rxjs
+```
+
+
 ### 2019-10-23
 - Upgraded to Angular 8 and updated all packages (from package.json)
 ```
