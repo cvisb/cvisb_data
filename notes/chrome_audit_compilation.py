@@ -89,6 +89,7 @@ extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_dev_loggedin", "dev version 0.2+ minor fixes; Angular 8 upgrade", "2019-12-03", "dev")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_dev_loggedin", "dev version 0.3; Angular 8", "2020-02-12", "dev")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin", "prod version 0.3; Angular 8", "2020-02-12", "prod")
+extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin", "prod version 0.4; Angular 9", "2020-02-12", "prod")
 
 
 compilation20200212 = """chunk {0} 0-es2015.de05392e9a04ac37609d.js () 31.6 kB  [rendered]
