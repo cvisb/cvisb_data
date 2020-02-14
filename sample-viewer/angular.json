@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "src/tsconfig.server.json",
             "sourceMap": false
           },
@@ -133,6 +133,32 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "sample-viewer:build",
+            "serverTarget": "sample-viewer:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sample-viewer:build:production",
+              "serverTarget": "sample-viewer:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "sample-viewer:build:production",
+            "serverTarget": "sample-viewer:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
