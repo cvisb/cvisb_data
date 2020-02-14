@@ -14,7 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { AuthState, CvisbUser } from '../_models';
 
 // --- Terms dialog box ---
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TermsPopupComponent } from '../_dialogs';
 
 @Injectable({

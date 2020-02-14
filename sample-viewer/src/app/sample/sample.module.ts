@@ -7,7 +7,12 @@ import { SampleRoutingModule } from './sample-routing.module';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
-import { MatButtonModule, MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { PatientTimepointsModule } from '../patient-timepoints/patient-timepoints.module';
 
 // --- services ---

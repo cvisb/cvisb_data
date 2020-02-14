@@ -12,7 +12,7 @@ import { GetExperimentsService } from '../_services/get-experiments.service';
 
 // --- modules ---
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [

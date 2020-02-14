@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { UploadPatientsRoutingModule } from './upload-patients-routing.module';
 
 // --- modules ---
-import { MatButtonModule, MatProgressBarModule } from '@angular/material';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 // --- components ---
 import { AddPatientsComponent } from '../add-patients/add-patients.component';

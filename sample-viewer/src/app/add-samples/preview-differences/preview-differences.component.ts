@@ -1,10 +1,12 @@
 import { Component, OnChanges, ViewChild } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { SampleUploadService } from '../../_services';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SpinnerPopupComponent } from '../../_dialogs';
 
 import { isEqual } from 'lodash';

@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { UploadDataRoutingModule } from './upload-data-routing.module';
 
 // --- modules ---
-import { MatSelectModule, MatProgressBarModule, MatButtonModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 // --- components ---
 import { AddDataComponent } from '../add-data/add-data.component';

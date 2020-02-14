@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild, Input } from '@angular/core';
 
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/operators';

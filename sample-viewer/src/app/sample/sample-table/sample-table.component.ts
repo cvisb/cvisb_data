@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 // import { SelectionModel } from '@angular/cdk/collections';
 // import { FormControl, FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { merge } from "rxjs/";

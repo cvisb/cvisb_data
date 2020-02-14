@@ -12,7 +12,11 @@ import { FormatCitationModule } from '../format-citation/format-citation.module'
 import { FileListModule } from '../file-list/file-list.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { ProvenanceModule } from '../provenance/provenance.module';
-import { MatExpansionModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatIconModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // --- components ---

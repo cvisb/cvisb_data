@@ -5,7 +5,8 @@ import { PatientTimepointsComponent } from './patient-timepoints.component';
 // import { SampleMetadataComponent } from '../_dialogs/sample-metadata/sample-metadata.component';
 import { PipesModule } from '../pipes/pipes.module';
 
-import { MatTooltipModule, MatExpansionModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [

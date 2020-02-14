@@ -1,8 +1,6 @@
 import { Component, OnChanges, Input } from '@angular/core';
 
-import { MatSnackBar } from '@angular/material';
-
-import { ApiService } from '../../_services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ViralSeqObj } from '../../_models';
 
