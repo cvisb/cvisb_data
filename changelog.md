@@ -73,7 +73,7 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 
 # Local
 
-2020-12-13
+2020-02-13
 - Upgraded to Angular 9, updated all packages.
 - followed https://update.angular.io/#8.0:9.0l3
 1. updated all Material import calls
@@ -89,7 +89,13 @@ ng update @angular/material --force
 ng update @nguniversal/express-engine
 ng update --> ng update rxjs
 ```
+```
+rm -rf node_modules
+npm install
+```
 
+If you depend on many Angular libraries you may consider speeding up your build by invoking the ngcc (Angular Compatibility Compiler) in an npm postinstall script via small change to your package.json.
+If you have specified any entryComponents in your NgModules or had any uses of ANALYZE_FOR_ENTRY_COMPONENTS, you can remove them. They are no longer required with the Ivy compiler and runtime.
 
 ### 2019-10-23
 - Upgraded to Angular 8 and updated all packages (from package.json)
