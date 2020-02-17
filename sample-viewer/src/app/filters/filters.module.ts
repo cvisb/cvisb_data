@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // --- modules ---
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -47,6 +48,7 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatChipsModule,
     MatIconModule,
     MatCheckboxModule,
     MatTooltipModule,

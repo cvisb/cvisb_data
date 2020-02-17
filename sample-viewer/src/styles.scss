@@ -24,6 +24,7 @@
 @include mat-radio-theme($candy-app-theme);
 @include mat-dialog-theme($candy-app-theme);
 @include mat-progress-bar-theme($candy-app-theme);
+@include mat-autocomplete-theme($candy-app-theme);
 
 body {
   font-family: $font-default;
