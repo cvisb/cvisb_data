@@ -12,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { NgSelectModule } from '@ng-select/ng-select';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { RouterModule } from '@angular/router';
 // import { PipesModule } from '../pipes/pipes.module';
@@ -43,7 +42,6 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
