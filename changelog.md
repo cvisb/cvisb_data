@@ -124,6 +124,7 @@ let minLon = d3.geoBounds(gin as any)[0][0],
   "resolveJsonModule": true,
 }
 ```
+https://mariusschulz.com/blog/importing-json-modules-in-typescript
 ```
 ERROR
 Cannot find module '../../assets/geo/naturalearth_africa.json'. Consider using '--resolveJsonModule' to import module with '.json' extension
