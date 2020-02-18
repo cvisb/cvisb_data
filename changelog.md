@@ -53,9 +53,27 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - Added `import '@angular/compiler'` to `main.ts`
 - remove hammer.js from package
 - remove import  'hammerjs' calls
-- removed `entryComponents` import ***
-** node_modules wipe
+- removed `entryComponents` import
+- removed `ModuleMapLoaderModule` from `sample-viewer/src/app/app.server.module.ts`
+- Forced a few d3-geo-projections typing conflicts that Angular 8 was okay with: `let minLon = d3.geoBounds(gin as any)[0][0]`
+- `sudo npm install -g npm@latest`: update latest version of node from 6.4.1 to 6.13.7
+- `npm install`
+- `npm audit fix`
+- `sudo npm install n -g`: install n to update node
+- `sudo n stable`: update node from 10.12 to 12.16.0
+- `ng update @angular/core@8 @angular/cli@8 --create-commits` : make sure v. 8 at latest
+- `ng update @angular/cli @angular/core --create-commits`: install v. 9
+- `ng update @angular/material --force`
+- `ng update @nguniversal/express-engine`
+- `ng update` --> `ng update rxjs`
+- committed, pushed to GH, pulled locally.
+```
+rm -rf node_modules
+npm install
+
 ** invoke ngcc?
+```
+
 
 ### 2019-12-09
 - installed Angular FontAwesome module
