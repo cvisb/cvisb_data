@@ -5,9 +5,14 @@ import { PatientRoutingModule } from './patient-routing.module';
 
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
-import {
-  MatExpansionModule, MatTableModule, MatIconModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressSpinnerModule, MatButtonModule
-} from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
