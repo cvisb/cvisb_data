@@ -115,6 +115,9 @@ error TS2306: File '/Users/laurahughes/GitHub/cvisb_data/sample-viewer/node_modu
 8 import { MatExpansionModule } from '@angular/material/';
 ```
 * Had to force a few d3-geo-projections typing conflicts that Angular 8 was okay with.
+```
+let minLon = d3.geoBounds(gin as any)[0][0],
+```
 * In `tsconfig.json`:
 ```
 "compilerOptions": {
