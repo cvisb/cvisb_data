@@ -15,7 +15,7 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @ViewChild('donut', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('donut') private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private endpoint: string;
   @Input() private height: number;

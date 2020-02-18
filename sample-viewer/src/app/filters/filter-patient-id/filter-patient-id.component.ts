@@ -18,7 +18,7 @@ export class FilterPatientIdComponent implements OnInit, OnDestroy {
   bufferSize = 50;
   numberOfItemsFromEndBeforeFetchingMore = 10;
   loading = false;
-  @ViewChild('selectpatients', { static: false }) public ngSelect: any;
+  @ViewChild('selectpatients') public ngSelect: any;
   authorized$: Observable<AuthState>;
 
   selectedPatients: string[] = [];

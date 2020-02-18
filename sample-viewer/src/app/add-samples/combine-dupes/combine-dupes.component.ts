@@ -15,8 +15,8 @@ export class CombineDupesComponent implements OnChanges {
   @Input() data: Object[];
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ["sampleID", "lab", "totalAliquots", "samples"];
   flatColumns: string[];

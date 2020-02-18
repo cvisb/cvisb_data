@@ -10,7 +10,7 @@ import * as d3 from 'd3';
 })
 export class NovelAllelesComponent implements AfterViewInit {
   @Input() data: any;
-  @ViewChild('new_alleles_plot', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('new_alleles_plot') private chartContainer: ElementRef;
 
   // plot sizes
   private element: any;

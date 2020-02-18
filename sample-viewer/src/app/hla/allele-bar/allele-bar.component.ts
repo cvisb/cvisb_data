@@ -11,7 +11,7 @@ import { HlaService } from '../../_services';
   encapsulation: ViewEncapsulation.None
 })
 export class AlleleBarComponent implements AfterViewInit {
-  @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('barplot') private chartContainer: ElementRef;
   @Input() data: any;
   // @Input() title: string;
   // @Input() subtitle: string;

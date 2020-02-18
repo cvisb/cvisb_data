@@ -17,7 +17,7 @@ import { RequestParametersService } from '../../_services';
 })
 
 export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('barplot', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('barplot') private chartContainer: ElementRef;
   @Input() private data: any;
   @Input() private options: string[];
   @Input() private endpoint: any;

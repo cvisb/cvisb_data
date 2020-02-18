@@ -20,8 +20,8 @@ export class FileListComponent implements OnInit {
   @Input() patientID: string;
 
   // MatPaginator
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   downloads: any[];
   anything_selected: boolean;

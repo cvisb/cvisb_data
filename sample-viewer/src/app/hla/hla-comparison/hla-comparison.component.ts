@@ -61,7 +61,7 @@ export class HlaComparisonComponent implements OnInit {
   filteredOptionsL: Observable<CohortSelectOptions[]>;
   filteredOptionsR: Observable<CohortSelectOptions[]>;
 
-  @ViewChild(MatAutocomplete, { static: false }) matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
 
 
   ngOnInit() {
