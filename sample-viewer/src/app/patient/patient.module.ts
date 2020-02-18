@@ -5,9 +5,12 @@ import { PatientRoutingModule } from './patient-routing.module';
 
 // --- common helper modules ---
 import { RouterModule } from '@angular/router';
-import {
-  MatExpansionModule, MatTableModule, MatIconModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressSpinnerModule, MatButtonModule
-} from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
@@ -29,10 +32,8 @@ import { PatientsResolver } from '../_services/patients.resolver';
     PatientRoutingModule,
     RouterModule,
     MatTableModule,
-    MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTooltipModule,
     MatIconModule,
     MatButtonModule,
     MatExpansionModule,
@@ -49,7 +50,7 @@ import { PatientsResolver } from '../_services/patients.resolver';
     PatientTableComponent
   ],
   providers: [
-    PatientsResolver
+    // PatientsResolver
   ]
 })
 export class PatientModule { }
