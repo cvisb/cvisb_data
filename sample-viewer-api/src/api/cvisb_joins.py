@@ -1,5 +1,0 @@
-
-class CViSBJoins(object):
-    ''' '''
-
-    pass
