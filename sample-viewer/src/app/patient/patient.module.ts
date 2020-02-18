@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FiltersModule } from '../filters/filters.module';
 import { DownloadBtnModule } from '../download-btn/download-btn.module';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
@@ -37,6 +39,8 @@ import { PatientsResolver } from '../_services/patients.resolver';
     MatIconModule,
     MatButtonModule,
     MatExpansionModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
     FiltersModule,
     DownloadBtnModule,
     SvgIconModule,
@@ -50,7 +54,7 @@ import { PatientsResolver } from '../_services/patients.resolver';
     PatientTableComponent
   ],
   providers: [
-    // PatientsResolver
+    PatientsResolver
   ]
 })
 export class PatientModule { }

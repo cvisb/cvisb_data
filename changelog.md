@@ -97,6 +97,35 @@ npm install
 If you depend on many Angular libraries you may consider speeding up your build by invoking the ngcc (Angular Compatibility Compiler) in an npm postinstall script via small change to your package.json.
 If you have specified any entryComponents in your NgModules or had any uses of ANALYZE_FOR_ENTRY_COMPONENTS, you can remove them. They are no longer required with the Ivy compiler and runtime.
 
+Some notes on the Angular 9 problems:
+* Had to import Material modules individually; Angular CLI was supposed to do automatically, but that didn't happen.
+```
+core.js:5845 ERROR Error: Uncaught (in promise): TypeError: Cannot read property 'ngModule' of undefined
+TypeError: Cannot read property 'ngModule' of undefined
+    at isModuleWithProviders
+```
+* In `main.ts`:
+```
+import '@angular/compiler';
+```
+https://stackoverflow.com/questions/60183056/ionic-5-with-angular-9-angular-jit-compilation-failed-angular-compiler-not
+```
+error TS2306: File '/Users/laurahughes/GitHub/cvisb_data/sample-viewer/node_modules/@angular/material/index.d.ts' is not a module.
+
+8 import { MatExpansionModule } from '@angular/material/';
+```
+* Had to force a few d3-geo-projections typing conflicts that Angular 8 was okay with.
+* In `tsconfig.json`:
+```
+"compilerOptions": {
+  "resolveJsonModule": true,
+}
+```
+```
+ERROR
+Cannot find module '../../assets/geo/naturalearth_africa.json'. Consider using '--resolveJsonModule' to import module with '.json' extension
+```
+
 ### 2019-10-23
 - Upgraded to Angular 8 and updated all packages (from package.json)
 ```

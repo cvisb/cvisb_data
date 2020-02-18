@@ -8,7 +8,12 @@ import { merge, Observable } from "rxjs/";
 import { PatientsDataSource, RequestParametersService, AuthService, GetPatientsService } from '../../_services/';
 import { AuthState, RequestParamArray } from '../../_models';
 import { HttpParams } from '@angular/common/http';
+
+// -- icons ---
+// 2020-02-17: Angular 9 upgrade: for some reason Angular has trouble passing certain modules to children in lazy loaded modules *shrugs*
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faVenus, faMars } from "@fortawesome/free-solid-svg-icons";
+// import { SvgIconModule } from '../../svg-icon/svg-icon.module';
 
 @Component({
   selector: 'app-patient-table',

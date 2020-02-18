@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
@@ -13,9 +13,11 @@ import { Patient, PatientArray, AuthState, RequestParam, RequestParamArray, Pati
   templateUrl: './filter-patients.component.html',
   styleUrls: ['./filter-patients.component.scss']
 })
-export class FilterPatientsComponent implements OnInit {
+
+export class FilterPatientsComponent implements OnInit, OnDestroy {
   public patients: Patient[];
   allPatientSummary: PatientSummary;
+  patientSubscription: Subscription;
   public patientSummary$: Observable<PatientSummary>;
   public searchQuery: string = null;
   private authenticated$: Observable<AuthState>;
@@ -91,9 +93,7 @@ export class FilterPatientsComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.route.snapshot.data)
-    this.route.data.subscribe(data => {
-      console.log(this.route.data)
+    this.patientSubscription = this.route.data.subscribe(data => {
       this.allPatientSummary = data.patients;
     })
 
@@ -110,6 +110,10 @@ export class FilterPatientsComponent implements OnInit {
     //   ).pipe(
     //     map(expts => expts)
     //   )
+  }
+
+  ngOnDestroy () {
+    this.patientSubscription.unsubscribe();
   }
 
   clearFilters() {
