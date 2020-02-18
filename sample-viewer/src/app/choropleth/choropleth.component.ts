@@ -72,10 +72,10 @@ export class ChoroplethComponent implements AfterViewInit {
     // First: calculate the coordinates in degrees to get the center of the map and the parallel for the projection (center latitude)
     // bounds returned as [[left, bottom] [right, top]] == [[minLon minLat] [maxLon maxLat]]
     // longitude = east/west-horizontal-x, latitude = north/south-vertical-y :)
-    let minLon = d3.geoBounds(gin)[0][0],
-      minLat = d3.geoBounds(nga)[0][1],
-      maxLon = d3.geoBounds(nga)[1][0],
-      maxLat = d3.geoBounds(mli)[1][1];
+    let minLon = d3.geoBounds(gin as any)[0][0],
+      minLat = d3.geoBounds(nga as any)[0][1],
+      maxLon = d3.geoBounds(nga as any)[1][0],
+      maxLat = d3.geoBounds(mli as any)[1][1];
 
     let center = [d3.mean([minLon, maxLon]), d3.mean([minLat, maxLat])];
     let x1 = maxLon - minLon

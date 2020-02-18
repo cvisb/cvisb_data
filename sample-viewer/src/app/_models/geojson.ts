@@ -1,7 +1,7 @@
 export class Geojson {
   properties: GeojsonProperties;
   geometry?: Geometry;
-  geometries: any;
+  geometries?: any;
   type: string;
 }
 
