@@ -54,10 +54,6 @@ import { TermsPopupComponent } from '../_dialogs/terms-popup/terms-popup.compone
     DataTermsComponent,
     SpinnerPopupComponent,
     TermsPopupComponent
-  ],
-  entryComponents: [
-    SpinnerPopupComponent,
-    TermsPopupComponent
   ]
 })
 export class AdminModule { }

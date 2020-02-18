@@ -74,9 +74,6 @@ import { CorrectionsComponent } from '../_dialogs/corrections/corrections.compon
     PatientWarningComponent,
     CorrectionsComponent
   ],
-  entryComponents: [
-    CorrectionsComponent
-  ],
   providers: [
   ]
 })
