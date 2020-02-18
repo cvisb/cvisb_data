@@ -65,7 +65,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     EmbedJsonldModule,
     // FiltersModule,
     SvgIconModule,
-    MatTooltipModule, 
+    MatTooltipModule,
     // ViralSequencingModule,
     // DownloadBtnModule,
     // LeafletModule
@@ -81,9 +81,6 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
       useClass: EncodeHttpParamsInterceptor,
       multi: true
     }
-  ],
-  entryComponents: [
-    SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })
