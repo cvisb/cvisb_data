@@ -68,7 +68,7 @@ export class PatientTableComponent implements OnInit {
 
   ngAfterViewInit() {
     // reset the paginator after sorting
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     if (this.paginator && this.paginator.page) {
       merge(this.sort.sortChange, this.paginator.page)
