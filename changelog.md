@@ -66,14 +66,15 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - `ng update @angular/material --force`
 - `ng update @nguniversal/express-engine`
 - `ng update` --> `ng update rxjs`
-- committed, pushed to GH, pulled locally.
-```
+- `npm uninstall webpack-cli`
+- ```
 rm -rf node_modules
 npm install
-
-** invoke ngcc?
 ```
-
+- for some reason to get SSR to compile, had to move `server.ts` from the root directory to inside `/src` and update the references to that file in `angular.json`
+- new SSR error: "refused to set unsafe header cookie" via https://github.com/angular/angular/issues/15730#issuecomment-572992686 (XHR2 bypass)
+- committed, pushed to GH, pulled locally.
+- on average, .js bundles decreased by ~9%. looks like a big portion may be due to cross-use of modules; getting thrown into main.js since they have to be re-used.
 
 ### 2019-12-09
 - installed Angular FontAwesome module
