@@ -74,7 +74,7 @@ npm install
 - for some reason to get SSR to compile, had to move `server.ts` from the root directory to inside `/src` and update the references to that file in `angular.json`
 - new SSR error: "refused to set unsafe header cookie" via https://github.com/angular/angular/issues/15730#issuecomment-572992686 (XHR2 bypass)
 - committed, pushed to GH, pulled locally.
-- on average, .js bundles decreased by ~9%. looks like a big portion may be due to cross-use of modules; getting thrown into main.js since they have to be re-used.
+- on average, .js bundles decreased by ~9%. looks like a big portion may be due to cross-use of modules; getting thrown into main.js since they have to be re-used. not sure if that can be worked around.
 
 ### 2019-12-09
 - installed Angular FontAwesome module
