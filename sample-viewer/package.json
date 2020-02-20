@@ -17,7 +17,7 @@
     "dev:ssr": "ng run sample-viewer:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "build:dev": "ng build --preserve-symlinks --aot && ng run sample-viewer:server",
-    "build:ssr": "ng build --prod && ng run sample-viewer:server:production",
+    "build:ssr": "ng build --prod --namedChunks && ng run sample-viewer:server:production",
     "prerender": "ng run sample-viewer:prerender"
   },
   "private": true,
