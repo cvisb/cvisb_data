@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "module": "esnext",
-    "target": "esnext",
+    "target": "es2015",
     "types": [
       "jasmine",
       "jasminewd2",
