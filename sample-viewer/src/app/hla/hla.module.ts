@@ -20,7 +20,10 @@ import { DatasetPageModule } from '../dataset-page/dataset-page.module';
 import { AlleleCirclePackingModule } from '../hla/allele-circle-packing/allele-circle-packing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FiltersModule } from '../filters/filters.module';
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // --- services ---
 import { DatasetResolver } from '../_services/get-datasets.resolver';

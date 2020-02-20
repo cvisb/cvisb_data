@@ -87,6 +87,80 @@ extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_prod_loggedin", "prod version 0.1; Angular 6.1.10", "2019-10-25")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_prod_loggedin", "prod version 0.2; Angular 8 upgrade", "2019-12-03")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_dev_loggedin", "dev version 0.2+ minor fixes; Angular 8 upgrade", "2019-12-03", "dev")
+extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_dev_loggedin", "dev version 0.3; Angular 8", "2020-02-12", "dev")
+extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin", "prod version 0.3; Angular 8", "2020-02-12", "prod")
+extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin", "prod version 0.4; Angular 9", "2020-02-12", "prod")
+
+
+compilation20200212 = """chunk {0} 0-es2015.de05392e9a04ac37609d.js () 31.6 kB  [rendered]
+chunk {0} 0-es5.de05392e9a04ac37609d.js () 32.3 kB  [rendered]
+chunk {6} 6-es2015.40289e921df966fe1f66.js () 13.8 kB  [rendered]
+chunk {6} 6-es5.40289e921df966fe1f66.js () 15.1 kB  [rendered]
+chunk {3} 3-es2015.59142471aff4676c8436.js () 11.3 kB  [rendered]
+chunk {3} 3-es5.59142471aff4676c8436.js () 13.1 kB  [rendered]
+chunk {5} 5-es2015.e309b5204a328e318765.js () 10.9 kB  [rendered]
+chunk {5} 5-es5.e309b5204a328e318765.js () 13.4 kB  [rendered]
+chunk {8} 8-es2015.dc6d691870e83f31b6da.js () 25 kB  [rendered]
+chunk {8} 8-es5.dc6d691870e83f31b6da.js () 25.6 kB  [rendered]
+chunk {9} common-es2015.7dd76a510c106084fa20.js (common) 18.6 kB  [rendered]
+chunk {9} common-es5.7dd76a510c106084fa20.js (common) 19.3 kB  [rendered]
+chunk {12} runtime-es2015.18733f6eca2ac7926543.js (runtime) 3.01 kB [entry] [rendered]
+chunk {12} runtime-es5.18733f6eca2ac7926543.js (runtime) 3 kB [entry] [rendered]
+chunk {17} 17-es2015.3ecc4b2ccd44466cea1a.js () 3.83 kB  [rendered]
+chunk {17} 17-es5.3ecc4b2ccd44466cea1a.js () 3.87 kB  [rendered]
+chunk {1} 1-es2015.fb7ece0ff1a3c931c1bf.js () 47.8 kB  [rendered]
+chunk {1} 1-es5.fb7ece0ff1a3c931c1bf.js () 51.5 kB  [rendered]
+chunk {24} 24-es2015.8c4720bd0e861e566d3c.js () 14.4 kB  [rendered]
+chunk {24} 24-es5.8c4720bd0e861e566d3c.js () 15 kB  [rendered]
+chunk {29} 29-es2015.7bd3c7dd124d5d1dd6ba.js () 2.19 kB  [rendered]
+chunk {29} 29-es5.7bd3c7dd124d5d1dd6ba.js () 2.25 kB  [rendered]
+chunk {34} 34-es2015.6513589e7b65c9f31bd5.js () 3.78 kB  [rendered]
+chunk {34} 34-es5.6513589e7b65c9f31bd5.js () 3.81 kB  [rendered]
+chunk {28} 28-es2015.6660c292732c3e1dd0bf.js () 20.3 kB  [rendered]
+chunk {28} 28-es5.6660c292732c3e1dd0bf.js () 20.5 kB  [rendered]
+chunk {35} 35-es2015.cbc840ef8a97fcac7cb5.js () 29.7 kB  [rendered]
+chunk {35} 35-es5.cbc840ef8a97fcac7cb5.js () 29.7 kB  [rendered]
+chunk {2} 2-es2015.7742a836f08c6745a648.js () 40.9 kB  [rendered]
+chunk {2} 2-es5.7742a836f08c6745a648.js () 40.9 kB  [rendered]
+chunk {4} 4-es2015.1e5a090f1aa41bcd21fe.js () 78.4 kB  [rendered]
+chunk {4} 4-es5.1e5a090f1aa41bcd21fe.js () 85.1 kB  [rendered]
+chunk {7} 7-es2015.da3e4ce5575b8fa65f12.js () 111 kB  [rendered]
+chunk {7} 7-es5.da3e4ce5575b8fa65f12.js () 120 kB  [rendered]
+chunk {10} 10-es2015.e8824fb8e6a62305b071.js () 98.7 kB  [rendered]
+chunk {10} 10-es5.e8824fb8e6a62305b071.js () 99.3 kB  [rendered]
+chunk {11} 11-es2015.c25bfc991ba14800a861.js () 38 kB  [rendered]
+chunk {11} 11-es5.c25bfc991ba14800a861.js () 38.2 kB  [rendered]
+chunk {14} 14-es2015.2471b64f4db8079bf1c3.js () 44 kB  [rendered]
+chunk {14} 14-es5.2471b64f4db8079bf1c3.js () 45.5 kB  [rendered]
+chunk {13} 13-es2015.f37e5d54a3354fd1377e.js () 87.9 kB  [rendered]
+chunk {13} 13-es5.f37e5d54a3354fd1377e.js () 88.1 kB  [rendered]
+chunk {15} 15-es2015.a786527c63fe0145ada7.js () 202 kB  [rendered]
+chunk {15} 15-es5.a786527c63fe0145ada7.js () 203 kB  [rendered]
+chunk {16} 16-es2015.e6d278f048c2a929dc54.js () 51.4 kB  [rendered]
+chunk {16} 16-es5.e6d278f048c2a929dc54.js () 52.1 kB  [rendered]
+chunk {18} main-es2015.0969f3268ecc18977574.js (main) 1.23 MB [initial] [rendered]
+chunk {18} main-es5.0969f3268ecc18977574.js (main) 1.27 MB [initial] [rendered]
+chunk {19} polyfills-es2015.b66d5b89354962735b85.js (polyfills) 36.6 kB [initial] [rendered]
+chunk {20} polyfills-es5.5ea9160c3cf05e508000.js (polyfills-es5) 122 kB [initial] [rendered]
+chunk {22} 22-es2015.d6c72c811debe2d96d20.js () 43.7 kB  [rendered]
+chunk {22} 22-es5.d6c72c811debe2d96d20.js () 44.4 kB  [rendered]
+chunk {23} 23-es2015.46129ee22090acb03ab9.js () 355 kB  [rendered]
+chunk {23} 23-es5.46129ee22090acb03ab9.js () 361 kB  [rendered]
+chunk {25} 25-es2015.8df1ee97d31e5e962488.js () 204 kB  [rendered]
+chunk {25} 25-es5.8df1ee97d31e5e962488.js () 207 kB  [rendered]
+chunk {26} 26-es2015.5553ece84a44dfd653df.js () 36.6 kB  [rendered]
+chunk {26} 26-es5.5553ece84a44dfd653df.js () 36.9 kB  [rendered]
+chunk {27} 27-es2015.5e2d9d59dd7a05367f10.js () 49 kB  [rendered]
+chunk {27} 27-es5.5e2d9d59dd7a05367f10.js () 49.3 kB  [rendered]
+chunk {30} 30-es2015.0d860b31f681225b5902.js () 96 kB  [rendered]
+chunk {30} 30-es5.0d860b31f681225b5902.js () 97.2 kB  [rendered]
+chunk {31} 31-es2015.dc14d1c9eb302784fa08.js () 47.7 kB  [rendered]
+chunk {31} 31-es5.dc14d1c9eb302784fa08.js () 47.8 kB  [rendered]
+chunk {32} 32-es2015.4e40666ba62c48adaf1d.js () 108 kB  [rendered]
+chunk {32} 32-es5.4e40666ba62c48adaf1d.js () 108 kB  [rendered]
+chunk {33} 33-es2015.ab567a6a1bca74023094.js () 124 kB  [rendered]
+chunk {33} 33-es5.ab567a6a1bca74023094.js () 124 kB  [rendered]
+chunk {21} styles.e41d91830c208ab6d957.css (styles) 56.4 kB [initial] [rendered]"""
 
 compilation20191203 ="""chunk {13} polyfills-es2015.7fe73f9f4f4623128707.js (polyfills) 36.6 kB [initial] [rendered]
 chunk {14} polyfills-es5.c82493fe8874487f5c6b.js (polyfills-es5) 122 kB [initial] [rendered]
@@ -141,4 +215,84 @@ chunk {26} 26-es5.1de41b2edb2bd0a2d21f.js () 58.1 kB  [rendered]
 chunk {15} styles.19a799310b1a1b10b47f.css (styles) 61.3 kB [initial] [rendered]"""
 
 
+
 extractCompilationData(compilation20191203, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_prod_loggedin/compilation_2019-12-03.csv")
+extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin/compilation_2020-02-12.csv")
+
+
+# decoding the various module .js chunks
+
+mods = ['admin',
+ 'app',
+ 'choropleth',
+ 'data-quality',
+ 'dataset',
+ 'dataset-page',
+ 'dataset-summary',
+ 'delete-data',
+ 'dot-plot',
+ 'download-btn',
+ 'download-data',
+ 'embed-json',
+ 'epidemiology',
+ 'file-list',
+ 'filters',
+  "font-awesome",
+ 'format-citation',
+ 'format-publisher',
+ 'hla',
+ 'home',
+ 'material',
+ 'patient',
+ 'patient-page',
+ 'patient-timepoints',
+ 'piccolo',
+ 'pipes',
+ 'provenance',
+ 'sample',
+ 'systems-serology',
+ 'summary-stats',
+ 'svg-icon',
+ 'upload',
+ 'upload-patients',
+ 'upload-samples',
+ 'viral-seq']
+
+ ng-select?
+ forms? reactiveforms?
+
+datasetMods = ["dataset", "dataset-summary", "choropleth", "app", "dot-plot", "filters", "svg-icon", "admin"]
+hlaMods = ["dataset-page", "allele-circle-packing", "hla", "dataset-summary", "choropleth", "app", "dot-plot", "filters", "svg-icon", "file-list", "embed-json", "format-citation", "format-publisher", "admin"]
+seroMods = ["dataset-page", 'systems-serology', "dataset-summary", "choropleth", "app", "dot-plot", "filters", "svg-icon", "file-list", "embed-json", "format-citation", "format-publisher", "admin"]
+viralseqMods = ["dataset-page", 'viral-seq', "dataset-summary", "choropleth", "app", "dot-plot", "filters", "svg-icon", "file-list", "embed-json", "format-citation", "format-publisher", "admin"]
+
+
+homeMods = []
+
+patientMods = ["patient", "filters", "download-btn", "svg-icon", "pipes", "patient-timepoints", "app", "font-awesome"]
+indivPatientMods = ["patientPage", "svg-icon", "pipes", "patient-timepoints", "format-citation", "file-list", "allele-circle-packing", "provenance", "app", "font-awesome"]
+
+
+dataset =   [1,3,5,6,7,8,10,22]
+sero =      [0,1,2,3,4,5,6,7,8,10,11,13,34]
+hla =       [0,1,2,3,4,5,6,7,8,10,11,13,16,30]
+viralseq =  [0,1,2,3,4,5,6,7,8,10,11,13,17]
+
+
+home = [0,14,31]
+
+patient = [0,1,2,3,4,5,6,7,8,14,15,32]
+indiv_patient = [0,1,2,3,4,11,14,16,25]
+
+samples = [0,1,2,3,4,5,6,7,15,33]
+
+upload = []
+upload_data = []
+upload_samples = []
+upload_patient = []
+upload_delete = []
+
+set(patient) - set(samples) - set(dataset)
+
+set(indiv_patient) - set(hla)
+set(patientMods) - set(indivPatientMods)

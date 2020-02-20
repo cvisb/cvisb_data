@@ -11,7 +11,7 @@ import * as d3 from 'd3';
   encapsulation: ViewEncapsulation.None
 })
 export class DotPlotComponent implements AfterViewInit {
-  @ViewChild('dotplot', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('dotplot') private chartContainer: ElementRef;
   @Input() private data: any;
 
   // plot sizes

@@ -16,7 +16,7 @@ export class AlleleCirclePackingComponent implements AfterViewInit {
   @Input() data: any;
   @Input() scale: number;
   @Input() genotype: string[];
-  @ViewChild('allele_count', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('allele_count') private chartContainer: ElementRef;
 
   // plot sizes
   private element: any;

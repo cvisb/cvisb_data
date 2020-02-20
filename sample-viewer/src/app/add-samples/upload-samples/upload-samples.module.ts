@@ -4,14 +4,19 @@ import { CommonModule } from '@angular/common';
 import { UploadSamplesRoutingModule } from './upload-samples-routing.module';
 
 // --- modules ---
-import {
-  MatFormFieldModule,
-  MatTableModule, MatSelectModule,
-  MatCheckboxModule, MatSortModule, MatButtonModule,
-  MatPaginatorModule, MatStepperModule, MatExpansionModule,
-  MatTooltipModule, MatRadioModule, MatIconModule,
-  MatProgressBarModule
-} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PipesModule } from '../../pipes/pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 

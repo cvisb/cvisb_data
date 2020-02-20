@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // --- modules ---
-import { MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { RouterModule } from '@angular/router';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
@@ -51,10 +52,6 @@ import { TermsPopupComponent } from '../_dialogs/terms-popup/terms-popup.compone
     DisclaimerComponent,
     ReleaseNotesComponent,
     DataTermsComponent,
-    SpinnerPopupComponent,
-    TermsPopupComponent
-  ],
-  entryComponents: [
     SpinnerPopupComponent,
     TermsPopupComponent
   ]

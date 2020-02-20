@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatAutocomplete } from '@angular/material';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 import { CohortSelectOptions } from '../../_models';
 
@@ -61,7 +61,7 @@ export class HlaComparisonComponent implements OnInit {
   filteredOptionsL: Observable<CohortSelectOptions[]>;
   filteredOptionsR: Observable<CohortSelectOptions[]>;
 
-  @ViewChild(MatAutocomplete, { static: false }) matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
 
 
   ngOnInit() {

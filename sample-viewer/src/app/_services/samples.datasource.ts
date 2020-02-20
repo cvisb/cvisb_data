@@ -50,7 +50,6 @@ export class SamplesDataSource implements DataSource<SampleWide> {
       finalize(() => this.loadingSubject.next(false))
     )
       .subscribe(sampleList => {
-        console.log(sampleList)
         if (sampleList.sampleWide) {
           let filteredSamples = sampleList.sampleWide.slice(pageIdx * pageSize, (pageIdx + 1) * pageSize);
           this.resultCountSubject.next(sampleList.sampleWide.length);

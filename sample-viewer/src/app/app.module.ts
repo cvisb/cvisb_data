@@ -10,12 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { AdminModule, PipesModule } from '.';
 import { FormatCitationModule } from './format-citation/format-citation.module';
 import { EncodeHttpParamsInterceptor } from './_models/encode-http-params-interceptor';
 import { EmbedJsonldModule } from './embed-jsonld/embed-jsonld.module';
-import { MatTooltipModule, MatExpansionModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // --- Services ---
 import { MyHttpClient } from './_services/http-cookies.service';
@@ -65,7 +65,7 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
     EmbedJsonldModule,
     // FiltersModule,
     SvgIconModule,
-    MatTooltipModule, MatExpansionModule
+    MatTooltipModule,
     // ViralSequencingModule,
     // DownloadBtnModule,
     // LeafletModule
@@ -81,9 +81,6 @@ import { SvgIconModule } from './svg-icon/svg-icon.module';
       useClass: EncodeHttpParamsInterceptor,
       multi: true
     }
-  ],
-  entryComponents: [
-    SampleMetadataComponent
   ],
   bootstrap: [AppComponent]
 })

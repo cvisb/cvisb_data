@@ -1,6 +1,8 @@
 import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-check-ids',
@@ -12,8 +14,8 @@ export class CheckIdsComponent implements OnChanges {
   @Input() data: Object[];
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ['originalID', 'id_check.id', 'id_check.timepoint', 'originalVisitCode', 'visitCodeDisagree', 'id_check.message'];
 

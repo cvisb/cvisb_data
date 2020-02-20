@@ -14,7 +14,8 @@ import { DatasetSourceComponent } from './dataset-source/dataset-source.componen
 import { FileListModule } from '../file-list/file-list.module';
 import { RouterModule } from '@angular/router';
 import { EmbedJsonldModule } from '../embed-jsonld/embed-jsonld.module';
-import { MatExpansionModule, MatTooltipModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 import { FormatPublisherModule } from '../format-publisher/format-publisher.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';

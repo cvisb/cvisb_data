@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -16,7 +16,7 @@ export class UploadStepperComponent implements OnInit {
   firstFormGroup: FormGroup;
   formGroup: FormGroup;
   previewData: Object[];
-  @ViewChild('sample_upload_stepper', { static: false }) stepper: MatStepper;
+  @ViewChild('sample_upload_stepper') stepper: MatStepper;
 
 
   constructor(

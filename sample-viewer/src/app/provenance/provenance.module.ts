@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // --- Modules ---
-import { MatButtonModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 

@@ -10,7 +10,7 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
+            "main": "./src/server.ts",
             "tsConfig": "src/tsconfig.server.json",
             "sourceMap": false
           },
@@ -28,14 +28,15 @@
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
               }]
-            }
+            ,              "optimization": true
+}
           }
         },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/browser",
-            /* "outputPath": "dist/sample-viewer", */
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -60,6 +61,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
@@ -69,7 +76,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false
@@ -125,6 +131,32 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "sample-viewer:build",
+            "serverTarget": "sample-viewer:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sample-viewer:build:production",
+              "serverTarget": "sample-viewer:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "sample-viewer:build:production",
+            "serverTarget": "sample-viewer:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

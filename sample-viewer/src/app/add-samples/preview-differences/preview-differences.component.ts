@@ -1,10 +1,12 @@
 import { Component, OnChanges, ViewChild } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { SampleUploadService } from '../../_services';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SpinnerPopupComponent } from '../../_dialogs';
 
 import { isEqual } from 'lodash';
@@ -24,8 +26,8 @@ export class PreviewDifferencesComponent implements OnChanges {
 
   columnOrder = ["sampleID", "sampleLabel", "privatePatientID", "visitCode", "location", "sampleType", "isolationDate", "_id"];
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private uploadSvc: SampleUploadService, public dialog: MatDialog, ) {
     uploadSvc.previewDifferencesState$.subscribe((mergedObj: any) => {

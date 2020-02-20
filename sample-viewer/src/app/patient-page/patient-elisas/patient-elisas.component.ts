@@ -2,7 +2,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 
 import { Patient, D3Nested } from '../../_models';
 
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { nest } from 'd3';
 

@@ -21,7 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { uniq, flatMapDeep } from 'lodash';
 
 // --- Dialog box ---
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SpinnerPopupComponent } from '../_dialogs';
 
 @Injectable({

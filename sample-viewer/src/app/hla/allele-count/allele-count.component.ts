@@ -10,7 +10,7 @@ import * as d3 from 'd3';
 })
 export class AlleleCountComponent implements AfterViewInit {
   @Input() data: any;
-  @ViewChild('allele_count', { static: false }) private chartContainer: ElementRef;
+  @ViewChild('allele_count') private chartContainer: ElementRef;
 
   // plot sizes
   private element: any;

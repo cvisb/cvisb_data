@@ -3,14 +3,16 @@ library(readxl)
 
 filename = "GitHub/cvisb_data/notes/performance/CViSB-data-portal_performance.xlsx"
 
-audit = read_excel(filename) %>% filter(server == "dev")
+serverType = "prod"
+
+audit = read_excel(filename) %>% filter(server == serverType)
 
 # Compilation stats
-stats = read_excel(filename, sheet=2)
+stats = read_excel(filename, sheet=3)
 stats %>% filter(date == "2019-12-03") %>% arrange(desc(size))
 
 
-ggplot(stats %>% filter(server == "prod"), aes(x = date, y = size, colour = module)) +
+ggplot(stats %>% filter(server == serverType), aes(x = date, y = size, colour = module)) +
   geom_point() +
   geom_line() +
   geom_blank(aes(y = 0)) +

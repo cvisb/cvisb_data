@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Citation } from '../_models/';
 
 import { CorrectionsComponent } from '../_dialogs/corrections/corrections.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-provenance',

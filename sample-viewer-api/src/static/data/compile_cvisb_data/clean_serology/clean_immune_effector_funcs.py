@@ -41,7 +41,7 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
 
     # --- Load data ---
     # Import all the data; stored as individual sheets within the Excel file
-    sheets = pd.read_excel(filename, sheetname=None)
+    sheets = pd.read_excel(filename, sheet_name=None)
 
     # Append together the individual sheets
     df = pd.DataFrame()

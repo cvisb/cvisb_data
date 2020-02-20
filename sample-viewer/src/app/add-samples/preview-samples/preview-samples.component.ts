@@ -1,6 +1,8 @@
 import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { uniq, flatMap, difference } from 'lodash';
 
@@ -19,8 +21,8 @@ export class PreviewSamplesComponent implements OnChanges {
 
   dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   columnOrder = ["missing", "sampleID", "sampleLabel", "privatePatientID", "visitCode", "patientID", "sampleType", "isolationDate", "lab", "numAliquots"];
 

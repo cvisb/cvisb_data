@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UploadRoutingModule } from './upload-routing.module';
 
 // --- modules ---
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 // --- components ---
 import { UploadComponent } from './upload.component';
