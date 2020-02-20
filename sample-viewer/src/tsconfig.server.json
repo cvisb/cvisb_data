@@ -7,7 +7,7 @@
     "outDir": "../out-tsc/app",
     "sourceMap": true,
     "declaration": false,
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
