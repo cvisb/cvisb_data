@@ -4,6 +4,8 @@ import pandas as pd
 import json
 import datetime as datetime
 import os
+import re
+
 def extractJSON(filename, date, versionComment, server):
     exportCols = ['index', 'description', 'displayValue', 'numericValue', 'score', 'overview']
     with open(filename, encoding='utf-8') as json_file:
@@ -82,6 +84,33 @@ def getChunk(row):
         return("chunk " + str.zfill(2))
     else:
         return(f"chunk {row[1].replace('{', '').replace('}', '').zfill(2)}")
+
+def getEsVersion(str):
+    result = re.match(".+(es\d+)", str)
+    result
+    if(result):
+        return(result[1])
+
+def cleanDiskUsage(str, server, versionStr, date, export_filename):
+    chunks = str.split("\n")
+
+    df = pd.DataFrame(chunks, columns=["raw"])
+
+    df['str_split'] = df.raw.apply(lambda x: re.sub("\s+" , "*", x).split("*"))
+    df['size_split'] = df.str_split.apply(lambda x: re.search("(\d+\.?\d+?)(\w+)", x[0]))
+
+    df['date'] = date
+    df['version'] = versionStr
+    df['server'] = server
+    df['chunk'] = None
+    df['module'] = df.str_split.apply(lambda x: x[1].replace("-ngfactory", ""))
+    df['size'] = df.size_split.apply(lambda x: x[1])
+    df['unit'] = df.size_split.apply(lambda x: x[2])
+    df['compiler'] = df.str_split.apply(lambda x: getEsVersion(x[1]))
+    res = df[['date', 'version', 'server', 'chunk', 'module', 'size', 'unit', 'compiler']].to_csv(export_filename, index=False)
+
+    return(res)
+
 
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_dev_loggedin", "Angular 8 upgrade", "2019-10-25", "dev")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_prod_loggedin", "prod version 0.1; Angular 6.1.10", "2019-10-25")
@@ -340,12 +369,12 @@ compiled20200220_angular8="""96K     3rdpartylicenses.txt
 272K    server/KGH_image_1600px.jpg
 3.4M    server/main.js
 3.7M    server/total
-16M     dist/server.js
-"""
+16M     dist/server.js"""
 
 extractCompilationData(compilation20191203, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_prod_loggedin/compilation_2019-12-03.csv")
 extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin/compilation_2020-02-12.csv")
 extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-19_prod_loggedin/compilation_2020-02-19.csv")
+cleanDiskUsage(compiled20200220_angular8, "prod", "Angular 8", "2020-02-20", "/Users/laurahughes/GitHub/cvisb_data/notes/performance/diskusage_prod-angular8_2020-02-20.csv")
 
 
 # decoding the various module .js chunks
