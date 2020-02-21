@@ -58,3 +58,5 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './main.server';
+
+export { renderModule, renderModuleFactory } from '@angular/platform-server';
