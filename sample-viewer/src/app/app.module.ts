@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { enableProdMode } from '@angular/core';
+  enableProdMode();
 
 // --- Modules ---
 import { AppRoutingModule } from './/app-routing.module';
