@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { GetSamplesService, RequestParametersService, AuthService } from '../../_services/';
 import { AuthState, RequestParam, RequestParamArray, ESFacetTerms } from '../../_models';
 
+import { uniq } from 'lodash';
 
 @Component({
   selector: 'app-filter-sample',
@@ -67,7 +68,7 @@ export class FilterSampleComponent implements OnInit {
         if (this.first_call) {
           this.first_call = false;
           this.total_samples = sList.length;
-          this.all_patients = sList.flatMap((d: any) => d.alternateIdentifier);
+          this.all_patients = uniq(sList.flatMap((d: any) => d.alternateIdentifier));
           // this.all_cohorts = pList.patientTypes.map((d: any) => d.key);
           // this.all_outcomes = pList.patientOutcomes.map((d: any) => d.key);
           // this.all_years = pList.patientYears.filter((d:any) => Number.isInteger(d.key)).map((d: any) => d.key);

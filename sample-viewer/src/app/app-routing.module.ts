@@ -33,7 +33,7 @@ const appRoutes: Routes = [
 
   // { path: 'epi', pathMatch: 'full', redirectTo: "/epidemiology" },
   // { path: 'epidemiology', loadChildren: () => import('./epidemiology/epidemiology.module').then(m => m.EpidemiologyModule), pathMatch: 'full', data: { title: 'Epidemiology | CViSB' } },
-  { canActivate: [AuthGuard], path: 'data-quality', loadChildren: () => import('./data-quality/data-quality.module').then(m => m.DataQualityModule), pathMatch: 'full', data: { title: 'Data Quality | CViSB' } },
+  {  path: 'data-quality', loadChildren: () => import('./data-quality/data-quality.module').then(m => m.DataQualityModule), pathMatch: 'full', data: { title: 'Data Quality | CViSB' } },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset/hla', loadChildren: () => import('./hla/hla.module').then(m => m.HlaModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
   { path: 'dataset/systems-serology', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
