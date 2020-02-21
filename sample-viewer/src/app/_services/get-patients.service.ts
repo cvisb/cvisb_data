@@ -147,9 +147,10 @@ export class GetPatientsService {
       .set("fields", "alternateIdentifier");
 
     return this.apiSvc.fetchAll('patient', params).pipe(
-      tap(d => console.log(d)),
+      tap(d => console.log(d.slice(0,4))),
       map((res: any) => {
         let ids = uniq(flatMapDeep(res, d => d['alternateIdentifier']));
+        console.log(ids)
         return ids;
       }),
       catchError(e => {
