@@ -371,10 +371,70 @@ compiled20200220_angular8="""96K     3rdpartylicenses.txt
 3.7M    server/total
 16M     dist/server.js"""
 
+
+compiled20200220_angular9 = """92K     3rdpartylicenses.txt
+28K     add-data-upload-data-upload-data-module-es2015.922b79810d90cb9debb0.js
+32K     add-data-upload-data-upload-data-module-es5.922b79810d90cb9debb0.js
+48K     add-patients-upload-patients-upload-patients-module-es2015.3c98b1d0efa0252878c6.js
+52K     add-patients-upload-patients-upload-patients-module-es5.3c98b1d0efa0252878c6.js
+272K    add-samples-upload-samples-upload-samples-module-es2015.b030a7bf3d3d5a79fbec.js
+280K    add-samples-upload-samples-upload-samples-module-es5.b030a7bf3d3d5a79fbec.js
+100K    assets/icons
+56K     assets/schema
+88K     assets/geo
+24K     assets/data
+580K    assets/img
+864K    assets
+12K     common-es2015.534b2cbc373e62f886e0.js
+16K     common-es5.534b2cbc373e62f886e0.js
+16K     data-quality-data-quality-module-es2015.1699fade178b3f2c1636.js
+16K     data-quality-data-quality-module-es5.1699fade178b3f2c1636.js
+28K     dataset-dataset-module-es2015.92fc7226628a573c134e.js
+28K     dataset-dataset-module-es5.92fc7226628a573c134e.js
+44K     default~home-home-module~patient-page-patient-page-module~patient-patient-module-es2015.f32324dfabd38514890c.js
+48K     default~home-home-module~patient-page-patient-page-module~patient-patient-module-es5.f32324dfabd38514890c.js
+132K    default~patient-patient-module~sample-sample-module-es2015.ffd30d5a00c11283533c.js
+132K    default~patient-patient-module~sample-sample-module-es5.ffd30d5a00c11283533c.js
+8.0K    delete-data-delete-data-module-es2015.39a0365b50279941cee1.js
+8.0K    delete-data-delete-data-module-es5.39a0365b50279941cee1.js
+4.0K    download-data-download-data-module-es2015.ddecf49a348605286246.js
+4.0K    download-data-download-data-module-es5.ddecf49a348605286246.js
+44K     home-home-module-es2015.806d1b04b040e83a5e44.js
+44K     home-home-module-es5.806d1b04b040e83a5e44.js
+4.0K    index.html
+272K    KGH_image_1600px.c85b66b77869719db030.jpg
+4.0K    layers-2x.4f0283c6ce28e888000e.png
+4.0K    layers.a6137456ed160d760698.png
+2.0M    main-es2015.88c82593d7a410d20f5b.js
+2.3M    main-es5.88c82593d7a410d20f5b.js
+4.0K    marker-icon.2273e3d8ad9264b7daa5.png
+168K    patient-page-patient-page-module-es2015.325ede2bdb7ddbd9693f.js
+172K    patient-page-patient-page-module-es5.325ede2bdb7ddbd9693f.js
+84K     patient-patient-module-es2015.9a16b3a2dd03407299a7.js
+84K     patient-patient-module-es5.9a16b3a2dd03407299a7.js
+36K     polyfills-es2015.acadf86ff3cc87446d4d.js
+128K    polyfills-es5.17dec13fc394c77f7a27.js
+4.0K    runtime-es2015.e2b54862d006bd647c88.js
+4.0K    runtime-es5.e2b54862d006bd647c88.js
+108K    sample-sample-module-es2015.565f83c34bc7d1c432ce.js
+108K    sample-sample-module-es5.565f83c34bc7d1c432ce.js
+4.0K    serology-serology-module-es2015.fa01fe50c1bab3129a26.js
+4.0K    serology-serology-module-es5.fa01fe50c1bab3129a26.js
+60K     styles.e61a92fea14431d9c8e5.css
+32K     upload-upload-module-es2015.221a0f2f1c3c7ed51beb.js
+32K     upload-upload-module-es5.221a0f2f1c3c7ed51beb.js
+4.0K    viral-sequencing-viral-sequencing-module-es2015.dd57cc2c92adff41fc1d.js
+4.0K    viral-sequencing-viral-sequencing-module-es5.dd57cc2c92adff41fc1d.js
+7.7M    browser/total
+7.2M    server/main.js
+7.2M    server/total
+16M     dist/server.js"""
+
 extractCompilationData(compilation20191203, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_prod_loggedin/compilation_2019-12-03.csv")
 extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin/compilation_2020-02-12.csv")
 extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-19_prod_loggedin/compilation_2020-02-19.csv")
 cleanDiskUsage(compiled20200220_angular8, "prod", "Angular 8", "2020-02-20", "/Users/laurahughes/GitHub/cvisb_data/notes/performance/diskusage_prod-angular8_2020-02-20.csv")
+cleanDiskUsage(compiled20200220_angular9, "prod", "Angular 9 upgrade", "2020-02-20", "/Users/laurahughes/GitHub/cvisb_data/notes/performance/diskusage_prod-angular9_2020-02-20.csv")
 
 
 # decoding the various module .js chunks
