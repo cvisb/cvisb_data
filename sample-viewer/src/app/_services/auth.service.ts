@@ -78,7 +78,7 @@ export class AuthService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
       }).subscribe((r) => {
-        // console.log(r)
+        console.log(r)
         this.user = r.body;
         this.userSubject.next(this.user);
 

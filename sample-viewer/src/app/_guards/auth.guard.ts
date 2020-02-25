@@ -47,8 +47,12 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
+    console.log(url)
     // Store the attempted URL for redirecting
     this.authSvc.redirectUrlSubject.next(url);
+    console.log(this.isLoggedIn)
+    console.log(this.isAuthorized)
+
 
     // if (this.isLoggedIn) {
     if (this.isLoggedIn && this.isAuthorized) {
