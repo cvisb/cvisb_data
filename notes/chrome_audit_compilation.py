@@ -4,6 +4,8 @@ import pandas as pd
 import json
 import datetime as datetime
 import os
+import re
+
 def extractJSON(filename, date, versionComment, server):
     exportCols = ['index', 'description', 'displayValue', 'numericValue', 'score', 'overview']
     with open(filename, encoding='utf-8') as json_file:
@@ -82,6 +84,33 @@ def getChunk(row):
         return("chunk " + str.zfill(2))
     else:
         return(f"chunk {row[1].replace('{', '').replace('}', '').zfill(2)}")
+
+def getEsVersion(str):
+    result = re.match(".+(es\d+)", str)
+    result
+    if(result):
+        return(result[1])
+
+def cleanDiskUsage(str, server, versionStr, date, export_filename):
+    chunks = str.split("\n")
+
+    df = pd.DataFrame(chunks, columns=["raw"])
+
+    df['str_split'] = df.raw.apply(lambda x: re.sub("\s+" , "*", x).split("*"))
+    df['size_split'] = df.str_split.apply(lambda x: re.search("(\d+\.?\d+?)(\w+)", x[0]))
+
+    df['date'] = date
+    df['version'] = versionStr
+    df['server'] = server
+    df['chunk'] = None
+    df['module'] = df.str_split.apply(lambda x: x[1].replace("-ngfactory", ""))
+    df['size'] = df.size_split.apply(lambda x: x[1])
+    df['unit'] = df.size_split.apply(lambda x: x[2])
+    df['compiler'] = df.str_split.apply(lambda x: getEsVersion(x[1]))
+    res = df[['date', 'version', 'server', 'chunk', 'module', 'size', 'unit', 'compiler']].to_csv(export_filename, index=False)
+
+    return(res)
+
 
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_dev_loggedin", "Angular 8 upgrade", "2019-10-25", "dev")
 extractAuditData("/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-10-25_prod_loggedin", "prod version 0.1; Angular 6.1.10", "2019-10-25")
@@ -214,10 +243,198 @@ chunk {26} 26-es2015.1de41b2edb2bd0a2d21f.js () 58 kB  [rendered]
 chunk {26} 26-es5.1de41b2edb2bd0a2d21f.js () 58.1 kB  [rendered]
 chunk {15} styles.19a799310b1a1b10b47f.css (styles) 61.3 kB [initial] [rendered]"""
 
+compilation20200219="""chunk {5} polyfills-es2015.ecabe7e8e886af30c42e.js (polyfills) 61.5 kB [initial] [rendered]
+chunk {6} polyfills-es5.dc833303df7e26db0da4.js (polyfills-es5) 134 kB [initial] [rendered]
+chunk {0} common-es2015.cc3b72b1e170abb018f0.js (common) 27.2 kB  [rendered]
+chunk {0} common-es5.cc3b72b1e170abb018f0.js (common) 29.1 kB  [rendered]
+chunk {1} runtime-es2015.ba2010f8b64c73ceb1c3.js (runtime) 2.63 kB [entry] [rendered]
+chunk {1} runtime-es5.ba2010f8b64c73ceb1c3.js (runtime) 2.63 kB [entry] [rendered]
+chunk {2} 2-es2015.e64a45c76c41aac6292c.js () 42.5 kB  [rendered]
+chunk {2} 2-es5.e64a45c76c41aac6292c.js () 46.5 kB  [rendered]
+chunk {3} 3-es2015.885f484e96e189f30784.js () 1010 bytes  [rendered]
+chunk {3} 3-es5.885f484e96e189f30784.js () 1.49 kB  [rendered]
+chunk {4} main-es2015.a77a3e63dde57fd582e6.js (main) 2.31 MB [initial] [rendered]
+chunk {4} main-es5.a77a3e63dde57fd582e6.js (main) 2.4 MB [initial] [rendered]
+chunk {8} 8-es2015.04e6e46b66208e804faa.js () 151 kB  [rendered]
+chunk {8} 8-es5.04e6e46b66208e804faa.js () 156 kB  [rendered]
+chunk {9} 9-es2015.4811fb5d9d580d3215f0.js () 217 kB  [rendered]
+chunk {9} 9-es5.4811fb5d9d580d3215f0.js () 223 kB  [rendered]
+chunk {10} 10-es2015.e7b973f318d9de84a038.js () 62 kB  [rendered]
+chunk {10} 10-es5.e7b973f318d9de84a038.js () 62.9 kB  [rendered]
+chunk {11} 11-es2015.0434315242e4117aeaa0.js () 49.9 kB  [rendered]
+chunk {11} 11-es5.0434315242e4117aeaa0.js () 50.8 kB  [rendered]
+chunk {12} 12-es2015.91053d2456f4834f4ddb.js () 14.1 kB  [rendered]
+chunk {12} 12-es5.91053d2456f4834f4ddb.js () 15.2 kB  [rendered]
+chunk {13} 13-es2015.30fb3b9345e61c5a7178.js () 21.2 kB  [rendered]
+chunk {13} 13-es5.30fb3b9345e61c5a7178.js () 22.1 kB  [rendered]
+chunk {14} 14-es2015.c2b1153d94ddfd6500fc.js () 36.1 kB  [rendered]
+chunk {14} 14-es5.c2b1153d94ddfd6500fc.js () 37.1 kB  [rendered]
+chunk {15} 15-es2015.4a8bb7934d039e5c0104.js () 18.9 kB  [rendered]
+chunk {15} 15-es5.4a8bb7934d039e5c0104.js () 19.5 kB  [rendered]
+chunk {16} 16-es2015.08bb1194e498bf2e6d97.js () 4.09 kB  [rendered]
+chunk {16} 16-es5.08bb1194e498bf2e6d97.js () 4.79 kB  [rendered]
+chunk {17} 17-es2015.f3462af0ce0b5acf908e.js () 1.53 kB  [rendered]
+chunk {17} 17-es5.f3462af0ce0b5acf908e.js () 2.08 kB  [rendered]
+chunk {18} 18-es2015.af607aa12dba85aa749e.js () 33.3 kB  [rendered]
+chunk {18} 18-es5.af607aa12dba85aa749e.js () 34.5 kB  [rendered]
+chunk {19} 19-es2015.125f36f05ba3c8382d01.js () 905 bytes  [rendered]
+chunk {19} 19-es5.125f36f05ba3c8382d01.js () 1.38 kB  [rendered]
+chunk {20} 20-es2015.4dbc9c67cfe7e86b2dce.js () 22.5 kB  [rendered]
+chunk {20} 20-es5.4dbc9c67cfe7e86b2dce.js () 23 kB  [rendered]
+chunk {7} styles.e61a92fea14431d9c8e5.css (styles) 59.9 kB [initial] [rendered]"""
 
+
+compiled20200220_angular8="""96K     3rdpartylicenses.txt
+40K     add-data-upload-data-upload-data-module-ngfactory-es2015.4c30f351e97f821d3f58.js
+40K     add-data-upload-data-upload-data-module-ngfactory-es5.4c30f351e97f821d3f58.js
+52K     add-patients-upload-patients-upload-patients-module-ngfactory-es2015.871ee9fb6cb80a40ccf2.js
+52K     add-patients-upload-patients-upload-patients-module-ngfactory-es5.871ee9fb6cb80a40ccf2.js
+356K    add-samples-upload-samples-upload-samples-module-ngfactory-es2015.84982894860d488f0a81.js
+368K    add-samples-upload-samples-upload-samples-module-ngfactory-es5.84982894860d488f0a81.js
+100K    assets/icons
+56K     assets/schema
+88K     assets/geo
+24K     assets/data
+580K    assets/img
+864K    assets
+20K     common-es2015.6f522755940a4448be66.js
+20K     common-es5.6f522755940a4448be66.js
+16K     data-quality-data-quality-module-ngfactory-es2015.f19e431b7e9f288f01ab.js
+16K     data-quality-data-quality-module-ngfactory-es5.f19e431b7e9f288f01ab.js
+44K     dataset-dataset-module-ngfactory-es2015.18ef8e259b0b28d65f53.js
+48K     dataset-dataset-module-ngfactory-es5.18ef8e259b0b28d65f53.js
+32K     default~add-data-upload-data-upload-data-module-ngfactory~add-patients-upload-patients-upload-patien~919e230c-es2015.ae8ba567142300b6a483.js
+36K     default~add-data-upload-data-upload-data-module-ngfactory~add-patients-upload-patients-upload-patien~919e230c-es5.ae8ba567142300b6a483.js
+48K     default~add-data-upload-data-upload-data-module-ngfactory~add-samples-upload-samples-upload-samples-~422dc2a0-es2015.8a6303c7bf9b774a7293.js
+52K     default~add-data-upload-data-upload-data-module-ngfactory~add-samples-upload-samples-upload-samples-~422dc2a0-es5.8a6303c7bf9b774a7293.js
+44K     default~add-data-upload-data-upload-data-module-ngfactory~add-samples-upload-samples-upload-samples-~a9c8087d-es2015.95afe62367515fd1da88.js
+44K     default~add-data-upload-data-upload-data-module-ngfactory~add-samples-upload-samples-upload-samples-~a9c8087d-es5.95afe62367515fd1da88.js
+12K     default~add-samples-upload-samples-upload-samples-module-ngfactory~dataset-dataset-module-ngfactory~~43b54e1b-es2015.72feca43f4185afa6569.js
+16K     default~add-samples-upload-samples-upload-samples-module-ngfactory~dataset-dataset-module-ngfactory~~43b54e1b-es5.72feca43f4185afa6569.js
+16K     default~add-samples-upload-samples-upload-samples-module-ngfactory~dataset-dataset-module-ngfactory~~f1789a2f-es2015.46ecacdf54455d7b5e0a.js
+16K     default~add-samples-upload-samples-upload-samples-module-ngfactory~dataset-dataset-module-ngfactory~~f1789a2f-es5.46ecacdf54455d7b5e0a.js
+80K     default~add-samples-upload-samples-upload-samples-module-ngfactory~hla-hla-module-ngfactory~patient-~9f288828-es2015.e80da03467f1a2d5983b.js
+88K     default~add-samples-upload-samples-upload-samples-module-ngfactory~hla-hla-module-ngfactory~patient-~9f288828-es5.e80da03467f1a2d5983b.js
+12K     default~dataset-dataset-module-ngfactory~delete-data-delete-data-module-ngfactory~hla-hla-module-ngf~174230fc-es2015.e48e3734136496bc9182.js
+16K     default~dataset-dataset-module-ngfactory~delete-data-delete-data-module-ngfactory~hla-hla-module-ngf~174230fc-es5.e48e3734136496bc9182.js
+28K     default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~patient-patient-module-ngfactory~s~78a4803a-es2015.0050d74b569c065245d4.js
+28K     default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~patient-patient-module-ngfactory~s~78a4803a-es5.0050d74b569c065245d4.js
+112K    default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~patient-patient-module-ngfactory~s~c287015a-es2015.fb41dce79f9a94ced768.js
+124K    default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~patient-patient-module-ngfactory~s~c287015a-es5.fb41dce79f9a94ced768.js
+100K    default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~serology-serology-module-ngfactory~4954789f-es2015.b945569ba56eaf795c57.js
+100K    default~dataset-dataset-module-ngfactory~hla-hla-module-ngfactory~serology-serology-module-ngfactory~4954789f-es5.b945569ba56eaf795c57.js
+52K     default~hla-hla-module-ngfactory~patient-page-patient-page-module-ngfactory-es2015.90c0a1cd2bf6e3c0c62e.js
+56K     default~hla-hla-module-ngfactory~patient-page-patient-page-module-ngfactory-es5.90c0a1cd2bf6e3c0c62e.js
+40K     default~hla-hla-module-ngfactory~patient-page-patient-page-module-ngfactory~serology-serology-module~550306ad-es2015.d80813abf9d176db7f9f.js
+40K     default~hla-hla-module-ngfactory~patient-page-patient-page-module-ngfactory~serology-serology-module~550306ad-es5.d80813abf9d176db7f9f.js
+88K     default~hla-hla-module-ngfactory~serology-serology-module-ngfactory~viral-sequencing-viral-sequencin~4f5a4e88-es2015.f49b674c60dfd8f03514.js
+92K     default~hla-hla-module-ngfactory~serology-serology-module-ngfactory~viral-sequencing-viral-sequencin~4f5a4e88-es5.f49b674c60dfd8f03514.js
+48K     default~home-home-module-ngfactory~patient-page-patient-page-module-ngfactory~patient-patient-module~52b9a080-es2015.0bbbc49855edc6937d4f.js
+48K     default~home-home-module-ngfactory~patient-page-patient-page-module-ngfactory~patient-patient-module~52b9a080-es5.0bbbc49855edc6937d4f.js
+204K    default~patient-patient-module-ngfactory~sample-sample-module-ngfactory-es2015.81c4754cc13e2031af85.js
+204K    default~patient-patient-module-ngfactory~sample-sample-module-ngfactory-es5.81c4754cc13e2031af85.js
+24K     delete-data-delete-data-module-ngfactory-es2015.16353e34b8a96b977ca8.js
+24K     delete-data-delete-data-module-ngfactory-es5.16353e34b8a96b977ca8.js
+4.0K    download-data-download-data-module-ngfactory-es2015.cd71c746cbf7a95bba7d.js
+4.0K    download-data-download-data-module-ngfactory-es5.cd71c746cbf7a95bba7d.js
+96K     hla-hla-module-ngfactory-es2015.98a2932c1c7eb9d42bb6.js
+100K    hla-hla-module-ngfactory-es5.98a2932c1c7eb9d42bb6.js
+48K     home-home-module-ngfactory-es2015.5bc8ab9ed31739169869.js
+48K     home-home-module-ngfactory-es5.5bc8ab9ed31739169869.js
+4.0K    index.html
+272K    KGH_image_1600px.c85b66b77869719db030.jpg
+4.0K    layers-2x.4f0283c6ce28e888000e.png
+4.0K    layers.a6137456ed160d760698.png
+1.3M    main-es2015.59ea3e854d8312974f78.js
+1.3M    main-es5.59ea3e854d8312974f78.js
+4.0K    marker-icon.2273e3d8ad9264b7daa5.png
+208K    patient-page-patient-page-module-ngfactory-es2015.d5fd062faf87aed34aee.js
+208K    patient-page-patient-page-module-ngfactory-es5.d5fd062faf87aed34aee.js
+108K    patient-patient-module-ngfactory-es2015.5dd352291b7dec2aff55.js
+112K    patient-patient-module-ngfactory-es5.5dd352291b7dec2aff55.js
+40K     polyfills-es2015.158c58c405e4449ca7fa.js
+124K    polyfills-es5.ac1ec1928412c1007966.js
+8.0K    runtime-es2015.21a17278f0ed4514d40d.js
+8.0K    runtime-es5.21a17278f0ed4514d40d.js
+124K    sample-sample-module-ngfactory-es2015.e02945069bc58a68ceeb.js
+128K    sample-sample-module-ngfactory-es5.e02945069bc58a68ceeb.js
+4.0K    serology-serology-module-ngfactory-es2015.6809c4dd17cafffeae42.js
+4.0K    serology-serology-module-ngfactory-es5.6809c4dd17cafffeae42.js
+60K     styles.e41d91830c208ab6d957.css
+32K     upload-upload-module-ngfactory-es2015.efce84f5640d93f8bdfc.js
+32K     upload-upload-module-ngfactory-es5.efce84f5640d93f8bdfc.js
+4.0K    viral-sequencing-viral-sequencing-module-ngfactory-es2015.7be366a6f8da136005d3.js
+4.0K    viral-sequencing-viral-sequencing-module-ngfactory-es5.7be366a6f8da136005d3.js
+8.2M    browser/total
+272K    server/KGH_image_1600px.jpg
+3.4M    server/main.js
+3.7M    server/total
+16M     dist/server.js"""
+
+
+compiled20200220_angular9 = """92K     3rdpartylicenses.txt
+28K     add-data-upload-data-upload-data-module-es2015.922b79810d90cb9debb0.js
+32K     add-data-upload-data-upload-data-module-es5.922b79810d90cb9debb0.js
+48K     add-patients-upload-patients-upload-patients-module-es2015.3c98b1d0efa0252878c6.js
+52K     add-patients-upload-patients-upload-patients-module-es5.3c98b1d0efa0252878c6.js
+272K    add-samples-upload-samples-upload-samples-module-es2015.b030a7bf3d3d5a79fbec.js
+280K    add-samples-upload-samples-upload-samples-module-es5.b030a7bf3d3d5a79fbec.js
+100K    assets/icons
+56K     assets/schema
+88K     assets/geo
+24K     assets/data
+580K    assets/img
+864K    assets
+12K     common-es2015.534b2cbc373e62f886e0.js
+16K     common-es5.534b2cbc373e62f886e0.js
+16K     data-quality-data-quality-module-es2015.1699fade178b3f2c1636.js
+16K     data-quality-data-quality-module-es5.1699fade178b3f2c1636.js
+28K     dataset-dataset-module-es2015.92fc7226628a573c134e.js
+28K     dataset-dataset-module-es5.92fc7226628a573c134e.js
+44K     default~home-home-module~patient-page-patient-page-module~patient-patient-module-es2015.f32324dfabd38514890c.js
+48K     default~home-home-module~patient-page-patient-page-module~patient-patient-module-es5.f32324dfabd38514890c.js
+132K    default~patient-patient-module~sample-sample-module-es2015.ffd30d5a00c11283533c.js
+132K    default~patient-patient-module~sample-sample-module-es5.ffd30d5a00c11283533c.js
+8.0K    delete-data-delete-data-module-es2015.39a0365b50279941cee1.js
+8.0K    delete-data-delete-data-module-es5.39a0365b50279941cee1.js
+4.0K    download-data-download-data-module-es2015.ddecf49a348605286246.js
+4.0K    download-data-download-data-module-es5.ddecf49a348605286246.js
+44K     home-home-module-es2015.806d1b04b040e83a5e44.js
+44K     home-home-module-es5.806d1b04b040e83a5e44.js
+4.0K    index.html
+272K    KGH_image_1600px.c85b66b77869719db030.jpg
+4.0K    layers-2x.4f0283c6ce28e888000e.png
+4.0K    layers.a6137456ed160d760698.png
+2.0M    main-es2015.88c82593d7a410d20f5b.js
+2.3M    main-es5.88c82593d7a410d20f5b.js
+4.0K    marker-icon.2273e3d8ad9264b7daa5.png
+168K    patient-page-patient-page-module-es2015.325ede2bdb7ddbd9693f.js
+172K    patient-page-patient-page-module-es5.325ede2bdb7ddbd9693f.js
+84K     patient-patient-module-es2015.9a16b3a2dd03407299a7.js
+84K     patient-patient-module-es5.9a16b3a2dd03407299a7.js
+36K     polyfills-es2015.acadf86ff3cc87446d4d.js
+128K    polyfills-es5.17dec13fc394c77f7a27.js
+4.0K    runtime-es2015.e2b54862d006bd647c88.js
+4.0K    runtime-es5.e2b54862d006bd647c88.js
+108K    sample-sample-module-es2015.565f83c34bc7d1c432ce.js
+108K    sample-sample-module-es5.565f83c34bc7d1c432ce.js
+4.0K    serology-serology-module-es2015.fa01fe50c1bab3129a26.js
+4.0K    serology-serology-module-es5.fa01fe50c1bab3129a26.js
+60K     styles.e61a92fea14431d9c8e5.css
+32K     upload-upload-module-es2015.221a0f2f1c3c7ed51beb.js
+32K     upload-upload-module-es5.221a0f2f1c3c7ed51beb.js
+4.0K    viral-sequencing-viral-sequencing-module-es2015.dd57cc2c92adff41fc1d.js
+4.0K    viral-sequencing-viral-sequencing-module-es5.dd57cc2c92adff41fc1d.js
+7.7M    browser/total
+7.2M    server/main.js
+7.2M    server/total
+16M     dist/server.js"""
 
 extractCompilationData(compilation20191203, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2019-12-03_prod_loggedin/compilation_2019-12-03.csv")
 extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-12_prod_loggedin/compilation_2020-02-12.csv")
+extractCompilationData(compilation20200212, "/Users/laurahughes/GitHub/cvisb_data/notes/performance/2020-02-19_prod_loggedin/compilation_2020-02-19.csv")
+cleanDiskUsage(compiled20200220_angular8, "prod", "Angular 8", "2020-02-20", "/Users/laurahughes/GitHub/cvisb_data/notes/performance/diskusage_prod-angular8_2020-02-20.csv")
+cleanDiskUsage(compiled20200220_angular9, "prod", "Angular 9 upgrade", "2020-02-20", "/Users/laurahughes/GitHub/cvisb_data/notes/performance/diskusage_prod-angular9_2020-02-20.csv")
 
 
 # decoding the various module .js chunks

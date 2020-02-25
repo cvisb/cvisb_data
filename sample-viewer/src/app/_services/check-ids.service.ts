@@ -12,11 +12,14 @@ export class CheckIdsService {
   accepted_patterns: RegExp[] = [
     // "G-1234".match(/^(G\-)(\d\d\d\d)$/)
     /^(G\-)(\d\d\d\d)$/,
+    /^(G\d\d)\-(\d{6})$/, // public
 
     // "S-123".match(/^(S\-)(\d\d\d)$/)
     /^(S\-)(\d\d\d)$/,
+    /^(S\-)(\d{7})$/, // public
     // "C-123-4".match(/^(C\-)(\d\d\d)\-([1-4])$/)
-    /^(C\-)(\d\d\d)\-([1-4])$/
+    /^(C\-)(\d\d\d)\-([1-4])$/,
+    /^(C\-)(\d{7})$/, // public
   ];
 
   // Things that are commonly seen and convertable to an acceptable pattern.
@@ -69,6 +72,8 @@ export class CheckIdsService {
     // "S123".match(/^(S)(\d\d\d)$/)
     { pattern: /^(S)(\d\d\d)$/, message: "Adding hyphen", converter: this.padHyphenate, idxArr: null },
 
+    { pattern: /^(S)(\d{7})$/, message: "Adding hyphen", converter: this.padHyphenate, idxArr: null },
+
     // "S0123".match(/^(S)0(\d\d\d)$/)
     { pattern: /^(S)0(\d\d\d)$/, message: "Removing first 0 from ID, adding hyphen", converter: this.padHyphenate, idxArr: null },
 
@@ -102,6 +107,9 @@ export class CheckIdsService {
     // --- C-numbers ---
     // "C7-123-4".match(/^(C)(\d)-(\d\d\d\-\d)$/)
     { pattern: /^(C)(\d)-(\d\d\d\-\d)$/, message: "Removing visit code (?)", converter: this.removeVisitCode, idxArr: [1, 3, 2] },
+
+    { pattern: /^(C)(\d{7})$/, message: "Adding hyphen", converter: this.padHyphenate, idxArr: null },
+
   ]
 
 

@@ -59,7 +59,7 @@ export class UnknownCount {
 
 export class PatientSummary {
   total: number;
-  patientIDs: string[];
+  // patientIDs: string[];
   relatedIDs?: string[];
   patientTypes: ESFacetTerms[];
   patientOutcomes: ESFacetTerms[];
@@ -75,7 +75,7 @@ export class PatientSummary {
     let facet_obj = patients.facets;
     this.total = patients.total;
 
-    this.patientIDs = facet_obj["patientID.keyword"].terms.map((d: ESFacetTerms) => d.term);
+    // this.patientIDs = facet_obj["patientID.keyword"].terms.map((d: ESFacetTerms) => d.term);
     this.patientTypes = facet_obj["cohort.keyword"].terms;
     this.patientOutcomes = facet_obj["outcome.keyword"].terms;
     this.patientYears = facet_obj["infectionYear"].terms;

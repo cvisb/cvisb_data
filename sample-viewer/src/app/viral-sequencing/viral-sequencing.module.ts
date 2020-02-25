@@ -10,7 +10,6 @@ import { ViralSequencingComponent } from './viral-sequencing.component';
 
 // -- Modules --
 import { DatasetPageModule } from '../dataset-page/dataset-page.module';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { DownloadAlignedSequencesComponent } from './download-aligned-sequences/download-aligned-sequences.component';
 // import { CompareCohortsComponent } from './compare-cohorts/compare-cohorts.component'
@@ -26,7 +25,6 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
     ViralSequencingRoutingModule,
     DatasetPageModule,
     SvgIconModule,
-    NgSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],
