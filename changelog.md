@@ -4,10 +4,10 @@
 - `sudo npm install -g npm@latest`: update latest version of node from 6.4.1 to 6.13.7
 - `sudo npm install n -g`: install n to update node
 - `sudo n stable`: update node from 10.12 to 12.16.0
-
 - `ng update @angular/core@8 @angular/cli@8 --create-commits` : make sure v. 8 at latest
 - `ng update @angular/cli @angular/core --create-commits`: install v. 9
-- `ng update @angular/material --force`
+
+- `ng update @angular/material --force` // already up to date
 - `ng update @nguniversal/express-engine`
 - `ng update` --> `ng update rxjs`
 - `npm uninstall webpack-cli`
@@ -17,10 +17,6 @@
 rm -rf node_modules
 npm install
 ```
-- for some reason to get SSR to compile, had to move `server.ts` from the root directory to inside `/src` and update the references to that file in `angular.json`
-- new SSR error: "refused to set unsafe header cookie" via https://github.com/angular/angular/issues/15730#issuecomment-572992686 (XHR2 bypass)
-- committed, pushed to GH, pulled locally.
-- on average, .js bundles decreased by ~9%. looks like a big portion may be due to cross-use of modules; getting thrown into main.js since they have to be re-used. not sure if that can be worked around.
 
 
 ### v 0.3: 2020-02-12
