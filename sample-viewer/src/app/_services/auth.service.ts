@@ -46,6 +46,8 @@ export class AuthService {
     @Inject(DOCUMENT) private document: any
   ) {
     this.redirectUrlState$.subscribe(url => {
+      console.log("url changed")
+      console.log(url)
       this.redirectUrl = url;
     })
 
