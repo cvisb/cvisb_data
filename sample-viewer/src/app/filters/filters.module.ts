@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // --- modules ---
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -11,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { NgSelectModule } from '@ng-select/ng-select';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { RouterModule } from '@angular/router';
 // import { PipesModule } from '../pipes/pipes.module';
@@ -42,11 +42,11 @@ import { FilterableHistogramComponent } from './filterable-histogram/filterable-
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatChipsModule,
     MatIconModule,
     MatCheckboxModule,
     MatTooltipModule,

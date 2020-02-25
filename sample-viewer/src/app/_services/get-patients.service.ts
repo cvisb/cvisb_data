@@ -14,7 +14,7 @@ import { MyHttpClient } from './http-cookies.service';
 import { DateRangePipe } from "../_pipes/date-range.pipe";
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 
-import { flatMapDeep, groupBy, chain } from 'lodash';
+import { flatMapDeep, groupBy, chain, uniq } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class GetPatientsService {
   public patientsSummaryState$ = this.patientsSummarySubject.asObservable();
 
   // Array of variables to calculate the summary stats for.
-  summaryVar: string[] = ["patientID.keyword", "cohort.keyword", "outcome.keyword", "country.identifier.keyword", "infectionYear"];
+  summaryVar: string[] = ["cohort.keyword", "outcome.keyword", "country.identifier.keyword", "infectionYear"];
 
   constructor(
     public myhttp: MyHttpClient,
@@ -140,6 +140,26 @@ export class GetPatientsService {
       )
   }
 
+
+  getPatientIDs(): Observable<string[]> {
+    let params = new HttpParams()
+      .set("q", "__all__")
+      .set("fields", "alternateIdentifier");
+
+    return this.apiSvc.fetchAll('patient', params).pipe(
+      tap(d => console.log(d.slice(0,4))),
+      map((res: any) => {
+        let ids = uniq(flatMapDeep(res, d => d['alternateIdentifier']));
+        console.log(ids)
+        return ids;
+      }),
+      catchError(e => {
+        console.log(e);
+        return (of(e))
+      })
+    );
+  }
+
   /*
   Gets summary, facetted stats for patients
    */
@@ -170,9 +190,10 @@ export class GetPatientsService {
   }
 
   getAllPatientsSummary(): Observable<PatientSummary> {
-    return forkJoin([this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
-      map(([patientSummary, expts]) => {
-        patientSummary["experiments"] = expts;
+    return forkJoin([this.getPatientIDs(), this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
+       map(([patientIDs, patientSummary, expts]) => {
+         patientSummary["experiments"] = expts;
+         patientSummary["patientIDs"] = patientIDs;
 
         let years = patientSummary.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
         let minYear = Math.min(...years);
