@@ -1,4 +1,7 @@
 # Prod
+### 2020-05-20
+* synchronized public/private data
+
 ### 2020-02-20: Angular 9 install
 1. Pulled dev changes
 - `sudo npm install -g npm@latest`: update latest version of node from 6.4.1 to 6.13.7

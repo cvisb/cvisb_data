@@ -21,18 +21,12 @@ ALIGNMENTS = [
      "description": "Lassa virus L-Z curated alignment",
      "curated": True,
      "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2019.11.22.fasta"},
-    {"virus": "Lassa",
-     "segment": "L",
-     "filename": "LASV_L_Z_non_curated_2019.11.26.fasta",
-     "curated": False,
-     "description": "Lassa virus L-Z non-curated alignment",
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_non_curated_2019.11.26.fasta"},
     {"virus": "Ebola",
      "segment": None,
-     "filename": "EBOV_ORFS_2019.11.22.fasta",
+     "filename": "EBOV_ORFs_2020.06.12.fasta",
      "curated": True,
      "description": "Ebola virus curated alignment",
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFS_2019.11.22.fasta"}
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2020.06.12.fasta"}
 ]
 
 

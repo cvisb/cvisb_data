@@ -91,7 +91,7 @@
     - "@id":             xsd:string
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   schema:Enumeration:
     # Sierra Leone, as per Wikipedia: https://en.wikipedia.org/wiki/Subdivisions_of_Sierra_Leone
                           - province

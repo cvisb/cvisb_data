@@ -36,10 +36,11 @@ LVIRAL_VERSION = 0.2
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
-EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/clean_ebola_orfs_aln_2019.11.12.fasta"
-EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_public_2019.11.12.csv"
+EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_curated_2020.06.12.fasta"
+EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_non_curated_2020.06.12.fasta"
+EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.06.12.csv"
 EVIRAL_DATE = today
-EVIRAL_VERSION = 0.1
+EVIRAL_VERSION = 0.2
 EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
@@ -63,7 +64,7 @@ EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchI
 
 # for non-KGH patients: what info should be
 PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
-               "dateModified", "updatedBy", "cohort", "outcome", "country",
+               "dateModified", "updatedBy", "cohort", "outcome", "country", "countryName", "admin2", "admin3", "homeLocation",
                "infectionYear", "species", 'sourceFiles', 'correction',
                'publisher', 'citation']
 
@@ -80,8 +81,8 @@ DOWNLOADCOLS = ["name", "includedInDataset", "identifier", "contentUrl", "additi
 DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
             'evalDate', 'dischargeDate', 'daysOnset', 'infectionDate',
             "age", "gender", "countryName", "elisa", "issue"]
-DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
-            "issue"]
+# DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
+#             "issue"]
 
 #  [GENERAL PARAMS] --------------------------------------------------------------------------------------
 SAVEINIVIDUAL = False

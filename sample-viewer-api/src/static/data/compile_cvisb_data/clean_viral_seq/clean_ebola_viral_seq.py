@@ -10,7 +10,7 @@ alignment_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/clean_ebola_
 metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_public_2019.11.12.csv"
 
 
-def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
+def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
     # --- constants ---
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
@@ -22,7 +22,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
 
     # --- Initial checks ---
     dupe_patientID = md[md.duplicated(
-        subset=["patientID"], keep=False)]
+        subset=["patientID", "patient_timepoint"], keep=False)]
     if(len(dupe_patientID) > 0):
         helpers.log_msg(
             f"DATA ERROR: {len(dupe_patientID)} duplicate patient ids found in virus sequences:", verbose)
@@ -65,13 +65,16 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     md['cohort'] = virus
     md['alternateIdentifier'] = md.patientID.apply(helpers.listify)
     md['country'] = md.country_iso3.apply(helpers.getCountry)
+    md['admin2'] = md.admin2.apply(lambda x: cleanAdmin(x, 2))
+    md['admin3'] = md.admin3.apply(lambda x: cleanAdmin(x, 3))
+    md['admin4'] = md.admin4.apply(lambda x: cleanAdmin(x, 4))
+    md['homeLocation'] = md.apply(getHome, axis=1)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date
     md['species'] = md.host.apply(helpers.convertSpecies)
-    # Raphaelle using patient_timepoint as a binary if there are multiple measurements / patient
-    md['visitCode'] = None
-    # md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
+    # Patient timepoints
+    md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
     # Note: not technically true; if a KGH patient, could have patient / survivor data.
     # But-- since only uploading the non-KGH patient data, should be fine.
     md['hasPatientData'] = False
@@ -80,8 +83,8 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     # --- clean up experiment properties ---
     md['inAlignment'] = md.curated.apply(bool)
     md['cvisb_data'] = md.CViSB_data.apply(bool)
-    citation_dict = helpers.createCitationDict(md, "source PMID")
-    md['citation'] = md["source PMID"].apply(
+    citation_dict = helpers.createCitationDict(md, "source_pmid")
+    md['citation'] = md["source_pmid"].apply(
         lambda x: helpers.lookupCitation(x, citation_dict))
     # Make sure arrays are arrays
     md['citation'] = md.citation.apply(helpers.listify)
@@ -105,7 +108,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
     md['contentUrlIdentifier'] = md.accession
 
     # --- Merge together data and metadata ---
-    seqs = getDNAseq(alignment_file, virus)
+    seqs = getDNAseq(alignment_file, uncurated_file, virus)
 
     merged = pd.merge(md, seqs, on="sequenceID", how="outer", indicator=True)
     no_seq = merged[merged._merge == "left_only"]
@@ -120,10 +123,12 @@ def clean_ebola_viral_seq(export_dir, alignment_file, metadata_file, expt_cols, 
         helpers.log_msg("-" * 50, verbose)
 
     # Make sure arrays are arrays
-    merged['data'] = merged.data.apply(helpers.listify)
+    # merged['data'] = merged.data.apply(helpers.listify)
 
     # --- partition data to different endpoints ---
     patients = md.loc[~ md.KGH_id, patient_cols]
+    # de-duplicate patients; some patients are timepoints of the same person
+    patients.drop_duplicates(subset=["patientID", "cohort", "outcome", "countryName", "infectionYear", "species"], inplace = True)
     samples = md.loc[~ md.KGH_id, sample_cols]
     experiments = merged[exptCols]
 
@@ -159,17 +164,63 @@ def getExptID(row, virus):
         expt_stub = "EBOV_seq_"
     if(virus == "Lassa"):
         expt_stub = "LASV_seq_"
-    return(expt_stub + row.patientID)
+    return(expt_stub + row.patientID + row.visitCode)
 
-def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
+def getDNAseq(alignment_file, uncurated_alignment, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
+    if(uncurated_alignment is not None):
+        uncurated_seq = list(SeqIO.parse(uncurated_alignment, "fasta"))
+    else:
+        uncurated_seq = list()
 
-    df = pd.DataFrame()
+    # curated sequences
+    curated = pd.DataFrame(columns=['sequenceID', 'curated'])
     for seq in all_seq:
         seq_obj = [{
         seq_type: str(seq.seq).upper(),
         "@type": data_type,
         "virus": virus,
+        "curated": True,
         "virusSegment": segment}]
-        df = df.append(pd.DataFrame({'sequenceID': seq.id, 'data': seq_obj}))
-    return(df)
+        curated = curated.append(pd.DataFrame({'sequenceID': seq.id, 'curated': seq_obj}))
+
+    uncurated = pd.DataFrame(columns=['sequenceID', 'uncurated'])
+    for seq in uncurated_seq:
+        seq_obj = [{
+        seq_type: str(seq.seq).upper(),
+        "@type": data_type,
+        "virus": virus,
+        "curated": False,
+        "virusSegment": segment}]
+        uncurated = uncurated.append(pd.DataFrame({'sequenceID': seq.id, 'uncurated': seq_obj}))
+
+    # Merge together curated and uncurated
+    df = pd.merge(curated, uncurated, how="outer", on="sequenceID", indicator=True)
+    df['data'] = df.apply(combineSeqs, axis=1)
+    cols2return = ['sequenceID', 'data']
+    return(df[cols2return])
+
+def combineSeqs(row):
+    if(row.uncurated == row.uncurated):
+        if(row.curated == row.curated):
+            return([row.curated, row.uncurated])
+        else:
+            return([row.uncurated])
+    else:
+        return([row.curated])
+
+
+def cleanAdmin(location, admin_level):
+    if(location==location):
+        loc_clean = location.replace("_", " ").title()
+        return( {'administrativeUnit': admin_level,'name': loc_clean})
+
+def getHome(row):
+    arr = [row.country]
+    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+        arr.append(row.admin2)
+    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
+        arr.append(row.admin3)
+    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
+        arr.append(row.admin4)
+    return(arr)
