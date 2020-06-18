@@ -108,7 +108,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['contentUrlIdentifier'] = md.accession
 
     # --- Merge together data and metadata ---
-    seqs = getDNAseq(alignment_file, virus)
+    seqs = getDNAseq(alignment_file, uncurated_file, virus)
 
     merged = pd.merge(md, seqs, on="sequenceID", how="outer", indicator=True)
     no_seq = merged[merged._merge == "left_only"]
@@ -123,7 +123,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
         helpers.log_msg("-" * 50, verbose)
 
     # Make sure arrays are arrays
-    merged['data'] = merged.data.apply(helpers.listify)
+    # merged['data'] = merged.data.apply(helpers.listify)
 
     # --- partition data to different endpoints ---
     patients = md.loc[~ md.KGH_id, patient_cols]
@@ -166,18 +166,48 @@ def getExptID(row, virus):
         expt_stub = "LASV_seq_"
     return(expt_stub + row.patientID + row.visitCode)
 
-def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
+def getDNAseq(alignment_file, uncurated_alignment, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
+    if(uncurated_alignment is not None):
+        uncurated_seq = list(SeqIO.parse(uncurated_alignment, "fasta"))
+    else:
+        uncurated_seq = list()
 
-    df = pd.DataFrame()
+    # curated sequences
+    curated = pd.DataFrame(columns=['sequenceID', 'curated'])
     for seq in all_seq:
         seq_obj = [{
         seq_type: str(seq.seq).upper(),
         "@type": data_type,
         "virus": virus,
+        "curated": True,
         "virusSegment": segment}]
-        df = df.append(pd.DataFrame({'sequenceID': seq.id, 'data': seq_obj}))
-    return(df)
+        curated = curated.append(pd.DataFrame({'sequenceID': seq.id, 'curated': seq_obj}))
+
+    uncurated = pd.DataFrame(columns=['sequenceID', 'uncurated'])
+    for seq in uncurated_seq:
+        seq_obj = [{
+        seq_type: str(seq.seq).upper(),
+        "@type": data_type,
+        "virus": virus,
+        "curated": False,
+        "virusSegment": segment}]
+        uncurated = uncurated.append(pd.DataFrame({'sequenceID': seq.id, 'uncurated': seq_obj}))
+
+    # Merge together curated and uncurated
+    df = pd.merge(curated, uncurated, how="outer", on="sequenceID", indicator=True)
+    df['data'] = df.apply(combineSeqs, axis=1)
+    cols2return = ['sequenceID', 'data']
+    return(df[cols2return])
+
+def combineSeqs(row):
+    if(row.uncurated == row.uncurated):
+        if(row.curated == row.curated):
+            return([row.curated, row.uncurated])
+        else:
+            return([row.uncurated])
+    else:
+        return([row.curated])
 
 
 def cleanAdmin(location, admin_level):
