@@ -39,7 +39,7 @@ parser.add_argument("--types", "-t", required=False,
                     help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-virus-seq', 'ebola-virus-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
                     type=str, default=["patients", "hla", "lassa-virus-seq", "systems-serology"])
                     # type=str, default=["patients", "hla", "lassa-virus-seq", "ebola-virus-seq", "systems-serology"])
-parser.add_argument('--verbose', '-v', default=False, action='store_false', help='whether to print log file to the console')
+parser.add_argument('--verbose', '-v', default=True, action='store_false', help='whether to print log file to the console')
 
 
 """

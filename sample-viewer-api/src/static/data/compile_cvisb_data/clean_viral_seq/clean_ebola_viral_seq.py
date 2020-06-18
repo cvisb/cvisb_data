@@ -65,13 +65,16 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['cohort'] = virus
     md['alternateIdentifier'] = md.patientID.apply(helpers.listify)
     md['country'] = md.country_iso3.apply(helpers.getCountry)
+    md['admin2'] = md.admin2.apply(lambda x: cleanAdmin(x, 2))
+    md['admin3'] = md.admin3.apply(lambda x: cleanAdmin(x, 3))
+    md['admin4'] = md.admin4.apply(lambda x: cleanAdmin(x, 4))
+    md['homeLocation'] = md.apply(getHome, axis=1)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date
     md['species'] = md.host.apply(helpers.convertSpecies)
-    # Raphaelle using patient_timepoint as a binary if there are multiple measurements / patient
-    md['visitCode'] = None
-    # md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
+    # Patient timepoints
+    md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
     # Note: not technically true; if a KGH patient, could have patient / survivor data.
     # But-- since only uploading the non-KGH patient data, should be fine.
     md['hasPatientData'] = False
@@ -159,7 +162,7 @@ def getExptID(row, virus):
         expt_stub = "EBOV_seq_"
     if(virus == "Lassa"):
         expt_stub = "LASV_seq_"
-    return(expt_stub + row.patientID)
+    return(expt_stub + row.patientID + row.visitCode)
 
 def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
@@ -173,3 +176,20 @@ def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_
         "virusSegment": segment}]
         df = df.append(pd.DataFrame({'sequenceID': seq.id, 'data': seq_obj}))
     return(df)
+
+"fd_fds_fds".replace("_", " ").title()
+
+def cleanAdmin(location, admin_level):
+    if(location==location):
+        loc_clean = location.replace("_", " ").title()
+        return( {'administrativeUnit': admin_level,'name': loc_clean})
+
+def getHome(row):
+    arr = [row.country]
+    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+        arr.append(row.admin2)
+    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
+        arr.append(row.admin3)
+    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
+        arr.append(row.admin4)
+    return(arr)

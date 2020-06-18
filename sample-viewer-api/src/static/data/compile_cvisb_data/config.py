@@ -64,7 +64,7 @@ EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchI
 
 # for non-KGH patients: what info should be
 PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
-               "dateModified", "updatedBy", "cohort", "outcome", "country",
+               "dateModified", "updatedBy", "cohort", "outcome", "country", "admin2", "admin3", "homeLocation",
                "infectionYear", "species", 'sourceFiles', 'correction',
                'publisher', 'citation']
 
@@ -81,8 +81,8 @@ DOWNLOADCOLS = ["name", "includedInDataset", "identifier", "contentUrl", "additi
 DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
             'evalDate', 'dischargeDate', 'daysOnset', 'infectionDate',
             "age", "gender", "countryName", "elisa", "issue"]
-DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
-            "issue"]
+# DICTCOLS = ["patientID", "gID", "sID", "publicGID", "publicSID", "cohort", "outcome", "alternateIdentifier",
+#             "issue"]
 
 #  [GENERAL PARAMS] --------------------------------------------------------------------------------------
 SAVEINIVIDUAL = False
