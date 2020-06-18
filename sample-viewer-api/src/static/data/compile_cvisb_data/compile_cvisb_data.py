@@ -16,6 +16,7 @@ import json
 import logging
 from helpers import setupLogging, log_msg, getSource, listify
 from datetime import datetime
+from math import ceil
 
 # --- cleanup modules ---
 import clean_viral_seq as viralseq
@@ -38,7 +39,7 @@ parser.add_argument("--types", "-t", required=False,
                     help="Which source types should be pulled in. Should correspond to the dataset IDs: one of 'patients', 'hla', 'lassa-virus-seq', 'ebola-virus-seq', 'systems-serology'. Multiple types can be specified by separating by a space, and by default all data will be combined.",  nargs="*",
                     type=str, default=["patients", "hla", "lassa-virus-seq", "systems-serology"])
                     # type=str, default=["patients", "hla", "lassa-virus-seq", "ebola-virus-seq", "systems-serology"])
-parser.add_argument('--verbose', '-v', default=False, action='store_true', help='whether to print log file to the console')
+parser.add_argument('--verbose', '-v', default=False, action='store_false', help='whether to print log file to the console')
 
 
 """
@@ -84,7 +85,7 @@ Compiles together all data after they have been cleaned, compiled, and coerced i
 the CViSB data schema format.  After each cleanup function has been called, the data
 are saved as a .json to be uploaded.
 """
-def compile_data(args):
+def compile_data(args, chunk_size=2000):
     config.VERBOSE = args.verbose
     log_msg(f"{datetime.today()}: starting CViSB data cleanup", args.verbose)
     # empty arrays to hold results
@@ -144,10 +145,13 @@ def compile_data(args):
             combined['dataset'], f"{config.EXPORTDIR}/datasets/CViSB__dataset_ALL_{config.today}.json")
         saveJson(combined['datadownload'],
                  f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload_ALL_{config.today}.json")
-        saveJson(combined['experiment'].iloc[0:2500],
+        if(len(combined['experiment']) > chunk_size):
+            for i in range(0, ceil(len(combined["experiment"])/chunk_size)):
+                saveJson(combined['experiment'].iloc[i*chunk_size:(i+1)*chunk_size],
+                         f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}_{i}.json")
+        else:
+            saveJson(combined['experiment'],
                  f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}.json")
-        saveJson(combined['experiment'].iloc[2500:],
-                 f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}_2.json")
 
     # --- save a sample of the data ---
     sample_n = args.export_sample
