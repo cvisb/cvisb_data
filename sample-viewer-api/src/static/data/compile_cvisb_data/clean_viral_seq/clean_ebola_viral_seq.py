@@ -22,7 +22,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
 
     # --- Initial checks ---
     dupe_patientID = md[md.duplicated(
-        subset=["patientID"], keep=False)]
+        subset=["patientID", "patient_timepoint"], keep=False)]
     if(len(dupe_patientID) > 0):
         helpers.log_msg(
             f"DATA ERROR: {len(dupe_patientID)} duplicate patient ids found in virus sequences:", verbose)
@@ -127,6 +127,8 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
 
     # --- partition data to different endpoints ---
     patients = md.loc[~ md.KGH_id, patient_cols]
+    # de-duplicate patients; some patients are timepoints of the same person
+    patients.drop_duplicates(subset=["patientID", "cohort", "outcome", "countryName", "infectionYear", "species"], inplace = True)
     samples = md.loc[~ md.KGH_id, sample_cols]
     experiments = merged[exptCols]
 
@@ -177,7 +179,6 @@ def getDNAseq(alignment_file, virus, seq_type="DNAsequence", segment=None, data_
         df = df.append(pd.DataFrame({'sequenceID': seq.id, 'data': seq_obj}))
     return(df)
 
-"fd_fds_fds".replace("_", " ").title()
 
 def cleanAdmin(location, admin_level):
     if(location==location):

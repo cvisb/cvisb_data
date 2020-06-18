@@ -64,7 +64,7 @@ EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchI
 
 # for non-KGH patients: what info should be
 PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
-               "dateModified", "updatedBy", "cohort", "outcome", "country", "admin2", "admin3", "homeLocation",
+               "dateModified", "updatedBy", "cohort", "outcome", "country", "countryName", "admin2", "admin3", "homeLocation",
                "infectionYear", "species", 'sourceFiles', 'correction',
                'publisher', 'citation']
 
