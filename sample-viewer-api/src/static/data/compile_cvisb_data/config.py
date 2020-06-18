@@ -36,10 +36,11 @@ LVIRAL_VERSION = 0.2
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
-EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/clean_ebola_orfs_aln_2019.11.12.fasta"
-EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_public_2019.11.12.csv"
+EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_curated_2020.06.12.fasta"
+EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_non_curated_2020.06.12.fasta"
+EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.06.12.csv"
 EVIRAL_DATE = today
-EVIRAL_VERSION = 0.1
+EVIRAL_VERSION = 0.2
 EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
