@@ -568,7 +568,15 @@ prepUpload(endpoint:string, uniqueID: string, data:Object[]): Observable<any> {
   .set("fields", "alternateIdentifier")
 
   return(this.fetchAll(endpoint, qParams).pipe(
-    tap(d => console.log(d))
+    map(ids => {
+      data.forEach(d => {
+        let filtered = ids.filter(id => id.alternateIdentifier.includes(d[uniqueID]));
+        if(filtered.length) {
+        d["_id"] = filtered[0]["_id"];
+        }
+
+      })
+    })
   ))
 }
 

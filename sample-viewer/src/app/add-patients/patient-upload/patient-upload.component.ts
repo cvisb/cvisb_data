@@ -102,7 +102,7 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded; sending data to the database.  Be patient! This can take a few minutes"
+        this.uploadResponse = "File uploaded; review and then upload";
 
         this.data2upload = this.prepData(reader.result);
         console.log(this.data2upload )
@@ -122,7 +122,8 @@ export class PatientUploadComponent implements OnInit {
   }
 
   uploadData(){
-    console.log(this.data2upload)
+    console.log(this.data2upload);
+    this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
     this.apiSvc.putPiecewise("patient", this.data2upload, this.uploadSize).subscribe(
       responses => {
         console.log(responses)

@@ -7,8 +7,7 @@
 
   <div class="client-responses">
 
-    <button type="button" mat-raised-button color="warn" (click)="uploadData()">Upload data</button>
-    <!-- <button type="button" mat-raised-button color="warn" (click)="uploadData()" *ngIf="data2upload">Upload data</button> -->
+    <button type="button" mat-raised-button color="warn" [disabled]="!data2upload" (click)="uploadData()">Upload data</button>
 
     <ng-container *ngIf="uploadResponse">
       <h1>{{ uploadResponse }}</h1>
