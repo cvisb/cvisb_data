@@ -1,4 +1,5 @@
 import pandas as pd
+from .logging import log_msg
 # df = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12.csv")
 # sl = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/geo/SLE/sle_adm4_UNOCHA.csv")
 # df.Chiefdom.apply(lambda x: str(x).title()).value_counts()
@@ -92,7 +93,7 @@ def cleanDistrict(district):
 #
 # df[df.District == "Grand Bassa"]
 
-def getCountry(countryID):
+def getCountry(countryID, verbose=True):
     if((countryID == "SL") | (countryID == "SLE") | (countryID == "Sierra Leone")):
         return({
         "@type": "Country",
@@ -142,7 +143,64 @@ def getCountry(countryID):
         "identifier": "LR",
         "url": "https://www.iso.org/obp/ui/#iso:code:3166:LR"
         })
+    elif((countryID == "LR") | (countryID == "ITA") | (countryID == "Italy")):
+        return({
+        "@type": "Country",
+        "name": "Italy",
+        "identifier": "IT",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:IT"
+        })
+    elif((countryID == "US") | (countryID == "USA") | (countryID == "United States") | (countryID == "United States of America")):
+        return({
+        "@type": "Country",
+        "name": "United States",
+        "identifier": "US",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:US"
+        })
+    elif((countryID == "CH") | (countryID == "CHE") | (countryID == "Switzerland")):
+        return({
+        "@type": "Country",
+        "name": "Switzerland",
+        "identifier": "CH",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:CH"
+        })
+    elif((countryID == "DE") | (countryID == "DEU") | (countryID == "Germany")):
+        return({
+        "@type": "Country",
+        "name": "Germany",
+        "identifier": "DE",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:DE"
+        })
+    elif((countryID == "GB") | (countryID == "GBR") | (countryID == "United Kingdom") | (countryID == "UK") | (countryID == "U.K.") | (countryID == "Great Britain")):
+        return({
+        "@type": "Country",
+        "name": "United Kingdom",
+        "identifier": "GB",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:GB"
+        })
+    elif((countryID == "CD") | (countryID == "COD") | (countryID == "DRC") | (countryID == "Democratic Republic of the Congo")):
+        return({
+        "@type": "Country",
+        "name": "Democratic Republic of the Congo",
+        "identifier": "CD",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:CD"
+        })
+    elif((countryID == "CG") | (countryID == "COG") | (countryID == "Republic of the Congo") | (countryID == "the Republic of the Congo")):
+        return({
+        "@type": "Country",
+        "name": "Republic of the Congo",
+        "identifier": "CG",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:CG"
+        })
+    elif((countryID == "GA") | (countryID == "GAB") | (countryID == "Gabon")):
+        return({
+        "@type": "Country",
+        "name": "Gabon",
+        "identifier": "GA",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:GA"
+        })
     else:
+        log_msg(f"WARNING: no country found for location: {countryID}", verbose)
         return(pd.np.nan)
 
 def getCountryName(countryID):

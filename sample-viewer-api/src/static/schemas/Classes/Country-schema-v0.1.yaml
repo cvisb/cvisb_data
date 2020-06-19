@@ -54,6 +54,13 @@
                           - TG
                           - CI
                           - US
+                          - IT
+                          - CD
+                          - CH
+                          - DE
+                          - GB
+                          - CG
+                          - GA
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property

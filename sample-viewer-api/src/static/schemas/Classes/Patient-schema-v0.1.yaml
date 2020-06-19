@@ -269,7 +269,7 @@
 # geographic location (country)
 - "@id":                 cvisb:country
   "@type":               rdf:Property
-  rdfs:comment:          Country where Patient lives
+  rdfs:comment:          Country where Patient was exposed to the virus
   rdfs:label:            Country
   schema:domainIncludes:
     - "@id":             cvisb:Patient
