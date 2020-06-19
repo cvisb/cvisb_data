@@ -25,6 +25,8 @@ export class PatientUploadComponent implements OnInit {
   dateDict: Object[];
   missingReq: Object[];
   previewData: Object[];
+  data2upload: Object[];
+  uploadSize: number;
   dataLength: number;
   fileKB: number;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
@@ -102,32 +104,35 @@ export class PatientUploadComponent implements OnInit {
       reader.onload = (e) => {
         this.uploadResponse = "File uploaded; sending data to the database.  Be patient! This can take a few minutes"
 
-        let data = this.prepData(reader.result);
-        console.log(data)
+        this.data2upload = this.prepData(reader.result);
+        console.log(this.data2upload )
 
-        let ids = data.map(d => d.privatePatientID);
-
-        let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
+        this.uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
         // double check upload size is greater than 0.
-        uploadSize = uploadSize === 0 ? 1 : uploadSize;
+        this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
-
-        this.apiSvc.putPiecewise("patient", data, uploadSize).subscribe(
-          responses => {
-            console.log(responses)
-
-            let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, 'patients');
-
-            this.uploadResponse = result.uploadResponse;
-            this.errorMsg = result.errorMsg;
-            this.errorObj = result.errorObj;
-          })
-
+        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(responses => {
+          console.log(responses)
+        })
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
       }
     }
 
+  }
+
+  uploadData(){
+    console.log(this.data2upload)
+    this.apiSvc.putPiecewise("patient", this.data2upload, this.uploadSize).subscribe(
+      responses => {
+        console.log(responses)
+
+        let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, 'patients');
+
+        this.uploadResponse = result.uploadResponse;
+        this.errorMsg = result.errorMsg;
+        this.errorObj = result.errorObj;
+      })
   }
 
 

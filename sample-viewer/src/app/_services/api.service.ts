@@ -468,6 +468,7 @@ export class ApiService {
     }
   }
 
+
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
@@ -555,6 +556,19 @@ export class ApiService {
     //
     // return (of(results));
   }
+
+// Function to look up IDs and replace
+prepUpload(endpoint:string, uniqueID: string, data:Object[]) {
+  const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
+  const qParams = new HttpParams()
+  .set("q", "__all__")
+  .set("patientID", ids)
+  .set("fields", "alternateIdentifier")
+
+  return(this.fetchAll(endpoint, qParams).pipe(
+    tap(d => console.log(d))
+  ))
+}
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {

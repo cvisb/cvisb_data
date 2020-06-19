@@ -7,6 +7,8 @@
 
   <div class="client-responses">
 
+    <button type="button" mat-raised-button color="warn" (click)="uploadData()" *ngIf="data2upload">Upload data</button>
+
     <ng-container *ngIf="uploadResponse">
       <h1>{{ uploadResponse }}</h1>
       <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
