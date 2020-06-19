@@ -473,6 +473,7 @@ export class ApiService {
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
+    console.log("PUT REQUEST")
 
     const tagError = tag => catchError(error => {
       error.tag = tag;
@@ -558,7 +559,8 @@ export class ApiService {
   }
 
 // Function to look up IDs and replace
-prepUpload(endpoint:string, uniqueID: string, data:Object[]) {
+prepUpload(endpoint:string, uniqueID: string, data:Object[]): Observable<any> {
+  console.log("PREP UPLOAD")
   const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
   const qParams = new HttpParams()
   .set("q", "__all__")
