@@ -26,6 +26,7 @@ export class PatientUploadComponent implements OnInit {
   missingReq: Object[];
   previewData: Object[];
   data2upload: Object[];
+  dupes: String[];
   uploadSize: number;
   dataLength: number;
   fileKB: number;
@@ -111,8 +112,9 @@ export class PatientUploadComponent implements OnInit {
         // double check upload size is greater than 0.
         this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
-        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(responses => {
-          console.log(responses)
+        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+          console.log(dupes)
+          this.dupes = dupes;
         })
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";

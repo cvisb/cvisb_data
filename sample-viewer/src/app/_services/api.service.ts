@@ -569,13 +569,19 @@ prepUpload(endpoint:string, uniqueID: string, data:Object[]): Observable<any> {
 
   return(this.fetchAll(endpoint, qParams).pipe(
     map(ids => {
+      let duplicateIDs = [];
       data.forEach(d => {
         let filtered = ids.filter(id => id.alternateIdentifier.includes(d[uniqueID]));
         if(filtered.length) {
         d["_id"] = filtered[0]["_id"];
         }
 
+        if(filtered.length > 1) {
+          duplicateIDs.push(d[uniqueID])
+        }
       })
+
+      return(duplicateIDs)
     })
   ))
 }
