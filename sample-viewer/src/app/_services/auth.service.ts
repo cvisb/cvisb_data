@@ -46,8 +46,6 @@ export class AuthService {
     @Inject(DOCUMENT) private document: any
   ) {
     this.redirectUrlState$.subscribe(url => {
-      console.log("url changed")
-      console.log(url)
       this.redirectUrl = url;
     })
 
@@ -80,7 +78,7 @@ export class AuthService {
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
       }).subscribe((r) => {
-        console.log(r)
+        // console.log(r)
         this.user = r.body;
         this.userSubject.next(this.user);
 
