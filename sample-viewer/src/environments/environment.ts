@@ -8,8 +8,10 @@ export const environment = {
   //host_url: "https://data.cvisb.org",
   //api_url: "https://data.cvisb.org"
   // api_url: "http://18.235.94.96"
-  host_url: "https://dev.cvisb.org",
-  api_url: "https://dev.cvisb.org",
+  host_url: "https://3.88.83.112/",
+  //host_url: "https://dev.cvisb.org",
+  //api_url: "https://dev.cvisb.org",
+  api_url: "https://3.88.83.112/",
   GA_tracking: "UA-136260805-2"
 };
 
