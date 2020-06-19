@@ -1,13 +1,14 @@
 <div class="upload-button" *ngIf="user.write">
   <!-- Dummy for styling -->
-  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
+  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list!</button>
   <!-- Actual workhorse to upload the data on the client side -->
   <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
 
 
   <div class="client-responses">
 
-    <button type="button" mat-raised-button color="warn" (click)="uploadData()" *ngIf="data2upload">Upload data</button>
+    <button type="button" mat-raised-button color="warn" (click)="uploadData()">Upload data</button>
+    <!-- <button type="button" mat-raised-button color="warn" (click)="uploadData()" *ngIf="data2upload">Upload data</button> -->
 
     <ng-container *ngIf="uploadResponse">
       <h1>{{ uploadResponse }}</h1>
