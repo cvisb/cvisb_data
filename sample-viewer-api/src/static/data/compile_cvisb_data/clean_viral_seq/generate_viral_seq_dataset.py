@@ -33,7 +33,7 @@ def get_viralseq_dataset(dateModified, downloads, metadata, version, datasetViru
         ds["identifier"] = "lassa-virus-seq"
         ds["name"] = "Lassa Virus Sequencing"
         ds["variableMeasured"] = ["Lassa virus sequence"]
-        ds["description"] = "Virus sequencing of Lassa-infected humans and rodents from Nigeria, Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae."
+        ds["description"] = "Virus sequencing of Lassa-infected humans and rodents from Nigeria, Sierra Leone, Liberia, Guinea, and other countries. Virus sequence data will be used to determine potential correlations between the infecting virus genome and patient survival, disease severity and development of sequelae. When multiple sequences are available for one patient, the virus has been sequenced from that patient at several points in time."
         ds["keywords"] = ["virus sequencing", "Lassa", "Lassa virus", "LASV"]
 
     # credit
