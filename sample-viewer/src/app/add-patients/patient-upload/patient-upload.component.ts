@@ -32,6 +32,7 @@ export class PatientUploadComponent implements OnInit {
   uploadSize: number;
   dataLength: number;
   fileKB: number;
+  uploading: Boolean = false;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   constructor(
@@ -68,6 +69,7 @@ export class PatientUploadComponent implements OnInit {
     this.errorMsg = null;
     this.errorObj = null;
     this.uploadProgress = 0;
+    this.uploading = false;
 
     if (fileList.length > 0) {
 
@@ -129,6 +131,7 @@ export class PatientUploadComponent implements OnInit {
   }
 
   uploadData(){
+    this.uploading = true;
     console.log(this.data2upload);
     this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
     this.apiSvc.putPiecewise("patient", this.data2upload, this.uploadSize).subscribe(
