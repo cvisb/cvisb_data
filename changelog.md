@@ -1,4 +1,17 @@
 # Prod
+### 2020-06-19
+* updated Ebola virus sequence data
+  - removed Ebola virus dataset, data downloads, experiment
+  - uploaded new Ebola virus dataset, data downloads, experiment
+* rebuilt schema
+* updated Ebola virus sequence new patient data
+  - Added non-KGH patients; replaced previous entries for the existing IDs
+* updated release notes on data catalog
+  - removed data catalog
+  - added new data catalog
+* synchronized public/private data
+* updated upload scripts to look for existing IDs, so data can be replaced if it already exists.
+
 ### 2020-05-20
 * synchronized public/private data
 
