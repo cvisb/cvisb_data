@@ -18,10 +18,71 @@
         <h5>{{ panelOpenState ? "Alignment methodology" : "View alignment methodology" }}</h5>
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="methodology-description">Sequences with lower quality (manual curation) and incomplete sequences (<95% of (GP+NP) or (Z+L) ORFs length) are excluded from the curated alignment. Remaining sequences are trimmed to their coding regions, codon aligned using
-        mafft and inspected manually. ORFs are arranged in sense orientation as follows: S segment: NP -NNNNNN- GP L segment: L -NNNNNN- Z A maximum likelihood (ML) phylogeny is reconstructed with RAxML using the general time-reversible (GTR)
-        nucleotide substitution model, gamma-distributed rates among sites and bootstrap resampling with 500 replicates.
+    <div class="methodology-description" *ngIf="includedInDataset == 'ebola-virus-seq'">
+      <div>We periodically combine genomic sequences generated as part of our consortium with publicly available sequences. Our curated alignments do not include:
       </div>
-      </mat-expansion-panel>
+      <ul>
+        <li>
+          laboratory strains (adapted, passaged, recombinant, antiviral & vaccine experiments)
+        </li>
+        <li>sequences without a timestamp</li>
+        <li>subsequent timepoints, if multiple timepoints are available</li>
+        <li>duplicates (when more than one sequence is available for a single strain)</li>
 
+      </ul>
+      <div>
+        Remaining sequences are trimmed to their coding regions, codon aligned using MAFFT and inspected manually. At this step we discard:
+      </div>
+      <ul>
+        <li>
+          low quality sequences (manual curation)
+        </li>
+        <li>
+          incomplete sequences (<95% of (NP+VP35+VP40+GP+VP30+VP24+L) ORFs length) </li> </ul> <div>
+            <div>
+              ORFs are arranged in sense orientation as follows:
+            </div>
+            <div>
+              Ebola: NP -NNN- VP35 -NNN- VP40 -NNN- GP -NNN- VP30 -NNN- VP24 -NNN- L
+            </div>
     </div>
+</div>
+<div class="methodology-description" *ngIf="includedInDataset == 'lassa-virus-seq'">
+  <div>We periodically combine genomic sequences generated as part of our consortium with publicly available sequences. Our curated alignments do not include:</div>
+  <ul>
+    <li>
+      laboratory strains (adapted, passaged, recombinant, antiviral & vaccine experiments)
+    </li>
+    <li>
+      sequences without a timestamp
+    </li>
+    <li>
+      subsequent timepoints, if multiple timepoints are available
+    </li>
+    <li>
+      duplicates (when more than one sequence is available for a single strain)
+    </li>
+    <li>
+      sequences from identified hospital epidemics
+    </li>
+  </ul>
+  <div>
+    Remaining sequences are trimmed to their coding regions, codon aligned using MAFFT and inspected manually. At this step we discard:
+  </div>
+  <ul>
+    <li>
+      low quality sequences (manual curation)
+    </li>
+    <li>
+      incomplete sequences (<95% of (GP+NP) or (Z+L) ORFs length) </li> </ul> <div>
+        ORFs are arranged in sense orientation as follows:
+</div>
+<div>
+  Lassa S segment: NP -NNN- GP
+</div>
+<div>
+  Lassa L segment: L -NNN- Z
+</div>
+</div>
+</mat-expansion-panel>
+</div>

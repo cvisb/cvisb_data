@@ -138,13 +138,19 @@ def compile_data(args, chunk_size=300):
     # --- save jsons ---
     if(not args.nosave):
         saveJson(
-            combined['patient'], f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}.json")
-        saveJson(
             combined['sample'], f"{config.EXPORTDIR}/samples/CViSB__sample_ALL_{config.today}.json")
         saveJson(
             combined['dataset'], f"{config.EXPORTDIR}/datasets/CViSB__dataset_ALL_{config.today}.json")
         saveJson(combined['datadownload'],
                  f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload_ALL_{config.today}.json")
+
+        if(len(combined['patient']) > chunk_size):
+            for i in range(0, ceil(len(combined["patient"])/chunk_size)):
+                saveJson(combined['patient'].iloc[i*chunk_size:(i+1)*chunk_size],
+                         f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}_{i}.json")
+        else:
+            saveJson(combined['patient'], f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}.json")
+
         if(len(combined['experiment']) > chunk_size):
             for i in range(0, ceil(len(combined["experiment"])/chunk_size)):
                 saveJson(combined['experiment'].iloc[i*chunk_size:(i+1)*chunk_size],

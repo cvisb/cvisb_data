@@ -70,6 +70,9 @@ export class PatientUploadComponent implements OnInit {
     this.errorObj = null;
     this.uploadProgress = 0;
     this.uploading = false;
+    this.dupes = [];
+    this.newIDs = [];
+    this.replacementIDs = [];
 
     if (fileList.length > 0) {
 
@@ -107,7 +110,7 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded; review and then upload";
+        this.uploadResponse = "File uploaded; review the new and replacement patient IDs and then upload";
 
         this.data2upload = this.prepData(reader.result);
         console.log(this.data2upload )
