@@ -23,13 +23,13 @@
       <p>
         These patients already exist in the database. They will be overwritten.
       </p>
-      <div *ngFor="let item of data2upload.filter(d => d._id)">
-        {{item.patientID}}
+      <div *ngFor="let id of replacementIDs">
+        {{id}}
       </div>
 
       <h5>New IDs to add:</h5>
-      <div *ngFor="let item of data2upload.filter(d => !d._id)">
-        {{item.patientID}}
+      <div *ngFor="let id of newIDs">
+        {{id}}
       </div>
     </ng-container>
 
