@@ -76,15 +76,15 @@
   owl:cardinality:       one
   marginality:           recommended
   authenticated:         false
-  schema:Enumeration:
-                          - https://www.iso.org/obp/ui/#iso:code:3166:SL
-                          - https://www.iso.org/obp/ui/#iso:code:3166:NG
-                          - https://www.iso.org/obp/ui/#iso:code:3166:LR
-                          - https://www.iso.org/obp/ui/#iso:code:3166:GN
-                          - https://www.iso.org/obp/ui/#iso:code:3166:US
-                          - https://www.iso.org/obp/ui/#iso:code:3166:ML
-                          - https://www.iso.org/obp/ui/#iso:code:3166:CI
-                          - https://www.iso.org/obp/ui/#iso:code:3166:TG
+  # schema:Enumeration:
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:SL
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:NG
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:LR
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:GN
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:US
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:ML
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:CI
+  #                         - https://www.iso.org/obp/ui/#iso:code:3166:TG
 
 - "@id":                 cvisb:name
   "@type":               rdf:Property
@@ -109,6 +109,12 @@
                           - Mali
                           - "Cote d'Ivoire"
                           - United States
+                          - Germany
+                          - Gabon
+                          - United Kingdom
+                          - Italy
+                          - Switzerland
+                          - Democratic Republic of the Congo
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
