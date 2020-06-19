@@ -1,4 +1,7 @@
 @import '../../../sass/material-theme.scss';
+.btn-group {
+  display: flex;
+}
 
 .progress-bar {
   max-width: 500px;
@@ -12,23 +15,32 @@
   margin-top: 5px;
 }
 
-.mat-progress-bar-background{
+.mat-progress-bar-background {
   fill: primary(100);
 }
-.mat-progress-bar-buffer{
+
+.mat-progress-bar-buffer {
   background-color: primary(100);
 }
+
 .mat-progress-bar-fill::after {
   background-color: primary(500);
 }
 
-
-.mat-progress-bar-background{
+.mat-progress-bar-background {
   fill: primary(100);
 }
-.mat-progress-bar-buffer{
+
+.mat-progress-bar-buffer {
   background-color: primary(100);
 }
+
 .mat-progress-bar-fill::after {
   background-color: primary(500);
+}
+
+.warning {
+  background: accent-redder(A400);
+  color: white;
+  font-weight: 400;
 }

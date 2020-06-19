@@ -1,14 +1,49 @@
 <div class="upload-button" *ngIf="user.write">
-  <!-- Dummy for styling -->
-  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
-  <!-- Actual workhorse to upload the data on the client side -->
-  <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+  <div class="btn-group">
+    <!-- Dummy for styling -->
+    <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload patient list</button>
+    <!-- Actual workhorse to upload the data on the client side -->
+    <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
 
+    <button style="margin-left: 25px" type="button" mat-raised-button color="warn" [disabled]="!data2upload" (click)="uploadData()">Upload data</button>
+  </div>
 
   <div class="client-responses">
-
     <ng-container *ngIf="uploadResponse">
+      <!-- message -->
       <h1>{{ uploadResponse }}</h1>
+
+      <!-- data replacement comments -->
+      <ng-container *ngIf="data2upload && !uploading">
+        <ng-container *ngIf="dupes.length">
+          <h3 class="warning">These patients have multiple entries in the database.</h3>
+          <p>
+            This is probably an error! Delete the duplicates. If you proceed with the upload, the first entry will be overwritten, and the other ones will remain unchanged.
+          </p>
+          <div *ngFor="let item of dupes">
+            {{item}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="replacementIDs.length">
+          <h3 class="warning">Existing IDs which will be overwritten</h3>
+          <p>
+            These patients already exist in the database. They will be overwritten.
+          </p>
+          <div *ngFor="let id of replacementIDs">
+            {{id}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="newIDs.length">
+          <h3>New IDs to add:</h3>
+          <div *ngFor="let id of newIDs">
+            {{id}}
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <!-- progress bar -->
       <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
       <p class="pct-complete">
         {{ uploadProgress | number:'1.0-0' }}% complete
@@ -21,17 +56,17 @@
       <div class="error-message-group" *ngFor="let msg of errorObj">
         <div class="error-message">
           <span class="error-label">
-        Error:
-      </span> {{ msg. key }}
+            Error:
+          </span> {{ msg. key }}
         </div>
         <div class="error-ids">
           <span class="error-label">
-        IDs:
-      </span>
+            IDs:
+          </span>
           <div *ngFor="let id of msg.value.ids; let index">
             {{ id }}
             <span *ngIf="index < msg.value.ids.length" class="id-separator">
-      </span>
+            </span>
           </div>
 
         </div>
@@ -42,10 +77,6 @@
 
 </div>
 
-<!-- TEMPORARY: JUST FOR ME WHILE TESTING -->
-<div style="margin-top: 25px;" *ngIf="user.email === 'laura.d.hughes@gmail.com'">
-  <button type="button" mat-raised-button color="warn" (click)="deletePatients()">DON'T PRESS THIS BUTTON -- clears patient list</button>
-</div>
 
 <div *ngIf="! user.write">
   <p>

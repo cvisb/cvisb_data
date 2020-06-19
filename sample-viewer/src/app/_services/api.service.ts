@@ -468,10 +468,12 @@ export class ApiService {
     }
   }
 
+
   // Generic PUT function, done in `size` pieces.
   // Executed in a cascade, where the previous API completes before
   // Modified from https://stackoverflow.com/questions/41619312/send-multiple-asynchronous-http-get-requests/41620361#41620361
   putPiecewise(endpoint: string, newData: any, size: number = 25): Observable<any> {
+    console.log("PUT REQUEST")
 
     const tagError = tag => catchError(error => {
       error.tag = tag;
@@ -555,6 +557,34 @@ export class ApiService {
     //
     // return (of(results));
   }
+
+// Function to look up IDs and replace
+prepUpload(endpoint:string, uniqueID: string, data:Object[]): Observable<any> {
+  console.log("PREP UPLOAD")
+  const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
+  const qParams = new HttpParams()
+  .set("q", "__all__")
+  .set("patientID", ids)
+  .set("fields", "alternateIdentifier")
+
+  return(this.fetchAll(endpoint, qParams).pipe(
+    map(ids => {
+      let duplicateIDs = [];
+      data.forEach(d => {
+        let filtered = ids.filter(id => id.alternateIdentifier.includes(d[uniqueID]));
+        if(filtered.length) {
+        d["_id"] = filtered[0]["_id"];
+        }
+
+        if(filtered.length > 1) {
+          duplicateIDs.push(d[uniqueID])
+        }
+      })
+
+      return(duplicateIDs)
+    })
+  ))
+}
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {
