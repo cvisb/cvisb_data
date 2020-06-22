@@ -49,7 +49,7 @@ export class FileListComponent implements OnInit {
         .set("patientID", `"${this.patientID}"`);
     } else if(this.experimentIDs) {
       this.qParams = new HttpParams()
-        .set("q", `experimentIDs:"${this.experimentIDs}"`);
+        .set("q", `experimentIDs:"${this.experimentIDs.join('","')}"`);
     } else {
       this.qParams = new HttpParams()
         .set("q", `includedInDataset:"${this.datasetID}"`);
