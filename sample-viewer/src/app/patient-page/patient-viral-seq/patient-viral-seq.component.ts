@@ -22,8 +22,6 @@ export class PatientViralSeqComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.sequences) {
-      this.experimentIDs = this.sequences.map(d => d.experimentID);
-
       this.sequences.forEach((seq: any) => {
         seq['source'] = seq['publisher'] ? seq['publisher']['name'] : null;
 
