@@ -21,9 +21,9 @@ export class PatientViralSeqComponent implements OnChanges {
     private snackBar: MatSnackBar) { }
 
   ngOnChanges() {
-    console.log(this.sequences)
     if (this.sequences) {
       this.experimentIDs = this.sequences.map(d => d.experimentID);
+      console.log(this.experimentIDs)
       this.sequences.forEach((seq: any) => {
         seq['source'] = seq['publisher'] ? seq['publisher']['name'] : null;
 
