@@ -5,6 +5,7 @@ export class ViralSeqObj {
   citation: Citation[];
   cvisb_data: boolean;
   data: ViralSeqData;
+  experimentID: string;
 }
 
 export class ViralSeqData {

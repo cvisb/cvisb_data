@@ -15,6 +15,7 @@ export class PatientViralSeqComponent implements OnChanges {
   @Input() patientID: string;
   @Input() datasetID: string;
   ncbiAccessionStub: string = "https://www.ncbi.nlm.nih.gov/nuccore/"; // website to link accession numbers, like https://www.ncbi.nlm.nih.gov/nuccore/LN823982
+  experimentIDs: string[];
 
   constructor(
     private snackBar: MatSnackBar) { }
@@ -22,6 +23,7 @@ export class PatientViralSeqComponent implements OnChanges {
   ngOnChanges() {
     console.log(this.sequences)
     if (this.sequences) {
+      this.experimentIDs = this.sequences.map(d => d.experimentID);
       this.sequences.forEach((seq: any) => {
         seq['source'] = seq['publisher'] ? seq['publisher']['name'] : null;
 

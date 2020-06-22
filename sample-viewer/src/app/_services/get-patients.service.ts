@@ -343,7 +343,7 @@ export class GetPatientsService {
     )
   }
 
-  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'sourceCitation', 'variableMeasured']): Observable<any> {
+  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'experimentID', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'sourceCitation', 'variableMeasured']): Observable<any> {
     let experimentParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${patientID}"`)

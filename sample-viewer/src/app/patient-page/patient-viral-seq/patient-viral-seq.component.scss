@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:300&display=swap');
 @import '../../../sass/variables.scss';
 
+.line-height-1 {
+  line-height: 1.1em;
+}
+
 .sequence-group {
-  margin-bottom: 35px;
+  margin-bottom: 50px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid $grey-600;
 }
 
 .sequence-header {

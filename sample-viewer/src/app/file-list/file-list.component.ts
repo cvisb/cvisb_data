@@ -18,6 +18,7 @@ import { FileMetadataService, ApiService, DownloadsDataSource } from '../_servic
 export class FileListComponent implements OnInit {
   @Input() datasetID: string;
   @Input() patientID: string;
+  @Input() experimentIDs: string[];
 
   // MatPaginator
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -46,6 +47,9 @@ export class FileListComponent implements OnInit {
       this.qParams = new HttpParams()
         .set("q", `includedInDataset:"${this.datasetID}"`)
         .set("patientID", `"${this.patientID}"`);
+    } else if(this.experimentIDs) {
+      this.qParams = new HttpParams()
+        .set("q", `experimentIDs:"${this.experimentIDs}"`);
     } else {
       this.qParams = new HttpParams()
         .set("q", `includedInDataset:"${this.datasetID}"`);

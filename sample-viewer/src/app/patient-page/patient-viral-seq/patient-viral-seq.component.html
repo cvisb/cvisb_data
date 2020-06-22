@@ -1,17 +1,20 @@
 <ng-container *ngIf="sequences && sequences.length > 0; else nodata">
-  <small *ngIf="sequences.length > 1">
-    Multiple sequences of the same virus come from different timepoints collected from the patient. Only one sequence is incldued in the curated data.
-  </small>
+  <div class="line-height-1">
+    <small *ngIf="sequences.length > 1"><em>
+      Multiple sequences of the same virus come from different timepoints collected from the patient. Only one sequence is included in the curated data.
+      </em>
+    </small>
+  </div>
+
   <div *ngFor="let seq of sequences" class="sequence-group">
     <app-provenance [dateModified]="seq.dateModified" embargoLabel="Virus Sequence" [source]="seq.source"
     [public_data]="seq.citation" [changes]="seq.correction"
     [citation]="seq.citation" [dataStatus]="seq.dataStatus" class="provenance"></app-provenance>
 
-    <div class="sequence-group">
+    <div>
       <ng-container *ngFor="let data of seq.data">
         <div class="container sequence-header">
           <h4 class="virus">{{ data.virus }} sequence
-            <span *ngIf="sequences.length > 1 && seq.visitCode">(timepoint {{seq.visitCode}})</span>
           </h4>
 
           <div class="quality-rating" *ngIf="data && data.quality">
@@ -45,7 +48,7 @@
         <div class="raw-sequence">
           <div class="container sequence-header">
             <p class="sequence-label">
-              raw sequence
+              raw sequence <span *ngIf="sequences.length > 1 && seq.visitCode">(timepoint {{seq.visitCode}})</span>
             </p>
 
             <!-- Dummy so the document has something to select with the data bound -->
@@ -63,7 +66,7 @@
 
     <div class="viralseq-files">
       <!-- <h5 class="patient-data">files</h5> -->
-      <app-file-list [datasetID]="datasetID" [patientID]="patientID"></app-file-list>
+      <app-file-list [experimentIDs]="patientID"></app-file-list>
     </div>
   </div>
 </ng-container>
