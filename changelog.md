@@ -1,4 +1,7 @@
 # Prod
+### 2020-06-22
+* Updated schema (prod and dev), based on the addition of `exposureLocation`
+
 ### 2020-06-19
 * updated Ebola virus sequence data
   - removed Ebola virus dataset, data downloads, experiment
