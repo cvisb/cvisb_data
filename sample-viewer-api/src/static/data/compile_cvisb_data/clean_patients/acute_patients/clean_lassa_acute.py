@@ -183,7 +183,7 @@ def cleanAcute(filename):
 
     # --- admin2 ---
     df['admin2'] = df.District.apply(helpers.cleanDistrict)
-    df['homeLocation'] = df.admin2.apply(helpers.listify)
+    df['exposureLocation'] = df.admin2.apply(helpers.listify)
 
     # -- admit status --
     # Waiting from John to hear what the differences are between these two vars.

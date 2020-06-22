@@ -54,7 +54,7 @@ output_extraIDs_weirdos = f"{inconsistencies_dir}/extraIDs_inconsistencies_{toda
 # [ Columns to export ] -----------------------------------------------------------------------------------
 # sans dates, temporarily
 export_cols = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome',
-               'age', 'gender', 'country', 'occupation', 'pregnant', 'homeLocation', 'admin2',
+               'age', 'gender', 'country', 'occupation', 'pregnant', 'homeLocation', 'exposureLocation', 'admin2',
                'survivorEvalDates', 'survivorEnrollmentDate',
                'contactGroupIdentifier', 'contactSurvivorRelationship', 'exposureType', 'relatedTo', 'relatedToPrivate',
                'evalDate', 'dischargeDate', 'daysOnset', 'daysInHospital', 'symptoms', 'infectionDate', 'infectionYear',

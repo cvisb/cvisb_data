@@ -283,7 +283,7 @@
 
 - "@id":                 cvisb:admin2
   "@type":               rdf:Property
-  rdfs:comment:          "Administrative unit 2 for where the Patient lives. Each country has their own specific name for admin 2- Sierra Leone: district, Liberia: district, Guinea: prefecture, Nigeria: local government area"
+  rdfs:comment:          "Administrative unit 2 for where the Patient was exposed to the virus or lives. Each country has their own specific name for admin 2- Sierra Leone: district, Liberia: district, Guinea: prefecture, Nigeria: local government area"
   rdfs:label:            admin2
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -295,7 +295,7 @@
 
 - "@id":                 cvisb:admin3
   "@type":               rdf:Property
-  rdfs:comment:          "Administrative unit 3 for where the Patient lives. Each country has their own specific name for admin 3- Sierra Leone: chiefdom, Liberia: clan, Guinea: sub-prefecture, Nigeria: wards"
+  rdfs:comment:          "Administrative unit 3 for where the Patient was exposed to the virus or lives. Each country has their own specific name for admin 3- Sierra Leone: chiefdom, Liberia: clan, Guinea: sub-prefecture, Nigeria: wards"
   rdfs:label:            admin3
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -307,7 +307,7 @@
 
 - "@id":                 cvisb:homeLocation
   "@type":               rdf:Property
-  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
+  rdfs:comment:          "The most specific geographic location of the home of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
   rdfs:label:            homeLocation
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -315,6 +315,20 @@
     - "@id":             cvisb:AdministrativeArea
   schema:sameAs:
     "@id":               schema:homeLocation
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:exposureLocation
+  "@type":               rdf:Property
+  rdfs:comment:          "The most specific geographic location of the presumed infection/exposure of the patient to the virus. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
+  rdfs:label:            exposureLocation
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:AdministrativeArea
+  schema:sameAs:
+    "@id":               schema:exposureLocation
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         true

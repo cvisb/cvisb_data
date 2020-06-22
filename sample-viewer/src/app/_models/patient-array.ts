@@ -82,9 +82,15 @@ export class PatientArray {
 
         if (d.homeLocation) {
           d.homeLocation.forEach((adminUnit) => {
-            d[adminUnit['administrativeType']] = adminUnit['name'];
+            d[`${adminUnit['administrativeType']}_home`] = adminUnit['name'];
           });
           delete d.homeLocation;
+        }
+        if (d.exposureLocation) {
+          d.exposureLocation.forEach((adminUnit) => {
+            d[`${adminUnit['administrativeType']}_exposure`] = adminUnit['name'];
+          });
+          delete d.exposureLocation;
         }
         if (d.elisa) {
           delete d.elisa;

@@ -199,7 +199,7 @@ def cleanup_merged(df, dateModified):
     df['country'] = df.countryName.apply(helpers.getCountry)
 
     # hack for now... admin2 isn't merging properly.
-    df['admin2'] = df.homeLocation.apply(getAdmin2)
+    df['admin2'] = df.exposureLocation.apply(getAdmin2)
     # Double check the gIDs are saved as an array, since they need to be an array for ES
     # df['gID'] = df.gID.apply(helpers.listify)
 
@@ -227,7 +227,7 @@ def assign_publicID(row):
     return(row.publicSID)
 
 
-def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["cohort", "outcome", "age", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID", "admin2", "homeLocation"]):
+def merge_function(acute, survivors, keyVar="gID", newKey="publicSID", varsInCommon=["cohort", "outcome", "age", "gender", "hasSurvivorData", "hasPatientData", "countryName", "issue",  "elisa", "gID", "admin2", "exposureLocation"]):
     """
     Workhorse to combine together acute and survivor datasets.
 
@@ -289,9 +289,9 @@ def combineIssues(row, issueCol="issue", mergeIssueCol="mergeIssue"):
 
 
 # Hack for now; assumes first entry in homeLocation is the district (since other geo info temporarily ignored)
-def getAdmin2(homeLocation):
+def getAdmin2(location):
     try:
-        return(homeLocation[0])
+        return(location[0])
     except:
         return(pd.np.nan)
 

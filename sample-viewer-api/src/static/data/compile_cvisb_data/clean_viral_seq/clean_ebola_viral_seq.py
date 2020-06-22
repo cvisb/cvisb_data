@@ -68,7 +68,9 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['admin2'] = md.admin2.apply(lambda x: cleanAdmin(x, 2))
     md['admin3'] = md.admin3.apply(lambda x: cleanAdmin(x, 3))
     md['admin4'] = md.admin4.apply(lambda x: cleanAdmin(x, 4))
-    md['homeLocation'] = md.apply(getHome, axis=1)
+    md['exposureLocation'] = md.apply(getExposure, axis=1)
+    md['homeLocation'] = md.import_country.apply(helpers.getCountry)
+    md['homeLocation'] = md.homeLocation.apply(helpers.listify)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date
@@ -215,7 +217,17 @@ def cleanAdmin(location, admin_level):
         loc_clean = location.replace("_", " ").title()
         return( {'administrativeUnit': admin_level,'name': loc_clean})
 
-def getHome(row):
+def getExposure(row):
+    arr = [row.country]
+    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+        arr.append(row.admin2)
+    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
+        arr.append(row.admin3)
+    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
+        arr.append(row.admin4)
+    return(arr)
+
+def getExposure(row):
     arr = [row.country]
     if((row.admin2 == row.admin2) & (row.admin2 is not None)):
         arr.append(row.admin2)

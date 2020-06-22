@@ -69,7 +69,7 @@ def clean_survivor_ids(filename):
 
     # --- admin2 ---
     ids['admin2'] = ids.District.apply(helpers.cleanDistrict)
-    ids['homeLocation'] = ids.admin2.apply(helpers.listify)
+    ids['exposureLocation'] = ids.admin2.apply(helpers.listify)
 
     # --- Check data is as expected ---
     ids = runIDChecks(ids, ids_raw)

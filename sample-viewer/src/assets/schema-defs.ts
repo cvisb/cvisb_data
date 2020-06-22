@@ -13,6 +13,7 @@ export abstract class SchemaDefs {
     "country.name",
     "country.identifier",
     "homeLocation",
+    "exposureLocation",
     "admittedLassaWard",
     "admitDate",
     "infectionDate",

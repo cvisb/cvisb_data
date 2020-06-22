@@ -108,7 +108,7 @@ def cleanESurvivors(df):
         getRel)
 
     # --- location ---
-    df['homeLocation'] = df.district.apply(helpers.cleanDistrict)
+    df['exposureLocation'] = df.district.apply(helpers.cleanDistrict)
     return(df)
 
 # # (4) gender all M/F

@@ -21,7 +21,7 @@ def clean_survivors(id_filename, ebola_filename, output_allSurvivors, output_sur
 
     merged.to_csv(output_allSurvivors + ".csv", index=False)
     # merged.to_json(output_allSurvivors + ".json", orient="records")
-    merged.drop(["cohort_x", "cohort_y", "outcome_x", "outcome_y", 'sID_x', 'sID_y', 'gID_x', 'gID_y', 'gender_x', 'gender_y', 'homeLocation_x', 'homeLocation_y'], axis=1, inplace=True)
+    merged.drop(["cohort_x", "cohort_y", "outcome_x", "outcome_y", 'sID_x', 'sID_y', 'gID_x', 'gID_y', 'gender_x', 'gender_y', 'expsoureLocation_x', 'exposureLocation_y'], axis=1, inplace=True)
     df2export = helpers.removeIssues(merged, "survivor patients")
 
     return(merged)
