@@ -348,6 +348,7 @@ export class GetPatientsService {
       .set("q", "__all__")
       .set("patientID", `"${patientID}"`)
       .set("fields", fields.join(","))
+      .set("sort", "visitCode")
       .set("pageSize", "1000");
 
     return this.myhttp.get<ESResult>(environment.api_url + "/api/experiment/query", {
