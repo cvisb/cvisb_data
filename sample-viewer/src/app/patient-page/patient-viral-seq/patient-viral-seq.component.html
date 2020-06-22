@@ -11,7 +11,7 @@
       <ng-container *ngFor="let data of seq.data">
         <div class="container sequence-header">
           <h4 class="virus">{{ data.virus }} sequence
-            <span *ngIf="sequences.length > 1 && data.visitCode">(timepoint {{data.visitCode}})</span>
+            <span *ngIf="sequences.length > 1 && seq.visitCode">(timepoint {{seq.visitCode}})</span>
           </h4>
 
           <div class="quality-rating" *ngIf="data && data.quality">
