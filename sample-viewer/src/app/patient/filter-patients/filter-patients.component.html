@@ -4,7 +4,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="container filter-header">
-            <h3>{{ patientSummary.total }} of {{ allPatientSummary.total }} Patients Selected</h3>
+            <h3>{{ patientSummary.total | number:'1.0-0' }} of {{ allPatientSummary.total | number:'1.0-0' }} Patients Selected</h3>
 
             <div class="container clear-filter">
               <button mat-stroked-button (click)="clearFilters()">clear filters</button>
