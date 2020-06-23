@@ -16,7 +16,7 @@ export class DotPlotComponent implements AfterViewInit {
 
   // plot sizes
   private element: any;
-  private margin: any = { top: 0, bottom: 2, left: 70, right: 8 };
+  private margin: any = { top: 0, bottom: 2, left: 120, right: 8 };
   private width: number = 50;
   private height: number;
   private ySpacing: number = 0.5;

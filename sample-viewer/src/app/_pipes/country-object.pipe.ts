@@ -31,7 +31,7 @@ export class CountryObjectPipe implements PipeTransform {
       "name": "Gabon",
       "identifier": "GA",
     }, {
-      "name": "Democratic Republic of the Congo",
+      "name": "Democratic Rep. Congo",
       "identifier": "CD",
     }, {
       "name": "Republic of the Congo",
