@@ -96,7 +96,7 @@ export class FilterPatientsComponent implements OnInit, OnDestroy {
       this.allPatientSummary = data.patients;
     })
 
-    console.log(this.allPatientSummary)
+    // console.log(this.allPatientSummary)
 
     // let allPatientSummary: PatientSummary = this.route.snapshot.data.patients;
     // console.log(allPatientSummary);
