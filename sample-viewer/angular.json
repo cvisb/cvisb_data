@@ -48,6 +48,7 @@
               "src/assets/robots.txt",
               "src/assets/schema",
               "src/assets/data",
+              "src/assets/icons",
               "src/assets/geo"
             ],
             "styles": [
@@ -117,6 +118,7 @@
               "src/assets/robots.txt",
               "src/assets/schema",
               "src/assets/data",
+              "src/assets/icons",
               "src/assets/geo"
             ]
           }
