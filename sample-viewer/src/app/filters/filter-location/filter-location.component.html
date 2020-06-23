@@ -1,25 +1,34 @@
 <div class="filter filter-adm0 container-column" *ngIf="countries">
   <h4 class="filter-label">location</h4>
 
+<div class="container">
   <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.term)" class="location mat-shadow" [ngClass]="ctry.term">
     <div class="container country-container" [ngClass]="{'disabled': ctry.disabled}">
       <svg-icon [icon]="ctry.term" [class]="'country-icon ' + ctry.term + '-icon'" *ngIf="ctry.term && ctry.term !== 'unknown' && ctry.term !== 'Unknown'"></svg-icon>
       <mat-icon *ngIf="!ctry.term || ctry.term === 'unknown' || ctry.term === 'Unknown'" class="unknown-icon">help_outline</mat-icon>
 
       <div class="filter-pair">
-        <div class="adm0-name" [ngSwitch]="ctry.term">
+        <div class="adm0-name" [ngSwitch]="ctry.term" *ngIf="ctry.term">
           <ng-container *ngSwitchCase="'SL'">Sierra Leone</ng-container>
           <ng-container *ngSwitchCase="'NG'">Nigeria</ng-container>
           <ng-container *ngSwitchCase="'GN'">Guinea</ng-container>
           <ng-container *ngSwitchCase="'LR'">Liberia</ng-container>
+          <ng-container *ngSwitchCase="'US'">United States</ng-container>
+          <ng-container *ngSwitchCase="'CD'">Democratic Republic of the Congo</ng-container>
+          <ng-container *ngSwitchCase="'CG'">Republic of the Congo</ng-container>
+          <ng-container *ngSwitchCase="'GA'">Gabon</ng-container>
           <ng-container *ngSwitchCase="'CI'">C&ocirc;te d'Ivoire</ng-container>
           <ng-container *ngSwitchCase="'TG'">Togo</ng-container>
           <ng-container *ngSwitchCase="'ML'">Mali</ng-container>
-          <ng-container *ngSwitchDefault>unknown</ng-container>
+          <ng-container *ngSwitchDefault>{{ctry.term}}</ng-container>
+        </div>
+        <div class="adm0-name"  *ngIf="!ctry.term">
+          unknown
         </div>
 
         <div class="adm0-count">{{ ctry.count || 0 }}</div>
       </div>
+    </div>
     </div>
 
   </div>

@@ -1,0 +1,7 @@
+Congo boundaries downloaded 23 June 2020 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/congo-administrative-boundaries
+from UN-OCHA's boundaries; last updated June 2019
+
+Mapshaper simplification
+md: 1.3%
+sm: 0.85%

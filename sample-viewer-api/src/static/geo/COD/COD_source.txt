@@ -1,0 +1,7 @@
+DRC boundaries downloaded 23 June 2020 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/drc-administrative-boundaries-levels-0-2#
+from UN-OCHA's boundaries; last updated September 2019
+
+Mapshaper simplification
+md: 0.75%
+sm: 0.5%

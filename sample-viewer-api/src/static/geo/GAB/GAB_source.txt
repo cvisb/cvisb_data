@@ -1,0 +1,6 @@
+Gabon boundaries downloaded 23 June 2020 from Humanitarian Data Exchange
+https://data.humdata.org/dataset/gabon-administrative-boundaries
+from UN-OCHA's boundaries; last updated August 2018
+
+Mapshaper simplification
+sm: 2%

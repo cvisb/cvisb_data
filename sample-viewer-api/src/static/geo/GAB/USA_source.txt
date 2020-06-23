@@ -1,0 +1,7 @@
+USA boundaries downloaded 23 June 2020 from Census Bureau
+https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
+last updated 2018
+
+Mapshaper simplification
+sm: 3.5%
+Converted to USA-Albers projection in R;
