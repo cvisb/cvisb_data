@@ -2,8 +2,6 @@
   <h4 class="filter-label">location</h4>
 
 <div class="container">
-  <svg-icon [icon]="'GA'" [class]="'country-icon SL-icon'"></svg-icon>
-
   <div *ngFor="let ctry of countries" (click)="selectCountry(ctry.term)" class="location mat-shadow" [ngClass]="ctry.term">
     <div class="container country-container" [ngClass]="{'disabled': ctry.disabled}">
       <svg-icon [icon]="ctry.term" [class]="'country-icon ' + ctry.term + '-icon'" *ngIf="ctry.term && ctry.term !== 'unknown' && ctry.term !== 'Unknown'"></svg-icon>
