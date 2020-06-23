@@ -150,7 +150,6 @@ export class GetPatientsService {
       tap(d => console.log(d.slice(0,4))),
       map((res: any) => {
         let ids = uniq(flatMapDeep(res, d => d['alternateIdentifier']));
-        console.log(ids)
         return ids;
       }),
       catchError(e => {
