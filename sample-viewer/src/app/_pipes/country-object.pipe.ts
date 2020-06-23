@@ -25,6 +25,18 @@ export class CountryObjectPipe implements PipeTransform {
       "name": "Togo",
       "identifier": "TG",
     }, {
+      "name": "United States",
+      "identifier": "US",
+    }, {
+      "name": "Gabon",
+      "identifier": "GA",
+    }, {
+      "name": "Democratic Republic of the Congo",
+      "identifier": "CD",
+    }, {
+      "name": "Republic of the Congo",
+      "identifier": "CG",
+    }, {
       "name": "Liberia",
       "identifier": "LR",
     }
