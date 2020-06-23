@@ -278,7 +278,7 @@
   schema:sameAs:
     "@id":               schema:geographicArea
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:admin2

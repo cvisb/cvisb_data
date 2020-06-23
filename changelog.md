@@ -1,4 +1,13 @@
 # Prod
+### 2020-06-23
+* Updated schema (prod and dev): removed requiredness of country
+* updated Ebola virus sequence data
+  - removed Ebola virus dataset, data downloads, experiment
+  - uploaded new Ebola virus dataset, data downloads, experiment
+* updated Ebola virus sequence new patient data
+  - Added non-KGH patients; replaced previous entries for the existing IDs
+* sync'd public/private
+
 ### 2020-06-22
 * Updated schema (prod and dev), based on the addition of `exposureLocation`
 
