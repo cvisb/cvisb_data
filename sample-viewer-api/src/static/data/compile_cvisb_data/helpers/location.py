@@ -200,7 +200,8 @@ def getCountry(countryID, verbose=True):
         "url": "https://www.iso.org/obp/ui/#iso:code:3166:GA"
         })
     else:
-        log_msg(f"WARNING: no country found for location: {countryID}", verbose)
+        if(countryID == countryID):
+            log_msg(f"WARNING: no country found for location: {countryID}", verbose)
         return(pd.np.nan)
 
 def getCountryName(countryID):
