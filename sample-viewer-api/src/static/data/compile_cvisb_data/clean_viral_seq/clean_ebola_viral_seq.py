@@ -218,21 +218,12 @@ def cleanAdmin(location, admin_level):
         return( {'administrativeUnit': admin_level,'name': loc_clean})
 
 def getExposure(row):
-    arr = [row.country]
-    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
-        arr.append(row.admin2)
-    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
-        arr.append(row.admin3)
-    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
-        arr.append(row.admin4)
-    return(arr)
-
-def getExposure(row):
-    arr = [row.country]
-    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
-        arr.append(row.admin2)
-    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
-        arr.append(row.admin3)
-    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
-        arr.append(row.admin4)
-    return(arr)
+    if((row.country == row.country) & (row.country is not None)):
+        arr = [row.country]
+        if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+            arr.append(row.admin2)
+        if((row.admin3 == row.admin3) & (row.admin3 is not None)):
+            arr.append(row.admin3)
+        if((row.admin4 == row.admin4) & (row.admin4 is not None)):
+            arr.append(row.admin4)
+        return(arr)
