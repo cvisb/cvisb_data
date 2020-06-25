@@ -56,6 +56,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+                         - SARS-CoV-2
 
 - "@id":                 cvisb:virusSegment
   "@type":               rdf:Property

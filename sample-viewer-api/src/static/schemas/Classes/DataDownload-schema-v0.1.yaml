@@ -84,6 +84,7 @@
                            - metagenome-seq
                            - ebola-virus-seq
                            - lassa-virus-seq
+                           - sarscov2-virus-seq
                            - bcr
                            - tcr
                            - systems-serology
@@ -316,6 +317,7 @@
                            - metagenome sequence
                            - Ebola virus sequence
                            - Lassa virus sequence
+                           - SARS-CoV-2 virus sequence
                            - BCR sequence
                            - TCR sequence
                            - ADNP

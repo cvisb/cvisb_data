@@ -49,7 +49,7 @@
 # identifier
 - "@id":                 cvisb:virus
   "@type":               rdf:Property
-  rdfs:comment:          Virus tested in RT-PCR (Ebola or Lassa)
+  rdfs:comment:          Virus tested in RT-PCR (Ebola, Lassa, or SARS-CoV-2)
   rdfs:label:            virus
   schema:domainIncludes:
     - "@id":             cvisb:RTPCR
@@ -60,6 +60,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+                         - SARS-CoV-2
   authenticated:         true
 
 - "@id":                 cvisb:RTPCRresult

@@ -143,7 +143,7 @@
 
 - "@id":                 cvisb:virus
   "@type":               rdf:Property
-  rdfs:comment:          Virus tested in ELISA (Ebola or Lassa)
+  rdfs:comment:          Virus tested in ELISA (Ebola, Lassa, or SARS-CoV-2)
   rdfs:label:            virus
   schema:domainIncludes:
     - "@id":             cvisb:ELISA
@@ -154,6 +154,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+                         - SARS-CoV-2
   authenticated:         false
 
 - "@id":                 cvisb:assayType

@@ -232,7 +232,7 @@
 # Main cohort
 - "@id":                 cvisb:cohort
   "@type":               rdf:Property
-  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for."
+  rdfs:comment:          "Cohort for virus exposure: Ebola, Lassa, COVID-19, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for."
   rdfs:label:            cohort
   schema:domainIncludes:
     - "@id":             cvisb:Patient
@@ -243,6 +243,7 @@
   schema:Enumeration:
                          - Ebola
                          - Lassa
+                         - COVID-19
                          - Control
                          - Unknown
   authenticated:         false

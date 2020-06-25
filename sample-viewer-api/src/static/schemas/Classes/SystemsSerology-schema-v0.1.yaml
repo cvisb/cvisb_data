@@ -133,7 +133,7 @@
 
 - "@id":                 cvisb:antigen
   "@type":               rdf:Property
-  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa virus or Ebola virus
+  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa virus, Ebola virus, or SARS-CoV-2 virus
   rdfs:label:            antigen
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
@@ -145,7 +145,7 @@
 
 - "@id":                 cvisb:antigenVirus
   "@type":               rdf:Property
-  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa or Ebola
+  rdfs:comment:          Antigen used in the Systems Serology experiment; either against Lassa, Ebola, or SARS-CoV-2
   rdfs:label:            antigenVirus
   schema:domainIncludes:
     - "@id":             cvisb:SystemsSerology
@@ -157,6 +157,7 @@
   schema:Enumeration:
                         - Ebola
                         - Lassa
+                        - SARS-CoV-2
 
 - "@id":                 cvisb:antigenSource
   "@type":               rdf:Property
