@@ -10,3 +10,7 @@ Please note that the data in the portal is still based on work in progress and s
 
 ## Citing CViSB data and data portal
 [How to cite CViSB data](https://data.cvisb.org/citation)
+
+## Launching CViSB data portal
+* Angular front-end can be generated using `npm run build:ssr && npm run serve:ssr` [prod version] or `npm run build:dev && npm run serve:ssr` [dev version]
+* Also requires a Tornado instance serving the data API.
