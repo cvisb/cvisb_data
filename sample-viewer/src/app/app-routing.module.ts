@@ -43,6 +43,8 @@ const appRoutes: Routes = [
   { path: 'dataset/lassa-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "lassa-virus-seq" } },
   { path: 'dataset/ebola-viral-seq', pathMatch: 'full', redirectTo: "/dataset/ebola-virus-seq" },
   { path: 'dataset/ebola-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "ebola-virus-seq" } },
+  { path: 'dataset/sarscov2-viral-seq', pathMatch: 'full', redirectTo: "/dataset/ebola-virus-seq" },
+  { path: 'dataset/sarscov2-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "sarscov2-virus-seq" } },
   { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
