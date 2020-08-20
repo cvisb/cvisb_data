@@ -138,6 +138,8 @@ export class DownloadDataService {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
 
+          console.log(data)
+
           let seroData = data['experiment'].map((expt: SystemsSerology) => {
             return (new SerologyDownload(expt))
           })
