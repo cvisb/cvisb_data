@@ -14,14 +14,13 @@ export class DownloadDataComponent implements OnInit {
   @Input() filetype: string;
   @Input() filename: string;
   @Input() data: any[];
+  isDone: Boolean;
 
   constructor(
     private route: ActivatedRoute,
     private downloadSvc: DownloadDataService) {
     this.downloadSvc.loadingCompleteState$.subscribe((isDone:Boolean) => {
-      if(isDone){
-        // window.top.close();
-      }
+      this.isDone = isDone;
     })
   }
 

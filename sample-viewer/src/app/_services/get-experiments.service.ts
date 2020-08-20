@@ -68,8 +68,8 @@ export class GetExperimentsService {
       this.apiSvc.fetchAll("patient", patient_params)
     ).pipe(
       map(([expts, patients]) => {
-        console.log(expts)
-        console.log(patients)
+        // console.log(expts)
+        // console.log(patients)
         return ({ patient: patients, experiment: expts });
       }
       ),

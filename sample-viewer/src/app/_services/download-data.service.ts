@@ -138,13 +138,11 @@ export class DownloadDataService {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
 
-          console.log(data)
-
           let seroData = data['experiment'].map((expt: SystemsSerology) => {
             return (new SerologyDownload(expt))
           })
-          this.parseData(patientData, 'patients', `${filename}_PatientData${this.auth_stub}.tsv`);
           this.parseData(seroData, filetype, `${filename}${this.auth_stub}.tsv`);
+          this.parseData(patientData, 'patients', `${filename}_PatientData${this.auth_stub}.tsv`);
         });
 
         break;
@@ -231,7 +229,6 @@ export class DownloadDataService {
   }
 
   downloadFasta(data: any[], filetype: string, filename: string) {
-    console.log(data)
     let seqdata = data;
     let dwnld_data = "";
     let lineDelimiter = "\n";

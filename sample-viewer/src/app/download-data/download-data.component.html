@@ -1,1 +1,6 @@
-Fetching and downloading {{ filetype }} data... this can take a few minutes.
+<ng-template *ngIf="isDone">
+  Download complete! Be sure to allow multiple file downloads if you want to download the experimental data and the patient metadata.
+</ng-template>
+<ng-template *ngIf="!isDone">
+  Fetching and downloading {{ filetype }} data... this can take a few minutes.
+</ng-template>
