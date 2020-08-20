@@ -26,7 +26,6 @@ export class DatasetPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("isDone")
     // fetch dataset data from resolver.
     this.dataset = this.route.snapshot.data['datasetData'];
 

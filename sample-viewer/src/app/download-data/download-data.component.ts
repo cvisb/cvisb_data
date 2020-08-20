@@ -21,12 +21,10 @@ export class DownloadDataComponent implements OnInit {
     private downloadSvc: DownloadDataService) {
     this.downloadSvc.loadingCompleteState$.subscribe((isDone:Boolean) => {
       this.isDone = isDone;
-      console.log(isDone)
     })
   }
 
   ngOnInit() {
-    console.log('downloading data')
     if(this.route.snapshot.data.dsid) {
       this.filetype = this.route.snapshot.data.dsid;
       this.filename = this.route.snapshot['_routerState']['url'];
