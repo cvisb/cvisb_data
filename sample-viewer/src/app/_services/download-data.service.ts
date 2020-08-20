@@ -155,7 +155,7 @@ export class DownloadDataService {
   }
 
   saveData(dwnld_data: string, filename: string, encodingFormat: string) {
-    this.loadingCompleteSubject.next(true);
+    // this.loadingCompleteSubject.next(true);
     if (isPlatformBrowser(this.platformId)) {
       var blob = new Blob([dwnld_data], { type: encodingFormat });
       var hiddenElement = document.createElement('a');
@@ -168,7 +168,7 @@ export class DownloadDataService {
       document.body.appendChild(hiddenElement);
       hiddenElement.click();
 
-      this.dialogRef.close();
+      // this.dialogRef.close();
     }
   }
 
