@@ -21,6 +21,7 @@ export class DownloadDataComponent implements OnInit {
     private downloadSvc: DownloadDataService) {
     this.downloadSvc.loadingCompleteState$.subscribe((isDone:Boolean) => {
       this.isDone = isDone;
+      console.log(isDone)
     })
   }
 
