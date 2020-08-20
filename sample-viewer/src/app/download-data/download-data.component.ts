@@ -26,6 +26,7 @@ export class DownloadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('downloading data')
     if(this.route.snapshot.data.dsid) {
       this.filetype = this.route.snapshot.data.dsid;
       this.filename = this.route.snapshot['_routerState']['url'];
