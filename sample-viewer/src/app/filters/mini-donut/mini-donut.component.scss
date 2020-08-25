@@ -39,6 +39,15 @@ text.unknown {
   }
 }
 
+.COVID-19 {
+  fill: $covid-md;
+  stroke: $covid-color;
+
+  &.not-highlight {
+    opacity: 0.4;
+  }
+}
+
 .Lassa,
 .lassa {
   fill: $lassa-md;
@@ -87,6 +96,14 @@ text.unknown {
 
     &:hover {
       fill: $ebola-lt;
+    }
+  }
+
+  &.COVID-19 {
+    stroke: $covid-md;
+
+    &:hover {
+      fill: $covid-lt;
     }
   }
 

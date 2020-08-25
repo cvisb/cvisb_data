@@ -57,6 +57,29 @@
   }
 }
 
+.COVID-19 {
+  a {
+    color: $covid-dk;
+    text-decoration: none;
+
+    &:hover {
+      color: $covid-color;
+    }
+  }
+
+  ul > li > ul > li a {
+    color: $covid-md;
+
+    &:hover {
+      color: $covid-color;
+    }
+  }
+
+  .level0 > li {
+    border-top: $covid-dk 1px solid;
+  }
+}
+
 .Lassa {
   a {
     color: $lassa-dk;
