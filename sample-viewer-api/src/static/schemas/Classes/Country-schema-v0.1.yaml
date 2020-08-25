@@ -61,6 +61,8 @@
                           - GB
                           - CG
                           - GA
+                          - MX
+                          - JO
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
