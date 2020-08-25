@@ -1,7 +1,7 @@
 import config
 import helpers
 
-from datetime  import datetime
+from datetime  import datetime, timedelta
 from os        import path
 from itertools import chain
 
@@ -18,26 +18,38 @@ def create_data():
 
     patients = [
         create_patient(
-            patient_id    =patient['ID'],
-            patient_source=patient['authors'],
-            location      =patient['location'],
-            sample_date   =patient['collection_date']
+            patient_id     = patient['ID'],
+            patient_source = patient['authors'],
+            location       = patient['location'],
+            sample_date    = patient['collection_date']
         )
         for patient in metadata
     ]
 
-    experiments    = [create_experiment(patient['patientID']) for patient in patients]
-    data_downloads = [create_data_download(name, url, []) for name, url in data_files.items()]
+    experiments    = [create_experiment(patient['patientID']) for patient   in patients]
+    data_downloads = [create_data_download(name, url, [])     for name, url in data_files.items()]
     dataset        = create_dataset(data_downloads)
 
     output = {
         'patients':       patients,
         'experiments':    experiments,
-        'data_downloads': data_downloads,
+        'datadownloads':  data_downloads,
         'dataset':        dataset,
     }
 
     for name, data in output.items():
+        if len(data) > 200:
+            count = 0
+            while count < len(data):
+                file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}{count}.json')
+                next_count = count + 200
+                if next_count > len(data):
+                    next_count = len(data)
+
+                with open(file_path, 'w') as output_file:
+                    json.dump(data[count:next_count], output_file)
+                count = next_count
+
         file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}.json')
         with open(file_path, 'w') as output_file:
             json.dump(data, output_file)
@@ -95,7 +107,7 @@ def create_dataset(data_downloads):
     dataset = {
         '@context':             'http://schema.org/',
         '@type':                'Dataset',
-        'identifier':           'sars-cov-2-virus-seq',
+        'identifier':           'sarscov2-virus-seq',
         'creator':              [helpers.getLabAuthor('Kristian')],
         'publisher':            [search_alliance],
         'funding':              helpers.cvisb_funding,
@@ -104,7 +116,7 @@ def create_dataset(data_downloads):
         'variableMeasured':     'SARS-CoV-2 virus sequence',
         'measurementTechnique': 'Nucleic Acid Sequencing',
         'measurementCategory':  'virus sequencing',
-        'includedInDataset':    'sars-cov-2-virus-seq',
+        'includedInDataset':    'sarscov2-virus-seq',
         'description':          'Virus sequencing of patients infected with COVID-19 from Southern California, Tijuana, New Orleans and Jordan by the SEARCH Alliance along with a large number of partners. The virus sequence data will be used to to gain insights into the emergence and spread of SARS-CoV-2. The sequencing is being performed using an amplicon-based sequencing scheme using PrimalSeq with artic nCoV-2019 scheme. Nanopore data was processed using the artic-nCoV019 pipeline with minimap2 and medaka. Illumina data was processed using iVar (Grubaguh et al. Genome Biology 2019) with bwa. Methodology is available at https://github.com/andersen-lab/HCoV-19-Genomics',
         'dateModified':         today,
         'keywords':             ['SARS-CoV-2', 'COVID-19'],
@@ -115,12 +127,13 @@ def create_dataset(data_downloads):
 
 def create_data_download(name, url, experiment_ids):
     datadownload = {
-        "includedInDataset":    'sars-cov-2-virus-seq',
+        "includedInDataset":    'sarscov2-virus-seq',
         "identifier":           name,
+        "name":                 name,
         "contentUrl":           url,
         "additionalType":       'raw data',
-        "variableMeasured":     'SARS-CoV-2 virus sequence',
-        "measurementTechnique": 'Nucleic Acid Sequencing',
+        "variableMeasured":     ['SARS-CoV-2 virus sequence'],
+        "measurementTechnique": ['Nucleic Acid Sequencing'],
         "dateModified":         today,
         "experimentIDs":        experiment_ids,
     }
@@ -133,15 +146,16 @@ def create_experiment(patient_id):
         "privatePatientID":     patient_id,
         "variableMeasured":     'SARS-CoV-2 virus sequence',
         "measurementTechnique": 'Nucleic Acid Sequencing',
-        "includedInDataset":    'sars-cov-2-virus-seq',
+        "includedInDataset":    'sarscov2-virus-seq',
         "dateModified":         today,
     }
 
     return experiment
 
 def create_patient(patient_id, patient_source, location, sample_date):
-    sample_week            = sample_date
     country, home_location = create_location(location)
+    if type(patient_source) == str:
+        patient_source = { 'name': patient_source, '@type': 'Organization' }
 
     patient = {
         "patientID":            patient_id,
@@ -149,17 +163,42 @@ def create_patient(patient_id, patient_source, location, sample_date):
         "cohort":               'COVID-19',
         "outcome":              'unknown',
         "alternateIdentifier":  [patient_id],
-        "presentationDate":     sample_date,
-        "presentationWeek":     sample_week,
         "infectionYear":        2020,
-        'publisher':            [helpers.cvisb],
-        "sourceCitation":       patient_source,
+        'publisher':            helpers.cvisb,
+        "sourceCitation":       [patient_source],
         "updatedBy":            "Julia Mullen",
         "country":              country,
-        "homeLocation":         home_location,
     }
 
+    try:
+        confirm_date = datetime.strptime(sample_date, '%Y-%m-%d')
+        week = create_week(confirm_date)
+        patient['presentationDate'] = sample_date
+        patient['presentationWeek'] = week
+        
+    except ValueError:
+        # sample_date is not in YYYY-MM-DD format
+        pass
+
     return patient
+
+def create_week(date):
+    # considering ISO week -- Monday to Monday
+    previous_monday = date + timedelta(days=-date.weekday())
+    next_monday     = date + timedelta(days=-date.weekday(), weeks=1)
+
+    upper_bound = "lt"
+    lower_bound = "gt"
+
+    if previous_monday == date:
+        upper_bound = "lte"
+    if next_monday     == date:
+        lower_bound = "gte"
+
+    return {
+        lower_bound: previous_monday.strftime('%Y-%m-%d'),
+        upper_bound: next_monday.strftime('%Y-%m-%d'),
+    }
 
 def create_location(location_string):
     COUNTRIES = {
@@ -174,21 +213,18 @@ def create_location(location_string):
 
     country = {'name': name}
 
-    home_location = [
-        {
-            "@type": "Country",
-            "name":  name,
-            "administrativeUnit": 0,
-            "administrativeType": "country",
-            "identifier": identifier,
-            "url": f"https://www.iso.org/obp/ui/#iso:code:3166:{identifier}"
-        },
-        {
-            "@type": "City",
-            "name":  city,
-            "administrativeType": "city" 
-        }
-    ]
+    country = {  
+        "@type": "Country",
+        "name":  name,
+        "administrativeUnit": 0,
+        "administrativeType": "country",
+        "identifier": identifier,
+        "url": f"https://www.iso.org/obp/ui/#iso:code:3166:{identifier}"
+    }
+
+    home_location = { 
+        "name":  city,
+    }
     return country, home_location
 
 PATIENT_ID_REGEX = re.compile('SEARCH-\d+')
