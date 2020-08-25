@@ -294,6 +294,7 @@ svg-icon.country-icon {
   height: 30px;
   width: 30px;
   padding-left: 3px;
+  fill: #bababa;
 
   &.SL {
     fill: $sierraleone-blue;
@@ -321,6 +322,30 @@ svg-icon.country-icon {
 
   &.CI {
     fill: $cote-divoire-orange;
+  }
+
+  &.US {
+    fill: $us-blue;
+  }
+
+  &.MX {
+    fill: $mexico-green;
+  }
+
+  &.JO {
+    fill: $jordan-red;
+  }
+
+  &.GA {
+    fill: $gabon-green;
+  }
+
+  &.CD {
+    fill: $drc-blue;
+  }
+
+  &.CG {
+    fill: $congo-red;
   }
 }
 
