@@ -116,6 +116,8 @@
                           - Switzerland
                           - Democratic Republic of the Congo
                           - Republic of the Congo
+                          - Mexico
+                          - Jordan
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
