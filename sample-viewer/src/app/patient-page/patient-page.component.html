@@ -108,6 +108,7 @@
               <app-patient-hla *ngSwitchCase="'hla'" [data]="expt['data']" [patientID]="patient.patientID"></app-patient-hla>
               <app-patient-viral-seq *ngSwitchCase="'ebola-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
               <app-patient-viral-seq *ngSwitchCase="'lassa-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="'sarscov2-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
               <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
             </ng-container>
           </mat-expansion-panel>
