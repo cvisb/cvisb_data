@@ -67,7 +67,7 @@ export class ChoroplethComponent implements AfterViewInit {
     this.isWestAfrica = this.data.every(d => westafrica.includes(d.identifier));
     if (this.isWestAfrica) {
       this.map_data = WEST_AFRICA_JSON['features'];
-      this.basemap = AFRICA_JSON['features'];
+      this.basemap = AFRICA_JSON['features'] as any;
 
       // --- mapping scales ---
       // Bounding box was manually chosen to crop the area to the bounding box of interest:
@@ -131,7 +131,7 @@ export class ChoroplethComponent implements AfterViewInit {
         maxLon = 160,
         maxLat = 90;
 
-      let center = [15, 7];
+      let center = [15, 7] as any;
       let x1 = maxLon - minLon
       let y1 = maxLat - minLat
 
