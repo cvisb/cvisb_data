@@ -177,9 +177,7 @@ export class GetPatientsService {
     }).pipe(
       pluck("body"),
       map((res: any) => {
-        console.log(res)
         let summary = new PatientSummary(res)
-        console.log(summary)
         return (summary);
       }),
       catchError(e => {
