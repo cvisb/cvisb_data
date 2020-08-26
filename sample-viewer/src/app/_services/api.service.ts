@@ -62,6 +62,7 @@ export class ApiService {
 
 
   post(endpoint: string, searchString: string, searchParam: string, returnParams: string) {
+    console.log(searchString)
     let headers = new HttpHeaders()
       // .set('Accept', 'application/json')
       .set('Content-Type', 'application/x-www-form-urlencoded');

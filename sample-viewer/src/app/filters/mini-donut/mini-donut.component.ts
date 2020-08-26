@@ -31,10 +31,10 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
   // --- plot sizes ---
   private element: any; // selector for SVG DIV
   // @Input() right_margin: number;
-  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 155 };
+  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 175 };
   private width: number;
   private hole_frac: number = 0.5;
-  private checkboxX: number = 110;
+  private checkboxX: number = 130;
 
   // --- Selectors ---
   private donut: any; // dotplot
