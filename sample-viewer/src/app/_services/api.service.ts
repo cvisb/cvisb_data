@@ -62,7 +62,6 @@ export class ApiService {
 
 
   post(endpoint: string, searchString: string, searchParam: string, returnParams: string) {
-    console.log(searchString)
     let headers = new HttpHeaders()
       // .set('Accept', 'application/json')
       .set('Content-Type', 'application/x-www-form-urlencoded');
@@ -223,8 +222,6 @@ export class ApiService {
     //     queryParams: { q: qParams.toString() },
     //     queryParamsHandling: "merge", // remove to replace all query params by provided
     //   });
-
-    console.log(qParams)
 
     let params = qParams
       .append('size', pageSize.toString());

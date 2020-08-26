@@ -249,7 +249,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .classed('disabled', (d: any) => d.count === 0)
-        .text((d: any) => (d.count))
+        .text((d: any) => d3.format(",")(d.count))
         .transition(t)
         .attr("x", (d: any) => this.x(d.count));
 

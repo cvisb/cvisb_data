@@ -12,7 +12,7 @@
     <div id="cohort-count">
       <h4 class="filter-label">cohort</h4>
       <app-mini-donut [data]="dataset.counts.cohorts" [height]="65"
-      [margin]="{ top: 2, bottom: 2, left: 2, right: 110 }" [cohorts]="dataset.counts.all_cohorts" [filterable]="false"></app-mini-donut>
+      [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [cohorts]="dataset.counts.all_cohorts" [filterable]="false"></app-mini-donut>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
 
   <div class="grid-item grid-column-container" id="outcome-count">
     <h4 class="filter-label">outcome</h4>
-    <app-mini-barplot [data]="dataset.counts.outcomes" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 30, right: 70 }"
+    <app-mini-barplot [data]="dataset.counts.outcomes" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }"
     [options]="dataset.counts.all_outcomes" [filterable]="false"></app-mini-barplot>
   </div>
 
