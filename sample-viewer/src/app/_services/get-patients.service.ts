@@ -258,6 +258,7 @@ export class GetPatientsService {
       // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
         patientData["source"] = patientData.sourceCitation ? patientData.sourceCitation : patientData.publisher;
+        console.log(patientData)
         return ({ patient: patientData, experiments: exptData, samples: sampleData })
       })
     )
