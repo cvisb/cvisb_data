@@ -29,7 +29,7 @@ export class PatientViralSeqComponent implements OnChanges {
           // remove the non-curated sequence
           seq.data = seq.data.filter((d:any) => d.curated);
         }
-        if (seq.data.quality) {
+        if (seq.data && seq.data.quality) {
           seq['data']['good'] = new Array(seq.data.quality);
           seq['data']['bad'] = new Array(this.maxStars - seq.data.quality);
         }
