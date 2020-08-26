@@ -28,7 +28,7 @@ export class ProvenanceComponent implements OnInit {
     console.log(this.source)
     // Search within any part of the string for CViSB
     if (this.source) {
-      this.cvisb_data = this.source["name"]includes("Center for Viral Systems Biology");
+      this.cvisb_data = this.source["name"].includes("Center for Viral Systems Biology");
     } else {
       this.cvisb_data = false;
     }
