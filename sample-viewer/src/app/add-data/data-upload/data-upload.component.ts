@@ -144,7 +144,7 @@ export class DataUploadComponent implements OnInit {
 
 
 
-    if (data && (data.forEach !== undefined)) {
+    if (data) {
       data.forEach(d => {
         // Append user name to the location change
         d['updatedBy'] = this.user.name;
