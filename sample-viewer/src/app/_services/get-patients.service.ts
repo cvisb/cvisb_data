@@ -147,7 +147,6 @@ export class GetPatientsService {
       .set("fields", "alternateIdentifier");
 
     return this.apiSvc.fetchAll('patient', params).pipe(
-      tap(d => console.log(d.slice(0,4))),
       map((res: any) => {
         let ids = uniq(flatMapDeep(res, d => d['alternateIdentifier']));
         return ids;
@@ -178,6 +177,7 @@ export class GetPatientsService {
     }).pipe(
       pluck("body"),
       map((res: any) => {
+        console.log(summary)
         let summary = new PatientSummary(res)
         return (summary);
       }),

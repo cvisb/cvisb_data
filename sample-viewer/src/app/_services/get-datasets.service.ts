@@ -260,8 +260,6 @@ export class getDatasetsService {
           let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation.${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
           let id_string = ids.length ? ids.join(",") : "none";
 
-          console.log(ids)
-
           return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
               let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation).filter(d => d);
