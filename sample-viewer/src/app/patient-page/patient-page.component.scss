@@ -61,7 +61,7 @@ $nav-width: 215px;
   }
 
   &.COVID-19 {
-    background: lighten($covid-md, 28%);
+    background: lighten($covid-lt, 10%);
     border: none;
   }
 
@@ -112,6 +112,7 @@ $nav-width: 215px;
 
 .cohort-group {
   font-size: 1.35em;
+  flex-shrink: 0;
 }
 
 .altIDs {
