@@ -1,4 +1,9 @@
 # Prod
+### 2020-08-25
+* Updated schema (prod and dev): added Country options for Jordan and Mexico.
+* Added in SARS-CoV2 sequencing data.
+* synchronized public + private
+
 ### 2020-06-23
 * Updated schema (prod and dev): removed requiredness of country
 * updated Ebola virus sequence data
