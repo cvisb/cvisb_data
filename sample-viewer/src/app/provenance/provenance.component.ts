@@ -19,7 +19,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() source: Object[] = [{ name: "Center for Viral Systems Biology" }];
   @Input() changes: string;
   @Input() public_data: boolean = false;
-  @Input() cvisb_data: boolean;
+  @Input() cvisb_data: boolean = true;
   @Input() citation: Citation[];
 
   constructor(public dialog: MatDialog) { }
@@ -27,11 +27,11 @@ export class ProvenanceComponent implements OnInit {
   ngOnInit() {
     console.log(this.source)
     // Search within any part of the string for CViSB
-    if (this.source) {
-      this.cvisb_data = this.source.some((d:any) => d.name == "Center for Viral Systems Biology");
-    } else {
-      this.cvisb_data = false;
-    }
+    // if (this.source) {
+    //   this.cvisb_data = this.source.some((d:any) => d.name == "Center for Viral Systems Biology");
+    // } else {
+    //   this.cvisb_data = false;
+    // }
   }
 
   showCorrections($event: Event, changes): void {
