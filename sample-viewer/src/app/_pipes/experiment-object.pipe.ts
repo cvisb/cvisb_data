@@ -43,6 +43,7 @@ export class ExperimentObjectPipe implements PipeTransform {
 
     { "variableMeasured": ["Ebola virus sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "ebola-virus-seq", "datasetName": "Ebola virus sequencing", "anchor_link": "Ebola-virus-sequencing" },
     { "variableMeasured": ["Lassa virus sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "lassa-virus-seq", "datasetName": "Lassa virus sequencing", "anchor_link": "Lassa-virus-sequencing" },
+    { "variableMeasured": ["SARS-CoV-2 virus sequence"], "measurementTechnique": ["Nucleic Acid Sequencing"], "measurementCategory": "virus sequencing", "dataset_id": "sarscov2-virus-seq", "datasetName": "SARS-CoV-2 virus sequencing", "anchor_link": "SARS-CoV-2-virus-sequencing" },
 
     { "variableMeasured": ["BCR sequence"], "measurementTechnique": ["Immune Repertoire Deep Sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "bcr", "datasetName": "BCR sequencing", "anchor_link": "BCR-sequencing" },
     { "variableMeasured": ["TCR sequence"], "measurementTechnique": ["Immune Repertoire Deep Sequencing"], "measurementCategory": "immune repertoire sequencing", "dataset_id": "tcr", "datasetName": "TCR sequencing", "anchor_link": "TCR-sequencing" },

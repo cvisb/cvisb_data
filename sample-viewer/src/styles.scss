@@ -294,6 +294,7 @@ svg-icon.country-icon {
   height: 30px;
   width: 30px;
   padding-left: 3px;
+  fill: #bababa;
 
   &.SL {
     fill: $sierraleone-blue;
@@ -321,6 +322,30 @@ svg-icon.country-icon {
 
   &.CI {
     fill: $cote-divoire-orange;
+  }
+
+  &.US {
+    fill: $us-blue;
+  }
+
+  &.MX {
+    fill: $mexico-green;
+  }
+
+  &.JO {
+    fill: $jordan-red;
+  }
+
+  &.GA {
+    fill: $gabon-green;
+  }
+
+  &.CD {
+    fill: $drc-blue;
+  }
+
+  &.CG {
+    fill: $congo-red;
   }
 }
 
@@ -411,6 +436,7 @@ svg-icon.country-icon {
   padding: 5px;
   margin-right: 0;
   border-radius: 5px 0 0 5px;
+  white-space: nowrap;
 }
 
 .cohort.Lassa,
@@ -424,6 +450,13 @@ svg-icon.country-icon {
 .outcome.Ebola {
   background-color: $ebola-color;
   border: $ebola-color 1px solid;
+  color: white;
+}
+
+.cohort.COVID-19,
+.outcome.COVID-19 {
+  background-color: $covid-color;
+  border: $covid-color 1px solid;
   color: white;
 }
 
@@ -464,6 +497,11 @@ svg-icon.country-icon {
       color: $lassa-color;
     }
 
+    &.COVID-19 {
+      background-color: lighten($covid-lt, 15%);
+      color: $covid-color;
+    }
+
     &.Unknown {
       background-color: $grey-50;
     }
@@ -478,6 +516,10 @@ svg-icon.country-icon {
 
     &.Ebola {
       color: $ebola-dk;
+    }
+
+    &.COVID-19 {
+      color: $covid-dk;
     }
 
     &.Unknown {
@@ -496,6 +538,11 @@ svg-icon.country-icon {
       color: $default-color;
     }
 
+    &.COVID-19 {
+      background-color: $covid-lt;
+      color: $default-color;
+    }
+
     &.Unknown {
       background-color: $grey-225;
       color: $default-color;
@@ -510,6 +557,11 @@ svg-icon.country-icon {
 
     &.Ebola {
       background-color: $ebola-md;
+      color: $default-color;
+    }
+
+    &.COVID-19 {
+      background-color: $covid-md;
       color: $default-color;
     }
 
@@ -676,6 +728,7 @@ button.stepper-button {
 
 .ebola-virus-seq,
 .lassa-virus-seq,
+.sarscov2-virus-seq,
 .virus-seq {
   background: #e4fffc;
 }

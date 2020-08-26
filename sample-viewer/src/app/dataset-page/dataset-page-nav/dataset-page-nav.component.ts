@@ -25,6 +25,11 @@ export class DatasetPageNavComponent implements OnInit {
         { key: "sources", name: "sources" },
         { key: "files", name: "download data" },
       ],
+      "sarscov2-virus-seq": [
+        { key: "description", name: "overview" },
+        { key: "sources", name: "sources" },
+        { key: "files", name: "download data" },
+      ],
       "ebola-virus-seq": [
         { key: "description", name: "overview" },
         { key: "alignments", name: "curated alignments" },

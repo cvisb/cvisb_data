@@ -7,7 +7,7 @@
 
 <div class="sex">
   <span class="variable-label">sex: </span>
-  <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender }}</span>
+  <span class="variable-value" [ngClass]="patient.gender">{{ patient.gender ? patient.gender : "unknown" }}</span>
   <!-- <span class="sex" [ngClass]="patient.gender">
   <span *ngIf="patient.gender === 'Female'"><i class="fas fa-venus"></i></span>
   <span *ngIf="patient.gender === 'Male'"><i class="fas fa-mars"></i></span>
@@ -16,7 +16,7 @@
 
 <div class="age">
   <span class="variable-label">age:</span>
-  <span class="variable-value">{{ patient.age }}</span>
+  <span class="variable-value">{{ patient.age || patient.age === 0 ? patient.age : "unknown" }}</span>
 </div>
 
 <div class="country container" [ngClass]="patient.country['name']">

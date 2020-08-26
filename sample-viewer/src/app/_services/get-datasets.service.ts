@@ -258,7 +258,7 @@ export class getDatasetsService {
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
           let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation.${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
-          let id_string = ids.join(",");
+          let id_string = ids.length ? ids.join(",") : "none";
 
           return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
             map(citations => {
