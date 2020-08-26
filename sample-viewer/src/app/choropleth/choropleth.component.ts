@@ -55,7 +55,6 @@ export class ChoroplethComponent implements AfterViewInit {
   }
 
   createPlot() {
-    console.log(this.data)
     this.element = this.chartContainer.nativeElement;
 
     // --- color scale ---

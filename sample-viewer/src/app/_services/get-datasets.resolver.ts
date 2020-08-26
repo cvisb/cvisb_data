@@ -33,6 +33,7 @@ export class DatasetResolver implements Resolve<any> {
   // Could create separate resolvers for each dataset type and cache the results...
   resolve(route: ActivatedRouteSnapshot) {
     let dsid = route.data.dsid;
+    console.log(dsid)
     // Send result --> this.result, which saves it to transferState
     return this.datasetSvc.getDataset(dsid);
 

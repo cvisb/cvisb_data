@@ -223,6 +223,8 @@ export class ApiService {
     //     queryParamsHandling: "merge", // remove to replace all query params by provided
     //   });
 
+    console.log(qParams)
+
     let params = qParams
       .append('size', pageSize.toString());
 
