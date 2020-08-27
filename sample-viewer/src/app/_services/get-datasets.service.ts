@@ -65,7 +65,7 @@ export class getDatasetsService {
     } else {
       // Get list of datasets
       qstring = "__all__";
-      fieldString = "name,description,identifier, keywords,dateModified"
+      fieldString = "name,description,identifier,keywords,dateModified,measurementCategory,measurementTechnique"
     }
 
     let params = new HttpParams()
