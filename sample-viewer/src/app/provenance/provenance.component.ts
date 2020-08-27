@@ -25,7 +25,6 @@ export class ProvenanceComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log(this.source)
     // Search within any part of the string for CViSB
     if (this.source) {
       if(!Array.isArray(this.source)){

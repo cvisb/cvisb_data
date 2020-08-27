@@ -258,15 +258,14 @@ export class GetPatientsService {
       // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
         if (patientData) {
-          console.log(patientData)
           if (patientData.sourceCitation) {
             patientData["source"] = patientData.sourceCitation;
-            // patientData["source"].forEach(d => {
-            //   d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]} ${d["journalName"]} ${d["datePublished"]}` : d.name;
-            // })
+            patientData["source"].forEach(d => {
+              d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]} ${d["journalName"]} ${d["datePublished"]}` : d.name;
+            })
 
           } else {
-            patientData["source"] = [patientData.publisher];
+            patientData["source"] = patientData.publisher ? [patientData.publisher] : null;
           }
 
         }
