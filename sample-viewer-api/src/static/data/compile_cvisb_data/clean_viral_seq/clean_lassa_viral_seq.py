@@ -114,6 +114,10 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     md['alternateIdentifier'] = md.privatePatientID.apply(helpers.listify)
     md['country'] = md.country_iso3.apply(helpers.getCountry)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
+    md['admin2'] = md["admin2"]
+    md['admin3'] = md["admin3-4"]
+    md['homeLocation'] = None
+    md['exposureLocation'] = None
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date.apply(helpers.date2Range)
     md['species'] = md.host.apply(helpers.convertSpecies)
