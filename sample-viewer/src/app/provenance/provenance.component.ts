@@ -35,7 +35,6 @@ export class ProvenanceComponent implements OnInit {
         }
       }
 
-      console.log(this.source)
       this.cvisb_data = this.source.some((d: any) => d.name.includes("Center for Viral Systems Biology"));
     } else {
       this.cvisb_data = false;
