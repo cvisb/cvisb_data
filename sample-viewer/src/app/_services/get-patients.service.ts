@@ -261,7 +261,7 @@ export class GetPatientsService {
           if (patientData.sourceCitation) {
             patientData["source"] = patientData.sourceCitation;
             patientData["source"].forEach(d => {
-              d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]["givenName"]} ${d["author"][0]["familyName"]} ${d["journalName"]} ${this.datePipe.transform(d["datePublished"], "YYYY")}` : d.name;
+              d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]["givenName"]} ${d["author"][0]["familyName"]} ${d["journalName"]} ${this.datePipe.transform(d["datePublished"], "yyyy")}` : d.name;
             })
 
           } else {
