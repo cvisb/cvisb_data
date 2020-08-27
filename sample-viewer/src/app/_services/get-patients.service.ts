@@ -189,9 +189,9 @@ export class GetPatientsService {
 
   getAllPatientsSummary(): Observable<PatientSummary> {
     return forkJoin([this.getPatientIDs(), this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
-       map(([patientIDs, patientSummary, expts]) => {
-         patientSummary["experiments"] = expts;
-         patientSummary["patientIDs"] = patientIDs;
+      map(([patientIDs, patientSummary, expts]) => {
+        patientSummary["experiments"] = expts;
+        patientSummary["patientIDs"] = patientIDs;
 
         let years = patientSummary.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
         let minYear = Math.min(...years);
@@ -257,6 +257,9 @@ export class GetPatientsService {
     ]).pipe(
       // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
+        if (patientData) {
+          patientData["source"] = patientData.sourceCitation ? patientData.sourceCitation : patientData.publisher;
+        }
         return ({ patient: patientData, experiments: exptData, samples: sampleData })
       })
     )

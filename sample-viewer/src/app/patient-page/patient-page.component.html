@@ -37,7 +37,7 @@
         </mat-expansion-panel-header>
 
         <div class="container patient-metadata">
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [changes]="patient.correction" [source]="patient.publisher" class="provenance"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [changes]="patient.correction" [source]="patient.source" class="provenance"></app-provenance>
 
           <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
