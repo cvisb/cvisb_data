@@ -46,8 +46,8 @@ export class Patient {
   correction: string;
   citation: Citation[];
   publisher: Organization;
-  sourceCitation: Organization;
-  source: Organization
+  sourceCitation: Organization[];
+  source: Organization[]
 }
 
 export class UnknownCount {
