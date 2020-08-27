@@ -27,11 +27,14 @@ export class ProvenanceComponent implements OnInit {
   ngOnInit() {
     // Search within any part of the string for CViSB
     if (this.source) {
-      if(typeof(this.source) == "string") {
-        this.source = [{name: this.source}];
-      } else if(typeof(this.source) == "object") {
-        this.source = [this.source];
+      if(!Array.isArray(this.source)){
+        if(typeof(this.source) == "string") {
+          this.source = [{name: this.source}];
+        } else if(typeof(this.source) == "object") {
+          this.source = [this.source];
+        }
       }
+
       console.log(this.source)
       this.cvisb_data = this.source.some((d: any) => d.name.includes("Center for Viral Systems Biology"));
     } else {
