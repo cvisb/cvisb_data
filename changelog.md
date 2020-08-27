@@ -1,4 +1,30 @@
 # Prod
+### 2020-08-27 v0.2.3
+* Re-ran schema generation to add Ghana
+* Wiped and reloaded `ebola-virus-seq`
+    -	1 dataset
+    - 2,309 experiments
+    - 2,310 data downloads
+* Wiped, re-ran, and reloaded `lassa-virus-seq`
+    -	1 dataset
+    - 1,318 experiments
+    - 1,807 data downloads
+* Updated datacatalog
+Not updated but logging:
+* HLA
+  - 1 dataset
+  - 370 experiments
+  - 371 data downloads
+* Serology (Ebola/Lassa)
+  - 1 dataset
+  - 2,554 experiments
+  - 1 data download
+* SARS-CoV-2 Virus Seq
+  - 1 dataset
+  - 1,195 experiments
+  - 1,195 patients
+
+    
 ### 2020-08-25
 * Updated schema (prod and dev): added Country options for Jordan and Mexico.
 * Added in SARS-CoV2 sequencing data.
