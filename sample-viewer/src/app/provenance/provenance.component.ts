@@ -16,7 +16,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() embargoLabel: string;
   @Input() embargoed: boolean = false;
   @Input() dataStatus: string;
-  @Input() source: Object = { name: "Center for Viral Systems Biology" };
+  @Input() source: any = [{ name: "Center for Viral Systems Biology" }];
   @Input() changes: string;
   @Input() public_data: boolean = false;
   @Input() cvisb_data: boolean;
@@ -27,8 +27,12 @@ export class ProvenanceComponent implements OnInit {
   ngOnInit() {
     // Search within any part of the string for CViSB
     if (this.source) {
-    console.log(this.source)
-      this.cvisb_data = this.source["name"].includes("Center for Viral Systems Biology");
+      if(typeof(this.source) == "string") {
+        this.source = [{name: this.source}];
+      } else if(typeof(this.source) == "object") {
+        this.source = [this.source];
+      }
+      this.cvisb_data = this.source.some((d: any) => d.name.includes("Center for Viral Systems Biology"));
     } else {
       this.cvisb_data = false;
     }
