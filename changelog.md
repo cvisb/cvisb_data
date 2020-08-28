@@ -1,4 +1,10 @@
 # Prod
+### 2020-08-27
+ * Wiped and readded SARS-CoV-2 experiment data adding sourceCitation
+ * Wiped and readded SARS-CoV-2 patient information removing duplicate entries
+ * SARS-CoV-2 totals now 1134 experiments and 1195 patients
+ * Reran public / private sync
+
 ### 2020-08-27 v0.2.3
 * Re-ran schema generation to add Ghana
 * Wiped and reloaded `ebola-virus-seq`
