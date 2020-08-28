@@ -1,4 +1,9 @@
 # Prod
+
+### 2020-08-28
+ * Wiped and readded SARS-CoV-2 experiment data, now totals 1195 again.
+ * pub/priv sync
+ 
 ### 2020-08-27
  * Wiped and readded SARS-CoV-2 experiment data adding sourceCitation
  * Wiped and readded SARS-CoV-2 patient information removing duplicate entries
