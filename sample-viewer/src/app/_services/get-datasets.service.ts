@@ -26,7 +26,7 @@ const SOURCES_KEY = makeStateKey('datasets.sources_result');
 export class getDatasetsService {
   dataset_schema: any;
   private sources_result;
-  schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "distribution", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
+  schemaorg_dataset: string[] = ["@context", "@type", "author", "citation", "creator", "dateModified", "datePublished", "description", "funding", "identifier", "includedInDataCatalog", "keywords", "license", "measurementTechnique", "name", "publisher", "spatialCoverage", "temporalCoverage", "url", "variableMeasured", "version"];
   schemaorg_datadownload: string[] = ["contentUrl", "encodingFormat", "@context", "@type", "dateModified"];
   // schemaorg_datadownload: string[] = ["@type", "name", "description", "version", "additionalType", "encodingFormat", "datePublished", "dateModified", "contentUrl"];
   ;
@@ -427,15 +427,15 @@ export class getDatasetsService {
       }
 
       // remove stuff from individual files
-      for (let file of this.dataset_schema['distribution']) {
-        let keys = Object.keys(file);
-
-        for (let key of keys) {
-          if (!this.schemaorg_datadownload.includes(key)) {
-            delete file[key];
-          }
-        }
-      }
+      // for (let file of this.dataset_schema['distribution']) {
+      //   let keys = Object.keys(file);
+      //
+      //   for (let key of keys) {
+      //     if (!this.schemaorg_datadownload.includes(key)) {
+      //       delete file[key];
+      //     }
+      //   }
+      // }
 
       // custom: get rid of the author list from citation, since they get long
       for (let citation of this.dataset_schema['citation']) {
