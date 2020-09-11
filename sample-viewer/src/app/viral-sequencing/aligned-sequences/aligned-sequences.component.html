@@ -1,0 +1,33 @@
+<div class="aligned-sequence virus-container" [id]="virusName">
+  <h4 class="aligned-seq-header">{{virusName}}</h4>
+  <div class="alignment-properties-container">
+
+    <div class="container-column">
+      <div class="updated">
+        updated 15 May 2019
+      </div>
+      <div class="alignment-params">
+        Aligned using ... (alignment parameters)
+      </div>
+
+    </div>
+
+    <button mat-raised-button color="primary" (click)="downloadAlignment()">download</button>
+  </div>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        select {{virusName}} sequences
+      </mat-panel-title>
+      <!-- <mat-panel-description>
+          filter the results
+        </mat-panel-description> -->
+    </mat-expansion-panel-header>
+
+    <app-aligned-sequences-filters></app-aligned-sequences-filters>
+
+  </mat-expansion-panel>
+
+
+</div>

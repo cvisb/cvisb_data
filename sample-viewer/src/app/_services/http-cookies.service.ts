@@ -47,22 +47,22 @@ export class MyHttpClient extends HttpClient {
       options = {};
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        .set('Cache-Control', 'no-cache')
-        .set("Access-Control-Allow-Origin", '*')
-        .set('Pragma', 'no-cache')
-        .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-        .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        .set('If-Modified-Since', '0');
+        // .set('Cache-Control', 'no-cache')
+        // .set("Access-Control-Allow-Origin", '*')
+        // .set('Pragma', 'no-cache')
+        // .set("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+        // .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+        // .set('If-Modified-Since', '0');
     }
     else {
       options.headers = <HttpHeaders>options.headers;
       options.headers = options.headers
-      .append('Cache-Control', 'no-cache')
-        .append('Pragma', 'no-cache')
-        .set("Access-Control-Allow-Origin", '*')
-        .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-        .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
-        .append('If-Modified-Since', '0')
+      // .append('Cache-Control', 'no-cache')
+      //   .append('Pragma', 'no-cache')
+      //   .set("Access-Control-Allow-Origin", '*')
+      //   .append("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+      //   .append('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+      //   .append('If-Modified-Since', '0')
     }
 
     if (typeof first !== "string" && !first.headers)
@@ -73,9 +73,9 @@ export class MyHttpClient extends HttpClient {
       first = (first as HttpRequest<any>).clone({
         // withCredentials needs to be true to allow cookie to be passed to the client
         // ... but to get it to run on localhost (with only public data from the API), it needs to be false to allow CORS
-        withCredentials: true,
+        withCredentials: false,
       });
-    options.withCredentials = true;
+    options.withCredentials = false;
 
     // if we are server side, then import cookie header from express
     if (isPlatformServer(this.platformId)) {

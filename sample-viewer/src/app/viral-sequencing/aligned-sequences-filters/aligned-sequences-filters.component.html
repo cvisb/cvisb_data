@@ -1,0 +1,58 @@
+<div class="seq-filter-container">
+
+  <div class="filter-column">
+    <div id="outcome" class="filter-group">
+      <h5 class="filter-title">outcome</h5>
+
+      <mat-checkbox *ngFor="let outcome of outcomes" color="primary" class="checkbox-list">{{outcome}}</mat-checkbox>
+    </div>
+
+    <div id="date" class="filter-group">
+      <h5 class="filter-title">sampling date</h5>
+      <mat-slider></mat-slider>
+    </div>
+  </div>
+
+  <div class="filter-column">
+    <div id="ids" class="filter-group">
+      <h5 class="filter-title">patient ID</h5>
+      <ng-select #selectpatients class="patient-ids" [items]="patients" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" placeholder="Enter patients" (search)="onSearch($event)" (ngModelChange)="filterPatientIDs($event)"
+        [(ngModel)]="selectedPatients">
+      </ng-select>
+    </div>
+
+    <div id="ncbi" class="filter-group">
+      <h5 class="filter-title">NIH accession number</h5>
+      <ng-select #selectpatients class="patient-ids" [items]="patients" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true"
+      placeholder="Enter ids" (search)="onSearch($event)" (ngModelChange)="filterPatientIDs($event)"
+        [(ngModel)]="selectedPatients">
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="filter-column">
+    <div id="source" class="filter-group">
+      <h5 class="filter-title">source</h5>
+
+      <mat-checkbox color="primary" class="checkbox-list">CViSB data</mat-checkbox>
+      <mat-checkbox color="primary" class="checkbox-list">public data</mat-checkbox>
+    </div>
+
+    <div id="publication" class="filter-group">
+      <h5 class="filter-title">publication</h5>
+
+      <mat-checkbox *ngFor="let publication of publications" color="primary" class="checkbox-list">{{publication}}</mat-checkbox>
+    </div>
+  </div>
+
+  <div id="country" class="filter-group">
+    <h5 class="filter-title">country</h5>
+
+    <mat-checkbox *ngFor="let country of countries" color="primary" class="checkbox-list">
+      <span class="country-name">{{country.label}}</span>
+      <svg-icon [icon]="country.id" class="country-icon" [ngClass]="country.id"></svg-icon>
+
+    </mat-checkbox>
+  </div>
+
+</div>

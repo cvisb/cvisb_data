@@ -1,5 +1,6 @@
-// --- Errors ---
+@import '../../../sass/material-theme.scss';
 
+// --- Errors ---
 .error-label {
   font-weight: 400;
 }
@@ -18,4 +19,39 @@
 
 .file-name {
   font-weight: 400;
+}
+
+
+.progress-bar {
+  max-width: 500px;
+  height: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.pct-complete {
+  max-width: 500px;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.mat-progress-bar-background{
+  fill: primary(100);
+}
+.mat-progress-bar-buffer{
+  background-color: primary(100);
+}
+.mat-progress-bar-fill::after {
+  background-color: primary(500);
+}
+
+
+.mat-progress-bar-background{
+  fill: primary(100);
+}
+.mat-progress-bar-buffer{
+  background-color: primary(100);
+}
+.mat-progress-bar-fill::after {
+  background-color: primary(500);
 }

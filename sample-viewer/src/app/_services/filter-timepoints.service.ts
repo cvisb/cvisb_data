@@ -26,9 +26,8 @@ export class FilterTimepointsService {
   // Call to https://dev.cvisb.org/api/sample/query?q=__all__&facets=privatePatientID.keyword(visitCode.keyword)&facet_size=10000&size=0
   // Groups by privatePatientID, then counts the number of visitCodes.
   // Before returning, collapses the ESNestedFacet result into a tuple of privatePatientID and numTimepoints (length of unique number of visitCode terms.)
-  getTimepoints(qString: string): Observable<PatientTimepoints[]> {
-    let params = new HttpParams()
-      .set('q', '__all__')
+  getTimepoints(qParams: HttpParams): Observable<PatientTimepoints[]> {
+    let params = qParams
       .append('facets', 'privatePatientID.keyword(visitCode.keyword)')
       .append('size', '0')
       .append('facet_size', '10000');
@@ -40,6 +39,7 @@ export class FilterTimepointsService {
       params: params
     }).pipe(
       map(res => {
+        console.log(res)
         let patient_timepoints = res['body']['facets']["privatePatientID.keyword"].terms.map(d => {
           return ({
             "privatePatientID": d.term, "numTimepoints": d['visitCode.keyword']['terms'].length
@@ -54,8 +54,8 @@ export class FilterTimepointsService {
     );
   }
 
-  summarizeTimepoints() {
-    return this.getTimepoints("__all__").pipe(
+  summarizeTimepoints(qParams) {
+    return this.getTimepoints(qParams).pipe(
       map((res: PatientTimepoints[]) => {
         let summary = _(res)
           .groupBy('numTimepoints')
@@ -72,8 +72,8 @@ export class FilterTimepointsService {
   }
 
   // Returns an array of patientIDs to use in a subsequent filter.
-  filterTimepoints(lowerLimit: number, upperLimit: number) {
-    return this.getTimepoints("__all__").pipe(
+  filterTimepoints(qParams, lowerLimit: number, upperLimit: number) {
+    return this.getTimepoints(qParams).pipe(
       map((res: PatientTimepoints[]) => {
         let filteredPatients = res
           .filter(d => d.numTimepoints <= upperLimit && d.numTimepoints >= lowerLimit)

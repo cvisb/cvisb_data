@@ -150,6 +150,7 @@ def getLabAuthor(name):
             "@type": "Organization",
             "identifier": "AlterLab",
             "url": "http://www.ragoninstitute.org/portfolio-item/alter-lab/",
+            "affiliation": "Ragon Institute of MGH, MIT and Harvard",
             "name": "Galit Alter laboratory"
         })
     elif((name == "KGA") | (name == "Kristian") | (name == "Andersen")):
@@ -158,6 +159,7 @@ def getLabAuthor(name):
             "identifier": "AndersenLab",
             "url": "https://andersen-lab.com/",
             "name": "Kristian Andersen laboratory",
+            "affiliation": "Scripps Research",
             "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "technical support",

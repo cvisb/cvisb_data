@@ -26,25 +26,24 @@
 # •	hasPatientData: True/False if there’s patient date available
 # •	idFlag: True/False if the gid isn’t in the format G-xxx or G-xxxx
 # •	ageFlag: True/False if something about the age looks weird.
-
-
-
 import pandas as pd
 import re
 from datetime import datetime, timedelta
-# import os
-# os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/clean_patients")
+import os
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/compile_cvisb_data/")
 import helpers # Helpers module, for common cleanup functions
+DATADIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
+filename = f"{DATADIR}/input_data/patient_rosters/acuteLassa_patientdata_v2_2019-06-12_PRIVATE.csv"
 
-from .clean_lassa_acute_ids import prep_id_data
+# from .clean_acute_ids import clean_acute_ids
 
-def clean_lassa_acute(filename, id_filename, export_filename, export_id_filename,
-export_weirdos, export_id_weirdos):
+def clean_lassa_acute(filename, id_filename):
     print('\n cleaning lassa')
 
     # --- Load acute patient data, clean it up ---
     df = cleanAcute(filename)
-
+    # indicate the source of the patient data
+    df['sourceFiles'] = f"{filename.split('/')[-1]}; {id_filename.split('/')[-1]}"
 
     # --- Add Public PatientIDs ---
     df_merged = mergePublicIDs(df, id_filename)
@@ -54,11 +53,11 @@ export_weirdos, export_id_weirdos):
 
     # --- Export weird values ---
     weirdos = df_merged.loc[df_merged.issue == df_merged.issue, id_cols]
-    weirdos.sort_values(by=id_cols).to_csv(export_id_weirdos + ".csv", index=False)
+    # weirdos.sort_values(by=id_cols).to_csv(export_id_weirdos + ".csv", index=False)
 
     # --- Export the ID dictionary -- all values ---
-    df_merged[id_cols].sort_values(by=["Original G No.", "Study Specific #"]).to_csv(
-        export_id_filename + ".csv", index=False)
+    # df_merged[id_cols].sort_values(by=["Original G No.", "Study Specific #"]).to_csv(
+    #     export_id_filename + ".csv", index=False)
 
 
     # --- Run series of checks to make sure the values are as expected ---
@@ -66,11 +65,11 @@ export_weirdos, export_id_weirdos):
     df_merged = runChecks(df_merged)
 
     # --- Export all data ---
-    df_merged[df_merged.issue == df_merged.issue].to_csv(export_weirdos + ".csv", index = False)
+    # df_merged[df_merged.issue == df_merged.issue].to_csv(export_weirdos + ".csv", index = False)
 
     # Export everything-- including original, unmodified data
     # df_merged.sort_values(by=["gID", "Original G No.", "Study Specific #"]).to_csv(
-    df_merged.to_csv(export_filename + ".csv", index=False)
+    # df_merged.to_csv(export_filename + ".csv", index=False)
     # df_merged.to_json(export_filename + ".json", orient="records")
 
 
@@ -139,7 +138,7 @@ def mergePublicIDs(df, id_filename):
     """
     Import and clean ID dictionary of public/private ID crosswalk
     """
-    ids = prep_id_data(id_filename)
+    ids = clean_acute_ids(id_filename)
 
     # Read in the metadata for the patients and merge
     df_merged = mergeMetadata(df, ids)
@@ -177,40 +176,45 @@ def cleanAcute(filename):
     # --- pregnant ---
     df['pregnant'] = df.pregnant.apply(helpers.convertBoolean)
 
-
     # -- elisas --
     df['elisa'] = df.apply(helpers.nestELISAs, axis = 1)
+    df['agPositive'] = df.agvresultcc1.apply(helpers.binarize)
+    df['iggPositive'] = df.iggvresultcc1.apply(helpers.binarize)
+    df['igmPositive'] = df.igmvresultcc1.apply(helpers.binarize)
+    df['lassaPositive'] = df.apply(helpers.classifyELISA, axis=1)
 
-    # --- admin2 ---
+        # --- admin2 ---
     df['admin2'] = df.District.apply(helpers.cleanDistrict)
     df['exposureLocation'] = df.admin2.apply(helpers.listify)
 
-    # -- admit status --
-    # Waiting from John to hear what the differences are between these two vars.
-    # # fix cases
-    # # admittted --> admitted
-    # # collapse med ward/maternity to hospitalized?
-    # # collapse admitted --> hospitalized?
-    # df.AdmitStatus.apply(lambda x: str(x).lower()).value_counts(dropna=False)
-    #
-    # df['admitStatus'] = df.AdmitStatus.apply(lambda x: str(x).lower())
-    #
-    # # -- admit --
-    # # convert to boolean
-    # df.admit.value_counts(dropna=False)
-    #
-    # # `AdmitStatus` and `admit` don't agree
-    # df.groupby("admitStatus").admit.value_counts(normalize=True)
-    # df.admitStatus.value_counts()
+        # -- admit status --
+        # Waiting from John to hear what the differences are between these two vars.
+        # # fix cases
+        # # admittted --> admitted
+        # # collapse med ward/maternity to hospitalized?
+        # # collapse admitted --> hospitalized?
+        # df.AdmitStatus.apply(lambda x: str(x).lower()).value_counts(dropna=False)
+        #
+        # df['admitStatus'] = df.AdmitStatus.apply(lambda x: str(x).lower())
+        #
+        # # -- admit --
+        # # convert to boolean
+        # df.admit.value_counts(dropna=False)
+        #
+        # # `AdmitStatus` and `admit` don't agree
+        # df.groupby("admitStatus").admit.value_counts(normalize=True)
+        # df.admitStatus.value_counts()
 
-    # --- time variables: convert all to python objects and then standardized YYYY-MM-DD dates ---
+        # --- time variables: convert all to python objects and then standardized YYYY-MM-DD dates ---
     df['converted_evalDate'] = df.evaldate_lba1.apply(helpers.convertExcelDate)
-    df['converted_admitDate'] = df.DOAdm.apply(helpers.convertExcelDate)
+    df['converted_admitDate'] = df.DOAdm.apply(lambda x: helpers.convertExcelDate(x, "%m/%d/%y"))
     df['converted_dischargeDate'] = df.DateofDischarge.apply(helpers.convertExcelDate)
 
+    df['admitDate'] = df.converted_admitDate.apply(helpers.dates2String)
     df['evalDate'] = df.converted_evalDate.apply(helpers.dates2String)
     df['dischargeDate'] = df.converted_dischargeDate.apply(helpers.dates2String)
 
+    df['admitYear'] = df.converted_evalDate.apply(helpers.getYearfromDate)
     df['evalYear'] = df.converted_evalDate.apply(helpers.getYearfromDate)
     df['dischargeYear'] = df.converted_dischargeDate.apply(helpers.getYearfromDate)
     df['daysOnset'] = df.duration # 2019-06-12 data has as separate column
@@ -220,8 +224,13 @@ def cleanAcute(filename):
     df['onsetYear'] = df.converted_onsetDate.apply(helpers.getYearfromDate)
     df['infectionDate'] = df.converted_onsetDate.apply(helpers.dates2String)
 
+    df['converted_presentationDate'] = df.apply(helpers.calcPresentation, axis = 1)
+    df['presentationDate'] = df.converted_presentationDate.apply(helpers.dates2String)
+
     df['daysInHospital'] = df.apply(helpers.calcHospitalStay, axis=1)
     df['daysOnset2Discharge'] = df.apply(helpers.calcOnsetDischargeGap, axis=1)
+
+
 
 
     return(df)

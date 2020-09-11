@@ -2,22 +2,22 @@ import pandas as pd
 import helpers
 
 
-def import_survivor_ids(filename):
+def import_survivor_ids(filename, verbose):
     print('\n\ncleaning survivor IDs')
     ids_raw = pd.read_excel(filename, usecols=list(range(0, 15)), converters={
                             'Study Specific #': str, 'ID Number': str})
-    print("\t" + str(len(ids_raw)) + "  survivors imported")
+    # Drop rows for future patients
+    ids_raw.dropna(subset=["ID Number"], inplace=True)
+    helpers.log_msg("\t" + str(len(ids_raw)) + "  survivors imported", verbose)
     return(ids_raw)
 
 
-def clean_survivor_ids(filename):
-    ids_raw = import_survivor_ids(filename)
+def clean_survivor_ids(filename, verbose):
+    ids_raw = import_survivor_ids(filename, verbose)
 
     # Rename to agree w/ previous code
     ids_raw.rename(columns={'G-NUM': "G-Number", "ID Number": "ID", "Subject Type": "Type",
                             "Unnamed: 5": "age_months", "Unnamed: 6": "age_days"}, inplace=True)
-    # Drop rows for future patients
-    ids_raw.dropna(subset=["ID"], inplace=True)
 
     # Assign outcome, publicSID
     ids = ids_raw.copy()
@@ -72,8 +72,7 @@ def clean_survivor_ids(filename):
     ids['exposureLocation'] = ids.admin2.apply(helpers.listify)
 
     # --- Check data is as expected ---
-    ids = runIDChecks(ids, ids_raw)
-    print(ids.issue.value_counts())
+    ids = runIDChecks(ids, ids_raw, verbose)
 
     # --- Export ---
     # Export weird values-- anything w/ issue != NA
@@ -81,7 +80,6 @@ def clean_survivor_ids(filename):
 
     # Export everything-- including original, unmodified data
     # ids.to_csv(export_filename + ".csv", index=False)
-
     return(ids)
 
 # Transform function to return a grouped list of patient IDs
@@ -99,30 +97,28 @@ def removeSelfID(row, relatedVar="relatedTo", idVar="publicSID"):
         return(ids)
 
 
-def runIDChecks(ids, ids_raw, errorCol="issue"):
+def runIDChecks(ids, ids_raw, verbose, errorCol="issue"):
     ids[errorCol] = None
 
     # --- missing IDs ---
     # Missing S/C ID or Study Specific Number
     ids = helpers.addError(
-        ids, ids['ID'] != ids['ID'], "[id roster] Missing S- or C- ID", errorCol=errorCol)
+        ids, ids['ID'] != ids['ID'], "[id roster] Missing S- or C- ID", verbose, logCols=['Study Specific #'], errorCol=errorCol)
     ids = helpers.addError(
-        ids, ids['Study Specific #'] != ids['Study Specific #'], "Missing Study Specific Number", errorCol=errorCol)
+        ids, ids['Study Specific #'] != ids['Study Specific #'], "Missing Study Specific Number", verbose, logCols=["ID"], errorCol=errorCol)
 
     # --- unique check ---
-    ids = helpers.idDupeRow(ids, ids_raw, errorCol=errorCol,
-                            errorMsg="[id roster] Duplicate row")
-    ids = helpers.checkPublicSurvivorIDs(ids, errorCol=errorCol, idCol="publicSID",
-                                         errorMsg="[id roster] Private and Public IDs have different contactGroupIdentifiers")
-    ids = helpers.idDupes(
-        ids, idCol="sID", errorMsg="[id roster] Duplicate private patient ID", errorCol=errorCol)
-    ids = helpers.idDupes(
-        ids, idCol="gID", errorMsg="[id roster] Duplicate G-Number", errorCol=errorCol)
-    ids = helpers.idDupes(ids, idCol="publicSID",
-                          errorMsg="[id roster] Duplicate public patient ID", errorCol=errorCol)
-
-    # --- check contact groups have the same identifier ---
-    ids = helpers.checkContactGroupIDs(ids, errorCol=errorCol, publicID_col="contactGroupIdentifier",
-                                       privateID_col="sID", errorMsg="[id roster] Private and Public IDs have different contactGroupIdentifiers")
+    # ids = helpers.idDupeRow(ids, ids_raw, verbose, logCols=["ID", "Study Specific #"], errorCol=errorCol, errorMsg="[id roster] Duplicate row")
+    # ids = helpers.checkPublicSurvivorIDs(ids, errorCol, verbose, idCol="publicSID")
+    # ids = helpers.idDupes(
+    #     ids, verbose, idCol="sID", errorMsg="[id roster] Duplicate private patient ID", errorCol=errorCol)
+    # ids = helpers.idDupes(
+    #     ids, verbose, idCol="gID", errorMsg="[id roster] Duplicate G-Number", errorCol=errorCol)
+    # ids = helpers.idDupes(ids, verbose, idCol="publicSID",
+    #                       errorMsg="[id roster] Duplicate public patient ID", errorCol=errorCol)
+    #
+    # # --- check contact groups have the same identifier ---
+    # ids = helpers.checkContactGroupIDs(ids, verbose, logCols=["contactGroupNumber"], errorCol=errorCol, publicID_col="contactGroupIdentifier",
+    #                                    privateID_col="sID", errorMsg="[id roster] Private and Public IDs have different contactGroupIdentifiers")
 
     return(ids)

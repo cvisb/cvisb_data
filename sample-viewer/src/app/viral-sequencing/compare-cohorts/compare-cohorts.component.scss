@@ -1,0 +1,19 @@
+.seq-label {
+  font-weight: 700;
+  // fill: white;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+#seq_comparison {
+  & .axis {
+    line,
+    path {
+      display: none;
+    }
+
+    text {
+      font-size: 1.5em;
+    }
+  }
+}

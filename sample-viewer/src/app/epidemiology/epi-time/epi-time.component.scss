@@ -1,0 +1,20 @@
+.epi-line {
+  fill: none;
+  stroke: #212529;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.epi-line--all {
+  // stroke-dasharray: 6,6;
+}
+
+.epi-path--selected {
+  fill-opacity: 0.4;
+}
+
+.dry-season {
+  fill: #212529;
+  opacity: 0.15;
+}

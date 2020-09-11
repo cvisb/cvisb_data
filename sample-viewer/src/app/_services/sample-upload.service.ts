@@ -75,6 +75,9 @@ export class SampleUploadService {
   public uploadStepSubject: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   public uploadStepState$ = this.uploadStepSubject.asObservable();
 
+  public uploadProgressSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({percent: 0, message: "Please select a file"});
+  public uploadProgressState$ = this.uploadProgressSubject.asObservable();
+
   public progressSubject: BehaviorSubject<Object[]> = new BehaviorSubject<Object[]>(this.steps);
   public progressState$ = this.progressSubject.asObservable();
 
@@ -233,6 +236,7 @@ export class SampleUploadService {
 
     // Update BehaviorSubjects
     this.previewDifferencesSubject.next({});
+    this.uploadProgressSubject.next({percent: 0, message: "Please select a file"});
     this.uploadSamplesSubject.next([]);
     this.progressSubject.next(this.steps);
   }

@@ -1,0 +1,70 @@
+@import "../../../sass/variables.scss";
+$box-height: 12px;
+
+:host ::ng-deep .mat-checkbox-inner-container {
+  height: $box-height !important;
+  width: $box-height !important;
+}
+
+:host ::ng-deep .checkbox-list {
+  font-size: 0.9em;
+  line-height: $box-height;
+}
+
+:host ::ng-deep .checkbox-list .mat-checkbox-layout .mat-checkbox-label {
+  line-height: $box-height*1.5;
+}
+
+:host ::ng-deep #country .checkbox-list .mat-checkbox-layout .mat-checkbox-label {
+  line-height: $box-height*2;
+}
+
+.seq-filter-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.filter-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h5.filter-title {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: $cvisb-theme;
+}
+
+:host ::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+  border: 1px solid $grey-200;
+}
+
+:host ::ng-deep mat-panel-title.mat-expansion-panel-header-title {
+  color: $cvisb-dark;
+  font-size: 1em;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+svg-icon.country-icon {
+  height: $box-height*1.5;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.country-name {
+  margin-right: 7px;
+  vertical-align: middle;
+}

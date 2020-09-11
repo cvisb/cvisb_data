@@ -1,0 +1,87 @@
+@import "../../../sass/variables.scss";
+
+.rect--count {
+  fill: $grey-100;
+  stroke: $default-color;
+  stroke-width: 0.75;
+}
+
+.hla-rect {
+  fill: lighten($female-color, 41%);
+  fill: lighten($female-color, 31%);
+  stroke: $default-color;
+  stroke-width: 0.75;
+}
+
+.tcr-rect {
+  background: accent(50);
+}
+
+.bcr-rect {
+  background: lighten($cvisb-bright, 50%);
+}
+
+.systems-serology-rect {
+  // background: lighten($lassa-lt, 20%);
+  background: #e3ffe2;
+}
+
+.elisa-rect {
+  // background: #f3ffe4;
+  background: #faffd7;
+}
+
+.RT-PCR-rect {
+  background: #fff8fb;
+}
+
+.rapid-diagnostics-rect {
+  background: lighten($sierraleone-blue, 56%);
+}
+
+.virus-seq-rect, .ebola-virus-seq-rect, .lassa-virus-seq-rect {
+  fill: #e4fffc;
+  fill: #bceae5;
+  stroke: $default-color;
+  stroke-width: 0.75;
+}
+
+.upset-plot {
+  & .axis--x .tick,
+  & .axis--y line,
+  & .axis--y path {
+    display: none;
+  }
+}
+
+.circle--all {
+  fill: $grey-50;
+  stroke: $grey-500;
+  stroke-width: 0.6;
+  stroke-dasharray: 3,3;
+}
+
+.circle--selected {
+  stroke: $grey-500;
+
+  &.virus-seq, &.ebola-virus-seq, &.lassa-virus-seq {
+    fill: #5cc3b8;
+  }
+
+  &.hla {
+    fill: lighten($female-color, 11%);
+  }
+}
+
+.svg-background {
+  stroke: none;
+  opacity: 0.65;
+}
+
+.dots-axis text {
+  font-size: 15px;
+  font-family: $font-default;
+}
+// .mat-shadow {
+//   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+// }

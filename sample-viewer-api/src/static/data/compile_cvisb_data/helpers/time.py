@@ -27,14 +27,14 @@ def convertExcelDateNum(row):
         except:
             return(pd.np.datetime64('NaT'))
 
-def convertExcelDate(x):
+def convertExcelDate(x, dateFormat = "%d-%b-%y"):
     """
     Converts from an Excel formatted date like 12-Jun-19
     to a pythonic date object.
     Try/catch catches any NaNs or strings in a different (presumably non-date) format
     """
     try:
-        return(datetime.strptime(x, "%d-%b-%y"))
+        return(datetime.strptime(x, dateFormat))
     except:
         return(pd.np.datetime64('NaT'))
 
@@ -101,6 +101,21 @@ def calcOnsetDischargeGap(row):
     if((row.converted_onsetDate == row.converted_onsetDate) & (row.converted_dischargeDate == row.converted_dischargeDate)):
         return((row.converted_dischargeDate - row.converted_onsetDate).days)
     return(None)
+
+def calcPresentation(row):
+    """
+    calculate the date of presentation, e.g. the FIRST date that they appeared in the hospital
+    If admitDate and evalDate both exist, take the minimum.
+    Otherwise, take either if they're non-zero.
+    Return NULL if admitDate and evalDate are both blank
+    """
+    if((row.converted_admitDate == row.converted_admitDate) & (row.converted_evalDate == row.converted_evalDate)):
+        return(min(row.converted_admitDate, row.converted_evalDate))
+    if((row.converted_admitDate == row.converted_admitDate)):
+        return(row.converted_admitDate)
+    if((row.converted_evalDate == row.converted_evalDate)):
+        return(row.converted_evalDate)
+    return(pd.np.datetime64('NaT'))
 
 def date2Range(date_string):
     if(date_string == date_string):

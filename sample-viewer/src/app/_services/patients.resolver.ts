@@ -12,15 +12,27 @@ import { ResolverPatientSummary, PatientSummary } from '../_models';
 import { GetPatientsService } from './get-patients.service';
 
 @Injectable()
-export class PatientsResolver implements Resolve<PatientSummary> {
+export class PatientsResolver implements Resolve<PatientSummary | null> {
 
   constructor(private patientSvc: GetPatientsService) {
   }
 
   // resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PatientSummary> {
-    // let route_params = route.queryParams;
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PatientSummary | null> {
+    let route_params = route.queryParams;
 
+    if (route_params.q) {
+      return this.patientSvc.getAllPatientsSummary();
+    } else {
+      return(EMPTY)
+    }
+      // .pipe(
+    //     map(patientSummary => {
+    //       return ({ allPatientSummary: patientSummary, selectedPatientSummary: patientSummary })
+    //     })
+    //   );
+    // }
+    //
     // if (route_params.q) {
     //   console.log("different parameters selected!  calling the selected filtered patients + all the patients")
     //   return forkJoin([this.patientSvc.getAllPatientsSummary(), this.patientSvc.getPatientSummary(route_params.q)]).pipe(
@@ -30,7 +42,7 @@ export class PatientsResolver implements Resolve<PatientSummary> {
     //     tap(x => console.log(x))
     //   );
     // } else {
-      return this.patientSvc.getAllPatientsSummary();
+      // return this.patientSvc.getAllPatientsSummary();
       // .pipe(
     //     map(patientSummary => {
     //       return ({ allPatientSummary: patientSummary, selectedPatientSummary: patientSummary })

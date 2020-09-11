@@ -13,7 +13,7 @@ import helpers
 from .generate_viral_seq_dataset import get_viralseq_dataset
 from .generate_viral_seq_datadownload import get_viralseq_downloads
 
-from Bio import SeqIO
+# from Bio import SeqIO
 # from Bio import Phylo
 
 def clean_viral_seq(output_dir, lassaS_AAfile, lassaS_Alignedfile, lassaS_Rawfile, lassa_MDfile, id_dict, exptCols_common, patientCols, sampleCols, downloadCols, dateModified, version, updatedBy, saveFiles, verbose):

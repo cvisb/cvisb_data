@@ -5,6 +5,7 @@ from datetime import datetime
 
 # Function for testing to make sure that structure, etc. of data hasn't changed.
 
+
 def import_ebola_survivors(filename):
     print("\ncleaning ebola survivors")
 
@@ -12,31 +13,30 @@ def import_ebola_survivors(filename):
     print("\t" + str(len(df_raw)) + " ebola survivors imported")
     return(df_raw)
 
-def clean_ebola_survivors(ids, filename, export_filename, export_weirdos, errorCol="issue"):
+
+def clean_ebola_survivors(ids, filename, updatedBy, dateModified, version, sourceFiles, errorCol="issue"):
     df_raw = import_ebola_survivors(filename)
 
     df = df_raw.copy()
 
-
-    df = cleanESurvivors(df)
+    df = cleanESurvivors(df, updatedBy, dateModified, version, sourceFiles)
 
     # --- merge in public IDs ---
     # Left join IDs (all survivors) to df (just the Ebola ones)
-    df_merged = helpers.mergeByPublicIDs(df, ids, on=["publicSID"], mergeCols2Check=["gID", "sID", "alternateIdentifier", "outcome", "cohort", "gender"])
+    df_merged = helpers.mergeByPublicIDs(df, ids, on=["publicSID"], mergeCols2Check=[
+                                         "gID", "sID", "alternateIdentifier", "outcome", "cohort", "gender"])
 
     # --- Checks to identify strange values ---
     df_merged = runChecks(df_merged, df_raw)
 
     # --- Export ---
     # Export weird values-- anything w/ issue != NA
-    df_merged[df_merged.issue == df_merged.issue].to_csv(export_weirdos + ".csv", index=False)
+    # df_merged[df_merged.issue == df_merged.issue].to_csv(export_weirdos + ".csv", index=False)
 
     # Export everything-- including original, unmodified data
-    df_merged.to_csv(export_filename + ".csv", index=False)
+    # df_merged.to_csv(export_filename + ".csv", index=False)
 
     return(df_merged)
-
-
 
 
 def runChecks(df, df_raw, errorCol="issue"):
@@ -44,10 +44,12 @@ def runChecks(df, df_raw, errorCol="issue"):
     # --- duplicates / unique IDs ---
     # df = helpers.idDupeRow(df, df_raw)
 
-    df = helpers.idDupes(df, idCol="sID", errorMsg="Duplicate private patientID (S- or C-number)", errorCol=errorCol)
-    df = helpers.idDupes(df, idCol="publicSID", errorMsg="Duplicate study specific number", errorCol=errorCol)
-    df = helpers.idDupes(df, idCol = "gID", errorMsg = "Duplicate G-Number", errorCol = errorCol)
-
+    df = helpers.idDupes(
+        df, idCol="sID", errorMsg="Duplicate private patientID (S- or C-number)", errorCol=errorCol)
+    df = helpers.idDupes(
+        df, idCol="publicSID", errorMsg="Duplicate study specific number", errorCol=errorCol)
+    df = helpers.idDupes(
+        df, idCol="gID", errorMsg="Duplicate G-Number", errorCol=errorCol)
 
     # --- missing IDs ---
     # Missing S ID or Study Specific Number
@@ -59,7 +61,8 @@ def runChecks(df, df_raw, errorCol="issue"):
     # --- ID structure ---
     df = helpers.checkIDs(df, idVar="ID number",
                           errorMsg="Unrecognized ID format", errorCol=errorCol)
-    df = helpers.checkPublicSurvivorIDs(df, errorCol = errorCol, idCol = "publicSID")
+    df = helpers.checkPublicSurvivorIDs(
+        df, errorCol=errorCol, idCol="publicSID")
 
     # --- ages ---
     df = helpers.checkAges(df)
@@ -67,9 +70,8 @@ def runChecks(df, df_raw, errorCol="issue"):
     return(df)
 
 
-def cleanESurvivors(df):
+def cleanESurvivors(df, updatedBy, dateModified, version, sourceFiles):
     df['hasSurvivorData'] = True
-
 
     # --- age ---
     df['age'] = df['age at diagnosis']
@@ -92,8 +94,35 @@ def cleanESurvivors(df):
     # --- nest the IgG measurements ---
     df['elisa'] = df.apply(helpers.nestELISAs, axis=1)
 
+    # --- provenance ---
+    df['sourceFiles'] = sourceFiles
+    df['updatedBy'] = updatedBy
+    df['version'] = version
+    df['dateModified'] = dateModified
+
     # --- nest the symptoms and convert to binaries ---
-    df['symptoms'] = df.apply(helpers.nestSymptoms, axis=1)
+    # Stored as Experiment:sequelae
+    sequelae = df.copy()
+    sequelae['data'] = sequelae.apply(helpers.nestSequelae, axis=1)
+    sequelae.dropna(subset=['data'], inplace=True)
+    sequelae['privatePatientID'] = sequelae.sID
+    sequelae['experimentID'] = sequelae.publicSID.apply(
+        lambda x: f"{x}_sequelae_suvivor-enrollment")
+    sequelae['sampleID'] = sequelae.publicSID.apply(
+        lambda x: f"{x}_suvivor-enrollment")
+    sequelae['measurementTechnique'] = "sequelae"
+    sequelae['measurementCategory'] = "clinical observations"
+    sequelae['includedInDataset'] = "sequelae"
+    sequelae['publisher'] = sequelae.sID.apply(lambda x: helpers.getPublisher("patients"))
+    sequelae['citation'] = None
+    sequelae['creator'] = None
+    sequelae['correction'] = None
+    sequelae['updatedBy'] = updatedBy
+    sequelae['dateModified'] = dateModified
+    sequelae['releaseDate'] = None  # All embargoed, as of November 2019
+    sequelae['dataStatus'] = "final"
+    sequelae['version'] = version
+    sequelae['sourceFiles'] = sourceFiles
 
     # --- rename the contact exposure / connection ---
     def getRel(relationship):

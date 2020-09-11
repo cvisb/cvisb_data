@@ -1,27 +1,14 @@
 <h2><span class="stepper-title">Select file and read data</span></h2>
 
-<div *ngIf="user.write" class="container-column">
+<div class="container-column">
+  <!-- <div *ngIf="user.write" class="container-column"> -->
   <p>
     Sample lists should be uploaded as either a .csv, .tsv, or .json file.
   </p>
 
-  <div class="file-info" *ngIf="fileName">
-    selected file: <span class="file-name">{{ fileName }}</span>
-  </div>
-
-  <div class="client-responses">
-
-    <ng-container *ngIf="uploadResponse">
-      <h1>{{ uploadResponse }}</h1>
-    </ng-container>
-
-    <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
-
-  </div>
-
   <div class="upload-button">
     <!-- Dummy for styling -->
-    <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload sample list</button>
+    <button type="button" mat-raised-button color="primary" (click)="fileInput.click()" [disabled]="uploading">Upload sample list</button>
     <!-- Actual workhorse to upload the data on the client side -->
     <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.tsv,.xlsx,.xls,.json" id="file_uploader">
   </div>
@@ -31,6 +18,20 @@
     <button type="button" mat-raised-button color="warn" (click)="deleteSamples()">DON'T PRESS THIS BUTTON -- clears sample list</button>
   </div>
 
+  <div class="client-responses">
+    <div class="file-info" *ngIf="fileName">
+      selected file: <span class="file-name">{{ fileName }}</span>
+    </div>
+
+    <ng-container *ngIf="uploadProgress$ | async as uploadProgress">
+      <h1>{{ uploadProgress.message }}</h1>
+      <mat-progress-bar mode="determinate" [value]="uploadProgress.percent" class="progress-bar"></mat-progress-bar>
+    </ng-container>
+
+
+    <h3 *ngIf="errorMsg">{{ errorMsg }}</h3>
+
+  </div>
 </div>
 
 

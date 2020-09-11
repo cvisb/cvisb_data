@@ -1,0 +1,26 @@
+@import "../../../sass/variables.scss";
+
+.virus-container {
+  margin-bottom: 50px;
+}
+
+h4.aligned-seq-header {
+  text-transform: uppercase;
+  color: $grey-300;
+  font-size: 1.17em;
+  font-weight: 900;
+  margin: 0;
+}
+
+.alignment-properties-container {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.container-column {
+  margin-right: 25px;
+}
+
+.alignment-params {
+  font-size: 0.75em;
+}

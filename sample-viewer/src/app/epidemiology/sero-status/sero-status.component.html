@@ -1,0 +1,24 @@
+<h3>Serostatus prevalence</h3>
+
+<svg id="sero-status" [attr.width]="width + margin.left + margin.right" [attr.height]="height + margin.top + margin.bottom">
+  <g attr.transform="translate({{margin.left}}, {{margin.top}})" id="group{{idx}}">
+    <ng-container *ngFor="let result of data; let idx = index">
+      <rect attr.width="{{x.bandwidth()}}" attr.height="{{y(0) - y(result.n)}}" attr.y="{{y(result.n)}}" attr.x="{{x(idx)}}"></rect>
+      <g id="statuses{{idx}}">
+        <text attr.x="{{x(idx) + x.bandwidth()/2}}" [attr.font-size]="x.bandwidth()*1" attr.y="{{height + statusInitOffset}}" class="font-awesome" [ngClass]="result.agPositive ? 'positive' : (result.agPositive === false ? 'negative' : 'unknown')">{{result.agPositive ? "&#xf055;" : (result.agPositive === false ? "&#xf056;" : "&#xf059;")}}</text>
+        <text attr.x="{{x(idx) + x.bandwidth()/2}}" [attr.font-size]="x.bandwidth()*1" attr.y="{{height + statusInitOffset + statusOffset}}" class="font-awesome" [ngClass]="result.igmPositive ? 'positive' : (result.igmPositive === false ? 'negative' : 'unknown')">{{result.igmPositive ? "&#xf055;" : (result.igmPositive === false ? "&#xf056;" : "&#xf059;")}}</text>
+        <text attr.x="{{x(idx) + x.bandwidth()/2}}" [attr.font-size]="x.bandwidth()*1" attr.y="{{height + statusInitOffset + statusOffset*2}}" class="font-awesome" [ngClass]="result.iggPositive ? 'positive' : (result.iggPositive === false ? 'negative' : 'unknown')">{{result.iggPositive ? "&#xf055;" : (result.iggPositive === false ? "&#xf056;" : "&#xf059;")}}</text>
+      </g>
+    </ng-container>
+  </g>
+  <g id="status-labels" attr.transform="translate({{margin.left}}, {{margin.top}})">
+    <text class="antigen-label left" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset}}">Ag</text>
+    <text class="antigen-label left" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset + statusOffset}}">IgM</text>
+    <text class="antigen-label left" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset + statusOffset* 2}}">IgG</text>
+  </g>
+  <g id="status-labels" attr.transform="translate({{margin.left + width}}, {{margin.top}})">
+    <text class="antigen-label right" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset}}">Ag</text>
+    <text class="antigen-label right" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset + statusOffset}}">IgM</text>
+    <text class="antigen-label right" [attr.font-size]="x.bandwidth()*1.2" attr.x="0" attr.y="{{height + statusInitOffset + statusOffset* 2}}">IgG</text>
+  </g>
+</svg>

@@ -8,7 +8,7 @@
 # @license:     Apache-2.0
 # @date:        31 October 2019
 # @use:         python compile_cvisb_data.py # imports / saves all
-# @use:         python compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
+# @use:         python3 compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
 
 import pandas as pd
 import argparse

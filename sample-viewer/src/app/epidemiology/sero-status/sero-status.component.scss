@@ -1,0 +1,38 @@
+@import "../../../sass/material-theme.scss";
+@import "../../../sass/variables.scss";
+
+#sero-status {
+  // background: aliceblue;
+}
+
+rect {
+  stroke: #212529;
+  stroke-width: 0.5;
+  fill: #DDD;
+}
+
+.font-awesome {
+  font-family: "FontAwesome";
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.negative {
+  fill: $sierraleone-blue;
+}
+
+.positive {
+  fill: accent-redder(A700);
+}
+
+.unknown {
+  fill: $grey-300;
+}
+
+.antigen-label {
+  dominant-baseline: middle;
+}
+
+.left {
+  text-anchor: end;
+}

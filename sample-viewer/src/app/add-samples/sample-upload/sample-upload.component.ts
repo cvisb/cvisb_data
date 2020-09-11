@@ -4,6 +4,8 @@ import { ApiService, AuthService, SampleUploadService, GetSamplesService } from 
 
 import { CvisbUser } from '../../_models';
 
+import { Observable } from 'rxjs';
+
 import { cloneDeep } from 'lodash';
 
 @Component({
@@ -18,12 +20,12 @@ export class SampleUploadComponent implements OnInit {
   user: CvisbUser;
   fileType: string;
   fileName: string;
-  uploadResponse: string;
+  uploadProgress$: Observable<Object>;
+  uploading: boolean = false;
   errorMsg: string;
 
   dataLength: number;
 
-  uploadProgress: number = 0;
 
   constructor(
     private apiSvc: ApiService,
@@ -34,10 +36,42 @@ export class SampleUploadComponent implements OnInit {
       this.user = user;
     })
 
+    // this.uploadProgress$ = uploadSvc.uploadProgressState$;
+
   }
 
   ngOnInit() {
   }
+
+  fileReaderObs(file: Blob): Observable<string> {
+  return Observable.create(obs => {
+    if (!(file instanceof Blob)) {
+      obs.error(new Error('`blob` must be an instance of File or Blob.'));
+      return;
+    }
+    console.log('observing')
+
+    const reader = new FileReader();
+    console.log(reader)
+
+    reader.onerror = err => obs.error(err);
+    reader.onabort = err => obs.error(err);
+    reader.onload = () => {
+      this.uploadSvc.uploadProgressSubject.next({message: "jfdksfjdkslfjkdsljfkdlsjfklds!", percent: 10});
+      this.prepData2(reader.result)
+      return obs.next({message: "LOADED!", percent: 40})
+    };
+    reader.onloadend = () => obs.complete();
+
+    return reader.readAsText(file, this.fileType);;
+  });
+}
+
+prepData2(results) {
+  console.log("PREPPINGGGGGGG")
+}
+
+
 
   fileChange(event) {
     let fileList: FileList = event.target.files;
@@ -48,19 +82,19 @@ export class SampleUploadComponent implements OnInit {
 
     if (fileList.length > 0) {
 
-      this.uploadResponse = "Uploading file..."
-
       let file: File = fileList[0];
-      // console.log(file)
+      console.log(file)
       this.fileName = file.name;
       this.fileType = file.type;
+      let fileSize = file.size;
 
       switch (this.fileType) {
         case "text/csv":
-          var reader = new FileReader();
-
-          // Read in the file as a text object.
-          reader.readAsText(file, this.fileType);
+          this.uploadProgress$ = this.fileReaderObs(file);
+          // var reader = new FileReader();
+          //
+          // // Read in the file as a text object.
+          // reader.readAsText(file, this.fileType);
           // reader.readAsBinaryString(file); // For .xlsx
           break;
 
@@ -78,32 +112,37 @@ export class SampleUploadComponent implements OnInit {
           reader.readAsText(file, this.fileType);
           break;
         case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-          this.uploadResponse = "Sorry, Excel sheets aren't supported yet."
+          this.uploadSvc.uploadProgressSubject.next({message: "Sorry, Excel sheets aren't supported yet.", percent: 0});
           this.errorMsg = "Save the file as a .csv and re-load.  Or buy Laura tea, pastries, and/or chocolate."
           break;
         default:
-          this.uploadResponse = "Sorry, this file format isn't supported."
+          this.uploadSvc.uploadProgressSubject.next({message: "Sorry, this file format isn't supported.", percent: 0});
           this.errorMsg = "Please upload a .csv or .json file."
           break;
       }
 
-
+      // Progress event listener
+      // reader.addEventListener('progress', updateProgress);
+      // function updateProgress(event) {
+      //   this.uploadProgress = (event.loaded / fileSize) * 100;
+      //   console.log(this.uploadProgress);
+      // }
 
 
       // listen for the file to be loaded; then save the result.
-      reader.onload = (e) => {
-        this.uploadResponse = "File uploaded."
-
-        let data = this.prepData(reader.result);
-
-        let ids = data.map(d => d.privatePatientID);
-
-        // Clear input so can re-upload the same file.
-        document.getElementById("file_uploader")['value'] = "";
-      }
+    //   reader.onload = (e) => {
+    //     let data = this.prepData(reader.result);
+    //
+    //     let ids = data.map(d => d.privatePatientID);
+    //
+    //     // Clear input so can re-upload the same file.
+    //     document.getElementById("file_uploader")['value'] = "";
+    //   }
     }
 
   }
+
+
 
 
   // Function to clean imported data into the correct format for ES upload
@@ -117,7 +156,7 @@ export class SampleUploadComponent implements OnInit {
           this.uploadSvc.updateProgress("upload", true);
           this.uploadSvc.updateValidation("delete_extra", true, 0, data);
         } catch (err) {
-          this.uploadResponse = "Uh oh. The .json can't be parsed-- is the syntax wrong?"
+          this.uploadSvc.uploadProgressSubject.next({message: "Uh oh. The .json can't be parsed-- is the syntax wrong?", percent: 0});
         }
         break;
       case "text/csv":
@@ -132,7 +171,6 @@ export class SampleUploadComponent implements OnInit {
     }
 
 
-
     if (data) {
       data.forEach(d => {
         // Append user name to the location change
@@ -140,7 +178,6 @@ export class SampleUploadComponent implements OnInit {
       });
 
       this.dataLength = data.length;
-
 
       // FRONT-END VALIDATION FUNCTIONS
       // [2] check required
@@ -153,7 +190,6 @@ export class SampleUploadComponent implements OnInit {
       // [4] check dates
       // Consolidate dates down for review.
       let cleaned_dates = this.uploadSvc.checkDates();
-
 
       // [5] create sample IDs
       this.uploadSvc.createSampleIDs();
@@ -196,6 +232,7 @@ export class SampleUploadComponent implements OnInit {
       }
     }
     this.uploadSvc.updateProgress("upload", true);
+    this.uploadSvc.uploadProgressSubject.next({message: "Data uploaded! Starting to prep the data", percent: 50});
 
     return (this.cleanCSV(result, headers));
   }
@@ -208,7 +245,7 @@ export class SampleUploadComponent implements OnInit {
   removeEmpties(data) {
     let filtered = cloneDeep(data);
 
-    filtered.forEach(d => delete(d.sampleID));
+    filtered.forEach(d => delete (d.sampleID));
 
     filtered = filtered.filter(d => Object.values(d).some(value => value !== ""));
     this.uploadSvc.updateValidation("delete_extra", true, data.length - filtered.length, filtered);
