@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DownloadRoutingModule } from './download-routing.module';
 import { DownloadComponent } from "./download.component";
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatTableModule } from '@angular/material/table';
@@ -20,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     DownloadRoutingModule,
+    FormsModule, ReactiveFormsModule,
     MatFormFieldModule,
     MatCheckboxModule,
     MatTableModule,
