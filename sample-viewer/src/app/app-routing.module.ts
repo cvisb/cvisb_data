@@ -49,6 +49,8 @@ const appRoutes: Routes = [
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
 
+  { path: 'download/:id', loadChildren: () => import('./download/download.module').then(m => m.DownloadModule), pathMatch: 'full' },
+
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },

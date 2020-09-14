@@ -1,0 +1,30 @@
+<h1>Download data</h1>
+<p>
+<b>#</b> experiments selected
+</p>
+
+<div class="container align-items-center">
+  <form [formGroup]="whichDataForm" class="container">
+    <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
+      include experimental data
+    </mat-checkbox>
+    <mat-checkbox color="primary" formControlName="patient" class="mr-3">
+      include patient metadata
+    </mat-checkbox>
+  </form>
+
+  <button mat-raised-button color="primary" (click)="changeRoute()">Download</button>
+</div>
+
+
+<div class="container w-100">
+  <div class="col-md-3">
+    <h6>Filters</h6>
+  </div>
+  <div>
+    Table
+    <table>
+
+    </table>
+  </div>
+</div>
