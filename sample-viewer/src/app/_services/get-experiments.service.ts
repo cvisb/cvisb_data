@@ -101,14 +101,7 @@ export class GetExperimentsService {
   // }
 
   getDownloadList(id: String) {
-    console.log("grabbing download list")
-    const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"]
-    let params = new HttpParams()
-      .set('q', `includedInDataset:"${id}"`)
-      .set('facets', exptFacets.map(d => `${d}.keyword`).join(","))
-      .set('facet_size', '1000')
-
-    return this.apiSvc.get('experiment', params, 10).pipe(
+    return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
       map((expts: any) => {
         console.log(expts)
       }),
@@ -119,4 +112,91 @@ export class GetExperimentsService {
       })
     )
   }
+
+  getDownloadFacets(id: String) {
+    const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"];
+
+    let params = new HttpParams()
+      .set('q', `includedInDataset:"${id}"`)
+      .set('facets', exptFacets.map(d => `${d}.keyword`).join(","))
+      .set('facet_size', '1000')
+
+    return this.apiSvc.get('experiment', params, 0).pipe(
+      map((expts: any) => {
+        console.log(expts)
+        return(expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
+
+  getPatientDownloadFacets(id: String) {
+    const patientFacets = ["cohort", "species", "infectionYear"];
+
+    let params = new HttpParams()
+      .set('q', "__all__")
+      .set("experimentQuery", `includedInDataset:"${id}"`)
+      .set('facets', patientFacets.map(d => `${d}.keyword`).join(","))
+      .set('facet_size', '1000')
+
+    return this.apiSvc.get('experiment', params, 0).pipe(
+      map((expts: any) => {
+        console.log(expts)
+        return(expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
+
+  getFilteredPatientDownloadFacets(id: String, filters: any) {
+    const patientFacets = ["cohort", "species", "infectionYear"];
+
+    let params = new HttpParams()
+      .set('q', "__all__")
+      .set("experimentQuery", `includedInDataset:"${id}"`)
+      .set('facets', patientFacets.map(d => `${d}.keyword`).join(","))
+      .set('facet_size', '1000')
+
+    return this.apiSvc.get('experiment', params, 0).pipe(
+      map((expts: any) => {
+        console.log(expts)
+        return(expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
+
+  getDownloadResults(id: String, filters: any) {
+    const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
+
+    let params = new HttpParams()
+      .set('q', `includedInDataset:"${id}"`)
+      .set('fields', exptFields.join(","))
+
+    return this.apiSvc.get('experiment', params, 10).pipe(
+      map((expts: any) => {
+        console.log(expts)
+        return(expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
+
+
 }
