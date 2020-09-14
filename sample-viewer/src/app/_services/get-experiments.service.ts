@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
-import { forkJoin, Observable, throwError } from 'rxjs/';
+import { forkJoin, Observable, throwError, from } from 'rxjs/';
 import { map, catchError, pluck } from 'rxjs/operators';
 
 import { ExperimentCount } from "../_models";
@@ -100,4 +100,23 @@ export class GetExperimentsService {
   //   }
   // }
 
+  getDownloadList(id: String) {
+    console.log("grabbing download list")
+    const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"]
+    let params = new HttpParams()
+      .set('q', `includedInDataset:"${id}"`)
+      .set('facets', exptFacets.join(","))
+      .set('facet_size', '1000')
+
+    return this.apiSvc.get('experiment', params, 10).pipe(
+      map((expts: any) => {
+        console.log(expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
 }
