@@ -35,7 +35,9 @@ export class DownloadComponent implements OnInit {
 
     console.log(this.outcomeParams)
     console.log(this.locationParams)
-    this.exptSvc.getDownloadList(this.id);
+    this.exptSvc.getDownloadList(this.id).subscribe(x => {
+      console.log(x)
+    });
   }
 
   changeRoute() {
