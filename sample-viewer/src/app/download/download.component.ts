@@ -11,6 +11,7 @@ import { GetExperimentsService } from "../_services/get-experiments.service";
 })
 export class DownloadComponent implements OnInit {
   id: String;
+  total: Number;
   outcomeParams: string[] = [];
   locationParams: string[] = [];
 
@@ -35,8 +36,9 @@ export class DownloadComponent implements OnInit {
 
     console.log(this.outcomeParams)
     console.log(this.locationParams)
-    this.exptSvc.getDownloadList(this.id).subscribe(x => {
-      console.log(x)
+    this.exptSvc.getDownloadList(this.id).subscribe(results => {
+      console.log(results)
+      this.total = results["total"];
     });
   }
 

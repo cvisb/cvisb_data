@@ -102,8 +102,13 @@ export class GetExperimentsService {
 
   getDownloadList(id: String) {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
-      map((expts: any) => {
-        console.log(expts)
+      map(([exptFacets, patientFacets, exptData, patientSummary]) => {
+        return({
+          facets: exptFacets,
+          patientFacets: patientFacets,
+          total: exptData["total"],
+          patientSummary: patientSummary
+        })
       }),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
@@ -122,6 +127,7 @@ export class GetExperimentsService {
       .set('facet_size', '1000')
 
     return this.apiSvc.get('experiment', params, 0).pipe(
+      pluck("facets"),
       map((expts: any) => {
         console.log(expts)
         return(expts)
@@ -143,7 +149,8 @@ export class GetExperimentsService {
       .set('facets', patientFacets.map(d => `${d}.keyword`).join(","))
       .set('facet_size', '1000')
 
-    return this.apiSvc.get('experiment', params, 0).pipe(
+    return this.apiSvc.get('patient', params, 0).pipe(
+      pluck("facets"),
       map((expts: any) => {
         console.log(expts)
         return(expts)
@@ -165,7 +172,8 @@ export class GetExperimentsService {
       .set('facets', patientFacets.map(d => `${d}.keyword`).join(","))
       .set('facet_size', '1000')
 
-    return this.apiSvc.get('experiment', params, 0).pipe(
+    return this.apiSvc.get('patient', params, 0).pipe(
+      pluck("facets"),
       map((expts: any) => {
         console.log(expts)
         return(expts)
