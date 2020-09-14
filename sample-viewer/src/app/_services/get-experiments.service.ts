@@ -105,7 +105,7 @@ export class GetExperimentsService {
     const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"]
     let params = new HttpParams()
       .set('q', `includedInDataset:"${id}"`)
-      .set('facets', exptFacets.join(","))
+      .set('facets', exptFacets.map(d => `${d}.keyword`).join(","))
       .set('facet_size', '1000')
 
     return this.apiSvc.get('experiment', params, 10).pipe(
