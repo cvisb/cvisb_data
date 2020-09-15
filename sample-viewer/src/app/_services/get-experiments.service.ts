@@ -7,6 +7,9 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError, from } from 'rxjs/';
 import { map, catchError, pluck } from 'rxjs/operators';
 
+import { cloneDeep } from "lodash";
+import { CountryObjectPipe } from '../_pipes/country-object.pipe';
+
 import { ExperimentCount } from "../_models";
 
 import { isPlatformBrowser } from '@angular/common';
@@ -16,7 +19,10 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class GetExperimentsService {
 
-  constructor(private apiSvc: ApiService, private exptPipe: ExperimentObjectPipe, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private apiSvc: ApiService,
+    private countryPipe: CountryObjectPipe,
+    private exptPipe: ExperimentObjectPipe,
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getExpt(patientID: string, dataset_id: string) {
     let qString = `includedInDataset:"${dataset_id}"`;
@@ -104,13 +110,15 @@ export class GetExperimentsService {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
       map(([exptFacets, patientFacets, exptData, patientSummary]) => {
         let filteredSummary = [];
-        filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
-        filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
-        filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
-        filteredSummary["years"] = patientSummary["infectionYear.keyword"]["terms"];
-        filteredSummary["countries"] = patientSummary["country.name.keyword"]["terms"];
+        filteredSummary["cohorts"] = cloneDeep(patientSummary["cohort.keyword"]["terms"]);
+        filteredSummary["outcomes"] = cloneDeep(patientSummary["outcome.keyword"]["terms"]);
+        filteredSummary["species"] = cloneDeep(patientSummary["species.keyword"]["terms"]);
+        filteredSummary["years"] = cloneDeep(patientSummary["infectionYear.keyword"]["terms"]);
+        let countries = cloneDeep(patientSummary["country.name.keyword"]["terms"]);
+        countries.forEach(d => this.getCountryName(d));
+        filteredSummary["countries"] = countries;
 
-        return({
+        return ({
           total: exptData["total"],
           filteredSummary: filteredSummary,
           facets: exptFacets,
@@ -138,7 +146,7 @@ export class GetExperimentsService {
       pluck("facets"),
       map((expts: any) => {
         console.log(expts)
-        return(expts)
+        return (expts)
       }),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
@@ -161,7 +169,7 @@ export class GetExperimentsService {
       pluck("facets"),
       map((expts: any) => {
         console.log(expts)
-        return(expts)
+        return (expts)
       }),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
@@ -184,7 +192,7 @@ export class GetExperimentsService {
       pluck("facets"),
       map((expts: any) => {
         console.log(expts)
-        return(expts)
+        return (expts)
       }),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
@@ -206,7 +214,7 @@ export class GetExperimentsService {
     return this.apiSvc.get('patient', params, 10).pipe(
       map((expts: any) => {
         console.log(expts)
-        return(expts)
+        return (expts)
       }),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
@@ -216,5 +224,11 @@ export class GetExperimentsService {
     )
   }
 
+  getCountryName(countryCount) {
+    let countryObj = this.countryPipe.transform(countryCount.term);
+    countryCount['name'] = countryObj['name'];
+    countryCount['identifier'] = countryObj['identifier'];
+    return (countryCount)
+  }
 
 }

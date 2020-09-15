@@ -16,7 +16,7 @@
   <button mat-raised-button color="primary" (click)="changeRoute()">Download</button>
 </div>
 
-<div class="container w-100" id="filtered-summary">
+<div class="container w-100" id="filtered-summary" *ngIf="summary">
   <div id="cohort-count">
     <h4 class="filter-label">cohort</h4>
     <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [cohorts]="summary['cohorts']" [filterable]="false"></app-mini-donut>
