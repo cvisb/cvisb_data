@@ -3,7 +3,7 @@
   <b>{{total}}</b> experiments selected
 </p>
 
-<div class="container align-items-center">
+<div class="container align-items-center mb-4">
   <form [formGroup]="whichDataForm" class="container">
     <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
       include experimental data
@@ -24,7 +24,7 @@
 
   <div class="grid-item grid-column-container" id="outcome-count">
     <h4 class="filter-label">outcome</h4>
-    <app-mini-barplot [data]="summary['outcomes']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [options]="summary['outcomes']" [filterable]="false"></app-mini-barplot>
+    <app-mini-barplot [data]="summary['outcomes']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [filterable]="false"></app-mini-barplot>
   </div>
 
   <div class="grid-item grid-column-container" id="country-count">
@@ -37,7 +37,7 @@
 
   <div class="grid-item grid-column-container" id="outcome-count">
     <h4 class="filter-label">host</h4>
-    <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [options]="summary['species']" [filterable]="false"></app-mini-barplot>
+    <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }"  [filterable]="false"></app-mini-barplot>
   </div>
 
   <div class="grid-item grid-row-container" id="year-file-count">
