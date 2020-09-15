@@ -1,4 +1,6 @@
 # Prod
+### 2020-09-15
+* Wiped, reinstalled and `npm update fix`'d node_modules.
 
 ### 2020-08-28
  * Wiped and readded SARS-CoV-2 experiment data, now totals 1195 again.
