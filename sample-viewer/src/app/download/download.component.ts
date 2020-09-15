@@ -14,6 +14,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   id: String;
   total: Number;
   summary: any[];
+  filters: any[];
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
   locationParams: string[] = [];
@@ -39,7 +40,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.exptSvc.getDownloadList(this.id).subscribe(results => {
       console.log(results)
       this.total = results["total"];
-      this.summary = results["filteredSummary"]
+      this.summary = results["filteredSummary"];
+      this.filters = results["filters"];
     });
   }
 

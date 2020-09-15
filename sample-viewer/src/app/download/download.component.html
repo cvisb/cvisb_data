@@ -1,7 +1,5 @@
 <h1>Download data</h1>
-<p *ngIf="total || total === 0">
-  <b>{{total}}</b> experiments selected
-</p>
+
 
 <div class="container align-items-center mb-4">
   <form [formGroup]="whichDataForm" class="container">
@@ -15,6 +13,10 @@
 
   <button mat-raised-button color="primary" (click)="changeRoute()">Download</button>
 </div>
+
+<p *ngIf="total || total === 0">
+  <b>{{total}}</b> experiments selected
+</p>
 
 <div class="container w-100" id="filtered-summary" *ngIf="summary">
   <div id="cohort-count">
@@ -51,6 +53,14 @@
 <div class="container w-100">
   <div class="col-md-3">
     <h6>Filters</h6>
+    <div class="filter-group" *ngFor="let filter in filters">
+      <h6>{{filter.name}}</h6>
+      <ul>
+        <li *ngFor="let option in filter.terms">
+          {{option.term}} ({{option.count}})
+          </li>
+        </ul>
+      </div>
   </div>
   <div>
     Table

@@ -117,12 +117,47 @@ export class GetExperimentsService {
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
 
+        // filter options
+        const filterLabels = {
+          "data.curated.keyword": "Curated Sequence",
+          "data.virusSegment.keyword": "Virus Segment",
+          "experimentDate.keyword": "Sample Date",
+          "sourceCitation.name.keyword": "Source",
+          "species.keyword": "Host",
+          "country.identifier.keyword": "Country",
+          "cohort.keyword": "Cohort",
+          "infectionYear.keyword": "Infection Year",
+          "outcome.keyword": "Outcome"
+        };
+
+        let filters = Object.keys(exptFacets).map(key => {
+          const name = filterLabels[key];
+
+          return({
+            key: key.replace(".keyword", ""),
+            name: name ? name : key.replace(".keyword", ""),
+            terms: exptFacets[key].terms
+          })
+        });
+
+        let patientFilters = Object.keys(patientFacets).map(key => {
+          const name = filterLabels[key];
+
+          return({
+            key: key.replace(".keyword", ""),
+            name: name ? name : key.replace(".keyword", ""),
+            terms: exptFacets[key].terms
+          })
+        });
+
+        filters = filters.concat(patientFilters);
+
+
         return ({
           total: exptData["total"],
           filteredSummary: filteredSummary,
-          facets: exptFacets,
-          patientFacets: patientFacets,
-          patientSummary: patientSummary
+          filters: filters,
+          results: exptData
         })
       }),
       catchError(err => {
