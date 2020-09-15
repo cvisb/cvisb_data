@@ -103,10 +103,18 @@ export class GetExperimentsService {
   getDownloadList(id: String) {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
       map(([exptFacets, patientFacets, exptData, patientSummary]) => {
+        let filteredSummary = [];
+        filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
+        filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
+        filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
+        filteredSummary["years"] = patientSummary["infectionYear.keyword"]["terms"];
+        filteredSummary["countries"] = patientSummary["country.name.keyword"]["terms"];
+
         return({
+          total: exptData["total"],
+          filteredSummary: filteredSummary,
           facets: exptFacets,
           patientFacets: patientFacets,
-          total: exptData["total"],
           patientSummary: patientSummary
         })
       }),
@@ -141,7 +149,7 @@ export class GetExperimentsService {
   }
 
   getPatientDownloadFacets(id: String) {
-    const patientFacets = ["cohort", "species", "infectionYear", "country"];
+    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.name"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -164,7 +172,7 @@ export class GetExperimentsService {
   }
 
   getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort", "species", "infectionYear", "country"];
+    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.name"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -191,7 +199,8 @@ export class GetExperimentsService {
     // const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
 
     let params = new HttpParams()
-      .set('q', `includedInDataset:"${id}"`)
+      .set('q', "__all__")
+      .set('experimentQuery', `includedInDataset:"${id}"`)
       .set('fields', patientFields.join(","))
 
     return this.apiSvc.get('patient', params, 10).pipe(

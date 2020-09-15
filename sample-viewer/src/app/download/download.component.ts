@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-download',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss']
 })
-export class DownloadComponent implements OnInit {
+export class DownloadComponent implements OnInit, OnDestroy {
   id: String;
   total: Number;
+  summary: any[];
+  dataSubscription: Subscription;
   outcomeParams: string[] = [];
   locationParams: string[] = [];
 
@@ -30,16 +33,18 @@ export class DownloadComponent implements OnInit {
     const params = this.route.snapshot.queryParams;
     console.log(params)
     this.id = this.route.snapshot.paramMap.get("id");
-    console.log(this.route.snapshot.paramMap)
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];
 
-    console.log(this.outcomeParams)
-    console.log(this.locationParams)
-    this.exptSvc.getDownloadList(this.id).subscribe(results => {
+    this.dataSubscription = this.exptSvc.getDownloadList(this.id).subscribe(results => {
       console.log(results)
       this.total = results["total"];
+      this.summary = results["filteredSummary"]
     });
+  }
+
+  ngOnDestroy () {
+    this.dataSubscription.unsubscribe();
   }
 
   changeRoute() {

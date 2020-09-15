@@ -15,6 +15,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FiltersModule } from '../filters/filters.module';
+import { ChoroplethModule } from '../choropleth/choropleth.module';
+import { DotPlotModule } from '../dot-plot/dot-plot.module';
 
 @NgModule({
   declarations: [DownloadComponent],
@@ -28,7 +31,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSortModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatButtonModule, MatPaginatorModule, MatTooltipModule
+    MatButtonModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    FiltersModule,
+    ChoroplethModule,
+    DotPlotModule
   ]
 })
 export class DownloadModule { }
