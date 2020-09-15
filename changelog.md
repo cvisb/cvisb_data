@@ -137,6 +137,10 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2020-09-15
+* Ran into disk space issues; released 2GB from the swapfile
+* Removed, reinstalled, and `npm audit fix`'d `node_modules`
+
 ### 2020-02-18: Angular 9 install
 1. cleaned up a few random things
 - Added json import to `tsconfig.json`
