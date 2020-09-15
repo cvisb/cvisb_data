@@ -146,7 +146,7 @@ export class GetExperimentsService {
           return({
             key: key.replace(".keyword", ""),
             name: name ? name : key.replace(".keyword", ""),
-            terms: exptFacets[key].terms
+            terms: patientFacets[key].terms
           })
         });
 
