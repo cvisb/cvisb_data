@@ -7,7 +7,6 @@ import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError, from } from 'rxjs/';
 import { map, catchError, pluck } from 'rxjs/operators';
 
-import { cloneDeep } from "lodash";
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
 import { ExperimentCount } from "../_models";
@@ -109,12 +108,12 @@ export class GetExperimentsService {
   getDownloadList(id: String) {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
       map(([exptFacets, patientFacets, exptData, patientSummary]) => {
-        let filteredSummary = [];
-        filteredSummary["cohorts"] = cloneDeep(patientSummary["cohort.keyword"]["terms"]);
-        filteredSummary["outcomes"] = cloneDeep(patientSummary["outcome.keyword"]["terms"]);
-        filteredSummary["species"] = cloneDeep(patientSummary["species.keyword"]["terms"]);
-        filteredSummary["years"] = cloneDeep(patientSummary["infectionYear.keyword"]["terms"]);
-        let countries = cloneDeep(patientSummary["country.name.keyword"]["terms"]);
+        let filteredSummary = {};
+        filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
+        filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
+        filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
+        filteredSummary["years"] = patientSummary["infectionYear.keyword"]["terms"];
+        let countries = patientSummary["country.identifier.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
 
@@ -157,7 +156,7 @@ export class GetExperimentsService {
   }
 
   getPatientDownloadFacets(id: String) {
-    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.name"];
+    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.identifier"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -180,7 +179,7 @@ export class GetExperimentsService {
   }
 
   getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.name"];
+    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.identifier"];
 
     let params = new HttpParams()
       .set('q', "__all__")
