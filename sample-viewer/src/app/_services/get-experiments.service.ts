@@ -141,7 +141,7 @@ export class GetExperimentsService {
   }
 
   getPatientDownloadFacets(id: String) {
-    const patientFacets = ["cohort", "species", "infectionYear"];
+    const patientFacets = ["cohort", "species", "infectionYear", "country"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -164,7 +164,7 @@ export class GetExperimentsService {
   }
 
   getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort", "species", "infectionYear"];
+    const patientFacets = ["cohort", "species", "infectionYear", "country"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -187,13 +187,14 @@ export class GetExperimentsService {
   }
 
   getDownloadResults(id: String, filters: any) {
-    const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
+    const patientFields = ["patientID", "cohort", "species", "infectionYear"];
+    // const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
 
     let params = new HttpParams()
       .set('q', `includedInDataset:"${id}"`)
-      .set('fields', exptFields.join(","))
+      .set('fields', patientFields.join(","))
 
-    return this.apiSvc.get('experiment', params, 10).pipe(
+    return this.apiSvc.get('patient', params, 10).pipe(
       map((expts: any) => {
         console.log(expts)
         return(expts)
