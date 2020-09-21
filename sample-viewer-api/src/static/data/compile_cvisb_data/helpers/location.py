@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from .logging import log_msg
 # df = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12.csv")
 # sl = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/geo/SLE/sle_adm4_UNOCHA.csv")
@@ -64,7 +65,7 @@ def cleanDistrict(district):
         if district_clean in adm2:
             return( {'administrativeType': 'district', 'administrativeUnit': 2,'name': district_clean})
     else:
-        return(pd.np.nan)
+        return(np.nan)
 
         # Clean up Western Area; assuming the Urban part of the district, since everyone is within Freetown.
         # if (district.lower() == "western area"):
@@ -209,7 +210,7 @@ def getCountry(countryID, verbose=True):
     else:
         if(countryID == countryID):
             log_msg(f"WARNING: no country found for location: {countryID}", verbose)
-        return(pd.np.nan)
+        return(np.nan)
 
 def getCountryName(countryID):
     """
