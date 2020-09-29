@@ -308,7 +308,8 @@
                            - tcr
                            - systems-serology
                            - metabolomics
-                           - blood-chemistry
+                           - blood-chemistry-vhf
+                           - blood-counts-vhf
                            - sensor-vitals
                            - rapid-diagnostics
                            - RT-PCR

@@ -909,7 +909,7 @@
     </symbol>
 
     <!-- piccolo -->
-    <symbol id="blood-chemistry" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="blood-chemistry-vhf" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Piccolo blood chemistry</title>
       <g id="piccolo">
         <g>
@@ -1008,6 +1008,88 @@
             </g>
           </g>
         </g>
+      </g>
+    </symbol>
+
+    <!-- hand -->
+    <symbol id="blood-counts-vhf" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+      <title>blood counts viral hemorrhagic fever</title>
+      <g id="cells">
+      	<g id="monocyte">
+      		<path class="st0" fill="#FFCA96" d="M27.9,16.9l0.6-0.4c1.3-0.5,2.6-1.6,4.1-1.6c1,0,1.9,0.6,2.6,1.2c0.8,0.6,1.5,1.3,1.9,2.2
+      			c0.3,0.6,0.4,1.2,0.7,1.8c0.3,0.5,0.6,1,0.6,1.6c0,0.3-0.1,0.6-0.2,0.9c-0.5,1.1-1.5,1.9-2.4,2.5c-0.3,0.2-0.6,0.4-0.9,0.6
+      			c-0.4,0.2-0.8,0.2-1.2,0.3c-1,0.2-2,0.4-3,0.3c-1.2,0-2.4-0.4-3.5-1c-0.7-0.4-1.3-0.9-1.5-1.6s0.1-1.5,0.1-2.2
+      			c0-0.5-0.2-1.1-0.1-1.6c0.1-0.8,0.6-1.4,1-2"/>
+      		<path class="st1" fill="#C98F5F" d="M32.6,20.4c-0.1-0.5-0.3-1-0.5-1.4c-0.3-0.7-0.6-2.1,0.6-1.9c1,0.2,2,0.6,2.6,1.4c0.8,1,0.8,2.2,0.8,3.4
+      			c0,1.6-1.3,2.6-2.8,2.8c-1,0.1-2.2,0.2-3.1,0.1c-0.5-0.1-1.5-0.3-1.6-0.9c-0.1-0.8,0.8-1.1,1.4-1.3c0.8-0.2,1.9-0.1,2.4-0.9
+      			C32.7,21.4,32.7,20.9,32.6,20.4z"/>
+      	</g>
+      	<g id="RBC">
+      		<path class="st2" fill="#D42026" d="M3.3,30c0.7-1.6,2.3-3,3.6-3.9c2.4-1.6,9-2.8,10.2,0.8c1.2,3.6-1.8,6.3-4.4,7.5C10.3,35.5,6,36.1,4,34.1
+      			C2.7,32.8,2.7,31.4,3.3,30z"/>
+      		<g>
+      			<path class="st3" fill="none" stroke="#FFFFFF" stroke-width="0.5444" stroke-miterlimit="10" d="M12.8,29.4c0,0.8-0.7,1.7-1.7,2.3c-0.9,0.5-1.9,0.6-2.6,0.3"/>
+      		</g>
+      		<ellipse transform="matrix(0.878 -0.4787 0.4787 0.878 -13.0684 8.5226)" class="st4" fill="#9E202C" cx="10.2" cy="29.9" rx="2.8" ry="1.9"/>
+      	</g>
+      	<g id="neutrophil">
+      		<path class="st0" fill="#FFCA96" d="M7.9,7.4c2.3-1.3,5.2-1.2,7.5,0.2c1.6,1,3,2.7,3.4,4.6c0.5,2.3-1.1,4.9-3,6c-2.6,1.5-5.6,0.8-8.1-0.5
+      			c-1.9-1-3.4-3-3.4-5.2C4.3,10.3,5.9,8.5,7.9,7.4z"/>
+      		<path class="st5" fill="#FFA750" d="M12.4,10.2L12.4,10.2c0.2,0.6,0.5,1.1,0.7,1.5s0.4,0.3,0.7,0.5c0.6,0.2,1.2,0.2,1.8,0.1
+      			c0.2,0,0.5-0.1,0.6,0.2c0,0.2,0,0.4,0,0.6c0,0.2-0.6,0.3-0.8,0.4c-0.3,0.1-0.7,0.3-0.9,0.5s-0.3,0.5-0.3,0.8s-0.1,0.9-0.2,1.1
+      			c0,0.1-0.1,0.1-0.2,0.1c-0.4,0.2-1,0.4-1.4,0c-0.1-0.2-0.2-0.4-0.3-0.6c-0.2-0.6-1-1-1.5-1.2s-1-0.3-1.5-0.3
+      			c-0.2,0-1.4-0.2-1.5,0.2v0.1C7.7,14.5,8,14.8,8,15.1c0,0.2,0,0.4,0,0.6c0.2,0.4,0.6,0.7,1,0.8c0.5,0.1,1,0.3,1.5,0.4
+      			c0.6,0.1,1.2,0,1.8-0.1c0.5-0.1,0.9-0.3,1.4-0.4s1,0.1,1.5,0.1c0.4,0,0.6-0.2,0.9-0.4c0.3-0.2,0.6-0.3,0.8-0.6
+      			c0.2-0.4,0.2-1.2-0.1-1.5c-0.2-0.2-0.3-0.5-0.3-0.8s0.1-0.6,0-0.8c-0.1-0.4-0.6-0.5-0.9-0.9c-0.3-0.4-0.1-1.1-0.3-1.5
+      			c-0.1-0.2-0.4-0.4-0.7-0.5c-0.6-0.2-1.3-0.3-2-0.3c-0.1,0-0.3,0-0.4,0.1C12.1,9.4,12,9.5,12,9.7C12.3,9.9,12.3,10,12.4,10.2z"/>
+      		<circle class="st6" fill="#BF8B53" cx="16.4" cy="11.1" r="0.2"/>
+      		<circle class="st6" fill="#BF8B53" cx="6.5" cy="15.5" r="0.3"/>
+      		<circle class="st6" fill="#BF8B53" cx="10.6" cy="10.2" r="0.4"/>
+      		<circle class="st6" fill="#BF8B53" cx="12.6" cy="14.5" r="0.2"/>
+      		<circle class="st6" fill="#BF8B53" cx="6.5" cy="12.3" r="0.4"/>
+      		<circle class="st6" fill="#BF8B53" cx="7.5" cy="9.6" r="0.2"/>
+      		<circle class="st6" fill="#BF8B53" cx="13.8" cy="17.4" r="0.3"/>
+      		<circle class="st6" fill="#BF8B53" cx="11.2" cy="8" r="0.3"/>
+      		<circle class="st6" fill="#BF8B53" cx="11.6" cy="12.3" r="0.4"/>
+      		<circle class="st6" fill="#BF8B53" cx="9.7" cy="13" r="0.2"/>
+      	</g>
+      </g>
+      <g>
+      	<g>
+      		<path class="st7" fill="#6D6E71" d="M28.3,8.5v28.8c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.5"/>
+      	</g>
+      	<g>
+      		<path class="st7" fill="#6D6E71" d="M29.1,8.2c0,0.5-0.4,0.8-0.8,0.8h-5.5C22.4,9,22,8.6,22,8.2V2c0-0.5,0.4-0.8,0.8-0.8h5.5
+      			c0.5,0,0.8,0.4,0.8,0.8C29.1,2,29.1,8.2,29.1,8.2z"/>
+      	</g>
+      </g>
+      <g>
+      	<g>
+      		<path class="st8" fill="#F1F2F2" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+      		<path class="st9" fill="none" stroke="#6D6E71" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+      	</g>
+      	<g>
+      		<g>
+      			<path class="st2" fill="#D42026" d="M27.7,27.7V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1v-9.3"/>
+      		</g>
+      		<rect x="22.1" y="24.6" class="st10" fill="#FECC84" width="5.6" height="3.3"/>
+      	</g>
+      	<g>
+      		<path class="st11" fill="none" stroke="#494D52" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+      	</g>
+      </g>
+      <g>
+      	<g>
+      		<path class="st12" fill="#EE2649" d="M28.5,7.8c0,0.5-0.4,0.8-0.8,0.8h-5.5c-0.5,0-0.8-0.4-0.8-0.8V1.7c0-0.5,0.4-0.8,0.8-0.8h5.5
+      			c0.5,0,0.8,0.4,0.8,0.8V7.8z"/>
+      	</g>
+      	<g>
+      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="22.4" y1="1.7" x2="22.4" y2="7.8"/>
+      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="23.6" y1="1.7" x2="23.6" y2="7.8"/>
+      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="26.2" y1="1.7" x2="26.2" y2="7.8"/>
+      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="27.5" y1="1.7" x2="27.5" y2="7.8"/>
+      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="24.9" y1="1.7" x2="24.9" y2="7.8"/>
+      	</g>
       </g>
     </symbol>
 
