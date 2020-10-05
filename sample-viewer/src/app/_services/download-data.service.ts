@@ -236,7 +236,7 @@ export class DownloadDataService {
     seqdata.forEach(d => {
       dwnld_data += ">" + d.name;
       dwnld_data += lineDelimiter;
-      dwnld_data += d.seq;
+      dwnld_data += d.DNAsequence;
       dwnld_data += lineDelimiter;
     })
 
@@ -274,10 +274,25 @@ export class DownloadDataService {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
 
-        let seroData = data['experiment'].map((expt: SystemsSerology) => {
-          return (new SerologyDownload(expt))
-        })
-        this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
+        let exptType = data['experiment'][0]['data'][0]['@type'];
+
+        switch(exptType){
+          case("VirusSeqData"):
+          let seqData = data["experiment"].map(d => {
+            d["data"].forEach(datum => {
+              datum["name"] = d.experimentID
+            })
+            return(d.data)
+          })
+          console.log(seqData)
+          this.downloadFasta(seqData, "patient", id)
+          break;
+        }
+
+        // let exptData = data['experiment'].map((expt: SystemsSerology) => {
+        //   return (new SerologyDownload(expt))
+        // })
+        // this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
     }
