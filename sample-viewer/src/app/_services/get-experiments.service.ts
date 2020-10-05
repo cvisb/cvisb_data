@@ -54,27 +54,12 @@ export class GetExperimentsService {
     );
   }
 
-  getExptsPatients(dataset_id: string,
-    exptCols: string[] = ["batchID", "citation", "correction", "creator", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"],
-    patientCols: string[] = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome', 'species', 'age', 'gender', 'country', 'admin2', 'admin3', 'infectionYear', 'infectionDate', 'evalDate',
-      'admitDate', 'dischargeDate', 'daysInHospital', 'daysOnset', 'elisa', 'publisher', 'citation', 'dataStatus', 'correction']): Observable<any> {
-    // console.log("getting experiments with id " + dataset_id)
-    let expt_params = new HttpParams()
-      .set('q', `includedInDataset:"${dataset_id}"`)
-      .set('fields', exptCols.join(","));
-
-    let patient_params = new HttpParams()
-      .set('q', "__all__")
-      .set('fields', patientCols.join(","))
-      .set('experimentQuery', `includedInDataset:"${dataset_id}"`);
-
+  getExptsPatients(dataset_id: string): Observable<any> {
     return forkJoin(
-      this.apiSvc.fetchAll("experiment", expt_params),
-      this.apiSvc.fetchAll("patient", patient_params)
+      this.getExpts(dataset_id, null),
+      this.getPatientsFromExpts(dataset_id, null)
     ).pipe(
       map(([expts, patients]) => {
-        // console.log(expts)
-        // console.log(patients)
         return ({ patient: patients, experiment: expts });
       }
       ),
@@ -85,25 +70,25 @@ export class GetExperimentsService {
       })
     )
   }
-  //     if (isPlatformBrowser(this.platformId)) {
-  //     console.log("client")
-  //     return this.apiSvc.fetchAll("experiment", expt_params
-  //     ).pipe(
-  //       map(expts => {
-  //         console.log(expts)
-  //         return ({ patient: [], experiment: expts });
-  //       }
-  //       ),
-  //       catchError(e => {
-  //         console.log(e)
-  //         throwError(e);
-  //         return (new Observable<any>())
-  //       })
-  //     )
-  //   } else {
-  //     console.log('server')
-  //   }
-  // }
+
+  getExpts(dataset_id: string, filterQuery: string, exptCols: string[] = ["batchID", "citation", "correction", "creator", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"]) {
+    let expt_params = new HttpParams()
+      .set('q', `includedInDataset:"${dataset_id}"`)
+      .set('fields', exptCols.join(","));
+
+    return (this.apiSvc.fetchAll("experiment", expt_params));
+  }
+
+  getPatientsFromExpts(dataset_id: string, filterQuery: string, patientCols: string[] = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome', 'species', 'age', 'gender', 'country', 'admin2', 'admin3', 'infectionYear', 'infectionDate', 'evalDate',
+    'admitDate', 'dischargeDate', 'daysInHospital', 'daysOnset', 'elisa', 'publisher', 'citation', 'dataStatus', 'correction']) {
+    let patient_params = new HttpParams()
+      .set('q', "__all__")
+      .set('fields', patientCols.join(","))
+      .set('experimentQuery', `includedInDataset:"${dataset_id}"`);
+
+    return (this.apiSvc.fetchAll("patient", patient_params));
+  }
+
 
   getDownloadList(id: String) {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
@@ -133,7 +118,7 @@ export class GetExperimentsService {
         let filters = Object.keys(exptFacets).map(key => {
           const name = filterLabels[key];
 
-          return({
+          return ({
             key: key.replace(".keyword", ""),
             name: name ? name : key.replace(".keyword", ""),
             terms: exptFacets[key].terms
@@ -143,7 +128,7 @@ export class GetExperimentsService {
         let patientFilters = Object.keys(patientFacets).map(key => {
           const name = filterLabels[key];
 
-          return({
+          return ({
             key: key.replace(".keyword", ""),
             name: name ? name : key.replace(".keyword", ""),
             terms: patientFacets[key].terms
