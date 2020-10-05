@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
+import { DownloadDataService } from "../_services/download-data.service";
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./download.component.scss']
 })
 export class DownloadComponent implements OnInit, OnDestroy {
-  id: String;
+  id: string;
   total: Number;
   summary: any[];
   filters: any[];
@@ -26,6 +27,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   constructor(
     private exptSvc: GetExperimentsService,
+    private dwnldSvc: DownloadDataService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -52,8 +54,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
   changeRoute() {
     console.log("changingroute")
     this.router.navigate(["/download", this.id, {location: "test"}])
+  }
 
-
+  downloadData() {
+    this.dwnldSvc.fetchDownload(this.id, this.whichDataForm.get("experiment"), this.whichDataForm.get("patient"))
   }
 
 }

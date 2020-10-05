@@ -265,4 +265,14 @@ export class DownloadDataService {
     return (nonzeroCols)
   }
 
+  fetchDownload(id: string, includeExpt: any, includePatient: any){
+    console.log(includeExpt);
+    // if(includeExpt) {
+      let expt = this.exptSvc.getExptsPatients(id)
+      console.log(expt)
+    // }
+
+
+  }
+
 }
