@@ -151,6 +151,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
 
   updatePlot(tDuration: number) {
     if (this.x && this.y) {
+      console.log(this.data)
 
       // --- Merge in null values ---
       // update the data to add in missing values.

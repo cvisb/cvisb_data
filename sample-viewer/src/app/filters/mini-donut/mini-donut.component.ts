@@ -134,6 +134,7 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   updatePlot() {
     if (this.data && this.donut) {
+      console.log(this.data)
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.

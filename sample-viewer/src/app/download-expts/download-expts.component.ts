@@ -13,7 +13,6 @@ export class DownloadExptsComponent implements OnInit {
 
   constructor(private datasetSvc: getDatasetsService) {
     this.datasets$ = this.datasetSvc.getDatasets();
-    console.log(this.datasets$)
   }
 
   ngOnInit() {
