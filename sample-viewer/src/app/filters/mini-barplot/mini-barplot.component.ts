@@ -151,7 +151,6 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
 
   updatePlot(tDuration: number) {
     if (this.x && this.y) {
-      console.log(this.data)
 
       // --- Merge in null values ---
       // update the data to add in missing values.
@@ -161,8 +160,6 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
       // If there are no bulk values, set to the keys.
       if (!this.options || this.options.length === 0) {
         this.options = keys;
-              console.log(keys)
-              console.log(this.options)
       } else {
         let missing_data = this.options.filter(d => !keys.includes(d));
         missing_data.forEach(d => {
