@@ -141,7 +141,7 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
       let keys = this.data.map(d => d.term);
 
       // If there are no bulk values, set to the keys.
-      if (this.cohorts.length === 0) {
+      if (!this.cohorts || this.cohorts.length === 0) {
         this.cohorts = keys;
       } else {
         let missing_data = this.cohorts.filter(d => !keys.includes(d));
@@ -149,6 +149,8 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
           this.data.push({ term: d, count: 0 });
         })
       }
+      console.log(keys)
+      console.log(this.cohorts)
       // if selectedCohorts doesn't exist, set to the cohorts.
       if (!this.selectedCohorts) {
         this.selectedCohorts = this.cohorts;
