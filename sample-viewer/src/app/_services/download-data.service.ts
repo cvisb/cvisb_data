@@ -296,11 +296,10 @@ export class DownloadDataService {
       console.log("PATEINT")
       this.exptSvc.getPatientsFromExpts(id, null).subscribe(data => {
         console.log(data)
-        let patientData = data['patient'].map((patient: Patient) => {
+        let patientData = data.map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
 
-        this.processExptData(data, id);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
     } else {
@@ -314,7 +313,7 @@ export class DownloadDataService {
 
     switch (exptType) {
       case ("VirusSeqData"):
-        let seqData = data["experiment"].flatMap(d => {
+        let seqData = data.flatMap(d => {
           d["data"].forEach(datum => {
             var name = `${d.experimentID}|${datum.virus}`;
             name = datum.virusSegment ? `${name}|${datum.virusSegment}` : name;
@@ -326,7 +325,7 @@ export class DownloadDataService {
         this.downloadFasta(seqData, "patient", id)
         break;
       case ("SystemsSerology"):
-        let seroData = data['experiment'].map((expt: SystemsSerology) => {
+        let seroData = data.map((expt: SystemsSerology) => {
           return (new SerologyDownload(expt))
         })
         this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
