@@ -93,6 +93,7 @@ export class GetExperimentsService {
   getDownloadList(id: String) {
     return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
       map(([exptFacets, patientFacets, exptData, patientSummary]) => {
+        console.log(patientSummary)
         let filteredSummary = {};
         filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
         filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
@@ -101,6 +102,7 @@ export class GetExperimentsService {
         let countries = patientSummary["country.identifier.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
+        console.log(filteredSummary)
 
         // filter options
         const filterLabels = {

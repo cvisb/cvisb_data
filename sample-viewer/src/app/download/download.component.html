@@ -21,7 +21,7 @@
 <div class="container w-100" id="filtered-summary" *ngIf="summary">
   <div id="cohort-count">
     <h4 class="filter-label">cohort</h4>
-    <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [cohorts]="summary['cohorts']" [filterable]="false"></app-mini-donut>
+    <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
   </div>
 
   <div class="grid-item grid-column-container" id="outcome-count">
@@ -56,7 +56,7 @@
     <form [formGroup]="filterForm">
 
     </form>
-    
+
     <div class="filter-group" *ngFor="let filter of filters">
       <h6>{{filter.name}}</h6>
       <ul>
