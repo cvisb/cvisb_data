@@ -122,7 +122,7 @@ export class DownloadDataService {
       // --- Viral sequencing ---
       case ("virus sequences"):
         // this.filename = `${this.today}_cvisb_${this.filenamePart}-virus-sequences`;
-        this.downloadFasta(data, filetype, filename);
+        this.downloadFasta(data, id);
         break;
       case ("systems-serology"):
         try {
@@ -228,7 +228,7 @@ export class DownloadDataService {
     }
   }
 
-  downloadFasta(data: any[], filetype: string, filename: string) {
+  downloadFasta(data: any[], id: string) {
     let seqdata = data;
     let dwnld_data = "";
     let lineDelimiter = "\n";
@@ -241,9 +241,7 @@ export class DownloadDataService {
     })
 
     // Sequences in .fasta format
-    this.saveData(dwnld_data, `${filename}.fasta`, "text/fasta");    // patient metadata
-    this.parseData(data, filetype, `${filename}_patient-data.tsv`);
-    // this.parseData(data.patients, `${filename}-patientData.tsv`);
+    this.saveData(dwnld_data, `${this.today}_cvisb_${id}${this.auth_stub}.fasta`, "text/fasta");    // patient metadata
   }
 
   sortingFunc(a: string, columnOrder: string[]) {
@@ -273,7 +271,7 @@ export class DownloadDataService {
       disableClose: true
     });
 
-// Download experiment and patient data
+    // Download experiment and patient data
     if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id, null).subscribe(data => {
         console.log(data)
@@ -282,20 +280,16 @@ export class DownloadDataService {
         });
 
         this.processExptData(data["experiment"], id);
-        this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
+        this.parseData(patientData, 'patients', `${this.today}_cvisb_${id}_PatientData${this.auth_stub}.tsv`);
       });
-    } else if(includeExpt) {
+    } else if (includeExpt) {
       // Download only experiment data
-      console.log("EXPT")
       this.exptSvc.getExpts(id, null).subscribe(data => {
-        console.log(data)
         this.processExptData(data, id);
       });
-    } else if(includePatient) {
+    } else if (includePatient) {
       // Download only patient data
-      console.log("PATEINT")
       this.exptSvc.getPatientsFromExpts(id, null).subscribe(data => {
-        console.log(data)
         let patientData = data.map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
@@ -304,7 +298,7 @@ export class DownloadDataService {
       });
     } else {
       this.loadingCompleteSubject.next(true);
-        this.dialogRef.close();
+      this.dialogRef.close();
     }
   }
 
@@ -322,13 +316,13 @@ export class DownloadDataService {
           return (d.data)
         })
         console.log(seqData)
-        this.downloadFasta(seqData, "patient", id)
+        this.downloadFasta(seqData, id)
         break;
       case ("SystemsSerology"):
         let seroData = data.map((expt: SystemsSerology) => {
           return (new SerologyDownload(expt))
         })
-        this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
+        this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       case ("HLAData"):
         console.log("HLA!!")
