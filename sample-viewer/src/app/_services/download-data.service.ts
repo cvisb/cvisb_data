@@ -133,7 +133,7 @@ export class DownloadDataService {
         }
 
         // this.exptSvc.getExptsPatients("ebola-viral-seq").subscribe(data => {
-        this.exptSvc.getExptsPatients(filetype).subscribe(data => {
+        this.exptSvc.getExptsPatients(filetype, null).subscribe(data => {
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
