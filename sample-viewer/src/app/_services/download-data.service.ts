@@ -265,9 +265,9 @@ export class DownloadDataService {
     return (nonzeroCols)
   }
 
-  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean){
+  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean) {
     console.log(includeExpt);
-    if(includeExpt && includePatient) {
+    if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id).subscribe(data => {
         console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
@@ -276,17 +276,17 @@ export class DownloadDataService {
 
         let exptType = data['experiment'][0]['data'][0]['@type'];
 
-        switch(exptType){
-          case("VirusSeqData"):
-          let seqData = data["experiment"].map(d => {
-            d["data"].forEach(datum => {
-              datum["name"] = d.experimentID
+        switch (exptType) {
+          case ("VirusSeqData"):
+            let seqData = data["experiment"].flatMap(d => {
+              d["data"].forEach(datum => {
+                datum["name"] = d.experimentID
+              })
+              return (d.data)
             })
-            return(d.data)
-          })
-          console.log(seqData)
-          this.downloadFasta(seqData, "patient", id)
-          break;
+            console.log(seqData)
+            this.downloadFasta(seqData, "patient", id)
+            break;
         }
 
         // let exptData = data['experiment'].map((expt: SystemsSerology) => {
