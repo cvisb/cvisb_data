@@ -274,43 +274,65 @@ export class DownloadDataService {
       disableClose: true
     });
 
+// Download experiment and patient data
     if (includeExpt && includePatient) {
-      this.exptSvc.getExptsPatients(id).subscribe(data => {
+      this.exptSvc.getExptsPatients(id, null).subscribe(data => {
         console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
 
-        let exptType = data['experiment'][0]['data'][0]['@type'];
+        this.processExptData(data, id);
+        this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
+      });
+    } else if(includeExpt) {
+      // Download only experiment data
+      console.log("EXPT")
+      this.exptSvc.getExpts(id, null).subscribe(data => {
+        console.log(data)
+        this.processExptData(data, id);
+      });
+    } else if(includePatient) {
+      // Download only patient data
+      console.log("PATEINT")
+      this.exptSvc.getExptsPatients(id, null).subscribe(data => {
+        console.log(data)
+        let patientData = data['patient'].map((patient: Patient) => {
+          return (new PatientDownload(patient, this.dateRangePipe));
+        });
 
-        switch (exptType) {
-          case ("VirusSeqData"):
-            let seqData = data["experiment"].flatMap(d => {
-              d["data"].forEach(datum => {
-                var name = `${d.experimentID}|${datum.virus}`;
-                name = datum.virusSegment ? `${name}|${datum.virusSegment}` : name;
-                datum["name"] = name;
-              })
-              return (d.data)
-            })
-            console.log(seqData)
-            this.downloadFasta(seqData, "patient", id)
-            break;
-          case ("SystemsSerology"):
-            let seroData = data['experiment'].map((expt: SystemsSerology) => {
-              return (new SerologyDownload(expt))
-            })
-            this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
-            break;
-          case ("HLAData"):
-            console.log("HLA!!")
-            break;
-        }
-
+        this.processExptData(data, id);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
     }
+  }
 
+  processExptData(data: any[], id) {
+    let exptType = data['experiment'][0]['data'][0]['@type'];
+
+    switch (exptType) {
+      case ("VirusSeqData"):
+        let seqData = data["experiment"].flatMap(d => {
+          d["data"].forEach(datum => {
+            var name = `${d.experimentID}|${datum.virus}`;
+            name = datum.virusSegment ? `${name}|${datum.virusSegment}` : name;
+            datum["name"] = name;
+          })
+          return (d.data)
+        })
+        console.log(seqData)
+        this.downloadFasta(seqData, "patient", id)
+        break;
+      case ("SystemsSerology"):
+        let seroData = data['experiment'].map((expt: SystemsSerology) => {
+          return (new SerologyDownload(expt))
+        })
+        this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
+        break;
+      case ("HLAData"):
+        console.log("HLA!!")
+        break;
+    }
 
   }
 

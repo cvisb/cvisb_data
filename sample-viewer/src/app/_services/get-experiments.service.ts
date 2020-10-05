@@ -54,10 +54,10 @@ export class GetExperimentsService {
     );
   }
 
-  getExptsPatients(dataset_id: string): Observable<any> {
+  getExptsPatients(dataset_id: string, filter_string: string): Observable<any> {
     return forkJoin(
-      this.getExpts(dataset_id, null),
-      this.getPatientsFromExpts(dataset_id, null)
+      this.getExpts(dataset_id, filter_string),
+      this.getPatientsFromExpts(dataset_id, filter_string)
     ).pipe(
       map(([expts, patients]) => {
         return ({ patient: patients, experiment: expts });
