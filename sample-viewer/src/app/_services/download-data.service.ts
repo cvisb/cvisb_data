@@ -287,19 +287,23 @@ export class DownloadDataService {
           case ("VirusSeqData"):
             let seqData = data["experiment"].flatMap(d => {
               d["data"].forEach(datum => {
-                datum["name"] = d.experimentID
+                var name = `${d.experimentID}|${datum.virus}`;
+                name = datum.virusSegment ? `${name}|${datum.virusSegment}` : name;
+                datum["name"] = name;
               })
               return (d.data)
             })
             console.log(seqData)
             this.downloadFasta(seqData, "patient", id)
             break;
+          case ("SystemsSerology"):
+            let seroData = data['experiment'].map((expt: SystemsSerology) => {
+              return (new SerologyDownload(expt))
+            })
+            this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
+            break;
         }
 
-        // let exptData = data['experiment'].map((expt: SystemsSerology) => {
-        //   return (new SerologyDownload(expt))
-        // })
-        // this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
     }
