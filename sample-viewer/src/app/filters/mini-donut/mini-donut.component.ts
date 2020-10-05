@@ -134,7 +134,6 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   updatePlot() {
     if (this.data && this.donut) {
-      console.log(this.data)
       // --- Merge in null values ---
       // update the data to add in missing values.
       // Essential for object constancy.
@@ -149,8 +148,6 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
           this.data.push({ term: d, count: 0 });
         })
       }
-      console.log(keys)
-      console.log(this.cohorts)
       // if selectedCohorts doesn't exist, set to the cohorts.
       if (!this.selectedCohorts) {
         this.selectedCohorts = this.cohorts;
