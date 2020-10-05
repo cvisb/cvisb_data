@@ -57,7 +57,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   downloadData() {
-    this.dwnldSvc.fetchDownload(this.id, this.whichDataForm.get("experiment"), this.whichDataForm.get("patient"))
+    this.dwnldSvc.downloadExperiments(this.id, this.whichDataForm.get("experiment").value, this.whichDataForm.get("patient").value)
   }
 
 }

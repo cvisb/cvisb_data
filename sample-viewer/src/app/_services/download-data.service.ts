@@ -265,12 +265,22 @@ export class DownloadDataService {
     return (nonzeroCols)
   }
 
-  fetchDownload(id: string, includeExpt: any, includePatient: any){
+  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean){
     console.log(includeExpt);
-    // if(includeExpt) {
-      let expt = this.exptSvc.getExptsPatients(id)
-      console.log(expt)
-    // }
+    if(includeExpt && includePatient) {
+      this.exptSvc.getExptsPatients(id).subscribe(data => {
+        console.log(data)
+        let patientData = data['patient'].map((patient: Patient) => {
+          return (new PatientDownload(patient, this.dateRangePipe));
+        });
+
+        let seroData = data['experiment'].map((expt: SystemsSerology) => {
+          return (new SerologyDownload(expt))
+        })
+        this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
+        this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
+      });
+    }
 
 
   }
