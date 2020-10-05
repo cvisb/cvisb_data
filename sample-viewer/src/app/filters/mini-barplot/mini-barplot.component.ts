@@ -168,6 +168,9 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
         })
       }
 
+      console.log(keys)
+      console.log(this.options)
+
       // if selectedCohorts doesn't exist, set to the cohorts.
       if (!this.selectedOutcomes) {
         this.selectedOutcomes = this.options;
