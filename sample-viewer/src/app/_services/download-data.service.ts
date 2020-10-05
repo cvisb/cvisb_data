@@ -266,7 +266,6 @@ export class DownloadDataService {
   }
 
   downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean) {
-
     this.loadingCompleteSubject.next(false);
     this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
       width: '535px',
@@ -282,7 +281,7 @@ export class DownloadDataService {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
 
-        this.processExptData(data, id);
+        this.processExptData(data["experiment"], id);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
     } else if(includeExpt) {
@@ -295,7 +294,7 @@ export class DownloadDataService {
     } else if(includePatient) {
       // Download only patient data
       console.log("PATEINT")
-      this.exptSvc.getExptsPatients(id, null).subscribe(data => {
+      this.exptSvc.getPatientsFromExpts(id, null).subscribe(data => {
         console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
@@ -304,11 +303,14 @@ export class DownloadDataService {
         this.processExptData(data, id);
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
       });
+    } else {
+      this.loadingCompleteSubject.next(true);
+        this.dialogRef.close();
     }
   }
 
   processExptData(data: any[], id) {
-    let exptType = data['experiment'][0]['data'][0]['@type'];
+    let exptType = data[0]['data'][0]['@type'];
 
     switch (exptType) {
       case ("VirusSeqData"):
