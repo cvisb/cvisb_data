@@ -159,8 +159,10 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
       let keys = this.data.map(d => d.term);
 
       // If there are no bulk values, set to the keys.
-      if (this.options && this.options.length === 0) {
+      if (!this.options || this.options.length === 0) {
         this.options = keys;
+              console.log(keys)
+              console.log(this.options)
       } else {
         let missing_data = this.options.filter(d => !keys.includes(d));
         missing_data.forEach(d => {
@@ -168,8 +170,6 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
         })
       }
 
-      console.log(keys)
-      console.log(this.options)
 
       // if selectedCohorts doesn't exist, set to the cohorts.
       if (!this.selectedOutcomes) {
