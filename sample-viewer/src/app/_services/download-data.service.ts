@@ -302,7 +302,7 @@ export class DownloadDataService {
     }
   }
 
-  processExptData(data: any[], id) {
+  processExptData(data: any[], id: string) {
     let exptType = data[0]['data'][0]['@type'];
 
     switch (exptType) {
@@ -325,7 +325,6 @@ export class DownloadDataService {
         this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       case ("HLAData"):
-        console.log("HLA!!")
         this.parseData(data, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
     }

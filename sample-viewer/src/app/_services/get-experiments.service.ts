@@ -109,7 +109,7 @@ export class GetExperimentsService {
           "experimentDate.keyword": "Sample Date",
           "sourceCitation.name.keyword": "Source",
           "species.keyword": "Host",
-          "country.identifier.keyword": "Country",
+          "country.name.keyword": "Country",
           "cohort.keyword": "Cohort",
           "infectionYear.keyword": "Infection Year",
           "outcome.keyword": "Outcome"
