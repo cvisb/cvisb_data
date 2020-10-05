@@ -326,6 +326,7 @@ export class DownloadDataService {
         break;
       case ("HLAData"):
         console.log("HLA!!")
+        this.parseData(data, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
     }
 
