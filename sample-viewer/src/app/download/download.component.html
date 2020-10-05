@@ -53,6 +53,10 @@
 <div class="container w-100">
   <div class="col-md-3" *ngIf="filters">
     <h6>Filters</h6>
+    <form [formGroup]="filterForm">
+
+    </form>
+    
     <div class="filter-group" *ngFor="let filter of filters">
       <h6>{{filter.name}}</h6>
       <ul>

@@ -25,6 +25,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
     patient: true
   });
 
+  filterForm: FormGroup = this.fb.group({
+    cohort: null
+  });
+
   constructor(
     private exptSvc: GetExperimentsService,
     private dwnldSvc: DownloadDataService,
