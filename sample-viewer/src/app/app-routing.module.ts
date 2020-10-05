@@ -52,6 +52,7 @@ const appRoutes: Routes = [
   // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
 
   { path: 'download/:id', loadChildren: () => import('./download/download.module').then(m => m.DownloadModule), pathMatch: 'full' },
+  { path: 'download', loadChildren: () => import('./download-expts/download-expts.module').then(m => m.DownloadExptsModule), pathMatch: 'full' },
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
