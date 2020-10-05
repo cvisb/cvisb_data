@@ -227,6 +227,21 @@
                            - ADNKA_CD107a
                            - ADNKA_IFNg
                            - ADNKA_MIP1b
+                           - NKD-CD107a
+                           - IgG2
+                           - FcRg2b
+                           - FcRg2A
+                           - NKD-MIP1b
+                           - IgA1
+                           - FcRg3A
+                           - RCA
+                           - IgG3
+                           - IgM
+                           - IgG4
+                           - IgA2
+                           - SNA
+                           - IgG1
+                           - NT50
                            - metabolomics
                            - blood chemistry
                            - vitals
@@ -235,7 +250,6 @@
                            - acute symptoms
                            - sequelae
                            - coma score
-                           - medications
 
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
@@ -307,6 +321,7 @@
                            - bcr
                            - tcr
                            - systems-serology
+                           - systems-serology-32783920
                            - metabolomics
                            - blood-chemistry-vhf
                            - blood-counts-vhf
@@ -484,6 +499,7 @@
     - "@id":             cvisb:VirusSeqData
     - "@id":             cvisb:SystemsSerology
     - "@id":             cvisb:PiccoloData
+    - "@id":             cvisb:BloodCountData
     - "@id":             cvisb:Vitals
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR
