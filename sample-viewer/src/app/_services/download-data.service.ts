@@ -266,7 +266,14 @@ export class DownloadDataService {
   }
 
   downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean) {
-    console.log(includeExpt);
+
+    this.loadingCompleteSubject.next(false);
+    this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
+      width: '535px',
+      data: `Downloading selected data...`,
+      disableClose: true
+    });
+
     if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id).subscribe(data => {
         console.log(data)
