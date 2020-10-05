@@ -302,6 +302,9 @@ export class DownloadDataService {
             })
             this.parseData(seroData, id, `${id}${this.auth_stub}.tsv`);
             break;
+          case ("HLAData"):
+            console.log("HLA!!")
+            break;
         }
 
         this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
