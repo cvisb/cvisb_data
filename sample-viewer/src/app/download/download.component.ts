@@ -25,7 +25,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   });
 
   filterForm: FormGroup;
-  filterKeys: string[];
+  filterKeys: string[] = [];
 
   constructor(
     private exptSvc: GetExperimentsService,
@@ -38,16 +38,19 @@ export class DownloadComponent implements OnInit, OnDestroy {
       outcome: this.fb.array([])
     })
 
-    this.filterKeys = Object.keys(this.filterForm);
-    console.log(this.filterForm)
+
+    this.filterKeys = Object.keys(this.filterForm.controls);
+
   }
 
   ngOnInit() {
+    console.log(this.filterForm)
+    console.log(this.filterKeys)
+
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
 
     const params = this.route.snapshot.queryParams;
-    console.log(params)
     this.id = this.route.snapshot.paramMap.get("id");
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];

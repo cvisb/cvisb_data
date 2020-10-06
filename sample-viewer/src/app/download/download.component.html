@@ -1,20 +1,20 @@
 <h1>Download data</h1>
 
-<form [formGroup]="filterForm" *ngIf="filterForm">
-<template *ngFor="let key of filterKeys">
-  <h1>{{key}}</h1>
-  <div [formArrayName]="key">
-    <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
-      <div [formGroupName]="i">
-        <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-          {{option.get("term").value}} ({{option.get("count").value}})
-        </mat-checkbox>
+<form [formGroup]="filterForm">
+  <div *ngFor="let key of filterKeys">
+    <h1>{{key}}</h1>
+    <div [formArrayName]="key">
+      <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
+        <div [formGroupName]="i">
+          <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+            {{option.get("term").value}} ({{option.get("count").value}})
+          </mat-checkbox>
         </div>
       </div>
     </div>
-    </template>
+  </div>
 
-  </form>
+</form>
 
 
 <div class="container align-items-center mb-4">
@@ -55,7 +55,7 @@
 
   <div class="grid-item grid-column-container" id="outcome-count">
     <h4 class="filter-label">host</h4>
-    <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 170 }"  [filterable]="false"></app-mini-barplot>
+    <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 170 }" [filterable]="false"></app-mini-barplot>
   </div>
 
   <div class="grid-item grid-row-container" id="year-file-count">
@@ -67,7 +67,7 @@
 </div>
 
 <div class="container w-100">
-    <h6>Filters</h6>
+  <h6>Filters</h6>
   <div>
     Table
     <table>
