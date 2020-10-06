@@ -15,7 +15,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
   total: Number;
   summary: any[];
-  filters: any[];
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
   locationParams: string[] = [];
@@ -53,7 +52,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
       console.log(results)
       this.total = results["total"];
       this.summary = results["filteredSummary"];
-      this.filters = results["filters"];
 
       results["filteredSummary"]["cohorts"].forEach(d => {
         cohorts.push(this.fb.group(d))

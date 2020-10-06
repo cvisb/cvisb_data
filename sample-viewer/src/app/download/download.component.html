@@ -3,8 +3,8 @@
 <form [formGroup]="filterForm" *ngIf="filterForm">
   <div formArrayName="cohort">
     <div *ngFor="let option of filterForm.get('cohort')['controls']; let i = index">
-      <div [formGroupName]="i">
-        <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+      <div formGroupName="i">
+        <mat-checkbox color="primary" [formControl="option.get('selected')" class="mr-3">
           {{option.get("term").value}}
         </mat-checkbox>
         </div>
@@ -13,7 +13,7 @@
 
   <div formArrayName="outcome">
     <div *ngFor="let option of filterForm.get('outcome')['controls']; let i = index">
-      <div [formGroupName]="i">
+      <div formGroupName="i">
         <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
           {{option.get("term").value}}
         </mat-checkbox>
@@ -73,21 +73,7 @@
 </div>
 
 <div class="container w-100">
-  <div class="col-md-3" *ngIf="filters">
     <h6>Filters</h6>
-    <form [formGroup]="filterForm">
-
-    </form>
-
-    <div class="filter-group" *ngFor="let filter of filters">
-      <h6>{{filter.name}}</h6>
-      <ul>
-        <li *ngFor="let option of filter.terms">
-          {{option.term}} ({{option.count}})
-          </li>
-        </ul>
-      </div>
-  </div>
   <div>
     Table
     <table>

@@ -117,33 +117,9 @@ export class GetExperimentsService {
           "outcome.keyword": "Outcome"
         };
 
-        let filters = Object.keys(exptFacets).map(key => {
-          const name = filterLabels[key];
-
-          return ({
-            key: key.replace(".keyword", ""),
-            name: name ? name : key.replace(".keyword", ""),
-            terms: exptFacets[key].terms
-          })
-        });
-
-        let patientFilters = Object.keys(patientFacets).map(key => {
-          const name = filterLabels[key];
-
-          return ({
-            key: key.replace(".keyword", ""),
-            name: name ? name : key.replace(".keyword", ""),
-            terms: patientFacets[key].terms
-          })
-        });
-
-        filters = filters.concat(patientFilters);
-
-
         return ({
           total: exptData["total"],
           filteredSummary: filteredSummary,
-          filters: filters,
           results: exptData
         })
       }),
