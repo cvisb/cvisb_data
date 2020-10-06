@@ -263,7 +263,7 @@ export class DownloadDataService {
     return (nonzeroCols)
   }
 
-  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean) {
+  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean, filters: any[]) {
     this.loadingCompleteSubject.next(false);
     this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
       width: '535px',
