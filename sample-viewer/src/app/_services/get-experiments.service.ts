@@ -99,7 +99,7 @@ export class GetExperimentsService {
         filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
         filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
         filteredSummary["years"] = patientSummary["infectionYear"]["terms"];
-        let countries = patientSummary["country.identifier.keyword"]["terms"];
+        let countries = patientSummary["country.name.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
         console.log(filteredSummary)
@@ -178,7 +178,7 @@ export class GetExperimentsService {
   }
 
   getPatientDownloadFacets(id: String) {
-    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
+    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.name.keyword"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -201,12 +201,12 @@ export class GetExperimentsService {
   }
 
   getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort", "outcome", "species", "infectionYear", "country.identifier"];
+    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.name.keyword"];
 
     let params = new HttpParams()
       .set('q', "__all__")
       .set("experimentQuery", `includedInDataset:"${id}"`)
-      .set('facets', patientFacets.map(d => `${d}.keyword`).join(","))
+      .set('facets', patientFacets.map(d => `${d}`).join(","))
       .set('facet_size', '1000')
 
     return this.apiSvc.get('patient', params, 0).pipe(
