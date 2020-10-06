@@ -55,11 +55,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.summary = results["filteredSummary"];
       this.filters = results["filters"];
 
-      results["filters"]["cohorts"].forEach(d => {
+      results["filteredSummary"]["cohorts"].forEach(d => {
         cohorts.push(this.fb.group(d))
       })
 
-      results["filters"]["outcomes"].forEach(d => {
+      results["filteredSummary"]["outcomes"].forEach(d => {
         outcomes.push(this.fb.group(d))
       })
     });
