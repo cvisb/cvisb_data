@@ -103,7 +103,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   downloadData() {
     console.log(this.filterForm.value)
-    this.dwnldSvc.downloadExperiments(this.id, this.whichDataForm.get("experiment").value, this.whichDataForm.get("patient").value)
+
+    let filters = Object.keys(this.filterForm.value).forEach(key => this.filterForm.value[key].filter(d => d.selected))
+
+    console.log(filters)
+
+    this.dwnldSvc.downloadExperiments(this.id, this.whichDataForm.get("experiment").value, this.whichDataForm.get("patient").value, filters)
   }
 
 }
