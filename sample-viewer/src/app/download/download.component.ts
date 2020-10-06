@@ -25,6 +25,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   });
 
   filterForm: FormGroup;
+  filterKeys: string[];
 
   constructor(
     private exptSvc: GetExperimentsService,
@@ -36,6 +37,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
       cohort: this.fb.array([]),
       outcome: this.fb.array([])
     })
+
+    this.filterKeys = Object.keys(this.filterForm);
+    console.log(this.filterForm)
   }
 
   ngOnInit() {

@@ -1,25 +1,19 @@
 <h1>Download data</h1>
 
 <form [formGroup]="filterForm" *ngIf="filterForm">
-  <div formArrayName="cohort">
-    <div *ngFor="let option of filterForm.get('cohort')['controls']; let i = index">
-      <div formGroupName="{{i}}">
-        <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-          {{option.get("term").value}}
-        </mat-checkbox>
-        </div>
-      </div>
-    </div>
-
-  <div formArrayName="outcome">
+<template *ngFor="let key of filterKeys">
+  <h1>{{key}}</h1>
+  <div [formArrayName]="key">
     <div *ngFor="let option of filterForm.get('outcome')['controls']; let i = index">
-      <div formGroupName="{{i}}">
+      <div [formGroupName]="i">
         <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-          {{option.get("term").value}}
+          {{option.get("term").value}} ({{option.get("count").value}})
         </mat-checkbox>
         </div>
       </div>
     </div>
+    </template>
+
   </form>
 
 
