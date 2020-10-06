@@ -104,7 +104,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
   downloadData() {
     console.log(this.filterForm.value)
 
-    let filters = Object.keys(this.filterForm.value).map(key => this.filterForm.value[key].filter(d => d.selected))
+    let filters = Object.keys(this.filterForm.value).map(key => {
+      return({
+        key: key,
+        terms: this.filterForm.value[key].filter(d => d.selected)
+      })
+    })
 
     console.log(filters)
 
