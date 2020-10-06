@@ -4,7 +4,7 @@
   <div formArrayName="cohort">
     <div *ngFor="let option of filterForm.get('cohort')['controls']; let i = index">
       <div formGroupName="i">
-        <mat-checkbox color="primary" [formControl="option.get('selected')" class="mr-3">
+        <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
           {{option.get("term").value}}
         </mat-checkbox>
         </div>
