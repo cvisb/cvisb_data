@@ -270,10 +270,15 @@ export class DownloadDataService {
       data: `Downloading selected data...`,
       disableClose: true
     });
+    let patientQueryArr = filters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
+    let patientQuery = patientQueryArr.join(" AND ");
+
+    console.log(patientQueryArr)
+    console.log(patientQuery)
 
     // Download experiment and patient data
     if (includeExpt && includePatient) {
-      this.exptSvc.getExptsPatients(id, null).subscribe(data => {
+      this.exptSvc.getExptsPatients(id, patientQuery).subscribe(data => {
         console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
@@ -284,7 +289,7 @@ export class DownloadDataService {
       });
     } else if (includeExpt) {
       // Download only experiment data
-      this.exptSvc.getExpts(id, null).subscribe(data => {
+      this.exptSvc.getExpts(id, patientQuery).subscribe(data => {
         this.processExptData(data, id);
       });
     } else if (includePatient) {

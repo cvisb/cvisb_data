@@ -74,6 +74,7 @@ export class GetExperimentsService {
   getExpts(dataset_id: string, filterQuery: string, exptCols: string[] = ["batchID", "citation", "correction", "creator", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"]) {
     let expt_params = new HttpParams()
       .set('q', `includedInDataset:"${dataset_id}"`)
+      .set('patientQuery', filterQuery)
       .set('fields', exptCols.join(","));
 
     return (this.apiSvc.fetchAll("experiment", expt_params));
@@ -82,7 +83,7 @@ export class GetExperimentsService {
   getPatientsFromExpts(dataset_id: string, filterQuery: string, patientCols: string[] = ['patientID', 'alternateIdentifier', 'gID', 'sID', 'cohort', 'outcome', 'species', 'age', 'gender', 'country', 'admin2', 'admin3', 'infectionYear', 'infectionDate', 'evalDate',
     'admitDate', 'dischargeDate', 'daysInHospital', 'daysOnset', 'elisa', 'publisher', 'citation', 'dataStatus', 'correction']) {
     let patient_params = new HttpParams()
-      .set('q', "__all__")
+      .set('q', filterQuery !== "" ? filterQuery : "__all__")
       .set('fields', patientCols.join(","))
       .set('experimentQuery', `includedInDataset:"${dataset_id}"`);
 
