@@ -99,7 +99,7 @@ export class GetExperimentsService {
         filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
         filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
         filteredSummary["years"] = patientSummary["infectionYear"]["terms"];
-        let countries = patientSummary["country.name.keyword"]["terms"];
+        let countries = patientSummary["country.identifier.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
         console.log(filteredSummary)
@@ -111,7 +111,7 @@ export class GetExperimentsService {
           "experimentDate.keyword": "Sample Date",
           "sourceCitation.name.keyword": "Source",
           "species.keyword": "Host",
-          "country.name.keyword": "Country",
+          "country.identifier.keyword": "Country",
           "cohort.keyword": "Cohort",
           "infectionYear": "Infection Year",
           "outcome.keyword": "Outcome"
@@ -178,7 +178,7 @@ export class GetExperimentsService {
   }
 
   getPatientDownloadFacets(id: String) {
-    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.name.keyword"];
+    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
 
     let params = new HttpParams()
       .set('q', "__all__")
@@ -201,7 +201,7 @@ export class GetExperimentsService {
   }
 
   getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.name.keyword"];
+    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
 
     let params = new HttpParams()
       .set('q', "__all__")
