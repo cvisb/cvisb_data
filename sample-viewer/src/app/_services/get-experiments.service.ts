@@ -104,6 +104,12 @@ export class GetExperimentsService {
         filteredSummary["countries"] = countries;
         console.log(filteredSummary)
 
+        Object.keys(filteredSummary).forEach(facet => {
+          filteredSummary[facet].forEach(d => {
+            d["selected"] = false;
+          })
+        })
+
         // filter options
         const filterLabels = {
           "data.curated.keyword": "Curated Sequence",

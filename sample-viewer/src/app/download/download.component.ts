@@ -39,7 +39,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     })
 
 
-    this.filterKeys = ["cohort"]//Object.keys(this.filterForm.controls);
+    this.filterKeys = Object.keys(this.filterForm.controls);
 
   }
 
