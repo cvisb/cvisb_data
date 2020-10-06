@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
-  total: Number;
+  total: number;
   summary: any[];
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
@@ -26,6 +26,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   filterForm: FormGroup;
   filterKeys: string[] = [];
+  numFilters: Number = 5;
 
   constructor(
     private exptSvc: GetExperimentsService,
@@ -35,7 +36,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) {
     this.filterForm = this.fb.group({
       cohort: this.fb.array([]),
-      outcome: this.fb.array([])
+      outcome: this.fb.array([]),
+      species: this.fb.array([])
+      country: this.fb.array([])
     })
 
 
@@ -49,6 +52,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
+    let species = this.filterForm.get("species") as FormArray;
+    let countries = this.filterForm.get("country") as FormArray;
 
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
@@ -60,13 +65,30 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.total = results["total"];
       this.summary = results["filteredSummary"];
 
-      results["filteredSummary"]["cohorts"].forEach(d => {
+      results["filteredSummary"]["cohorts"].forEach((d, i:number) => {
+        if(i < this.numFilters) {
         cohorts.push(this.fb.group(d))
+        }
       })
 
-      results["filteredSummary"]["outcomes"].forEach(d => {
+      results["filteredSummary"]["outcomes"].forEach((d, i:number) => {
+        if(i < this.numFilters) {
         outcomes.push(this.fb.group(d))
+        }
       })
+
+      results["filteredSummary"]["species"].forEach((d, i:number) => {
+        if(i < this.numFilters) {
+        species.push(this.fb.group(d))
+        }
+      })
+
+      results["filteredSummary"]["countries"].forEach((d, i:number) => {
+        if(i < this.numFilters) {
+        countries.push(this.fb.group(d))
+        }
+      })
+
     });
   }
 

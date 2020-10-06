@@ -1,22 +1,5 @@
 <h1>Download data</h1>
 
-<form [formGroup]="filterForm">
-  <div *ngFor="let key of filterKeys">
-    <h1>{{key}}</h1>
-    <div formArrayName="{{key}}">
-      <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
-        <div formGroupName="{{i}}">
-          <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-            {{option.get("term").value}} ({{option.get("count").value}})
-          </mat-checkbox>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</form>
-
-
 <div class="container align-items-center mb-4">
   <form [formGroup]="whichDataForm" class="container">
     <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
@@ -68,6 +51,21 @@
 
 <div class="container w-100">
   <h6>Filters</h6>
+
+  <form [formGroup]="filterForm">
+    <div *ngFor="let key of filterKeys">
+      <h1>{{key}}</h1>
+      <div formArrayName="{{key}}">
+        <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
+          <div formGroupName="{{i}}">
+            <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+              {{option.get("term").value}} ({{option.get("count").value}})
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <div>
     Table
     <table>
