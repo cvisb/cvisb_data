@@ -37,7 +37,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterForm = this.fb.group({
       cohort: this.fb.array([]),
       outcome: this.fb.array([]),
-      species: this.fb.array([])
+      species: this.fb.array([]),
       country: this.fb.array([])
     })
 
