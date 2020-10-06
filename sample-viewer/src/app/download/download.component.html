@@ -3,7 +3,7 @@
 <form [formGroup]="filterForm">
   <div *ngFor="let key of filterKeys">
     <h1>{{key}}</h1>
-    <div [formArrayName]="key">
+    <div formArrayName="key">
       <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
         <div [formGroupName]="i">
           <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
