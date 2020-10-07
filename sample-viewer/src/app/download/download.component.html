@@ -13,22 +13,22 @@
   <button mat-raised-button color="primary" (click)="downloadData()">Download</button>
 </div>
 
-<p *ngIf="total || total === 0">
-  <b>{{total}}</b> experiments selected
-</p>
+<h2 *ngIf="total || total === 0">
+  You selected <b>{{total}}</b> experiments
+</h2>
 
 <div class="container w-100" id="filtered-summary" *ngIf="summary">
-  <div id="cohort-count">
+  <div id="cohort-count" class="mr-3">
     <h4 class="filter-label">cohort</h4>
     <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
   </div>
 
-  <div class="grid-item grid-column-container" id="outcome-count">
+  <div class="grid-item grid-column-container mr-3" id="outcome-count">
     <h4 class="filter-label">outcome</h4>
     <app-mini-barplot [data]="summary['outcomes']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [filterable]="false"></app-mini-barplot>
   </div>
 
-  <div class="grid-item grid-column-container" id="country-count">
+  <div class="grid-item grid-column-container mr-3" id="country-count">
     <h4 class="filter-label">country</h4>
     <div class="grid-row-container">
       <app-choropleth [data]="summary['countries']"></app-choropleth>
@@ -36,12 +36,12 @@
     </div>
   </div>
 
-  <div class="grid-item grid-column-container" id="outcome-count">
+  <div class="grid-item grid-column-container mr-3" id="outcome-count">
     <h4 class="filter-label">host</h4>
     <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 170 }" [filterable]="false"></app-mini-barplot>
   </div>
 
-  <div class="grid-item grid-row-container" id="year-file-count">
+  <div class="grid-item grid-row-container mr-3" id="year-file-count">
     <div id="year-count" class="grid-column-container">
       <h4 class="filter-label">year</h4>
       <app-filterable-histogram [data]="summary['years']" [xDomain]="[1979, 2020]" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
@@ -50,18 +50,21 @@
 </div>
 
 <div class="container w-100">
-  <h6>Filters</h6>
+  <div>
+  <h5>Filters</h5>
+    </div>
+
 
   <form [formGroup]="filterForm">
     <div *ngFor="let key of filterKeys">
-      <h1>{{key}}</h1>
+      <h6>{{key}}</h6>
       <div formArrayName="{{key}}">
         <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
-          <div formGroupName="{{i}}">
+          <small formGroupName="{{i}}">
             <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
               {{option.get("term").value}} ({{option.get("count").value}})
             </mat-checkbox>
-          </div>
+          </small>
         </div>
       </div>
     </div>
