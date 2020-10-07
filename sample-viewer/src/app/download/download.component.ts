@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
+import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
 import { Subscription } from 'rxjs';
 
@@ -13,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
+  datasetName: string;
   total: number;
   summary: any[];
   dataSubscription: Subscription;
@@ -31,6 +33,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   constructor(
     private exptSvc: GetExperimentsService,
     private dwnldSvc: DownloadDataService,
+    private exptPipe: ExperimentObjectPipe,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute) {
@@ -41,15 +44,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
       country: this.fb.array([])
     })
 
-
     this.filterKeys = Object.keys(this.filterForm.controls);
 
   }
 
   ngOnInit() {
-    console.log(this.filterForm)
-    console.log(this.filterKeys)
-
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
     let species = this.filterForm.get("species") as FormArray;
@@ -57,6 +56,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
+    let filtered = this.exptPipe.transform(this.id, 'dataset_id');
+    this.datasetName = filtered['datasetName'];
+
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];
 
