@@ -50,25 +50,25 @@
 </div>
 
 <div class="container w-100">
-  <div>
-  <h5>Filters</h5>
-    </div>
+  <div class="container-column filter-container">
+    <h5>Filters</h5>
 
-
-  <form [formGroup]="filterForm">
-    <div *ngFor="let key of filterKeys">
-      <h6>{{key}}</h6>
-      <div formArrayName="{{key}}">
-        <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
-          <small formGroupName="{{i}}">
-            <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-              {{option.get("term").value}} ({{option.get("count").value}})
-            </mat-checkbox>
-          </small>
+    <form [formGroup]="filterForm">
+      <div *ngFor="let key of filterKeys">
+        <h6 class="m-0">{{key}}</h6>
+        <div formArrayName="{{key}}">
+          <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
+            <small formGroupName="{{i}}">
+              <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+                {{option.get("term").value}} ({{option.get("count").value}})
+              </mat-checkbox>
+            </small>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
+
   <div>
     Table
     <table>
