@@ -13,11 +13,12 @@
   <button mat-raised-button color="primary" (click)="downloadData()">Download</button>
 </div>
 
-<h2 *ngIf="total || total === 0">
-  You selected <b>{{total}}</b> experiments
-</h2>
 
 <div class="container w-100" id="filtered-summary" *ngIf="summary">
+  <h2 *ngIf="total || total === 0">
+    You selected <b>{{total}}</b> experiments
+  </h2>
+
   <div id="cohort-count" class="mr-3">
     <h4 class="filter-label">cohort</h4>
     <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
