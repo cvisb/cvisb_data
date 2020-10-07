@@ -50,11 +50,11 @@
 </div>
 
 <div class="container w-100">
-  <div class="container-column filter-container">
-    <h5>Filters</h5>
+  <div class="container-column dwnld-filter-container">
+    <h5 class="m-0">Filters</h5>
 
     <form [formGroup]="filterForm">
-      <div *ngFor="let key of filterKeys">
+      <div *ngFor="let key of filterKeys" class="mb-3">
         <h6 class="m-0">{{key}}</h6>
         <div formArrayName="{{key}}">
           <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
