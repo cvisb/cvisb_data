@@ -78,6 +78,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       this.dataSource = new MatTableDataSource(results["results"]);
 
+      console.log(this.dataSource)
+
       results["filteredSummary"]["cohorts"].forEach((d, i:number) => {
         if(i < this.numFilters) {
         cohorts.push(this.fb.group(d))
