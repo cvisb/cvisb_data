@@ -7,6 +7,11 @@ import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
 import { Subscription } from 'rxjs';
 
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+
+
 @Component({
   selector: 'app-download',
   templateUrl: './download.component.html',
@@ -16,7 +21,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
   datasetName: string;
   total: number;
-  summary: any[];
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
+
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
   locationParams: string[] = [];
@@ -66,7 +73,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"];
-      this.summary = results["filteredSummary"];
 
       results["filteredSummary"]["cohorts"].forEach((d, i:number) => {
         if(i < this.numFilters) {

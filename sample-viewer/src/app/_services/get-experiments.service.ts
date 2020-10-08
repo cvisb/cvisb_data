@@ -248,7 +248,7 @@ export class GetExperimentsService {
   }
 
   getPatients4Table(exptIDs: string[]) {
-    const patientFields = ["patientID", "alternateIdentifier", "cohort", "species", "infectionYear"];
+    const patientFields = ["patientID", "alternateIdentifier", "cohort", "outcome", "country.name", "species", "infectionYear"];
 
     let params = new HttpParams()
       .set('q', "__all__")
