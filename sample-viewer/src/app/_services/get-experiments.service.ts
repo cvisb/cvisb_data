@@ -90,15 +90,15 @@ export class GetExperimentsService {
     return (this.apiSvc.fetchAll("patient", patient_params));
   }
 
-/*
-Function for /download to grab the initial results for the page load.
-Grabs:
-1. Summary of patient facets for filtering, summary box (no filters applied, unless specified by the URL)
-2. Summary of expt facets for filtering, summary box
-3. Table of results to display
+  /*
+  Function for /download to grab the initial results for the page load.
+  Grabs:
+  1. Summary of patient facets for filtering, summary box (no filters applied, unless specified by the URL)
+  2. Summary of expt facets for filtering, summary box
+  3. Table of results to display
 
-On filter application, will re-call this function with filters applied
-*/
+  On filter application, will re-call this function with filters applied
+  */
   getDownloadData(id: string) {
     return forkJoin([this.getExptTable(id, null, null), this.getFilteredPatientDownloadFacets(id, null, null)]).pipe(
       map(([exptData, patientSummary]) => {
@@ -201,14 +201,14 @@ On filter application, will re-call this function with filters applied
     let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
 
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
-    mergeMap(expts => this.getPatients4Table(expts.map(d => d.experimentID)).pipe(
-      map(patients => {
-        console.log(expts)
-        console.log(patients)
-        return(expts)
-      })
-    )
-    ),
+      mergeMap(expts => this.getPatients4Table(expts).pipe(
+        map(patients => {
+          console.log(expts)
+          console.log(patients)
+          return (expts)
+        })
+      )
+      ),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
         console.log(err)
@@ -221,23 +221,28 @@ On filter application, will re-call this function with filters applied
     const exptFields = ["experimentID", "privatePatientID", "experimentDate", "dateModified"];
     let params = new HttpParams()
       .set('q', exptQuery)
-      .set('patientQuery', patientQuery)
       .set('fields', exptFields.join(","));
 
-      return this.apiSvc.get("experiment", params, size).pipe(
-        map((expts: any) => {
-          console.log(expts)
-          return (expts)
-        }),
-        catchError(err => {
-          console.log(`%c Error getting download list of experiments`, "color: orange")
-          console.log(err)
-          return from([]);
-        })
-      )
+    if (patientQuery != "__all__") {
+      params.set("patientQuery", patientQuery)
+    }
+
+    return this.apiSvc.get("experiment", params, size).pipe(
+      map((expts: any) => {
+        console.log(expts)
+        return (expts)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
   }
 
-  getPatients4Table(exptIDs: string[]) {
+  getPatients4Table(exptIDs) {
+    console.log(exptIDs)
+
     const patientFields = ["patientID", "cohort", "species", "infectionYear"];
 
     let params = new HttpParams()
@@ -245,17 +250,17 @@ On filter application, will re-call this function with filters applied
       .set('experimentQuery', `experimentID:("${exptIDs.join('","')}")`)
       .set('fields', patientFields.join(","));
 
-      return this.apiSvc.get("patient", params).pipe(
-        map((patients: any) => {
-          console.log(patients)
-          return (patients)
-        }),
-        catchError(err => {
-          console.log(`%c Error getting download list of experiments`, "color: orange")
-          console.log(err)
-          return from([]);
-        })
-      )
+    return this.apiSvc.get("patient", params).pipe(
+      map((patients: any) => {
+        console.log(patients)
+        return (patients)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
   }
 
   getCountryName(countryCount) {
