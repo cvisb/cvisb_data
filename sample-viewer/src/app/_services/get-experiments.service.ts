@@ -5,7 +5,7 @@ import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError, from } from 'rxjs/';
-import { map, catchError, pluck } from 'rxjs/operators';
+import { map, catchError, pluck, mergeMap } from 'rxjs/operators';
 
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
@@ -96,6 +96,8 @@ Grabs:
 1. Summary of patient facets for filtering, summary box (no filters applied, unless specified by the URL)
 2. Summary of expt facets for filtering, summary box
 3. Table of results to display
+
+On filter application, will re-call this function with filters applied
 */
   getDownloadData(id: string) {
     return forkJoin([this.getExptTable(id, null, null), this.getFilteredPatientDownloadFacets(id, null, null)]).pipe(
@@ -192,26 +194,68 @@ Grabs:
     )
   }
 
-  getExptTable(id: String, patientFilter: string, exptFilter: string) {
-    const patientFields = ["patientID", "cohort", "species", "infectionYear"];
-    // const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
+  getExptTable(id: string, patientFilter: string, exptFilter: string, size: number = 10) {
+    const dwnldFields = ["name", "contentUrl", "additionalType"];
 
-    let params = new HttpParams()
-      .set('q', "__all__")
-      .set('experimentQuery', `includedInDataset:"${id}"`)
-      .set('fields', patientFields.join(","))
+    let patientQuery = patientFilter ? patientFilter : "__all__";
+    let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
 
-    return this.apiSvc.get('patient', params, 10).pipe(
-      map((expts: any) => {
+    return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
+    mergeMap(expts => this.getPatients4Table(expts.map(d => d.experimentID)).pipe(
+      map(patients => {
         console.log(expts)
-        return (expts)
-      }),
+        console.log(patients)
+        return(expts)
+      })
+    )
+    ),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
         console.log(err)
         return from([]);
       })
     )
+  }
+
+  getExpts4Table(patientQuery: string, exptQuery: string, size: number) {
+    const exptFields = ["experimentID", "privatePatientID", "experimentDate", "dateModified"];
+    let params = new HttpParams()
+      .set('q', exptQuery)
+      .set('patientQuery', patientQuery)
+      .set('fields', exptFields.join(","));
+
+      return this.apiSvc.get("experiment", params, size).pipe(
+        map((expts: any) => {
+          console.log(expts)
+          return (expts)
+        }),
+        catchError(err => {
+          console.log(`%c Error getting download list of experiments`, "color: orange")
+          console.log(err)
+          return from([]);
+        })
+      )
+  }
+
+  getPatients4Table(exptIDs: string[]) {
+    const patientFields = ["patientID", "cohort", "species", "infectionYear"];
+
+    let params = new HttpParams()
+      .set('q', "__all__")
+      .set('experimentQuery', `experimentID:("${exptIDs.join('","')}")`)
+      .set('fields', patientFields.join(","));
+
+      return this.apiSvc.get("patient", params).pipe(
+        map((patients: any) => {
+          console.log(patients)
+          return (patients)
+        }),
+        catchError(err => {
+          console.log(`%c Error getting download list of experiments`, "color: orange")
+          console.log(err)
+          return from([]);
+        })
+      )
   }
 
   getCountryName(countryCount) {
