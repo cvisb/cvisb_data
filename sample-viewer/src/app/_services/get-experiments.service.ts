@@ -44,7 +44,7 @@ export class GetExperimentsService {
       pluck("includedInDataset.keyword"),
       pluck("terms"),
       map((expts: ExperimentCount[]) => {
-        expts.forEach(d => {
+        expts["hits"].forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['datasetName'] = filtered['datasetName'];
           d['measurementCategory'] = filtered['measurementCategory'];
