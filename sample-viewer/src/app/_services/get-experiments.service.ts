@@ -203,9 +203,17 @@ export class GetExperimentsService {
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
       mergeMap(expts => this.getPatients4Table(expts["hits"].map(d => d.experimentID)).pipe(
         map(patients => {
-          console.log(expts)
-          console.log(patients)
-          return (expts)
+          // Join together patients and expt data for the table.
+          let merged = expts.hits.map(expt => {
+            let idx = patients.findIndex(patient => patient.alternateIdentifier.includes(expt.privatePatientID))
+            if (idx > -1) {
+              return ({ ...expt, ...patients[idx] })
+            } else {
+              return (expt)
+            }
+          })
+
+          return ({ hits: merged, total: expts.total })
         })
       )
       ),
@@ -241,7 +249,7 @@ export class GetExperimentsService {
   }
 
   getPatients4Table(exptIDs: string[]) {
-    const patientFields = ["patientID", "cohort", "species", "infectionYear"];
+    const patientFields = ["patientID", "alternateIdentifier", "cohort", "species", "infectionYear"];
 
     let params = new HttpParams()
       .set('q', "__all__")

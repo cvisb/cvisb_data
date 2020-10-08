@@ -16,7 +16,7 @@
 
 <div class="container-column w-100" id="filtered-summary" *ngIf="summary">
   <h2 *ngIf="total || total === 0">
-    You selected <b>{{total}}</b> experiments
+    You selected <b>{{total.toLocaleString()}}</b> experiments
   </h2>
 
   <div class="container">
