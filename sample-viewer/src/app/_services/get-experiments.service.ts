@@ -194,20 +194,25 @@ export class GetExperimentsService {
   }
 
   getExptTable(id: string, patientFilter: string, exptFilter: string, size: number = 10) {
-    const dwnldFields = ["name", "contentUrl", "additionalType"];
-
     let patientQuery = patientFilter ? patientFilter : "__all__";
     let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
 
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
-      mergeMap(expts => forkJoin(this.getPatients4Table(expts["hits"].map(d => d.experimentID)), this.getPatients4Table(expts["hits"].map(d => d.experimentID))).pipe(
+      mergeMap(expts => forkJoin(this.getPatients4Table(expts["hits"].map(d => d.experimentID)), this.getDownloads4Table(expts["hits"].map(d => d.experimentID))).pipe(
         map(([patients, dwnloads]) => {
+          console.log(dwnloads)
           // Join together patients and expt data for the table.
           let merged = expts.hits.map(expt => {
-            let idx = patients.findIndex(patient => patient.alternateIdentifier.includes(expt.privatePatientID))
-            if (idx > -1) {
-              return ({ ...expt, ...patients[idx] })
-            } else {
+            let pIdx = patients.findIndex(patient => patient.alternateIdentifier.includes(expt.privatePatientID))
+            let dIdx = dwnloads.findIndex(download => download.experimentIDs.includes(expt.experimentID))
+            if (pIdx > -1 && dIdx > -1) {
+              return ({ ...expt, ...patients[pIdx], ...dwnloads[dIdx] })
+            } else if (pIdx > -1) {
+              return ({ ...expt, ...patients[pIdx] })
+            } else if (dIdx > -1) {
+              return ({ ...expt, ...dwnloads[dIdx] })
+            }
+            else {
               return (expt)
             }
           })
@@ -237,7 +242,7 @@ export class GetExperimentsService {
     return this.apiSvc.get("experiment", params, size).pipe(
       map((expts: any) => {
         expts["hits"].forEach(d => {
-          d["sequenceLength"] = d.data.DNAsequence ? d.data.DNAsequence.length : null;
+          d["sequenceLength"] = d.data.map(seq => seq.DNAsequence.length);
         })
         return (expts)
       }),
@@ -267,6 +272,30 @@ export class GetExperimentsService {
       }),
       catchError(err => {
         console.log(`%c Error getting download list of patients`, "color: orange")
+        console.log(err)
+        return from([]);
+      })
+    )
+  }
+
+  getDownloads4Table(exptIDs: string[]) {
+    const dwnldFields = ["name", "contentUrl", "additionalType", "experimentIDs"];
+
+    let params = new HttpParams()
+      .set('q', "__all__")
+      .set('experimentQuery', `experimentID:("${exptIDs.join('","')}")`)
+      .set('fields', dwnldFields.join(","));
+
+    return this.apiSvc.get("datadownload", params).pipe(
+      pluck("hits"),
+      map((dwnlds: any) => {
+        dwnlds.forEach(d => {
+          d["file"] = d.name;
+        })
+        return (dwnlds)
+      }),
+      catchError(err => {
+        console.log(`%c Error getting download list of downloads`, "color: orange")
         console.log(err)
         return from([]);
       })
