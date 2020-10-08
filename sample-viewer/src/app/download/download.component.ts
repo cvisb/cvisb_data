@@ -21,6 +21,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
   datasetName: string;
   total: number;
+  summary: any;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
 
@@ -73,6 +74,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"];
+      this.summary = results["filteredSummary"];
 
       results["filteredSummary"]["cohorts"].forEach((d, i:number) => {
         if(i < this.numFilters) {
