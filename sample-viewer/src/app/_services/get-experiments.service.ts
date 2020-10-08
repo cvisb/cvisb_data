@@ -236,7 +236,7 @@ export class GetExperimentsService {
 
     return this.apiSvc.get("experiment", params, size).pipe(
       map((expts: any) => {
-        expts.forEach(d => {
+        expts["hits"].forEach(d => {
           d["sequenceLength"] = d.data.DNAsequence ? d.data.DNAsequence.length : null;
         })
         return (expts)
