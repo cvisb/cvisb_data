@@ -78,7 +78,7 @@
       <ng-container *ngFor="let key of displayedColumns" [matColumnDef]="key">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key }}</th>
         <td mat-cell *matCellDef="let element">
-          {{ key.toLowerCase().includes("date") ? element[key] | date:'d MMM yyyy' : element[key] }}
+          {{ key.toLowerCase().includes("date") ? (element[key] | date:'d MMM yyyy') : element[key] }}
         </td>
       </ng-container>
 
