@@ -23,7 +23,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
   total: number;
   summary: any;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
+  displayedColumns: string[] = ["cohort"];
+  // displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
 
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
