@@ -62,7 +62,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];
 
-    this.dataSubscription = this.exptSvc.getDownloadList(this.id).subscribe(results => {
+    this.dataSubscription = this.exptSvc.getDownloadData(this.id).subscribe(results => {
       console.log(results)
       this.total = results["total"];
       this.summary = results["filteredSummary"];
@@ -104,8 +104,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   downloadData() {
-    console.log(this.filterForm.value)
-
     let filters = Object.keys(this.filterForm.value).map(key => {
       return({
         key: key,

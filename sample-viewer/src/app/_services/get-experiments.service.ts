@@ -90,10 +90,16 @@ export class GetExperimentsService {
     return (this.apiSvc.fetchAll("patient", patient_params));
   }
 
-
-  getDownloadList(id: String) {
-    return forkJoin([this.getDownloadFacets(id), this.getPatientDownloadFacets(id), this.getDownloadResults(id, null), this.getFilteredPatientDownloadFacets(id, null)]).pipe(
-      map(([exptFacets, patientFacets, exptData, patientSummary]) => {
+/*
+Function for /download to grab the initial results for the page load.
+Grabs:
+1. Summary of patient facets for filtering, summary box (no filters applied, unless specified by the URL)
+2. Summary of expt facets for filtering, summary box
+3. Table of results to display
+*/
+  getDownloadData(id: string) {
+    return forkJoin([this.getExptTable(id, null, null), this.getFilteredPatientDownloadFacets(id, null, null)]).pipe(
+      map(([exptData, patientSummary]) => {
         console.log(patientSummary)
         let filteredSummary = {};
         filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
@@ -138,7 +144,7 @@ export class GetExperimentsService {
     )
   }
 
-  getDownloadFacets(id: String) {
+  getExptFacets(id: string, patientFilter: string, exptFilter: string) {
     const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"];
 
     let params = new HttpParams()
@@ -160,12 +166,15 @@ export class GetExperimentsService {
     )
   }
 
-  getPatientDownloadFacets(id: String) {
+  getFilteredPatientDownloadFacets(id: string, patientFilter: string, exptFilter: string) {
     const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
 
+    let patientQuery = patientFilter ? patientFilter : "__all__";
+    let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
+
     let params = new HttpParams()
-      .set('q', "__all__")
-      .set("experimentQuery", `includedInDataset:"${id}"`)
+      .set('q', patientQuery)
+      .set("experimentQuery", exptQuery)
       .set('facets', patientFacets.map(d => `${d}`).join(","))
       .set('facet_size', '1000')
 
@@ -183,30 +192,7 @@ export class GetExperimentsService {
     )
   }
 
-  getFilteredPatientDownloadFacets(id: String, filters: any) {
-    const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
-
-    let params = new HttpParams()
-      .set('q', "__all__")
-      .set("experimentQuery", `includedInDataset:"${id}"`)
-      .set('facets', patientFacets.map(d => `${d}`).join(","))
-      .set('facet_size', '1000')
-
-    return this.apiSvc.get('patient', params, 0).pipe(
-      pluck("facets"),
-      map((expts: any) => {
-        console.log(expts)
-        return (expts)
-      }),
-      catchError(err => {
-        console.log(`%c Error getting download list of experiments`, "color: orange")
-        console.log(err)
-        return from([]);
-      })
-    )
-  }
-
-  getDownloadResults(id: String, filters: any) {
+  getExptTable(id: String, patientFilter: string, exptFilter: string) {
     const patientFields = ["patientID", "cohort", "species", "infectionYear"];
     // const exptFields = ["experimentID", "privatePatientID", "experimentDate"];
 
