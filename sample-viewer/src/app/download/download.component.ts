@@ -23,7 +23,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   total: number;
   summary: any;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: Object[] = [
+  columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
     { id: "patientID", label: "patient ID" },
     { id: "species", label: "host" },
@@ -34,6 +34,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     { id: "sequenceLength", label: "sequence length" },
     { id: "experimentDate", label: "experiment date" },
     { id: "dateModified", label: "date modified" }];
+  displayedColumns: string[];
 
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
@@ -63,10 +64,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
     })
 
     this.filterKeys = Object.keys(this.filterForm.controls);
-
   }
 
   ngOnInit() {
+    this.displayedColumns = this.columns.map(d => d.id);
+    
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
     let species = this.filterForm.get("species") as FormArray;
