@@ -201,7 +201,7 @@ export class GetExperimentsService {
     let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
 
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
-      mergeMap(expts => this.getPatients4Table(expts).pipe(
+      mergeMap(expts => this.getPatients4Table(expts["hits"].map(d => d.experimentID)).pipe(
         map(patients => {
           console.log(expts)
           console.log(patients)
@@ -240,9 +240,7 @@ export class GetExperimentsService {
     )
   }
 
-  getPatients4Table(exptIDs) {
-    console.log(exptIDs)
-
+  getPatients4Table(exptIDs: string[]) {
     const patientFields = ["patientID", "cohort", "species", "infectionYear"];
 
     let params = new HttpParams()
@@ -251,12 +249,13 @@ export class GetExperimentsService {
       .set('fields', patientFields.join(","));
 
     return this.apiSvc.get("patient", params).pipe(
+      pluck("hits"),
       map((patients: any) => {
         console.log(patients)
         return (patients)
       }),
       catchError(err => {
-        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(`%c Error getting download list of patients`, "color: orange")
         console.log(err)
         return from([]);
       })
