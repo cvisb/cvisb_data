@@ -78,12 +78,14 @@
       <ng-container *ngFor="let key of columns" [matColumnDef]="key.id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key.label }}</th>
         <td mat-cell *matCellDef="let element" class="td-padded">
-          <span *ngIf="key.id == 'file'">
+          <span *ngIf="key.id == 'file'; else normal_td">
             <a [href]="element.contentUrl" target="_blank">
               {{element.file}}
             </a>
           </span>
+          <ng-template #normal_td>
           {{ key.id.toLowerCase().includes("date") ? (element[key.id] | date:'d MMM yyyy') : element[key.id] }}
+          </ng-template>
         </td>
       </ng-container>
 
