@@ -23,8 +23,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   total: number;
   summary: any;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["cohort"];
-  // displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
+  displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
 
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
@@ -77,7 +76,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.total = results["total"];
       this.summary = results["filteredSummary"];
 
-      this.dataSource = new MatTableDataSource(results["results"]);
+      this.dataSource = new MatTableDataSource(results["results"]["hits"]);
 
       console.log(this.dataSource)
 
