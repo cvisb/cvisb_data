@@ -225,7 +225,7 @@ export class GetExperimentsService {
   }
 
   getExpts4Table(patientQuery: string, exptQuery: string, size: number) {
-    const exptFields = ["experimentID", "privatePatientID", "experimentDate", "dateModified"];
+    const exptFields = ["experimentID", "privatePatientID", "experimentDate", "dateModified", "data.DNAsequence"];
     let params = new HttpParams()
       .set('q', exptQuery)
       .set('fields', exptFields.join(","));
@@ -236,7 +236,9 @@ export class GetExperimentsService {
 
     return this.apiSvc.get("experiment", params, size).pipe(
       map((expts: any) => {
-        console.log(expts)
+        expts.forEach(d => {
+          d["sequenceLength"] = d.data.DNAsequence ? d.data.DNAsequence.length : null;
+        })
         return (expts)
       }),
       catchError(err => {
@@ -258,7 +260,9 @@ export class GetExperimentsService {
     return this.apiSvc.get("patient", params).pipe(
       pluck("hits"),
       map((patients: any) => {
-        console.log(patients)
+        patients.forEach(d => {
+          d["country"] = d.country.name;
+        })
         return (patients)
       }),
       catchError(err => {

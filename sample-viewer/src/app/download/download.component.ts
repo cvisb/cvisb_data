@@ -23,7 +23,17 @@ export class DownloadComponent implements OnInit, OnDestroy {
   total: number;
   summary: any;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["experimentID", "patientID", "species", "cohort", "outcome", "country.name", "infectionYear", "experimentDate", "dateModified"];
+  displayedColumns: Object[] = [
+    { id: "experimentID", label: "experiment ID" },
+    { id: "patientID", label: "patient ID" },
+    { id: "species", label: "host" },
+    { id: "cohort", label: "cohort" },
+    { id: "outcome", label: "outcome" },
+    { id: "country", label: "country" },
+    { id: "infectionYear", label: "infection year" },
+    { id: "sequenceLength", label: "sequence length" },
+    { id: "experimentDate", label: "experiment date" },
+    { id: "dateModified", label: "date modified" }];
 
   dataSubscription: Subscription;
   outcomeParams: string[] = [];
@@ -80,27 +90,27 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       console.log(this.dataSource)
 
-      results["filteredSummary"]["cohorts"].forEach((d, i:number) => {
-        if(i < this.numFilters) {
-        cohorts.push(this.fb.group(d))
+      results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
+        if (i < this.numFilters) {
+          cohorts.push(this.fb.group(d))
         }
       })
 
-      results["filteredSummary"]["outcomes"].forEach((d, i:number) => {
-        if(i < this.numFilters) {
-        outcomes.push(this.fb.group(d))
+      results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
+        if (i < this.numFilters) {
+          outcomes.push(this.fb.group(d))
         }
       })
 
-      results["filteredSummary"]["species"].forEach((d, i:number) => {
-        if(i < this.numFilters) {
-        species.push(this.fb.group(d))
+      results["filteredSummary"]["species"].forEach((d, i: number) => {
+        if (i < this.numFilters) {
+          species.push(this.fb.group(d))
         }
       })
 
-      results["filteredSummary"]["countries"].forEach((d, i:number) => {
-        if(i < this.numFilters) {
-        countries.push(this.fb.group(d))
+      results["filteredSummary"]["countries"].forEach((d, i: number) => {
+        if (i < this.numFilters) {
+          countries.push(this.fb.group(d))
         }
       })
 
@@ -118,7 +128,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   downloadData() {
     let filters = Object.keys(this.filterForm.value).map(key => {
-      return({
+      return ({
         key: key,
         terms: this.filterForm.value[key].filter(d => d.selected)
       })
