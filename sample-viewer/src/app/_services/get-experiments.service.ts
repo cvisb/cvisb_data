@@ -157,7 +157,6 @@ export class GetExperimentsService {
     return this.apiSvc.get('experiment', params, 0).pipe(
       pluck("facets"),
       map((expts: any) => {
-        console.log(expts)
         return (expts)
       }),
       catchError(err => {
@@ -201,8 +200,8 @@ export class GetExperimentsService {
     let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
 
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
-      mergeMap(expts => this.getPatients4Table(expts["hits"].map(d => d.experimentID)).pipe(
-        map(patients => {
+      mergeMap(expts => forkJoin(this.getPatients4Table(expts["hits"].map(d => d.experimentID)), this.getPatients4Table(expts["hits"].map(d => d.experimentID))).pipe(
+        map(([patients, dwnloads]) => {
           // Join together patients and expt data for the table.
           let merged = expts.hits.map(expt => {
             let idx = patients.findIndex(patient => patient.alternateIdentifier.includes(expt.privatePatientID))

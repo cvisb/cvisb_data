@@ -63,6 +63,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     this.dataSubscription = this.exptSvc.getDownloadData(this.id).subscribe(results => {
+      console.log("results!!!!")
       console.log(results)
       this.total = results["total"];
       this.summary = results["filteredSummary"];
