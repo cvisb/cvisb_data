@@ -117,7 +117,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let patientQuery = patientQueryArr.join(" AND ");
 
     console.log(patientQuery)
-    this.dataSubscription = this.exptSvc.getDownloadData(this.id, patientQuery).subscribe(results => {
+    this.dataSubscription = this.exptSvc.getDownloadData(this.id, null).subscribe(results => {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"]; // total number of expts
