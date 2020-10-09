@@ -96,7 +96,7 @@ export class getDatasetsService {
       );
   }
 
-  getDatasetCounts(id): Observable<any> {
+  getDatasetCounts(id: string): Observable<any> {
     return forkJoin(
       this.getPatientSummary(id), this.getDownloadsSummary(id), this.getExperimentCount(id)
     ).pipe(
