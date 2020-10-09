@@ -99,8 +99,8 @@ export class GetExperimentsService {
 
   On filter application, will re-call this function with filters applied
   */
-  getDownloadData(id: string) {
-    return forkJoin([this.getExptTable(id, null, null), this.getFilteredPatientDownloadFacets(id, null, null)]).pipe(
+  getDownloadData(id: string, patientQuery: string) {
+    return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
         let filteredSummary = {};
         filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];

@@ -74,6 +74,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
     console.log(params)
+    console.log(this.route.snapshot)
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
 
@@ -81,18 +82,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     // Subscribe to initial data acquisition, create summary, table
-    this.dataSubscription = this.exptSvc.getDownloadData(this.id).subscribe(results => {
-      console.log("results!!!!")
-      console.log(results)
-      this.total = results["total"]; // total number of expts
-      this.summary = results["filteredSummary"]; // graphical summary
-
-      // table
-      this.dataSource = new MatTableDataSource(results["results"]["hits"]);
-
-      // filter options
-      this.updateFilters(results);
-    });
+    this.getData();
 
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
@@ -107,11 +97,38 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.router.navigate(["/download", this.id, filterStr]);
 
       // update the summary, etc.
+this.getData();
     })
   }
 
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
+  }
+
+  getData() {
+    let patientFilters = Object.keys(this.filterForm.value).map(key => {
+      return ({
+        key: key,
+        terms: this.filterForm.value[key].filter(d => d.selected)
+      })
+    })
+    
+    let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
+    let patientQuery = patientQueryArr.join(" AND ");
+
+    console.log(patientQuery)
+    this.dataSubscription = this.exptSvc.getDownloadData(this.id, patientQuery).subscribe(results => {
+      console.log("results!!!!")
+      console.log(results)
+      this.total = results["total"]; // total number of expts
+      this.summary = results["filteredSummary"]; // graphical summary
+
+      // table
+      this.dataSource = new MatTableDataSource(results["results"]["hits"]);
+
+      // filter options
+      this.updateFilters(results);
+    });
   }
 
   downloadData() {
