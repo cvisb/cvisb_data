@@ -132,10 +132,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.dataSubscription.unsubscribe();
   }
 
-  changeRoute() {
-    this.router.navigate(["/download", this.id, { location: "test" }])
-  }
-
   downloadData() {
     let filters = Object.keys(this.filterForm.value).map(key => {
       return ({
