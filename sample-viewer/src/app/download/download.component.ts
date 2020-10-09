@@ -71,13 +71,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.displayedColumns = this.columns.map(d => d["id"]);
 
-    let cohorts = this.filterForm.get("cohort") as FormArray;
-    let outcomes = this.filterForm.get("outcome") as FormArray;
-    let species = this.filterForm.get("species") as FormArray;
-    let countries = this.filterForm.get("country") as FormArray;
-
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
+    console.log(params)
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
 
@@ -95,29 +91,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource(results["results"]["hits"]);
 
       // filter options
-      results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
-        if (i < this.numFilters) {
-          cohorts.push(this.fb.group(d))
-        }
-      })
-
-      results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
-        if (i < this.numFilters) {
-          outcomes.push(this.fb.group(d))
-        }
-      })
-
-      results["filteredSummary"]["species"].forEach((d, i: number) => {
-        if (i < this.numFilters) {
-          species.push(this.fb.group(d))
-        }
-      })
-
-      results["filteredSummary"]["countries"].forEach((d, i: number) => {
-        if (i < this.numFilters) {
-          countries.push(this.fb.group(d))
-        }
-      })
+      this.updateFilters(results);
     });
 
     // event listener for filters
@@ -127,10 +101,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // update the route
       let filterArr = Object.keys(filters).map(key => {
         let filtered = filters[key].filter(d => d.selected);
-        return({key: key, value: filtered.map(d => d.term).join(",")})
+        return ({ key: key, value: filtered.map(d => d.term).join(",") })
       })
-      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj) ,{});
-      this.router.navigate(["/download", this.id, filterStr])
+      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+      this.router.navigate(["/download", this.id, filterStr]);
+
+      // update the summary, etc.
     })
   }
 
@@ -147,6 +123,37 @@ export class DownloadComponent implements OnInit, OnDestroy {
     })
 
     this.dwnldSvc.downloadExperiments(this.id, this.whichDataForm.get("experiment").value, this.whichDataForm.get("patient").value, filters)
+  }
+
+  updateFilters(results) {
+    let cohorts = this.filterForm.get("cohort") as FormArray;
+    let outcomes = this.filterForm.get("outcome") as FormArray;
+    let species = this.filterForm.get("species") as FormArray;
+    let countries = this.filterForm.get("country") as FormArray;
+
+    results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
+      if (i < this.numFilters) {
+        cohorts.push(this.fb.group(d))
+      }
+    })
+
+    results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
+      if (i < this.numFilters) {
+        outcomes.push(this.fb.group(d))
+      }
+    })
+
+    results["filteredSummary"]["species"].forEach((d, i: number) => {
+      if (i < this.numFilters) {
+        species.push(this.fb.group(d))
+      }
+    })
+
+    results["filteredSummary"]["countries"].forEach((d, i: number) => {
+      if (i < this.numFilters) {
+        countries.push(this.fb.group(d))
+      }
+    })
   }
 
 }
