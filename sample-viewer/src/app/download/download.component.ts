@@ -124,6 +124,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterForm.valueChanges.subscribe(filters => {
       console.log("FILTER CHANGED")
       console.log(filters)
+        this.router.navigate(["/download", this.id, filters])
     })
   }
 
@@ -132,7 +133,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   changeRoute() {
-    console.log("changingroute")
     this.router.navigate(["/download", this.id, { location: "test" }])
   }
 
