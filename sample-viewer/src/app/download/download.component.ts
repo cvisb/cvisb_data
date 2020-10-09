@@ -97,7 +97,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.router.navigate(["/download", this.id, filterStr]);
 
       // update the summary, etc.
-      this.getData();
+      // this.getData();
     })
   }
 
