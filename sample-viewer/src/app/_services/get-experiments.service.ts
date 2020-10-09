@@ -102,7 +102,6 @@ export class GetExperimentsService {
   getDownloadData(id: string) {
     return forkJoin([this.getExptTable(id, null, null), this.getFilteredPatientDownloadFacets(id, null, null)]).pipe(
       map(([exptData, patientSummary]) => {
-        console.log(patientSummary)
         let filteredSummary = {};
         filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
         filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
@@ -111,7 +110,6 @@ export class GetExperimentsService {
         let countries = patientSummary["country.identifier.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
         filteredSummary["countries"] = countries;
-        console.log(filteredSummary)
 
         Object.keys(filteredSummary).forEach(facet => {
           filteredSummary[facet].forEach(d => {
@@ -182,7 +180,6 @@ export class GetExperimentsService {
     return this.apiSvc.get('patient', params, 0).pipe(
       pluck("facets"),
       map((expts: any) => {
-        console.log(expts)
         return (expts)
       }),
       catchError(err => {
@@ -200,7 +197,6 @@ export class GetExperimentsService {
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
       mergeMap(expts => forkJoin(this.getPatients4Table(expts["hits"].map(d => d.experimentID)), this.getDownloads4Table(expts["hits"].map(d => d.experimentID))).pipe(
         map(([patients, dwnloads]) => {
-          console.log(dwnloads)
           // Join together patients and expt data for the table.
           let merged = expts.hits.map(expt => {
             let pIdx = patients.findIndex(patient => patient.alternateIdentifier.includes(expt.privatePatientID))
