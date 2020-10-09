@@ -17,6 +17,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss']
 })
+
 export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
   datasetName: string;
@@ -83,16 +84,17 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];
 
+    // Subscribe to initial data acquisition, create summary, table
     this.dataSubscription = this.exptSvc.getDownloadData(this.id).subscribe(results => {
       console.log("results!!!!")
       console.log(results)
-      this.total = results["total"];
-      this.summary = results["filteredSummary"];
+      this.total = results["total"]; // total number of expts
+      this.summary = results["filteredSummary"]; // graphical summary
 
+      // table
       this.dataSource = new MatTableDataSource(results["results"]["hits"]);
 
-      console.log(this.dataSource)
-
+      // filter options
       results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
         if (i < this.numFilters) {
           cohorts.push(this.fb.group(d))
@@ -116,8 +118,13 @@ export class DownloadComponent implements OnInit, OnDestroy {
           countries.push(this.fb.group(d))
         }
       })
-
     });
+
+    // event listener for filters
+    this.filterForm.valueChanges.subscribe(filters => {
+      console.log("FILTER CHANGED")
+      console.log(filters)
+    })
   }
 
   ngOnDestroy() {
@@ -136,8 +143,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
         terms: this.filterForm.value[key].filter(d => d.selected)
       })
     })
-
-    console.log(filters)
 
     this.dwnldSvc.downloadExperiments(this.id, this.whichDataForm.get("experiment").value, this.whichDataForm.get("patient").value, filters)
   }
