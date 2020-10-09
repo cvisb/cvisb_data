@@ -125,12 +125,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
       console.log("FILTER CHANGED")
       console.log(filters)
       // update the route
-      let filter_strings = Object.keys(filters).map(key => {
-        let obj = {}
-        obj[key] = filters[key].map(d => d.term).join(",")
-        return (obj)
+      let filterArr = Object.keys(filters).map(key => {
+        let filtered = filters[key].filter(d => d.selected);
+        return({key: key, value: filtered.map(d => d.term).join(",")})
       })
-      this.router.navigate(["/download", this.id, filter_strings])
+      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj) ,{});
+      this.router.navigate(["/download", this.id, filterStr])
     })
   }
 
