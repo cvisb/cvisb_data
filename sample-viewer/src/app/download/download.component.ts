@@ -85,20 +85,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.getData();
 
     // event listener for filters
-    this.filterForm.valueChanges.subscribe(filters => {
-      console.log("FILTER CHANGED")
-      console.log(filters)
-      // update the route
-      let filterArr = Object.keys(filters).map(key => {
-        let filtered = filters[key].filter(d => d.selected);
-        return ({ key: key, value: filtered.map(d => d.term).join(",") })
-      })
-      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-      this.router.navigate(["/download", this.id, filterStr]);
-
-      // update the summary, etc.
-      // this.getData();
-    })
   }
 
   ngOnDestroy() {
@@ -128,6 +114,23 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // filter options
       this.updateFilters(results);
+
+      // event listener
+      this.filterForm.valueChanges.subscribe(filters => {
+        console.log("FILTER CHANGED")
+        console.log(filters)
+        // update the route
+        let filterArr = Object.keys(filters).map(key => {
+          let filtered = filters[key].filter(d => d.selected);
+          return ({ key: key, value: filtered.map(d => d.term).join(",") })
+        })
+        let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+        this.router.navigate(["/download", this.id, filterStr]);
+
+        // update the summary, etc.
+        console.log("update summary")
+        this.getData();
+      })
     });
   }
 
