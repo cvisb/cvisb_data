@@ -82,16 +82,14 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     // Subscribe to initial data acquisition, create summary, table
-    this.getData();
-
-    // event listener for filters
+    this.getData(true);
   }
 
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
   }
 
-  getData() {
+  getData(isFirstCall: boolean = false) {
     let patientFilters = Object.keys(this.filterForm.value).map(key => {
       return ({
         key: key,
@@ -115,22 +113,24 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // filter options
       this.updateFilters(results);
 
-      // event listener
-      this.filterForm.valueChanges.subscribe(filters => {
-        console.log("FILTER CHANGED")
-        console.log(filters)
-        // update the route
-        let filterArr = Object.keys(filters).map(key => {
-          let filtered = filters[key].filter(d => d.selected);
-          return ({ key: key, value: filtered.map(d => d.term).join(",") })
-        })
-        let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-        this.router.navigate(["/download", this.id, filterStr]);
+      if (isFirstCall) {
+        // event listener for filters
+        this.filterForm.valueChanges.subscribe(filters => {
+          console.log("FILTER CHANGED")
+          console.log(filters)
+          // update the route
+          let filterArr = Object.keys(filters).map(key => {
+            let filtered = filters[key].filter(d => d.selected);
+            return ({ key: key, value: filtered.map(d => d.term).join(",") })
+          })
+          let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+          this.router.navigate(["/download", this.id, filterStr]);
 
-        // update the summary, etc.
-        console.log("update summary")
-        this.getData();
-      })
+          // update the summary, etc.
+          console.log("update summary")
+          this.getData();
+        })
+      }
     });
   }
 
