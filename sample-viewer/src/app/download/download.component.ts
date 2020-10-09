@@ -124,7 +124,13 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterForm.valueChanges.subscribe(filters => {
       console.log("FILTER CHANGED")
       console.log(filters)
-        this.router.navigate(["/download", this.id, filters])
+      // update the route
+      let filter_strings = Object.keys(filters).map(key => {
+        let obj = {}
+        obj[key] = filters[key].map(d => d.term).join(",")
+        return (obj)
+      })
+      this.router.navigate(["/download", this.id, filter_strings])
     })
   }
 
