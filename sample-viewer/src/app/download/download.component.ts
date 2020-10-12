@@ -82,6 +82,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     // Subscribe to initial data acquisition, create summary, table
     this.getData();
+  }
+
+  ngAfterViewInit() {
+    console.log("setting first call to FALSE")
+    this.isFirstCall = false;
 
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
@@ -99,18 +104,13 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // update the summary, etc.
       if (!this.isFirstCall) {
         console.log("update summary")
-        this.getData()
+        // this.getData()
       } else {
         // initial loading of the data
         console.log("NO update summary")
         // this.isFirstCall = false;
       }
     })
-  }
-
-  ngAfterViewInit() {
-    console.log("setting first call to FALSE")
-    this.isFirstCall = false;
   }
 
   ngOnDestroy() {
