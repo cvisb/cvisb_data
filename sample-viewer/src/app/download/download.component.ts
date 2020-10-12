@@ -24,6 +24,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   total: number;
   summary: any;
   dataSource: MatTableDataSource<any>;
+  isFirstCall: Boolean = true;
   columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
     { id: "patientID", label: "patient ID" },
@@ -73,8 +74,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
-    console.log(params)
-    console.log(this.route.snapshot)
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
 
@@ -82,14 +81,38 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     // Subscribe to initial data acquisition, create summary, table
-    this.getData(true);
+    // this.getData(true);
+
+    // event listener for filters
+    this.filterForm.valueChanges.subscribe(filters => {
+      console.log("FILTER CHANGED")
+      console.log(filters)
+      // update the route
+      let filterArr = Object.keys(filters).map(key => {
+        let filtered = filters[key].filter(d => d.selected);
+        return ({ key: key, value: filtered.map(d => d.term).join(",") })
+      })
+
+      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+      this.router.navigate(["/download", this.id, filterStr]);
+
+      // update the summary, etc.
+      if (!this.isFirstCall) {
+        console.log("update summary")
+        this.getData()
+      } else {
+        // initial loading of the data
+        console.log("NO update summary")
+        this.isFirstCall = false;
+      }
+    })
   }
 
   ngOnDestroy() {
     this.dataSubscription.unsubscribe();
   }
 
-  getData(isFirstCall: boolean = false) {
+  getData() {
     let patientFilters = Object.keys(this.filterForm.value).map(key => {
       return ({
         key: key,
@@ -100,11 +123,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
     let patientQuery = patientQueryArr.join(" AND ");
 
-    console.log(patientQuery)
-    this.dataSubscription = this.exptSvc.getDownloadData(this.id, null).subscribe(results => {
+    this.dataSubscription = this.exptSvc.getDownloadData(this.id, patientQuery).subscribe(results => {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"]; // total number of expts
+      console.log(this.total)
       this.summary = results["filteredSummary"]; // graphical summary
 
       // table
@@ -112,30 +135,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // filter options
       this.updateFilters(results);
-
-      // event listener for filters
-      this.filterForm.valueChanges.subscribe(filters => {
-        console.log("FILTER CHANGED")
-        console.log(filters)
-        // update the route
-        let filterArr = Object.keys(filters).map(key => {
-          let filtered = filters[key].filter(d => d.selected);
-          return ({ key: key, value: filtered.map(d => d.term).join(",") })
-        })
-
-        let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-        this.router.navigate(["/download", this.id, filterStr]);
-
-
-        // update the summary, etc.
-        if (!isFirstCall) {
-          console.log("update summary")
-          this.getData();
-        } else {
-          // initial loading of the data
-          console.log("NO update summary")
-        }
-      })
     });
   }
 
@@ -151,16 +150,17 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   updateFilters(results) {
+    console.log("UPDATING FILTERS")
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
     let species = this.filterForm.get("species") as FormArray;
     let countries = this.filterForm.get("country") as FormArray;
 
-// reset all forms
-    cohorts.clear()
-    outcomes.clear()
-    species.clear()
-    countries.clear()
+    // reset all forms
+    cohorts.clear();
+    outcomes.clear();
+    species.clear();
+    countries.clear();
 
     results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
       if (i < this.numFilters) {
