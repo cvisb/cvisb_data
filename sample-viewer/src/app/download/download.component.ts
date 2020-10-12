@@ -113,24 +113,29 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // filter options
       this.updateFilters(results);
 
-      if (isFirstCall) {
-        // event listener for filters
-        this.filterForm.valueChanges.subscribe(filters => {
-          console.log("FILTER CHANGED")
-          console.log(filters)
-          // update the route
-          let filterArr = Object.keys(filters).map(key => {
-            let filtered = filters[key].filter(d => d.selected);
-            return ({ key: key, value: filtered.map(d => d.term).join(",") })
-          })
-          let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-          this.router.navigate(["/download", this.id, filterStr]);
+      // event listener for filters
+      this.filterForm.valueChanges.subscribe(filters => {
+        console.log("FILTER CHANGED")
+        console.log(filters)
+        // update the route
+        let filterArr = Object.keys(filters).map(key => {
+          let filtered = filters[key].filter(d => d.selected);
+          return ({ key: key, value: filtered.map(d => d.term).join(",") })
+        })
 
-          // update the summary, etc.
+        let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+        this.router.navigate(["/download", this.id, filterStr]);
+
+
+        // update the summary, etc.
+        if (!isFirstCall) {
           console.log("update summary")
           this.getData();
-        })
-      }
+        } else {
+          // initial loading of the data
+          console.log("NO update summary")
+        }
+      })
     });
   }
 
@@ -150,6 +155,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let outcomes = this.filterForm.get("outcome") as FormArray;
     let species = this.filterForm.get("species") as FormArray;
     let countries = this.filterForm.get("country") as FormArray;
+
+// reset all forms
+    cohorts.clear()
+    outcomes.clear()
+    species.clear()
+    countries.clear()
 
     results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
       if (i < this.numFilters) {
