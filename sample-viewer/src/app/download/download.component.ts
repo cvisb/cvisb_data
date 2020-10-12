@@ -109,7 +109,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if(this.dataSubscription){
     this.dataSubscription.unsubscribe();
+    }
   }
 
   getData() {
