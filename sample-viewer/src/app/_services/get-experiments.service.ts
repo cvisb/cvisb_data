@@ -233,7 +233,7 @@ export class GetExperimentsService {
 
     if (patientQuery != "__all__") {
       console.log("ADD P Query")
-      params.set("patientQuery", patientQuery)
+      params = params.set("patientQuery", patientQuery)
     }
     console.log(patientQuery)
     console.log(params)
