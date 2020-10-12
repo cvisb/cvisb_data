@@ -81,7 +81,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     // Subscribe to initial data acquisition, create summary, table
-    // this.getData(true);
+    this.getData();
 
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
@@ -109,8 +109,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.dataSubscription){
-    this.dataSubscription.unsubscribe();
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe();
     }
   }
 
@@ -124,6 +124,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
     let patientQuery = patientQueryArr.join(" AND ");
+    console.log(patientQuery)
 
     this.dataSubscription = this.exptSvc.getDownloadData(this.id, patientQuery).subscribe(results => {
       console.log("results!!!!")
