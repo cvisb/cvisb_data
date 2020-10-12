@@ -104,7 +104,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // update the summary, etc.
       if (!this.isFirstCall) {
         console.log("update summary")
-        // this.getData()
+        this.getData()
       } else {
         // initial loading of the data
         console.log("NO update summary")
