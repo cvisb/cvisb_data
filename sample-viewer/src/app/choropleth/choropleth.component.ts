@@ -230,11 +230,15 @@ export class ChoroplethComponent implements AfterViewInit {
       })
 
       // --- Append choropleth ---
-      this.chart
+      let choroSelector = this.chart
         .selectAll(".choropleth-path")
-        .data(this.map_data.filter((d: any) => d.properties.count))
-        .enter().append("path")
+        .data(this.map_data.filter((d: any) => d.properties.count));
+
+        choroSelector.exit().remove();
+
+        choroSelector.enter().append("path")
         .attr("class", "choropleth-path")
+        .merge(choroSelector)
         .style("fill", (d: any) => this.colorScale(d.properties.count))
         .attr("d", this.path);
     }
