@@ -31,6 +31,7 @@ export class DotPlotComponent implements AfterViewInit {
   // --- Scales/Axes ---
   private x: any;
   private y: any;
+  private ySelector: any;
   private yAxis: any;
   private colorScale: any;
 
@@ -77,6 +78,10 @@ export class DotPlotComponent implements AfterViewInit {
       .paddingInner(this.ySpacing)
       .paddingOuter(0);
 
+    this.ySelector = this.svg.append('g')
+      .attr('class', 'dotplot-axis axis--y')
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
     // --- color scale ---
     this.colorScale = d3.scaleSequential(d3.interpolateYlGnBu);
 
@@ -106,9 +111,7 @@ export class DotPlotComponent implements AfterViewInit {
 
       this.yAxis = d3.axisLeft(this.y);
 
-      this.svg.append('g')
-        .attr('class', 'dotplot-axis axis--y')
-        .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+      this.ySelector
         .call(this.yAxis);
 
       // --- Update background ---
