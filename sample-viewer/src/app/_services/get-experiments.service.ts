@@ -4,8 +4,8 @@ import { HttpParams } from '@angular/common/http';
 
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
-import { forkJoin, Observable, throwError, from } from 'rxjs/';
-import { map, catchError, pluck, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable, throwError, from, BehaviorSubject } from 'rxjs/';
+import { map, catchError, pluck, mergeMap, finalize } from 'rxjs/operators';
 
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
@@ -16,7 +16,12 @@ import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GetExperimentsService {
+  // Loading spinner
+  private loadingCompleteSubject = new BehaviorSubject<boolean>(false);
+  public loadingCompleteState$ = this.loadingCompleteSubject.asObservable();
+
 
   constructor(private apiSvc: ApiService,
     private countryPipe: CountryObjectPipe,
@@ -100,6 +105,8 @@ export class GetExperimentsService {
   On filter application, will re-call this function with filters applied
   */
   getDownloadData(id: string, patientQuery: string) {
+    this.loadingCompleteSubject.next(false);
+
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
         let filteredSummary = {};
@@ -136,6 +143,7 @@ export class GetExperimentsService {
           results: exptData
         })
       }),
+      finalize(_ => this.loadingCompleteSubject.next(true)),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
         console.log(err)

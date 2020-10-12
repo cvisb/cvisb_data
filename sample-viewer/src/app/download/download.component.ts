@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -25,6 +25,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   summary: any;
   dataSource: MatTableDataSource<any>;
   isFirstCall: Boolean = true;
+  isLoading$: Observable<Boolean>;
   columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
     { id: "patientID", label: "patient ID" },
@@ -79,6 +80,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
     this.locationParams = params.location ? params.location.split(";") : [];
+
+    // loading state
+    this.isLoading$ = this.exptSvc.loadingCompleteState$;
 
     // Subscribe to initial data acquisition, create summary, table
     this.getData();
@@ -194,7 +198,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
         countries.push(this.fb.group(d))
       }
     })
-    
+
     this.isFirstCall = false;
   }
 
