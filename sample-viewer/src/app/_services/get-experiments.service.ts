@@ -232,8 +232,11 @@ export class GetExperimentsService {
       .set('fields', exptFields.join(","));
 
     if (patientQuery != "__all__") {
+      console.log("ADD P Query")
       params.set("patientQuery", patientQuery)
     }
+    console.log(patientQuery)
+    console.log(params)
 
     return this.apiSvc.get("experiment", params, size).pipe(
       map((expts: any) => {
