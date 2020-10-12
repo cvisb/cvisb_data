@@ -86,7 +86,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     console.log("setting first call to FALSE")
-    this.isFirstCall = false;
+    // this.isFirstCall = false;
 
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
@@ -143,6 +143,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // filter options
       this.updateFilters(results);
+      this.isFirstCall = false;
     });
   }
 
