@@ -82,7 +82,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.locationParams = params.location ? params.location.split(";") : [];
 
     // loading state
-    this.isLoading$ = this.exptSvc.loadingCompleteState$;
+    this.isLoading$ = this.exptSvc.isLoadingState$;
 
     // Subscribe to initial data acquisition, create summary, table
     this.getData();
