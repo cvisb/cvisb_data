@@ -104,7 +104,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       // update the summary, etc.
       if (!this.isFirstCall) {
         console.log("update summary")
-        this.getData()
+        this.getData();
       } else {
         // initial loading of the data
         console.log("NO update summary")
@@ -143,7 +143,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // filter options
       this.updateFilters(results);
-      this.isFirstCall = false;
     });
   }
 
@@ -160,6 +159,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     console.log("UPDATING FILTERS")
+    this.isFirstCall = true;
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
     let species = this.filterForm.get("species") as FormArray;
@@ -194,6 +194,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
         countries.push(this.fb.group(d))
       }
     })
+    
+    this.isFirstCall = false;
   }
 
 }
