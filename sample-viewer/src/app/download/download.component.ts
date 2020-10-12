@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
@@ -103,9 +103,14 @@ export class DownloadComponent implements OnInit, OnDestroy {
       } else {
         // initial loading of the data
         console.log("NO update summary")
-        this.isFirstCall = false;
+        // this.isFirstCall = false;
       }
     })
+  }
+
+  ngAfterViewInit() {
+    console.log("setting first call to FALSE")
+    this.isFirstCall = false;
   }
 
   ngOnDestroy() {
