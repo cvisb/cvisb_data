@@ -19,8 +19,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 export class GetExperimentsService {
   // Loading spinner
-  private loadingCompleteSubject = new BehaviorSubject<boolean>(false);
-  public loadingCompleteState$ = this.loadingCompleteSubject.asObservable();
+  private isLoadingSubject = new BehaviorSubject<boolean>(false);
+  public isLoadingState$ = this.isLoadingSubject.asObservable();
 
 
   constructor(private apiSvc: ApiService,
@@ -105,7 +105,7 @@ export class GetExperimentsService {
   On filter application, will re-call this function with filters applied
   */
   getDownloadData(id: string, patientQuery: string) {
-    this.loadingCompleteSubject.next(false);
+    this.isLoadingSubject.next(true);
 
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
@@ -143,7 +143,7 @@ export class GetExperimentsService {
           results: exptData
         })
       }),
-      finalize(() => this.loadingCompleteSubject.next(true)),
+      finalize(() => this.isLoadingSubject.next(false)),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
         console.log(err)
