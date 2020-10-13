@@ -100,7 +100,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
 
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-      console.log(filterObj)
+
+      filterObj={ cohort: 'Ebola', outcome: 'survivor', species: '', country: '' }
+      // console.log(filterObj)
       this.router.navigate(
         [],
         {
@@ -169,16 +171,17 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let countries = this.filterForm.get("country") as FormArray;
 
     // reset all forms
-    cohorts.clear();
-    outcomes.clear();
-    species.clear();
-    countries.clear();
+    // cohorts.clear();
+    // outcomes.clear();
+    // species.clear();
+    // countries.clear();
 
-    results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
-      if (i < this.numFilters) {
-        cohorts.push(this.fb.group(d))
-      }
-    })
+cohorts.setValue(results["filteredSummary"]["cohorts"]);
+    // results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
+    //   if (i < this.numFilters) {
+    //     cohorts.push(this.fb.group(d))
+    //   }
+    // })
 
     results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
       if (i < this.numFilters) {
