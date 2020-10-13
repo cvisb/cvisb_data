@@ -91,7 +91,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
-      console.log(filters)
       // update the route
       let filterArr = Object.keys(filters).map(key => {
         let filtered = filters[key].filter(d => d.selected);
@@ -99,6 +98,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
 
       let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+      console.log(filterStr)
       this.router.navigate(["/download", this.id, filterStr]);
 
       // update the summary, etc.
@@ -193,7 +193,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.router.navigate(["/download", this.id, ""]);
+    this.router.navigate(["/download", this.id, {}]);
   }
 
 }
