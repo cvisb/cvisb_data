@@ -143,7 +143,7 @@ export class GetExperimentsService {
           results: exptData
         })
       }),
-      // finalize(() => this.isLoadingSubject.next(false)),
+      finalize(() => this.isLoadingSubject.next(false)),
       catchError(err => {
         console.log(`%c Error getting download list of experiments`, "color: orange")
         console.log(err)
