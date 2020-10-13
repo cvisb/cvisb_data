@@ -46,7 +46,7 @@ df["cohort"] = "COVID-19"
 df["species"] = "Homo sapiens"
 df["country"] = df.SampleID.apply(lambda x: helpers.getCountry("USA"))
 df["countryName"] = "United States"
-df["location"] = df.SampleID.apply(lambda x: [{"name": "Seattle", "locationType": "unknown", "administrativeType": "city"}, {"name": "Washington", "locationType": "unknown", "administrativeType": "state", "administrativeUnit": 1, "identifier": "WA"}, {"name": "United States", "locationType": "unknown", "administrativeType": "country", "administrativeUnit": 0, "identifier": "US"}])
+df["location"] = df.SampleID.apply(lambda x: [{"name": "Seattle", "locationType": "unknown", "administrativeType": "city"}, {"name": "Washington", "locationType": "unknown", "administrativeType": "state", "administrativeUnit": 1, "identifier": "US-WA"}, {"name": "United States", "locationType": "unknown", "administrativeType": "country", "administrativeUnit": 0, "identifier": "US"}])
 df["hasPatientData"] = True
 df["infectionYear"] = 2020
 df['version'] = version
@@ -54,7 +54,7 @@ df['version'] = version
 df["sourceCitation"] = ""
 df["symptoms"] = df.Ards.apply(getSymptoms)
 
-df.sample(1).iloc[0]["symptoms"]
+df.sample(1).iloc[0]["location"]
 
 
 # --- Experiments cleanup ---
@@ -202,3 +202,4 @@ TO FIX:
 1. symptoms
 2. figure out citation/source/etc.
 3. data
+sero.head()
