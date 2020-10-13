@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
@@ -61,7 +61,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute) {
     this.filterForm = this.fb.group({
-      cohort: this.fb.array([]),
+      cohort: this.fb.array([new FormControl()]),
       outcome: this.fb.array([]),
       species: this.fb.array([]),
       country: this.fb.array([])
