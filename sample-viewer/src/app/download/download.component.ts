@@ -101,7 +101,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
       console.log(filterStr)
-      this.router.navigate(["/download", this.id, filterStr]);
+      this.router.navigate(["/download", this.id, { queryParams: filterStr }]);
 
       // update the summary, etc.
       if (!this.isFirstCall) {
@@ -195,7 +195,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.router.navigate(["/download", this.id, {}]);
+    this.router.navigate(["/download", this.id, {queryParams: {}}]);
   }
 
 }
