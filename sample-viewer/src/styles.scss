@@ -224,6 +224,12 @@ a {
     top: calc(50% - 111px);
 }
 
+.spinner-container-centered.container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
+
 // --- Icons ---
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
