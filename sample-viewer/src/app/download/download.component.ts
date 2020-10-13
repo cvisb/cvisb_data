@@ -207,7 +207,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       {
         relativeTo: this.route,
         queryParams: {},
-        queryParamsHandling: 'preserve'
+        queryParamsHandling: 'merge'
       });
     // this.router.navigate(["/download", this.id, { queryParams: {} }]);
   }
