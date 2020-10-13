@@ -74,6 +74,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.displayedColumns = this.columns.map(d => d["id"]);
 
     const params = this.route.snapshot.queryParams;
+    console.log(params)
+    console.log(this.route.snapshot)
     this.id = this.route.snapshot.paramMap.get("id");
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
