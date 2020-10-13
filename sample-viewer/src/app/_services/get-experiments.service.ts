@@ -249,12 +249,12 @@ export class GetExperimentsService {
     return this.apiSvc.get("experiment", params, size).pipe(
       map((expts: any) => {
         expts["hits"].forEach(d => {
-          d["sequenceLength"] = d.data.map(seq => seq.DNAsequence.length);
+          d["sequenceLength"] = d.data ? d.data.map(seq => seq.DNAsequence.length) : null;
         })
         return (expts)
       }),
       catchError(err => {
-        console.log(`%c Error getting download list of experiments`, "color: orange")
+        console.log(`%c Error getting list of experiments for table`, "color: orange")
         console.log(err)
         return from([]);
       })
