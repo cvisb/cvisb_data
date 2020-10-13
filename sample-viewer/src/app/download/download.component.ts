@@ -192,4 +192,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.isFirstCall = false;
   }
 
+  clearFilters() {
+    this.router.navigate(["/download", this.id, ""]);
+  }
+
 }

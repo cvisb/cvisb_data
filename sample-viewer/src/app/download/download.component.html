@@ -58,6 +58,7 @@
 <div class="container w-100">
   <div class="container-column dwnld-filter-container">
     <h5 class="m-0">Filters</h5>
+    <button mat-button mat-stroked-button class="mat-primary" (click)="clearFilters()">clear filters</button>
 
     <form [formGroup]="filterForm">
       <div *ngFor="let key of filterKeys" class="mb-3 filter-group">
