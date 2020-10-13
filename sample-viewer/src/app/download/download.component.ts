@@ -89,12 +89,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log("setting first call to FALSE")
-    // this.isFirstCall = false;
-
     // event listener for filters
     this.filterForm.valueChanges.subscribe(filters => {
-      console.log("FILTER CHANGED")
       console.log(filters)
       // update the route
       let filterArr = Object.keys(filters).map(key => {
@@ -107,12 +103,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // update the summary, etc.
       if (!this.isFirstCall) {
-        console.log("update summary")
         this.getData();
       } else {
         // initial loading of the data
-        console.log("NO update summary")
-        // this.isFirstCall = false;
       }
     })
   }
@@ -133,13 +126,11 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
     let patientQuery = patientQueryArr.join(" AND ");
-    console.log(patientQuery)
 
     this.dataSubscription = this.exptSvc.getDownloadData(this.id, patientQuery).subscribe(results => {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"]; // total number of expts
-      console.log(this.total)
       this.summary = results["filteredSummary"]; // graphical summary
 
       // table
@@ -162,7 +153,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   updateFilters(results) {
-    console.log("UPDATING FILTERS")
     this.isFirstCall = true;
     let cohorts = this.filterForm.get("cohort") as FormArray;
     let outcomes = this.filterForm.get("outcome") as FormArray;
