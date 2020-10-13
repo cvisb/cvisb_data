@@ -99,9 +99,16 @@ export class DownloadComponent implements OnInit, OnDestroy {
         return ({ key: key, value: filtered.map(d => d.term).join(",") })
       })
 
-      let filterStr = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-      console.log(filterStr)
-      this.router.navigate(["/download", this.id, { queryParams: filterStr }]);
+      let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+      console.log(filterObj)
+      this.router.navigate(
+        [],
+        {
+          relativeTo: this.route,
+          queryParams: filterObj,
+          queryParamsHandling: 'preserve'
+        });
+      // this.router.navigate(["/download", this.id, { queryParams: filterStr }]);
 
       // update the summary, etc.
       if (!this.isFirstCall) {
@@ -195,7 +202,14 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.router.navigate(["/download", this.id, {queryParams: {}}]);
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {},
+        queryParamsHandling: 'preserve'
+      });
+    // this.router.navigate(["/download", this.id, { queryParams: {} }]);
   }
 
 }
