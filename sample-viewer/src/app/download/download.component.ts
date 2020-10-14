@@ -71,9 +71,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-// initialize data
+    // initialize data
     let cohorts = this.filterForm.get("cohort") as FormArray;
-    cohorts.push(this.fb.group({selected: false, value: null, term: null}));
+    cohorts.push(this.fb.group({ selected: false, value: 0, term: null }));
 
     this.displayedColumns = this.columns.map(d => d["id"]);
 
@@ -105,7 +105,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
 
-      filterObj={ cohort: 'Ebola', outcome: 'survivor', species: '', country: '' }
+      filterObj = { cohort: 'Ebola', outcome: 'survivor', species: '', country: '' }
       // console.log(filterObj)
       this.router.navigate(
         [],
@@ -180,7 +180,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     // species.clear();
     // countries.clear();
 
-cohorts.setValue(results["filteredSummary"]["cohorts"]);
+    cohorts.setValue(results["filteredSummary"]["cohorts"]);
     // results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
     //   if (i < this.numFilters) {
     //     cohorts.push(this.fb.group(d))
