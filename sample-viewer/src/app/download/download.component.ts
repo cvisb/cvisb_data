@@ -205,8 +205,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    let cohorts = this.filterForm.get("cohort") as FormArray;
-    cohorts.setValue([{term: "madeup", value: 100, selected: true}]);
+    console.log("clearing filters")
+    // let cohorts = this.filterForm.get("cohort") as FormArray;
+    // cohorts.setValue([{term: "madeup", value: 100, selected: true}]);
     // this.router.navigate(
     //   [],
     //   {
