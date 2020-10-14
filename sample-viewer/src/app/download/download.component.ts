@@ -71,10 +71,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // initialize data
-    let cohorts = this.filterForm.get("cohort") as FormArray;
-    cohorts.push(this.fb.group({ selected: false, value: 0, term: null }));
-
     this.displayedColumns = this.columns.map(d => d["id"]);
 
     const params = this.route.snapshot.queryParams;
@@ -175,17 +171,17 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let countries = this.filterForm.get("country") as FormArray;
 
     // reset all forms
-    // cohorts.clear();
-    // outcomes.clear();
-    // species.clear();
-    // countries.clear();
+    cohorts.clear();
+    outcomes.clear();
+    species.clear();
+    countries.clear();
 
-    cohorts.setValue(results["filteredSummary"]["cohorts"]);
-    // results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
-    //   if (i < this.numFilters) {
-    //     cohorts.push(this.fb.group(d))
-    //   }
-    // })
+    // cohorts.setValue(results["filteredSummary"]["cohorts"]);
+    results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
+      if (i < this.numFilters) {
+        cohorts.push(this.fb.group(d))
+      }
+    })
 
     results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
       if (i < this.numFilters) {
@@ -209,13 +205,15 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.route,
-        queryParams: {},
-        queryParamsHandling: 'merge'
-      });
+    let cohorts = this.filterForm.get("cohort") as FormArray;
+    cohorts.setValue([{term: "madeup", value: 100, selected: true}]);
+    // this.router.navigate(
+    //   [],
+    //   {
+    //     relativeTo: this.route,
+    //     queryParams: {},
+    //     queryParamsHandling: 'merge'
+    //   });
     // this.router.navigate(["/download", this.id, { queryParams: {} }]);
   }
 
