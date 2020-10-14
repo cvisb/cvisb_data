@@ -59,10 +59,6 @@
   <div class="container-column dwnld-filter-container">
     <h5 class="m-0">Filters</h5>
     <button mat-button mat-raised-button class="mt-2 mb-3" (click)="clearFilters()">clear filters</button>
-    <div *ngFor="let key of filterKeys" class="mb-3 filter-group">
-      {{key}}
-      </div>
-
     <form [formGroup]="filterForm">
       <div *ngFor="let key of filterKeys" class="mb-3 filter-group">
         <h6 class="m-0">{{key}}</h6>

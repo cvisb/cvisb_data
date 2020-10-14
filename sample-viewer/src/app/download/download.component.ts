@@ -208,8 +208,8 @@ console.log(this.filterForm)
 
   clearFilters() {
     console.log("clearing filters")
-    // let cohorts = this.filterForm.get("cohort") as FormArray;
-    // cohorts.setValue([{term: "madeup", value: 100, selected: true}]);
+    let cohorts = this.filterForm.get("cohort") as FormArray;
+    cohorts.setValue([this.fb.group({term: "madeup", value: 100, selected: true})]);
     // this.router.navigate(
     //   [],
     //   {
