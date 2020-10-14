@@ -61,7 +61,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute) {
     this.filterForm = this.fb.group({
-      cohort: this.fb.array([new FormControl({term: null, selected: false, value: null})]),
+      cohort: this.fb.array([]),
       outcome: this.fb.array([]),
       species: this.fb.array([]),
       country: this.fb.array([])
@@ -71,6 +71,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+// initialize data
+    let cohorts = this.filterForm.get("cohort") as FormArray;
+    cohorts.push(this.fb.group({selected: false, value: null, term: null}));
+
     this.displayedColumns = this.columns.map(d => d["id"]);
 
     const params = this.route.snapshot.queryParams;
