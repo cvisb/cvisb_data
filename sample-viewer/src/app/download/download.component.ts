@@ -101,8 +101,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
 
-      filterObj = { cohort: 'Ebola', outcome: 'survivor', species: '', country: '' }
-      // console.log(filterObj)
+      console.log(filters)
       this.router.navigate(
         [],
         {
