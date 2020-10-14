@@ -61,7 +61,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute) {
     this.filterForm = this.fb.group({
-      cohort: this.fb.array([new FormControl()]),
+      cohort: this.fb.array([{term: null, selected: false, value: null}]),
       outcome: this.fb.array([]),
       species: this.fb.array([]),
       country: this.fb.array([])
