@@ -62,7 +62,7 @@
 
     <form [formGroup]="filterForm">
       <div *ngFor="let key of filterKeys" class="mb-3 filter-group">
-        <ng-template *ngIf="filterForm.get(key)['controls'].get('term')">
+        <ng-template>
         <h6 class="m-0">{{key}}</h6>
         <div formArrayName="{{key}}">
           <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
