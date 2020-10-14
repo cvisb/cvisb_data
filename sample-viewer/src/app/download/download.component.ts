@@ -175,6 +175,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     outcomes.clear();
     species.clear();
     countries.clear();
+    console.log(this.fb)
 
     // cohorts.setValue(results["filteredSummary"]["cohorts"]);
     results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
