@@ -273,9 +273,6 @@ export class DownloadDataService {
     let patientQueryArr = filters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
     let patientQuery = patientQueryArr.join(" AND ");
 
-    console.log(patientQueryArr)
-    console.log(patientQuery)
-
     // Download experiment and patient data
     if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id, patientQuery).subscribe(data => {
@@ -325,15 +322,38 @@ export class DownloadDataService {
         break;
       case ("SystemsSerology"):
         let seroData = data.map((expt: SystemsSerology) => {
-          return (new SerologyDownload(expt))
+          return (new SerologyDownload( expt))
         })
         this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       case ("HLAData"):
-        this.parseData(data, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
+      let hlaData = data.flatMap(expt => this.flattenHLA(expt))
+      console.log(hlaData)
+
+        this.parseData(hlaData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
     }
+  }
 
+  flattenHLA(expt) {
+    return expt.data.map(datum => {
+      return({
+        patientID: expt["privatePatientID"],
+        visitCode: expt["visitCode"],
+        experimentID: expt["experimentID"],
+        isControl: expt["isControl"],
+        experimentDate: expt["experimentDate"],
+        source: expt.sourceCitation ? expt.sourceCitation.map(d => d.name) : expt.creator ? expt.creator.name : null,
+        citation: expt.citation ? expt.citation.map(d => d.url).join(", ") : null,
+        publisher : expt.publisher ? expt.publisher.name : null,
+        dataStatus : expt.dataStatus,
+        dateModified : expt.dateModified,
+        correction : expt.correction,
+        locus: datum["locus"],
+        allele: datum["allele"],
+        novel: datum["novel"]
+      })
+    })
   }
 
 }
