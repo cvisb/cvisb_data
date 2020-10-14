@@ -171,10 +171,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let countries = this.filterForm.get("country") as FormArray;
 
     // reset all forms
-    cohorts.clear();
-    outcomes.clear();
-    species.clear();
-    countries.clear();
+    // cohorts.clear();
+    // outcomes.clear();
+    // species.clear();
+    // countries.clear();
 
     // cohorts.setValue(results["filteredSummary"]["cohorts"]);
     results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
@@ -200,6 +200,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
         countries.push(this.fb.group(d))
       }
     })
+
+console.log(this.filterForm)
 
     this.isFirstCall = false;
   }
