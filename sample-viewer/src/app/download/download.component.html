@@ -65,19 +65,11 @@
         <div formArrayName="{{key}}">
           <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
             length: {{ filterForm.get(key)['controls'].length}}
-            <!-- <div *ngIf="filterForm.get(key)['controls'].length; else temp">
-              <small formGroupName="{{i}}">
-                <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-                  {{option.get("term").value}} ({{option.get("count").value}})
-                </mat-checkbox>
-              </small>
-            </div>
-            <ng-template #temp>
-              TESTING!
-            </ng-template> -->
-            <div *ngIf="option.get('term')">
-              TERM: {{option.get('term')}}
-              </div>
+            <small formGroupName="{{i}}">
+              <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+                {{option.get("term").value}} ({{option.get("count").value}})
+              </mat-checkbox>
+            </small>
           </div>
         </div>
       </div>
