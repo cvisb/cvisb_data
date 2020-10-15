@@ -87,11 +87,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
       return (obj)
     });
+    console.log(filterVals)
 
     // select filter form
     this.filterKeys.forEach(key => {
       console.log(filterVals[key])
-      if (filterVals[key].length) {
+      if (filterVals[key]) {
         this.filterForm.setControl(key, this.fb.array(filterVals[key].map(option => this.fb.group(option)) || []));
       } else {
         this.filterForm.setControl(key, this.fb.array([]))
