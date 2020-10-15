@@ -338,10 +338,12 @@ export class GetExperimentsService {
   }
 
   updateFacets(arr, summaryFacets, filters, key, variable) {
-    let filterTerms = Object.keys(filters).map(key => filters[key].filter(d => d.selected)).flatMap(d => d.term);
-
     console.log(filters)
+
+    let filterTerms = Object.keys(filters);
+    // .map(key => filters[key].filter(d => d.selected)).flatMap(d => d.term);
     console.log(filterTerms)
+
     arr[key].forEach(target => {
       let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
       target.count = filtered.length == 1 ? filtered[0].count : 0;
