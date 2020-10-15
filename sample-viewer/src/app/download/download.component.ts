@@ -171,12 +171,15 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     this.isFirstCall = true;
+    console.log(this.filterForm)
 
     this.filterKeys.forEach(key => {
       console.log(key)
       console.log(results["filteredSummary"][key])
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key] || []));
     })
+
+    console.log(this.filterForm)
 
     // let cohorts = this.filterForm.get("cohort") as FormArray;
     // let outcomes = this.filterForm.get("outcome") as FormArray;
