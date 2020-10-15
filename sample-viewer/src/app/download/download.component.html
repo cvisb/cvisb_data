@@ -65,13 +65,19 @@
         <div formArrayName="{{key}}">
           <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
             length: {{ filterForm.get(key)['controls'].length}}
-            <ng-template *ngIf="filterForm.get(key)['controls'].length">
-            <small formGroupName="{{i}}">
-              <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
-                {{option.get("term").value}} ({{option.get("count").value}})
-              </mat-checkbox>
-            </small>
+            <div *ngIf="filterForm.get(key)['controls'].length; else temp">
+              <small formGroupName="{{i}}">
+                <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+                  {{option.get("term").value}} ({{option.get("count").value}})
+                </mat-checkbox>
+              </small>
+            </div>
+            <ng-template #temp>
+              TESTING!
             </ng-template>
+            <div *ngIf="option.get('term')">
+              TERM: {{option.get('term')}}
+              </div>
           </div>
         </div>
       </div>
@@ -90,7 +96,7 @@
             </a>
           </span>
           <ng-template #normal_td>
-          {{ key.id.toLowerCase().includes("date") ? (element[key.id] | date:'d MMM yyyy') : element[key.id] }}
+            {{ key.id.toLowerCase().includes("date") ? (element[key.id] | date:'d MMM yyyy') : element[key.id] }}
           </ng-template>
         </td>
       </ng-container>
