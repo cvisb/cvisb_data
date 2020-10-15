@@ -101,17 +101,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
 
-      console.log(filters)
-      console.log(filterObj)
-      console.log(this.router)
-      this.router.navigate(
-        [],
-        {
-          relativeTo: this.route,
-          queryParams: filterObj,
-          queryParamsHandling: 'preserve'
-        });
-      // this.router.navigate(["/download", this.id, { queryParams: filterStr }]);
+      this.router.navigate(["/download", this.id], { queryParams: filterObj });
 
       // update the summary, etc.
       if (!this.isFirstCall) {
@@ -203,15 +193,19 @@ export class DownloadComponent implements OnInit, OnDestroy {
       }
     })
 
-console.log(this.filterForm)
+    console.log(this.filterForm)
 
     this.isFirstCall = false;
   }
 
   clearFilters() {
     console.log("clearing filters")
-    let cohorts = this.filterForm.get("cohort") as FormArray;
-    cohorts.setValue([this.fb.group({term: "madeup", value: 100, selected: true})]);
+    let filterObj = { cohort: "Ebola", outcome: "control,dead", species: "", country: "" };
+
+    this.router.navigate(["/download", this.id], { queryParams: filterObj });
+
+    // let cohorts = this.filterForm.get("cohort") as FormArray;
+    // cohorts.setValue([this.fb.group({term: "madeup", value: 100, selected: true})]);
     // this.router.navigate(
     //   [],
     //   {
@@ -219,7 +213,7 @@ console.log(this.filterForm)
     //     queryParams: {},
     //     queryParamsHandling: 'merge'
     //   });
-    // this.router.navigate(["/download", this.id, { queryParams: {} }]);
+
   }
 
 }
