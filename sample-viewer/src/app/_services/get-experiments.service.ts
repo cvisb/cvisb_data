@@ -112,6 +112,7 @@ export class GetExperimentsService {
 
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
+        console.log(patientSummary)
         let filteredSummary = {};
         filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
         filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
