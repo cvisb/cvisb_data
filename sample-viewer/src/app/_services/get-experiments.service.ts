@@ -122,7 +122,11 @@ export class GetExperimentsService {
           // update the counts
           filteredSummary = cloneDeep(summaryData);
 
+          filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, "cohort", "cohort.keyword");
+          filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, "outcome", "outcome.keyword");
           filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, "species", "species.keyword");
+          filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, "year", "infectionYear");
+          filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, "country", "country.identifier.keyword");
 
         } else {
           // initial call; create the static summary object and populate.
