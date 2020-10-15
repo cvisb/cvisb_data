@@ -79,14 +79,15 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get("id");
 
     // set initial checked boxes, based on the url
-    let filterVals = this.filterKeys.flatMap(key => {
-      let obj = {};
+    let filterVals = {};
+
+    this.filterKeys.forEach(key => {
       let arr = params[key].split(",");
-      obj[key] = arr.map(d => {
+      filterVals[key] = arr.map(d => {
         return ({ selected: true, term: d, value: null })
       })
-      return (obj)
     });
+    
     console.log(filterVals)
 
     // select filter form
