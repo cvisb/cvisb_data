@@ -340,14 +340,13 @@ export class GetExperimentsService {
   updateFacets(arr, summaryFacets, filters, key, variable) {
     console.log(filters)
 
-    let filterTerms = Object.keys(filters);
-    // .map(key => filters[key].filter(d => d.selected)).flatMap(d => d.term);
+    let filterTerms = Object.keys(filters).flatMap(d => d["terms"].map(d => d.term));
     console.log(filterTerms)
 
     arr[key].forEach(target => {
       let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
       target.count = filtered.length == 1 ? filtered[0].count : 0;
-      // target.selected = filterTerms.includes(target.term);
+      target.selected = filterTerms.includes(target.term);
     })
 
     // sort by frequency
