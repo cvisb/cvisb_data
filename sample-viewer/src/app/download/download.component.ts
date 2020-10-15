@@ -142,10 +142,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
     })
 
-    let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
-    let patientQuery = patientQueryArr.join(" AND ");
-
-    this.dataSubscription = this.exptSvc.getDownloadData(this.id, this.unfilteredSummary, patientQuery).subscribe(results => {
+    this.dataSubscription = this.exptSvc.getDownloadData(this.id, this.unfilteredSummary, patientFilters).subscribe(results => {
       console.log("results!!!!")
       console.log(results)
       this.total = results["total"]; // total number of expts
@@ -176,8 +173,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterKeys.forEach(key => {
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
     })
-
-    console.log(this.filterForm)
 
     this.isFirstCall = false;
   }

@@ -104,8 +104,11 @@ export class GetExperimentsService {
 
   On filter application, will re-call this function with filters applied
   */
-  getDownloadData(id: string, summaryData: any[], patientQuery: string) {
+  getDownloadData(id: string, summaryData: any[], patientFilters: any) {
     this.isLoadingSubject.next(true);
+
+    let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
+    let patientQuery = patientQueryArr.join(" AND ");
 
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
