@@ -122,11 +122,11 @@ export class GetExperimentsService {
           // update the counts
           filteredSummary = cloneDeep(summaryData);
 
-          filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, "cohort", "cohort.keyword");
-          filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, "outcome", "outcome.keyword");
-          filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, "species", "species.keyword");
-          filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, "year", "infectionYear");
-          filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, "country", "country.identifier.keyword");
+          filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "cohort", "cohort.keyword");
+          filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "outcome", "outcome.keyword");
+          filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "species", "species.keyword");
+          filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "year", "infectionYear");
+          filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "country", "country.identifier.keyword");
 
         } else {
           // initial call; create the static summary object and populate.
@@ -337,10 +337,15 @@ export class GetExperimentsService {
     return (countryCount)
   }
 
-  updateFacets(arr, summaryFacets, key, variable) {
+  updateFacets(arr, summaryFacets, filters, key, variable) {
+    let filterTerms = Object.keys(filters).map(key => filters[key].filter(d => d.selected)).flatMap(d => d.term);
+
+    console.log(filters)
+    console.log(filterTerms)
     arr[key].forEach(target => {
       let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
       target.count = filtered.length == 1 ? filtered[0].count : 0;
+      target.selected = filterTerms.includes(target.term);
     })
     return (arr[key])
   }
