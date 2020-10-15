@@ -340,7 +340,7 @@ export class GetExperimentsService {
   updateFacets(arr, summaryFacets, filters, key, variable) {
     console.log(filters)
 
-    let filterTerms = Object.keys(filters).flatMap(d => d["terms"].map(d => d.term));
+    let filterTerms = filters.flatMap(d => d["terms"].map(d => d.term));
     console.log(filterTerms)
 
     arr[key].forEach(target => {
