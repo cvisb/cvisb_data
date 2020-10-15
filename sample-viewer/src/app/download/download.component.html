@@ -64,7 +64,7 @@
         <h6 class="m-0">{{key}}</h6>
         <div formArrayName="{{key}}">
           <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
-            length: {{ option.length}}
+            length: {{ filterForm.get(key)['controls'].length}}
             <!-- <ng-template >
             <small formGroupName="{{i}}">
               <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
