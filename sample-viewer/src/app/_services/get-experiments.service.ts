@@ -110,13 +110,13 @@ export class GetExperimentsService {
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
         let filteredSummary = {};
-        filteredSummary["cohorts"] = patientSummary["cohort.keyword"]["terms"];
-        filteredSummary["outcomes"] = patientSummary["outcome.keyword"]["terms"];
+        filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
+        filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
         filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
-        filteredSummary["years"] = patientSummary["infectionYear"]["terms"];
+        filteredSummary["year"] = patientSummary["infectionYear"]["terms"];
         let countries = patientSummary["country.identifier.keyword"]["terms"];
         countries.forEach(d => this.getCountryName(d));
-        filteredSummary["countries"] = countries;
+        filteredSummary["country"] = countries;
 
         Object.keys(filteredSummary).forEach(facet => {
           filteredSummary[facet].forEach(d => {

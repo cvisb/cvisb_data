@@ -25,19 +25,19 @@
   <div class="container">
     <div id="cohort-count" class="mr-3">
       <h4 class="filter-label">cohort</h4>
-      <app-mini-donut [data]="summary['cohorts']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
+      <app-mini-donut [data]="summary['cohort']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
     </div>
 
     <div class="grid-item grid-column-container mr-3" id="outcome-count">
       <h4 class="filter-label">outcome</h4>
-      <app-mini-barplot [data]="summary['outcomes']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [filterable]="false"></app-mini-barplot>
+      <app-mini-barplot [data]="summary['outcome']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [filterable]="false"></app-mini-barplot>
     </div>
 
     <div class="grid-item grid-column-container mr-3" id="country-count">
       <h4 class="filter-label">country</h4>
       <div class="grid-row-container">
-        <app-choropleth [data]="summary['countries']"></app-choropleth>
-        <app-dot-plot [data]="summary['countries']"></app-dot-plot>
+        <app-choropleth [data]="summary['country']"></app-choropleth>
+        <app-dot-plot [data]="summary['country']"></app-dot-plot>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
     <div class="grid-item grid-row-container mr-3" id="year-file-count">
       <div id="year-count" class="grid-column-container">
         <h4 class="filter-label">year</h4>
-        <app-filterable-histogram [data]="summary['years']" [xDomain]="[1979, 2020]" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
+        <app-filterable-histogram [data]="summary['year']" [xDomain]="[1979, 2020]" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
       </div>
     </div>
   </div>

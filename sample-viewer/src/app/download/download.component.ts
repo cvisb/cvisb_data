@@ -26,6 +26,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any>;
   isFirstCall: Boolean = true;
   isLoading$: Observable<Boolean>;
+  filterGroups: string[] = ["cohort", "outcome", "species", "country"];
   columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
     { id: "patientID", label: "patient ID" },
@@ -73,10 +74,25 @@ export class DownloadComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.displayedColumns = this.columns.map(d => d["id"]);
 
+    // read params from route
     const params = this.route.snapshot.queryParams;
-    console.log(params)
-    console.log(this.route.snapshot)
     this.id = this.route.snapshot.paramMap.get("id");
+
+    // set initial checked boxes, based on the url
+    let filterVals = this.filterGroups.map(key => {
+      let obj = {};
+      let arr = params[key].split(",");
+      obj[key] = arr.map(d => {
+        return ({ selected: true, term: d, value: null })
+      })
+      return (obj)
+    });
+
+    // select filter form
+    // filterGroups.forEach(key => {
+    //   this.filterForm.setControl(key, this.fb.array(filterVals[key] || []));
+    // })
+
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
 
@@ -105,7 +121,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
       // update the summary, etc.
       if (!this.isFirstCall) {
-        // this.getData();
+        this.getData();
       } else {
         // initial loading of the data
       }
@@ -156,64 +172,61 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     this.isFirstCall = true;
-    let cohorts = this.filterForm.get("cohort") as FormArray;
-    let outcomes = this.filterForm.get("outcome") as FormArray;
-    let species = this.filterForm.get("species") as FormArray;
-    let countries = this.filterForm.get("country") as FormArray;
 
-    // reset all forms
-    cohorts.clear();
-    outcomes.clear();
-    species.clear();
-    countries.clear();
-    console.log(this.fb)
-
-    // cohorts.setValue(results["filteredSummary"]["cohorts"]);
-    results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
-      if (i < this.numFilters) {
-        cohorts.push(this.fb.group(d))
-      }
+    this.filterGroups.forEach(key => {
+      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key] || []));
     })
 
-    results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
-      if (i < this.numFilters) {
-        outcomes.push(this.fb.group(d))
-      }
-    })
-
-    results["filteredSummary"]["species"].forEach((d, i: number) => {
-      if (i < this.numFilters) {
-        species.push(this.fb.group(d))
-      }
-    })
-
-    results["filteredSummary"]["countries"].forEach((d, i: number) => {
-      if (i < this.numFilters) {
-        countries.push(this.fb.group(d))
-      }
-    })
-
-    console.log(this.filterForm)
+    // let cohorts = this.filterForm.get("cohort") as FormArray;
+    // let outcomes = this.filterForm.get("outcome") as FormArray;
+    // let species = this.filterForm.get("species") as FormArray;
+    // let countries = this.filterForm.get("country") as FormArray;
+    //
+    // // reset all forms
+    // cohorts.clear();
+    // outcomes.clear();
+    // species.clear();
+    // countries.clear();
+    //
+    // // cohorts.setValue(results["filteredSummary"]["cohorts"]);
+    // results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
+    //   if (i < this.numFilters) {
+    //     cohorts.push(this.fb.group(d))
+    //   }
+    // })
+    //
+    // results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
+    //   if (i < this.numFilters) {
+    //     outcomes.push(this.fb.group(d))
+    //   }
+    // })
+    //
+    // results["filteredSummary"]["species"].forEach((d, i: number) => {
+    //   if (i < this.numFilters) {
+    //     species.push(this.fb.group(d))
+    //   }
+    // })
+    //
+    // results["filteredSummary"]["countries"].forEach((d, i: number) => {
+    //   if (i < this.numFilters) {
+    //     countries.push(this.fb.group(d))
+    //   }
+    // })
+    //
+    // console.log(this.filterForm)
 
     this.isFirstCall = false;
   }
 
   clearFilters() {
     console.log("clearing filters")
-    let filterObj = { cohort: "Ebola", outcome: "control,dead", species: "", country: "" };
 
-    this.router.navigate(["/download", this.id], { queryParams: filterObj });
+    this.router.navigate(["/download", this.id], { queryParams: {} });
 
-    // let cohorts = this.filterForm.get("cohort") as FormArray;
-    // cohorts.setValue([this.fb.group({term: "madeup", value: 100, selected: true})]);
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: {},
-    //     queryParamsHandling: 'merge'
-    //   });
-
+    this.filterGroups.forEach(key => {
+      let ctrl = this.filterForm.get(key) as FormArray;
+      ctrl.clear();
+    })
   }
 
 }
