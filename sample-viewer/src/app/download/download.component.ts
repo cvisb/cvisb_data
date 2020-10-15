@@ -102,6 +102,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
 
       console.log(filters)
+      console.log(filterObj)
+      console.log(this.router)
       this.router.navigate(
         [],
         {
