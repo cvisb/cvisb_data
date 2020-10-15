@@ -345,8 +345,12 @@ export class GetExperimentsService {
     arr[key].forEach(target => {
       let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
       target.count = filtered.length == 1 ? filtered[0].count : 0;
-      target.selected = filterTerms.includes(target.term);
+      // target.selected = filterTerms.includes(target.term);
     })
+
+    // sort by frequency
+    arr[key].sort((a, b) => b.value - a.value);
+
     return (arr[key])
   }
 }
