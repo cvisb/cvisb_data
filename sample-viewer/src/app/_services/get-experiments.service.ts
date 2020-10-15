@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError, from, BehaviorSubject } from 'rxjs/';
 import { map, catchError, pluck, mergeMap, finalize } from 'rxjs/operators';
+import { cloneDeep } from "lodash";
 
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
@@ -104,7 +105,7 @@ export class GetExperimentsService {
 
   On filter application, will re-call this function with filters applied
   */
-  getDownloadData(id: string, summaryData: any[], patientFilters: any) {
+  getDownloadData(id: string, summaryData: any, patientFilters: any) {
     this.isLoadingSubject.next(true);
 
     let patientQueryArr = patientFilters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
@@ -113,22 +114,34 @@ export class GetExperimentsService {
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
       map(([exptData, patientSummary]) => {
         console.log(patientSummary)
+
         let filteredSummary = {};
-        filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
-        filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
-        filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
-        filteredSummary["year"] = patientSummary["infectionYear"]["terms"];
-        let countries = patientSummary["country.identifier.keyword"]["terms"];
-        countries.forEach(d => this.getCountryName(d));
-        filteredSummary["country"] = countries;
+        let summary = summaryData;
 
-        Object.keys(filteredSummary).forEach(facet => {
-          filteredSummary[facet].forEach(d => {
-            d["selected"] = false;
+        if (summaryData) {
+          // update the counts
+          filteredSummary = cloneDeep(summaryData);
+
+          filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, "species", "species.keyword");
+
+        } else {
+          // initial call; create the static summary object and populate.
+          filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
+          filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
+          filteredSummary["species"] = patientSummary["species.keyword"]["terms"];
+          filteredSummary["year"] = patientSummary["infectionYear"]["terms"];
+          let countries = patientSummary["country.identifier.keyword"]["terms"];
+          countries.forEach(d => this.getCountryName(d));
+          filteredSummary["country"] = countries;
+
+          summary = filteredSummary;
+
+          Object.keys(filteredSummary).forEach(facet => {
+            filteredSummary[facet].forEach(d => {
+              d["selected"] = false;
+            })
           })
-        })
-
-        let summary = summaryData ? summaryData : filteredSummary;
+        }
 
         // filter options
         const filterLabels = {
@@ -320,4 +333,11 @@ export class GetExperimentsService {
     return (countryCount)
   }
 
+  updateFacets(arr, summaryFacets, key, variable) {
+    arr[key].forEach(target => {
+      let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
+      target.count = filtered.length == 1 ? filtered[0].count : 0;
+    })
+    return (arr)
+  }
 }
