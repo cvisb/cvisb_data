@@ -338,6 +338,6 @@ export class GetExperimentsService {
       let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
       target.count = filtered.length == 1 ? filtered[0].count : 0;
     })
-    return (arr)
+    return (arr[key])
   }
 }
