@@ -171,60 +171,16 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     this.isFirstCall = true;
-    console.log(this.filterForm)
-
     this.filterKeys.forEach(key => {
-      console.log(key)
-      console.log(results["filteredSummary"][key])
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
     })
 
     console.log(this.filterForm)
 
-    // let cohorts = this.filterForm.get("cohort") as FormArray;
-    // let outcomes = this.filterForm.get("outcome") as FormArray;
-    // let species = this.filterForm.get("species") as FormArray;
-    // let countries = this.filterForm.get("country") as FormArray;
-    //
-    // // reset all forms
-    // cohorts.clear();
-    // outcomes.clear();
-    // species.clear();
-    // countries.clear();
-    //
-    // // cohorts.setValue(results["filteredSummary"]["cohorts"]);
-    // results["filteredSummary"]["cohorts"].forEach((d, i: number) => {
-    //   if (i < this.numFilters) {
-    //     cohorts.push(this.fb.group(d))
-    //   }
-    // })
-    //
-    // results["filteredSummary"]["outcomes"].forEach((d, i: number) => {
-    //   if (i < this.numFilters) {
-    //     outcomes.push(this.fb.group(d))
-    //   }
-    // })
-    //
-    // results["filteredSummary"]["species"].forEach((d, i: number) => {
-    //   if (i < this.numFilters) {
-    //     species.push(this.fb.group(d))
-    //   }
-    // })
-    //
-    // results["filteredSummary"]["countries"].forEach((d, i: number) => {
-    //   if (i < this.numFilters) {
-    //     countries.push(this.fb.group(d))
-    //   }
-    // })
-    //
-    // console.log(this.filterForm)
-
     this.isFirstCall = false;
   }
 
   clearFilters() {
-    console.log("clearing filters")
-
     this.router.navigate(["/download", this.id], { queryParams: {} });
 
     this.filterKeys.forEach(key => {
