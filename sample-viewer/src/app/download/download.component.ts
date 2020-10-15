@@ -26,7 +26,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any>;
   isFirstCall: Boolean = true;
   isLoading$: Observable<Boolean>;
-  filterGroups: string[] = ["cohort", "outcome", "species", "country"];
   columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
     { id: "patientID", label: "patient ID" },
@@ -79,7 +78,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get("id");
 
     // set initial checked boxes, based on the url
-    let filterVals = this.filterGroups.map(key => {
+    let filterVals = this.filterKeys.map(key => {
       let obj = {};
       let arr = params[key].split(",");
       obj[key] = arr.map(d => {
@@ -89,7 +88,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     });
 
     // select filter form
-    // filterGroups.forEach(key => {
+    // filterKeys.forEach(key => {
     //   this.filterForm.setControl(key, this.fb.array(filterVals[key] || []));
     // })
 
@@ -173,7 +172,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
   updateFilters(results) {
     this.isFirstCall = true;
 
-    this.filterGroups.forEach(key => {
+    this.filterKeys.forEach(key => {
+      console.log(key)
+      console.log(results["filteredSummary"][key])
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key] || []));
     })
 
@@ -223,7 +224,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     this.router.navigate(["/download", this.id], { queryParams: {} });
 
-    this.filterGroups.forEach(key => {
+    this.filterKeys.forEach(key => {
       let ctrl = this.filterForm.get(key) as FormArray;
       ctrl.clear();
     })
