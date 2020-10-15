@@ -84,10 +84,13 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterKeys.forEach(key => {
       let arr = params[key].split(",");
       filterVals[key] = arr.map(d => {
+        if(d != "") {
         return ({ selected: true, term: d, value: null })
+        }
+        return ({ selected: true, term: null, value: null })
       })
     });
-    
+
     console.log(filterVals)
 
     // select filter form
