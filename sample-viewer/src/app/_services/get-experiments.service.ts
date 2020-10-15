@@ -104,7 +104,7 @@ export class GetExperimentsService {
 
   On filter application, will re-call this function with filters applied
   */
-  getDownloadData(id: string, patientQuery: string) {
+  getDownloadData(id: string, summaryData: any[], patientQuery: string) {
     this.isLoadingSubject.next(true);
 
     return forkJoin([this.getExptTable(id, patientQuery, null), this.getFilteredPatientDownloadFacets(id, patientQuery, null)]).pipe(
@@ -124,6 +124,8 @@ export class GetExperimentsService {
           })
         })
 
+        let summary = summaryData ? summaryData : filteredSummary;
+
         // filter options
         const filterLabels = {
           "data.curated.keyword": "Curated Sequence",
@@ -139,6 +141,7 @@ export class GetExperimentsService {
 
         return ({
           total: exptData["total"],
+          summary: summary,
           filteredSummary: filteredSummary,
           results: exptData
         })
