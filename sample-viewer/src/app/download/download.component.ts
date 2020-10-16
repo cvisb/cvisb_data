@@ -42,8 +42,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   displayedColumns: string[];
 
   dataSubscription: Subscription;
-  outcomeParams: string[] = [];
-  locationParams: string[] = [];
 
   whichDataForm: FormGroup = this.fb.group({
     experiment: true,
@@ -108,9 +106,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
-
-    this.outcomeParams = params.outcome ? params.outcome.split(";") : [];
-    this.locationParams = params.location ? params.location.split(";") : [];
 
     // loading state
     this.isLoading$ = this.exptSvc.isLoadingState$;
