@@ -85,7 +85,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       if (params[key] && params[key] != "") {
         let arr = params[key].split(",");
         filterVals[key] = arr.map(d => {
-          return ({ selected: true, term: d, value: null })
+          return ({ selected: true, term: d, value: 0 })
         })
       } else {
         filterVals[key] = null;
@@ -150,6 +150,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
         terms: this.filterForm.value[key].filter(d => d.selected)
       })
     })
+
+    console.log(patientFilters)
 
     this.dataSubscription = this.exptSvc.getDownloadData(this.id, this.unfilteredSummary, patientFilters).subscribe(results => {
       console.log("results!!!!")
