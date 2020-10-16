@@ -82,13 +82,14 @@ export class DownloadComponent implements OnInit, OnDestroy {
     let filterVals = {};
 
     this.filterKeys.forEach(key => {
-      let arr = params[key].split(",");
-      filterVals[key] = arr.map(d => {
-        if(d != "") {
-        return ({ selected: true, term: d, value: null })
-        }
-        return (null)
-      })
+      if (params[key] && params[key] != "") {
+        let arr = params[key].split(",");
+        filterVals[key] = arr.map(d => {
+          return ({ selected: true, term: d, value: null })
+        })
+      } else {
+        filterVals[key] = null;
+      }
     });
 
     console.log(filterVals)
