@@ -85,7 +85,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       if (params[key] && params[key] != "") {
         let arr = params[key].split(",");
         filterVals[key] = arr.map(d => {
-          return ({ selected: true, term: d, value: 0 })
+          return ({ selected: true, term: d, count: 0 })
         })
       } else {
         filterVals[key] = null;
@@ -184,6 +184,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.filterKeys.forEach(key => {
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
     })
+
+    console.log(this.filterForm)
 
     this.isFirstCall = false;
   }
