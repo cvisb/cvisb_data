@@ -78,6 +78,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
 
+    console.log(params)
+
     // set initial checked boxes, based on the url
     let filterVals = {};
 
@@ -87,7 +89,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
         if(d != "") {
         return ({ selected: true, term: d, value: null })
         }
-        return ({ selected: true, term: null, value: null })
+        return (null)
       })
     });
 
