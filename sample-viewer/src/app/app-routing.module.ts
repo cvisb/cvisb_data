@@ -64,8 +64,8 @@ const appRoutes: Routes = [
   { path: 'terms', component: TermsComponent, pathMatch: 'full', data: { title: 'Terms of Use | CViSB Data' } },
   { path: 'privacy', component: PrivacyComponent, pathMatch: 'full', data: { title: 'Privacy | CViSB Data' } },
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), pathMatch: 'full', data: { title: 'CViSB Data' } },
-  { path: 'sitemap.xml', pathMatch: 'full', redirectTo: "/assets/sitemap.xml" },
-  { path: 'robots.txt', pathMatch: 'full', redirectTo: "/assets/robots.txt" },
+  { path: 'assets/sitemap.xml', pathMatch: 'full', redirectTo: "/sitemap.xml" },
+  { path: 'assets/robots.txt', pathMatch: 'full', redirectTo: "/robots.txt" },
   // { path: 'test', pathMatch: 'full', component: TestComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

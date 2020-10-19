@@ -44,8 +44,8 @@
             "assets": [
               "src/assets",
               "src/assets/img/favicon.ico",
-              "src/assets/sitemap.xml",
-              "src/assets/robots.txt",
+              "src/sitemap.xml",
+              "src/robots.txt",
               "src/assets/schema",
               "src/assets/data",
               "src/assets/icons",
