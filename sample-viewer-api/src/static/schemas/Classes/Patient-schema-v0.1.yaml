@@ -306,30 +306,30 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:homeLocation
+- "@id":                 cvisb:location
   "@type":               rdf:Property
-  rdfs:comment:          "The most specific geographic location of the home of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
-  rdfs:label:            homeLocation
+  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates. SHOULD ONLY INCLUDE LOCATIONS THAT CAN BE RELEASED TO THE PUBLIC."
+  rdfs:label:            location
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
   schema:sameAs:
-    "@id":               schema:homeLocation
+    "@id":               schema:location
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
-- "@id":                 cvisb:exposureLocation
+- "@id":                 cvisb:locationPrivate
   "@type":               rdf:Property
-  rdfs:comment:          "The most specific geographic location of the presumed infection/exposure of the patient to the virus. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
-  rdfs:label:            exposureLocation
+  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates.  Includes location information that should only be accessed by authorized users."
+  rdfs:label:            locationPrivate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
   schema:sameAs:
-    "@id":               schema:exposureLocation
+    "@id":               schema:location
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
@@ -610,10 +610,9 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Float
+    - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  minimum:               1
-  maximum:               100
   authenticated:         false
 
 # height
@@ -745,6 +744,18 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:ELISA
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:medications
+  "@type":               rdf:Property
+  rdfs:comment:          List of medications administered (or not) to the patient during the course of their treatment.
+  rdfs:label:            medications
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
