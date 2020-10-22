@@ -774,3 +774,87 @@
   owl:cardinality:       many
   marginality:           optional
   authenticated:         true
+
+- "@id":                 cvisb:rheumatologicalSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Rheumatological
+  rdfs:label:            rheumatologicalSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:rheumatologicalGISequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Other Rheumatological and Gastrointestinal
+  rdfs:label:            rheumatologicalGISequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:pyschNeuroSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Psychiatric and Neurological
+  rdfs:label:            pyschNeuroSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:cardiacGISequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Cardiac and Other Gastrointestinal
+  rdfs:label:            cardiacGISequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:opthoAudioSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Ophthamological and Auditory
+  rdfs:label:            opthoAudioSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:constitutionalSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Constitutional
+  rdfs:label:            constitutionalSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:acuteRespiratoryDistressSyndrome
+  "@type":               rdf:Property
+  rdfs:comment:          Acute respiratory distress syndrome
+  rdfs:label:            acuteRespiratoryDistressSyndrome
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false
