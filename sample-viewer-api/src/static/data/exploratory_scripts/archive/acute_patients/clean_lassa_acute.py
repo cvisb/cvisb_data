@@ -226,6 +226,7 @@ def cleanAcute(filename):
 
     return(df)
 
+df.sample(1).iloc[0]
 # Function to run a series of automated checks on the data.
 def runChecks(df):
 
