@@ -3,12 +3,14 @@ import helpers
 
 from datetime  import datetime, timedelta
 from os        import path
-from itertools import chain
 
 import requests
 import csv
 import json
 import re
+
+from Bio import SeqIO
+from io  import StringIO
 
 today = datetime.today().strftime('%Y-%m-%d')
 
@@ -26,9 +28,11 @@ def create_data():
         for patient in metadata
     ]
 
-    experiments    = [create_experiment(patient['patientID']) for patient   in patients]
-    data_downloads = [create_data_download(name, url, [])     for name, url in data_files.items()]
-    dataset        = create_dataset(data_downloads)
+    experiments    = [create_experiment(patient['patientID'], patient['sourceCitation']) for patient in patients]
+    experiment_ids = [e['experimentID'] for e in experiments]
+
+    data_downloads = [create_data_download(name, url, experiment_ids) for name, url in data_files.items()]
+    dataset        = [create_dataset(data_downloads)]
 
     output = {
         'patients':       patients,
@@ -38,21 +42,8 @@ def create_data():
     }
 
     for name, data in output.items():
-        if len(data) > 200:
-            count = 0
-            while count < len(data):
-                file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}{count}.json')
-                next_count = count + 200
-                if next_count > len(data):
-                    next_count = len(data)
-
-                with open(file_path, 'w') as output_file:
-                    json.dump(data[count:next_count], output_file)
-                count = next_count
-
-        file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}.json')
-        with open(file_path, 'w') as output_file:
-            json.dump(data, output_file)
+        print("{name} {len(data)}")
+        save(name, data, segmented=false)
 
 def get_metadata_from_github():
     metadata         = requests.get("https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv")
@@ -82,7 +73,12 @@ def get_metadata_from_gcloud_files():
     gcloud_url = "https://console.cloud.google.com/storage/browser/_details/andersen-lab_hcov-19-genomics/{cloud_path}"
     sra_url    = "https://www.ncbi.nlm.nih.gov/sra/{sra_id}[accn]"
 
-    for file_name, file_path in chain(bams.items(), fastas.items()):
+    for file_name, file_path in fastas.items():
+        file_path = file_path.replace('gs://andersen-lab_hcov-19-genomics/', '')
+        url = gcloud_url.format(cloud_path=file_path)
+        url_for_file[file_name] = url
+
+    for file_name, file_path in bams.items():
         sra_id = sra_dict.get(remove_location_patient_id(file_name))
 
         if sra_id:
@@ -108,13 +104,13 @@ def create_dataset(data_downloads):
         '@context':             'http://schema.org/',
         '@type':                'Dataset',
         'identifier':           'sarscov2-virus-seq',
-        'creator':              [helpers.getLabAuthor('Kristian')],
+        'creator':              [helpers.getlabauthor('Kristian')],
         'publisher':            [search_alliance],
         'funding':              helpers.cvisb_funding,
         'license':              'https://creativecommons.org/licenses/by/4.0/',
         'name':                 'SARS-CoV-2 Virus Sequencing',
         'variableMeasured':     'SARS-CoV-2 virus sequence',
-        'measurementTechnique': 'Nucleic Acid Sequencing',
+        'measurementTechnique': ['Nucleic Acid Sequencing'],
         'measurementCategory':  'virus sequencing',
         'includedInDataset':    'sarscov2-virus-seq',
         'description':          'Virus sequencing of patients infected with COVID-19 from Southern California, Tijuana, New Orleans and Jordan by the SEARCH Alliance along with a large number of partners. The virus sequence data will be used to to gain insights into the emergence and spread of SARS-CoV-2. The sequencing is being performed using an amplicon-based sequencing scheme using PrimalSeq with artic nCoV-2019 scheme. Nanopore data was processed using the artic-nCoV019 pipeline with minimap2 and medaka. Illumina data was processed using iVar (Grubaguh et al. Genome Biology 2019) with bwa. Methodology is available at https://github.com/andersen-lab/HCoV-19-Genomics',
@@ -126,6 +122,7 @@ def create_dataset(data_downloads):
     return dataset
 
 def create_data_download(name, url, experiment_ids):
+    experiment_ids = [e for e in experiment_ids if remove_location_patient_id(name) in e]
     datadownload = {
         "includedInDataset":    'sarscov2-virus-seq',
         "identifier":           name,
@@ -140,7 +137,8 @@ def create_data_download(name, url, experiment_ids):
     
     return datadownload
 
-def create_experiment(patient_id):
+def create_experiment(patient_id, source_citation):
+    data = create_experiment_data_from_fasta(patient_id)
     experiment =  {
         "experimentID":         patient_id + '-sarscov2',
         "privatePatientID":     patient_id,
@@ -148,9 +146,31 @@ def create_experiment(patient_id):
         "measurementTechnique": 'Nucleic Acid Sequencing',
         "includedInDataset":    'sarscov2-virus-seq',
         "dateModified":         today,
+        "sourceCitation":       source_citation,
+        "data":                 data,
     }
+    import pdb;pdb.set_trace()
 
     return experiment
+
+def create_experiment_data_from_fasta(patient_id):
+    try:
+        data_url = f"https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/consensus_sequences/{patient_id}.fa"
+        r = requests.get(data_url)
+        all_seq = SeqIO.parse(StringIO(r.text), 'fasta')
+        return [{
+            '@type': 'VirusSeqData',
+            'virus': 'SARS-CoV-2',
+            'virusSegment': None,
+            'DNAsequence': str(seq.seq).upper(),
+        } for seq in all_seq]
+
+    except Exception as e:
+        print(e)
+        pass
+
+    return []
+
 
 def create_patient(patient_id, patient_source, location, sample_date):
     country, home_location = create_location(location)
@@ -237,6 +257,28 @@ def remove_location_patient_id(patient_id):
         return patient_id
 
     return match.group()
+
+def save(name, data, segmented=False):
+    """
+    Saves name, data in batches of 200 e.g., 'patients0.json, patients200.json'
+    """
+    if segmented:
+        i = 0
+        while i < len(data):
+            j = i + 200
+            if j > len(data):
+                j = len(data)
+
+            file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}{i}.json')
+            with open(file_path, 'w') as output_file:
+                json.dump(data[i:j], output_file)
+
+            i = j
+    else:
+        # usual case, just save like normal
+        file_path = path.join(path.dirname(path.abspath(__file__)), 'scov2_newoutput', f'{name}.json')
+        with open(file_path, 'w') as output_file:
+            json.dump(data, output_file)
 
 if __name__ == "__main__":
     data = create_data()
