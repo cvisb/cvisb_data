@@ -1,4 +1,9 @@
 # Prod
+### 2020-11-03
+* Wiped and updated SARS-CoV-2 experiments to include "data" field
+* Updated datacatalog
+* public/private sync
+
 ### 2020-09-15
 * Wiped, reinstalled and `npm update fix`'d node_modules.
 
