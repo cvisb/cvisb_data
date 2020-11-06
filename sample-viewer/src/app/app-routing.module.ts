@@ -36,8 +36,6 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'data-quality', loadChildren: () => import('./data-quality/data-quality.module').then(m => m.DataQualityModule), pathMatch: 'full', data: { title: 'Data Quality | CViSB' } },
   // // { canActivate: [AuthGuard], path: 'sample/:sid', component: SampleOverviewComponent, pathMatch: 'full' },
   { path: 'dataset/hla', loadChildren: () => import('./hla/hla.module').then(m => m.HlaModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "hla" } },
-  { path: 'dataset/systems-serology-vhf', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology-vhf" } },
-  { path: 'dataset/systems-serology-32783920', loadChildren: () => import('./serology/serology.module').then(m => m.SerologyModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology-32783920" } },
   { path: 'dataset/viralseq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
   { path: 'dataset/viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
   { path: 'dataset/lassa-viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
@@ -47,7 +45,7 @@ const appRoutes: Routes = [
   { path: 'dataset/sarscov2-viral-seq', pathMatch: 'full', redirectTo: "/dataset/sarscov2-virus-seq" },
   { path: 'dataset/sarscov2-virus-seq', loadChildren: () => import('./viral-sequencing/viral-sequencing.module').then(m => m.ViralSequencingModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "sarscov2-virus-seq" } },
   { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
-  { path: 'dataset/:dsid', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full' },
+  { path: 'dataset/:dsid', loadChildren: () => import('./dataset-page-generic/dataset-page-generic.module').then(m => m.DatasetPageGenericModule), pathMatch: 'full' },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
   // { path: 'summary-stats', loadChildren: () => import('./summary-stats/summary-stats.module').then(m => m.SummaryStatsModule), pathMatch: 'full', data: { title: 'Summary Statistics | CViSB' } },
 
