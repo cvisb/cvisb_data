@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-dataset-page-generic',
   templateUrl: './dataset-page-generic.component.html',
@@ -9,10 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DatasetPageGenericComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.route.snapshot)
   }
 
 }
