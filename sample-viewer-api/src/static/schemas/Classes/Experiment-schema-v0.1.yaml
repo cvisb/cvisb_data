@@ -385,7 +385,7 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:creator"
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
 
@@ -520,6 +520,6 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
