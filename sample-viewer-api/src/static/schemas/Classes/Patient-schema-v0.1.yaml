@@ -210,7 +210,7 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
 
@@ -575,6 +575,9 @@
                           - Fullah
                           - Temne
                           - Krio
+                          - White
+                          - Black
+                          - Asian
                           - Other
 
 # age
