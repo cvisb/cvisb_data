@@ -328,13 +328,13 @@
                            - ADNKA_MIP1b
                            - metabolomics
                            - blood chemistry
+                           - blood counts
                            - vitals
                            - virus level
                            - patient antibody response
                            - acute symptoms
                            - sequelae
                            - coma score
-                           - medications
 
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
