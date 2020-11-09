@@ -25,6 +25,20 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:SystolicPressure
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - SystolicPressure
+
 - "@id":                 cvisb:time
   "@type":               rdf:Property
   rdfs:comment:          Date and time of SystolicPressure measurement
