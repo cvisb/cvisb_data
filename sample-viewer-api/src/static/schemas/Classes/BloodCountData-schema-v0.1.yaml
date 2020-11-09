@@ -1,7 +1,7 @@
-- "@id":                 cvisb:CBCData
+- "@id":                 cvisb:BloodCountData
   "@type":               rdfs:Class
   rdfs:comment:          A schema describing complete blood count analysis of patients in the Center for Viral Systems Biology.
-  rdfs:label:            CBCData
+  rdfs:label:            BloodCountData
   rdfs:subClassOf:
     "@id":               cvisb:Data
   schema:isPartOf:
@@ -13,7 +13,7 @@
   rdfs:comment:          "Whole blood count from complete blood count measurement (cells / uL)"
   rdfs:label:            wholeBloodCount
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -25,7 +25,7 @@
   rdfs:comment:          "Hemoglobin (g/dL); Complete Blood Count measurement"
   rdfs:label:            hemoglobin
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Float
   owl:cardinality:       one
@@ -37,7 +37,7 @@
   rdfs:comment:          "platelets (/uL); Complete Blood Count measurement"
   rdfs:label:            platelets
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -49,7 +49,7 @@
   rdfs:comment:          "neutrophils (% age); Complete Blood Count measurement"
   rdfs:label:            neutrophils
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -61,7 +61,7 @@
   rdfs:comment:          "bands (% age); Complete Blood Count measurement"
   rdfs:label:            bands
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -73,7 +73,7 @@
   rdfs:comment:          "lymphocytes (% age); Complete Blood Count measurement"
   rdfs:label:            lymphocytes
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -85,7 +85,7 @@
   rdfs:comment:          "monocytes (% age); Complete Blood Count measurement"
   rdfs:label:            monocytes
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -97,7 +97,7 @@
   rdfs:comment:          "eosinophils (% age); Complete Blood Count measurement"
   rdfs:label:            eosinophils
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -109,7 +109,7 @@
   rdfs:comment:          "basophils (% age); Complete Blood Count measurement"
   rdfs:label:            basophils
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Integer
   owl:cardinality:       one
@@ -121,7 +121,7 @@
   rdfs:comment:          "prothrombin time (seconds); Complete Blood Count measurement"
   rdfs:label:            prothrombinTime
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Float
   owl:cardinality:       one
@@ -133,7 +133,7 @@
   rdfs:comment:          "international normalization ratio; Complete Blood Count measurement"
   rdfs:label:            internationalNormalizationRatio
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Float
   owl:cardinality:       one
@@ -145,7 +145,7 @@
   rdfs:comment:          "D-Dimer test; Complete Blood Count measurement"
   rdfs:label:            dDimer
   schema:domainIncludes:
-    - "@id":             cvisb:CBCData
+    - "@id":             cvisb:BloodCountData
   schema:rangeIncludes:
     - "@id":             schema:Float
   owl:cardinality:       one
