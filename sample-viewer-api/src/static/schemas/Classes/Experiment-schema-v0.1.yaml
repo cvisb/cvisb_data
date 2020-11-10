@@ -503,7 +503,13 @@
     - "@id":             cvisb:SystemsSerology
     - "@id":             cvisb:PiccoloData
     - "@id":             cvisb:BloodCountData
-    - "@id":             cvisb:Vitals
+    - "@id":             cvisb:HeartRate
+    - "@id":             cvisb:ComaScore
+    - "@id":             cvisb:BodyTemperature
+    - "@id":             cvisb:OxygenSaturation
+    - "@id":             cvisb:SystolicPressure
+    - "@id":             cvisb:DiastolicPressure
+    - "@id":             cvisb:RespiratoryRate
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR
     - "@id":             cvisb:ELISA
