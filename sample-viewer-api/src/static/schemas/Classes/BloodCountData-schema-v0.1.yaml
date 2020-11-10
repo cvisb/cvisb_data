@@ -8,6 +8,20 @@
     "@id":               https://data.cvisb.org/schema
 
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - BloodCountData
+
 - "@id":                 cvisb:wholeBloodCount
   "@type":               rdf:Property
   rdfs:comment:          "Whole blood count from complete blood count measurement (cells / uL)"
