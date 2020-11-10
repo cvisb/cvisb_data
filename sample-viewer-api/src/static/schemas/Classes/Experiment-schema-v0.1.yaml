@@ -274,6 +274,7 @@
                            - Vital Signs Measurement
                            - Rapid Antigen Test
                            - Reverse Transcriptase-Polymerase Chain Reaction
+                           - Blood Cell Count
                            - ELISA
                            - Clinical Observation
 
@@ -325,6 +326,7 @@
                            - metabolomics
                            - blood-chemistry-vhf
                            - blood-counts-vhf
+                           - vitals-vhf
                            - sensor-vitals
                            - rapid-diagnostics
                            - RT-PCR
