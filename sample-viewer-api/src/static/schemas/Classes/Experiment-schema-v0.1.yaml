@@ -515,7 +515,6 @@
     - "@id":             cvisb:ELISA
     - "@id":             cvisb:SymptomList
     - "@id":             cvisb:ComaScore
-    - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
