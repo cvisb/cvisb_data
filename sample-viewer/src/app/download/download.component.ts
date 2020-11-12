@@ -27,7 +27,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
   summary: any;
   unfilteredSummary: any;
   dataSource: MatTableDataSource<any>;
-  isFirstCall: Boolean = true;
   pauseForm: Boolean = false;
   isLoading$: Observable<Boolean>;
   columns: Object[] = [
@@ -150,11 +149,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
         this.router.navigate(["/download", this.id], { queryParams: filterObj });
 
         // update the summary, etc.
-        if (!this.isFirstCall) {
           this.getData();
-        } else {
-          // initial loading of the data
-        }
       })
   }
 
@@ -202,7 +197,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     this.pauseForm = true;
-    this.isFirstCall = true;
     console.log("update filters");
 
     this.filterKeys.forEach(key => {
@@ -210,8 +204,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
     })
 
     console.log(this.filterForm)
-    //
-    this.isFirstCall = false;
     this.pauseForm = false;
   }
 
