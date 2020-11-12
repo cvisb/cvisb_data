@@ -116,17 +116,17 @@ export class GetExperimentsService {
         let filteredSummary = {};
         let summary = summaryData;
 
-        if (summaryData) {
+        // if (summaryData) {
           // update the counts
-          filteredSummary = cloneDeep(summaryData);
+          // filteredSummary = cloneDeep(summaryData);
+          //
+          // filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "cohort", "cohort.keyword");
+          // filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "outcome", "outcome.keyword");
+          // filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "species", "species.keyword");
+          // filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "year", "infectionYear");
+          // filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "country", "country.identifier.keyword");
 
-          filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "cohort", "cohort.keyword");
-          filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "outcome", "outcome.keyword");
-          filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "species", "species.keyword");
-          filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "year", "infectionYear");
-          filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "country", "country.identifier.keyword");
-
-        } else {
+        // } else {
           // initial call; create the static summary object and populate.
           filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
           filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
@@ -138,14 +138,12 @@ export class GetExperimentsService {
 
           summary = filteredSummary;
 
-          console.log(patientFilters)
-
           Object.keys(filteredSummary).forEach(facet => {
             filteredSummary[facet].forEach(d => {
               d["selected"] = patientFilters.filter(d => d.terms.length).map(d => d.key).includes(facet);
             })
           })
-        }
+        // }
 
         // filter options
         const filterLabels = {
