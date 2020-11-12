@@ -1,5 +1,5 @@
 <nav class="dataset-links">
-  <ul class="level0" *ngIf="custom; else default">
+  <ul class="level0" *ngIf="isCustom; else default">
     <li *ngFor="let link of links[id]">
       <a class="link" [routerLink]="['../', id]" [fragment]="link.key" (click)="onAnchorClick(link.key)">{{link.name}}</a>
     </li>
