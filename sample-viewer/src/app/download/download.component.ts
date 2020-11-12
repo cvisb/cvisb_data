@@ -198,7 +198,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
     console.log("update filters");
     this.filterForm.setValue({
       cohort: this.fb.array(results["filteredSummary"]['cohort'].map(option => this.fb.group(option)) || []),
-      outcome: this.fb.array(results["filteredSummary"]['outcome'].map(option => this.fb.group(option)) || [])
+      outcome: this.fb.array(results["filteredSummary"]['outcome'].map(option => this.fb.group(option)) || []),
+      species: this.fb.array(results["filteredSummary"]['species'].map(option => this.fb.group(option)) || []),
+      country: this.fb.array(results["filteredSummary"]['country'].map(option => this.fb.group(option)) || [])
     });
 
     //
