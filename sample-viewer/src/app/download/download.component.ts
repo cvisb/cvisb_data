@@ -194,14 +194,21 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   updateFilters(results) {
-    console.log("update filters")
     this.isFirstCall = true;
-    this.filterKeys.forEach(key => {
-      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
-    })
+    console.log("update filters");
+    this.filterForm.setValue({
+      cohort: this.fb.array(results["filteredSummary"]['cohort'].map(option => this.fb.group(option)) || []),
+      outcome: this.fb.array(results["filteredSummary"]['outcome'].map(option => this.fb.group(option)) || [])
+    });
 
+    //
+
+    // this.filterKeys.forEach(key => {
+    //   this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
+    // })
+    //
     console.log(this.filterForm)
-
+    //
     this.isFirstCall = false;
   }
 
