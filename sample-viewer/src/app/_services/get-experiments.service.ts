@@ -342,15 +342,29 @@ export class GetExperimentsService {
     console.log(variable)
     let filterTerms = filters.flatMap(d => d["terms"].map(d => d.term));
 
-    arr[key].forEach(target => {
-      let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target.term);
-      target.count = filtered.length == 1 ? filtered[0].count : 0;
-      target.selected = filterTerms.includes(target.term);
-    })
+    let keys = [... new Set(arr[key].concat(summaryFacets[variable]["terms"]).map(d => d.term))];
+
+    let results = keys.map(target => {
+      let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target);
+      let obj = { term: target };
+      obj["count"] = filtered.length == 1 ? filtered[0].count : 0;
+      obj["selected"] = filterTerms.includes(target);
+      return(obj)
+    });
+
+    console.log(keys)
+    console.log(results)
+    console.log(keys.map(target => {
+      let filtered = summaryFacets[variable]["terms"].filter(facet => facet.term == target);
+      let obj = { term: target };
+      obj["count"] = filtered.length == 1 ? filtered[0].count : 0;
+      obj["selected"] = filterTerms.includes(target);
+      return(obj)
+    }))
 
     // sort by frequency
-    arr[key].sort((a, b) => b.count - a.count);
+    // results.sort((a, b) => b.count - a.count);
 
-    return (arr[key])
+    return (results)
   }
 }
