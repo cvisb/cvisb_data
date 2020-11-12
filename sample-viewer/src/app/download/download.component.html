@@ -1,7 +1,7 @@
 <h1>Download {{ datasetName }} data</h1>
 <div class="container container-dataset-name">
-  <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
-    <svg-icon [icon]="dataset.identifier"></svg-icon>
+  <div [ngClass]="[id, id + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+    <svg-icon [icon]="id"></svg-icon>
   </div>
   <div class="dataset-name">
     Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
