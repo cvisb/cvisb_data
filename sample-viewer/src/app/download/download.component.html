@@ -1,28 +1,31 @@
-  <h1 class="container container-dataset-name align-items-center">
-    <div [ngClass]="[id, id + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+  <div class="container container-dataset-name align-items-center">
+    <h1 class="dataset-name">
+      Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
+    </h1>
+
+    <div [ngClass]="[id, id + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
       <svg-icon [icon]="id"></svg-icon>
     </div>
-    <div class="dataset-name">
-      Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
+
+    <div class="container align-items-center mb-4">
+      <form [formGroup]="whichDataForm" class="container">
+        <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
+          include experimental data
+        </mat-checkbox>
+        <mat-checkbox color="primary" formControlName="patient" class="mr-3">
+          include patient metadata
+        </mat-checkbox>
+      </form>
+
+      <button mat-raised-button color="primary" (click)="downloadData()">Download</button>
     </div>
-  </h1>
+  </div>
 
   <div class="spinner-container-centered container" *ngIf="isLoading$ | async">
     <mat-spinner></mat-spinner>
   </div>
 
-  <div class="container align-items-center mb-4">
-    <form [formGroup]="whichDataForm" class="container">
-      <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
-        include experimental data
-      </mat-checkbox>
-      <mat-checkbox color="primary" formControlName="patient" class="mr-3">
-        include patient metadata
-      </mat-checkbox>
-    </form>
 
-    <button mat-raised-button color="primary" (click)="downloadData()">Download</button>
-  </div>
 
 
   <div class="container-column w-100" id="filtered-summary" *ngIf="summary">
