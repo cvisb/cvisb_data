@@ -93,6 +93,9 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key.label }}</th>
           <td mat-cell *matCellDef="let element" class="td-padded">
             <span *ngIf="key.id == 'file'; else normal_td">
+              <div class="file-type" [ngClass]="element.additionalType ? element.additionalType.replace(' ', '-') : 'unknown-type'">
+                {{ element.additionalType ? element.additionalType : 'unknown type'}}
+              </div>
               <a [href]="element.contentUrl" target="_blank">
                 {{element.file}}
               </a>
