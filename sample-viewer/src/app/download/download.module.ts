@@ -18,6 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FiltersModule } from '../filters/filters.module';
 import { ChoroplethModule } from '../choropleth/choropleth.module';
 import { DotPlotModule } from '../dot-plot/dot-plot.module';
+import { SvgIconModule } from '../svg-icon/svg-icon.module';
 
 @NgModule({
   declarations: [DownloadComponent],
@@ -36,6 +37,7 @@ import { DotPlotModule } from '../dot-plot/dot-plot.module';
     MatTooltipModule,
     FiltersModule,
     ChoroplethModule,
+    SvgIconModule,
     DotPlotModule
   ]
 })
