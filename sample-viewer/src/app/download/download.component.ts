@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
-import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
@@ -68,13 +68,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
       species: this.fb.array([]),
       country: this.fb.array([])
     })
-
-    router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        console.log("nav end")
-      }
-    });
-
     this.filterKeys = Object.keys(this.filterForm.controls);
   }
 
@@ -85,8 +78,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
     // read params from route
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
-
-    console.log(params)
 
     // set initial checked boxes, based on the url
     let filterVals = {};
@@ -101,8 +92,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
         filterVals[key] = null;
       }
     });
-
-    console.log(filterVals)
 
     // set filter form values
     this.filterKeys.forEach(key => {
@@ -133,7 +122,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
         filter(_ => !this.pauseForm)
       )
       .subscribe(filters => {
-        console.log("FORM CHANGED")
         // update the route
         let filterArr = Object.keys(filters).map(key => {
           let filtered = filters[key].filter(d => d.selected);
@@ -141,10 +129,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
         })
 
         let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-
-        console.log("filter obj:")
-        console.log(this.filterForm)
-        console.log(filterObj)
 
         this.router.navigate(["/download", this.id], { queryParams: filterObj });
 
@@ -167,11 +151,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
     })
 
-    console.log(patientFilters)
-
     this.dataSubscription = this.exptSvc.getDownloadData(this.id, this.unfilteredSummary, patientFilters).subscribe(results => {
-      console.log("results!!!!")
-      console.log(results)
       this.total = results["total"]; // total number of expts
       this.summary = results["filteredSummary"]; // graphical summary
       this.unfilteredSummary = results["summary"]; // graphical summary; constant results
@@ -197,18 +177,13 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   updateFilters(results) {
     this.pauseForm = true;
-    console.log("update filters");
-
-    console.log(results)
 
     this.filterKeys.forEach(key => {
       this.filterForm.setControl(key, this.fb.array(results[key].map(option => {
-        console.log(option)
         return this.fb.group(option)
       }) || []));
     })
 
-    console.log(this.filterForm)
     this.pauseForm = false;
   }
 
@@ -219,8 +194,6 @@ export class DownloadComponent implements OnInit, OnDestroy {
       let ctrl = this.filterForm.get(key) as FormArray;
       ctrl.clear();
     })
-
-    console.log(this.filterForm.value)
 
     this.getData();
   }
