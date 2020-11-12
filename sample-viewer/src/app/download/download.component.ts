@@ -6,6 +6,7 @@ import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
 import { Subscription, Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -56,6 +57,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     private exptSvc: GetExperimentsService,
     private dwnldSvc: DownloadDataService,
     private exptPipe: ExperimentObjectPipe,
+    private titleSvc: Title,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute) {
@@ -70,13 +72,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.displayedColumns = this.columns.map(d => d["id"]);
 
     // read params from route
     const params = this.route.snapshot.queryParams;
     this.id = this.route.snapshot.paramMap.get("id");
-
-    console.log(params)
 
     // set initial checked boxes, based on the url
     let filterVals = {};
@@ -107,6 +108,9 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
+
+    // Set page name
+    this.titleSvc.setTitle(`Download ${this.datasetName} data`);
 
     // loading state
     this.isLoading$ = this.exptSvc.isLoadingState$;
