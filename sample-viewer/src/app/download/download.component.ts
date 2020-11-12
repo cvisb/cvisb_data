@@ -5,7 +5,8 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
 import { DownloadDataService } from "../_services/download-data.service";
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, pipe } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 
 import { MatTableDataSource } from '@angular/material/table';
@@ -27,6 +28,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   unfilteredSummary: any;
   dataSource: MatTableDataSource<any>;
   isFirstCall: Boolean = true;
+  pauseForm: Boolean = false;
   isLoading$: Observable<Boolean>;
   columns: Object[] = [
     { id: "experimentID", label: "experiment ID" },
@@ -127,29 +129,33 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     // event listener for filters
-    this.filterForm.valueChanges.subscribe(filters => {
-      console.log("FORM CHANGED")
-      // update the route
-      let filterArr = Object.keys(filters).map(key => {
-        let filtered = filters[key].filter(d => d.selected);
-        return ({ key: key, value: filtered.map(d => d.term).join(",") })
+    this.filterForm.valueChanges
+      .pipe(
+        filter(_ => !this.pauseForm)
+      )
+      .subscribe(filters => {
+        console.log("FORM CHANGED")
+        // update the route
+        let filterArr = Object.keys(filters).map(key => {
+          let filtered = filters[key].filter(d => d.selected);
+          return ({ key: key, value: filtered.map(d => d.term).join(",") })
+        })
+
+        let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+
+        console.log("filter obj:")
+        console.log(this.filterForm)
+        console.log(filterObj)
+
+        this.router.navigate(["/download", this.id], { queryParams: filterObj });
+
+        // update the summary, etc.
+        if (!this.isFirstCall) {
+          this.getData();
+        } else {
+          // initial loading of the data
+        }
       })
-
-      let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
-
-      console.log("filter obj:")
-      console.log(this.filterForm)
-      console.log(filterObj)
-
-      this.router.navigate(["/download", this.id], { queryParams: filterObj });
-
-      // update the summary, etc.
-      if (!this.isFirstCall) {
-        this.getData();
-      } else {
-        // initial loading of the data
-      }
-    })
   }
 
   ngOnDestroy() {
@@ -195,24 +201,18 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   updateFilters(results) {
+    this.pauseForm = true;
     this.isFirstCall = true;
     console.log("update filters");
-    this.filterForm = this.fb.group({
-      cohort: this.fb.array(results["filteredSummary"]['cohort'].map(option => this.fb.group(option)) || []),
-      outcome: this.fb.array(results["filteredSummary"]['outcome'].map(option => this.fb.group(option)) || []),
-      species: this.fb.array(results["filteredSummary"]['species'].map(option => this.fb.group(option)) || []),
-      country: this.fb.array(results["filteredSummary"]['country'].map(option => this.fb.group(option)) || [])
-    });
 
-    //
+    this.filterKeys.forEach(key => {
+      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
+    })
 
-    // this.filterKeys.forEach(key => {
-    //   this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
-    // })
-    //
     console.log(this.filterForm)
     //
     this.isFirstCall = false;
+    this.pauseForm = false;
   }
 
   clearFilters() {
