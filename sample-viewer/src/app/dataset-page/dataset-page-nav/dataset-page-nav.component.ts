@@ -9,6 +9,7 @@ import { AnchorService } from '../../_services';
 })
 export class DatasetPageNavComponent implements OnInit {
   @Input() id: string;
+  isCustom: boolean;
 
   links: Object =
     {
@@ -37,6 +38,7 @@ export class DatasetPageNavComponent implements OnInit {
   constructor(private anchorSvc: AnchorService) { }
 
   ngOnInit() {
+    this.isCustom = Object.keys(this.links).includes(this.id);
   }
 
   onAnchorClick(anchor_tag: string) {
