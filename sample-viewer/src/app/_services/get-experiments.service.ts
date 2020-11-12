@@ -142,7 +142,7 @@ export class GetExperimentsService {
 
           Object.keys(filteredSummary).forEach(facet => {
             filteredSummary[facet].forEach(d => {
-              d["selected"] = false;
+              d["selected"] = patientFilters.filter(d => d.terms.length).map(d => d.key).includes(facet);
             })
           })
         }
