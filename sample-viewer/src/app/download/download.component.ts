@@ -200,7 +200,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
     console.log("update filters");
 
     this.filterKeys.forEach(key => {
-      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
+      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => {
+        console.log(option)
+        return this.fb.group(option)
+      }) || []));
     })
 
     console.log(this.filterForm)
