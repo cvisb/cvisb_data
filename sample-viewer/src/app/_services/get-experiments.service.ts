@@ -30,7 +30,7 @@ export class GetExperimentsService {
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getExpt(patientID: string, dataset_id: string) {
-    let qString = `includedInDataset:"${dataset_id}"`;
+    let qString = `includedInDataset.keyword:"${dataset_id}"`;
 
     let params = new HttpParams()
       .set('q', qString)
@@ -79,7 +79,7 @@ export class GetExperimentsService {
 
   getExpts(dataset_id: string, filterQuery: string, exptCols: string[] = ["batchID", "citation", "correction", "creator", "data", "dataStatus", "dateModified", "experimentDate", "experimentID", "privatePatientID", "publisher", "sampleID", "visitCode"]) {
     let expt_params = new HttpParams()
-      .set('q', `includedInDataset:"${dataset_id}"`)
+      .set('q', `includedInDataset.keyword:"${dataset_id}"`)
       .set('patientQuery', filterQuery)
       .set('fields', exptCols.join(","));
 
@@ -91,7 +91,7 @@ export class GetExperimentsService {
     let patient_params = new HttpParams()
       .set('q', filterQuery !== "" ? filterQuery : "__all__")
       .set('fields', patientCols.join(","))
-      .set('experimentQuery', `includedInDataset:"${dataset_id}"`);
+      .set('experimentQuery', `includedInDataset.keyword:"${dataset_id}"`);
 
     return (this.apiSvc.fetchAll("patient", patient_params));
   }
@@ -178,7 +178,7 @@ export class GetExperimentsService {
     const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"];
 
     let params = new HttpParams()
-      .set('q', `includedInDataset:"${id}"`)
+      .set('q', `includedInDataset.keyword:"${id}"`)
       .set('facets', exptFacets.map(d => `${d}.keyword`).join(","))
       .set('facet_size', '1000')
 
@@ -199,7 +199,7 @@ export class GetExperimentsService {
     const patientFacets = ["cohort.keyword", "outcome.keyword", "species.keyword", "infectionYear", "country.identifier.keyword"];
 
     let patientQuery = patientFilter ? patientFilter : "__all__";
-    let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
+    let exptQuery = exptFilter ? `includedInDataset.keyword:"${id}"` : `includedInDataset.keyword:"${id}"`;
 
     let params = new HttpParams()
       .set('q', patientQuery)
@@ -222,7 +222,7 @@ export class GetExperimentsService {
 
   getExptTable(id: string, patientFilter: string, exptFilter: string, size: number = 10) {
     let patientQuery = patientFilter ? patientFilter : "__all__";
-    let exptQuery = exptFilter ? `includedInDataset:"${id}"` : `includedInDataset:"${id}"`;
+    let exptQuery = exptFilter ? `includedInDataset.keyword:"${id}"` : `includedInDataset.keyword:"${id}"`;
 
     return this.getExpts4Table(patientQuery, exptQuery, size).pipe(
       mergeMap(expts => forkJoin(this.getPatients4Table(expts["hits"].map(d => d.experimentID)), this.getDownloads4Table(expts["hits"].map(d => d.experimentID))).pipe(
