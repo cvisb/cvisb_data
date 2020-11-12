@@ -222,6 +222,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
       let ctrl = this.filterForm.get(key) as FormArray;
       ctrl.clear();
     })
+
+    this.getData();
   }
 
 }
