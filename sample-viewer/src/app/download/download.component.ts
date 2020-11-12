@@ -97,17 +97,14 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     console.log(filterVals)
 
-    // // select filter form
-    // this.filterKeys.forEach(key => {
-    //   console.log(filterVals[key])
-    //   if (filterVals[key]) {
-    //     this.filterForm.setControl(key, this.fb.array(filterVals[key].map(option => this.fb.group(option)) || []));
-    //   } else {
-    //     this.filterForm.setControl(key, this.fb.array([]))
-    //   }
-    // })
-
-    console.log(this.filterKeys)
+    // set filter form values
+    this.filterKeys.forEach(key => {
+      if (filterVals[key]) {
+        this.filterForm.setControl(key, this.fb.array(filterVals[key].map(option => this.fb.group(option)) || []));
+      } else {
+        this.filterForm.setControl(key, this.fb.array([]))
+      }
+    })
 
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
