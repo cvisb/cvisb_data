@@ -138,6 +138,8 @@ export class GetExperimentsService {
 
           summary = filteredSummary;
 
+          console.log(patientFilters)
+
           Object.keys(filteredSummary).forEach(facet => {
             filteredSummary[facet].forEach(d => {
               d["selected"] = false;
