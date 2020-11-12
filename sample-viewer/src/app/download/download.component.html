@@ -1,10 +1,12 @@
-  <div class="container container-dataset-name align-items-center mb-4 pb-4">
-    <h1 class="dataset-name">
-      Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
-    </h1>
+  <div class="container-justified container-dataset-name align-items-center mb-4 pb-4">
+    <div>
+      <h1 class="dataset-name">
+        Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
+      </h1>
 
-    <div [ngClass]="[id, id + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
-      <svg-icon [icon]="id"></svg-icon>
+      <div [ngClass]="[id, id + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
+        <svg-icon [icon]="id"></svg-icon>
+      </div>
     </div>
 
     <div class="container align-items-center">
@@ -93,7 +95,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key.label }}</th>
           <td mat-cell *matCellDef="let element" class="td-padded">
             <span *ngIf="key.id == 'file'; else normal_td">
-              <div class="file-type" [ngClass]="element.additionalType ? element.additionalType.replace(' ', '-') : 'unknown-type'">
+              <div class="file-type" [ngClass]="element.additionalType ? element.additionalType.replace(' ', '-') : 'unknown-type'" *ngIf="element.file">
                 {{ element.additionalType ? element.additionalType : 'unknown type'}}
               </div>
               <a [href]="element.contentUrl" target="_blank">
