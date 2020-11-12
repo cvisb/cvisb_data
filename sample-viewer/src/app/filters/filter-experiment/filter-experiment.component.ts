@@ -58,7 +58,7 @@ export class FilterExperimentComponent implements OnInit, OnDestroy {
 
     let exptNames = this.expts.filter(d => !d.disabled).map(d => d.term);
 
-    this.requestSvc.updateParams(this.endpoint, { field: "includedInDataset", value: exptNames });
+    this.requestSvc.updateParams(this.endpoint, { field: "includedInDataset.keyword", value: exptNames });
   }
 
   // Used to reset, when the filters are cleared.

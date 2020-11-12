@@ -137,7 +137,7 @@ export class getDatasetsService {
 
   getExperimentCount(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `includedInDataset:"${datasetID}"`);
+      .set("q", `includedInDataset.keyword:"${datasetID}"`);
 
     return this.apiSvc.get("experiment", params, 0);
   }
@@ -145,7 +145,7 @@ export class getDatasetsService {
   getPatientSummary(datasetID): Observable<any> {
     let params = new HttpParams()
       .set("q", "__all__")
-      .set("experimentQuery", `includedInDataset:"${datasetID}"`)
+      .set("experimentQuery", `includedInDataset.keyword:"${datasetID}"`)
       .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear")
       .set("facet_size", "10000");
 
@@ -154,7 +154,7 @@ export class getDatasetsService {
 
   getDownloadsSummary(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `includedInDataset:"${datasetID}"`)
+      .set("q", `includedInDataset.keyword:"${datasetID}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
 
@@ -224,7 +224,7 @@ export class getDatasetsService {
 
   getDownloads(datasetID: string): Observable<DataDownload[]> {
     return this.apiSvc.fetchAll("datadownload", new HttpParams()
-      .set('q', `includedInDataset:"${datasetID}"`)
+      .set('q', `includedInDataset.keyword:"${datasetID}"`)
       .set('fields', `@context, @type, contentUrl, creator, dateModified, datePublished, description, encodingFormat, name, version`)
     );
   }
@@ -242,7 +242,7 @@ export class getDatasetsService {
 
     let qstring: string;
     if (dsid) {
-      qstring = `includedInDataset:"${dsid}"`;
+      qstring = `includedInDataset.keyword:"${dsid}"`;
     } else {
       qstring = "__all__";
     }
