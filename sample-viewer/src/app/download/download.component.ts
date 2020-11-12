@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { GetExperimentsService } from "../_services/get-experiments.service";
 import { ExperimentObjectPipe } from "../_pipes/experiment-object.pipe";
@@ -67,6 +67,12 @@ export class DownloadComponent implements OnInit, OnDestroy {
       species: this.fb.array([]),
       country: this.fb.array([])
     })
+
+    router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        console.log("nav end")
+      }
+    });
 
     this.filterKeys = Object.keys(this.filterForm.controls);
   }
@@ -188,6 +194,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   updateFilters(results) {
+    console.log("update filters")
     this.isFirstCall = true;
     this.filterKeys.forEach(key => {
       this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => this.fb.group(option)) || []));
