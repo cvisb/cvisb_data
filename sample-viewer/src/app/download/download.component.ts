@@ -97,16 +97,15 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     console.log(filterVals)
 
-    // select filter form
-    this.filterKeys.forEach(key => {
-      console.log(filterVals[key])
-      if (filterVals[key]) {
-        this.filterForm.setControl(key, this.fb.array(filterVals[key].map(option => this.fb.group(option)) || []));
-      } else {
-        this.filterForm.setControl(key, this.fb.array([]))
-      }
-
-    })
+    // // select filter form
+    // this.filterKeys.forEach(key => {
+    //   console.log(filterVals[key])
+    //   if (filterVals[key]) {
+    //     this.filterForm.setControl(key, this.fb.array(filterVals[key].map(option => this.fb.group(option)) || []));
+    //   } else {
+    //     this.filterForm.setControl(key, this.fb.array([]))
+    //   }
+    // })
 
     console.log(this.filterKeys)
 
@@ -133,6 +132,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
       })
 
       let filterObj = filterArr.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+
+      console.log("filter obj:")
+      console.log(this.filterForm)
+      console.log(filterObj)
 
       this.router.navigate(["/download", this.id], { queryParams: filterObj });
 
