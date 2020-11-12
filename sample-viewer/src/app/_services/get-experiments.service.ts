@@ -116,17 +116,17 @@ export class GetExperimentsService {
         let filteredSummary = {};
         let summary = summaryData;
 
-        // if (summaryData) {
+        if (summaryData) {
           // update the counts
-          // filteredSummary = cloneDeep(summaryData);
-          //
-          // filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "cohort", "cohort.keyword");
-          // filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "outcome", "outcome.keyword");
-          // filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "species", "species.keyword");
-          // filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "year", "infectionYear");
-          // filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "country", "country.identifier.keyword");
+          filteredSummary = cloneDeep(summaryData);
 
-        // } else {
+          filteredSummary["cohort"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "cohort", "cohort.keyword");
+          filteredSummary["outcome"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "outcome", "outcome.keyword");
+          filteredSummary["species"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "species", "species.keyword");
+          filteredSummary["year"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "year", "infectionYear");
+          filteredSummary["country"] = this.updateFacets(filteredSummary, patientSummary, patientFilters, "country", "country.identifier.keyword");
+
+        } else {
           // initial call; create the static summary object and populate.
           filteredSummary["cohort"] = patientSummary["cohort.keyword"]["terms"];
           filteredSummary["outcome"] = patientSummary["outcome.keyword"]["terms"];
@@ -143,7 +143,7 @@ export class GetExperimentsService {
               d["selected"] = patientFilters.filter(d => d.terms.length).map(d => d.key).includes(facet);
             })
           })
-        // }
+        }
 
         // filter options
         const filterLabels = {
@@ -336,6 +336,10 @@ export class GetExperimentsService {
   }
 
   updateFacets(arr, summaryFacets, filters, key, variable) {
+    console.log(arr)
+    console.log(summaryFacets)
+    console.log(key)
+    console.log(variable)
     let filterTerms = filters.flatMap(d => d["terms"].map(d => d.term));
 
     arr[key].forEach(target => {
