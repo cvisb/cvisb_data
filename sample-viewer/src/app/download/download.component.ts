@@ -180,7 +180,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource(results["results"]["hits"]);
 
       // filter options
-      this.updateFilters(results);
+      this.updateFilters(this.summary);
     });
   }
 
@@ -199,8 +199,10 @@ export class DownloadComponent implements OnInit, OnDestroy {
     this.pauseForm = true;
     console.log("update filters");
 
+    console.log(results)
+
     this.filterKeys.forEach(key => {
-      this.filterForm.setControl(key, this.fb.array(results["filteredSummary"][key].map(option => {
+      this.filterForm.setControl(key, this.fb.array(results[key].map(option => {
         console.log(option)
         return this.fb.group(option)
       }) || []));
@@ -217,6 +219,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
       let ctrl = this.filterForm.get(key) as FormArray;
       ctrl.clear();
     })
+
+    console.log(this.filterForm.value)
 
     this.getData();
   }
