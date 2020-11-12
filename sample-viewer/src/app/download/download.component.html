@@ -1,4 +1,13 @@
 <h1>Download {{ datasetName }} data</h1>
+<div class="container container-dataset-name">
+  <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+    <svg-icon [icon]="dataset.identifier"></svg-icon>
+  </div>
+  <div class="dataset-name">
+    Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
+  </div>
+</div>
+
 <div class="spinner-container-centered container" *ngIf="isLoading$ | async">
   <mat-spinner></mat-spinner>
 </div>

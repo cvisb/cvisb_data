@@ -46,9 +46,9 @@
 
 
       <div id="files">
-        <h3>Download files and view metadata</h3>
-
-        <app-file-list [datasetID]="dataset.identifier"></app-file-list>
+        <h3 class="download-link">
+          <a class="link" [routerLink]="['/download/' + id]">Download data</a>
+        </h3>
       </div>
 
     </div>

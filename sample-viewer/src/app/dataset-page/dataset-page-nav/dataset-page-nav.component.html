@@ -1,7 +1,10 @@
 <nav class="dataset-links">
-  <ul class="level0">
+  <ul class="level0" *ngIf="Object.keys(links).includes(id); else default">
     <li *ngFor="let link of links[id]">
       <a class="link" [routerLink]="['../', id]" [fragment]="link.key" (click)="onAnchorClick(link.key)">{{link.name}}</a>
+    </li>
+    <li>
+      <a class="link" [routerLink]="['/download/' + id]">Download data</a>
     </li>
   </ul>
 </nav>
