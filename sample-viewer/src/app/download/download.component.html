@@ -1,4 +1,4 @@
-  <div class="container container-dataset-name align-items-center">
+  <div class="container container-dataset-name align-items-center mb-4 pb-4">
     <h1 class="dataset-name">
       Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
     </h1>
@@ -7,7 +7,7 @@
       <svg-icon [icon]="id"></svg-icon>
     </div>
 
-    <div class="container align-items-center mb-4">
+    <div class="container align-items-center">
       <form [formGroup]="whichDataForm" class="container">
         <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
           include experimental data
