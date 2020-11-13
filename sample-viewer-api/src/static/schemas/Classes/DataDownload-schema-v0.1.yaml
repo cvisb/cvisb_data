@@ -88,11 +88,15 @@
                            - bcr
                            - tcr
                            - systems-serology
+                           - systems-serology-32783920
+                           - rtpcr-32783920
                            - metabolomics
-                           - blood-chemistry
+                           - blood-chemistry-vhf
+                           - blood-counts-vhf
+                           - vitals-vhf
+                           - rtpcr-vhf
                            - sensor-vitals
                            - rapid-diagnostics
-                           - RT-PCR
                            - clinical-observations
 
 # DOI
