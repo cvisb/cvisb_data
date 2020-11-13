@@ -506,7 +506,7 @@
     - "@id":             cvisb:HeartRate
     - "@id":             cvisb:ComaScore
     - "@id":             cvisb:BodyTemperature
-    - "@id":             cvisb:OxygenSaturation
+    # - "@id":             cvisb:OxygenSaturation
     - "@id":             cvisb:SystolicPressure
     - "@id":             cvisb:DiastolicPressure
     - "@id":             cvisb:RespiratoryRate
