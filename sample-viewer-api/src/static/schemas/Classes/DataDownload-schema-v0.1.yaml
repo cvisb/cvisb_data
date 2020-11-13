@@ -326,9 +326,24 @@
                            - ADNKA_CD107a
                            - ADNKA_IFNg
                            - ADNKA_MIP1b
+                           - NKD-CD107a
+                           - IgG2
+                           - FcRg2b
+                           - FcRg2A
+                           - NKD-MIP1b
+                           - IgA1
+                           - FcRg3A
+                           - RCA
+                           - IgG3
+                           - IgM
+                           - IgG4
+                           - IgA2
+                           - SNA
+                           - IgG1
+                           - NT50
                            - metabolomics
                            - blood chemistry
-                           - blood counts
+                           - blood cell count
                            - vitals
                            - virus level
                            - patient antibody response
