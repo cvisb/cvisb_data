@@ -508,7 +508,7 @@
     - "@id":             cvisb:BodyTemperature
     # - "@id":             cvisb:OxygenSaturation
     - "@id":             cvisb:SystolicPressure
-    - "@id":             cvisb:DiastolicPressure
+    # - "@id":             cvisb:DiastolicPressure
     - "@id":             cvisb:RespiratoryRate
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR
