@@ -330,6 +330,7 @@
                            - blood-counts-vhf
                            - vitals-vhf
                            - rtpcr-vhf
+                           - rdt-vhf
                            - sensor-vitals
                            - rapid-diagnostics
                            - clinical-observations
