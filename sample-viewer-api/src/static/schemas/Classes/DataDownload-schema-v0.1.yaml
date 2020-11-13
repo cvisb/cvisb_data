@@ -373,6 +373,7 @@
                            - Vital Signs Measurement
                            - Rapid Antigen Test
                            - Reverse Transcriptase-Polymerase Chain Reaction
+                           - Blood Cell Count
                            - ELISA
                            - Clinical Observation
   authenticated:         false
