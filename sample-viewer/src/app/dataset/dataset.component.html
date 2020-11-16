@@ -1,4 +1,4 @@
-<div *ngIf="datasets$ | async as datasets">
+<div *ngIf="datasets$ | async as datasets; else loading">
 
   <div>
 
@@ -8,11 +8,11 @@
 
     <div class="container dataset-count-container">
       <div class="dataset-count">
-        {{datasets.length  }} available datasets:
+        {{datasets.length }} available datasets:
       </div>
       <ng-container *ngFor="let dataset of datasets; let idx = index">
         <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
-          {{dataset.name}}
+        {{dataset.name}}
         <!-- </a> -->
         <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
       </ng-container>
@@ -54,3 +54,9 @@
     </div>
 
   </div>
+
+  <ng-template #loading>
+    <div class="spinner-container container" id="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
