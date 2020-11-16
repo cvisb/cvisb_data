@@ -27,10 +27,12 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
         ds["name"] = "RT-PCR Measurements of Seattle COVID-19 Patients"
         ds["measurementCategory"] = "clinical measurements"
         ds["description"] = "RT-PCR measurements of SARS-CoV-2 levels for COVID-19 patients in Seattle, Washington. Complimentary dataset to Systems Serology measurments of the same patient cohort."
+        keywords = ["RT-PCR", "PCR", "SARS-CoV-2", "COVID-19", "Seattle"]
     else:
         ds["name"] = "Systems Serology Measurements of Seattle COVID-19 Patients"
         ds["measurementCategory"] = "Systems Serology"
         ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity. Samples are taken from COVID-19 patients in Seattle, Washington."
+        keywords = ["Systems Serology", "SARS-CoV-2", "COVID-19", "Seattle"]
 
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
 
@@ -50,7 +52,6 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["dataDownloadIDs"] = helpers.getUnique(downloads, "identifier")
 
     measTechs = helpers.getUnique(experiments, "measurementTechnique")
-    keywords = ["systems serology", "SARS-CoV-2", "COVID-19", "Seattle"]
     keywords.extend(measTechs)
     ds["keywords"] = keywords
     ds["measurementTechnique"] = measTechs
