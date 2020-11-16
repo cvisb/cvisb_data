@@ -513,7 +513,6 @@
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR
     - "@id":             cvisb:ELISA
-    - "@id":             cvisb:SymptomList
     - "@id":             cvisb:ComaScore
   owl:cardinality:       many
   marginality:           recommended

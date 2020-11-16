@@ -737,4 +737,16 @@
     - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         false
+  authenticated:         true
+
+- "@id":                 cvisb:symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
+  rdfs:label:            symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Symptom
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         true

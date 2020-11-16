@@ -29,6 +29,46 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of symptom
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         true
+  schema:Enumeration:
+                        - Sequela
+                        - AcuteSymptom
+
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          Description of when the symptoms were observed (e.g. at survivor enrollment, initial presentation in hospital, etc.)
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+
 - "@id":                 cvisb:joint_pain
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports joint pain
