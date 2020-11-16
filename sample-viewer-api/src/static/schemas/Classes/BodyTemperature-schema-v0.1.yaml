@@ -25,6 +25,21 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:BodyTemperature
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - BodyTemperature
+
+
 - "@id":                 cvisb:time
   "@type":               rdf:Property
   rdfs:comment:          Date and time of BodyTemperature measurement

@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import re
 from . import checkIDstructure, getPrivateContactGroup
 from .logging import addError, updateError
@@ -270,7 +271,7 @@ def listify(val):
     Checks that val is a list. If not, returns it as a list containing one value
     """
     if (pd.isnull(val)):
-        return(pd.np.nan)
+        return(np.nan)
     if (isinstance(val, list)):
         return(val)
     return([val])

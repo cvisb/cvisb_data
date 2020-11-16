@@ -96,7 +96,7 @@ export class getDatasetsService {
       );
   }
 
-  getDatasetCounts(id): Observable<any> {
+  getDatasetCounts(id: string): Observable<any> {
     return forkJoin(
       this.getPatientSummary(id), this.getDownloadsSummary(id), this.getExperimentCount(id)
     ).pipe(
@@ -137,7 +137,7 @@ export class getDatasetsService {
 
   getExperimentCount(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `includedInDataset:"${datasetID}"`);
+      .set("q", `includedInDataset.keyword:"${datasetID}"`);
 
     return this.apiSvc.get("experiment", params, 0);
   }
@@ -145,7 +145,7 @@ export class getDatasetsService {
   getPatientSummary(datasetID): Observable<any> {
     let params = new HttpParams()
       .set("q", "__all__")
-      .set("experimentQuery", `includedInDataset:"${datasetID}"`)
+      .set("experimentQuery", `includedInDataset.keyword:"${datasetID}"`)
       .set("facets", "cohort.keyword,outcome.keyword,country.identifier.keyword,infectionYear")
       .set("facet_size", "10000");
 
@@ -154,7 +154,7 @@ export class getDatasetsService {
 
   getDownloadsSummary(datasetID): Observable<any> {
     let params = new HttpParams()
-      .set("q", `includedInDataset:"${datasetID}"`)
+      .set("q", `includedInDataset.keyword:"${datasetID}"`)
       .set("facets", "additionalType.keyword")
       .set("facet_size", "10000");
 
@@ -224,7 +224,7 @@ export class getDatasetsService {
 
   getDownloads(datasetID: string): Observable<DataDownload[]> {
     return this.apiSvc.fetchAll("datadownload", new HttpParams()
-      .set('q', `includedInDataset:"${datasetID}"`)
+      .set('q', `includedInDataset.keyword:"${datasetID}"`)
       .set('fields', `@context, @type, contentUrl, creator, dateModified, datePublished, description, encodingFormat, name, version`)
     );
   }
@@ -242,14 +242,14 @@ export class getDatasetsService {
 
     let qstring: string;
     if (dsid) {
-      qstring = `includedInDataset:"${dsid}"`;
+      qstring = `includedInDataset.keyword:"${dsid}"`;
     } else {
       qstring = "__all__";
     }
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", `includedInDataset.keyword(sourceCitation.${citation_variable}.keyword)`)
+      .set("facets", `includedInDataset.keyword(citation.${citation_variable}.keyword)`)
       .set("size", "0")
       .set("facet_size", "10000");
 
@@ -257,19 +257,19 @@ export class getDatasetsService {
       .pipe(
         mergeMap((citationCts: any) => {
           let counts = citationCts.facets["includedInDataset.keyword"].terms;
-          let ids = uniq(flatMapDeep(counts.map(d => d[`sourceCitation.${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
+          let ids = uniq(flatMapDeep(counts.map(d => d[`citation.${citation_variable}.keyword`]), d => d.terms).map(d => d.term));
           let id_string = ids.length ? ids.join(",") : "none";
 
-          return this.apiSvc.post("experiment", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
+          return this.apiSvc.post("experiment", id_string, `citation.${citation_variable}`, "citation").pipe(
             map(citations => {
-              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation).filter(d => d);
+              let citation_dict = flatMapDeep(citations.body, d => d.citation).filter(d => d);
 
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
                 dataset['datasetName'] = ds_obj['datasetName'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
-                dataset['sources'] = cloneDeep(dataset[`sourceCitation.${citation_variable}.keyword`]['terms']);
-                delete dataset[`sourceCitation.${citation_variable}.keyword`];
+                dataset['sources'] = cloneDeep(dataset[`citation.${citation_variable}.keyword`]['terms']);
+                delete dataset[`citation.${citation_variable}.keyword`];
                 let dataset_total: number = dataset.sources.reduce((total: number, x) => total + x.count, 0);
 
                 dataset.sources.forEach(source => {
@@ -310,22 +310,22 @@ export class getDatasetsService {
 
     let params = new HttpParams()
       .set("q", qstring)
-      .set("facets", `sourceCitation.${citation_variable}.keyword`)
+      .set("facets", `citation.${citation_variable}.keyword`)
       .set("size", "0")
       .set("facet_size", "10000");
 
     return this.apiSvc.get("patient", params, 0)
       .pipe(
         mergeMap((citationCts: any) => {
-          let counts = citationCts.facets[`sourceCitation.${citation_variable}.keyword`]['terms'];
+          let counts = citationCts.facets[`citation.${citation_variable}.keyword`]['terms'];
           let ids = uniq(counts.map(d => d.term));
           let id_string = ids.join(",");
 
-          return this.apiSvc.post("patient", id_string, `sourceCitation.${citation_variable}`, "sourceCitation").pipe(
+          return this.apiSvc.post("patient", id_string, `citation.${citation_variable}`, "citation").pipe(
             map(citations => {
               // console.log(citations)
               // console.log(citationCts)
-              let citation_dict = flatMapDeep(citations.body, d => d.sourceCitation);
+              let citation_dict = flatMapDeep(citations.body, d => d.citation);
 
               let total_citations = counts.reduce((total: number, x) => total + x.count, 0);
 

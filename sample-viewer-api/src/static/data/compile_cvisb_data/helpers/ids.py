@@ -1,5 +1,6 @@
 import re
 import pandas as pd
+import numpy as np
 # from . import updateError
 
 
@@ -42,7 +43,7 @@ def splitGID(id):
         return(ids)
     else:
         # Ignore NaNs
-        return(pd.np.nan)
+        return(np.nan)
 
 
 def checkIDtype(id):

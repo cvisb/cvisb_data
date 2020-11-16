@@ -46,7 +46,6 @@ export class Patient {
   correction: string;
   citation: Citation[];
   publisher: Organization;
-  sourceCitation: Organization[];
   source: Organization[]
 }
 

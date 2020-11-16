@@ -47,6 +47,24 @@
   marginality:           required
   authenticated:         false
 
+
+- "@id":                 cvisb:locationType
+  "@type":               rdf:Property
+  rdfs:comment:          "Type of location for the patient: home, exposure location (presumably where he/she was infected), or unknown"
+  rdfs:label:            locationType
+  schema:domainIncludes:
+    - "@id":             cvisb:AdministrativeArea
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                          - home
+                          - exposure
+                          - unknown
+
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
   rdfs:comment:          Alternative name of the admin area, for instance in a different language
@@ -80,6 +98,8 @@
                           - district
                           - chiefdom
                           - village
+                          - city
+                          - country
                           - prefecture
                           - sub-prefecture
                           - clan

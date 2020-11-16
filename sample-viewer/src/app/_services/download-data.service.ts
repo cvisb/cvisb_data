@@ -122,7 +122,7 @@ export class DownloadDataService {
       // --- Viral sequencing ---
       case ("virus sequences"):
         // this.filename = `${this.today}_cvisb_${this.filenamePart}-virus-sequences`;
-        this.downloadFasta(data, filetype, filename);
+        this.downloadFasta(data, filename);
         break;
       case ("systems-serology"):
         try {
@@ -133,7 +133,7 @@ export class DownloadDataService {
         }
 
         // this.exptSvc.getExptsPatients("ebola-viral-seq").subscribe(data => {
-        this.exptSvc.getExptsPatients(filetype).subscribe(data => {
+        this.exptSvc.getExptsPatients(filetype, null).subscribe(data => {
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
           });
@@ -228,7 +228,7 @@ export class DownloadDataService {
     }
   }
 
-  downloadFasta(data: any[], filetype: string, filename: string) {
+  downloadFasta(data: any[], id: string) {
     let seqdata = data;
     let dwnld_data = "";
     let lineDelimiter = "\n";
@@ -236,14 +236,12 @@ export class DownloadDataService {
     seqdata.forEach(d => {
       dwnld_data += ">" + d.name;
       dwnld_data += lineDelimiter;
-      dwnld_data += d.seq;
+      dwnld_data += d.DNAsequence;
       dwnld_data += lineDelimiter;
     })
 
     // Sequences in .fasta format
-    this.saveData(dwnld_data, `${filename}.fasta`, "text/fasta");    // patient metadata
-    this.parseData(data, filetype, `${filename}_patient-data.tsv`);
-    // this.parseData(data.patients, `${filename}-patientData.tsv`);
+    this.saveData(dwnld_data, `${this.today}_cvisb_${id}${this.auth_stub}.fasta`, "text/fasta");    // patient metadata
   }
 
   sortingFunc(a: string, columnOrder: string[]) {
@@ -263,6 +261,98 @@ export class DownloadDataService {
       }
     })
     return (nonzeroCols)
+  }
+
+  downloadExperiments(id: string, includeExpt: boolean, includePatient: boolean, filters: any[]) {
+    this.loadingCompleteSubject.next(false);
+    this.dialogRef = this.dialog.open(SpinnerPopupComponent, {
+      width: '535px',
+      data: `Downloading selected data...`,
+      disableClose: true
+    });
+    let patientQueryArr = filters.filter(d => d.terms.length).map(facet => `${facet.key}:("${facet.terms.map(x => x.term).join('" OR "')}")`);
+    let patientQuery = patientQueryArr.join(" AND ");
+
+    // Download experiment and patient data
+    if (includeExpt && includePatient) {
+      this.exptSvc.getExptsPatients(id, patientQuery).subscribe(data => {
+        console.log(data)
+        let patientData = data['patient'].map((patient: Patient) => {
+          return (new PatientDownload(patient, this.dateRangePipe));
+        });
+
+        this.processExptData(data["experiment"], id);
+        this.parseData(patientData, 'patients', `${this.today}_cvisb_${id}_PatientData${this.auth_stub}.tsv`);
+      });
+    } else if (includeExpt) {
+      // Download only experiment data
+      this.exptSvc.getExpts(id, patientQuery).subscribe(data => {
+        this.processExptData(data, id);
+      });
+    } else if (includePatient) {
+      // Download only patient data
+      this.exptSvc.getPatientsFromExpts(id, null).subscribe(data => {
+        let patientData = data.map((patient: Patient) => {
+          return (new PatientDownload(patient, this.dateRangePipe));
+        });
+
+        this.parseData(patientData, 'patients', `${id}_PatientData${this.auth_stub}.tsv`);
+      });
+    } else {
+      this.loadingCompleteSubject.next(true);
+      this.dialogRef.close();
+    }
+  }
+
+  processExptData(data: any[], id: string) {
+    let exptType = data[0]['data'][0]['@type'];
+
+    switch (exptType) {
+      case ("VirusSeqData"):
+        let seqData = data.flatMap(d => {
+          d["data"].forEach(datum => {
+            var name = `${d.experimentID}|${datum.virus}`;
+            name = datum.virusSegment ? `${name}|${datum.virusSegment}` : name;
+            datum["name"] = name;
+          })
+          return (d.data)
+        })
+        console.log(seqData)
+        this.downloadFasta(seqData, id)
+        break;
+      case ("SystemsSerology"):
+        let seroData = data.map((expt: SystemsSerology) => {
+          return (new SerologyDownload( expt))
+        })
+        this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
+        break;
+      case ("HLAData"):
+      let hlaData = data.flatMap(expt => this.flattenHLA(expt))
+      console.log(hlaData)
+
+        this.parseData(hlaData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
+        break;
+    }
+  }
+
+  flattenHLA(expt) {
+    return expt.data.map(datum => {
+      return({
+        patientID: expt["privatePatientID"],
+        visitCode: expt["visitCode"],
+        experimentID: expt["experimentID"],
+        isControl: expt["isControl"],
+        experimentDate: expt["experimentDate"],
+        citation: expt.citation ? expt.citation.map(d => d.url).join(", ") : null,
+        publisher : expt.publisher ? expt.publisher.name : null,
+        dataStatus : expt.dataStatus,
+        dateModified : expt.dateModified,
+        correction : expt.correction,
+        locus: datum["locus"],
+        allele: datum["allele"],
+        novel: datum["novel"]
+      })
+    })
   }
 
 }

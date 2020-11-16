@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViralSequencingComponent } from './viral-sequencing.component';
+import { DownloadExptsComponent } from './download-expts.component';
 
-describe('ViralSequencingComponent', () => {
-  let component: ViralSequencingComponent;
-  let fixture: ComponentFixture<ViralSequencingComponent>;
+describe('DownloadExptsComponent', () => {
+  let component: DownloadExptsComponent;
+  let fixture: ComponentFixture<DownloadExptsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViralSequencingComponent ]
+      declarations: [ DownloadExptsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViralSequencingComponent);
+    fixture = TestBed.createComponent(DownloadExptsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

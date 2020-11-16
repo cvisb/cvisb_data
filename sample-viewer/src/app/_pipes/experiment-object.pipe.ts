@@ -52,6 +52,7 @@ export class ExperimentObjectPipe implements PipeTransform {
 
     { "variableMeasured": ["metabolomics"], "measurementTechnique": ["Metabolomics"], "measurementCategory": "clinical measurements", "dataset_id": "metabolomics", "datasetName": "metabolomics", "anchor_link": "metabolomics" },
     { "variableMeasured": ["blood chemistry"], "measurementTechnique": ["Blood Chemistry Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "blood-chemistry", "datasetName": "blood chemistry", "anchor_link": "blood-chemistry" },
+    { "variableMeasured": ["blood counts"], "measurementTechnique": ["Blood Cell Count"], "measurementCategory": "clinical measurements", "dataset_id": "blood-counts-vhf", "datasetName": "blood counts", "anchor_link": "blood-count" },
     { "variableMeasured": ["vitals"], "measurementTechnique": ["Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "vitals", "datasetName": "vitals", "anchor_link": "vitals" },
     { "variableMeasured": ["vitals"], "measurementTechnique": ["Sensor Vital Signs Measurement"], "measurementCategory": "clinical measurements", "dataset_id": "sensor-vitals", "datasetName": "sensor vitals", "anchor_link": "sensor-vitals" },
     { "variableMeasured": ["virus level"], "measurementTechnique": ["Rapid Antigen Test"], "measurementCategory": "clinical measurements", "dataset_id": "rapid-diagnostics", "datasetName": "rapid diagnostics", "anchor_link": "rapid-diagnostics" },

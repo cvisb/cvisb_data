@@ -140,7 +140,7 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
       let keys = this.data.map(d => d.term);
 
       // If there are no bulk values, set to the keys.
-      if (this.cohorts.length === 0) {
+      if (!this.cohorts || this.cohorts.length === 0) {
         this.cohorts = keys;
       } else {
         let missing_data = this.cohorts.filter(d => !keys.includes(d));

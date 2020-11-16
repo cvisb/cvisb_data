@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 import re
 
 def convertExcelDateNum(row):
@@ -25,7 +26,7 @@ def convertExcelDateNum(row):
                 # Calculate IllnessOnset as days difference from the evalDate
                 return(row.converted_evalDate - timedelta(days = ordinal))
         except:
-            return(pd.np.datetime64('NaT'))
+            return(np.datetime64('NaT'))
 
 def convertExcelDate(x):
     """
@@ -36,13 +37,13 @@ def convertExcelDate(x):
     try:
         return(datetime.strptime(x, "%d-%b-%y"))
     except:
-        return(pd.np.datetime64('NaT'))
+        return(np.datetime64('NaT'))
 
 def dates2String(x):
     try:
         return(x.strftime("%Y-%m-%d"))
     except:
-        return(pd.np.nan)
+        return(np.nan)
 
 def getYearfromDate(pythondate):
     """
@@ -84,7 +85,7 @@ def calcOnsetDate(row):
     """
     if((row.daysOnset == row.daysOnset) & (row.converted_evalDate == row.converted_evalDate)):
         return(row.converted_evalDate - timedelta(days = row.daysOnset))
-    return(pd.np.datetime64('NaT'))
+    return(np.datetime64('NaT'))
 
 def calcHospitalStay(row):
     """

@@ -28,7 +28,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
 
     # descriptions
-    ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity."
+    ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity. Samples are taken from Ebola or Lassa Fever patients, convalescent survivors, or household contacts of these patients in Sierra Leone."
 
     # credit
     ds['creator'] = [helpers.getLabAuthor("Galit")]

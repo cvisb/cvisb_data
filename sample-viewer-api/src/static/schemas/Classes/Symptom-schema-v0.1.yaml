@@ -29,6 +29,46 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of symptom
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         true
+  schema:Enumeration:
+                        - Sequela
+                        - AcuteSymptom
+
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          Description of when the symptoms were observed (e.g. at survivor enrollment, initial presentation in hospital, etc.)
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:daysSinceAdmit
+  "@type":               rdf:Property
+  rdfs:comment:          Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0
+  rdfs:label:            daysSinceAdmit
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+
 - "@id":                 cvisb:joint_pain
   "@type":               rdf:Property
   rdfs:comment:          If the patient reports joint pain
@@ -774,3 +814,87 @@
   owl:cardinality:       many
   marginality:           optional
   authenticated:         true
+
+- "@id":                 cvisb:rheumatologicalSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Rheumatological
+  rdfs:label:            rheumatologicalSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:rheumatologicalGISequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Other Rheumatological and Gastrointestinal
+  rdfs:label:            rheumatologicalGISequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:pyschNeuroSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Psychiatric and Neurological
+  rdfs:label:            pyschNeuroSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:cardiacGISequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Cardiac and Other Gastrointestinal
+  rdfs:label:            cardiacGISequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:opthoAudioSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Ophthamological and Auditory
+  rdfs:label:            opthoAudioSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:constitutionalSequelae
+  "@type":               rdf:Property
+  rdfs:comment:          Sequelae Cluster of Symptoms - Constitutional
+  rdfs:label:            constitutionalSequelae
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         true
+
+- "@id":                 cvisb:acuteRespiratoryDistressSyndrome
+  "@type":               rdf:Property
+  rdfs:comment:          Acute respiratory distress syndrome
+  rdfs:label:            acuteRespiratoryDistressSyndrome
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           optional
+  authenticated:         false

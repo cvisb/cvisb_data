@@ -45,14 +45,14 @@ export class FileListComponent implements OnInit {
   ngOnInit() {
     if (this.patientID) {
       this.qParams = new HttpParams()
-        .set("q", `includedInDataset:"${this.datasetID}"`)
+        .set("q", `includedInDataset.keyword:"${this.datasetID}"`)
         .set("patientID", `"${this.patientID}"`);
     } else if(this.experimentIDs) {
       this.qParams = new HttpParams()
         .set("q", `experimentIDs:"${this.experimentIDs.join('","')}"`);
     } else {
       this.qParams = new HttpParams()
-        .set("q", `includedInDataset:"${this.datasetID}"`);
+        .set("q", `includedInDataset.keyword:"${this.datasetID}"`);
     }
 
     this.dataSource = new DownloadsDataSource(this.apiSvc);

@@ -54,11 +54,11 @@
 - "@id":                 cvisb:piccolo
   "@type":               rdf:Property
   rdfs:comment:          Object of Piccolo data measured for the patient at the timepoint.
-  rdfs:label:            symptoms
+  rdfs:label:            piccolo
   schema:domainIncludes:
-    - "@id":             cvisb:PiccoloData
+    - "@id":             cvisb:PiccoloMeasurement
   schema:rangeIncludes:
-    - "@id":             cvisb:Symptom
+    - "@id":             cvisb:PiccoloData
   owl:cardinality:       one
   marginality:           required
   authenticated:         true

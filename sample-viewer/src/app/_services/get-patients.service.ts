@@ -258,8 +258,8 @@ export class GetPatientsService {
       // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
         if (patientData) {
-          if (patientData.sourceCitation) {
-            patientData["source"] = patientData.sourceCitation;
+          if (patientData.citation) {
+            patientData["source"] = patientData.citation;
             patientData["source"].forEach(d => {
               d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]["givenName"]} ${d["author"][0]["familyName"]} ${d["journalName"]} ${this.datePipe.transform(d["datePublished"], "yyyy")}` : d.name;
             })
@@ -353,7 +353,7 @@ export class GetPatientsService {
     )
   }
 
-  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'experimentID', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'sourceCitation', 'variableMeasured']): Observable<any> {
+  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'experimentID', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'variableMeasured']): Observable<any> {
     let experimentParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${patientID}"`)

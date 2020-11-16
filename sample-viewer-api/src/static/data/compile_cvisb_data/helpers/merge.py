@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import collections
 import numpy as np
 
@@ -101,7 +102,7 @@ def combineIDs(row, columns=["gID", "sID", "publicGID", "publicSID"], unique = T
         ids = list(set(ids))
     if(len(ids) > 0):
         return([ids])
-    return(pd.np.nan)
+    return(np.nan)
 
 def mergeByPublicIDs(df1, df2, on=["publicPatientID"], how="left",
                      mergeCols2Check=["gID", "sID", "alternateIdentifier", "outcome"], errorCol="issue",
@@ -153,7 +154,7 @@ dropMerge = True, leftErrorMsg = None, rightErrorMsg = None, ignoreUnknown = Tru
     for colVar in mergeCols2Check:
         # Double check that the columns exist in the merged dataframe
         if((f"{colVar}_x" in merged_cols) & (f"{colVar}_y" in merged_cols)):
-            merged[colVar] = pd.np.nan
+            merged[colVar] = np.nan
             merged[errorCol] = merged.apply(lambda x: checkMergeRowwise(x, colVar, errorCol, df1_label, df2_label, ignoreUnknown, cols2Ignore), axis=1)
             merged[colVar] = merged.apply(lambda x: combineColsRowwise(x, colVar, ignoreUnknown), axis=1)
     # Get rid of the _merge tracking variable
@@ -179,7 +180,7 @@ dropMerge = True, leftErrorMsg = None, rightErrorMsg = None, ignoreUnknown = Tru
     for colVar in mergeCols2Check:
         # Double check that the columns exist in the merged dataframe
         if((f"{colVar}_x" in merged_cols) & (f"{colVar}_y" in merged_cols)):
-            merged[colVar] = pd.np.nan
+            merged[colVar] = np.nan
             merged[errorCol] = merged.apply(lambda x: checkMergeRowwise(x, colVar, errorCol, df1_label, df2_label, ignoreUnknown, cols2Ignore), axis=1)
             merged[colVar] = merged.apply(lambda x: combineColsRowwise2(x, colVar, ignoreUnknown), axis=1)
     # Get rid of the _merge tracking variable
@@ -201,9 +202,9 @@ def checkMergeRowwise(row, colVar, errorCol, df1_label, df2_label, ignoreUnknown
     if(ignoreUnknown):
         # Replaces "unknown" or "Unknown" with NA
         if(str(x).lower() == "unknown"):
-            x = pd.np.nan
+            x = np.nan
         if(str(y).lower() == "unknown"):
-            y = pd.np.nan
+            y = np.nan
 
 
     # Two values disagree and both _x or _y are not null
@@ -233,9 +234,9 @@ def combineColsRowwise(row, colVar, ignoreUnknown):
     if(ignoreUnknown):
         # Replaces "unknown" or "Unknown" with NA
         if(str(x).lower() == "unknown"):
-            x = pd.np.nan
+            x = np.nan
         if(str(y).lower() == "unknown"):
-            y = pd.np.nan
+            y = np.nan
 
     if(x != y):
         # x is NA; return y
@@ -273,9 +274,9 @@ def combineColsRowwise2(row, colVar, ignoreUnknown):
     # if(ignoreUnknown & (colVar != "outcome")):
     #     # Replaces "unknown" or "Unknown" with NA
     #     if(str(x).lower() == "unknown"):
-    #         x = pd.np.nan
+    #         x = np.nan
     #     if(str(y).lower() == "unknown"):
-    #         y = pd.np.nan
+    #         y = np.nan
 
     xIsList = isinstance(x, list)
     yIsList = isinstance(y, list)

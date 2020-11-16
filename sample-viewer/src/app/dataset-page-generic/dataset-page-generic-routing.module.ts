@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // --- components ---
-import { SerologyComponent } from './serology.component';
+import { DatasetPageGenericComponent } from './dataset-page-generic.component';
 
 // --- resolvers ---
 import { DatasetResolver } from '../_services/get-datasets.resolver';
@@ -10,7 +10,7 @@ import { DatasetResolver } from '../_services/get-datasets.resolver';
 
 const routes: Routes = [
   {
-    path: '', component: SerologyComponent, pathMatch: 'full', resolve: {
+    path: '', component: DatasetPageGenericComponent, pathMatch: 'full', resolve: {
       datasetData: DatasetResolver,
     }
   }
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SerologyRoutingModule { }
+export class DatasetPageGenericRoutingModule { }
