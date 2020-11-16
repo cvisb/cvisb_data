@@ -198,6 +198,20 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          Descriptive time of data collection, like "survivor enrollment" or "patient admission". Note that "patient admission" is assumed but not confirmed to be the date of admission to KGH.
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+  schema:Enumeration:
+                           - patient admission
+                           - survivor enrollment
 
 # measurementTechnique
 - "@id":                 cvisb:variableMeasured
