@@ -15,15 +15,19 @@ def get_serology_downloads(dateModified, experiments, updatedBy, version, datase
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "DataDownload"
     ds["includedInDataset"] = datasetID
-    ds["name"] = "CViSB-SystemsSerology.csv"
-    ds["description"] = "Summary of systems serology measurements"
-    ds["identifier"] = f"CViSB_SystemsSerology{datasetID}.csv"
+    ds["name"] = "mmc2.xlsx"
+    ds["description"] = "Source Data of Antigen-Specific Titers, FcRs, and Functional Responses across Samples"
+    ds["identifier"] = f"{datasetID}_{ds['name']}"
+
+    if("rtpcr" in datasetID):
+        ds["measurementCategory"] = "clinical measurements"
+    else:
+        ds["measurementCategory"] = "Systems Serology"
 
     # properties
-    ds["measurementCategory"] = "Systems Serology"
     ds["additionalType"] = "summary data"
-    ds["encodingFormat"] = "text/csv"
-    ds["contentUrl"] = f"https://data.cvisb.org/dataset/{ds['name']}"
+    ds["encodingFormat"] = "application/vnd.ms-excel"
+    ds["contentUrl"] = "https://www.cell.com/immunity/fulltext/S1074-7613(20)30327-7#supplementaryMaterial"
 
     # credit
     ds['creator'] = [helpers.getLabAuthor("Galit")]
