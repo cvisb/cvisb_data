@@ -408,27 +408,15 @@
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
-  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string). If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment."
   rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
+    - "@id":             cvisb:Organization
   schema:sameAs:
     "@id":               schema:citation
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:sourceCitation
-  "@type":               rdf:Property
-  rdfs:comment:          "Citation object(s) for the experiment. Should be journal article or other publication associated with the experiment; if no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment."
-  rdfs:label:            sourceCitation
-  schema:domainIncludes:
-    - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             cvisb:ScholarlyArticle
-    - "@id":             cvisb:Organization
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false

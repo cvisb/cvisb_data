@@ -343,7 +343,6 @@ export class DownloadDataService {
         experimentID: expt["experimentID"],
         isControl: expt["isControl"],
         experimentDate: expt["experimentDate"],
-        source: expt.sourceCitation ? expt.sourceCitation.map(d => d.name) : expt.creator ? expt.creator.name : null,
         citation: expt.citation ? expt.citation.map(d => d.url).join(", ") : null,
         publisher : expt.publisher ? expt.publisher.name : null,
         dataStatus : expt.dataStatus,

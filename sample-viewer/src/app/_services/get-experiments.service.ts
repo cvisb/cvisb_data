@@ -150,7 +150,7 @@ export class GetExperimentsService {
           "data.curated.keyword": "Curated Sequence",
           "data.virusSegment.keyword": "Virus Segment",
           "experimentDate.keyword": "Sample Date",
-          "sourceCitation.name.keyword": "Source",
+          "citation.name.keyword": "Source",
           "species.keyword": "Host",
           "country.identifier.keyword": "Country",
           "cohort.keyword": "Cohort",
@@ -175,7 +175,7 @@ export class GetExperimentsService {
   }
 
   getExptFacets(id: string, patientFilter: string, exptFilter: string) {
-    const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "sourceCitation.name", "citation.identifier"];
+    const exptFacets = ["data.curated", "data.virusSegment", "experimentDate", "citation.name"];
 
     let params = new HttpParams()
       .set('q', `includedInDataset.keyword:"${id}"`)
