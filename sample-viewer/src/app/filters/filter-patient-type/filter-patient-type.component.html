@@ -1,24 +1,26 @@
-<div [ngClass]="horizontal ? 'patient-type-filter container' : 'patient-type-filter container-column'" *ngIf="viruses && outcomes">
+<div class="container-column">
   <h4 class="filter-label">patient type</h4>
 
-  <div class="filter-subtype filter-virus">
-    <h5 class="filter-sublabel">cohort</h5>
-    <div class="disclaimer" matTooltip="learn more about cohorts">
-      <!-- 'cohort' indicates  -->
-      <a [routerLink]="['/', 'documentation']" fragment="cohort">
-        suspected infection/exposure, pending diagnostic confirmation
-    </a>
+  <div [ngClass]="horizontal ? 'patient-type-filter container' : 'patient-type-filter container-column'" *ngIf="viruses && outcomes">
+    <div class="filter-subtype filter-virus">
+      <h5 class="filter-sublabel">cohort</h5>
+      <div class="disclaimer" matTooltip="learn more about cohorts">
+        <!-- 'cohort' indicates  -->
+        <a [routerLink]="['/', 'documentation']" fragment="cohort">
+          suspected infection/exposure, pending diagnostic confirmation
+        </a>
+      </div>
+      <app-mini-donut [data]="viruses" [height]="plot_height" [cohorts]="all_cohorts" [endpoint]="endpoint" [filterable]="filterable"></app-mini-donut>
     </div>
-    <app-mini-donut [data]="viruses" [height]="plot_height" [cohorts]="all_cohorts" [endpoint]="endpoint" [filterable]="filterable"></app-mini-donut>
-  </div>
 
-  <div class="filter-subtype filter-outcome">
-    <h5 class="filter-sublabel">outcome</h5>
-    <div class="disclaimer" matTooltip="learn more about outcomes">
-      <a [routerLink]="['/', 'documentation']" fragment="outcome">
-      survivors were alive 10+ days after hospital admission
-    </a>
+    <div class="filter-subtype filter-outcome">
+      <h5 class="filter-sublabel">outcome</h5>
+      <div class="disclaimer" matTooltip="learn more about outcomes">
+        <a [routerLink]="['/', 'documentation']" fragment="outcome">
+          survivors were alive 10+ days after hospital admission
+        </a>
+      </div>
+      <app-mini-barplot [data]="outcomes" [name_var]="'term'" [height]="plot_height" [options]="all_outcomes" [endpoint]="endpoint" [filterable]="filterable"></app-mini-barplot>
     </div>
-    <app-mini-barplot [data]="outcomes" [name_var]="'term'" [height]="plot_height" [options]="all_outcomes" [endpoint]="endpoint" [filterable]="filterable"></app-mini-barplot>
   </div>
 </div>
