@@ -702,7 +702,7 @@
   authenticated:         false
 
 
-# ELISAs
+# ELISAs, clinical data
 - "@id":                 cvisb:symptoms
   "@type":               rdf:Property
   rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
@@ -711,6 +711,18 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:Symptom
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:medications
+  "@type":               rdf:Property
+  rdfs:comment:          List of medications administered (or not) to the patient during the course of their treatment.
+  rdfs:label:            medications
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -726,27 +738,3 @@
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
-#
-# - "@id":                 cvisb:medications
-#   "@type":               rdf:Property
-#   rdfs:comment:          List of medications administered (or not) to the patient during the course of their treatment.
-#   rdfs:label:            medications
-#   schema:domainIncludes:
-#     - "@id":             cvisb:Patient
-#   schema:rangeIncludes:
-#     - "@id":             cvisb:Medication
-#   owl:cardinality:       many
-#   marginality:           recommended
-#   authenticated:         true
-#
-# - "@id":                 cvisb:symptoms
-#   "@type":               rdf:Property
-#   rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
-#   rdfs:label:            symptoms
-#   schema:domainIncludes:
-#     - "@id":             cvisb:Patient
-#   schema:rangeIncludes:
-#     - "@id":             cvisb:Symptom
-#   owl:cardinality:       many
-#   marginality:           recommended
-#   authenticated:         true
