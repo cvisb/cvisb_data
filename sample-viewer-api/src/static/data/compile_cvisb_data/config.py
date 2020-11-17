@@ -9,14 +9,10 @@ ID_DICT = f"{DATADIR}/output_data/patients/patients_2019-09-13_PRIVATE_dict.json
 
 # --- patients ---
 # ACUTE_IDS_FILE = f"{DATADIR}/input_data/patient_rosters/additional_IDdict_v3_2019-10-23.csv"
-ACUTE_IDS_FILE = f"{DATADIR}/input_data/patient_rosters/complete_acuteid_roster_v1_2019-11-01.xlsx"
-ACUTE_LASSA_FILE = f"{DATADIR}/input_data/patient_rosters/acuteLassa_patientdata_v2_2019-06-12_PRIVATE.csv"
-ACUTE_LASSA_IDS = f"{DATADIR}/input_data/patient_rosters/acuteLassa_IDdict_v1_2019-03-27_PRIVATE.xlsx"
-SURVIVOR_IDS = f"{DATADIR}/input_data/patient_rosters/survivor_IDdict_v2_2019-03-06_PRIVATE.xlsx"
-SURVIVOR_EBOLA_FILE = f"{DATADIR}/input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx"
-PATIENTS_UPDATEDBY = "John Schieffelin"
+PATIENT_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/DisseminationData_31Aug20.xlsx"
+PATIENTS_UPDATEDBY = "Emily Engel"
 PATIENTS_DATE = today
-PATIENTS_VERSION = 0.2
+PATIENTS_VERSION = 0.3
 
 # --- hla ---
 HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_20191024.csv"
@@ -36,11 +32,11 @@ LVIRAL_VERSION = 0.2
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
-EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_curated_2020.06.22.fasta"
-EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_non_curated_2020.06.22.fasta"
-EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.06.22.csv"
-EVIRAL_DATE = today
-EVIRAL_VERSION = 0.2
+EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_curated_2020.08.04.fasta"
+EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_non_curated_2020.08.04.fasta"
+EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.08.03.csv"
+EVIRAL_DATE = "2020-11-16"
+EVIRAL_VERSION = 0.3
 EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
@@ -63,10 +59,15 @@ EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchI
 
 
 # for non-KGH patients: what info should be
-PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
-               "dateModified", "updatedBy", "cohort", "outcome", "country", "countryName", "admin2", "admin3", "homeLocation", "exposureLocation",
-               "infectionYear", "species", 'sourceFiles', 'correction',
-               'publisher', 'citation']
+PATIENTCOLS = [
+                "patientID", "species", "alternateIdentifier",
+                "hasPatientData", "hasSurvivorData",
+                "dateModified", "updatedBy", "dataStatus",
+                'sourceFiles', "version",
+                "cohort", "outcome",
+                "country", "countryName", "location", "locationPrivate",
+                "infectionYear",
+                'publisher', 'citation','correction']
 
 # For all experiments, to relate sample <--> experiment
 SAMPLECOLS = ["creatorInitials", "sampleLabel",
