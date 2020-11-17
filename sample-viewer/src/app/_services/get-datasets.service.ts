@@ -267,6 +267,7 @@ export class getDatasetsService {
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
                 dataset['datasetName'] = ds_obj['datasetName'];
+                dataset['icon'] = ds_obj['icon_id'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
                 dataset['sources'] = cloneDeep(dataset[`citation.${citation_variable}.keyword`]['terms']);
                 delete dataset[`citation.${citation_variable}.keyword`];

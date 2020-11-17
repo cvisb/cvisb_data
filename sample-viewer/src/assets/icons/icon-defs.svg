@@ -909,7 +909,7 @@
     </symbol>
 
     <!-- piccolo -->
-    <symbol id="blood-chemistry-vhf" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="blood-chemistry" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Piccolo blood chemistry</title>
       <g id="piccolo">
         <g>
@@ -1012,7 +1012,7 @@
     </symbol>
 
     <!-- hand -->
-    <symbol id="blood-counts-vhf" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="blood-counts" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
       <title>blood counts viral hemorrhagic fever</title>
       <g id="cells">
       	<g id="monocyte">
