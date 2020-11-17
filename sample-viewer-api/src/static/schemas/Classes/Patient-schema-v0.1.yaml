@@ -215,10 +215,10 @@
   authenticated:         true
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version number of patient, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:comment:          Version number of patient data
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
@@ -395,7 +395,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:Date
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -702,15 +702,15 @@
   authenticated:         false
 
 
-# ELISAs
-- "@id":                 cvisb:elisa
+# ELISAs, clinical data
+- "@id":                 cvisb:symptoms
   "@type":               rdf:Property
-  rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
-  rdfs:label:            elisa
+  rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
+  rdfs:label:            symptoms
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:ELISA
+    - "@id":             cvisb:Symptom
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -725,16 +725,16 @@
     - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
-- "@id":                 cvisb:symptoms
+- "@id":                 cvisb:elisa
   "@type":               rdf:Property
-  rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
-  rdfs:label:            symptoms
+  rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient
+  rdfs:label:            elisa
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:Symptom
+    - "@id":             cvisb:ELISA
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false

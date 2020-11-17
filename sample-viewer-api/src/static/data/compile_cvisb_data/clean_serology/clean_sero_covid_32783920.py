@@ -60,7 +60,7 @@ def clean_sero_covid(sero_file, version, updatedBy, dateUpdated, output_dir):
     df["species"] = "Homo sapiens"
     df["country"] = df.SampleID.apply(lambda x: helpers.getCountry("USA"))
     df["countryName"] = "United States"
-    df["location"] = df.SampleID.apply(lambda x: [{"name": "Seattle", "locationType": "unknown", "administrativeType": "city"}, {"name": "Washington", "locationType": "unknown", "administrativeType": "state", "administrativeUnit": 1, "identifier": "US-WA"}, {"name": "United States", "locationType": "unknown", "administrativeType": "country", "administrativeUnit": 0, "identifier": "US"}])
+    df["location"] = df.SampleID.apply(lambda x: [{"name": "Seattle", "locationType": "unknown", "administrativeType": "city", "@type": "AdministrativeArea"}, {"name": "Washington", "locationType": "unknown", "administrativeType": "state", "administrativeUnit": 1, "identifier": "US-WA", "@type": "AdministrativeArea"}, {"name": "United States", "locationType": "unknown", "administrativeType": "country", "administrativeUnit": 0, "identifier": "US", "@type": "Country"}])
     df["locationPrivate"] = df.location
     df["hasPatientData"] = True
     df["infectionYear"] = 2020

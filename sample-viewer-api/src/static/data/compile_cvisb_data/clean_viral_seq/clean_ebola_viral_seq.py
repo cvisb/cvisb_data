@@ -37,6 +37,8 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
                         'patientID', 'patient_timepoint', 'accession']].sort_values("accession"), verbose)
         helpers.log_msg("-" * 50, verbose)
 
+    helpers.log_msg("finished initial checks", verbose)
+
     # --- clean up common properties, across patient/expt/sample/downloads/dataset ---
     md['variableMeasured'] = f"{virus} virus sequence"
     md['measurementTechnique'] = "Nucleic Acid Sequencing"
@@ -44,8 +46,8 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['includedInDataset'] = f"{virus.lower()}-virus-seq"
     md['creator'] = None
     md['correction'] = None
-    md['sourceFiles'] = "; ".join(
-        [alignment_file.split("/")[-1], metadata_file.split("/")[-1]])
+    source = [alignment_file.split("/")[-1], metadata_file.split("/")[-1]]
+    md['sourceFiles'] = md.apply(lambda x: source, axis=1)
     md['version'] = version
     md['dateModified'] = dateModified
     md['updatedBy'] = updatedBy
@@ -53,8 +55,9 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['dataStatus'] = "final"
     md['publisher'] = md.apply(getPublisher, axis=1)
     md['batchID'] = None
-    md['experimentDate'] = md.date
+    md['experimentDate'] = md.collection_date
     md['isControl'] = False
+    helpers.log_msg("finished chunk 1", verbose)
 
     # --- clean up patient metadata ---
     md['privatePatientID'] = md.patientID
@@ -65,15 +68,11 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['cohort'] = virus
     md['alternateIdentifier'] = md.patientID.apply(helpers.listify)
     md['country'] = md.country_iso3.apply(helpers.getCountry)
-    md['admin2'] = md.admin2.apply(lambda x: cleanAdmin(x, 2))
-    md['admin3'] = md.admin3.apply(lambda x: cleanAdmin(x, 3))
-    md['admin4'] = md.admin4.apply(lambda x: cleanAdmin(x, 4))
-    md['exposureLocation'] = md.apply(getExposure, axis=1)
-    md['homeLocation'] = md.import_country.apply(helpers.getCountry)
-    md['homeLocation'] = md.homeLocation.apply(helpers.listify)
+    md['location'] = md.apply(getLocation, axis = 1)
+    md['locationPrivate'] = md.apply(getLocationPrivate, axis = 1)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
     md['infectionYear'] = md.year
-    md['samplingDate'] = md.date
+    md['samplingDate'] = md.collection_date
     md['species'] = md.host.apply(helpers.convertSpecies)
     # Patient timepoints
     md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
@@ -81,10 +80,13 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     # But-- since only uploading the non-KGH patient data, should be fine.
     md['hasPatientData'] = False
     md['hasSurvivorData'] = False
+    helpers.log_msg("finished chunk 2", verbose)
 
     # --- clean up experiment properties ---
     md['inAlignment'] = md.curated.apply(bool)
     md['cvisb_data'] = md.CViSB_data.apply(bool)
+    helpers.log_msg("finished chunk 3", verbose)
+    print("Is this going really slowly? Make sure your VPN is turned off when you're getting citations from NCBI.")
     citation_dict = helpers.createCitationDict(md, "source_pmid")
     md['citation'] = md["source_pmid"].apply(
         lambda x: helpers.lookupCitation(x, citation_dict))
@@ -92,6 +94,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['citation'] = md.citation.apply(helpers.listify)
     md['experimentID'] = md.apply(lambda x: getExptID(x, virus), axis=1)
     md['genbankID'] = md.accession
+    helpers.log_msg("finished chunk 4 (citations done!)", verbose)
 
     # --- clean up sample properties ---
     md['sampleLabel'] = md.label
@@ -99,7 +102,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['creatorInitials'] = f"{(updatedBy.split(' ')[0][0] + updatedBy.split(' ')[1][0]).lower()}"
     md['sampleID'] = md.apply(
         lambda x: f"{x.creatorInitials}-{x.sampleLabel}_{x.sampleType}", axis=1)
-
+    helpers.log_msg("finished chunk 4", verbose)
     # --- clean up download properties ---
     md['name'] = md.apply(lambda x: x.patientID + "_" + x.accession, axis=1)
     md['identifier'] = md.apply(lambda x: x.patientID + "_" + x.accession, axis=1)
@@ -108,10 +111,10 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['experimentIDs'] = md.experimentID.apply(lambda x: [x])
     md['contentUrlRepository'] = "GenBank"
     md['contentUrlIdentifier'] = md.accession
-
+    helpers.log_msg("finished chunk 5", verbose)
     # --- Merge together data and metadata ---
     seqs = getDNAseq(alignment_file, uncurated_file, virus)
-
+    helpers.log_msg("finished chunk 6", verbose)
     merged = pd.merge(md, seqs, on="sequenceID", how="outer", indicator=True)
     no_seq = merged[merged._merge == "left_only"]
     seq_only = merged[merged._merge == "right_only"]
@@ -123,7 +126,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
         helpers.log_msg(f"\tDATA ERROR: no patient found in sequence metadata file for {len(seq_only)} sequences:", verbose)
         helpers.log_msg(seq_only['sequenceID'], verbose)
         helpers.log_msg("-" * 50, verbose)
-
+    helpers.log_msg("finished chunk 7", verbose)
     # Make sure arrays are arrays
     # merged['data'] = merged.data.apply(helpers.listify)
 
@@ -133,12 +136,12 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     patients.drop_duplicates(subset=["patientID", "cohort", "outcome", "countryName", "infectionYear", "species"], inplace = True)
     samples = md.loc[~ md.KGH_id, sample_cols]
     experiments = merged[exptCols]
-
+    helpers.log_msg("finished chunk 8", verbose)
     # --- Call to get data downloads, dataset ---
     dwnlds = md[download_cols]
     all_dwnlds = get_viralseq_downloads(dateModified, dwnlds, experiments, version, virus)
     ds = get_viralseq_dataset(dateModified, dwnlds, md, version, virus)
-
+    helpers.log_msg("finished chunk 9", verbose)
     # [Export]  ----------------------------------------------------------------------------------------------------
     if(saveFiles):
         # --- experiments ---
@@ -151,7 +154,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
         # --- samples ---
         samples.to_json(
             f"{output_dir}/samples/virus_seq_samples_{today}.json", orient="records")
-
+    helpers.log_msg("finished chunk 10", verbose)
     return({"patient": patients, "sample": samples, "dataset": ds, "datadownload": all_dwnlds, "experiment": experiments})
 # sum(md.duplicated(subset = "accession"))
 
@@ -212,18 +215,23 @@ def combineSeqs(row):
         return([row.curated])
 
 
-def cleanAdmin(location, admin_level):
-    if(location==location):
-        loc_clean = location.replace("_", " ").title()
-        return( {'administrativeUnit': admin_level,'name': loc_clean})
-
-def getExposure(row):
+def getLocation(row):
+    loc = []
     if((row.country == row.country) & (row.country is not None)):
-        arr = [row.country]
-        if((row.admin2 == row.admin2) & (row.admin2 is not None)):
-            arr.append(row.admin2)
-        if((row.admin3 == row.admin3) & (row.admin3 is not None)):
-            arr.append(row.admin3)
-        if((row.admin4 == row.admin4) & (row.admin4 is not None)):
-            arr.append(row.admin4)
-        return(arr)
+        row["country"]["locationType"] = "exposure"
+        loc.append(row.country)
+    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+        loc.append({"@type": "AdministrativeArea", "name": row.admin2.replace("_", " ").title(), "locationType": "exposure", "administrativeUnit": 2})
+    if((row.import_country == row.import_country) & (row.import_country is not None)):
+        ctry = helpers.getCountry(row.import_country)
+        ctry["locationType"] = "home"
+        loc.append(ctry)
+    return(loc);
+
+def getLocationPrivate(row):
+    loc = getLocation(row)
+    if((row.admin3 == row.admin3) & (row.admin3 is not None)):
+            loc.append({"@type": "AdministrativeArea", "name": row.admin3.replace("_", " ").title(), "locationType": "exposure", "administrativeUnit": 3})
+    if((row.admin4 == row.admin4) & (row.admin4 is not None)):
+            loc.append({"@type": "AdministrativeArea", "name": row.admin4.replace("_", " ").title(), "locationType": "exposure"})
+    return(loc);

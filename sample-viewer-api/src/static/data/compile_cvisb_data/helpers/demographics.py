@@ -1,7 +1,8 @@
 import pandas as pd
+import numpy as np
 import re
 
-def convertLower(input, unknownVal = pd.np.nan):
+def convertLower(input, unknownVal = np.nan):
     # Value is NA; collapse to unknown
     if(input != input):
         return(unknownVal)
@@ -10,7 +11,7 @@ def convertLower(input, unknownVal = pd.np.nan):
 def convertBoolean(input):
     # Value is NA
     if(input != input):
-        return(pd.np.nan)
+        return(np.nan)
     if((input.lower() == "n") | (input.lower() == "no")):
         return(False)
     if((input.lower() == "y") | (input.lower() == "yes")):
@@ -40,7 +41,7 @@ def convertSpecies(species):
             return("Mastomys natalensis")
         elif((species.lower() == 'rodent')):
             return("rodent")
-    return(pd.np.nan)
+    return(np.nan)
 
 # --- cohort ---
 def cleanCohort(input):
@@ -54,6 +55,8 @@ def cleanCohort(input):
         return("Lassa")
     if(re.search("LASV", input.upper())):
         return("Lassa")
+    if(re.search("LF", input.upper())):
+        return("Lassa")
     if(re.search("Ebola", input.title())):
         return("Ebola")
     if(re.search("EBOV", input.upper())):
@@ -64,6 +67,8 @@ def cleanCohort(input):
         return("Ebola")
     if(re.search("Control", input.title())):
         return("Control")
+    if(re.search("COVID-19", input.upper())):
+        return("COVID-19")
     else:
         return("Unknown")
 
@@ -85,13 +90,23 @@ def cleanOutcome(input):
     # outcome looks good; just pass it through
     if((outcome == "contact") | (outcome == "control")):
         return(outcome)
-    elif((outcome == 'discharged') | (outcome == "survivor")):
+    elif((outcome == 'discharged') | (outcome == "survivor") | (outcome == "survived")):
         return('survivor')
-    elif((outcome == 'died') |( outcome == 'dead')):
+    elif((outcome == 'died') | ( outcome == 'dead') | ( outcome == 'died?')):
         return('dead')
     else:
     # if((outcome == '?') | (outcome == "other") | (outcome == "transferred") | (outcome == "not admitted")):
         return('unknown')
+
+def decodeEthnicity(input):
+    if(input == 1):
+        return("Mende")
+    if(input == 2):
+        return("Temne")
+    if(input == 3):
+        return("Fullah")
+    if(input == 4):
+        return("Krio")
 
 # For the survivor roster, they are listed as either a "case" (aka survivor)
 # or a contact to XXX -- aka a contact.
@@ -109,7 +124,7 @@ def cleanSurvivorOutcome(input):
 # --- age ---
 def getAge(row):
     if((row.Agey != row.Agey) & (row.Agem != row.Agem) & (row.Aged != row.Aged)):
-        return(pd.np.nan)
+        return(np.nan)
     try:
         years = int(row.Agey)
     except:
@@ -127,5 +142,5 @@ def getAge(row):
         days = 0
     if((years + months + days) == 0):
         # Age is too small, likely from weird strings in one of the arguments
-        return(pd.np.nan)
+        return(np.nan)
     return(years + months/12 + days/365)

@@ -111,3 +111,13 @@ def year2Range(year):
     if(year == year):
         year_string = "{:.0f}".format(year)
         return({"gte": f"{year_string}-01-01", "lte": f"{year_string}-12-31"})
+
+def getInfectionWeek(row, infectionVar = "DoEval"):
+    if(row[infectionVar] == row[infectionVar]):
+        isoweek = row[infectionVar].isocalendar()[1]
+        if(row.Week == row.Week):
+            if(row.Week != isoweek):
+                print("Calculated week doesn't agree w/ Tulane calculated week")
+        isodate = datetime.strptime(f"{row.infectionYear:.0f}-W{isoweek}" + '-1', "%Y-W%W-%w")
+        enddate = isodate + timedelta(days = 6)
+        return({"gte": isodate.strftime("%Y-%m-%d"), "lte": enddate.strftime("%Y-%m-%d")})
