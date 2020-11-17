@@ -199,6 +199,9 @@ comb["_merge"].value_counts()
 acute.sample(10).to_json(f"{output_dir}/patients/{today}_acute_tester.json", orient="records")
 surv.sample(10).to_json(f"{output_dir}/patients/{today}_survivor_tester.json", orient="records")
 
+acute.cohort.value_counts(dropna=False)
+filtered_surv.cohort.value_counts(dropna=False)
+
 # TEMP for the moment: export patients that are in the acute dataset or non-mergable S-numbers
 filtered_surv = surv[surv.gID.isnull()]
 # For Emily: testing
@@ -218,7 +221,7 @@ filtered_surv = surv[surv.gID.isnull()]
 
 # EXPORT PATIENTS
 
-chunk_size = 600
+chunk_size = 300
 for i in range(0, ceil(len(acute)/chunk_size)):
     acute.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_acute-patients_{i}_{today}.json", orient="records")
 for i in range(0, ceil(len(filtered_surv)/chunk_size)):
