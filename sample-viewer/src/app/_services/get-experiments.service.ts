@@ -12,8 +12,6 @@ import { CountryObjectPipe } from '../_pipes/country-object.pipe';
 
 import { ExperimentCount } from "../_models";
 
-import { isPlatformBrowser } from '@angular/common';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -51,10 +49,10 @@ export class GetExperimentsService {
       pluck("includedInDataset.keyword"),
       pluck("terms"),
       map((expts: ExperimentCount[]) => {
-        console.log(expts)
-        expts["hits"].forEach(d => {
+        expts.forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['datasetName'] = filtered['datasetName'];
+          d['icon'] = filtered['icon_id'];
           d['measurementCategory'] = filtered['measurementCategory'];
         })
         return (expts.sort((a, b) => a.measurementCategory < b.measurementCategory ? -1 : (a.datasetName < b.datasetName ? 0 : 1)));
