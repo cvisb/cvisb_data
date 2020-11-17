@@ -345,7 +345,6 @@
                            - rtpcr-vhf
                            - rapid-diagnostics-vhf
                            - sensor-vitals-vhf
-                           - clinical-observations-vhf
 
 # when updated
 - "@id":                 cvisb:dateModified
