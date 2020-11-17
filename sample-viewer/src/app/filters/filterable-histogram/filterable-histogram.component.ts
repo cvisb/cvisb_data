@@ -179,16 +179,19 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
 
   prepData() {
     if (this.data) {
+      console.log(this.data)
       // Split data into numeric + non-numeric data
       this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
       this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
+
+      console.log(this.num_data);
 
       // combine together the values below the limit
       if (this.windsorized) {
         this.xDomain = this.xDomain.filter(d => d >= this.windsorized);
         this.xDomain.push(this.windsorized); // add in windsorized value
 
-        let windsorData = this.num_data.filter((d: any) => d.term < this.windsorized);
+        let windsorData = this.num_data ? this.num_data.filter((d: any) => d.term < this.windsorized) : [];
         let windsorCount = windsorData.reduce((prev, curr) => prev + curr['count'], 0);
 
         this.num_data = this.num_data.filter((d: any) => d.term >= this.windsorized);
