@@ -1,5 +1,6 @@
 import pandas as pd
 import helpers
+import re
 from datetime import datetime
 from Bio import SeqIO
 from .generate_viral_seq_dataset import get_viralseq_dataset
@@ -55,7 +56,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['dataStatus'] = "final"
     md['publisher'] = md.apply(getPublisher, axis=1)
     md['batchID'] = None
-    md['experimentDate'] = md.collection_date
+    md['experimentDate'] = md.collection_date.apply(checkDate)
     md['isControl'] = False
     helpers.log_msg("finished chunk 1", verbose)
 
@@ -72,7 +73,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['locationPrivate'] = md.apply(getLocationPrivate, axis = 1)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
     md['infectionYear'] = md.year
-    md['samplingDate'] = md.collection_date
+    md['samplingDate'] = md.collection_date.apply(checkDate)
     md['species'] = md.host.apply(helpers.convertSpecies)
     # Patient timepoints
     md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
@@ -235,3 +236,7 @@ def getLocationPrivate(row):
     if((row.admin4 == row.admin4) & (row.admin4 is not None)):
             loc.append({"@type": "AdministrativeArea", "name": row.admin4.replace("_", " ").title(), "locationType": "exposure"})
     return(loc);
+
+def checkDate(datestr):
+    if(re.match("\d\d\d\d\-\d\d-\d\d", datestr)):
+        return(datestr)
