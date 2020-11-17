@@ -179,12 +179,9 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
 
   prepData() {
     if (this.data) {
-      console.log(this.data)
       // Split data into numeric + non-numeric data
       this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
       this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
-
-      console.log(this.num_data);
 
       // combine together the values below the limit
       if (this.windsorized) {
