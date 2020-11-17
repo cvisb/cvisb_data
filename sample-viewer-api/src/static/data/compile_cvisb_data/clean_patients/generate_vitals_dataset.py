@@ -28,7 +28,7 @@ def get_vitals_dataset(dateModified, downloadIDs, experiments, countries, versio
     ds["url"] = f"https://data.cvisb.org/dataset/{dataset_id}"
 
     # descriptions
-    ds["description"] = "Vital measurement data of suspected or confirmed Ebola or Lassa Fever patients in the acute phase of infection."
+    ds["description"] = "Vital measurement data of suspected or confirmed Ebola or Lassa Fever patients in the acute phase of infection, or patients and household contacts in a follow-up visit."
     ds["keywords"] = ["vitals",
                       "body temperature", "respiratory rate", "heart rate", "systolic pressure", "diastolic pressure", "coma score", "Glasgow coma score", "oxygen saturation",
                       "Ebola",
