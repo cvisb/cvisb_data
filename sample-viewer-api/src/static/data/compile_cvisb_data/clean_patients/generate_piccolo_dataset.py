@@ -51,7 +51,7 @@ def get_piccolo_dataset(dateModified, downloadIDs, experiments, countries, versi
     # passed in; from patient info.
     ds["spatialCoverage"] = countries
     # data downloads
-    ds["dataDownloadIDs"] = downloadIDs
+    ds["dataDownloadIDs"] = helpers.getUnique(downloadIDs, "identifier")
     # pulled from experiments
     cats = helpers.getUnique(experiments, "measurementCategory")
     if(len(cats) == 1):
