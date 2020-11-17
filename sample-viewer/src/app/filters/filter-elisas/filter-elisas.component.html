@@ -1,7 +1,7 @@
 <div class="filter filter-expts container-column">
   <h4 class="filter-label">ELISA result</h4>
 
-  <form [formGroup]="elisaForm">
+  <form [formGroup]="elisaForm" class="container">
     <div formArrayName="elisaGroups">
 
       <div *ngFor="let group of elisaArray.controls; let i = index;">

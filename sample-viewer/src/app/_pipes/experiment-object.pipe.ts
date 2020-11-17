@@ -38,7 +38,7 @@ import { ExperimentObject } from '../_models';
 dataset_id: Dataset:identifier
 icon_id: id in icon_defs.svg
 anchor_link:
-datasetName:
+datasetName: name for btns; should be short
  */
 export class ExperimentObjectPipe implements PipeTransform {
   exptDict: ExperimentObject[] = [
