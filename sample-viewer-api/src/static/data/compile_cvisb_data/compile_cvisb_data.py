@@ -9,6 +9,7 @@
 # @date:        31 October 2019
 # @use:         python3 compile_cvisb_data.py # imports / saves all
 # @use:         python3 compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
+# @use:         python3 compile_cvisb_data.py -t ebola-virus-seq -f EBOV_seq
 
 import pandas as pd
 import argparse
@@ -139,28 +140,28 @@ def compile_data(args, chunk_size=300):
     # --- save jsons ---
     if(not args.nosave):
         saveJson(
-            combined['sample'], f"{config.EXPORTDIR}/samples/{args.filename}__sample_ALL_{config.today}.json")
+            combined['sample'], f"{config.EXPORTDIR}/samples/{config.today}_sample_{args.filename}_ALL.json")
         saveJson(
-            combined['dataset'], f"{config.EXPORTDIR}/datasets/{args.filename}__dataset_ALL_{config.today}.json")
+            combined['dataset'], f"{config.EXPORTDIR}/datasets/{config.today}_dataset_{args.filename}_ALL.json")
         if(len(combined['datadownload']) > chunk_size):
             for i in range(0, ceil(len(combined["datadownload"])/chunk_size)):
                 saveJson(combined['datadownload'].iloc[i*chunk_size:(i+1)*chunk_size],
-                 f"{config.EXPORTDIR}/datadownloads/{args.filename}__datadownload_ALL_{config.today}_{i}.json")
+                 f"{config.EXPORTDIR}/datadownloads/{config.today}_datadownload_{args.filename}_ALL_{i}.json")
 
         if(len(combined['patient']) > chunk_size):
             for i in range(0, ceil(len(combined["patient"])/chunk_size)):
                 saveJson(combined['patient'].iloc[i*chunk_size:(i+1)*chunk_size],
-                         f"{config.EXPORTDIR}/patients/{args.filename}__patient_ALL_{config.today}_{i}.json")
+                         f"{config.EXPORTDIR}/patients/{config.today}_{args.filename}_patient_ALL_{i}.json")
         else:
-            saveJson(combined['patient'], f"{config.EXPORTDIR}/patients/{args.filename}__patient_ALL_{config.today}.json")
+            saveJson(combined['patient'], f"{config.EXPORTDIR}/patients/{config.today}_patient_{args.filename}_ALL.json")
 
         if(len(combined['experiment']) > chunk_size):
             for i in range(0, ceil(len(combined["experiment"])/chunk_size)):
                 saveJson(combined['experiment'].iloc[i*chunk_size:(i+1)*chunk_size],
-                         f"{config.EXPORTDIR}/experiments/{args.filename}__experiment_ALL_{config.today}_{i}.json")
+                         f"{config.EXPORTDIR}/experiments/{config.today}_experiment_{args.filename}_ALL_{i}.json")
         else:
             saveJson(combined['experiment'],
-                 f"{config.EXPORTDIR}/experiments/{args.filename}__experiment_ALL_{config.today}.json")
+                 f"{config.EXPORTDIR}/experiments/{config.today}_experiment_{args.filename}_ALL.json")
 
     # --- save a sample of the data ---
     sample_n = args.export_sample
