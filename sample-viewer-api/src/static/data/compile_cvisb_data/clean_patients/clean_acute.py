@@ -150,9 +150,9 @@ if(sum(expts.duplicated(subset=["experimentID"]))):
     print("ERROR! Duplicate experiment IDs detected")
 
 # EXPORT EXPERIMENTS
-chunk_size = 500
+chunk_size = 300
 for i in range(0, ceil(len(expts)/chunk_size)):
-    expts.iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/experiments/kgh_experiments_{i}_{today}.json", orient="records")
+    expts.iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/experiments/{today}_experiment_kgh-acute_{i}.json", orient="records")
 
 
 countries = helpers.getUnique(df, "country")
@@ -214,14 +214,12 @@ filtered_surv = surv[surv.gID.isnull()]
 # yucky1[['gID_x','age_x', 'age_y', 'cohort_x', 'cohort_y', 'countryName_x', 'countryName_y', 'dischargeDate_x', 'dischargeDate_y', 'gender_x', 'gender_y', 'height_x', 'height_y', 'infectionYear_x', 'infectionYear_y', 'occupation_x', 'occupation_y', 'outcome_x', 'outcome_y', 'weight_x', 'weight_y', "gID_y"]].to_csv("combined_survivor_acute_1.csv")
 # yucky2[['gID_x','age_x', 'age_y', 'cohort_x', 'cohort_y', 'countryName_x', 'countryName_y', 'dischargeDate_x', 'dischargeDate_y', 'gender_x', 'gender_y', 'height_x', 'height_y', 'infectionYear_x', 'infectionYear_y', 'occupation_x', 'occupation_y', 'outcome_x', 'outcome_y', 'weight_x', 'weight_y', "gID_y"]].to_csv("combined_survivor_acute_2.csv")
 
-
 # EXPORT PATIENTS
-
 chunk_size = 300
 for i in range(0, ceil(len(acute)/chunk_size)):
-    acute.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_acute-patients_{i}_{today}.json", orient="records")
+    acute.drop(["gIDString"], axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/{today}_patient_kgh_acute-patients_{i}.json", orient="records")
 for i in range(0, ceil(len(filtered_surv)/chunk_size)):
-    filtered_surv.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_survivor-patients_{i}_{today}.json", orient="records")
+    filtered_surv.drop(["gIDString"], axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/{today}_patient_kgh_survivor-patients_{i}.json", orient="records")
 
 
 

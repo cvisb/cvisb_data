@@ -81,8 +81,11 @@ export class getDatasetsService {
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
               let datasets = datasetResults;
+
               datasets.forEach((dataset: Dataset, idx: number) => {
                 dataset['counts'] = summaryData[idx];
+                let ds_obj = this.exptObjPipe.transform(dataset.identifier, "dataset_id")
+                dataset['icon'] = ds_obj['icon_id'];
               })
               return datasets.sort((a: Dataset, b: Dataset) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
             }),
@@ -267,6 +270,7 @@ export class getDatasetsService {
               counts.forEach(dataset => {
                 let ds_obj = this.exptObjPipe.transform(dataset.term, "dataset_id")
                 dataset['datasetName'] = ds_obj['datasetName'];
+                dataset['icon'] = ds_obj['icon_id'];
                 dataset['measurementCategory'] = ds_obj['measurementCategory'];
                 dataset['sources'] = cloneDeep(dataset[`citation.${citation_variable}.keyword`]['terms']);
                 delete dataset[`citation.${citation_variable}.keyword`];

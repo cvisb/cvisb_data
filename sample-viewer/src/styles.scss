@@ -786,8 +786,8 @@ button.stepper-button {
 .error-message-group {
   margin-bottom: 35px;
 }
-// EXPERIMENT ICONS
 
+// EXPERIMENT ICONS
 .expt-type {
   display: inline-block;
   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
@@ -830,7 +830,7 @@ button.stepper-button {
   background: #faffd7;
 }
 
-.RT-PCR {
+.rtpcr {
   background: lighten($ebola-lt, 11%);
 }
 
@@ -849,7 +849,7 @@ button.stepper-button {
   background: #fbe6ff;
 }
 
-.blood-chemistry-vhf, .blood-counts-vhf {
+.blood-chemistry, .blood-counts {
   background: #ffe7c7;
 }
 

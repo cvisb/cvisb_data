@@ -30,7 +30,7 @@ export class DatasetComponent implements OnInit {
 
     this.datasets$ = this.datasetSvc.getDatasets();
     // this.datasetSvc.getDatasets().subscribe((datasets) => {
-    //   this.datasets = datasets;
+    //   console.log(datasets)
     // });
 
     // Show terms, if they haven't been displayed before:

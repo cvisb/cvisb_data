@@ -909,7 +909,7 @@
     </symbol>
 
     <!-- piccolo -->
-    <symbol id="blood-chemistry-vhf" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="blood-chemistry" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>Piccolo blood chemistry</title>
       <g id="piccolo">
         <g>
@@ -1012,7 +1012,7 @@
     </symbol>
 
     <!-- hand -->
-    <symbol id="blood-counts-vhf" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
+    <symbol id="blood-counts" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
       <title>blood counts viral hemorrhagic fever</title>
       <g id="cells">
       	<g id="monocyte">
@@ -1511,18 +1511,9 @@
       </g>
     </symbol>
 
-    <symbol id="US" viewBox="0 0 393.7 243.7" style="enable-background:new 0 0 393.7 243.7;" xml:space="preserve">
-      <g id="USA_albers">
-        <path
-          d="M20.3,1.9l11.4,5.8L34,0l24,6.4l31.8,6.9l39.1,6l16.1,1.7l31.3,2.1l30.1,0.5l10.8,4.1l3.2-0.9l9.2,5.1l3,11.3l4.9,2.4
-    		l14.7-4.9l5.4,3.9l7.9-2.3l13.3-0.1l0.9,5.1l-9.7,0.1l-10.4,5l-2.8,22.7l3.9,15l6.3-2.6l1.9-8.3l-3.1-8.1l2-12.3l4.4-1.8l3.6-7.4
-    		l9.4,3.6l1.5,8.8l5.4,4.1l2.6,7.6L289.1,86l7.4,3l13.9-8.4l8.9-8.9l1.1-5.8l11-1.2l2.7-9.6l5.5-7.6l24.2-7.4l5.8-10.2l-0.4-7.8
-    		l2.9-8.3l10,0.9l3.8,12.6l7.9,6.1l-7.7,9.3l-10.2,7.3l-2.1,13.6l6.3,5.5l-17,8.1l0.8,5.5l-5.9,4.7l0.4,5.7l-4.2,7l0,10.3l-7.1,3.6
-    		l10.4,20.2l0.2,3.6l-6.3,7.6l-4.7,0.5l-4.9,8.5l-5.4,1.4l-3.1,7L321.8,175l-2.8,13.2l3.1,9l7.3,10.2l7.2,15.4l0,16.2l-6.2,1.3
-    		l-3.6-5.7l-13.4-13.8l-3.3-15.4l-11.4-8.1l-7.5,5.8l-8.5-5.6l-23.7,1l-4.2,9.7l-11.3,4l-4.6-3.9l-14.8-2l-11.7,3.1l-6.5,5.8
-    		l-12.6,7.9l-4.3,9.1l-0.5,11.4l-14.4-5.8l-3.4-11.3l-5.7-6.2l-3-8.2l-5.7-6.3l-7.3-1.8l-8.7,7.9l-9.9-7.4l-2.9-9.8l-11.3-11.8
-    		l-13.4-1.6l-0.5,4.2l-23-3.3l-27.6-16.2l-17.9-4.2l-0.9-7.4l-6.6-9l-7.4-5.7l-6.2-1.9l-1.4-8.3l-6.1-20.9L3.9,97.3l-3.3-7.1
-    		l1.5-8.7L0,74.7l5.2-8.4l0.6-13.8l4.1-5.9L16,32.7L19.7,18L20.3,1.9z"/>
+
+    <symbol id="US" viewBox="0 0 800 1193" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 604.0172 15.592 590.759 73.7913 667.6752 169.6699 667.9756 305.1413 686.1457 452.0256 732.6913 519.8703 692.5721 688.0848 707.5996 780.8236 757.3884 899.002 799 964.3659 508.4201 1074.2774 405.1989 1138.2871 237.7414 1192.294 72.2446 1139.0057 80.8733 1065.4151 1 904.4198 50.1171 693.9124 128.5442 537.5196 80.8063 271.8862 56.5174 131.2926 61.4384 25.4664 379.4057 17.659 460.2909 31.2088 519.3345 1 604.0172 15.592 Z"/>
       </g>
     </symbol>
 

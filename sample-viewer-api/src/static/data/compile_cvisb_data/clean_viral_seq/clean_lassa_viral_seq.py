@@ -114,10 +114,8 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     md['alternateIdentifier'] = md.privatePatientID.apply(helpers.listify)
     md['country'] = md.country_iso3.apply(helpers.getCountry)
     md['countryName'] = md.country.apply(helpers.pullCountryName)
-    md['admin2'] = md["admin2"]
-    md['admin3'] = md["admin3-4"]
-    md['homeLocation'] = None
-    md['exposureLocation'] = None
+    md['location'] = md.apply(getLocation, axis = 1)
+    md['locationPrivate'] = md.apply(getLocationPrivate, axis = 1)
     md['infectionYear'] = md.year
     md['samplingDate'] = md.date.apply(helpers.date2Range)
     md['species'] = md.host.apply(helpers.convertSpecies)
@@ -132,6 +130,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     # --- clean up experiment properties ---
     md['inAlignment'] = md.curated.apply(bool)
     md['cvisb_data'] = md.CViSB_data.apply(bool)
+    print("Is this going really slowly? Make sure your VPN is turned off when you're getting citations from NCBI.")
     citation_dict = helpers.createCitationDict(md, "source_PMID")
     md['citation'] = md["source_PMID"].apply(
         lambda x: helpers.lookupCitation(x, citation_dict))
@@ -262,12 +261,12 @@ def getExptDate(date_str):
 
 def getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file):
     if(row.segment == "S"):
-        return("; ".join([alignment_file_S.split("/")[-1], metadata_file.split("/")[-1]]))
+        return([alignment_file_S.split("/")[-1], metadata_file.split("/")[-1]])
     if(row.segment == "L"):
         if(row.curated):
-            return("; ".join([alignment_file_L.split("/")[-1], alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]]))
+            return([alignment_file_L.split("/")[-1], alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]])
         else:
-            return("; ".join([alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]]))
+            return([alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]])
 
 def combineSeqs(row):
     if(row.uncurated == row.uncurated):
@@ -311,3 +310,18 @@ def getDNAseq(alignment_file, uncurated_alignment, virus, seq_type="DNAsequence"
     df['data'] = df.apply(combineSeqs, axis=1)
     cols2return = ['sequenceID', 'data']
     return(df[cols2return])
+
+def getLocation(row):
+    loc = []
+    if((row.country == row.country) & (row.country is not None)):
+        row["country"]["locationType"] = "home"
+        loc.append(row.country)
+    if((row.admin2 == row.admin2) & (row.admin2 is not None)):
+        loc.append({"@type": "AdministrativeArea", "name": row.admin2.replace("_", " ").title(), "locationType": "home", "administrativeUnit": 2})
+    return(loc);
+
+def getLocationPrivate(row):
+    loc = getLocation(row)
+    if((row["admin3-4"] == row["admin3-4"]) & (row["admin3-4"] is not None)):
+            loc.append({"@type": "AdministrativeArea", "name": row["admin3-4"].replace("_", " ").title(), "locationType": "home"})
+    return(loc);
