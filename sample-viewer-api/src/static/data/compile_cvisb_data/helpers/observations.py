@@ -230,7 +230,7 @@ def getAcuteSymptoms(row, dateUpdated):
     symptoms["bleeding_vaginal"] = binarize(row.BVaginal)
     symptoms["bleeding_vomit"] = binarize(row.BVomit)
     if(row.BOther1 == row.BOther1):
-        symptoms["bleeding_other"] = [row.BOther1]
+        symptoms["bleeding_other"] = [str(row.BOther1)]
 
     symptoms["abdominal_pain"] = binarize(row.PAbdominal)
     symptoms["back_pain"] = binarize(row.PBack)
@@ -239,7 +239,7 @@ def getAcuteSymptoms(row, dateUpdated):
     symptoms["retrosternal_pain"] = binarize(row.PRetrosternal)
     symptoms["side_pain"] = binarize(row.PSide)
     if(row.POther1 == row.POther1):
-        symptoms["other_pain"] = [row.POther1]
+        symptoms["other_pain"] = [str(row.POther1)]
 
     return ([symptoms])
 

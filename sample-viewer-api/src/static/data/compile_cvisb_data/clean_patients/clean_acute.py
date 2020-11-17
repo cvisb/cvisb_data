@@ -214,7 +214,6 @@ filtered_surv = surv[surv.gID.isnull()]
 # yucky1[['gID_x','age_x', 'age_y', 'cohort_x', 'cohort_y', 'countryName_x', 'countryName_y', 'dischargeDate_x', 'dischargeDate_y', 'gender_x', 'gender_y', 'height_x', 'height_y', 'infectionYear_x', 'infectionYear_y', 'occupation_x', 'occupation_y', 'outcome_x', 'outcome_y', 'weight_x', 'weight_y', "gID_y"]].to_csv("combined_survivor_acute_1.csv")
 # yucky2[['gID_x','age_x', 'age_y', 'cohort_x', 'cohort_y', 'countryName_x', 'countryName_y', 'dischargeDate_x', 'dischargeDate_y', 'gender_x', 'gender_y', 'height_x', 'height_y', 'infectionYear_x', 'infectionYear_y', 'occupation_x', 'occupation_y', 'outcome_x', 'outcome_y', 'weight_x', 'weight_y', "gID_y"]].to_csv("combined_survivor_acute_2.csv")
 
-
 # EXPORT PATIENTS
 chunk_size = 300
 for i in range(0, ceil(len(acute)/chunk_size)):
