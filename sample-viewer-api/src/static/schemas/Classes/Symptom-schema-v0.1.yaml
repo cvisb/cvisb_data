@@ -39,7 +39,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         true
+  authenticated:         false
   schema:Enumeration:
                         - Sequela
                         - AcuteSymptom
