@@ -61,7 +61,7 @@ export class getDatasetsService {
     let fieldString: string = "";
 
     if (id && idVar) {
-      qstring = `${idVar}:"${id}"`;
+      qstring = `${idVar}.keyword:"${id}"`;
     } else {
       // Get list of datasets
       qstring = "__all__";
