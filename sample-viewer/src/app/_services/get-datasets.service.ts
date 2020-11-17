@@ -81,8 +81,11 @@ export class getDatasetsService {
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
               let datasets = datasetResults;
+
               datasets.forEach((dataset: Dataset, idx: number) => {
                 dataset['counts'] = summaryData[idx];
+                let ds_obj = this.exptObjPipe.transform(dataset.identifier, "dataset_id")
+                dataset['icon'] = ds_obj['icon_id'];
               })
               return datasets.sort((a: Dataset, b: Dataset) => a.measurementCategory < b.measurementCategory ? -1 : (a.measurementTechnique < b.measurementTechnique ? 0 : 1));
             }),

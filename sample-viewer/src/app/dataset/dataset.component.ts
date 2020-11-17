@@ -29,9 +29,9 @@ export class DatasetComponent implements OnInit {
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
     this.datasets$ = this.datasetSvc.getDatasets();
-    // this.datasetSvc.getDatasets().subscribe((datasets) => {
-    //   this.datasets = datasets;
-    // });
+    this.datasetSvc.getDatasets().subscribe((datasets) => {
+      console.log(datasets)
+    });
 
     // Show terms, if they haven't been displayed before:
     this.authSvc.popupTerms();
