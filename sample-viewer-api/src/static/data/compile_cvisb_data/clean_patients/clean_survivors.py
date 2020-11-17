@@ -99,7 +99,7 @@ def getSurvivors(filename, output_dir, updatedBy, dateModified, patient_version,
     chunk_size = 500
     today = datetime.today().strftime("%Y-%m-%d")
     for i in range(0, ceil(len(surv_expts)/chunk_size)):
-        surv_expts.iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/experiments/kgh_experiments_survivor_{i}_{today}.json", orient="records")
+        surv_expts.iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/experiments/{today}_experiment_kgh-survivor_{i}.json", orient="records")
 
 
     # --- checks ---
