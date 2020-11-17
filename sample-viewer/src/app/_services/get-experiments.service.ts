@@ -5,7 +5,7 @@ import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { ExperimentObjectPipe } from '../_pipes/experiment-object.pipe';
 import { forkJoin, Observable, throwError, from, BehaviorSubject } from 'rxjs/';
-import { map, catchError, pluck, mergeMap, finalize } from 'rxjs/operators';
+import { map, catchError, pluck, mergeMap, finalize , tap} from 'rxjs/operators';
 import { cloneDeep } from "lodash";
 
 import { CountryObjectPipe } from '../_pipes/country-object.pipe';
@@ -46,10 +46,12 @@ export class GetExperimentsService {
       .set('facet_size', '1000')
 
     return this.apiSvc.get('experiment', params, 0).pipe(
+      tap(d => console.log(d)),
       pluck("facets"),
       pluck("includedInDataset.keyword"),
       pluck("terms"),
       map((expts: ExperimentCount[]) => {
+        console.log(expts)
         expts["hits"].forEach(d => {
           let filtered = this.exptPipe.transform(d['term'], 'dataset_id');
           d['datasetName'] = filtered['datasetName'];
