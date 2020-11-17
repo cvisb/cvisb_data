@@ -232,3 +232,32 @@ def pullCountryName(countryObj):
         return(countryObj['name'])
     except:
         pass
+
+def getLocation(row):
+    loc = []
+    if(row.country == row.country):
+        row.country["locationType"] = "unknown"
+        row.country["administrativeType"] = "country"
+        loc.append(row.country)
+    if(row.District == row.District):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "district",
+        "administrativeUnit": 2,
+        'name': row.District,
+        'locationType': 'unknown'})
+    if(row.Chiefdom == row.Chiefdom):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "chiefdom",
+        "administrativeUnit": 3,
+        'name': row.Chiefdom,
+        'locationType': 'unknown'})
+    return(loc)
+
+def getPrivateLocation(row):
+    loc = row.location.copy()
+    if(row.Village == row.Village):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "village",
+  'name': row.Village,
+  'locationType': 'unknown'})
+    return(loc)
