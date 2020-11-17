@@ -216,12 +216,11 @@ filtered_surv = surv[surv.gID.isnull()]
 
 
 # EXPORT PATIENTS
-
 chunk_size = 300
 for i in range(0, ceil(len(acute)/chunk_size)):
-    acute.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_acute-patients_{i}_{today}.json", orient="records")
+    acute.drop(["gIDString"], axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/{today}_patient_kgh_acute-patients_{i}.json", orient="records")
 for i in range(0, ceil(len(filtered_surv)/chunk_size)):
-    filtered_surv.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_survivor-patients_{i}_{today}.json", orient="records")
+    filtered_surv.drop(["gIDString"], axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/{today}_patient_kgh_survivor-patients_{i}.json", orient="records")
 
 
 
