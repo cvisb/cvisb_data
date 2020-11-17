@@ -217,7 +217,7 @@
   # versions
 - "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version number of patient, auto-assigned by CViSB database
+  rdfs:comment:          Version number of patient data
   rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Patient
