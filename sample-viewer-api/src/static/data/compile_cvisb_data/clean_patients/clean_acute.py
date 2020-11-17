@@ -150,7 +150,7 @@ if(sum(expts.duplicated(subset=["experimentID"]))):
     print("ERROR! Duplicate experiment IDs detected")
 
 # EXPORT EXPERIMENTS
-chunk_size = 500
+chunk_size = 300
 for i in range(0, ceil(len(expts)/chunk_size)):
     expts.iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/experiments/{today}_experiment_kgh-acute_{i}.json", orient="records")
 
