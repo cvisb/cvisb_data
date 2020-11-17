@@ -35,6 +35,10 @@
           </div>
         </div>
 
+        <div class="filter-item filter-elisas">
+          <app-filter-elisas endpoint="patient"></app-filter-elisas>
+        </div>
+        
         <div class="filter-item filter-ctry">
           <app-filter-location [countries]="patientSummary.patientCountries" endpoint="patient" [all_countries]="allPatientSummary.patientCountries"></app-filter-location>
         </div>
@@ -45,9 +49,6 @@
 
 
         <div class="filter-wide-container container-column">
-          <div class="filter-item filter-elisas">
-            <app-filter-elisas endpoint="patient"></app-filter-elisas>
-          </div>
 
           <div class="filter-item filter-expts">
             <app-filter-experiment endpoint="patient" [expts]="allPatientSummary.experiments"></app-filter-experiment>
