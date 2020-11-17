@@ -395,7 +395,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:Date
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
