@@ -169,25 +169,24 @@ piccolo_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_piccolo.json", or
 from generate_vitals_dataset import get_vitals_dataset
 vitals_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Vital Signs Measurement"], updatedBy, vitals_version, vitals_id)
 vitals_ds = get_vitals_dataset(dateUpdated, vitals_dwnld, expts[expts.measurementTechnique == "Vital Signs Measurement"], countries, vitals_version, vitals_id)
-vitals_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_vitals.json.json", orient="records")
+vitals_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_vitals.json", orient="records")
 
 from generate_cbc_dataset import get_cbc_dataset
-cbc_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Blood Chemistry Measurement"], updatedBy, cbc_version, cbc_id)
+cbc_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Blood Cell Count"], updatedBy, cbc_version, cbc_id)
 cbc_ds = get_cbc_dataset(dateUpdated, cbc_dwnld, expts[expts.measurementTechnique == "Blood Cell Count"], countries, cbc_version, cbc_id)
 cbc_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_cbc.json", orient="records")
 
 from generate_rdt_dataset import get_rdt_dataset
-rdt_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Blood Chemistry Measurement"], updatedBy, rdt_version, rdt_id)
+rdt_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Rapid Antigen Test"], updatedBy, rdt_version, rdt_id)
 rdt_ds = get_rdt_dataset(dateUpdated, rdt_dwnld, expts[expts.measurementTechnique == "Rapid Antigen Test"], countries, rdt_version, rdt_id)
 rdt_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_rdt.json", orient="records")
 
 from generate_rtpcr_dataset import get_rtpcr_dataset
-pcr_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Blood Chemistry Measurement"], updatedBy, rtpcr_version, rtpcr_id)
+pcr_dwnld = get_expt_downloads(dateUpdated, expts[expts.measurementTechnique == "Reverse Transcriptase-Polymerase Chain Reaction"], updatedBy, rtpcr_version, rtpcr_id)
 pcr_ds = get_rtpcr_dataset(dateUpdated, pcr_dwnld, expts[expts.measurementTechnique == "Reverse Transcriptase-Polymerase Chain Reaction"], countries, rtpcr_version, rtpcr_id)
 pcr_ds.to_json(f"{output_dir}/datasets/{today}_dataset_kgh_rtpcr.json", orient="records")
 
 pd.concat([piccolo_dwnld, vitals_dwnld, cbc_dwnld, rdt_dwnld, pcr_dwnld]).to_json(f"{output_dir}/datadownloads/{today}_download_kgh_expts.json", orient="records")
-
 
 # [SURVIVORS]  ----------------------------------------------------------------------------------------------------
 # Merge and combine survivor data
@@ -218,7 +217,7 @@ filtered_surv = surv[surv.gID.isnull()]
 
 # EXPORT PATIENTS
 
-chunk_size = 600
+chunk_size = 300
 for i in range(0, ceil(len(acute)/chunk_size)):
     acute.drop("gIDString", axis=1).iloc[i*chunk_size:(i+1)*chunk_size].to_json(f"{output_dir}/patients/kgh_acute-patients_{i}_{today}.json", orient="records")
 for i in range(0, ceil(len(filtered_surv)/chunk_size)):

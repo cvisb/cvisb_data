@@ -51,7 +51,7 @@ def get_cbc_dataset(dateModified, downloadIDs, experiments, countries, version, 
     # passed in; from patient info.
     ds["spatialCoverage"] = countries
     # data downloads
-    ds["dataDownloadIDs"] = downloadIDs
+    ds["dataDownloadIDs"] = ds["dataDownloadIDs"] = helpers.getUnique(downloadIDs, "identifier")
     # pulled from experiments
     cats = helpers.getUnique(experiments, "measurementCategory")
     if(len(cats) == 1):

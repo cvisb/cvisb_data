@@ -94,6 +94,7 @@ def getSurvivors(filename, output_dir, updatedBy, dateModified, patient_version,
     # --- vitals ---
     surv_expts = surv.apply(lambda x: helpers.getVitals(x, dateModified, vitals_version, vitals_id, "survivor enrollment"), axis = 1)
     surv_expts = surv_expts[surv_expts==surv_expts] # remove Nulls
+
     # EXPORT EXPERIMENTS
     chunk_size = 500
     today = datetime.today().strftime("%Y-%m-%d")

@@ -454,6 +454,7 @@
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
+    - "@id":             cvisb:Organization
   schema:sameAs:
     "@id":               schema:citation
   owl:cardinality:       many
