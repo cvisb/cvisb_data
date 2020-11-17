@@ -215,10 +215,10 @@
   authenticated:         true
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
   rdfs:comment:          Version number of patient, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
