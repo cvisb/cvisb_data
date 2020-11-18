@@ -2,13 +2,34 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://data.cvisb.org/about</loc></url>
 <url><loc>https://data.cvisb.org/citation</loc></url>
+<!-- <url><loc>https://data.cvisb.org/data-quality</loc></url> -->
 <url><loc>https://data.cvisb.org/dataset</loc></url>
-<url><loc>https://data.cvisb.org/dataset/hla</loc></url>
+<url><loc>https://data.cvisb.org/dataset/blood-chemistry-vhf</loc></url>
+<url><loc>https://data.cvisb.org/dataset/blood-counts-vhf</loc></url>
 <url><loc>https://data.cvisb.org/dataset/ebola-virus-seq</loc></url>
+<url><loc>https://data.cvisb.org/dataset/hla</loc></url>
 <url><loc>https://data.cvisb.org/dataset/lassa-virus-seq</loc></url>
+<url><loc>https://data.cvisb.org/dataset/rapid-diagnostics-vhf</loc></url>
+<url><loc>https://data.cvisb.org/dataset/rtpcr-32783920</loc></url>
+<url><loc>https://data.cvisb.org/dataset/rtpcr-vhf</loc></url>
 <url><loc>https://data.cvisb.org/dataset/sarscov2-virus-seq</loc></url>
 <url><loc>https://data.cvisb.org/dataset/systems-serology</loc></url>
+<url><loc>https://data.cvisb.org/dataset/systems-serology-32783920</loc></url>
+<url><loc>https://data.cvisb.org/dataset/vitals-vhf</loc></url>
 <url><loc>https://data.cvisb.org/documentation</loc></url>
+<url><loc>https://data.cvisb.org/download</loc></url>
+<url><loc>https://data.cvisb.org/download/blood-chemistry-vhf</loc></url>
+<url><loc>https://data.cvisb.org/download/blood-counts-vhf</loc></url>
+<url><loc>https://data.cvisb.org/download/ebola-virus-seq</loc></url>
+<url><loc>https://data.cvisb.org/download/hla</loc></url>
+<url><loc>https://data.cvisb.org/download/lassa-virus-seq</loc></url>
+<url><loc>https://data.cvisb.org/download/rapid-diagnostics-vhf</loc></url>
+<url><loc>https://data.cvisb.org/download/rtpcr-32783920</loc></url>
+<url><loc>https://data.cvisb.org/download/rtpcr-vhf</loc></url>
+<url><loc>https://data.cvisb.org/download/sarscov2-virus-seq</loc></url>
+<url><loc>https://data.cvisb.org/download/systems-serology</loc></url>
+<url><loc>https://data.cvisb.org/download/systems-serology-32783920</loc></url>
+<url><loc>https://data.cvisb.org/download/vitals-vhf</loc></url>
 <url><loc>https://data.cvisb.org/home</loc></url>
 <url><loc>https://data.cvisb.org/login</loc></url>
 <url><loc>https://data.cvisb.org/patient</loc></url>
