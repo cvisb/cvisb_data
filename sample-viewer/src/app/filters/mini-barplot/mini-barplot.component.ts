@@ -31,7 +31,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
 
   // plot sizes
   private element: any;
-  @Input() private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
+  @Input() private margin: any = { top: 2, bottom: 2, left: 50, right: 100 };
 
   @Input() private height: number;
   @Input() private width: number = 70;
