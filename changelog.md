@@ -1,4 +1,42 @@
 # Prod
+### 2020-11-17 / 2020-11-18
+* Deleted /patient index and recreated, without `infectionDate` as a `DateRange`
+  - KGH acute patients
+  - KGH survivor patients (excluding those w/ a G-id)
+  - SARS-CoV-2 sequencing patients
+  - EBOV sequencing patients (non-KGH)
+  - LASV sequencing patients (non-KGH)
+* New datasets
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* New datadownloads
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* New experiments
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* updated data catalog
+* rebuilt schema
+* sync'd public/private indices
+
 ### 2020-11-03
 * Wiped and updated SARS-CoV-2 experiments to include "data" field
 * Updated datacatalog
