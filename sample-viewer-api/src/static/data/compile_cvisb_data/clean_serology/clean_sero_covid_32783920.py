@@ -91,7 +91,7 @@ def clean_sero_covid(sero_file, version, updatedBy, dateUpdated, output_dir):
 
     # --- experiment classifications ---
     sero["variableMeasured"] = sero.assay
-    sero["measurementTechnique"] = "serology"
+    sero["measurementTechnique"] = "Serology"
     sero["measurementCategory"] = "Systems Serology"
     sero["includedInDataset"] = "systems-serology-32783920"
     sero['isControl'] = sero.experimentID.apply(getControl)
