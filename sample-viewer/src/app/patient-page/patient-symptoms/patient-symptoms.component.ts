@@ -15,11 +15,9 @@ export class PatientSymptomsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges() {
-    this.symptom_keys = [];
     if (this.patient && this.patient.symptoms) {
-      this.patient.symptoms.forEach(d =>
-        this.symptom_keys = this.symptom_keys.concat(this.symptom_keys, Object.keys(d['symptoms'])));
+      this.symptom_keys = this.patient.symptoms.flatMap(d => Object.keys(d));
+      this.symptom_keys = this.symptom_keys.filter(d => !["@type", "timepoint"].includes(d))
     }
   }
-
 }

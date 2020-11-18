@@ -22,7 +22,7 @@ def get_rtpcr_dataset(dateModified, downloadIDs, experiments, countries, version
     ds['@context'] = "http://schema.org/"
     ds["@type"] = "Dataset"
     ds["identifier"] = dataset_id
-    ds["name"] = "RT-PCR MEasurements of Ebola/Lassa Patients"
+    ds["name"] = "RT-PCR Measurements of Ebola/Lassa Patients"
 
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
     ds["url"] = f"https://data.cvisb.org/dataset/{dataset_id}"
