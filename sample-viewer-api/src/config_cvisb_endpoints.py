@@ -12,7 +12,7 @@ CVISB_ENDPOINTS = {
         "private_index": "sample_metadata_current",
         "public_index": "sample_metadata_public_current",
         # 2019-11-15: 16 fields
-        "public_fields": ["AVLinactivated", "dateModified", "derivedIndex", "dilutionFactor", "freezingBuffer", "patientID", "protocolURL", "protocolVersion", "sampleGroup", "sampleType", "samplingDate.gt", "samplingDate.gte", "samplingDate.lt", "samplingDate.lte", "species", "visitCode"],
+        "public_fields": ['dateModified', 'protocolVersion', 'visitCode', 'patientID', 'protocolURL', 'sampleGroup', 'samplingDate.lt', 'sampleType', 'freezingBuffer', 'derivedIndex', 'samplingDate.gt', 'samplingDate.lte', 'AVLinactivated', 'species', 'dilutionFactor', 'samplingDate.gte'],
         "elasticsearch_public_index_body": {
             "settings": CVISB_DEFAULT_SETTINGS,
             "mappings": {
