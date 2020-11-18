@@ -4,7 +4,7 @@
       <!-- SHORTEST -->
       <ng-container *ngSwitchCase="'basic'">
         <div class="citation-article">
-          <span id="authors">
+          <span id="authors" *ngIf="citation.author">
             <a [href]="citation.url" target="_blank" rel="noreferrer">
               {{citation.author[0].givenName}} {{citation.author[0].familyName}}
               <i>et al.</i>
@@ -26,7 +26,7 @@
             </a>.
           </span>
 
-          <span id="authors">
+          <span id="authors" *ngIf="citation.author">
             <span *ngFor="let author of citation.author; let i=index" class="author">
               {{author.givenName}} {{author.familyName}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
             </span>
@@ -57,7 +57,7 @@
 
   <ng-template #basic_citation let-citation="citation">
     <div class="citation-article">
-      <span id="authors">
+      <span id="authors" *ngIf="citation.author">
         <a [href]="citation.url" target="_blank" rel="noreferrer">
           {{citation.author[0].givenName}} {{citation.author[0].familyName}}
           <i>et al.</i>
