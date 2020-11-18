@@ -16,10 +16,9 @@ export class PatientSymptomsComponent implements OnChanges {
 
   ngOnChanges() {
     this.symptom_keys = [];
+    console.log(this.patient)
     if (this.patient && this.patient.symptoms) {
-      this.patient.symptoms.forEach(d =>
-        this.symptom_keys = this.symptom_keys.concat(this.symptom_keys, Object.keys(d['symptoms'])));
+      this.symptom_keys = Object.keys(this.patient.symptoms);
     }
   }
-
 }
