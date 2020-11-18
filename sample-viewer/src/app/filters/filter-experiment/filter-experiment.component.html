@@ -2,8 +2,8 @@
   <h4 class="filter-label">experiment data</h4>
 
   <div class="expt-container">
-    <div class="filter-pair expt-type filter-expt" [ngClass]="[expt.icon, expt.icon + '-icon']" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
-    [ngClass]="{'disabled' : expt.disabled}">
+    <div class="filter-pair expt-type filter-expt" *ngFor="let expt of expts; let idx = index" (click)="filterExpt(idx)"
+    [ngClass]="{'disabled' : expt.disabled, expt.icon: true, expt.icon + '-icon': true }">
       <svg-icon [icon]="expt.icon"></svg-icon>
       <div class="expt-name">{{ expt.datasetName }}</div>
       <!-- <div class="file-count">{{ expt.value }}</div> -->
