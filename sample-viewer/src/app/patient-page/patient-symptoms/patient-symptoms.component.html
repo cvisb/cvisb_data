@@ -2,7 +2,7 @@
 
   <div class="symptom-timepoint" *ngFor="let timepoint of patient.symptoms">
     <h4 class="patient timepoint">
-      <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>Sequelae symptoms at {{ timepoint.timepoint }}</h4>
+      <i class="fas fa-lock private-icon" matTooltip="private data; do not share"></i>{{timepoint['@type']}} symptoms <span *ngIf="timepoint.timepoint">at {{ timepoint.timepoint }}</span></h4>
 
     <table class="symptom-list">
       <tr *ngFor="let symptom of symptom_keys">
@@ -11,18 +11,18 @@
         </th>
         <td>
 
-          <span class="fa-stack fa-1x symptom-false" *ngIf="timepoint.symptoms[symptom] === false">
+          <span class="fa-stack fa-1x symptom-false" *ngIf="timepoint[symptom] === false">
             <i class="fas fa-circle fa-stack-1x"></i>
             <i class="far fa-circle fa-stack-1x"></i>
           </span>
 
 
-          <span class="fa-stack fa-1x symptom-true" *ngIf="timepoint.symptoms[symptom] === true">
+          <span class="fa-stack fa-1x symptom-true" *ngIf="timepoint[symptom] === true">
             <i class="fas fa-circle fa-stack-1x"></i>
             <i class="far fa-check-circle fa-stack-1x"></i>
           </span>
 
-          <span class="symptom-unavailable" *ngIf="!timepoint.symptoms[symptom] && timepoint.symptoms[symptom] !== false">
+          <span class="symptom-unavailable" *ngIf="!timepoint[symptom] && timepoint[symptom] !== false">
             N/A
           </span>
 
