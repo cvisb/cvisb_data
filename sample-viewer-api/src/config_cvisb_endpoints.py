@@ -144,16 +144,16 @@ CVISB_ENDPOINTS = {
                     'dynamic': 'true',
                     'dynamic_date_formats': ['yyyy-MM-dd'],
                     'dynamic_templates': [
-                        {
-                            'infectionDateRange': {
-                                'path_match': 'infectionDate',
-                                'mapping': {
-                                    'dynamic': 'false',
-                                    'format': 'yyyy-MM-dd',
-                                    'type': 'date_range'
-                                }
-                            }
-                        },
+                        #{
+                        #    'infectionDateRange': {
+                        #        'path_match': 'infectionDate',
+                        #        'mapping': {
+                        #            'dynamic': 'false',
+                        #            'format': 'yyyy-MM-dd',
+                        #            'type': 'date_range'
+                        #        }
+                        #    }
+                        #},
                         #{
                         #    'infectionYearRange': {
                         #        'path_match': 'infectionYear',
