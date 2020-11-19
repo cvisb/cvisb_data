@@ -1,11 +1,11 @@
   <div class="container-justified container-dataset-name align-items-center mb-4 pb-4">
-    <div>
+    <div class="container align-items-center">
       <h1 class="dataset-name">
         Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
       </h1>
 
-      <div [ngClass]="[id, 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
-        <svg-icon [icon]="id"></svg-icon>
+      <div [ngClass]="[iconID 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
+        <svg-icon [icon]="iiconID"></svg-icon>
       </div>
     </div>
 

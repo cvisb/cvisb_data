@@ -22,6 +22,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 export class DownloadComponent implements OnInit, OnDestroy {
   id: string;
+  iconID: string;
   datasetName: string;
   total: number;
   summary: any;
@@ -104,6 +105,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
 
     let filtered = this.exptPipe.transform(this.id, 'dataset_id');
     this.datasetName = filtered['datasetName'];
+    this.iconID = filtered['icon_id'];
 
     // Set page name
     this.titleSvc.setTitle(`Download ${this.datasetName} data`);
