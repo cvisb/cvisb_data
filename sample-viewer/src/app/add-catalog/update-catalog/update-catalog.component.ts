@@ -44,7 +44,7 @@ export class UpdateCatalogComponent implements OnDestroy {
       this.catalog = catalog;
       if (this.catalog && this.catalog.releaseVersion) {
         console.log("YES")
-        console.log(this.catalog.keys())
+        console.log(this.catalog)
         // this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
       //   this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
       }
