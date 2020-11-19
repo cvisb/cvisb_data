@@ -5,6 +5,7 @@ import { pipe, Subscription, Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { GetDatacatalogService, AuthService, ApiService } from '../../_services/';
 import { CvisbUser, DataCatalog, ReleaseNote } from '../../_models';
+import { nest } from "d3";
 
 @Component({
   selector: 'app-update-catalog',
@@ -45,8 +46,8 @@ export class UpdateCatalogComponent implements OnDestroy {
       if (this.catalog && this.catalog.releaseVersion) {
         console.log("YES")
         console.log(this.catalog)
-        // this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
-      //   this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+        this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+        this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
       }
     });
 
@@ -167,11 +168,15 @@ export class UpdateCatalogComponent implements OnDestroy {
   }
 
   generateJson() {
+    let notes = this.releaseForm.get("noteGroups").value;
+    console.log(notes)
+    console.log(nest)
+
     return ({
       datePublished: this.datePipe.transform(this.summaryForm.get("datePublished").value, "yyyy-MM-dd"),
       abstract: this.summaryForm.get("abstract").value,
       version: this.getVersion(),
-      description: this.releaseForm.get("noteGroups").value
+      description: notes
     })
   }
 
