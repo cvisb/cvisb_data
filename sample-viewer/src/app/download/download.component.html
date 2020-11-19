@@ -4,8 +4,8 @@
         Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
       </h1>
 
-      <div [ngClass]="[iconID 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
-        <svg-icon [icon]="iiconID"></svg-icon>
+      <div [ngClass]="[iconID, 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
+        <svg-icon [icon]="iconID"></svg-icon>
       </div>
     </div>
 
