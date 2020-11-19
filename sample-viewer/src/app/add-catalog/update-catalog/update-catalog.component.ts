@@ -41,11 +41,8 @@ export class UpdateCatalogComponent implements OnDestroy {
     })
 
     this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
-      console.log(catalog)
       this.catalog = catalog;
       if (this.catalog && this.catalog.releaseVersion) {
-        console.log("YES")
-        console.log(this.catalog)
         this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
         this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
       }
@@ -53,7 +50,6 @@ export class UpdateCatalogComponent implements OnDestroy {
 
     this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
       this.datasets = datasets;
-      console.log(this.datasets)
     });
 
     this.versionForm = this.fb.group({
@@ -148,11 +144,11 @@ export class UpdateCatalogComponent implements OnDestroy {
     if (this.catalog["_version"]) {
       delete this.catalog["_version"];
     }
-    console.log(this.catalog);
 
     this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
     this.apiSvc.putPiecewise("datacatalog", [this.catalog]).subscribe(
       responses => {
+        console.log(this.catalog);
         console.log(responses)
         let result = this.apiSvc.tidyPutResponse(responses, 1, 'data catalog');
 
