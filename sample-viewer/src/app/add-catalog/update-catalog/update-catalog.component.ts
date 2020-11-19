@@ -38,10 +38,12 @@ export class UpdateCatalogComponent implements OnDestroy {
     })
 
     this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
+      console.log(catalog)
       this.catalog = catalog;
-      this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
-      this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
-      console.log(this.catalog)
+      if (this.catalog) {
+        this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+        this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+      }
     });
 
     this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
