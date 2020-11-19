@@ -31,7 +31,7 @@ export class UpdateCatalogComponent implements OnDestroy {
     private authSvc: AuthService,
     private catalogSvc: GetDatacatalogService
   ) {
-    this.authSvc.userState$.subscribe((user: CvisbUser) => {
+    this.userSubscription = this.authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
     })
 
@@ -89,7 +89,7 @@ export class UpdateCatalogComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+  this.userSubscription.unsubscribe();
   }
 
   // Get method to grab the formArray within formGroup
