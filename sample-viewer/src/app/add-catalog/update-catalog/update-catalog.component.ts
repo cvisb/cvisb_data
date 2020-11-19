@@ -154,10 +154,9 @@ export class UpdateCatalogComponent implements OnDestroy {
     this.apiSvc.putPiecewise("datacatalog", [this.catalog]).subscribe(
       responses => {
         console.log(responses)
-        // this.uploadReponse = responses;
-        // this.uploadResponse = result.uploadResponse;
-        // this.errorMsg = result.errorMsg;
-        // this.errorObj = result.errorObj;
+        let result = this.apiSvc.tidyPutResponse(responses, 1, 'data catalog');
+
+        this.uploadResponse = result.uploadResponse;
       })
 
   }
