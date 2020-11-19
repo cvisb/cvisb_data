@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { DatePipe } from '@angular/common';
 import { pipe, Subscription, Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { GetDatacatalogService, AuthService } from '../../_services/';
+import { GetDatacatalogService, AuthService, ApiService } from '../../_services/';
 import { CvisbUser, DataCatalog, ReleaseNote } from '../../_models';
 
 @Component({
@@ -40,7 +40,7 @@ export class UpdateCatalogComponent implements OnDestroy {
     this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
       console.log(catalog)
       this.catalog = catalog;
-      if (this.catalog) {
+      if (this.catalog && this.catalog.releaseVersion) {
         this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
         this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
       }
@@ -144,6 +144,15 @@ export class UpdateCatalogComponent implements OnDestroy {
       delete this.catalog["_version"];
     }
     console.log(this.catalog);
+
+    // this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
+    // this.apiSvc.putPiecewise("datacatalog", this.catalog, 1000).subscribe(
+    //   responses => {
+    //     console.log(responses)
+    //     this.uploadResponse = result.uploadResponse;
+    //     // this.errorMsg = result.errorMsg;
+    //     // this.errorObj = result.errorObj;
+    //   })
 
   }
 
