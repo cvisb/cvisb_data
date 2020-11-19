@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { pipe, Subscription, Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { GetDatacatalogService, AuthService } from '../../_services/';
-import { CvisbUser, DataCatalog } from '../../_models';
+import { CvisbUser, DataCatalog, ReleaseNote } from '../../_models';
 
 @Component({
   selector: 'app-update-catalog',
@@ -18,11 +18,13 @@ export class UpdateCatalogComponent implements OnDestroy {
   versionForm: FormGroup;
   summaryForm: FormGroup;
   releaseForm: FormGroup;
-  newNote: Object;
+  newNote: ReleaseNote;
   categories: string[] = ["Data", "Patient", "Dataset", "Sample", "Download", "Performance", "General", "Bugs"];
   debounceTime: number = 400;
-  catalog$: Observable<DataCatalog>
-  datasets$: Observable<any>
+  catalog: DataCatalog;
+  catalogSubscription: Subscription;
+  datasets: any;
+  datasetSubscription: Subscription;
   currentVersion: number[];
 
   constructor(
@@ -35,9 +37,13 @@ export class UpdateCatalogComponent implements OnDestroy {
       this.user = user;
     })
 
-    this.catalog$ = this.catalogSvc.dataCatalog$;
+    this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
+      this.catalog = catalog;
+    });
 
-    console.log(this.catalogSvc.dataCatalog$)
+    this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
+      this.datasets = datasets;
+    });
 
     this.versionForm = this.fb.group({
       major: new FormControl(0, Validators.required),
@@ -54,11 +60,13 @@ export class UpdateCatalogComponent implements OnDestroy {
       noteGroups: this.fb.array([this.createNote()])
     })
 
-    console.log(this.catalog$)
+    console.log(this.catalog)
+    console.log(this.datasets)
 
-    // this.currentVersion = this.catalog$['releaseVersion'].split(".").map(d => +d);
-    // this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+    this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+    this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
 
+    // subscribe to changes in form
     this.versionForm.valueChanges
       .pipe(
         debounceTime(this.debounceTime),
@@ -89,7 +97,9 @@ export class UpdateCatalogComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-  this.userSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.catalogSubscription.unsubscribe();
+    this.datasetSubscription.unsubscribe();
   }
 
   // Get method to grab the formArray within formGroup
@@ -116,18 +126,24 @@ export class UpdateCatalogComponent implements OnDestroy {
 
   uploadCatalog() {
     // update user updatedBy
-    this.catalog$["updatedBy"] = this.user.name ? this.user.name : "unknown";
+    this.catalog["updatedBy"] = this.user.name ? this.user.name : "unknown";
 
     // update releaseVersion
-    this.catalog$["releaseVersion"] = this.getVersion();
+    this.catalog["releaseVersion"] = this.getVersion();
 
     // update dataset list
-    this.datasets$ = this.catalogSvc.getDatasets();
-    this.catalog$["dataset"] = this.datasets$;
+    this.catalog["dataset"] = this.datasets;
 
     // append new release note
     this.newNote = this.generateJson();
-    this.catalog$["releaseNotes"].push(this.newNote);
+    this.catalog["releaseNotes"].push(this.newNote);
+    if(this.catalog["_score"]){
+      delete this.catalog["_score"];
+    }
+    if(this.catalog["_version"]){
+      delete this.catalog["_version"];
+    }
+    console.log(this.catalog);
 
   }
 
