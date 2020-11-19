@@ -22,3 +22,4 @@ export * from './experiment-object';
 export * from './systems-serology';
 export * from './experiment';
 export * from './missing-data';
+export * from './data-catalog';

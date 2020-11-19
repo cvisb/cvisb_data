@@ -27,6 +27,7 @@ const appRoutes: Routes = [
   { canActivate: [AuthGuard], path: 'upload/sample', loadChildren: () => import('./add-samples/upload-samples/upload-samples.module').then(m => m.UploadSamplesModule), pathMatch: 'full', data: { title: 'Upload Samples | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/patient', loadChildren: () => import('./add-patients/upload-patients/upload-patients.module').then(m => m.UploadPatientsModule), pathMatch: 'full', data: { title: 'Upload Patients | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/dataset', loadChildren: () => import('./add-data/upload-data/upload-data.module').then(m => m.UploadDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
+  { path: 'upload/catalog', loadChildren: () => import('./add-catalog/add-catalog.module').then(m => m.AddCatalogModule), pathMatch: 'full', data: { title: 'Upload Data Catalog | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload/delete', loadChildren: () => import('./delete-data/delete-data.module').then(m => m.DeleteDataModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'upload', loadChildren: () => import('./upload/upload.module').then(m => m.UploadModule), pathMatch: 'full', data: { title: 'Upload Data | CViSB' } },
   { canActivate: [AuthGuard], path: 'sample', loadChildren: () => import('./sample/sample.module').then(m => m.SampleModule), pathMatch: 'full', data: { title: 'Samples | CViSB' } },
