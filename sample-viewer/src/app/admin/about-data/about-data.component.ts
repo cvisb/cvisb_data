@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GetDatacatalogService, AnchorService } from '../../_services';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
+import { DataCatalog } from '../../_models';
 
 @Component({
   selector: 'app-about-data',
@@ -10,7 +11,7 @@ import { Subscription, Observable } from 'rxjs';
 })
 
 export class AboutDataComponent implements OnInit, OnDestroy {
-  cvisbCatalog$: Observable<Object>;
+  cvisbCatalog$: Observable<DataCatalog>;
   routeSubscription: Subscription;
 
   constructor(private dataCatalogSvc: GetDatacatalogService,
@@ -19,7 +20,7 @@ export class AboutDataComponent implements OnInit, OnDestroy {
   ) {
 
     // get static data catalog params
-    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;;
+    this.cvisbCatalog$ = this.dataCatalogSvc.dataCatalog$;
   }
 
   ngOnInit() {

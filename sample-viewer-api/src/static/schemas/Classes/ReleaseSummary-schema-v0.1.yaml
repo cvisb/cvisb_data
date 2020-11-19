@@ -74,10 +74,10 @@
   marginality:           required
   authenticated:         false
 
-- "@id":                 cvisb:overview
+- "@id":                 cvisb:abstract
   "@type":               rdf:Property
   rdfs:comment:          Overview summary of what was changed in the most recent update.
-  rdfs:label:            overview
+  rdfs:label:            abstract
   schema:domainIncludes:
     - "@id":             cvisb:ReleaseSummary
   schema:rangeIncludes:
