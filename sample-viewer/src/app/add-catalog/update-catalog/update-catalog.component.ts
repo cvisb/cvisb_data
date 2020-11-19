@@ -39,6 +39,8 @@ export class UpdateCatalogComponent implements OnDestroy {
 
     this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
       this.catalog = catalog;
+      this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+      this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
     });
 
     this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
@@ -63,10 +65,6 @@ export class UpdateCatalogComponent implements OnDestroy {
     console.log(this.catalog)
     console.log(this.datasets)
 
-    if (this.catalog && this.catalog["releaseVersion"]) {
-      this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
-      this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
-    }
 
     // subscribe to changes in form
     this.versionForm.valueChanges
