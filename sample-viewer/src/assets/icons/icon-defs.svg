@@ -1094,7 +1094,7 @@
     </symbol>
 
     <!-- RT-PCR -->
-    <symbol id="RT-PCR" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <symbol id="rtpcr" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
       <title>RT PCR</title>
       <g id="copied_dna">
         <line class="st0" fill="none" stroke="#ff3d82" stroke-width="1.0256" stroke-miterlimit="10" x1="15.9" y1="10" x2="24.1" y2="10"/>
