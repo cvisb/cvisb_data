@@ -41,10 +41,12 @@ export class UpdateCatalogComponent implements OnDestroy {
       this.catalog = catalog;
       this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
       this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+      console.log(this.catalog)
     });
 
     this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
       this.datasets = datasets;
+      console.log(this.datasets)
     });
 
     this.versionForm = this.fb.group({
@@ -61,10 +63,6 @@ export class UpdateCatalogComponent implements OnDestroy {
     this.releaseForm = this.fb.group({
       noteGroups: this.fb.array([this.createNote()])
     })
-
-    console.log(this.catalog)
-    console.log(this.datasets)
-
 
     // subscribe to changes in form
     this.versionForm.valueChanges
