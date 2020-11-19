@@ -63,8 +63,10 @@ export class UpdateCatalogComponent implements OnDestroy {
     console.log(this.catalog)
     console.log(this.datasets)
 
-    this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
-    this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+    if (this.catalog && this.catalog["releaseVersion"]) {
+      this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+      this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+    }
 
     // subscribe to changes in form
     this.versionForm.valueChanges
@@ -137,10 +139,10 @@ export class UpdateCatalogComponent implements OnDestroy {
     // append new release note
     this.newNote = this.generateJson();
     this.catalog["releaseNotes"].push(this.newNote);
-    if(this.catalog["_score"]){
+    if (this.catalog["_score"]) {
       delete this.catalog["_score"];
     }
-    if(this.catalog["_version"]){
+    if (this.catalog["_version"]) {
       delete this.catalog["_version"];
     }
     console.log(this.catalog);
