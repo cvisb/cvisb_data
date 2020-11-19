@@ -1,4 +1,7 @@
 # Prod
+### 2020-11-19
+* Rebuilt schema (minor changes to DataCatalog)
+
 ### 2020-11-17 / 2020-11-18
 * Deleted /patient index and recreated, without `infectionDate` as a `DateRange`
   - KGH acute patients
