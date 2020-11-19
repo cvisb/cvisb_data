@@ -33,13 +33,11 @@ export class GetDatacatalogService {
   getDatasets() {
     let params = new HttpParams()
     .set("q", "__all__")
+    .set("size", "0")
     .set("facets", "identifier.keyword")
     .set("facet_size", "1000");
 
     return this.apiSvc.get("dataset", params).pipe(
-      map(d => {
-        console.log(d)
-      }),
       pluck("facets", "identifier.keyword", "terms"),
       map((datasets: any) => {
         console.log(datasets);
