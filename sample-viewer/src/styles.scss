@@ -490,17 +490,6 @@ svg-icon.country-icon {
   height: 20px;
 }
 
-.hla-icon,
-.hla-icon {
-  stroke: $default-color;
-  stroke-width: 0.75;
-  fill: $grey-300;
-}
-
-.systems-serology-icon {
-  fill: url("#grey_radial_gradient") $grey-200;
-  stroke: $nigeria-green;
-}
 // --- filters ---
 
 .filter-container {
@@ -821,8 +810,9 @@ button.stepper-button {
 }
 
 .systems-serology {
-  // background: lighten($lassa-lt, 20%);
-  background: #e3ffe2;
+  background: lighten($lassa-lt, 17%);
+  // background: #e3ffe2;
+  fill: url("#grey_radial_gradient") $grey-200;
 }
 
 .elisa {

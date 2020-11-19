@@ -44,7 +44,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["dataDownloadIDs"] = helpers.getUnique(downloads, "identifier")
 
     measTechs = helpers.getUnique(experiments, "measurementTechnique")
-    keywords = ["systems serology", "Ebola", "Ebola virus", "EBOV", "Lassa", "Lassa virus", "LASV"]
+    keywords = ["Systems Serology", "Ebola", "Ebola virus", "EBOV", "Lassa", "Lassa virus", "LASV"]
     keywords.extend(measTechs)
     ds["keywords"] = keywords
     ds["measurementTechnique"] = measTechs
