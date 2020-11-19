@@ -40,7 +40,7 @@ export class GetDatacatalogService {
       map(d => {
         console.log(d)
       }),
-      pluck("identifier.keyword", "terms"),
+      pluck("facets", "identifier.keyword", "terms"),
       map((datasets: any) => {
         console.log(datasets);
         return(datasets.map(d => d.term))
