@@ -26,11 +26,13 @@ export class UpdateCatalogComponent implements OnDestroy {
   datasets: any;
   datasetSubscription: Subscription;
   currentVersion: number[];
+  uploadResponse: string = "not submitted";
 
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private authSvc: AuthService,
+    private apiSvc: ApiService,
     private catalogSvc: GetDatacatalogService
   ) {
     this.userSubscription = this.authSvc.userState$.subscribe((user: CvisbUser) => {
@@ -40,10 +42,10 @@ export class UpdateCatalogComponent implements OnDestroy {
     this.catalogSubscription = this.catalogSvc.dataCatalog$.subscribe(catalog => {
       console.log(catalog)
       this.catalog = catalog;
-      if (this.catalog && this.catalog.releaseVersion) {
-        this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
-        this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
-      }
+      // if (this.catalog && this.catalog.releaseVersion) {
+      //   this.currentVersion = this.catalog['releaseVersion'].split(".").map(d => +d);
+      //   this.versionForm.setValue({ major: this.currentVersion[0], minor: this.currentVersion[1], patch: this.currentVersion[2] });
+      // }
     });
 
     this.datasetSubscription = this.catalogSvc.getDatasets().subscribe(datasets => {
@@ -149,7 +151,8 @@ export class UpdateCatalogComponent implements OnDestroy {
     // this.apiSvc.putPiecewise("datacatalog", this.catalog, 1000).subscribe(
     //   responses => {
     //     console.log(responses)
-    //     this.uploadResponse = result.uploadResponse;
+    //     this.uploadReponse = responses;
+    //     // this.uploadResponse = result.uploadResponse;
     //     // this.errorMsg = result.errorMsg;
     //     // this.errorObj = result.errorObj;
     //   })

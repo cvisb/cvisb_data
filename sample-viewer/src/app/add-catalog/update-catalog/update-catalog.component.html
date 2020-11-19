@@ -4,10 +4,13 @@
   </div>
 </div>
 
-<button mat-icon-button color="primary" (click)="addNote()">
-  <mat-icon aria-hidden="false" class="huge pointer" aria-label="upload data catalog">cloud_upload</mat-icon>
-  Upload
-</button>
+<div>
+  <button mat-icon-button color="primary" (click)="addNote()">
+    <mat-icon aria-hidden="false" class="huge pointer" aria-label="upload data catalog">cloud_upload</mat-icon>
+    Upload
+  </button>
+  upload status: {{ uploadResponse }}
+  </div>
 
 <div class="container-justified align-items-center mb-2 pb-4 blue-underline">
   <div id="current-version">
