@@ -15,7 +15,7 @@
 <div class="container-justified align-items-center mb-2 pb-4 blue-underline">
   <div id="current-version">
     <h3>Current version</h3>
-    <table>
+    <table *ngIf="currentVersion && currentVersion.length">
       <thead>
         <tr>
           <th>
