@@ -169,8 +169,13 @@ export class UpdateCatalogComponent implements OnDestroy {
 
   generateJson() {
     let notes = this.releaseForm.get("noteGroups").value;
-    console.log(notes)
-    console.log(nest)
+    notes = nest()
+      .key(note => note["category"])
+      .rollup((values: any) => values.map(d => d.note))
+      .entries(notes)
+      .map(d => {
+        return ({ category: d.key, note: d.value })
+      })
 
     return ({
       datePublished: this.datePipe.transform(this.summaryForm.get("datePublished").value, "yyyy-MM-dd"),
