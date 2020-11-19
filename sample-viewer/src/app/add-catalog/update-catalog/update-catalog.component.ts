@@ -150,15 +150,15 @@ export class UpdateCatalogComponent implements OnDestroy {
     }
     console.log(this.catalog);
 
-    // this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
-    // this.apiSvc.putPiecewise("datacatalog", this.catalog, 1000).subscribe(
-    //   responses => {
-    //     console.log(responses)
-    //     this.uploadReponse = responses;
-    //     // this.uploadResponse = result.uploadResponse;
-    //     // this.errorMsg = result.errorMsg;
-    //     // this.errorObj = result.errorObj;
-    //   })
+    this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
+    this.apiSvc.putPiecewise("datacatalog", this.catalog, 1000).subscribe(
+      responses => {
+        console.log(responses)
+        // this.uploadReponse = responses;
+        // this.uploadResponse = result.uploadResponse;
+        // this.errorMsg = result.errorMsg;
+        // this.errorObj = result.errorObj;
+      })
 
   }
 
