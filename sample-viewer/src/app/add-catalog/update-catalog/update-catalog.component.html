@@ -5,8 +5,9 @@
 </div>
 
 <div>
-  <button mat-icon-button color="primary" (click)="addNote()">
-    <mat-icon aria-hidden="false" class="huge pointer" aria-label="upload data catalog">cloud_upload</mat-icon>
+  <button mat-raised-button color="primary"
+  class="huge pointer py-2 container align-items-center mr-3" (click)="uploadCatalog()">
+    <mat-icon aria-hidden="false" aria-label="upload data catalog" class=" huge mr-3">cloud_upload</mat-icon>
     Upload
   </button>
   upload status: {{ uploadResponse }}
@@ -96,6 +97,9 @@
 
     <div id="changes">
       <h4>Specific changes</h4>
+      <p>
+        If you have multiple changes for the same category &mdash; for instance, two data uploads&mdash; add them as separate release notes.  They'll be combined before the upload.
+        </p>
 
       <div class="container align-items-center">
         <form [formGroup]="releaseForm" class="container" id="release-notes-form">
@@ -129,7 +133,7 @@
   </div>
 
   <div id="preview">
-    <h3>Preview</h3>
+    <h3>Preview: new release note</h3>
     <pre>
     {{newNote | json}}
     </pre>
