@@ -40,7 +40,6 @@ export class GetDatacatalogService {
     return this.apiSvc.get("dataset", params).pipe(
       pluck("facets", "identifier.keyword", "terms"),
       map((datasets: any) => {
-        console.log(datasets);
         return(datasets.map(d => d.term))
       })
 
