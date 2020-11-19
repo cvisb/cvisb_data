@@ -17,3 +17,7 @@
 .blue-underline {
   border-bottom: 1px solid #00abe5;
 }
+
+::ng-deep .mat-datepicker-content .mat-calendar {
+    background: #fffffff0 !important;
+}
