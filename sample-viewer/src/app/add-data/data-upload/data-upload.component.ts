@@ -109,7 +109,7 @@ export class DataUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded. Sending data to the database..."
+        this.uploadResponse = "File uploaded; review the new and replacement IDs and then upload"
 
         this.data2upload = this.prepData(reader.result);
 
