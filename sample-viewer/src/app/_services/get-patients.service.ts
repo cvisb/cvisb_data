@@ -359,7 +359,7 @@ export class GetPatientsService {
       .set("patientID", `"${patientID}"`)
       .set("fields", fields.join(","))
       .set("sort", "visitCode.keyword")
-      .set("pageSize", "1000");
+      .set("size", "1000");
 
     return this.myhttp.get<ESResult>(environment.api_url + "/api/experiment/query", {
       observe: 'response',
