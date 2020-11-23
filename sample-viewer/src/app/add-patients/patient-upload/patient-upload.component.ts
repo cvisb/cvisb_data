@@ -108,7 +108,7 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded; review the new and replacement patient IDs and then upload";
+        this.uploadResponse = "File uploaded; checking if the records already exist in the database.";
 
         this.data2upload = this.prepData(reader.result);
         console.log(this.data2upload )
@@ -118,6 +118,7 @@ export class PatientUploadComponent implements OnInit {
         this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
         this.apiSvc.prepPatientUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+          this.uploadResponse = "Review the new and replacement IDs and then upload";
           console.log(dupes)
           dupes.sort((a,b) => a < b ? -1 : 1);
           this.dupes = dupes;
