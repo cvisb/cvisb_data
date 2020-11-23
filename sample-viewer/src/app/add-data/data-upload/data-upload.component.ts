@@ -142,10 +142,6 @@ export class DataUploadComponent implements OnInit {
           this.replacementIDs.sort((a, b) => a < b ? -1 : 1);
           this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d[uniqueID]);
           this.newIDs.sort((a, b) => a < b ? -1 : 1);
-          console.log(dupes)
-          console.log(this.replacementIDs)
-          console.log(this.newIDs)
-          console.log(this.data2upload)
         })
 
         // this.apiSvc.putPiecewise(this.endpoint, this.data2upload, uploadSize).subscribe(
