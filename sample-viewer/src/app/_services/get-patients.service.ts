@@ -370,6 +370,7 @@ export class GetPatientsService {
       pluck("body"),
       pluck("hits"),
       map(exptData => {
+        console.log(exptData)
 
         let groupedExpts = chain(exptData).groupBy('includedInDataset')
           .map((items, id) => {
