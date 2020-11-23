@@ -8,7 +8,8 @@ import pandas as pd
 import os
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/compile_cvisb_data")
 import helpers # Helpers module, for common cleanup functions
-from datetime import date
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 from math import ceil
 
 output_dir = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/output_data"
@@ -29,6 +30,7 @@ cbc_version = 0.1
 cbc_id = "blood-counts-vhf"
 # output_dir = "../output_data"
 
+releaseDate = datetime.strptime(dateUpdated, "%Y-%m-%d") + relativedelta(months=+6)
 
 DATADIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
 PATIENT_FILE = f"{DATADIR}input_data/patient_rosters/DisseminationData_2Nov20.xlsx"
@@ -75,7 +77,7 @@ df["sourceFiles"] = df.apply(lambda x: [filename], axis=1)
 df["citation"] = df.apply(lambda x: [helpers.kgh], axis=1)
 df["publisher"] = df.apply(lambda x: helpers.cvisb, axis=1)
 df["creator"] = df.apply(lambda x: [helpers.kgh], axis=1)
-df["releaseDate"] = None
+df["releaseDate"] = releaseDate
 df["version"] = patient_version
 
 # --- disease info / dates ---
@@ -120,7 +122,7 @@ df["wbc"] = df.apply(lambda x: helpers.getWBC(x, dateUpdated, cbc_version, cbc_i
 df["vitals"] = df.apply(lambda x: helpers.getVitals(x, dateUpdated, vitals_version, vitals_id, "patient admission"), axis = 1)
 
 # --- symptoms ---
-df["symptoms"] = df.apply(lambda x: helpers.getAcuteSymptoms(x, dateUpdated), axis = 1)
+df["symptoms"] = df.apply(lambda x: helpers.getAcuteSymptoms(x, dateUpdated, releaseDate), axis = 1)
 
 # --- elisas ---
 df["elisa"] = df.apply(helpers.nestELISAs, axis = 1)

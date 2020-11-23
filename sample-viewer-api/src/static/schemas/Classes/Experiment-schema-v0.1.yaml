@@ -376,10 +376,10 @@
   authenticated:         true
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version number of experiment, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:comment:          Version number of experiment
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
