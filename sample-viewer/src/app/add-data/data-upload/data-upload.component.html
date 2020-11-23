@@ -11,9 +11,10 @@
 <!-- <div class="upload-button"> -->
 <div class="upload-button" *ngIf="user.write">
   <!-- Dummy for styling -->
-  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload data</button>
+  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Load file</button>
   <!-- Actual workhorse to upload the data on the client side -->
   <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+  <button style="margin-left: 25px" type="button" mat-raised-button color="warn" [disabled]="!data2upload || uploading" (click)="uploadData()">Upload data</button>
 
 
   <div class="client-responses">

@@ -22,8 +22,14 @@ export class DataUploadComponent implements OnInit {
   dateDict: Object[];
   missingReq: Object[];
   previewData: Object[];
+  data2upload: Object[];
+  newIDs: String[];
+  replacementIDs: String[];
+  dupes: String[];
+  uploadSize: number;
   dataLength: number;
   fileKB: number;
+  uploading: Boolean = false;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
 
   endpoint: string;
@@ -62,6 +68,10 @@ export class DataUploadComponent implements OnInit {
     this.errorMsg = null;
     this.errorObj = null;
     this.uploadProgress = 0;
+    this.uploading = false;
+    this.dupes = [];
+    this.newIDs = [];
+    this.replacementIDs = [];
 
     if (fileList.length > 0) {
 
@@ -101,24 +111,50 @@ export class DataUploadComponent implements OnInit {
       reader.onload = (e) => {
         this.uploadResponse = "File uploaded. Sending data to the database..."
 
-        let data = this.prepData(reader.result);
+        this.data2upload = this.prepData(reader.result);
 
 
-        let uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
+        this.uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
         // double check upload size is greater than 0.
-        uploadSize = uploadSize === 0 ? 1 : uploadSize;
+        this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
+        var uniqueID: string;
 
-        this.apiSvc.putPiecewise(this.endpoint, data, uploadSize).subscribe(
-          responses => {
-            console.log(responses)
+        switch (this.endpoint) {
+          case "experiment":
+            uniqueID = "experimentID";
+            break;
+          case "dataset":
+            uniqueID = "identifier";
+            break;
+          case "datadownload":
+            uniqueID = "identifier";
+            break;
+          case "datacatalog":
+            uniqueID = "identifier";
+            break;
+        }
 
-            let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, this.endpoint + "s");
+        this.apiSvc.prepUpload(this.endpoint, uniqueID, this.data2upload).subscribe(dupes => {
+          console.log(dupes)
+          dupes.sort((a, b) => a < b ? -1 : 1);
+          this.dupes = dupes;
+          this.replacementIDs = this.data2upload.filter(d => d["_id"]).map(d => d["patientID"]);
+          this.replacementIDs.sort((a, b) => a < b ? -1 : 1);
+          this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d["patientID"]);
+          this.newIDs.sort((a, b) => a < b ? -1 : 1);
+        })
 
-            this.uploadResponse = result.uploadResponse;
-            this.errorMsg = result.errorMsg;
-            this.errorObj = result.errorObj;
-          })
+        // this.apiSvc.putPiecewise(this.endpoint, this.data2upload, uploadSize).subscribe(
+        //   responses => {
+        //     console.log(responses)
+        //
+        //     let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, this.endpoint + "s");
+        //
+        //     this.uploadResponse = result.uploadResponse;
+        //     this.errorMsg = result.errorMsg;
+        //     this.errorObj = result.errorObj;
+        //   })
 
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
@@ -126,6 +162,23 @@ export class DataUploadComponent implements OnInit {
     }
 
   }
+
+  uploadData() {
+    this.uploading = true;
+    console.log(this.data2upload);
+    this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
+    this.apiSvc.putPiecewise(this.endpoint, this.data2upload, this.uploadSize).subscribe(
+      responses => {
+        console.log(responses)
+
+        let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, this.endpoint + "s");
+
+        this.uploadResponse = result.uploadResponse;
+        this.errorMsg = result.errorMsg;
+        this.errorObj = result.errorObj;
+      })
+  }
+
 
 
   // Function to clean imported data into the correct format for ES upload
