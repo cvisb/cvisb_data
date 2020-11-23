@@ -117,7 +117,7 @@ export class PatientUploadComponent implements OnInit {
         // double check upload size is greater than 0.
         this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
-        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+        this.apiSvc.prepPatientUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
           console.log(dupes)
           dupes.sort((a,b) => a < b ? -1 : 1);
           this.dupes = dupes;

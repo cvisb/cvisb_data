@@ -375,7 +375,7 @@ export class ApiService {
         return {
           next: response['_scroll_id'],
           results: response['hits'],
-          counter: counter+1
+          counter: counter + 1
         };
       }),
       catchError(e => {
@@ -558,33 +558,59 @@ export class ApiService {
     // return (of(results));
   }
 
-// Function to look up IDs and replace
-prepUpload(endpoint:string, uniqueID: string, data:Object[]): Observable<any> {
-  console.log("PREP UPLOAD")
-  const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
-  const qParams = new HttpParams()
-  .set("q", "__all__")
-  .set("patientID", ids)
-  .set("fields", "alternateIdentifier")
+  // Function to look up IDs and replace
+  prepPatientUpload(endpoint: string, uniqueID: string, data: Object[]): Observable<any> {
+    console.log("PREP UPLOAD")
+    const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
+    const qParams = new HttpParams()
+      .set("q", "__all__")
+      .set("patientID", ids)
+      .set("fields", "alternateIdentifier")
 
-  return(this.fetchAll(endpoint, qParams).pipe(
-    map(ids => {
-      let duplicateIDs = [];
-      data.forEach(d => {
-        let filtered = ids.filter(id => id.alternateIdentifier.includes(d[uniqueID]));
-        if(filtered.length) {
-        d["_id"] = filtered[0]["_id"];
-        }
+    return (this.fetchAll(endpoint, qParams).pipe(
+      map(ids => {
+        let duplicateIDs = [];
+        data.forEach(d => {
+          let filtered = ids.filter(id => id.alternateIdentifier.includes(d[uniqueID]));
+          if (filtered.length) {
+            d["_id"] = filtered[0]["_id"];
+          }
 
-        if(filtered.length > 1) {
-          duplicateIDs.push(d[uniqueID])
-        }
+          if (filtered.length > 1) {
+            duplicateIDs.push(d[uniqueID])
+          }
+        })
+
+        return (duplicateIDs)
       })
+    ))
+  }
 
-      return(duplicateIDs)
-    })
-  ))
-}
+  prepUpload(endpoint: string, uniqueID: string, data: Object[]): Observable<any> {
+    console.log("PREP UPLOAD")
+    const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
+    const qParams = new HttpParams()
+      .set("q", `${uniqueID}:${ids}`)
+      .set("fields", uniqueID)
+
+    return (this.fetchAll(endpoint, qParams).pipe(
+      map(ids => {
+        let duplicateIDs = [];
+        data.forEach(uploadRecord => {
+          let filtered = ids.filter(id => id[uniqueID] == uploadRecord[uniqueID]);
+          if (filtered.length) {
+            uploadRecord["_id"] = filtered[0]["_id"];
+          }
+
+          if (filtered.length > 1) {
+            duplicateIDs.push(uploadRecord[uniqueID])
+          }
+        })
+
+        return (duplicateIDs)
+      })
+    ))
+  }
 
   // Function to convert to a json object to be inserted by ES
   jsonify(arr: any[]): string {
