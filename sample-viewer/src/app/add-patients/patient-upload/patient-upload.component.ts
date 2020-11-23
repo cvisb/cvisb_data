@@ -37,9 +37,7 @@ export class PatientUploadComponent implements OnInit {
 
   constructor(
     private apiSvc: ApiService,
-    private authSvc: AuthService,
-    private patientSvc: GetPatientsService,
-    // private idSvc: CheckIdsService,
+    private authSvc: AuthService
   ) {
     authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
@@ -119,7 +117,7 @@ export class PatientUploadComponent implements OnInit {
         // double check upload size is greater than 0.
         this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
-        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+        this.apiSvc.prepPatientUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
           console.log(dupes)
           dupes.sort((a,b) => a < b ? -1 : 1);
           this.dupes = dupes;
@@ -127,7 +125,6 @@ export class PatientUploadComponent implements OnInit {
           this.replacementIDs.sort((a,b) => a < b ? -1 : 1);
           this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d["patientID"]);
           this.newIDs.sort((a,b) => a < b ? -1 : 1);
-
         })
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";

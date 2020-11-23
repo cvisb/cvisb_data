@@ -11,15 +11,48 @@
 <!-- <div class="upload-button"> -->
 <div class="upload-button" *ngIf="user.write">
   <!-- Dummy for styling -->
-  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload data</button>
+  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Load file</button>
   <!-- Actual workhorse to upload the data on the client side -->
   <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+
+  <button style="margin-left: 25px" type="button" mat-raised-button color="warn" [disabled]="!data2upload || uploading" (click)="uploadData()">Upload data</button>
 
 
   <div class="client-responses">
 
     <ng-container *ngIf="uploadResponse">
       <h1>{{ uploadResponse }}</h1>
+
+      <!-- data replacement comments -->
+      <ng-container *ngIf="data2upload && !uploading">
+        <ng-container *ngIf="dupes && dupes.length">
+          <h3 class="warning">These patients have multiple entries in the database.</h3>
+          <p>
+            This is probably an error! Delete the duplicates. If you proceed with the upload, the first entry will be overwritten, and the other ones will remain unchanged.
+          </p>
+          <div *ngFor="let item of dupes">
+            {{item}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="replacementIDs && replacementIDs.length">
+          <h3 class="warning">Existing IDs which will be overwritten</h3>
+          <p>
+            These patients already exist in the database. They will be overwritten.
+          </p>
+          <div *ngFor="let id of replacementIDs">
+            {{id}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="newIDs && newIDs.length">
+          <h3>New IDs to add:</h3>
+          <div *ngFor="let id of newIDs">
+            {{id}}
+          </div>
+        </ng-container>
+      </ng-container>
+      
       <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
       <p class="pct-complete">
         {{ uploadProgress | number:'1.0-0' }}% complete
