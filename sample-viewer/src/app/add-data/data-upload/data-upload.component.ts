@@ -136,13 +136,16 @@ export class DataUploadComponent implements OnInit {
         }
 
         this.apiSvc.prepUpload(this.endpoint, uniqueID, this.data2upload).subscribe(dupes => {
-          console.log(dupes)
           dupes.sort((a, b) => a < b ? -1 : 1);
           this.dupes = dupes;
-          this.replacementIDs = this.data2upload.filter(d => d["_id"]).map(d => d["patientID"]);
+          this.replacementIDs = this.data2upload.filter(d => d["_id"]).map(d => d[uniqueID]);
           this.replacementIDs.sort((a, b) => a < b ? -1 : 1);
-          this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d["patientID"]);
+          this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d[uniqueID]);
           this.newIDs.sort((a, b) => a < b ? -1 : 1);
+          console.log(dupes)
+          console.log(this.replacementIDs)
+          console.log(this.newIDs)
+          console.log(this.data2upload)
         })
 
         // this.apiSvc.putPiecewise(this.endpoint, this.data2upload, uploadSize).subscribe(
