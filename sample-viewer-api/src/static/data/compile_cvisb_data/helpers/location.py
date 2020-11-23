@@ -158,6 +158,13 @@ def getCountry(countryID, verbose=True):
         "identifier": "GH",
         "url": "https://www.iso.org/obp/ui/#iso:code:3166:GH"
         })
+    elif((countryID == "BJ") | (countryID == "BEN") | (countryID == "Benin")):
+        return({
+        "@type": "Country",
+        "name": "Benin",
+        "identifier": "BJ",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:BJ"
+        })
     elif((countryID == "US") | (countryID == "USA") | (countryID == "United States") | (countryID == "United States of America")):
         return({
         "@type": "Country",

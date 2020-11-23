@@ -217,8 +217,13 @@ def getWBC(row, dateUpdated, version, dataset_id, timepoint = "patient admission
         return(expt)
 
 
-def getAcuteSymptoms(row, dateUpdated):
-    symptoms = {"@type": "AcuteSymptom", "timepoint": "patient admission"}
+def getAcuteSymptoms(row, dateUpdated, releaseDate):
+    symptoms = {
+    "@type": "AcuteSymptom",
+    "timepoint": "patient admission",
+    "dateModified": dateUpdated,
+    "releaseDate": releaseDate
+    }
     symptoms["bleeding_gums"] = binarize(row.BGums)
     symptoms["bleeding_gums"] = binarize(row.BGums)
     symptoms["bleeding_hematoma"] = binarize(row.BHemat)
@@ -243,8 +248,13 @@ def getAcuteSymptoms(row, dateUpdated):
 
     return ([symptoms])
 
-def getSurvivorSymptoms(row, dateUpdated):
-    symptoms = {"@type": "Sequela", "timepoint": "survivor enrollment"}
+def getSurvivorSymptoms(row, dateUpdated, releaseDate):
+    symptoms = {
+    "@type": "Sequela",
+    "timepoint": "survivor enrollment",
+    "dateModified": dateUpdated,
+    "releaseDate": releaseDate
+    }
     symptoms["rheumatologicalSequelae"] = binarize(row['Rheum'])
     symptoms["rheumatologicalGISequelae"] = binarize(row['RheumGI'])
     symptoms["pyschNeuroSequelae"] = binarize(row['PsychNeuro'])

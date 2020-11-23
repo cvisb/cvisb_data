@@ -68,6 +68,77 @@
   marginality:           recommended
   authenticated:         true
 
+# when updated
+- "@id":                 cvisb:dateModified
+  "@type":               rdf:Property
+  rdfs:comment:          Date of last update (YYYY-MM-DD)
+  rdfs:label:            dateModified
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  schema:sameAs:
+    "@id":               "schema:dateModified"
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+
+- "@id":                 cvisb:updatedBy
+  "@type":               rdf:Property
+  rdfs:comment:          Person who updated the experiment data
+  rdfs:label:            updatedBy
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    # - "@id":           schema:Person
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+  # versions
+- "@id":                 cvisb:version
+  "@type":               rdf:Property
+  rdfs:comment:          Version number of experiment
+  rdfs:label:            version
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Number
+  schema:sameAs:
+    "@id":               schema:version
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+
+- "@id":                 cvisb:dataStatus
+  "@type":               rdf:Property
+  rdfs:comment:          'description of whether the data is considered preliminary (subject to review) or finalized. Note that "final" data can still be modified.'
+  rdfs:label:            dataStatus
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                        - preliminary
+                        - final
+
+- "@id":                 cvisb:releaseDate
+  "@type":               rdf:Property
+  rdfs:comment:          Date upon which the data should be made publicly available.
+  rdfs:label:            releaseDate
+  schema:domainIncludes:
+    - "@id":             cvisb:Symptom
+  schema:rangeIncludes:
+    - "@id":             schema:Date
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
 
 - "@id":                 cvisb:joint_pain
   "@type":               rdf:Property

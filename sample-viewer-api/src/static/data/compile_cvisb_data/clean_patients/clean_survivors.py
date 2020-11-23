@@ -3,6 +3,7 @@
 
 import pandas as pd
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 import os
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/compile_cvisb_data")
@@ -24,6 +25,8 @@ cols = ['patientID', 'sID', 'gID', 'gIDString', 'alternateIdentifier',
 ]
 
 def getSurvivors(filename, output_dir, updatedBy, dateModified, patient_version, vitals_version, vitals_id):
+    releaseDate = datetime.strptime(dateModified, "%Y-%m-%d") + relativedelta(months=+6)
+
     surv = pd.read_excel(filename, sheet_name="SurvivorStudy", dtype={"PublicID": str})
 
     # First and most importantly-- remove patients who have not consented
@@ -70,7 +73,7 @@ def getSurvivors(filename, output_dir, updatedBy, dateModified, patient_version,
     surv["publisher"] = surv.apply(lambda x: helpers.cvisb, axis=1)
     surv["citation"] = surv.apply(lambda x: [helpers.kgh], axis=1)
     surv["dataStatus"] = "final"
-    surv["releaseDate"] =  None
+    surv["releaseDate"] =  releaseDate
     surv["version"] =  patient_version
 
     # --- geography ---
@@ -85,7 +88,7 @@ def getSurvivors(filename, output_dir, updatedBy, dateModified, patient_version,
 
     # Clinical data
     # --- sequelae ---
-    surv["symptoms"] = surv.apply(lambda x: helpers.getSurvivorSymptoms(x, dateModified), axis = 1)
+    surv["symptoms"] = surv.apply(lambda x: helpers.getSurvivorSymptoms(x, dateModified, releaseDate), axis = 1)
 
 
     # --- ELISA ---

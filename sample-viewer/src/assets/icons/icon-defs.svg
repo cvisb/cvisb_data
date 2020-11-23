@@ -595,101 +595,112 @@
     </symbol>
 
     <!-- SARS-CoV-2 SEQUENCING -->
-    <symbol  id="sarscov2-virus-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="14" y1="5.2" x2="15.1" y2="7.2"/>
-    	<ellipse transform="matrix(0.8712 -0.4909 0.4909 0.8712 -0.3989 7.2653)" class="st1" fill="#5ED1F7" cx="13.6" cy="4.4" rx="2.1" ry="1.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="22.2" y1="5.1" x2="21.2" y2="7.2"/>
-    	<ellipse transform="matrix(0.4519 -0.8921 0.8921 0.4519 8.5463 22.6424)" class="st1" fill="#5ED1F7" cx="22.7" cy="4.4" rx="1.1" ry="2.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="28" y1="8.4" x2="26.7" y2="10.2"/>
-    	<ellipse transform="matrix(0.5853 -0.8108 0.8108 0.5853 5.5962 26.4069)" class="st1" fill="#5ED1F7" cx="28.6" cy="7.7" rx="1.1" ry="2.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="7.9" y1="9.5" x2="9.7" y2="10.9"/>
-    	<ellipse transform="matrix(0.5979 -0.8016 0.8016 0.5979 -4.2438 9.4003)" class="st1" fill="#5ED1F7" cx="7.2" cy="8.9" rx="2.1" ry="1.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="5.1" y1="15.8" x2="7.3" y2="16.2"/>
-    	<ellipse transform="matrix(0.1827 -0.9832 0.9832 0.1827 -11.7865 16.8308)" class="st1" fill="#5ED1F7" cx="4.2" cy="15.5" rx="2.1" ry="1.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="6" y1="24.8" x2="8.2" y2="23.9"/>
-    	<ellipse transform="matrix(0.9202 -0.3914 0.3914 0.9202 -9.3909 4.0332)" class="st1" fill="#5ED1F7" cx="5.2" cy="25.1" rx="1.1" ry="2.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="10.3" y1="30.1" x2="11.6" y2="28.2"/>
-    	<ellipse transform="matrix(0.5659 -0.8245 0.8245 0.5659 -21.1572 21.362)" class="st1" fill="#5ED1F7" cx="9.7" cy="30.8" rx="1.1" ry="2.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="26.4" y1="30.8" x2="25.2" y2="28.9"/>
-    	<ellipse transform="matrix(0.8439 -0.5365 0.5365 0.8439 -12.7768 19.3146)" class="st1" fill="#5ED1F7" cx="26.8" cy="31.6" rx="2.1" ry="1.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="17.4" y1="32.1" x2="17.4" y2="29.8"/>
-    	<ellipse class="st1" fill="#5ED1F7" cx="17.3" cy="33" rx="2.1" ry="1.1"/>
-    </g>
-    <g>
-    	<line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="31.6" y1="13.6" x2="29.5" y2="14.4"/>
-    	<ellipse transform="matrix(0.9359 -0.3523 0.3523 0.9359 -2.6438 12.3047)" class="st1" fill="#5ED1F7" cx="32.5" cy="13.4" rx="1.1" ry="2.1"/>
-    </g>
-    <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="32.7" y1="24.7" x2="30.5" y2="23.9"/>
-    <ellipse transform="matrix(0.3307 -0.9437 0.9437 0.3307 -1.2227 48.3786)" class="st1" fill="#5ED1F7" cx="33.5" cy="25.1" rx="2.1" ry="1.1"/>
-    <g id="sars-cov-2">
-    	<g>
-    		<path class="st2" fill="#297AA3" d="M8.6,10.4c1.1-1.5,2.5-2.7,4.2-3.7c6.9-3.6,15.8,0,17.9,7.6c0.8,2.9,1.7,5.6,0.6,8.6c-1,2.7-3.1,6-5.7,7.3
+    <symbol id="sarscov2-virus-seq" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="14" y1="5.2" x2="15.1" y2="7.2"/>
+        <ellipse transform="matrix(0.8712 -0.4909 0.4909 0.8712 -0.3989 7.2653)" class="st1" fill="#5ED1F7" cx="13.6" cy="4.4" rx="2.1" ry="1.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="22.2" y1="5.1" x2="21.2" y2="7.2"/>
+        <ellipse transform="matrix(0.4519 -0.8921 0.8921 0.4519 8.5463 22.6424)" class="st1" fill="#5ED1F7" cx="22.7" cy="4.4" rx="1.1" ry="2.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="28" y1="8.4" x2="26.7" y2="10.2"/>
+        <ellipse transform="matrix(0.5853 -0.8108 0.8108 0.5853 5.5962 26.4069)" class="st1" fill="#5ED1F7" cx="28.6" cy="7.7" rx="1.1" ry="2.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="7.9" y1="9.5" x2="9.7" y2="10.9"/>
+        <ellipse transform="matrix(0.5979 -0.8016 0.8016 0.5979 -4.2438 9.4003)" class="st1" fill="#5ED1F7" cx="7.2" cy="8.9" rx="2.1" ry="1.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="5.1" y1="15.8" x2="7.3" y2="16.2"/>
+        <ellipse transform="matrix(0.1827 -0.9832 0.9832 0.1827 -11.7865 16.8308)" class="st1" fill="#5ED1F7" cx="4.2" cy="15.5" rx="2.1" ry="1.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="6" y1="24.8" x2="8.2" y2="23.9"/>
+        <ellipse transform="matrix(0.9202 -0.3914 0.3914 0.9202 -9.3909 4.0332)" class="st1" fill="#5ED1F7" cx="5.2" cy="25.1" rx="1.1" ry="2.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="10.3" y1="30.1" x2="11.6" y2="28.2"/>
+        <ellipse transform="matrix(0.5659 -0.8245 0.8245 0.5659 -21.1572 21.362)" class="st1" fill="#5ED1F7" cx="9.7" cy="30.8" rx="1.1" ry="2.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="26.4" y1="30.8" x2="25.2" y2="28.9"/>
+        <ellipse transform="matrix(0.8439 -0.5365 0.5365 0.8439 -12.7768 19.3146)" class="st1" fill="#5ED1F7" cx="26.8" cy="31.6" rx="2.1" ry="1.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="17.4" y1="32.1" x2="17.4" y2="29.8"/>
+        <ellipse class="st1" fill="#5ED1F7" cx="17.3" cy="33" rx="2.1" ry="1.1"/>
+      </g>
+      <g>
+        <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="31.6" y1="13.6" x2="29.5" y2="14.4"/>
+        <ellipse transform="matrix(0.9359 -0.3523 0.3523 0.9359 -2.6438 12.3047)" class="st1" fill="#5ED1F7" cx="32.5" cy="13.4" rx="1.1" ry="2.1"/>
+      </g>
+      <line fill="none" stroke="#5ED1F7" stroke-width="1.1473" stroke-miterlimit="10" class="st0" x1="32.7" y1="24.7" x2="30.5" y2="23.9"/>
+      <ellipse transform="matrix(0.3307 -0.9437 0.9437 0.3307 -1.2227 48.3786)" class="st1" fill="#5ED1F7" cx="33.5" cy="25.1" rx="2.1" ry="1.1"/>
+      <g id="sars-cov-2">
+        <g>
+          <path class="st2" fill="#297AA3" d="M8.6,10.4c1.1-1.5,2.5-2.7,4.2-3.7c6.9-3.6,15.8,0,17.9,7.6c0.8,2.9,1.7,5.6,0.6,8.6c-1,2.7-3.1,6-5.7,7.3
     			c-2.8,1.3-6.4,1.2-9.4,0.9C5.8,30,3.3,17.7,8.6,10.4z"/>
-    		<path class="st3" fill="#3399CB" d="M10.6,12c0.9-1.2,2-2.2,3.4-2.9c5.5-2.9,12.7,0,14.3,6.1c0.6,2.3,1.4,4.5,0.5,6.9c-0.8,2.1-2.5,4.8-4.6,5.8
+          <path class="st3" fill="#3399CB" d="M10.6,12c0.9-1.2,2-2.2,3.4-2.9c5.5-2.9,12.7,0,14.3,6.1c0.6,2.3,1.4,4.5,0.5,6.9c-0.8,2.1-2.5,4.8-4.6,5.8
     			c-2.3,1-5.2,1-7.6,0.7C8.4,27.7,6.4,17.8,10.6,12z"/>
-    	</g>
-    </g>
-    <g id="dna_1_">
-    	<g>
-    		<g>
-    			<g>
-    				<g>
-    					<defs>
-    						<rect id="SVGID_1_" width="40" height="40"/>
-    					</defs>
-    					<clipPath id="SVGID_2_">
-    						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
-    					</clipPath>
-    					<g class="st4" clip-path="url(#SVGID_2_)">
-    						<g>
-    							<path class="st5" fill="none" stroke="#484D51" stroke-width="0.75" stroke-miterlimit="10" d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
+        </g>
+      </g>
+      <g id="dna_1_">
+        <g>
+          <g>
+            <g>
+              <g>
+                <defs>
+                  <rect id="SVGID_1_" width="40" height="40"/>
+                </defs>
+                <clipPath id="SVGID_2_">
+                  <use xlink:href="#SVGID_1_" style="overflow:visible;"/>
+                </clipPath>
+                <g class="st4" clip-path="url(#SVGID_2_)">
+                  <g>
+                    <path
+                      class="st5"
+                      fill="none"
+                      stroke="#484D51"
+                      stroke-width="0.75"
+                      stroke-miterlimit="10"
+                      d="M21.9,42.8c-0.3-1.3-0.6-2.3-0.1-4c0.1-0.4,0.3-0.8,0.5-1.2c0.2-0.3,0.5-0.6,0.7-0.8
     								c1.1-0.9,2.2-1.4,3.2-1.7c1.3-0.3,2.6-0.6,3.9-0.9c1.2-0.3,2.5-0.6,3.7-1.5c0.3-0.2,0.6-0.4,0.8-0.7c0.6-0.6,0.9-1.4,1.2-2.2
     								c0.1-0.2,0.1-0.4,0.2-0.6c0-0.1,0-0.3,0-0.4c-0.1-1.7-0.3-3.2-0.7-4.7c-0.4-1.6-1.1-3-1-5c0-0.7,0.2-1.4,0.5-2.2
     								c0.9-1.8,2.9-2.7,4.1-3c1.7-0.5,3.3-0.7,4.9-1.1c0.6-0.2,1.3-0.3,2-0.7s1.5-1.2,2-2c0.3-0.5,0.8-1.5,0.6-2"/>
-    							<path class="st5" fill="none" stroke="#484D51" stroke-width="0.75" stroke-miterlimit="10" d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
+                    <path
+                      class="st5"
+                      fill="none"
+                      stroke="#484D51"
+                      stroke-width="0.75"
+                      stroke-miterlimit="10"
+                      d="M20.8,42.1c2.1-0.7,4-1.1,6.1-1.6c1.3-0.3,2.3-0.6,3.6-1.8c0.3-0.3,0.6-0.6,0.8-1c0.2-0.3,0.3-0.7,0.4-1
     								c0.3-1.4,0.3-2.6,0-3.6c-0.3-1.3-0.6-2.6-0.9-3.9c-0.3-1.2-0.6-2.5-0.4-4c0-0.3,0.1-0.7,0.3-1.1c0.3-0.8,0.8-1.5,1.4-2.1
     								c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.1,0.4-0.2c1.5-0.7,3-1.2,4.5-1.5c1.6-0.4,3.1-0.4,4.9-1.4c0.6-0.3,1.2-0.8,1.7-1.5
     								c1.2-1.6,1-3.8,0.8-5c-0.3-1.7-0.9-3.2-1.3-4.8c-0.4-0.6-0.5-1.3-0.5-2c0-0.8,0.3-1.9,0.9-2.7c0.4-0.5,1-1.4,1.5-1.4"/>
-    						</g>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
-    						<line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
-    					</g>
-    				</g>
-    			</g>
-    		</g>
-    	</g>
-    </g>
+                  </g>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="21.7" y1="39.4" x2="24.6" y2="41.2"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="23" y1="36.9" x2="28.1" y2="40"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="25.3" y1="35.5" x2="30.5" y2="38.6"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="28.7" y1="34.6" x2="31.7" y2="36.4"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.3" y1="31" x2="34" y2="32.7"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.4" y1="27.8" x2="35.4" y2="30.9"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="30.5" y1="24.6" x2="35.9" y2="27.9"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="31.7" y1="22.5" x2="35.4" y2="24.8"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="34.5" y1="18.4" x2="37.2" y2="20.1"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="35.6" y1="16.1" x2="40.9" y2="19.3"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="37.9" y1="14.5" x2="43.2" y2="17.7"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="41.2" y1="13.5" x2="44.5" y2="15.6"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="44.1" y1="10.1" x2="46.7" y2="11.7"/>
+                  <line class="st6" fill="none" stroke="#484D51" stroke-width="0.4" stroke-miterlimit="10" x1="43.2" y1="6.8" x2="48.2" y2="9.9"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
     </symbol>
-
 
     <!-- ELISA -->
     <symbol id="elisa" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
@@ -1015,81 +1026,90 @@
     <symbol id="blood-counts" viewBox="0 0 40 40" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio='xMidYMin meet'>
       <title>blood counts viral hemorrhagic fever</title>
       <g id="cells">
-      	<g id="monocyte">
-      		<path class="st0" fill="#FFCA96" d="M27.9,16.9l0.6-0.4c1.3-0.5,2.6-1.6,4.1-1.6c1,0,1.9,0.6,2.6,1.2c0.8,0.6,1.5,1.3,1.9,2.2
+        <g id="monocyte">
+          <path
+            class="st0"
+            fill="#FFCA96"
+            d="M27.9,16.9l0.6-0.4c1.3-0.5,2.6-1.6,4.1-1.6c1,0,1.9,0.6,2.6,1.2c0.8,0.6,1.5,1.3,1.9,2.2
       			c0.3,0.6,0.4,1.2,0.7,1.8c0.3,0.5,0.6,1,0.6,1.6c0,0.3-0.1,0.6-0.2,0.9c-0.5,1.1-1.5,1.9-2.4,2.5c-0.3,0.2-0.6,0.4-0.9,0.6
       			c-0.4,0.2-0.8,0.2-1.2,0.3c-1,0.2-2,0.4-3,0.3c-1.2,0-2.4-0.4-3.5-1c-0.7-0.4-1.3-0.9-1.5-1.6s0.1-1.5,0.1-2.2
       			c0-0.5-0.2-1.1-0.1-1.6c0.1-0.8,0.6-1.4,1-2"/>
-      		<path class="st1" fill="#C98F5F" d="M32.6,20.4c-0.1-0.5-0.3-1-0.5-1.4c-0.3-0.7-0.6-2.1,0.6-1.9c1,0.2,2,0.6,2.6,1.4c0.8,1,0.8,2.2,0.8,3.4
+          <path
+            class="st1"
+            fill="#C98F5F"
+            d="M32.6,20.4c-0.1-0.5-0.3-1-0.5-1.4c-0.3-0.7-0.6-2.1,0.6-1.9c1,0.2,2,0.6,2.6,1.4c0.8,1,0.8,2.2,0.8,3.4
       			c0,1.6-1.3,2.6-2.8,2.8c-1,0.1-2.2,0.2-3.1,0.1c-0.5-0.1-1.5-0.3-1.6-0.9c-0.1-0.8,0.8-1.1,1.4-1.3c0.8-0.2,1.9-0.1,2.4-0.9
       			C32.7,21.4,32.7,20.9,32.6,20.4z"/>
-      	</g>
-      	<g id="RBC">
-      		<path class="st2" fill="#D42026" d="M3.3,30c0.7-1.6,2.3-3,3.6-3.9c2.4-1.6,9-2.8,10.2,0.8c1.2,3.6-1.8,6.3-4.4,7.5C10.3,35.5,6,36.1,4,34.1
+        </g>
+        <g id="RBC">
+          <path class="st2" fill="#D42026" d="M3.3,30c0.7-1.6,2.3-3,3.6-3.9c2.4-1.6,9-2.8,10.2,0.8c1.2,3.6-1.8,6.3-4.4,7.5C10.3,35.5,6,36.1,4,34.1
       			C2.7,32.8,2.7,31.4,3.3,30z"/>
-      		<g>
-      			<path class="st3" fill="none" stroke="#FFFFFF" stroke-width="0.5444" stroke-miterlimit="10" d="M12.8,29.4c0,0.8-0.7,1.7-1.7,2.3c-0.9,0.5-1.9,0.6-2.6,0.3"/>
-      		</g>
-      		<ellipse transform="matrix(0.878 -0.4787 0.4787 0.878 -13.0684 8.5226)" class="st4" fill="#9E202C" cx="10.2" cy="29.9" rx="2.8" ry="1.9"/>
-      	</g>
-      	<g id="neutrophil">
-      		<path class="st0" fill="#FFCA96" d="M7.9,7.4c2.3-1.3,5.2-1.2,7.5,0.2c1.6,1,3,2.7,3.4,4.6c0.5,2.3-1.1,4.9-3,6c-2.6,1.5-5.6,0.8-8.1-0.5
+          <g>
+            <path class="st3" fill="none" stroke="#FFFFFF" stroke-width="0.5444" stroke-miterlimit="10" d="M12.8,29.4c0,0.8-0.7,1.7-1.7,2.3c-0.9,0.5-1.9,0.6-2.6,0.3"/>
+          </g>
+          <ellipse transform="matrix(0.878 -0.4787 0.4787 0.878 -13.0684 8.5226)" class="st4" fill="#9E202C" cx="10.2" cy="29.9" rx="2.8" ry="1.9"/>
+        </g>
+        <g id="neutrophil">
+          <path class="st0" fill="#FFCA96" d="M7.9,7.4c2.3-1.3,5.2-1.2,7.5,0.2c1.6,1,3,2.7,3.4,4.6c0.5,2.3-1.1,4.9-3,6c-2.6,1.5-5.6,0.8-8.1-0.5
       			c-1.9-1-3.4-3-3.4-5.2C4.3,10.3,5.9,8.5,7.9,7.4z"/>
-      		<path class="st5" fill="#FFA750" d="M12.4,10.2L12.4,10.2c0.2,0.6,0.5,1.1,0.7,1.5s0.4,0.3,0.7,0.5c0.6,0.2,1.2,0.2,1.8,0.1
+          <path
+            class="st5"
+            fill="#FFA750"
+            d="M12.4,10.2L12.4,10.2c0.2,0.6,0.5,1.1,0.7,1.5s0.4,0.3,0.7,0.5c0.6,0.2,1.2,0.2,1.8,0.1
       			c0.2,0,0.5-0.1,0.6,0.2c0,0.2,0,0.4,0,0.6c0,0.2-0.6,0.3-0.8,0.4c-0.3,0.1-0.7,0.3-0.9,0.5s-0.3,0.5-0.3,0.8s-0.1,0.9-0.2,1.1
       			c0,0.1-0.1,0.1-0.2,0.1c-0.4,0.2-1,0.4-1.4,0c-0.1-0.2-0.2-0.4-0.3-0.6c-0.2-0.6-1-1-1.5-1.2s-1-0.3-1.5-0.3
       			c-0.2,0-1.4-0.2-1.5,0.2v0.1C7.7,14.5,8,14.8,8,15.1c0,0.2,0,0.4,0,0.6c0.2,0.4,0.6,0.7,1,0.8c0.5,0.1,1,0.3,1.5,0.4
       			c0.6,0.1,1.2,0,1.8-0.1c0.5-0.1,0.9-0.3,1.4-0.4s1,0.1,1.5,0.1c0.4,0,0.6-0.2,0.9-0.4c0.3-0.2,0.6-0.3,0.8-0.6
       			c0.2-0.4,0.2-1.2-0.1-1.5c-0.2-0.2-0.3-0.5-0.3-0.8s0.1-0.6,0-0.8c-0.1-0.4-0.6-0.5-0.9-0.9c-0.3-0.4-0.1-1.1-0.3-1.5
       			c-0.1-0.2-0.4-0.4-0.7-0.5c-0.6-0.2-1.3-0.3-2-0.3c-0.1,0-0.3,0-0.4,0.1C12.1,9.4,12,9.5,12,9.7C12.3,9.9,12.3,10,12.4,10.2z"/>
-      		<circle class="st6" fill="#BF8B53" cx="16.4" cy="11.1" r="0.2"/>
-      		<circle class="st6" fill="#BF8B53" cx="6.5" cy="15.5" r="0.3"/>
-      		<circle class="st6" fill="#BF8B53" cx="10.6" cy="10.2" r="0.4"/>
-      		<circle class="st6" fill="#BF8B53" cx="12.6" cy="14.5" r="0.2"/>
-      		<circle class="st6" fill="#BF8B53" cx="6.5" cy="12.3" r="0.4"/>
-      		<circle class="st6" fill="#BF8B53" cx="7.5" cy="9.6" r="0.2"/>
-      		<circle class="st6" fill="#BF8B53" cx="13.8" cy="17.4" r="0.3"/>
-      		<circle class="st6" fill="#BF8B53" cx="11.2" cy="8" r="0.3"/>
-      		<circle class="st6" fill="#BF8B53" cx="11.6" cy="12.3" r="0.4"/>
-      		<circle class="st6" fill="#BF8B53" cx="9.7" cy="13" r="0.2"/>
-      	</g>
+          <circle class="st6" fill="#BF8B53" cx="16.4" cy="11.1" r="0.2"/>
+          <circle class="st6" fill="#BF8B53" cx="6.5" cy="15.5" r="0.3"/>
+          <circle class="st6" fill="#BF8B53" cx="10.6" cy="10.2" r="0.4"/>
+          <circle class="st6" fill="#BF8B53" cx="12.6" cy="14.5" r="0.2"/>
+          <circle class="st6" fill="#BF8B53" cx="6.5" cy="12.3" r="0.4"/>
+          <circle class="st6" fill="#BF8B53" cx="7.5" cy="9.6" r="0.2"/>
+          <circle class="st6" fill="#BF8B53" cx="13.8" cy="17.4" r="0.3"/>
+          <circle class="st6" fill="#BF8B53" cx="11.2" cy="8" r="0.3"/>
+          <circle class="st6" fill="#BF8B53" cx="11.6" cy="12.3" r="0.4"/>
+          <circle class="st6" fill="#BF8B53" cx="9.7" cy="13" r="0.2"/>
+        </g>
       </g>
       <g>
-      	<g>
-      		<path class="st7" fill="#6D6E71" d="M28.3,8.5v28.8c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.5"/>
-      	</g>
-      	<g>
-      		<path class="st7" fill="#6D6E71" d="M29.1,8.2c0,0.5-0.4,0.8-0.8,0.8h-5.5C22.4,9,22,8.6,22,8.2V2c0-0.5,0.4-0.8,0.8-0.8h5.5
+        <g>
+          <path class="st7" fill="#6D6E71" d="M28.3,8.5v28.8c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.5"/>
+        </g>
+        <g>
+          <path class="st7" fill="#6D6E71" d="M29.1,8.2c0,0.5-0.4,0.8-0.8,0.8h-5.5C22.4,9,22,8.6,22,8.2V2c0-0.5,0.4-0.8,0.8-0.8h5.5
       			c0.5,0,0.8,0.4,0.8,0.8C29.1,2,29.1,8.2,29.1,8.2z"/>
-      	</g>
+        </g>
       </g>
       <g>
-      	<g>
-      		<path class="st8" fill="#F1F2F2" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
-      		<path class="st9" fill="none" stroke="#6D6E71" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
-      	</g>
-      	<g>
-      		<g>
-      			<path class="st2" fill="#D42026" d="M27.7,27.7V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1v-9.3"/>
-      		</g>
-      		<rect x="22.1" y="24.6" class="st10" fill="#FECC84" width="5.6" height="3.3"/>
-      	</g>
-      	<g>
-      		<path class="st11" fill="none" stroke="#494D52" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
-      	</g>
+        <g>
+          <path class="st8" fill="#F1F2F2" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+          <path class="st9" fill="none" stroke="#6D6E71" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+        </g>
+        <g>
+          <g>
+            <path class="st2" fill="#D42026" d="M27.7,27.7V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1v-9.3"/>
+          </g>
+          <rect x="22.1" y="24.6" class="st10" fill="#FECC84" width="5.6" height="3.3"/>
+        </g>
+        <g>
+          <path class="st11" fill="none" stroke="#494D52" stroke-width="0.1471" stroke-miterlimit="10" d="M27.7,8.2V37c0,1.2-1,2.1-2.1,2.1h-1.3c-1.2,0-2.1-1-2.1-2.1V8.2"/>
+        </g>
       </g>
       <g>
-      	<g>
-      		<path class="st12" fill="#EE2649" d="M28.5,7.8c0,0.5-0.4,0.8-0.8,0.8h-5.5c-0.5,0-0.8-0.4-0.8-0.8V1.7c0-0.5,0.4-0.8,0.8-0.8h5.5
+        <g>
+          <path class="st12" fill="#EE2649" d="M28.5,7.8c0,0.5-0.4,0.8-0.8,0.8h-5.5c-0.5,0-0.8-0.4-0.8-0.8V1.7c0-0.5,0.4-0.8,0.8-0.8h5.5
       			c0.5,0,0.8,0.4,0.8,0.8V7.8z"/>
-      	</g>
-      	<g>
-      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="22.4" y1="1.7" x2="22.4" y2="7.8"/>
-      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="23.6" y1="1.7" x2="23.6" y2="7.8"/>
-      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="26.2" y1="1.7" x2="26.2" y2="7.8"/>
-      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="27.5" y1="1.7" x2="27.5" y2="7.8"/>
-      		<line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="24.9" y1="1.7" x2="24.9" y2="7.8"/>
-      	</g>
+        </g>
+        <g>
+          <line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="22.4" y1="1.7" x2="22.4" y2="7.8"/>
+          <line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="23.6" y1="1.7" x2="23.6" y2="7.8"/>
+          <line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="26.2" y1="1.7" x2="26.2" y2="7.8"/>
+          <line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="27.5" y1="1.7" x2="27.5" y2="7.8"/>
+          <line class="st13" fill="none" stroke="#7E1416" stroke-width="0.1471" stroke-miterlimit="10" x1="24.9" y1="1.7" x2="24.9" y2="7.8"/>
+        </g>
       </g>
     </symbol>
 
@@ -1486,21 +1506,24 @@
     <!-- Mexico -->
     <symbol id="MX" viewBox="0 0 800 544" stroke-linecap="round" stroke-linejoin="round">
       <g id="mexico">
-      <path d="M 1 1 58.8738 6.9681 151.7854 49.2102 222.3681 52.7092 222.9375 40.557 266.7695 42.1727 303.3251 75.8707 317.6484 107.8304 352.253 126.0383 368.6154 102.7195 389.6555 102.1268 407.897 113.8049 430.3407 151.1867 446.0516 167.8262 459.9389 202.2674 499.8581 216.8929 510.1788 215.6437 496.7589 263.5785 493.8792 317.9757 514.4154 370.9607 533.6519 392.2915 552.4218 422.9555 582.5694 429.336 594.8481 441.0443 678.0535 413.8846 694.8459 400.4545 704.2801 348.6942 750.5116 329.7777 791.1351 324.117 799 343.947 786.0975 363.0483 787.0507 386.2514 779.5895 423.0541 760.6433 418.2145 744.2279 439.8986 691.8955 444.1484 693.1946 460.693 711.2012 484.1633 711.3074 494.2006 674.6996 497.1833 662.6586 522.051 664.1813 542.8736 629.5249 513.5684 590.4224 498.6168 537.7868 517.1817 495.6347 505.3216 468.5923 492.5462 447.1465 488.8632 414.7688 475.6227 383.8096 453.844 339.2381 442.5852 327.6754 428.9858 297.8646 411.7325 278.0396 378.192 291.2093 359.4652 271.6841 308.6189 248.7003 278.3977 222.5105 254.2158 210.2813 235.1673 183.4776 214.4876 188.4438 196.3647 160.6441 173.48 155.3409 152.431 141.4623 149.1556 116.2501 117.3581 96.2891 61.5195 97.5536 50.246 57.9367 28.3353 52.8175 39.893 56.2536 76.6921 96.0896 131.5928 99.8661 151.0569 127.5275 186.2588 134.4875 214.3953 148.1124 242.2238 180.6757 287.5056 162.9536 302.6626 156.8281 284.2397 140.193 266.2888 108.5981 242.2375 108.1325 204.2838 79.1372 179.5688 53.7982 166.314 52.6165 148.3594 65.3311 124.9193 32.9828 92.5677 8.4397 28.4135 1 1 Z"/>
+        <path
+          d="M 1 1 58.8738 6.9681 151.7854 49.2102 222.3681 52.7092 222.9375 40.557 266.7695 42.1727 303.3251 75.8707 317.6484 107.8304 352.253 126.0383 368.6154 102.7195 389.6555 102.1268 407.897 113.8049 430.3407 151.1867 446.0516 167.8262 459.9389 202.2674 499.8581 216.8929 510.1788 215.6437 496.7589 263.5785 493.8792 317.9757 514.4154 370.9607 533.6519 392.2915 552.4218 422.9555 582.5694 429.336 594.8481 441.0443 678.0535 413.8846 694.8459 400.4545 704.2801 348.6942 750.5116 329.7777 791.1351 324.117 799 343.947 786.0975 363.0483 787.0507 386.2514 779.5895 423.0541 760.6433 418.2145 744.2279 439.8986 691.8955 444.1484 693.1946 460.693 711.2012 484.1633 711.3074 494.2006 674.6996 497.1833 662.6586 522.051 664.1813 542.8736 629.5249 513.5684 590.4224 498.6168 537.7868 517.1817 495.6347 505.3216 468.5923 492.5462 447.1465 488.8632 414.7688 475.6227 383.8096 453.844 339.2381 442.5852 327.6754 428.9858 297.8646 411.7325 278.0396 378.192 291.2093 359.4652 271.6841 308.6189 248.7003 278.3977 222.5105 254.2158 210.2813 235.1673 183.4776 214.4876 188.4438 196.3647 160.6441 173.48 155.3409 152.431 141.4623 149.1556 116.2501 117.3581 96.2891 61.5195 97.5536 50.246 57.9367 28.3353 52.8175 39.893 56.2536 76.6921 96.0896 131.5928 99.8661 151.0569 127.5275 186.2588 134.4875 214.3953 148.1124 242.2238 180.6757 287.5056 162.9536 302.6626 156.8281 284.2397 140.193 266.2888 108.5981 242.2375 108.1325 204.2838 79.1372 179.5688 53.7982 166.314 52.6165 148.3594 65.3311 124.9193 32.9828 92.5677 8.4397 28.4135 1 1 Z"/>
       </g>
     </symbol>
 
     <!-- Jordan -->
     <symbol id="JO" viewBox="0 0 800 910" stroke-linecap="round" stroke-linejoin="round">
       <g id="jordan">
-      <path d="M 126.7729 215.7857 159.5737 147.8468 363.6941 234.9113 720.0682 1 799 263.4921 764.5021 296.867 394.7777 409.267 581.9382 624.9615 520.1379 662.2713 489.5927 735.015 345.6482 765.2868 300.1735 843.1647 217.7592 909.3721 6.8022 872.2866 1 840.8156 100.0088 495.894 96.8108 411.5346 125.0274 348.3051 126.7729 215.7857 Z"/>
+        <path
+          d="M 126.7729 215.7857 159.5737 147.8468 363.6941 234.9113 720.0682 1 799 263.4921 764.5021 296.867 394.7777 409.267 581.9382 624.9615 520.1379 662.2713 489.5927 735.015 345.6482 765.2868 300.1735 843.1647 217.7592 909.3721 6.8022 872.2866 1 840.8156 100.0088 495.894 96.8108 411.5346 125.0274 348.3051 126.7729 215.7857 Z"/>
       </g>
     </symbol>
 
     <!-- Ghana -->
     <symbol id="GH" viewBox="0 0 800 1193" stroke-linecap="round" stroke-linejoin="round">
       <g>
-      <path d="M 604.0172 15.592 590.759 73.7913 667.6752 169.6699 667.9756 305.1413 686.1457 452.0256 732.6913 519.8703 692.5721 688.0848 707.5996 780.8236 757.3884 899.002 799 964.3659 508.4201 1074.2774 405.1989 1138.2871 237.7414 1192.294 72.2446 1139.0057 80.8733 1065.4151 1 904.4198 50.1171 693.9124 128.5442 537.5196 80.8063 271.8862 56.5174 131.2926 61.4384 25.4664 379.4057 17.659 460.2909 31.2088 519.3345 1 604.0172 15.592 Z"/>
+        <path
+          d="M 604.0172 15.592 590.759 73.7913 667.6752 169.6699 667.9756 305.1413 686.1457 452.0256 732.6913 519.8703 692.5721 688.0848 707.5996 780.8236 757.3884 899.002 799 964.3659 508.4201 1074.2774 405.1989 1138.2871 237.7414 1192.294 72.2446 1139.0057 80.8733 1065.4151 1 904.4198 50.1171 693.9124 128.5442 537.5196 80.8063 271.8862 56.5174 131.2926 61.4384 25.4664 379.4057 17.659 460.2909 31.2088 519.3345 1 604.0172 15.592 Z"/>
       </g>
     </symbol>
 
@@ -1527,6 +1550,14 @@
       </g>
     </symbol>
 
-  </defs>
+    <symbol id="BJ" width="800" height="1638" viewBox="0 0 800 1638" stroke-linecap="round" stroke-linejoin="round">
+      <g id="benin">
+        <path
+          d="M 508.9022 1605.5389 288.3499 1636.8712 222.8453 1451.6085 235.8405 835.1093 182.5767 779.6967 172.8291 647.9193 81.3221 553.6199 1 474.0242 35.1903 332.7964 125.8954 302.7655 179.8667 185.553 308.4462 160.7191 365.915 80.4954 454.0059 1.8426 548.0464 1 748.8248 154.7869 738.9968 244.0408 799 403.0385 747.5171 511.3758 775.6616 583.4785 647.9593 750.1586 566.5535 832.6452 516.812 1002.0521 523.7361 1172.807 508.9022 1605.5389 Z"/>
+      </g>
+    </svg>
+  </symbol>
+
+</defs>
 
 </svg>
