@@ -1,4 +1,8 @@
 # Prod
+### 2020-11-24
+* Updated Lassa-virus-seq data (dataset, downloads, experiments, patients)
+* Rebuilt schema (minor changes to Symptoms)
+
 ### 2020-11-19
 * Rebuilt schema (minor changes to DataCatalog)
 
