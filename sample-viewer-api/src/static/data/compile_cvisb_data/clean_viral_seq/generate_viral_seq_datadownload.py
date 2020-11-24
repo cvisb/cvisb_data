@@ -8,29 +8,7 @@ os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data
 # Helper functions for cleanup...
 import helpers
 
-ALIGNMENTS = [
-    {"virus": "Lassa",
-     "segment": "S",
-     "filename": "LASV_NP-GP_2019-09-11.fasta",
-     "description": "Lassa virus NP-GP curated alignment",
-     "curated": True,
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP_GPC_2019.11.21.fasta"},
-    {"virus": "Lassa",
-     "segment": "L",
-     "filename": "LASV_L_Z_2019.11.22.fasta",
-     "description": "Lassa virus L-Z curated alignment",
-     "curated": True,
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2019.11.22.fasta"},
-    {"virus": "Ebola",
-     "segment": None,
-     "filename": "EBOV_ORFs_2020.06.12.fasta",
-     "curated": True,
-     "description": "Ebola virus curated alignment",
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2020.06.12.fasta"}
-]
-
-
-def get_viralseq_downloads(dateModified, downloads, experiments, version, datasetVirus):
+def get_viralseq_downloads(alignments, dateModified, downloads, experiments, version, datasetVirus):
     # Combine together curated lassa sequence, curated ebola sequence, and all the individual raw files (contained in downloads, a DataFrame)
 
     # Make sure arrays are arrays
@@ -42,7 +20,7 @@ def get_viralseq_downloads(dateModified, downloads, experiments, version, datase
     ds['citation'] = ds.citation.apply(helpers.listify)
 
 
-    for file in ALIGNMENTS:
+    for file in alignments:
         if(file['virus'] == datasetVirus):
             download = get_curated(dateModified, version, experiments, datasetVirus,
                                     file['filename'], file['description'], file['url'], file['curated'], file['segment'])

@@ -5,6 +5,7 @@ import { UploadPatientsRoutingModule } from './upload-patients-routing.module';
 
 // --- modules ---
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 
 // --- components ---
@@ -16,7 +17,8 @@ import { PatientUploadComponent } from '../patient-upload/patient-upload.compone
     CommonModule,
     UploadPatientsRoutingModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AddPatientsComponent,

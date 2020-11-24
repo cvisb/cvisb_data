@@ -1,3 +1,7 @@
+<div class="spinner-container container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
 <mat-form-field>
   <mat-label>Select an endpoint</mat-label>
   <mat-select [(value)]="endpoint">

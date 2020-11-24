@@ -11,7 +11,7 @@ alignment_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/clean_ebola_
 metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/survival_dataset_ebov_public_2019.11.12.csv"
 
 
-def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
+def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_file, alignments, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, virus="Ebola"):
     # --- constants ---
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
@@ -140,7 +140,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     helpers.log_msg("finished chunk 8", verbose)
     # --- Call to get data downloads, dataset ---
     dwnlds = md[download_cols]
-    all_dwnlds = get_viralseq_downloads(dateModified, dwnlds, experiments, version, virus)
+    all_dwnlds = get_viralseq_downloads(alignments, dateModified, dwnlds, experiments, version, virus)
     ds = get_viralseq_dataset(dateModified, dwnlds, md, version, virus)
     helpers.log_msg("finished chunk 9", verbose)
     # [Export]  ----------------------------------------------------------------------------------------------------

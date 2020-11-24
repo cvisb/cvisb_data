@@ -4,8 +4,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, throwError, forkJoin, of, from, EMPTY, queueScheduler, asapScheduler, range } from 'rxjs';
-import { map, catchError, tap, mergeMap, reduce, finalize, expand, concatMap, takeWhile, pluck } from "rxjs/operators";
+import { Observable, BehaviorSubject, throwError, forkJoin, of, EMPTY } from 'rxjs';
+import { map, catchError, tap, mergeMap, reduce, finalize, expand, pluck } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -22,6 +22,8 @@ import { nest } from 'd3';
 export class ApiService {
   public uploadProgressSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public uploadProgressState$ = this.uploadProgressSubject.asObservable();
+  public loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingState$ = this.loadingSubject.asObservable();
 
 
   constructor(
@@ -560,6 +562,7 @@ export class ApiService {
 
   // Function to look up IDs and replace
   prepPatientUpload(endpoint: string, uniqueID: string, data: Object[]): Observable<any> {
+    this.loadingSubject.next(true)
     console.log("PREP UPLOAD")
     const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
     const qParams = new HttpParams()
@@ -582,11 +585,13 @@ export class ApiService {
         })
 
         return (duplicateIDs)
-      })
+      }),
+      finalize(() => this.loadingSubject.next(false))
     ))
   }
 
   prepUpload(endpoint: string, uniqueID: string, data: Object[]): Observable<any> {
+    this.loadingSubject.next(true)
     console.log("PREP UPLOAD")
     const ids = `"${data.map(d => d[uniqueID]).join('","')}"`;
     const qParams = new HttpParams()
@@ -608,7 +613,8 @@ export class ApiService {
         })
 
         return (duplicateIDs)
-      })
+      }),
+      finalize(() => this.loadingSubject.next(false))
     ))
   }
 

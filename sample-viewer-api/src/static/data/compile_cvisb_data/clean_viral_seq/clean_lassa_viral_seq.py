@@ -34,7 +34,7 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 # updatedBy='raph'
 # output_dir = ""
 
-def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, alignment_file_S_uncurated, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, output_dir, onlyCurated = False, virus="Lassa"):
+def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, alignment_file_S_uncurated, metadata_file, alignments, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, output_dir, onlyCurated = False, virus="Lassa"):
     # --- constants ---
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
@@ -219,7 +219,8 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
 
     # --- Call to get data downloads, dataset ---
     dwnlds = md[download_cols]
-    all_dwnlds = get_viralseq_downloads(dateModified, dwnlds, experiments, version, virus)
+    dwnlds["publisher"] = dwnlds.publisher.apply(helpers.listify)
+    all_dwnlds = get_viralseq_downloads(alignments, dateModified, dwnlds, experiments, version, virus)
     ds = get_viralseq_dataset(dateModified, dwnlds, md, version, virus)
 
     # [Export]  ----------------------------------------------------------------------------------------------------
@@ -248,7 +249,7 @@ def getPrivateID(row):
 def getPublisher(row, varName="CViSB_data"):
     # Check binary if CVISB_data
     if(row[varName]):
-        return([helpers.cvisb])
+        return(helpers.cvisb)
 
 def getExptID(row, virus):
     if(virus == "Ebola"):
