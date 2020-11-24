@@ -1,8 +1,9 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
-import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
+import { ApiService, AuthService, GetPatientsService } from '../../_services/';
 
 import { CvisbUser } from '../../_models';
+import { Subscription } from "rxjs";
 
 import { cloneDeep } from 'lodash';
 
@@ -11,7 +12,7 @@ import { cloneDeep } from 'lodash';
   templateUrl: './data-upload.component.html',
   styleUrls: ['./data-upload.component.scss']
 })
-export class DataUploadComponent implements OnInit {
+export class DataUploadComponent implements OnDestroy {
   user: CvisbUser;
   fileType: string;
   uploadResponse: string;
@@ -31,6 +32,10 @@ export class DataUploadComponent implements OnInit {
   fileKB: number;
   uploading: Boolean = false;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
+  loading: boolean = false;
+  loadingSubscription: Subscription;
+  progressSubscription: Subscription;
+  userSubscription: Subscription;
 
   endpoint: string;
 
@@ -40,20 +45,22 @@ export class DataUploadComponent implements OnInit {
     private patientSvc: GetPatientsService,
     // private idSvc: CheckIdsService,
   ) {
-    authSvc.userState$.subscribe((user: CvisbUser) => {
+    this.userSubscription = this.authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
     })
 
-    apiSvc.uploadProgressState$.subscribe((progress: number) => {
+    this.progressSubscription = this.apiSvc.uploadProgressState$.subscribe((progress: number) => {
       this.uploadProgress = progress;
     })
 
+    this.loadingSubscription = this.apiSvc.loadingState$.subscribe(loading => this.loading = loading)
+
   }
 
-  ngOnInit() {
-  }
-
-  ngOnChanges() {
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
+    this.progressSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   deletePatients() {
