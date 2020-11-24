@@ -15,20 +15,20 @@ PATIENTS_DATE = today
 PATIENTS_VERSION = 0.3
 
 # --- hla ---
-HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_20191024.csv"
-HLA_DATE = today
-HLA_VERSION = 0.2
+HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_2020-01-30.csv"
+HLA_DATE = "2020-11-23"
+HLA_VERSION = 0.3
 HLA_UPDATEDBY = "Matthias Pauthner"
 
 # --- lassa virus seq ---
 # LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
-LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
-LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
-LVIRAL_LFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2019.11.26.fasta"
-# LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
-LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.25.csv"
-LVIRAL_DATE = today
-LVIRAL_VERSION = 0.2
+LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2020.11.23.fasta"
+LVIRAL_SFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_non_curated_2020.11.23.fasta"
+LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_2020.11.23.fasta"
+LVIRAL_LFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2020.11.23.fasta"
+LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_lasv_curated_2020.11.23.csv"
+LVIRAL_DATE = "2020-11-23"
+LVIRAL_VERSION = 0.3
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---

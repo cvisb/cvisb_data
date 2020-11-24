@@ -20,9 +20,9 @@
           <p>
             This is probably an error! Delete the duplicates. If you proceed with the upload, the first entry will be overwritten, and the other ones will remain unchanged.
           </p>
-          <div *ngFor="let item of dupes">
+          <span *ngFor="let item of dupes" class="mr-3">
             {{item}}
-          </div>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="replacementIDs && replacementIDs.length">
@@ -30,16 +30,16 @@
           <p>
             These patients already exist in the database. They will be overwritten.
           </p>
-          <div *ngFor="let id of replacementIDs">
+          <span *ngFor="let id of replacementIDs" class="mr-3">
             {{id}}
-          </div>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="newIDs && newIDs.length">
           <h3>New IDs to add:</h3>
-          <div *ngFor="let id of newIDs">
+          <span *ngFor="let id of newIDs" class="mr-3">
             {{id}}
-          </div>
+          </span>
         </ng-container>
       </ng-container>
 

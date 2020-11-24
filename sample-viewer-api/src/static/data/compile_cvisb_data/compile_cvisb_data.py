@@ -60,7 +60,7 @@ SWITCHER = {
     "systems-serology": lambda: serology.clean_serology(config.SEROLOGY_FILE, config.EXPTCOLS,
     config.SEROLOGY_UPDATEDBY, config.SEROLOGY_DATE, config.SEROLOGY_VERSION, config.VERBOSE, config.EXPORTDIR),
     "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_LFILE, config.LVIRAL_SFILE,
-                                                        config.LVIRAL_LFILE_UNCURATED, config.LVIRAL_MDFILE,
+                                                        config.LVIRAL_LFILE_UNCURATED, config.LVIRAL_SFILE_UNCURATED, config.LVIRAL_MDFILE,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE, config.EXPORTDIR),

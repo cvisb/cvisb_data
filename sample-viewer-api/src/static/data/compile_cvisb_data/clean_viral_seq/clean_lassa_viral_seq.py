@@ -8,10 +8,11 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 
 
 # DATADIR = "/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/"
-# alignment_file_S = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
-# alignment_file_L = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
-# alignment_file_L_uncurated = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2019.11.26.fasta"
-# metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.22.csv"
+# alignment_file_S = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2020.11.19.fasta"
+# alignment_file_S_uncurated = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_non_curated_2020.11.19.fasta"
+# alignment_file_L = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_2020.11.20.fasta"
+# alignment_file_L_uncurated = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2020.11.20.fasta"
+# metadata_file = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_curated_2020.11.19.csv"
 #
 # import os
 # os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/compile_cvisb_data/")
@@ -31,18 +32,18 @@ from .generate_viral_seq_datadownload import get_viralseq_downloads
 # today = datetime.today().strftime('%Y-%m-%d')
 # dateModified= today
 # updatedBy='raph'
+# output_dir = ""
 
-def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, output_dir, onlyCurated = False, virus="Lassa"):
+def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, alignment_file_S_uncurated, metadata_file, expt_cols, patient_cols, sample_cols, download_cols, dateModified, version, updatedBy, saveFiles, verbose, output_dir, onlyCurated = False, virus="Lassa"):
     # --- constants ---
     today = datetime.today().strftime('%Y-%m-%d')
     # Custom, extra properties specific to viral sequencing
     exptCols = expt_cols.copy()
     exptCols.extend(['genbankID', 'inAlignment', 'cvisb_data', 'segment'])
-    dupes_path = f"{output_dir}/log/inconsistencies/experiments_LassaViralSeq_duplicatePatients_{dateModified}.csv"
+    dupes_path = f"{output_dir}/log/inconsistencies/experiments_LassaViralSeq_icatePatients_{dateModified}.csv"
 
     # --- read in metadata ---
     md = pd.read_csv(metadata_file)
-
     if(onlyCurated):
         md = md[md.curated]
 
@@ -61,7 +62,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     if(len(dupe_seqID) > 0):
         helpers.log_msg(
             f"DATA ERROR: {len(dupe_seqID)} duplicate sequence ids found in virus sequences:", verbose)
-        helpers.log_msg(dupe_seqID[['sequenceID']].sort_values(
+        helpers.log_msg(dupe_seqID[['sequenceID', 'label']].sort_values(
             "label"), verbose)
         helpers.log_msg("-" * 50, verbose)
 
@@ -89,7 +90,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     md['batchID'] = None
     md['isControl'] = False
     md['experimentDate'] = md.date.apply(getExptDate)
-    md['sourceFiles'] = md.apply(lambda row: getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file), axis = 1)
+    md['sourceFiles'] = md.apply(lambda row: getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_S_uncurated, alignment_file_L_uncurated, metadata_file), axis = 1)
 
     # --- clean up patient metadata ---
     # NOTE: SUPER IMPORTANT!
@@ -138,7 +139,6 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     md['citation'] = md.citation.apply(helpers.listify)
     md['experimentID'] = md.apply(lambda x: getExptID(x, virus), axis=1)
     md['genbankID'] = md.accession
-
     # --- clean up sample properties ---
     md['sampleLabel'] = md.label
     md['sampleType'] = "viralRNA"
@@ -147,9 +147,9 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
         lambda x: f"{x.creatorInitials}-{x.sampleLabel}_{x.sampleType}", axis=1)
 
     # --- clean up download properties ---
-    md['name'] = md.apply(lambda x: x.label + "_" + x.accession, axis=1)
-    md['identifier'] = md.apply(lambda x: x.label + "_" + x.accession, axis=1)
-    md['contentUrl'] = md.apply(lambda x: "https://www.ncbi.nlm.nih.gov/nuccore/" + x.accession, axis=1)
+    md['name'] = md.apply(lambda x: getDwnldID(x), axis=1)
+    md['identifier'] = md.name
+    md['contentUrl'] = md.accession.apply(getDwnldUrl)
     md['additionalType'] = 'raw data'
     md['experimentIDs'] = md.experimentID.apply(lambda x: [x])
     md['contentUrlRepository'] = "GenBank"
@@ -157,7 +157,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
 
     # --- Merge together data and metadata ---
     Lseqs = getDNAseq(alignment_file_L, alignment_file_L_uncurated, virus, segment="L")
-    Sseqs = getDNAseq(alignment_file_S, None, virus, segment="S")
+    Sseqs = getDNAseq(alignment_file_S, alignment_file_S_uncurated, virus, segment="S")
 
     seqs = pd.concat([Lseqs, Sseqs], ignore_index=True)
 
@@ -181,10 +181,14 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
 
     patientDupeCols = ["patientID", "countryName", "hasPatientData", "hasSurvivorData",
                    "dateModified", "updatedBy", "cohort", "outcome",
-                   "infectionYear", "species", 'correction', 'source_PMID']
+                   "infectionYear", "species", 'correction']
     new_patients = merged[~ merged.KGH_id]
 
     # Remove redundant patient data
+    # first: remove the data points that Raph has designated as being duplicate.
+    original = len(new_patients)
+    new_patients = new_patients[~new_patients.duplicate]
+    helpers.log_msg(f"{original - len(new_patients)} removed because they're duplicate sequences.", verbose)
     dupe_patients2 = new_patients[new_patients.duplicated(subset = patientDupeCols, keep=False)]
     if(len(dupe_patients2) > 0):
         patients = new_patients.drop_duplicates(subset = patientDupeCols)[patient_cols]
@@ -249,9 +253,25 @@ def getPublisher(row, varName="CViSB_data"):
 def getExptID(row, virus):
     if(virus == "Ebola"):
         expt_stub = "EBOV_seq_"
+        return(expt_stub + row.accession)
     if(virus == "Lassa"):
         expt_stub = "LASV_seq_"
-    return(expt_stub + row.accession)
+        if(row.accession == row.accession):
+            return(expt_stub + row.accession)
+        else:
+            return(expt_stub + row.label + "_" + row.segment)
+
+def getDwnldID(row):
+    if(row.accession == row.accession):
+        return(row.label + "_" + row.segment + "_" + row.accession)
+    else:
+        return(row.label + "_" + row.segment)
+
+def getDwnldUrl(accession):
+    if(accession == accession):
+        return("https://www.ncbi.nlm.nih.gov/nuccore/" + accession)
+    else:
+        return("https://data.cvisb.org/download/lassa-virus-seq")
 
 def getExptDate(date_str):
     if(date_str == date_str):
@@ -259,9 +279,9 @@ def getExptDate(date_str):
             return(date_str)
     return None
 
-def getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, metadata_file):
+def getSourceFiles(row, alignment_file_L, alignment_file_S, alignment_file_L_uncurated, alignment_file_S_uncurated, metadata_file):
     if(row.segment == "S"):
-        return([alignment_file_S.split("/")[-1], metadata_file.split("/")[-1]])
+        return([alignment_file_S.split("/")[-1], alignment_file_S_uncurated.split("/")[-1], metadata_file.split("/")[-1]])
     if(row.segment == "L"):
         if(row.curated):
             return([alignment_file_L.split("/")[-1], alignment_file_L_uncurated.split("/")[-1], metadata_file.split("/")[-1]])

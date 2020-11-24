@@ -109,7 +109,7 @@ export class DataUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded; review the new and replacement IDs and then upload"
+        this.uploadResponse = "File uploaded; checking if the records already exist in the database.";
 
         this.data2upload = this.prepData(reader.result);
 
@@ -136,16 +136,13 @@ export class DataUploadComponent implements OnInit {
         }
 
         this.apiSvc.prepUpload(this.endpoint, uniqueID, this.data2upload).subscribe(dupes => {
+          this.uploadResponse = "Review the new and replacement IDs and then upload";
           dupes.sort((a, b) => a < b ? -1 : 1);
           this.dupes = dupes;
           this.replacementIDs = this.data2upload.filter(d => d["_id"]).map(d => d[uniqueID]);
           this.replacementIDs.sort((a, b) => a < b ? -1 : 1);
           this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d[uniqueID]);
           this.newIDs.sort((a, b) => a < b ? -1 : 1);
-          console.log(dupes)
-          console.log(this.replacementIDs)
-          console.log(this.newIDs)
-          console.log(this.data2upload)
         })
 
         // this.apiSvc.putPiecewise(this.endpoint, this.data2upload, uploadSize).subscribe(
