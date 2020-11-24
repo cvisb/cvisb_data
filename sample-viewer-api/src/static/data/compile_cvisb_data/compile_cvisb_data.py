@@ -87,7 +87,7 @@ Compiles together all data after they have been cleaned, compiled, and coerced i
 the CViSB data schema format.  After each cleanup function has been called, the data
 are saved as a .json to be uploaded.
 """
-def compile_data(args, chunk_size=300):
+def compile_data(args, chunk_size=200):
     config.VERBOSE = args.verbose
     log_msg(f"{datetime.today()}: starting CViSB data cleanup", args.verbose)
     # empty arrays to hold results
