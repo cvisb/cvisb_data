@@ -53,7 +53,10 @@ export class DataUploadComponent implements OnDestroy {
       this.uploadProgress = progress;
     })
 
-    this.loadingSubscription = this.apiSvc.loadingState$.subscribe(loading => this.loading = loading)
+    this.loadingSubscription = this.apiSvc.loadingState$.subscribe(loading => {
+      console.log("testing")
+      this.loading = loading
+    })
 
   }
 
