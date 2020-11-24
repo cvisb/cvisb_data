@@ -64,6 +64,7 @@
                           - GH
                           - MX
                           - JO
+                          - BJ
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -122,6 +123,7 @@
                           - Republic of the Congo
                           - Mexico
                           - Jordan
+                          - Benin
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property
