@@ -48,6 +48,9 @@ export class CountryObjectPipe implements PipeTransform {
     }, {
       "name": "Jordan",
       "identifier": "JO",
+    }, {
+      "name": "Benin",
+      "identifier": "BJ",
     }
   ]
 
