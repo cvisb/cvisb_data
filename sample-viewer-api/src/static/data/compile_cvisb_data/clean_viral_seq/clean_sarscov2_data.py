@@ -26,7 +26,7 @@ def create_data():
         for patient in metadata
     ]
 
-    experiments    = [create_experiment(patient['patientID']) for patient   in patients]
+    experiments    = [create_experiment(patient['patientID'], patient['authors']) for patient   in patients]
     data_downloads = [create_data_download(name, url, [])     for name, url in data_files.items()]
     dataset        = create_dataset(data_downloads)
 
@@ -140,7 +140,7 @@ def create_data_download(name, url, experiment_ids):
 
     return datadownload
 
-def create_experiment(patient_id):
+def create_experiment(patient_id, patient_source):
     experiment =  {
         "experimentID":         patient_id + '-sarscov2',
         "privatePatientID":     patient_id,
@@ -148,6 +148,7 @@ def create_experiment(patient_id):
         "measurementTechnique": 'Nucleic Acid Sequencing',
         "includedInDataset":    'sarscov2-virus-seq',
         "dateModified":         today,
+        "citation":             [patient_source]
     }
 
     return experiment
@@ -165,7 +166,7 @@ def create_patient(patient_id, patient_source, location, sample_date):
         "alternateIdentifier":  [patient_id],
         "infectionYear":        2020,
         'publisher':            helpers.cvisb,
-        "citation":       [patient_source],
+        "citation":             [patient_source],
         "updatedBy":            "Julia Mullen",
         "country":              country,
     }
