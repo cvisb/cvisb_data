@@ -98,7 +98,7 @@
 
         <!-- Experimental Data -->
          <ng-container *ngFor="let expt of experiments">
-          <mat-expansion-panel class="panel-group" [id]="expt.dataset_id" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
+          <mat-expansion-panel class="panel-group" [id]="expt.iconID" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
               <mat-panel-title class="panel-title">
                 <app-provenance-title class="flex-grow1" [title]="expt.datasetName" [icon]="expt.dataset_id" [embargoed]="getEmbargoed(expt.dataset_id)" [dataStatus]="getPrelim(expt.dataset_id)"></app-provenance-title>
