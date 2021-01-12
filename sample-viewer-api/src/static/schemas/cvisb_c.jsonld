@@ -1,0 +1,385 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:Country",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a Country in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "Country",
+      "rdfs:subClassOf": {
+        "@id": "schema:Country"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:Country"
+      }
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "2 letter ISO code of the country, e.g. SL",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "SL",
+        "NG",
+        "LR",
+        "GN",
+        "ML",
+        "TG",
+        "CI",
+        "US",
+        "IT",
+        "CD",
+        "CH",
+        "DE",
+        "GB",
+        "CG",
+        "GA",
+        "GH",
+        "MX",
+        "JO",
+        "BJ"
+      ]
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Link to the ISO country page",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Name of the country, e.g. Sierra Leone",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Sierra Leone",
+        "Nigeria",
+        "Liberia",
+        "Guinea",
+        "Togo",
+        "Mali",
+        "Cote d'Ivoire",
+        "United States",
+        "Germany",
+        "Ghana",
+        "Gabon",
+        "United Kingdom",
+        "Italy",
+        "Switzerland",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Mexico",
+        "Jordan",
+        "Benin"
+      ]
+    },
+    {
+      "@id": "cvisb:alternateName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternative name of the country, for instance in a different language",
+      "rdfs:label": "alternateName",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:alternateName"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ComaScore",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a series of observations about a patient, to calculate a Glasgow Coma Score in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ComaScore",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ComaScore"
+      ]
+    },
+    {
+      "@id": "cvisb:glasgowComaScore",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Combined Glasgow Coma Score",
+      "rdfs:label": "glasgowComaScore",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "minimum": 3,
+      "maximum": 15
+    },
+    {
+      "@id": "cvisb:eyeOpening",
+      "@type": "rdf:Property",
+      "rdfs:comment": "How a patient opens his/her eyes: Spontaneously (4), to speech (3), to pain (2), none (1)",
+      "rdfs:label": "eyeOpening",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "minimum": 1,
+      "maximum": 4
+    },
+    {
+      "@id": "cvisb:verbalResponse",
+      "@type": "rdf:Property",
+      "rdfs:comment": "How a patient verbally communicates: oriented (5), confused (4), Inappropriate (3), Incomprehensible (2), none (1)",
+      "rdfs:label": "verbalResponse",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "minimum": 1,
+      "maximum": 5
+    },
+    {
+      "@id": "cvisb:motorResponse",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Motor response of patient: obeys commands (6), localizes to pain (5), withdraws from pain (4), flexion to pain (3), extension to pain (2), none (1)",
+      "rdfs:label": "motorResponse",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "minimum": 1,
+      "maximum": 6
+    },
+    {
+      "@id": "cvisb:ContactPoint",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a ContactPoint for the Center for Viral Systems Biology",
+      "rdfs:label": "ContactPoint",
+      "rdfs:subClassOf": {
+        "@id": "schema:ContactPoint"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:ContactPoint"
+      }
+    },
+    {
+      "@id": "cvisb:contactType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "contact type of the contactPoint",
+      "rdfs:label": "contactType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:contactType"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "technical support",
+        "customer support"
+      ]
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "url of the contactPoint",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:email",
+      "@type": "rdf:Property",
+      "rdfs:comment": "email of the contactPoint",
+      "rdfs:label": "email",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:email"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    }
+  ]
+}

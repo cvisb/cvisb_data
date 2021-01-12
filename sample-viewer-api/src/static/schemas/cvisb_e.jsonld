@@ -1,0 +1,1139 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:Experiment",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an Experiment in the Center for Viral Systems Biology. An experiment is a measurement (specified by measurementTechnique) of a specific sample (e.g. a particular timepoint for a Patient).",
+      "rdfs:label": "Experiment",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "root_entity": true
+    },
+    {
+      "@id": "cvisb:experimentID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique experiment ID for that sample analysed by that experimental method",
+      "rdfs:label": "experimentID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:batchID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique batch ID created by the lab doing the experiment",
+      "rdfs:label": "batchID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sample ID used in the experiment",
+      "rdfs:label": "sampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:visitCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",
+      "rdfs:label": "visitCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Public Patient IDs used within the experiment",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:privatePatientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Private Patient ID used within the experiment. Link to patient metadata properties",
+      "rdfs:label": "privatePatientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:sraID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "ID used by the National Center for Biotechnology Information (NCBI) to identify the data within the Sequence Read Archive (SRA)",
+      "rdfs:label": "sraID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:genbankID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "ID used to identify the data within GenBank, the NIH's genetic sequence database",
+      "rdfs:label": "genbankID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:isControl",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the experiment is a control experiment",
+      "rdfs:label": "isControl",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the experiment",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Short description of the experiment",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:experimentDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of the Experiment",
+      "rdfs:label": "experimentDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive time of data collection, like \"survivor enrollment\" or \"patient admission\". Note that \"patient admission\" is assumed but not confirmed to be the date of admission to KGH.",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "patient admission",
+        "survivor enrollment"
+      ]
+    },
+    {
+      "@id": "cvisb:variableMeasured",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).",
+      "rdfs:label": "variableMeasured",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:variableMeasured"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA genotype",
+        "metagenome sequence",
+        "Ebola virus sequence",
+        "Lassa virus sequence",
+        "SARS-CoV-2 virus sequence",
+        "BCR sequence",
+        "TCR sequence",
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "NKD-CD107a",
+        "IgG2",
+        "FcRg2b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA1",
+        "FcRg3A",
+        "RCA",
+        "IgG3",
+        "IgM",
+        "IgG4",
+        "IgA2",
+        "SNA",
+        "IgG1",
+        "NT50",
+        "metabolomics",
+        "blood chemistry",
+        "blood cell count",
+        "vitals",
+        "virus level",
+        "patient antibody response",
+        "acute symptoms",
+        "sequelae",
+        "coma score"
+      ]
+    },
+    {
+      "@id": "cvisb:measurementTechnique",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.",
+      "rdfs:label": "measurementTechnique",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:measurementTechnique"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Nucleic Acid Sequencing",
+        "RNA sequencing",
+        "Immune Repertoire Deep Sequencing",
+        "serology",
+        "Blood Chemistry Measurement",
+        "Vital Signs Measurement",
+        "Rapid Antigen Test",
+        "Reverse Transcriptase-Polymerase Chain Reaction",
+        "Blood Cell Count",
+        "ELISA",
+        "Clinical Observation"
+      ]
+    },
+    {
+      "@id": "cvisb:measurementCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)",
+      "rdfs:label": "measurementCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA sequencing",
+        "virus sequencing",
+        "metagenome sequencing",
+        "immune repertoire sequencing",
+        "Systems Serology",
+        "clinical measurements",
+        "clinical observations"
+      ]
+    },
+    {
+      "@id": "cvisb:includedInDataset",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A unique identifier for the Dataset that the Experiment is contained in. Note: should be an internal, CViSB identifier. Must match Dataset:identifier options",
+      "rdfs:label": "includedInDataset",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "hla",
+        "metagenome-seq",
+        "ebola-virus-seq",
+        "lassa-virus-seq",
+        "sarscov2-virus-seq",
+        "bcr",
+        "tcr",
+        "systems-serology",
+        "systems-serology-32783920",
+        "rtpcr-32783920",
+        "blood-chemistry-vhf",
+        "blood-counts-vhf",
+        "vitals-vhf",
+        "rtpcr-vhf",
+        "rapid-diagnostics-vhf",
+        "sensor-vitals-vhf"
+      ]
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:updatedBy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Person who updated the experiment data",
+      "rdfs:label": "updatedBy",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Version number of experiment",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:creator",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Author/creator of this experiment",
+      "rdfs:label": "creator",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:creator"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this experiment, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string). If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment.\"",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:analysisCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Computer programming source code. Example: Full (compile ready) solutions, code snippet samples, scripts, templates.",
+      "rdfs:label": "analysisCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:releaseDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date upon which the data should be made publicly available.",
+      "rdfs:label": "releaseDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:data",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Data associated with the experiment. Typically summary values for that particular measurement.",
+      "rdfs:label": "data",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        },
+        {
+          "@id": "cvisb:VirusSeqData"
+        },
+        {
+          "@id": "cvisb:SystemsSerology"
+        },
+        {
+          "@id": "cvisb:PiccoloData"
+        },
+        {
+          "@id": "cvisb:BloodCountData"
+        },
+        {
+          "@id": "cvisb:HeartRate"
+        },
+        {
+          "@id": "cvisb:ComaScore"
+        },
+        {
+          "@id": "cvisb:BodyTemperature"
+        },
+        {
+          "@id": "cvisb:OxygenSaturation"
+        },
+        {
+          "@id": "cvisb:SystolicPressure"
+        },
+        {
+          "@id": "cvisb:DiastolicPressure"
+        },
+        {
+          "@id": "cvisb:RespiratoryRate"
+        },
+        {
+          "@id": "cvisb:RDT"
+        },
+        {
+          "@id": "cvisb:RTPCR"
+        },
+        {
+          "@id": "cvisb:ELISA"
+        },
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sourceFiles",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the experiment data",
+      "rdfs:label": "sourceFiles",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:ELISA",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ELISA",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ELISA"
+      ]
+    },
+    {
+      "@id": "cvisb:virus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Virus tested in ELISA (Ebola, Lassa, or SARS-CoV-2)",
+      "rdfs:label": "virus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa",
+        "SARS-CoV-2"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:assayType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of ELISA: IgG, IgM, or Ag",
+      "rdfs:label": "assayType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "IgG",
+        "IgM",
+        "Ag"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:elisaResult",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of ELISA, either positive/negative/indeterminate",
+      "rdfs:label": "elisaResult",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        "positive",
+        "negative",
+        "indeterminate",
+        null
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:elisaValue",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of ELISA, as a quantitative calibrated value",
+      "rdfs:label": "elisaValue",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "sampleID associated with the ELISA measurement",
+      "rdfs:label": "sampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of the time at which the ELISA was taken, e.g. at patient presentation, survivor enrollment etc.",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this dataset, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string)",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sourceFiles",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the ELISA data",
+      "rdfs:label": "sourceFiles",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:ECGPoint",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a single ECG datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "ECGPoint",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:time",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date and time of ECGPoint measurement",
+      "rdfs:label": "time",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ECGPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:DateTime"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:voltage",
+      "@type": "rdf:Property",
+      "rdfs:comment": "ECG voltage, in mV",
+      "rdfs:label": "voltage",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ECGPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:collectionInstrument",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor",
+      "rdfs:label": "collectionInstrument",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ECGPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "PhysIQ",
+        "conventional"
+      ]
+    }
+  ]
+}
