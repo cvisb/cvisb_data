@@ -98,6 +98,7 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
 
         with open(output_file, 'w') as out_f:
             json.dump(schema_data, out_f, indent=2)
+        print("DONE!")
 
 convert("cvisb-context.yaml")
 
