@@ -13,160 +13,12 @@
   "@id": "https://data.cvisb.org/jsonschema/v0.1",
   "@graph": [
     {
-      "@id": "cvisb:RepertoireSequencing",
+      "@id": "cvisb:Experiment",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a repertoire sequencing Experiment in the Center for Viral Systems Biology",
-      "rdfs:label": "RepertoireSequencing",
+      "rdfs:comment": "A schema describing an Experiment in the Center for Viral Systems Biology. An experiment is a measurement (specified by measurementTechnique) of a specific sample (e.g. a particular timepoint for a Patient).",
+      "rdfs:label": "Experiment",
       "rdfs:subClassOf": {
-        "@id": "cvisb:sequencingExperiment"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:cellType",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the repertoire sequencing was performed on B-cells or T-cells",
-      "rdfs:label": "cellType",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "B-cell",
-        "T-cell"
-      ]
-    },
-    {
-      "@id": "cvisb:primerSet",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Primer set",
-      "rdfs:label": "primerSet",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:analysisVersion",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Analysis pipeline version",
-      "rdfs:label": "analysisVersion",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:abstarVersion",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Abstar Version",
-      "rdfs:label": "abstarVersion",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:germlineDatabase",
-      "@type": "rdf:Property",
-      "rdfs:comment": "germline database name or URL",
-      "rdfs:label": "germlineDatabase",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:germlineDBVersion",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Germline database version",
-      "rdfs:label": "germlineDBVersion",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RepertoireSequencing"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:Sample",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a sample the Center for Viral Systems Biology. Primary samples = blood draw, tissue sample, urine, or feces.  Derived are some sort of isolation/preparation of whole blood/tissue, e.g. plasma, sera, DNA, RNA, etc.",
-      "rdfs:label": "Sample",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Thing"
+        "@id": "schema:Thing"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
@@ -174,13 +26,57 @@
       "root_entity": true
     },
     {
+      "@id": "cvisb:experimentID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique experiment ID for that sample analysed by that experimental method",
+      "rdfs:label": "experimentID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:batchID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique batch ID created by the lab doing the experiment",
+      "rdfs:label": "batchID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:sampleID",
       "@type": "rdf:Property",
-      "rdfs:comment": "unique ID for the derived sample; ideally, the combination of sampleType and isolationDate. Should *not* contain non-public IDs.",
+      "rdfs:comment": "Sample ID used in the experiment",
       "rdfs:label": "sampleID",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -192,17 +88,17 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": true
     },
     {
-      "@id": "cvisb:sampleLabel",
+      "@id": "cvisb:visitCode",
       "@type": "rdf:Property",
-      "rdfs:comment": "Label for what the sample is called on sample tubes, etc.",
-      "rdfs:label": "sampleLabel",
+      "rdfs:comment": "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",
+      "rdfs:label": "visitCode",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -214,92 +110,17 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:alternateIdentifier",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Alternate identifers for sample. Can contain private IDs.",
-      "rdfs:label": "alternateIdentifier",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:alternateIdentifier"
-      },
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:name",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Descriptive name of the derived sample",
-      "rdfs:label": "name",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:name"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:description",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Short description of the derived sample",
-      "rdfs:label": "description",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:description"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
       "@id": "cvisb:patientID",
       "@type": "rdf:Property",
-      "rdfs:comment": "Unique public patient id. Will be added into the database via join",
+      "rdfs:comment": "Public Patient IDs used within the experiment",
       "rdfs:label": "patientID",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -317,11 +138,11 @@
     {
       "@id": "cvisb:privatePatientID",
       "@type": "rdf:Property",
-      "rdfs:comment": "Unique *private* patient id, e.g. G-number, S-number, C-number",
+      "rdfs:comment": "Private Patient ID used within the experiment. Link to patient metadata properties",
       "rdfs:label": "privatePatientID",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -337,13 +158,13 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:visitCode",
+      "@id": "cvisb:sraID",
       "@type": "rdf:Property",
-      "rdfs:comment": "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",
-      "rdfs:label": "visitCode",
+      "rdfs:comment": "ID used by the National Center for Biotechnology Information (NCBI) to identify the data within the Sequence Read Archive (SRA)",
+      "rdfs:label": "sraID",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -359,51 +180,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:isolationDate",
+      "@id": "cvisb:genbankID",
       "@type": "rdf:Property",
-      "rdfs:comment": "Date of sample creation/collection (NOT date of blood draw/tissue collection, unless the sample is that primary sample) (YYYY-MM-DD)",
-      "rdfs:label": "isolationDate",
+      "rdfs:comment": "ID used to identify the data within GenBank, the NIH's genetic sequence database",
+      "rdfs:label": "genbankID",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:samplingDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of sample collection used for the the experiment.  Should refer to the initial time the sample was collected from the patient.",
-      "rdfs:label": "samplingDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:DateRange"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:sampleGroup",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sample group type: whether it comes from the *acute* phase while the patient treated in the hospital, or from the *survivor* study where survivors and contacts of the survivors are sampled after the infection.",
-      "rdfs:label": "sampleGroup",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -416,199 +199,16 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "acute",
-        "survivor"
-      ]
-    },
-    {
-      "@id": "cvisb:sampleType",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sample type. Primary types: \"blood_purple-EDTA\", \"blood_blue-citrate\", \"blood_mixed\", \"blood_unknown\", \"urine\", \"feces\", \"organs\", \"tissue\"; Derived types: \"plasma\", \"serum\", \"buffy coat\", \"PBMC\", \"frozenPBMC-DNA\", \"frozenPBMC-RNA\", \"viralRNA\", \"totalRNA\", \"DNA\"",
-      "rdfs:label": "sampleType",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "schema:Enumeration": [
-        "blood_purple-EDTA",
-        "blood_blue-citrate",
-        "blood_mixed",
-        "blood_unknown",
-        "urine",
-        "feces",
-        "organs",
-        "tissue",
-        "plasma",
-        "serum",
-        "plasma_or_serum",
-        "buffy_coat",
-        "PBMC",
-        "frozenPBMC-DNA",
-        "frozenPBMC-RNA",
-        "viralRNA",
-        "totalRNA",
-        "DNA"
-      ],
       "authenticated": false
     },
     {
-      "@id": "cvisb:derivedIndex",
+      "@id": "cvisb:isControl",
       "@type": "rdf:Property",
-      "rdfs:comment": "Integer expressing how far derived the sample is from the primary sample.  Primary sample (e.g. blood draw) has a derivedIndex=0; PBMC=1, ...",
-      "rdfs:label": "derivedIndex",
+      "rdfs:comment": "Whether the experiment is a control experiment",
+      "rdfs:label": "isControl",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:species",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Species of sample (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)",
-      "rdfs:label": "species",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "schema:Enumeration": [
-        "Homo sapiens",
-        "Hylomyscus pamfi",
-        "Mastomys erythroleucus",
-        "Mastomys natalensis",
-        "rodent",
-        null
-      ],
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:protocolVersion",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Protocol version to isolate sample; either file name and/or version",
-      "rdfs:label": "protocolVersion",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:protocolURL",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Link to protocol used to isolate sample",
-      "rdfs:label": "protocolURL",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:freezingBuffer",
-      "@type": "rdf:Property",
-      "rdfs:comment": "What buffer was used to freeze the sample in; relevant for PBMC samples",
-      "rdfs:label": "freezingBuffer",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:dilutionFactor",
-      "@type": "rdf:Property",
-      "rdfs:comment": "How much a plamsa sample has been diluted from its original isolation",
-      "rdfs:label": "dilutionFactor",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:avlInactivated",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether a plasma or serum sample is AVL-inactivated",
-      "rdfs:label": "avlInactivated",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -616,591 +216,6 @@
           "@id": "schema:Boolean"
         }
       ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:location",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Current location(s) for the sample, including Lab, number of aliquots, and when the info was last updated",
-      "rdfs:label": "location",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dateModified",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
-      "rdfs:label": "dateModified",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:dateModified"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:updatedBy",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Person who updated the sample location",
-      "rdfs:label": "updatedBy",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:_version",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Version number of sample, auto-assigned by CViSB database",
-      "rdfs:label": "_version",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Sample"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Number"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:version"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:RespiratoryRate",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a single respiratory rate datapoint collected from patients in the Center for Viral Systems Biology.",
-      "rdfs:label": "RespiratoryRate",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Data"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:@type",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Type of data",
-      "rdfs:label": "@type",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RespiratoryRate"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "RespiratoryRate"
-      ]
-    },
-    {
-      "@id": "cvisb:time",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date and time of RespiratoryRate measurement",
-      "rdfs:label": "time",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RespiratoryRate"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:DateTime"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:respiratoryRate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "RespiratoryRate, in breaths per minute",
-      "rdfs:label": "respiratoryRate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RespiratoryRate"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:collectionInstrument",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor",
-      "rdfs:label": "collectionInstrument",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:RespiratoryRate"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true,
-      "schema:Enumeration": [
-        "PhysIQ",
-        "conventional"
-      ]
-    },
-    {
-      "@id": "cvisb:SNPData",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing viral sequencing data in the Center for Viral Systems Biology.",
-      "rdfs:label": "SNPData",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Data"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:snp",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Single nucleotide polymorphism, e.g. Q9H",
-      "rdfs:label": "snp",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:snpDetected",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether or not the SNP was found in the sequencing",
-      "rdfs:label": "snpDetected",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:snpLocation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Amino acid number of the SNP, relative to the reference sequence.",
-      "rdfs:label": "snpLocation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:originalAA",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Amino acid code for the amino acid at the reference sequence.",
-      "rdfs:label": "originalAA",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:mutatedAA",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Amino acid code for the amino acid at the mutation site.",
-      "rdfs:label": "mutatedAA",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:VirusSeqData",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing viral sequencing data in the Center for Viral Systems Biology.",
-      "rdfs:label": "VirusSeqData",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Data"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:@type",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Type of data",
-      "rdfs:label": "@type",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "VirusSeqData"
-      ]
-    },
-    {
-      "@id": "cvisb:virus",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Virus sequenced",
-      "rdfs:label": "virus",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "Ebola",
-        "Lassa",
-        "SARS-CoV-2"
-      ]
-    },
-    {
-      "@id": "cvisb:virusSegment",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Segment of the virus sequenced, for Lassa (S or L)",
-      "rdfs:label": "virusSegment",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "L",
-        "S"
-      ]
-    },
-    {
-      "@id": "cvisb:referenceSeq",
-      "@type": "rdf:Property",
-      "rdfs:comment": "reference sequence used for alignment.",
-      "rdfs:label": "referenceSeq",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:isReferenceSeq",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the data is a reference sequence",
-      "rdfs:label": "isReferenceSeq",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:dnaSequence",
-      "@type": "rdf:Property",
-      "rdfs:comment": "DNA sequence for the virus",
-      "rdfs:label": "dnaSequence",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:alignedDNAsequence",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Aligned, curated DNA sequence for the virus",
-      "rdfs:label": "alignedDNAsequence",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:aaSequence",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Raw amino acid sequence for the virus",
-      "rdfs:label": "aaSequence",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:alignedAAsequence",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Aligned, curated amino acid sequence for the virus",
-      "rdfs:label": "alignedAAsequence",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:snpSequence",
-      "@type": "rdf:Property",
-      "rdfs:comment": "single nucleotide polymorphisms for the virus",
-      "rdfs:label": "snpSequence",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:VirusSeqData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:SNPData"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:SoftwareSourceCode",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing SoftwareSourceCode in the Center for Viral Systems Biology",
-      "rdfs:label": "SoftwareSourceCode",
-      "rdfs:subClassOf": {
-        "@id": "schema:SoftwareSourceCode"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      },
-      "schema:sameAs": {
-        "@id": "schema:SoftwareSourceCode"
-      }
-    },
-    {
-      "@id": "cvisb:identifier",
-      "@type": "rdf:Property",
-      "rdfs:comment": "DOI or unique identifier for code",
-      "rdfs:label": "identifier",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:@id",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the software code, preferably a DOI",
-      "rdfs:label": "@id",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:URL"
-      },
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
       "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
@@ -1208,11 +223,11 @@
     {
       "@id": "cvisb:name",
       "@type": "rdf:Property",
-      "rdfs:comment": "Name of code",
+      "rdfs:comment": "Descriptive name of the experiment",
       "rdfs:label": "name",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SoftwareSourceCode"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1227,17 +242,17 @@
         "@id": "schema:name"
       },
       "owl:cardinality": "one",
-      "marginality": "recommended",
+      "marginality": "optional",
       "authenticated": false
     },
     {
       "@id": "cvisb:description",
       "@type": "rdf:Property",
-      "rdfs:comment": "Description of code",
+      "rdfs:comment": "Short description of the experiment",
       "rdfs:label": "description",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SoftwareSourceCode"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1256,460 +271,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:codeRepository",
+      "@id": "cvisb:experimentDate",
       "@type": "rdf:Property",
-      "rdfs:comment": "Link to the repository where the un-compiled, human readable code and related code is located (SVN, github, CodePlex).",
-      "rdfs:label": "codeRepository",
+      "rdfs:comment": "Date of the Experiment",
+      "rdfs:label": "experimentDate",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:URL"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:codeRepository"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:programmingLanguage",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Computer programming language.",
-      "rdfs:label": "programmingLanguage",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:programmingLanguage"
-      },
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:creator",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Author/creator(s) of the code repository",
-      "rdfs:label": "creator",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Person"
-        },
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:creator"
-      },
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:citation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Citation object for the journal article or other publication associated with the dataset",
-      "rdfs:label": "citation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        },
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:citation"
-      },
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:version",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Software version",
-      "rdfs:label": "version",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:version"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:license",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Computer programming language.",
-      "rdfs:label": "license",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:URL"
-        },
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:license"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:datePublished",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of first broadcast/publication",
-      "rdfs:label": "datePublished",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:Date"
-      },
-      "schema:sameAs": {
-        "@id": "schema:datePublished"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:dateModified",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date on which the code was most recently modified",
-      "rdfs:label": "dateModified",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:Date"
-      },
-      "schema:sameAs": {
-        "@id": "schema:dateModified"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:SystolicPressure",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a single systolic blood pressure datapoint collected from patients in the Center for Viral Systems Biology.",
-      "rdfs:label": "SystolicPressure",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Data"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:@type",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Type of data",
-      "rdfs:label": "@type",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SystolicPressure"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "SystolicPressure"
-      ]
-    },
-    {
-      "@id": "cvisb:time",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date and time of SystolicPressure measurement",
-      "rdfs:label": "time",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SystolicPressure"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:DateTime"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:systolicPressure",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Systolic Pressure, in mmHg",
-      "rdfs:label": "systolicPressure",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SystolicPressure"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:ReleaseNote",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing the ReleaseNote for the Center for Viral Systems Biology experiments",
-      "rdfs:label": "ReleaseNote",
-      "rdfs:subClassOf": {
-        "@id": "schema:Thing"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:category",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Which part of the website has been updated.",
-      "rdfs:label": "category",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseNote"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:note",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Explanation of what was changed in the release",
-      "rdfs:label": "note",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseNote"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:SampleLocation",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a the location of a sample in the Center for Viral Systems Biology",
-      "rdfs:label": "SampleLocation",
-      "rdfs:subClassOf": {
-        "@id": "schema:Place"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:lab",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Current location of sample",
-      "rdfs:label": "lab",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "schema:Enumeration": [
-        "KGH",
-        "TSRI-Andersen",
-        "MGH-Alter",
-        "TSRI-Briney",
-        "TSRI-Sullivan",
-        "Tulane-Schieffelin",
-        "Tulane-Garry"
-      ],
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:numAliquots",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Number of aliquots for a particular sampleID at a particular lab location. If sample has been used up, numAliquots = 0",
-      "rdfs:label": "numAliquots",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:freezerID",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Freezer in which the sample is located within the lab.",
-      "rdfs:label": "freezerID",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:freezerRack",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Rack in the freezer in which the sample is located within the lab.",
-      "rdfs:label": "freezerRack",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:freezerBox",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Box in the rack/freezer in which the sample is located within the lab.",
-      "rdfs:label": "freezerBox",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:freezerBoxCell",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Cell within the freezer box in which the sample is located within the lab, for example \"C12\".",
-      "rdfs:label": "freezerBoxCell",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dateModified",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
-      "rdfs:label": "dateModified",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SampleLocation"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1717,21 +285,140 @@
           "@id": "schema:Date"
         }
       ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive time of data collection, like \"survivor enrollment\" or \"patient admission\". Note that \"patient admission\" is assumed but not confirmed to be the date of admission to KGH.",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "patient admission",
+        "survivor enrollment"
+      ]
+    },
+    {
+      "@id": "cvisb:variableMeasured",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).",
+      "rdfs:label": "variableMeasured",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
       "schema:sameAs": {
-        "@id": "schema:dateModified"
+        "@id": "schema:variableMeasured"
       },
       "owl:cardinality": "one",
       "marginality": "required",
-      "authenticated": true
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA genotype",
+        "metagenome sequence",
+        "Ebola virus sequence",
+        "Lassa virus sequence",
+        "SARS-CoV-2 virus sequence",
+        "BCR sequence",
+        "TCR sequence",
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "NKD-CD107a",
+        "IgG2",
+        "FcRg2b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA1",
+        "FcRg3A",
+        "RCA",
+        "IgG3",
+        "IgM",
+        "IgG4",
+        "IgA2",
+        "SNA",
+        "IgG1",
+        "NT50",
+        "metabolomics",
+        "blood chemistry",
+        "blood cell count",
+        "vitals",
+        "virus level",
+        "patient antibody response",
+        "acute symptoms",
+        "sequelae",
+        "coma score"
+      ]
     },
     {
-      "@id": "cvisb:updatedBy",
+      "@id": "cvisb:measurementTechnique",
       "@type": "rdf:Property",
-      "rdfs:comment": "Person who updated the sample location",
-      "rdfs:label": "updatedBy",
+      "rdfs:comment": "A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.",
+      "rdfs:label": "measurementTechnique",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SampleLocation"
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:measurementTechnique"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Nucleic Acid Sequencing",
+        "RNA sequencing",
+        "Immune Repertoire Deep Sequencing",
+        "serology",
+        "Blood Chemistry Measurement",
+        "Vital Signs Measurement",
+        "Rapid Antigen Test",
+        "Reverse Transcriptase-Polymerase Chain Reaction",
+        "Blood Cell Count",
+        "ELISA",
+        "Clinical Observation"
+      ]
+    },
+    {
+      "@id": "cvisb:measurementCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)",
+      "rdfs:label": "measurementCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1743,81 +430,55 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA sequencing",
+        "virus sequencing",
+        "metagenome sequencing",
+        "immune repertoire sequencing",
+        "Systems Serology",
+        "clinical measurements",
+        "clinical observations"
+      ]
     },
     {
-      "@id": "cvisb:Symptom",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing an Symptom for a Patient in the Center for Viral Systems Biology experiments",
-      "rdfs:label": "Symptom",
-      "rdfs:subClassOf": {
-        "@id": "schema:Thing"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:@type",
+      "@id": "cvisb:includedInDataset",
       "@type": "rdf:Property",
-      "rdfs:comment": "Type of symptom",
-      "rdfs:label": "@type",
+      "rdfs:comment": "A unique identifier for the Dataset that the Experiment is contained in. Note: should be an internal, CViSB identifier. Must match Dataset:identifier options",
+      "rdfs:label": "includedInDataset",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
       "owl:cardinality": "one",
       "marginality": "required",
       "authenticated": false,
       "schema:Enumeration": [
-        "Sequela",
-        "AcuteSymptom"
+        "hla",
+        "metagenome-seq",
+        "ebola-virus-seq",
+        "lassa-virus-seq",
+        "sarscov2-virus-seq",
+        "bcr",
+        "tcr",
+        "systems-serology",
+        "systems-serology-32783920",
+        "rtpcr-32783920",
+        "blood-chemistry-vhf",
+        "blood-counts-vhf",
+        "vitals-vhf",
+        "rtpcr-vhf",
+        "rapid-diagnostics-vhf",
+        "sensor-vitals-vhf"
       ]
-    },
-    {
-      "@id": "cvisb:timepoint",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Description of when the symptoms were observed (e.g. at survivor enrollment, initial presentation in hospital, etc.)",
-      "rdfs:label": "timepoint",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:daysSinceAdmit",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0",
-      "rdfs:label": "daysSinceAdmit",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
     },
     {
       "@id": "cvisb:dateModified",
@@ -1826,7 +487,7 @@
       "rdfs:label": "dateModified",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1848,7 +509,7 @@
       "rdfs:label": "updatedBy",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1870,7 +531,7 @@
       "rdfs:label": "version",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1886,13 +547,123 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:creator",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Author/creator of this experiment",
+      "rdfs:label": "creator",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:creator"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this experiment, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string). If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment.\"",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:analysisCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Computer programming source code. Example: Full (compile ready) solutions, code snippet samples, scripts, templates.",
+      "rdfs:label": "analysisCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:dataStatus",
       "@type": "rdf:Property",
       "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
       "rdfs:label": "dataStatus",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1915,7 +686,7 @@
       "rdfs:label": "releaseDate",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
@@ -1928,1555 +699,111 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:joint_pain",
+      "@id": "cvisb:data",
       "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports joint pain",
-      "rdfs:label": "joint_pain",
+      "rdfs:comment": "Data associated with the experiment. Typically summary values for that particular measurement.",
+      "rdfs:label": "data",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:Experiment"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:muscle_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports muscle pain",
-      "rdfs:label": "muscle_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:HLAData"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:VirusSeqData"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:abdominal_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports abdominal pain",
-      "rdfs:label": "abdominal_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:SystemsSerology"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:PiccoloData"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:back_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports back pain",
-      "rdfs:label": "back_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:BloodCountData"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:HeartRate"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:side_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports side pain",
-      "rdfs:label": "side_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:ComaScore"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:BodyTemperature"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:retrosternal_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports retrosternal pain",
-      "rdfs:label": "retrosternal_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:OxygenSaturation"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:SystolicPressure"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:eye_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports eye pain",
-      "rdfs:label": "eye_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:DiastolicPressure"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:RespiratoryRate"
+        },
         {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:other_pain",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports other pain",
-      "rdfs:label": "other_pain",
-      "schema:domainIncludes": [
+          "@id": "cvisb:RDT"
+        },
         {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "cvisb:RTPCR"
+        },
         {
-          "@id": "schema:Text"
+          "@id": "cvisb:ELISA"
+        },
+        {
+          "@id": "cvisb:ComaScore"
         }
       ],
       "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:hearing_loss",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports hearing loss",
-      "rdfs:label": "hearing_loss",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:ringing_in_ears",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports ringing in ears",
-      "rdfs:label": "ringing_in_ears",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dry_eyes",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports dry eyes",
-      "rdfs:label": "dry_eyes",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:burning_eyes",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports burning in eyes",
-      "rdfs:label": "burning_eyes",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:vision_loss",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports vision loss",
-      "rdfs:label": "vision_loss",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:blurry_vision",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports blurry vision",
-      "rdfs:label": "blurry_vision",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:light_sensitivity",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports light sensitivity",
-      "rdfs:label": "light_sensitivity",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:eye_foreign_body_sensation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a sensation of a foreign body in his/her eye(s)",
-      "rdfs:label": "eye_foreign_body_sensation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_gums",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports bleeding gums",
-      "rdfs:label": "bleeding_gums",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_nose",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a bloody nose",
-      "rdfs:label": "bleeding_nose",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_stools",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports bloody stools",
-      "rdfs:label": "bleeding_stools",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_vomit",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports vomited blood",
-      "rdfs:label": "bleeding_vomit",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_injection",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient was bleeding at injection sites",
-      "rdfs:label": "bleeding_injection",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_hematoma",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a hematoma",
-      "rdfs:label": "bleeding_hematoma",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_sputum",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports coughing up blood / blood in his/her sputum",
-      "rdfs:label": "bleeding_sputum",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_urine",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports blood in his/her urine",
-      "rdfs:label": "bleeding_urine",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_vaginal",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports vaginal bleeding",
-      "rdfs:label": "bleeding_vaginal",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_other",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports any other unusual bleeding",
-      "rdfs:label": "bleeding_other",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bleeding_none",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports no symptoms of bleeding",
-      "rdfs:label": "bleeding_none",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:fever",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a fever",
-      "rdfs:label": "fever",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:conjunctivitis",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports conjunctivitis",
-      "rdfs:label": "conjunctivitis",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:facial_swelling",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports facial or neck swelling",
-      "rdfs:label": "facial_swelling",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:joint_swelling",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports joint swelling",
-      "rdfs:label": "joint_swelling",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:lymphadenopathy",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports lymphadenopathy",
-      "rdfs:label": "lymphadenopathy",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:shortness_breath",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have shortness of breath",
-      "rdfs:label": "shortness_breath",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:rales",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have rales",
-      "rdfs:label": "rales",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:crepitations",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have crepitations",
-      "rdfs:label": "crepitations",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:abdominal_tenderness",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have abdominal tenderness",
-      "rdfs:label": "abdominal_tenderness",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:hepatomegaly",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have hepatomegaly",
-      "rdfs:label": "hepatomegaly",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:splenomegaly",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have splenomegaly",
-      "rdfs:label": "splenomegaly",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:ruqTenderness",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is observed to have right upper quadrant (RUQ) tenderness",
-      "rdfs:label": "ruqTenderness",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:disorientation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is reports having disorientation",
-      "rdfs:label": "disorientation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:tremors",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is reports having tremors",
-      "rdfs:label": "tremors",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:seizures",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is reports having seizures",
-      "rdfs:label": "seizures",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:hiccups",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient is reports having hiccups",
-      "rdfs:label": "hiccups",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:edema",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports edema",
-      "rdfs:label": "edema",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:inflammation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports inflammation",
-      "rdfs:label": "inflammation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:rash",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a rash",
-      "rdfs:label": "rash",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:headache",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports headaches",
-      "rdfs:label": "headache",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:sore_throat",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports a sore throat",
-      "rdfs:label": "sore_throat",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:vomit",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports vomiting",
-      "rdfs:label": "vomit",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:decreased_urination",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports decreased urination",
-      "rdfs:label": "decreased_urination",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:cough",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports coughing",
-      "rdfs:label": "cough",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:diarrhea",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports diarrhea",
-      "rdfs:label": "diarrhea",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:malaise",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports malaise",
-      "rdfs:label": "malaise",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:appetite_loss",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports loss of appetite",
-      "rdfs:label": "appetite_loss",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:weakness",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports weakness",
-      "rdfs:label": "weakness",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dizziness",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports dizziness",
-      "rdfs:label": "dizziness",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:convulsions",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports convulsions",
-      "rdfs:label": "convulsions",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:confusion",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports confusion",
-      "rdfs:label": "confusion",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:jaundice",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports  jaundice",
-      "rdfs:label": "jaundice",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dyspnea",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports dyspnea",
-      "rdfs:label": "dyspnea",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:no_symptoms",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports no symptoms",
-      "rdfs:label": "no_symptoms",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:other_symptoms",
-      "@type": "rdf:Property",
-      "rdfs:comment": "If the patient reports other symptoms",
-      "rdfs:label": "other_symptoms",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:rheumatologicalSequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Rheumatological",
-      "rdfs:label": "rheumatologicalSequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:rheumatologicalGISequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Other Rheumatological and Gastrointestinal",
-      "rdfs:label": "rheumatologicalGISequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:pyschNeuroSequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Psychiatric and Neurological",
-      "rdfs:label": "pyschNeuroSequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:cardiacGISequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Cardiac and Other Gastrointestinal",
-      "rdfs:label": "cardiacGISequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:opthoAudioSequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Ophthamological and Auditory",
-      "rdfs:label": "opthoAudioSequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:constitutionalSequelae",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequelae Cluster of Symptoms - Constitutional",
-      "rdfs:label": "constitutionalSequelae",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:acuteRespiratoryDistressSyndrome",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Acute respiratory distress syndrome",
-      "rdfs:label": "acuteRespiratoryDistressSyndrome",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:SequencingExperiment",
+      "@id": "cvisb:sourceFiles",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the experiment data",
+      "rdfs:label": "sourceFiles",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:ELISA",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a Sequencing Experiment in the Center for Viral Systems Biology",
-      "rdfs:label": "SequencingExperiment",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Experiment"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:sequencingTechnology",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequencing Technology (e.g. Illumina)",
-      "rdfs:label": "sequencingTechnology",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SequencingExperiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:sequencingPlatform",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequencing Platform (e.g. MiSeq)",
-      "rdfs:label": "sequencingPlatform",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SequencingExperiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:instrumentID",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequencing instrument ID",
-      "rdfs:label": "instrumentID",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SequencingExperiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:sequencingCenter",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Sequencing Center (e.g. TSRI, Broad)",
-      "rdfs:label": "sequencingCenter",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SequencingExperiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:readLength",
-      "@type": "rdf:Property",
-      "rdfs:comment": "read length",
-      "rdfs:label": "readLength",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SequencingExperiment"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:ReleaseSummary",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing the ReleaseSummary for the Center for Viral Systems Biology experiments",
-      "rdfs:label": "ReleaseSummary",
+      "rdfs:comment": "A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ELISA",
       "rdfs:subClassOf": {
         "@id": "schema:Thing"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
-      },
-      "schema:sameAs": {
-        "@id": "schema:ReleaseSummary"
-      }
-    },
-    {
-      "@id": "cvisb:datePublished",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of release for the particular version.",
-      "rdfs:label": "datePublished",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseSummary"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:datePublished"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:version",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH",
-      "rdfs:label": "version",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseSummary"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:version"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:description",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Notes specifying what in particular was updated.",
-      "rdfs:label": "description",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseSummary"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ReleaseNote"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:abstract",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Overview summary of what was changed in the most recent update.",
-      "rdfs:label": "abstract",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ReleaseSummary"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:ScholarlyArticle",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a ScholarlyArticle (a.k.a. a paper) in the Center for Viral Systems Biology",
-      "rdfs:label": "ScholarlyArticle",
-      "rdfs:subClassOf": {
-        "@id": "schema:ScholarlyArticle"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      },
-      "schema:sameAs": {
-        "@id": "schema:ScholarlyArticle"
       }
     },
     {
       "@id": "cvisb:@type",
       "@type": "rdf:Property",
-      "rdfs:comment": "Type, used for internal purposes. Should be ScholarlyArticle",
+      "rdfs:comment": "Type of data",
       "rdfs:label": "@type",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
@@ -3488,17 +815,17 @@
       "marginality": "recommended",
       "authenticated": false,
       "schema:Enumeration": [
-        "ScholarlyArticle"
+        "ELISA"
       ]
     },
     {
-      "@id": "cvisb:identifier",
+      "@id": "cvisb:virus",
       "@type": "rdf:Property",
-      "rdfs:comment": "Identifier or DOI for publication",
-      "rdfs:label": "identifier",
+      "rdfs:comment": "Virus tested in ELISA (Ebola, Lassa, or SARS-CoV-2)",
+      "rdfs:label": "virus",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
@@ -3506,21 +833,23 @@
           "@id": "schema:Text"
         }
       ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
       "owl:cardinality": "one",
       "marginality": "required",
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa",
+        "SARS-CoV-2"
+      ],
       "authenticated": false
     },
     {
-      "@id": "cvisb:issn",
+      "@id": "cvisb:assayType",
       "@type": "rdf:Property",
-      "rdfs:comment": "ISSN for publication",
-      "rdfs:label": "issn",
+      "rdfs:comment": "Type of ELISA: IgG, IgM, or Ag",
+      "rdfs:label": "assayType",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
@@ -3528,109 +857,175 @@
           "@id": "schema:Text"
         }
       ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:doi",
-      "@type": "rdf:Property",
-      "rdfs:comment": "DOI for publication",
-      "rdfs:label": "doi",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:pmid",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Pubmed ID for publication",
-      "rdfs:label": "pmid",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:url",
-      "@type": "rdf:Property",
-      "rdfs:comment": "url for publication",
-      "rdfs:label": "url",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:URL"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:url"
-      },
       "owl:cardinality": "one",
       "marginality": "required",
+      "schema:Enumeration": [
+        "IgG",
+        "IgM",
+        "Ag"
+      ],
       "authenticated": false
     },
     {
-      "@id": "cvisb:author",
+      "@id": "cvisb:elisaResult",
       "@type": "rdf:Property",
-      "rdfs:comment": "Author list of publication",
-      "rdfs:label": "author",
+      "rdfs:comment": "Result of ELISA, either positive/negative/indeterminate",
+      "rdfs:label": "elisaResult",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:Person"
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        "positive",
+        "negative",
+        "indeterminate",
+        null
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:elisaValue",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Result of ELISA, as a quantitative calibrated value",
+      "rdfs:label": "elisaValue",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "sampleID associated with the ELISA measurement",
+      "rdfs:label": "sampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of the time at which the ELISA was taken, e.g. at patient presentation, survivor enrollment etc.",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this dataset, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:author"
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string)",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
       },
       "owl:cardinality": "many",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:name",
+      "@id": "cvisb:correction",
       "@type": "rdf:Property",
-      "rdfs:comment": "Name of article",
-      "rdfs:label": "name",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
@@ -3639,187 +1034,39 @@
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:name"
+        "@id": "schema:correction"
       },
-      "owl:cardinality": "one",
+      "owl:cardinality": "many",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:datePublished",
+      "@id": "cvisb:sourceFiles",
       "@type": "rdf:Property",
-      "rdfs:comment": "Date when the ScholarlyArticle was published",
-      "rdfs:label": "datePublished",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the ELISA data",
+      "rdfs:label": "sourceFiles",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "cvisb:ELISA"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Date"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:datePublished"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:pagination",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Any description of pages that is not separated into pageStart and pageEnd; for example, \"1-6, 9, 55\" or \"10-12, 46-49\".",
-      "rdfs:label": "pagination",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:pageStart"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:pageStart",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The page on which the work ends; for example \"135\" or \"xiii\".",
-      "rdfs:label": "pageStart",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:pageStart"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:pageEnd",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The page on which the work ends; for example \"138\" or \"xvi\".",
-      "rdfs:label": "pageEnd",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:pageEnd"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:journalName",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Name of journal/publication of the article",
-      "rdfs:label": "journalName",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
+          "@id": "xsd:string"
+        },
         {
           "@id": "schema:Text"
         }
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false
+      "authenticated": true
     },
     {
-      "@id": "cvisb:journalNameAbbrev",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Abbreviated name of journal/publication of the article",
-      "rdfs:label": "journalNameAbbrev",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:issueNumber",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Identifies the issue of publication; for example, \"iii\" or \"2\".",
-      "rdfs:label": "issueNumber",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:issueNumber"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:volumeNumber",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Identifies the volume of publication or multi-part work; for example, \"iii\" or \"2\".",
-      "rdfs:label": "volumeNumber",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:volumeNumber"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:SkinTemperature",
+      "@id": "cvisb:ECGPoint",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a single skin temperature datapoint collected from patients in the Center for Viral Systems Biology.",
-      "rdfs:label": "SkinTemperature",
+      "rdfs:comment": "A schema describing a single ECG datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "ECGPoint",
       "rdfs:subClassOf": {
         "@id": "cvisb:Data"
       },
@@ -3830,11 +1077,11 @@
     {
       "@id": "cvisb:time",
       "@type": "rdf:Property",
-      "rdfs:comment": "Date and time of SkinTemperature measurement",
+      "rdfs:comment": "Date and time of ECGPoint measurement",
       "rdfs:label": "time",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SkinTemperature"
+          "@id": "cvisb:ECGPoint"
         }
       ],
       "schema:rangeIncludes": [
@@ -3847,13 +1094,13 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:skinTemperature",
+      "@id": "cvisb:voltage",
       "@type": "rdf:Property",
-      "rdfs:comment": "Skin temperature, in degrees Celsius",
-      "rdfs:label": "skinTemperature",
+      "rdfs:comment": "ECG voltage, in mV",
+      "rdfs:label": "voltage",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SkinTemperature"
+          "@id": "cvisb:ECGPoint"
         }
       ],
       "schema:rangeIncludes": [
@@ -3872,7 +1119,7 @@
       "rdfs:label": "collectionInstrument",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SkinTemperature"
+          "@id": "cvisb:ECGPoint"
         }
       ],
       "schema:rangeIncludes": [
@@ -3889,10 +1136,60 @@
       ]
     },
     {
-      "@id": "cvisb:SystemsSerology",
+      "@id": "cvisb:MeanArterialPressure",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a Systems Serology Experiment in the Center for Viral Systems Biology",
-      "rdfs:label": "SystemsSerology",
+      "rdfs:comment": "A schema describing a single mean artertial blood pressure datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "MeanArterialPressure",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:time",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date and time of MeanArterialPressure measurement",
+      "rdfs:label": "time",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:MeanArterialPressure"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:DateTime"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:meanArterialPressure",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Mean artertial blood pressure, in mmHg",
+      "rdfs:label": "meanArterialPressure",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:MeanArterialPressure"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:HeartRate",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a single Heart Rate datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "HeartRate",
       "rdfs:subClassOf": {
         "@id": "cvisb:Data"
       },
@@ -3907,7 +1204,7 @@
       "rdfs:label": "@type",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:HeartRate"
         }
       ],
       "schema:rangeIncludes": [
@@ -3919,68 +1216,115 @@
       "marginality": "required",
       "authenticated": false,
       "schema:Enumeration": [
-        "SystemsSerology"
+        "HeartRate"
       ]
     },
     {
-      "@id": "cvisb:assayType",
+      "@id": "cvisb:time",
       "@type": "rdf:Property",
-      "rdfs:comment": "Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, ADNKA_CD107a, ADNKA_IFNg, ADNKA_MIP1b",
-      "rdfs:label": "assayType",
+      "rdfs:comment": "Date and time of heart rate measurement",
+      "rdfs:label": "time",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:HeartRate"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
+          "@id": "schema:DateTime"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:heartRate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "heart rate, in beats per minute",
+      "rdfs:label": "heartRate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:collectionInstrument",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor",
+      "rdfs:label": "collectionInstrument",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "PhysIQ",
+        "conventional"
+      ]
+    },
+    {
+      "@id": "cvisb:HLAData",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing Human Leukocyte Antigen (HLA) Genotype calls in the Center for Viral Systems Biology.",
+      "rdfs:label": "HLAData",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
         {
           "@id": "schema:Text"
         }
       ],
       "owl:cardinality": "one",
       "marginality": "required",
+      "authenticated": false,
       "schema:Enumeration": [
-        "ADNP",
-        "ADCD",
-        "ADCP",
-        "ADNKA_CD107a",
-        "ADNKA_IFNg",
-        "ADNKA_MIP1b",
-        "FcRg2A",
-        "NKD-MIP1b",
-        "IgA2",
-        "NKD-CD107a",
-        "IgG4",
-        "IgG2",
-        "IgM",
-        "SNA",
-        "IgG3",
-        "FcRg3A",
-        "IgA1",
-        "IgG1",
-        "RCA",
-        "FcRg2b",
-        "NT50"
-      ],
-      "authenticated": false
+        "HLAData"
+      ]
     },
     {
-      "@id": "cvisb:assayReadout",
+      "@id": "cvisb:allele",
       "@type": "rdf:Property",
-      "rdfs:comment": "Type of assay readout, such as phagocytic score, C3 deposition MFI",
-      "rdfs:label": "assayReadout",
+      "rdfs:comment": "Allele call",
+      "rdfs:label": "allele",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:HLAData"
         }
       ],
       "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
         {
           "@id": "schema:Text"
         }
@@ -3990,19 +1334,16 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:sampleDilution",
+      "@id": "cvisb:locus",
       "@type": "rdf:Property",
-      "rdfs:comment": "Dilution of sample",
-      "rdfs:label": "sampleDilution",
+      "rdfs:comment": "Locus of the allele",
+      "rdfs:label": "locus",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:HLAData"
         }
       ],
       "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
         {
           "@id": "schema:Text"
         }
@@ -4012,13 +1353,199 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:value",
+      "@id": "cvisb:novel",
       "@type": "rdf:Property",
-      "rdfs:comment": "Assay result. Should be available in almost all cases; however, due to material limitations, controls are occasionally null.",
-      "rdfs:label": "value",
+      "rdfs:comment": "Whether the allele is a novel mutation",
+      "rdfs:label": "novel",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:cohort",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Cohort of the patient",
+      "rdfs:label": "cohort",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:outcome",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Outcome of the patient",
+      "rdfs:label": "outcome",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Public patientID of the patient",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:Medication",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an Medication for a Patient in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "Medication",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Drug name",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:isDrugAdministered",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the drug is administered (true/false)",
+      "rdfs:label": "isDrugAdministered",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Medication"
+      ]
+    },
+    {
+      "@id": "cvisb:dateAdministered",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of drug administration",
+      "rdfs:label": "dateAdministered",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:timeAdministered",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Time of drug administration",
+      "rdfs:label": "timeAdministered",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Time"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:doseNumeric",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Dose of the drug (numeric portion), used in combination with doseUnits",
+      "rdfs:label": "doseNumeric",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
         }
       ],
       "schema:rangeIncludes": [
@@ -4031,13 +1558,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:valueCategory",
+      "@id": "cvisb:doseUnits",
       "@type": "rdf:Property",
-      "rdfs:comment": "Assay result, grouped into qualitative groups: 'low_none', 'moderate', or 'high'",
-      "rdfs:label": "valueCategory",
+      "rdfs:comment": "Dose units of the drug, used in combination with doseNumeric",
+      "rdfs:label": "doseUnits",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:Medication"
         }
       ],
       "schema:rangeIncludes": [
@@ -4050,32 +1577,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:valueCategoryNumeric",
+      "@id": "cvisb:doseFrequency",
       "@type": "rdf:Property",
-      "rdfs:comment": "Assay result, grouped into qualitative groups: 'low_none' (1), 'moderate' (2), or 'high' (3)",
-      "rdfs:label": "valueCategory",
+      "rdfs:comment": "Frequency of the drug administered",
+      "rdfs:label": "doseFrequency",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:antigen",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Antigen used in the Systems Serology experiment; either against Lassa virus, Ebola virus, or SARS-CoV-2 virus",
-      "rdfs:label": "antigen",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:Medication"
         }
       ],
       "schema:rangeIncludes": [
@@ -4088,13 +1596,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:antigenVirus",
+      "@id": "cvisb:doseDuration",
       "@type": "rdf:Property",
-      "rdfs:comment": "Antigen used in the Systems Serology experiment; either against Lassa, Ebola, or SARS-CoV-2",
-      "rdfs:label": "antigenVirus",
+      "rdfs:comment": "Dosing duration of the drug",
+      "rdfs:label": "doseDuration",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:Medication"
         }
       ],
       "schema:rangeIncludes": [
@@ -4103,41 +1611,17 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "Ebola",
-        "Lassa",
-        "SARS-CoV-2"
-      ]
-    },
-    {
-      "@id": "cvisb:antigenSource",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Source (URL) where the antigen can be acquired.",
-      "rdfs:label": "antigenSource",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SystemsSerology"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:URL"
-        }
-      ],
-      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:controlType",
+      "@id": "cvisb:drugRoute",
       "@type": "rdf:Property",
-      "rdfs:comment": "If the sample was a control sample, indicates what type of control (positive control, negative control, no absorbance control, etc.)",
-      "rdfs:label": "controlType",
+      "rdfs:comment": "Route of the drug, such as IV, PO, etc.",
+      "rdfs:label": "drugRoute",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:SystemsSerology"
+          "@id": "cvisb:Medication"
         }
       ],
       "schema:rangeIncludes": [

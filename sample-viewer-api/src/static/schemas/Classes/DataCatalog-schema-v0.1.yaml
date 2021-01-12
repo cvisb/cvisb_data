@@ -260,10 +260,10 @@
   authenticated:         false
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          "Version of DataCatalog, auto-assigned by CViSB database"
-  rdfs:label:            _version
+  rdfs:comment:          "Version of DataCatalog"
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:DataCatalog
   schema:rangeIncludes:
