@@ -1,0 +1,866 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:SoftwareSourceCode",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing SoftwareSourceCode in the Center for Viral Systems Biology",
+      "rdfs:label": "SoftwareSourceCode",
+      "rdfs:subClassOf": {
+        "@id": "schema:SoftwareSourceCode"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:SoftwareSourceCode"
+      }
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "DOI or unique identifier for code",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:@id",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A unique identifier for the software code, preferably a DOI",
+      "rdfs:label": "@id",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Name of code",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Description of code",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:codeRepository",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Link to the repository where the un-compiled, human readable code and related code is located (SVN, github, CodePlex).",
+      "rdfs:label": "codeRepository",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:codeRepository"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:programmingLanguage",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Computer programming language.",
+      "rdfs:label": "programmingLanguage",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:programmingLanguage"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:creator",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Author/creator(s) of the code repository",
+      "rdfs:label": "creator",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Person"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:creator"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Citation object for the journal article or other publication associated with the dataset",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Software version",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:license",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Computer programming language.",
+      "rdfs:label": "license",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        },
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:license"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:datePublished",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of first broadcast/publication",
+      "rdfs:label": "datePublished",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Date"
+      },
+      "schema:sameAs": {
+        "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date on which the code was most recently modified",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SoftwareSourceCode"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Date"
+      },
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:SequencingExperiment",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a Sequencing Experiment in the Center for Viral Systems Biology",
+      "rdfs:label": "SequencingExperiment",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Experiment"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:sequencingTechnology",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequencing Technology (e.g. Illumina)",
+      "rdfs:label": "sequencingTechnology",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SequencingExperiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sequencingPlatform",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequencing Platform (e.g. MiSeq)",
+      "rdfs:label": "sequencingPlatform",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SequencingExperiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:instrumentID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequencing instrument ID",
+      "rdfs:label": "instrumentID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SequencingExperiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sequencingCenter",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequencing Center (e.g. TSRI, Broad)",
+      "rdfs:label": "sequencingCenter",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SequencingExperiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:readLength",
+      "@type": "rdf:Property",
+      "rdfs:comment": "read length",
+      "rdfs:label": "readLength",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SequencingExperiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ScholarlyArticle",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a ScholarlyArticle (a.k.a. a paper) in the Center for Viral Systems Biology",
+      "rdfs:label": "ScholarlyArticle",
+      "rdfs:subClassOf": {
+        "@id": "schema:ScholarlyArticle"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:ScholarlyArticle"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type, used for internal purposes. Should be ScholarlyArticle",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ScholarlyArticle"
+      ]
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Identifier or DOI for publication",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:issn",
+      "@type": "rdf:Property",
+      "rdfs:comment": "ISSN for publication",
+      "rdfs:label": "issn",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:doi",
+      "@type": "rdf:Property",
+      "rdfs:comment": "DOI for publication",
+      "rdfs:label": "doi",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:pmid",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Pubmed ID for publication",
+      "rdfs:label": "pmid",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "url for publication",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:author",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Author list of publication",
+      "rdfs:label": "author",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Person"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:author"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Name of article",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:datePublished",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date when the ScholarlyArticle was published",
+      "rdfs:label": "datePublished",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:pagination",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Any description of pages that is not separated into pageStart and pageEnd; for example, \"1-6, 9, 55\" or \"10-12, 46-49\".",
+      "rdfs:label": "pagination",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:pageStart"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:pageStart",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The page on which the work ends; for example \"135\" or \"xiii\".",
+      "rdfs:label": "pageStart",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:pageStart"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:pageEnd",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The page on which the work ends; for example \"138\" or \"xvi\".",
+      "rdfs:label": "pageEnd",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:pageEnd"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:journalName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Name of journal/publication of the article",
+      "rdfs:label": "journalName",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:journalNameAbbrev",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Abbreviated name of journal/publication of the article",
+      "rdfs:label": "journalNameAbbrev",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:issueNumber",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Identifies the issue of publication; for example, \"iii\" or \"2\".",
+      "rdfs:label": "issueNumber",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:issueNumber"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:volumeNumber",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Identifies the volume of publication or multi-part work; for example, \"iii\" or \"2\".",
+      "rdfs:label": "volumeNumber",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:volumeNumber"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:SkinTemperature",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a single skin temperature datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "SkinTemperature",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:time",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date and time of SkinTemperature measurement",
+      "rdfs:label": "time",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SkinTemperature"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:DateTime"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:skinTemperature",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Skin temperature, in degrees Celsius",
+      "rdfs:label": "skinTemperature",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SkinTemperature"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:collectionInstrument",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor",
+      "rdfs:label": "collectionInstrument",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SkinTemperature"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "PhysIQ",
+        "conventional"
+      ]
+    }
+  ]
+}

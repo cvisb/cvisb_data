@@ -1,0 +1,853 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:Sample",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a sample the Center for Viral Systems Biology. Primary samples = blood draw, tissue sample, urine, or feces.  Derived are some sort of isolation/preparation of whole blood/tissue, e.g. plasma, sera, DNA, RNA, etc.",
+      "rdfs:label": "Sample",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "root_entity": true
+    },
+    {
+      "@id": "cvisb:sampleID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "unique ID for the derived sample; ideally, the combination of sampleType and isolationDate. Should *not* contain non-public IDs.",
+      "rdfs:label": "sampleID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:sampleLabel",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Label for what the sample is called on sample tubes, etc.",
+      "rdfs:label": "sampleLabel",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:alternateIdentifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternate identifers for sample. Can contain private IDs.",
+      "rdfs:label": "alternateIdentifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:alternateIdentifier"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the derived sample",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Short description of the derived sample",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique public patient id. Will be added into the database via join",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:privatePatientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique *private* patient id, e.g. G-number, S-number, C-number",
+      "rdfs:label": "privatePatientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:visitCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",
+      "rdfs:label": "visitCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:isolationDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of sample creation/collection (NOT date of blood draw/tissue collection, unless the sample is that primary sample) (YYYY-MM-DD)",
+      "rdfs:label": "isolationDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:samplingDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of sample collection used for the the experiment.  Should refer to the initial time the sample was collected from the patient.",
+      "rdfs:label": "samplingDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:DateRange"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sampleGroup",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sample group type: whether it comes from the *acute* phase while the patient treated in the hospital, or from the *survivor* study where survivors and contacts of the survivors are sampled after the infection.",
+      "rdfs:label": "sampleGroup",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "acute",
+        "survivor"
+      ]
+    },
+    {
+      "@id": "cvisb:sampleType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sample type. Primary types: \"blood_purple-EDTA\", \"blood_blue-citrate\", \"blood_mixed\", \"blood_unknown\", \"urine\", \"feces\", \"organs\", \"tissue\"; Derived types: \"plasma\", \"serum\", \"buffy coat\", \"PBMC\", \"frozenPBMC-DNA\", \"frozenPBMC-RNA\", \"viralRNA\", \"totalRNA\", \"DNA\"",
+      "rdfs:label": "sampleType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "blood_purple-EDTA",
+        "blood_blue-citrate",
+        "blood_mixed",
+        "blood_unknown",
+        "urine",
+        "feces",
+        "organs",
+        "tissue",
+        "plasma",
+        "serum",
+        "plasma_or_serum",
+        "buffy_coat",
+        "PBMC",
+        "frozenPBMC-DNA",
+        "frozenPBMC-RNA",
+        "viralRNA",
+        "totalRNA",
+        "DNA"
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:derivedIndex",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Integer expressing how far derived the sample is from the primary sample.  Primary sample (e.g. blood draw) has a derivedIndex=0; PBMC=1, ...",
+      "rdfs:label": "derivedIndex",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:species",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Species of sample (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)",
+      "rdfs:label": "species",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        "Homo sapiens",
+        "Hylomyscus pamfi",
+        "Mastomys erythroleucus",
+        "Mastomys natalensis",
+        "rodent",
+        null
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:protocolVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Protocol version to isolate sample; either file name and/or version",
+      "rdfs:label": "protocolVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:protocolURL",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Link to protocol used to isolate sample",
+      "rdfs:label": "protocolURL",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:freezingBuffer",
+      "@type": "rdf:Property",
+      "rdfs:comment": "What buffer was used to freeze the sample in; relevant for PBMC samples",
+      "rdfs:label": "freezingBuffer",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dilutionFactor",
+      "@type": "rdf:Property",
+      "rdfs:comment": "How much a plamsa sample has been diluted from its original isolation",
+      "rdfs:label": "dilutionFactor",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:avlInactivated",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether a plasma or serum sample is AVL-inactivated",
+      "rdfs:label": "avlInactivated",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:location",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Current location(s) for the sample, including Lab, number of aliquots, and when the info was last updated",
+      "rdfs:label": "location",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:updatedBy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Person who updated the sample location",
+      "rdfs:label": "updatedBy",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Version number of sample",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:SNPData",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing viral sequencing data in the Center for Viral Systems Biology.",
+      "rdfs:label": "SNPData",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:snp",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Single nucleotide polymorphism, e.g. Q9H",
+      "rdfs:label": "snp",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SNPData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:snpDetected",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether or not the SNP was found in the sequencing",
+      "rdfs:label": "snpDetected",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SNPData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:snpLocation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Amino acid number of the SNP, relative to the reference sequence.",
+      "rdfs:label": "snpLocation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SNPData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:originalAA",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Amino acid code for the amino acid at the reference sequence.",
+      "rdfs:label": "originalAA",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SNPData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:mutatedAA",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Amino acid code for the amino acid at the mutation site.",
+      "rdfs:label": "mutatedAA",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SNPData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:SampleLocation",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a the location of a sample in the Center for Viral Systems Biology",
+      "rdfs:label": "SampleLocation",
+      "rdfs:subClassOf": {
+        "@id": "schema:Place"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:lab",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Current location of sample",
+      "rdfs:label": "lab",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "schema:Enumeration": [
+        "KGH",
+        "TSRI-Andersen",
+        "MGH-Alter",
+        "TSRI-Briney",
+        "TSRI-Sullivan",
+        "Tulane-Schieffelin",
+        "Tulane-Garry"
+      ],
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:numAliquots",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Number of aliquots for a particular sampleID at a particular lab location. If sample has been used up, numAliquots = 0",
+      "rdfs:label": "numAliquots",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:freezerID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Freezer in which the sample is located within the lab.",
+      "rdfs:label": "freezerID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:freezerRack",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Rack in the freezer in which the sample is located within the lab.",
+      "rdfs:label": "freezerRack",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:freezerBox",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Box in the rack/freezer in which the sample is located within the lab.",
+      "rdfs:label": "freezerBox",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:freezerBoxCell",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Cell within the freezer box in which the sample is located within the lab, for example \"C12\".",
+      "rdfs:label": "freezerBoxCell",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:updatedBy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Person who updated the sample location",
+      "rdfs:label": "updatedBy",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SampleLocation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    }
+  ]
+}
