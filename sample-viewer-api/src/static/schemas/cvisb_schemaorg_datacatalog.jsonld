@@ -572,6 +572,143 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:PostalAddress",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an PostalAddress for the Center for Viral Systems Biology",
+      "rdfs:label": "PostalAddress",
+      "rdfs:subClassOf": {
+        "@id": "schema:PostalAddress"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:PostalAddress"
+      }
+    },
+    {
+      "@id": "cvisb:streetAddress",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The street address. For example, 1600 Amphitheatre Pkwy",
+      "rdfs:label": "streetAddress",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:streetAddress"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:addressLocality",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The locality (e.g. city). For example, Mountain View.",
+      "rdfs:label": "addressLocality",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:addressLocality"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:addressRegion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The region (e.g. state/Adm 2). For example, CA.",
+      "rdfs:label": "addressRegion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:addressRegion"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:postalCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The postal code. For example, 94043.",
+      "rdfs:label": "postalCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:postalCode"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:addressCountry",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The country object (containing name, ISO code/identifier, link to ISO page)",
+      "rdfs:label": "addressCountry",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:addressCountry"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:Organization",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing an Organization for the Center for Viral Systems Biology",
@@ -1021,6 +1158,100 @@
       ],
       "owl:cardinality": "one",
       "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ContactPoint",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a ContactPoint for the Center for Viral Systems Biology",
+      "rdfs:label": "ContactPoint",
+      "rdfs:subClassOf": {
+        "@id": "schema:ContactPoint"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:ContactPoint"
+      }
+    },
+    {
+      "@id": "cvisb:contactType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "contact type of the contactPoint",
+      "rdfs:label": "contactType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:contactType"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "technical support",
+        "customer support"
+      ]
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "url of the contactPoint",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:email",
+      "@type": "rdf:Property",
+      "rdfs:comment": "email of the contactPoint",
+      "rdfs:label": "email",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:email"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
