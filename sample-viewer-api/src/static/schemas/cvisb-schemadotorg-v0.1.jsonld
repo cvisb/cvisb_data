@@ -900,10 +900,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:LassaExposed",
+      "@id": "cvisb:lassaExposed",
       "@type": "rdf:Property",
       "rdfs:comment": "Whether the patient was exposed to another person who had Lassa",
-      "rdfs:label": "LassaExposed",
+      "rdfs:label": "lassaExposed",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
@@ -919,10 +919,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:LassaHHDeaths",
+      "@id": "cvisb:lassaHHDeaths",
       "@type": "rdf:Property",
       "rdfs:comment": "Whether the patient had recent Lassa-related deaths in their household",
-      "rdfs:label": "LassaHHDeaths",
+      "rdfs:label": "lassaHHDeaths",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
