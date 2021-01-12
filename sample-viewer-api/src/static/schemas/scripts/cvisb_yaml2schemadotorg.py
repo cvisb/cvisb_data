@@ -31,9 +31,9 @@ def open_yaml(yaml_file):
         # with open(outfile, 'w') as out_f:
         #     json.dump(schema_data, out_f, indent=2)
 
-# files = os.listdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
-# os.chdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
-# context_file = "cvisb-context.yaml"
+files = os.listdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/")
+context_file = "cvisb-context.yaml"
 
 # file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
 # schema = open_yaml(file)
@@ -90,6 +90,7 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
         for sel_file in sel_files:
             for file in all_files:
                 if fnmatch.fnmatch(file, sel_file):
+                    # print(sel_file)
                     schema = open_yaml(f"{schema_dir}/{file}")
                     schema_graph.extend(schema)
 
