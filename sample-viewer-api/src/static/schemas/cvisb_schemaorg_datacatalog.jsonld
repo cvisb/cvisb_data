@@ -1,0 +1,1086 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:Country",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a Country in the Center for Viral Systems Biology experiments",
+      "rdfs:label": "Country",
+      "rdfs:subClassOf": {
+        "@id": "schema:Country"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:Country"
+      }
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "2 letter ISO code of the country, e.g. SL",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "SL",
+        "NG",
+        "LR",
+        "GN",
+        "ML",
+        "TG",
+        "CI",
+        "US",
+        "IT",
+        "CD",
+        "CH",
+        "DE",
+        "GB",
+        "CG",
+        "GA",
+        "GH",
+        "MX",
+        "JO",
+        "BJ"
+      ]
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Link to the ISO country page",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Name of the country, e.g. Sierra Leone",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Sierra Leone",
+        "Nigeria",
+        "Liberia",
+        "Guinea",
+        "Togo",
+        "Mali",
+        "Cote d'Ivoire",
+        "United States",
+        "Germany",
+        "Ghana",
+        "Gabon",
+        "United Kingdom",
+        "Italy",
+        "Switzerland",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Mexico",
+        "Jordan",
+        "Benin"
+      ]
+    },
+    {
+      "@id": "cvisb:alternateName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternative name of the country, for instance in a different language",
+      "rdfs:label": "alternateName",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Country"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:alternateName"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:DataCatalog",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing the DataCatalog for the Center for Viral Systems Biology experiments",
+      "rdfs:label": "DataCatalog",
+      "rdfs:subClassOf": {
+        "@id": "schema:DataCatalog"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:DataCatalog"
+      },
+      "root_entity": true
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the DataCatalog",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:alternateName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternate name of the DataCatalog",
+      "rdfs:label": "alternateName",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:alternateName"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Short summary describing a DataCatalog",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Location of a page describing the DataCatalog",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataset",
+      "@type": "rdf:Property",
+      "rdfs:comment": "list of unique internal identifiers for the datasets associated with the DataCatalog",
+      "rdfs:label": "dataset",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:dataset"
+      },
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A unique identifier for the DataCatalog. Note: should be an internal, CViSB identifier; DOIs should go in @id",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sameAs",
+      "@type": "rdf:Property",
+      "rdfs:comment": "URL to cross-reference other copies of the DataCatalog",
+      "rdfs:label": "sameAs",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "schema:sameAs"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:keywords",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Comma-seperated keywords to summarize the DataCatalog",
+      "rdfs:label": "keywords",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:keywords"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:datePublished",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of first broadcast/publication",
+      "rdfs:label": "datePublished",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Date"
+      },
+      "schema:sameAs": {
+        "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date on which the DataCatalog was most recently modified",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Date"
+      },
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:updatedBy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Person who updated the data catalog data",
+      "rdfs:label": "updatedBy",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:temporalCoverage",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The temporalCoverage of a DataCatalog indicates the period that the content applies to, i.e. that it describes, either as a DateTime or as a textual string indicating a time period in ISO 8601 time interval format.",
+      "rdfs:label": "temporalCoverage",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "cvisb:DateRange"
+      },
+      "schema:sameAs": {
+        "@id": "schema:temporalCoverage"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:spatialCoverage",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Countries from which patients in the DataCatalog come",
+      "rdfs:label": "spatialCoverage",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "cvisb:Country"
+      },
+      "schema:sameAs": {
+        "@id": "schema:spatialCoverage"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this DataCatalog, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:releaseVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH",
+      "rdfs:label": "releaseVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:releaseNotes",
+      "@type": "rdf:Property",
+      "rdfs:comment": null,
+      "rdfs:label": "releaseNotes",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:sameAs": [
+        {
+          "@id": "schema:releaseNotes"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:schemaVersion",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Version of DataCatalog schema",
+      "rdfs:label": "schemaVersion",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:schemaVersion"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:funding",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Funding that supports (sponsors) the collection of this dataset through some kind of financial contribution",
+      "rdfs:label": "funding",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:MonetaryGrant"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:funding"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:Organization",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing an Organization for the Center for Viral Systems Biology",
+      "rdfs:label": "Organization",
+      "rdfs:subClassOf": {
+        "@id": "schema:Organization"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:Organization"
+      }
+    },
+    {
+      "@id": "cvisb:name",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the Organization",
+      "rdfs:label": "name",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:name"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique identifier of the Organization",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:alternateName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Alternate name of the Organization",
+      "rdfs:label": "alternateName",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:alternateName"
+      },
+      "owl:cardinality": "many",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Description of the Organization",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:description"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "URL of the Organization",
+      "rdfs:label": "url",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:email",
+      "@type": "rdf:Property",
+      "rdfs:comment": "email of the Organization; could also be specified in contactPoint",
+      "rdfs:label": "email",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:email"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional"
+    },
+    {
+      "@id": "cvisb:parentOrganization",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The larger organization that this organization is a subOrganization of, if any",
+      "rdfs:label": "parentOrganization",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:parentOrganization"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:logo",
+      "@type": "rdf:Property",
+      "rdfs:comment": "logo for the organization",
+      "rdfs:label": "logo",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:logo"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:contactPoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Contact point for the Organization",
+      "rdfs:label": "contactPoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ContactPoint"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:contactPoint"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:address",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Postal address for the Organization",
+      "rdfs:label": "address",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:PostalAddress"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:address"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:DateRange",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A derivation of the schema.org Date class, for explicit bounded or unbounded date ranges. Used in json validation.",
+      "rdfs:label": "DateRange",
+      "rdfs:subClassOf": {
+        "@id": "schema:Date"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:Date"
+      }
+    },
+    {
+      "@id": "cvisb:lte",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Inclusive upper bound of a date range",
+      "rdfs:label": "lte",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DateRange"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:lt",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Exclusive upper bound of a date range",
+      "rdfs:label": "lt",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DateRange"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:gte",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Inclusive lower bound of a date range",
+      "rdfs:label": "gte",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DateRange"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:gt",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Exclusive lower bound of a date range",
+      "rdfs:label": "gt",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DateRange"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:ReleaseSummary",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing the ReleaseSummary for the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ReleaseSummary",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:ReleaseSummary"
+      }
+    },
+    {
+      "@id": "cvisb:datePublished",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of release for the particular version.",
+      "rdfs:label": "datePublished",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Notes specifying what in particular was updated.",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ReleaseNote"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:abstract",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Overview summary of what was changed in the most recent update.",
+      "rdfs:label": "abstract",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:MonetaryGrant",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing the MonetaryGrant for the Center for Viral Systems Biology",
+      "rdfs:label": "MonetaryGrant",
+      "rdfs:subClassOf": {
+        "@id": "schema:MonetaryGrant"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:MonetaryGrant"
+      }
+    },
+    {
+      "@id": "cvisb:funder",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive name of the MonetaryGrant",
+      "rdfs:label": "funder",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:MonetaryGrant"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:funder"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique identifier for the grant, e.g. U19AI135995 for CViSB's NIAID U19 award.",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:MonetaryGrant"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    }
+  ]
+}
