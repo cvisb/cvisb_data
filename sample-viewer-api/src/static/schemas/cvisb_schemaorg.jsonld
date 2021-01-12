@@ -3862,26 +3862,6 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:@id",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the software code, preferably a DOI",
-      "rdfs:label": "@id",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SoftwareSourceCode"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:URL"
-      },
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
       "@id": "cvisb:name",
       "@type": "rdf:Property",
       "rdfs:comment": "Name of code",
@@ -4637,26 +4617,6 @@
       ],
       "schema:rangeIncludes": {
         "@id": "xsd:string"
-      },
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:@id",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the DataCatalog, preferably a DOI",
-      "rdfs:label": "@id",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:DataCatalog"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:URL"
       },
       "schema:sameAs": {
         "@id": "schema:identifier"
@@ -7936,26 +7896,6 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:@id",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the dataset, preferably a DOI",
-      "rdfs:label": "@id",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:DataDownload"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:URL"
-      },
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
       "@id": "cvisb:isBasedOn",
       "@type": "rdf:Property",
       "rdfs:comment": "A reference to the identifier of a parent file(s), e.g. raw data that this analysis file is based on",
@@ -8780,26 +8720,6 @@
         "sensor-vitals-vhf",
         "clinical-observations-vhf"
       ]
-    },
-    {
-      "@id": "cvisb:@id",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the dataset, preferably a DOI",
-      "rdfs:label": "@id",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Dataset"
-        }
-      ],
-      "schema:rangeIncludes": {
-        "@id": "schema:URL"
-      },
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
     },
     {
       "@id": "cvisb:sameAs",
