@@ -14,7 +14,8 @@ import fnmatch
 import csv
 
 # How expected files should be combined:
-schema_files = ["ComaScore"]
+schema_files =  ["Accelerometry-schema-v0.1.yaml", "AdministrativeArea-schema-v0.1.yaml", "AndersenSequencing-schema-v0.1.yaml", "BloodCountData-schema-v0.1.yaml", "BodyTemperature-schema-v0.1.yaml", "ComaScore-schema-v0.1.yaml", "ContactPoint-schema-v0.1.yaml", "Country-schema-v0.1.yaml", "Data-schema-v0.1.yaml", "DataCatalog-schema-v0.1.yaml", "DataDownload-schema-v0.1.yaml", "Dataset-schema-v0.1.yaml", "DateRange-schema-v0.1.yaml", "DerivedSample-schema-v0.1.yaml", "DiastolicPressure-schema-v0.1.yaml"]
+# , "ECGPoint-schema-v0.1.yaml", "ELISA-schema-v0.1.yaml", "Experiment-schema-v0.1.yaml", "HLAData-schema-v0.1.yaml", "HeartRate-schema-v0.1.yaml", "MeanArterialPressure-schema-v0.1.yaml", "Medication-schema-v0.1.yaml", "MonetaryGrant-schema-v0.1.yaml", "Organization-schema-v0.1.yaml", "OxygenSaturation-schema-v0.1.yaml", "Patient-schema-v0.1.yaml", "Person-schema-v0.1.yaml", "PiccoloData-schema-v0.1.yaml", "PiccoloMeasurement-schema-v0.1.yaml", "Place-schema-v0.1.yaml", "PostalAddress-schema-v0.1.yaml", "RDT-schema-v0.1.yaml", "RTPCR-schema-v0.1.yaml", "ReleaseNote-schema-v0.1.yaml", "ReleaseSummary-schema-v0.1.yaml", "RepertoireSequencing-schema-v0.1.yaml", "RespiratoryRate-schema-v0.1.yaml", "SNPData-schema-v0.1.yaml", "Sample-schema-v0.1.yaml", "SampleLocation-schema-v0.1.yaml", "ScholarlyArticle-schema-v0.1.yaml", "SequencingExperiment-schema-v0.1.yaml", "SkinTemperature-schema-v0.1.yaml", "SoftwareSourceCode-schema-v0.1.yaml", "Symptom-schema-v0.1.yaml", "SystemsSerology-schema-v0.1.yaml", "SystolicPressure-schema-v0.1.yaml", "ViralSeqData-schema-v0.1.yaml"]
 
 def open_yaml(yaml_file):
     '''Convert input yaml file as JSON file.'''
@@ -25,7 +26,7 @@ def open_yaml(yaml_file):
         # with open(outfile, 'w') as out_f:
         #     json.dump(schema_data, out_f, indent=2)
 
-files = os.listdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
+files = os.listdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes")
 os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/")
 context_file = "cvisb-context.yaml"
 
