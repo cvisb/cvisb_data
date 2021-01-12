@@ -13,48 +13,25 @@
   "@id": "https://data.cvisb.org/jsonschema/v0.1",
   "@graph": [
     {
-      "@id": "cvisb:Patient",
+      "@id": "cvisb:AndersenSequencing",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a Patient/Person in the Center for Viral Systems Biology experiments",
-      "rdfs:label": "Patient",
+      "rdfs:comment": "A schema describing a HLA, viral, or metagenome sequencing Experiment in the Center for Viral Systems Biology",
+      "rdfs:label": "AndersenSequencing",
       "rdfs:subClassOf": {
-        "@id": "health:Patient"
+        "@id": "cvisb:sequencingExperiment"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
-      },
-      "root_entity": true
+      }
     },
     {
-      "@id": "cvisb:patientID",
+      "@id": "cvisb:analysisVersion",
       "@type": "rdf:Property",
-      "rdfs:comment": "Unique, public study ID for patient",
-      "rdfs:label": "patientID",
+      "rdfs:comment": "Analysis pipeline version",
+      "rdfs:label": "analysisVersion",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:species",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Species of patient (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)",
-      "rdfs:label": "species",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
@@ -67,160 +44,16 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "schema:Enumeration": [
-        "Homo sapiens",
-        "Hylomyscus pamfi",
-        "Mastomys erythroleucus",
-        "Mastomys natalensis",
-        "rodent",
-        null
-      ],
       "authenticated": false
     },
     {
-      "@id": "cvisb:alternateIdentifier",
+      "@id": "cvisb:metagenomeDatabase",
       "@type": "rdf:Property",
-      "rdfs:comment": "Alternative ID(s) used for patient (including G-number, S-number, or C-numbers, available to consortia members only)",
-      "rdfs:label": "alternateIdentifier",
+      "rdfs:comment": "metagenome database",
+      "rdfs:label": "metagenomeDatabase",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:gID",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Internal G-number used to refer to the patients when they're in the acute treatment phase at KGH. For most samples, should be a single gID; however, some patients have two.",
-      "rdfs:label": "gID",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:hasPatientData",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether CViSB has data, metadata, and/or samples from the acute phase of infection of the patient.",
-      "rdfs:label": "hasPatientData",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:sID",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Internal survivor ID used to refer to the patients during follow-up visits. Can include either survivors (S-numbers) or contacts (C-numbers)",
-      "rdfs:label": "sID",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:hasSurvivorData",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether CViSB has data, metadata, and/or samples from follow-up visits after the patient has survived the acute infection phase.",
-      "rdfs:label": "hasSurvivorData",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:contactGroupIdentifier",
-      "@type": "rdf:Property",
-      "rdfs:comment": "ID group for patient and associated contacts",
-      "rdfs:label": "contactGroupIdentifier",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dateModified",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date on which the Patient metadata was most recently modified",
-      "rdfs:label": "dateModified",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:dateModified"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:updatedBy",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Person who updated the patient data",
-      "rdfs:label": "updatedBy",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
@@ -233,39 +66,91 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     },
     {
-      "@id": "cvisb:dataStatus",
+      "@id": "cvisb:metagenomeDBVersion",
       "@type": "rdf:Property",
-      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
-      "rdfs:label": "dataStatus",
+      "rdfs:comment": "metagenome database version",
+      "rdfs:label": "metagenomeDBVersion",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        },
+        {
+          "@id": "xsd:string"
+        },
         {
           "@id": "schema:Text"
         }
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "preliminary",
-        "final"
-      ]
+      "authenticated": false
     },
     {
-      "@id": "cvisb:sourceFiles",
+      "@id": "cvisb:assemblyReference",
       "@type": "rdf:Property",
-      "rdfs:comment": "Internal tracking of who / which file(s) supplied the patient metadata",
-      "rdfs:label": "sourceFiles",
+      "rdfs:comment": "Reference for assembly",
+      "rdfs:label": "assemblyReference",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        },
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:alignmentReference",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Reference for alignment",
+      "rdfs:label": "alignmentReference",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:AndersenSequencing"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        },
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:libraryKit",
+      "@type": "rdf:Property",
+      "rdfs:comment": "library kit",
+      "rdfs:label": "libraryKit",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
@@ -276,563 +161,23 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:version",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Version number of patient data",
-      "rdfs:label": "version",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Number"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:version"
-      },
       "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:cohort",
+      "@id": "cvisb:libraryVersion",
       "@type": "rdf:Property",
-      "rdfs:comment": "Cohort for virus exposure: Ebola, Lassa, COVID-19, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for.",
-      "rdfs:label": "cohort",
+      "rdfs:comment": "library version",
+      "rdfs:label": "libraryVersion",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "schema:Enumeration": [
-        "Ebola",
-        "Lassa",
-        "COVID-19",
-        "Control",
-        "Unknown"
-      ],
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:outcome",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Outcome for patient: control, survivor, contact, dead, or unknown. Patients are considered survivors if they are alive at least 10 days after presentation of symptoms in the hospital, the time at which they are commonly discharged from the hospital.",
-      "rdfs:label": "outcome",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "schema:Enumeration": [
-        "control",
-        "survivor",
-        "contact",
-        "dead",
-        "unknown"
-      ],
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:country",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Country where Patient was exposed to the virus",
-      "rdfs:label": "country",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Country"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:geographicArea"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:location",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates. SHOULD ONLY INCLUDE LOCATIONS THAT CAN BE RELEASED TO THE PUBLIC.",
-      "rdfs:label": "location",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:AdministrativeArea"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:location"
-      },
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:locationPrivate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates.  Includes location information that should only be accessed by authorized users.",
-      "rdfs:label": "locationPrivate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:AdministrativeArea"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:location"
-      },
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:admittedLassaWard",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the patient was admitted to the Lassa isolation ward at KGH.",
-      "rdfs:label": "admittedLassaWard",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:admitDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of admission in the hospital. Note that not all patients who are evaluated are admitted for further care.",
-      "rdfs:label": "admitDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:evalDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of first evaluation in the hospital. Note that not all patients who are evaluated are admitted for further care.",
-      "rdfs:label": "evalDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:presentationDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of the first evaluation in the hospital; will be the minimum of the admitDate and evalDate",
-      "rdfs:label": "presentationDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:presentationWeek",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Week of presentation or first sample collection for the patient. Note that this date range could come from the date the patient was admitted to a health care facility, was evaluated, and/or a sample was collected and analyzed for them. This *may* be the week at which the patient was being treated in the acute phase of infection, or the date of first collection for a contact of an acutely ill patient, or it may be the date of a survivor follow-up visit where no data on their acute phase of illness is available.",
-      "rdfs:label": "presentationWeek",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:DateRange"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false,
-      "minimum": 1,
-      "maximum": 52
-    },
-    {
-      "@id": "cvisb:infectionYear",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Approximate year of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.  If the onset of symptoms isn't reported, based on the date the patient presented in the hospital or was discharged.",
-      "rdfs:label": "infectionYear",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:infectionDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Approximate date / date range of infection or contact with the virus. Based on self-reporting, so take it with a grain of salt.",
-      "rdfs:label": "infectionDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:survivorEnrollmentDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of enrollment of the survivor or contact in the KGH survivor study",
-      "rdfs:label": "survivorEnrollmentDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:survivorEvalDates",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Dates of evaluation of the survivor or contact in the KGH survivor study",
-      "rdfs:label": "survivorEvalDates",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dischargeDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of discharge from the hospital",
-      "rdfs:label": "dischargeDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:deathDate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Date of death",
-      "rdfs:label": "deathDate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Date"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:daysOnset",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between onset of symptoms and hospital admission, as self-reported",
-      "rdfs:label": "daysOnset",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:daysInHospital",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between first evaluation and discharge or death",
-      "rdfs:label": "daysInHospital",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:occupation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Occupation of patient",
-      "rdfs:label": "occupation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:gender",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Gender",
-      "rdfs:label": "gender",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:GenderType"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:gender"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "schema:Enumeration": [
-        "Male",
-        "Female",
-        "Unknown"
-      ],
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:relatedTo",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A list of related household contacts's public patientIDs",
-      "rdfs:label": "relatedTo",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:relatedToPrivate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A list of related household contacts's private patientIDs",
-      "rdfs:label": "relatedToPrivate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:exposureType",
-      "@type": "rdf:Property",
-      "rdfs:comment": "For contacts, the type or level of exposure they had to the infected person.",
-      "rdfs:label": "exposureType",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:contactSurvivorRelationship",
-      "@type": "rdf:Property",
-      "rdfs:comment": "For contacts, how they are related to the infected person.",
-      "rdfs:label": "contactSurvivorRelationship",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:ethnicity",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Patient ethnicity",
-      "rdfs:label": "ethnicity",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": true,
-      "schema:Enumeration": [
-        "Mende",
-        "Fullah",
-        "Temne",
-        "Krio",
-        "White",
-        "Black",
-        "Asian",
-        "Other"
-      ]
-    },
-    {
-      "@id": "cvisb:age",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Age at time of first presentation",
-      "rdfs:label": "age",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Float"
+          "@id": "xsd:string"
         },
         {
           "@id": "schema:Text"
@@ -843,249 +188,69 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:height",
+      "@id": "cvisb:variantCallingType",
       "@type": "rdf:Property",
-      "rdfs:comment": "Patient height, in meters",
-      "rdfs:label": "height",
+      "rdfs:comment": "Variant calling Type(Consensus/Reference)",
+      "rdfs:label": "variantCallingType",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Float"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:weight",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Patient weight, in kilograms",
-      "rdfs:label": "weight",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Float"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:pregnant",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the patient was pregnant at the time of presentation",
-      "rdfs:label": "pregnant",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:lassaExposed",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the patient was exposed to another person who had Lassa",
-      "rdfs:label": "lassaExposed",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:lassaHHDeaths",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Whether the patient had recent Lassa-related deaths in their household",
-      "rdfs:label": "lassaHHDeaths",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Boolean"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:publisher",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Publisher of the Patient demographic data",
-      "rdfs:label": "publisher",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:publisher"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:citation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Journal article or other publication associated with the patient demographic data (stored as an object, not a string).  If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the patient.",
-      "rdfs:label": "citation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ScholarlyArticle"
+          "@id": "xsd:string"
         },
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:citation"
-      },
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:correction",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.",
-      "rdfs:label": "correction",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
         {
           "@id": "schema:Text"
         }
       ],
-      "schema:sameAs": {
-        "@id": "schema:correction"
-      },
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:symptoms",
+      "@id": "cvisb:replicate",
       "@type": "rdf:Property",
-      "rdfs:comment": "List of symptoms the patient experienced during or after the course of illness.",
-      "rdfs:label": "symptoms",
+      "rdfs:comment": "Replicate number",
+      "rdfs:label": "replicate",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Patient"
+          "@id": "cvisb:AndersenSequencing"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "schema:Integer"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:medications",
-      "@type": "rdf:Property",
-      "rdfs:comment": "List of medications administered (or not) to the patient during the course of their treatment.",
-      "rdfs:label": "medications",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Medication"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:elisa",
-      "@type": "rdf:Property",
-      "rdfs:comment": "List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient",
-      "rdfs:label": "elisa",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ELISA"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:Organization",
+      "@id": "cvisb:AdministrativeArea",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing an Organization for the Center for Viral Systems Biology",
-      "rdfs:label": "Organization",
+      "rdfs:comment": "A schema describing a geographic AdministrativeArea in the Center for Viral Systems Biology. Used typically to specify province, district, village, etc. for regions of a Country. Note that for Administrative Unit 0 `Country` should be used instead",
+      "rdfs:label": "AdministrativeArea",
       "rdfs:subClassOf": {
-        "@id": "schema:Organization"
+        "@id": "cvisb:Place"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       },
       "schema:sameAs": {
-        "@id": "schema:Organization"
+        "@id": "schema:AdministrativeArea"
       }
     },
     {
       "@id": "cvisb:name",
       "@type": "rdf:Property",
-      "rdfs:comment": "Descriptive name of the Organization",
+      "rdfs:comment": "Name of the adminstrative area, e.g. Sierra Leone",
       "rdfs:label": "name",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Organization"
+          "@id": "cvisb:AdministrativeArea"
         }
       ],
       "schema:rangeIncludes": [
@@ -1104,13 +269,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:identifier",
+      "@id": "cvisb:locationType",
       "@type": "rdf:Property",
-      "rdfs:comment": "Unique identifier of the Organization",
-      "rdfs:label": "identifier",
+      "rdfs:comment": "Type of location for the patient: home, exposure location (presumably where he/she was infected), or unknown",
+      "rdfs:label": "locationType",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Organization"
+          "@id": "cvisb:AdministrativeArea"
         }
       ],
       "schema:rangeIncludes": [
@@ -1121,21 +286,23 @@
           "@id": "schema:Text"
         }
       ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
       "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "home",
+        "exposure",
+        "unknown"
+      ]
     },
     {
       "@id": "cvisb:alternateName",
       "@type": "rdf:Property",
-      "rdfs:comment": "Alternate name of the Organization",
+      "rdfs:comment": "Alternative name of the admin area, for instance in a different language",
       "rdfs:label": "alternateName",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Organization"
+          "@id": "cvisb:AdministrativeArea"
         }
       ],
       "schema:rangeIncludes": [
@@ -1154,13 +321,13 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:description",
+      "@id": "cvisb:administrativeType",
       "@type": "rdf:Property",
-      "rdfs:comment": "Description of the Organization",
-      "rdfs:label": "description",
+      "rdfs:comment": "Type of administative area, e.g. province (Adm 1), district (Adm 2), chiefdom (Adm 3), village (Adm 4)",
+      "rdfs:label": "administrativeType",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Organization"
+          "@id": "cvisb:AdministrativeArea"
         }
       ],
       "schema:rangeIncludes": [
@@ -1171,177 +338,81 @@
           "@id": "schema:Text"
         }
       ],
-      "schema:sameAs": {
-        "@id": "schema:description"
-      },
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:url",
-      "@type": "rdf:Property",
-      "rdfs:comment": "URL of the Organization",
-      "rdfs:label": "url",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:url"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:email",
-      "@type": "rdf:Property",
-      "rdfs:comment": "email of the Organization; could also be specified in contactPoint",
-      "rdfs:label": "email",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:email"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional"
-    },
-    {
-      "@id": "cvisb:parentOrganization",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The larger organization that this organization is a subOrganization of, if any",
-      "rdfs:label": "parentOrganization",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:parentOrganization"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:logo",
-      "@type": "rdf:Property",
-      "rdfs:comment": "logo for the organization",
-      "rdfs:label": "logo",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:URL"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:logo"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:contactPoint",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Contact point for the Organization",
-      "rdfs:label": "contactPoint",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ContactPoint"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:contactPoint"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:address",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Postal address for the Organization",
-      "rdfs:label": "address",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:PostalAddress"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:address"
-      },
-      "owl:cardinality": "one",
-      "marginality": "optional",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:@type",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Type, used for internal purposes; should be Organization",
-      "rdfs:label": "@type",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false,
       "schema:Enumeration": [
-        "Organization"
-      ]
+        "province",
+        "district",
+        "chiefdom",
+        "village",
+        "city",
+        "country",
+        "prefecture",
+        "sub-prefecture",
+        "clan",
+        "Federal Capital Territory",
+        "state",
+        "Local Government Area",
+        "ward"
+      ],
+      "authenticated": false
     },
     {
-      "@id": "cvisb:OxygenSaturation",
+      "@id": "cvisb:administrativeUnit",
+      "@type": "rdf:Property",
+      "rdfs:comment": "level of administative area, e.g. 1: province, 2: district, 3: chiefdom, 4: village for Sierra Leone",
+      "rdfs:label": "administrativeUnit",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:AdministrativeArea"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "identifier  / short name for administrative area. Note: where possible, align to governmental codes for the Administrative Area",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:AdministrativeArea"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:Accelerometry",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a single oxygen saturation datapoint collected from patients in the Center for Viral Systems Biology.",
-      "rdfs:label": "OxygenSaturation",
+      "rdfs:comment": "A schema describing a single accelerometry datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "Accelerometry",
       "rdfs:subClassOf": {
         "@id": "cvisb:Data"
       },
@@ -1350,35 +421,13 @@
       }
     },
     {
-      "@id": "cvisb:@type",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Type of data",
-      "rdfs:label": "@type",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:OxygenSaturation"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "OxygenSaturation"
-      ]
-    },
-    {
       "@id": "cvisb:time",
       "@type": "rdf:Property",
-      "rdfs:comment": "Date and time of OxygenSaturation measurement",
+      "rdfs:comment": "Date and time of Accelerometry measurement",
       "rdfs:label": "time",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:OxygenSaturation"
+          "@id": "cvisb:Accelerometry"
         }
       ],
       "schema:rangeIncludes": [
@@ -1391,13 +440,51 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:oxygenSaturation",
+      "@id": "cvisb:x",
       "@type": "rdf:Property",
-      "rdfs:comment": "OxygenSaturation, in percent",
-      "rdfs:label": "oxygenSaturation",
+      "rdfs:comment": "Displacement of the body / sensor in the x-direction",
+      "rdfs:label": "x",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:OxygenSaturation"
+          "@id": "cvisb:Accelerometry"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:y",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Displacement of the body / sensor in the y-direction",
+      "rdfs:label": "y",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Accelerometry"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:z",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Displacement of the body / sensor in the z-direction",
+      "rdfs:label": "z",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Accelerometry"
         }
       ],
       "schema:rangeIncludes": [
@@ -1416,7 +503,7 @@
       "rdfs:label": "collectionInstrument",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:OxygenSaturation"
+          "@id": "cvisb:Accelerometry"
         }
       ],
       "schema:rangeIncludes": [
@@ -1431,168 +518,6 @@
         "PhysIQ",
         "conventional"
       ]
-    },
-    {
-      "@id": "cvisb:Person",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a Person in the Center for Viral Systems Biology, mostly for the purposes of authorship of papers",
-      "rdfs:label": "Person",
-      "rdfs:subClassOf": {
-        "@id": "schema:Person"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      },
-      "schema:sameAs": {
-        "@id": "schema:Person"
-      }
-    },
-    {
-      "@id": "cvisb:givenName",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property.",
-      "rdfs:label": "givenName",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Person"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:Person"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:additionalName",
-      "@type": "rdf:Property",
-      "rdfs:comment": "An additional name for a Person, can be used for a middle name",
-      "rdfs:label": "additionalName",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Person"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:Person"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:familyName",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property.",
-      "rdfs:label": "familyName",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Person"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:Person"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:name",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Full name of the person-- concatenation of givenName, additionalName, familyName. givenName, additionalName, and familyName are the preferred way of specifying the name.",
-      "rdfs:label": "name",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Person"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:Person"
-      },
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:MonetaryGrant",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing the MonetaryGrant for the Center for Viral Systems Biology",
-      "rdfs:label": "MonetaryGrant",
-      "rdfs:subClassOf": {
-        "@id": "schema:MonetaryGrant"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      },
-      "schema:sameAs": {
-        "@id": "schema:MonetaryGrant"
-      }
-    },
-    {
-      "@id": "cvisb:funder",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Descriptive name of the MonetaryGrant",
-      "rdfs:label": "funder",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:MonetaryGrant"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Organization"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:funder"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:identifier",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Unique identifier for the grant, e.g. U19AI135995 for CViSB's NIAID U19 award.",
-      "rdfs:label": "identifier",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:MonetaryGrant"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:identifier"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
     }
   ]
 }
