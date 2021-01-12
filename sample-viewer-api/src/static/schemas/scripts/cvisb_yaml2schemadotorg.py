@@ -14,13 +14,7 @@ import fnmatch
 import csv
 
 # How expected files should be combined:
-schema_grps = {
-# 'sample': ['sample-schema', 'SampleLocation-schema', 'derivedSample-schema'],
-# 'experiment': ['andersenSequencing', 'ELISA', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
-# 'patient': ['Patient'],
-# 'dataset': ['Dataset', 'DataDownload', 'DataCatalog']
-}
-
+schema_files = ["ComaScore"]
 
 def open_yaml(yaml_file):
     '''Convert input yaml file as JSON file.'''
@@ -58,7 +52,8 @@ def get_validation(schema):
     with open(validation_file, 'w') as out_f:
         json.dump(validation_schema, out_f, indent=2)
 
-def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", output_file = None):
+
+def convert(context_file, schema_files = schema_files, schema_dir = "Classes", output_file = None):
     current_dir = os.curdir
     schema_dir = f'{current_dir}/{schema_dir}'
 
@@ -68,8 +63,11 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
     yamls = []
     for file in all_files:
         if fnmatch.fnmatch(file, "*.yaml"):
-            yamls.append(file)
-
+            if(len(schema_files)):
+                for schema_file in schema_files:
+                    if fnmatch.fnmatch(file, f"{schema_file}*"):
+                        yamls.append(file)
+    schema_grps = {}
     schema_grps['schemadotorg'] = yamls
     context = open_yaml(f"{current_dir}/{context_file}")
 
