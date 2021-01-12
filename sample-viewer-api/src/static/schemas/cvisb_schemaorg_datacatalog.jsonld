@@ -1281,7 +1281,7 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:Organization"
+          "@id": "schema:Text"
         }
       ],
       "schema:sameAs": {
