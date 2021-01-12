@@ -1025,7 +1025,7 @@
       "@id": "cvisb:url",
       "@type": "rdf:Property",
       "rdfs:comment": "URL pointing to information about the file, e.g. landing page for the content.",
-      "rdfs:label": "contentUrl",
+      "rdfs:label": "url",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:DataDownload"
