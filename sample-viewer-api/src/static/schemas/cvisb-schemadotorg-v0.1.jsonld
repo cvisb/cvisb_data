@@ -213,7 +213,7 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
@@ -238,6 +238,28 @@
       "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": true
+    },
+    {
+      "@id": "cvisb:visitCode",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Visit code for the patient (day post hospitalization of blood draw for patients, visit number after initial for follow-up/contact)",
+      "rdfs:label": "visitCode",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
       "@id": "cvisb:patientID",
@@ -328,6 +350,25 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:isControl",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the experiment is a control experiment",
+      "rdfs:label": "isControl",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:name",
       "@type": "rdf:Property",
       "rdfs:comment": "Descriptive name of the experiment",
@@ -397,9 +438,93 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Descriptive time of data collection, like \"survivor enrollment\" or \"patient admission\". Note that \"patient admission\" is assumed but not confirmed to be the date of admission to KGH.",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "patient admission",
+        "survivor enrollment"
+      ]
+    },
+    {
+      "@id": "cvisb:variableMeasured",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).",
+      "rdfs:label": "variableMeasured",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:variableMeasured"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA genotype",
+        "metagenome sequence",
+        "Ebola virus sequence",
+        "Lassa virus sequence",
+        "SARS-CoV-2 virus sequence",
+        "BCR sequence",
+        "TCR sequence",
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "NKD-CD107a",
+        "IgG2",
+        "FcRg2b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA1",
+        "FcRg3A",
+        "RCA",
+        "IgG3",
+        "IgM",
+        "IgG4",
+        "IgA2",
+        "SNA",
+        "IgG1",
+        "NT50",
+        "metabolomics",
+        "blood chemistry",
+        "blood cell count",
+        "vitals",
+        "virus level",
+        "patient antibody response",
+        "acute symptoms",
+        "sequelae",
+        "coma score"
+      ]
+    },
+    {
       "@id": "cvisb:measurementTechnique",
       "@type": "rdf:Property",
-      "rdfs:comment": "A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).",
+      "rdfs:comment": "A technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.",
       "rdfs:label": "measurementTechnique",
       "schema:domainIncludes": [
         {
@@ -421,16 +546,86 @@
       "marginality": "required",
       "authenticated": false,
       "schema:Enumeration": [
+        "Nucleic Acid Sequencing",
+        "RNA sequencing",
+        "Immune Repertoire Deep Sequencing",
+        "serology",
+        "Blood Chemistry Measurement",
+        "Vital Signs Measurement",
+        "Rapid Antigen Test",
+        "Reverse Transcriptase-Polymerase Chain Reaction",
+        "Blood Cell Count",
+        "ELISA",
+        "Clinical Observation"
+      ]
+    },
+    {
+      "@id": "cvisb:measurementCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)",
+      "rdfs:label": "measurementCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
         "HLA sequencing",
-        "viral sequencing",
+        "virus sequencing",
         "metagenome sequencing",
-        "BCR sequencing",
-        "TCR sequencing",
+        "immune repertoire sequencing",
         "Systems Serology",
-        "Metabolomics",
-        "blood chemistry",
-        "vitals",
-        "other"
+        "clinical measurements",
+        "clinical observations"
+      ]
+    },
+    {
+      "@id": "cvisb:includedInDataset",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A unique identifier for the Dataset that the Experiment is contained in. Note: should be an internal, CViSB identifier. Must match Dataset:identifier options",
+      "rdfs:label": "includedInDataset",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "xsd:string"
+      },
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "hla",
+        "metagenome-seq",
+        "ebola-virus-seq",
+        "lassa-virus-seq",
+        "sarscov2-virus-seq",
+        "bcr",
+        "tcr",
+        "systems-serology",
+        "systems-serology-32783920",
+        "rtpcr-32783920",
+        "blood-chemistry-vhf",
+        "blood-counts-vhf",
+        "vitals-vhf",
+        "rtpcr-vhf",
+        "rapid-diagnostics-vhf",
+        "sensor-vitals-vhf"
       ]
     },
     {
@@ -478,10 +673,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:_version",
+      "@id": "cvisb:version",
       "@type": "rdf:Property",
-      "rdfs:comment": "Version number of experiment, auto-assigned by CViSB database",
-      "rdfs:label": "_version",
+      "rdfs:comment": "Version number of experiment",
+      "rdfs:label": "version",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Experiment"
@@ -500,9 +695,31 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:creator",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Author/creator of this experiment",
+      "rdfs:label": "creator",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:creator"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:publisher",
       "@type": "rdf:Property",
-      "rdfs:comment": "Publisher of this dataset, usually the host organization",
+      "rdfs:comment": "Publisher of this experiment, usually the host organization",
       "rdfs:label": "publisher",
       "schema:domainIncludes": [
         {
@@ -524,7 +741,7 @@
     {
       "@id": "cvisb:citation",
       "@type": "rdf:Property",
-      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string)",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string). If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment.\"",
       "rdfs:label": "citation",
       "schema:domainIncludes": [
         {
@@ -534,6 +751,9 @@
       "schema:rangeIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
         }
       ],
       "schema:sameAs": {
@@ -563,6 +783,156 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:releaseDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date upon which the data should be made publicly available.",
+      "rdfs:label": "releaseDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:data",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Data associated with the experiment. Typically summary values for that particular measurement.",
+      "rdfs:label": "data",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        },
+        {
+          "@id": "cvisb:VirusSeqData"
+        },
+        {
+          "@id": "cvisb:SystemsSerology"
+        },
+        {
+          "@id": "cvisb:PiccoloData"
+        },
+        {
+          "@id": "cvisb:BloodCountData"
+        },
+        {
+          "@id": "cvisb:HeartRate"
+        },
+        {
+          "@id": "cvisb:ComaScore"
+        },
+        {
+          "@id": "cvisb:BodyTemperature"
+        },
+        {
+          "@id": "cvisb:OxygenSaturation"
+        },
+        {
+          "@id": "cvisb:SystolicPressure"
+        },
+        {
+          "@id": "cvisb:DiastolicPressure"
+        },
+        {
+          "@id": "cvisb:RespiratoryRate"
+        },
+        {
+          "@id": "cvisb:RDT"
+        },
+        {
+          "@id": "cvisb:RTPCR"
+        },
+        {
+          "@id": "cvisb:ELISA"
+        },
+        {
+          "@id": "cvisb:ComaScore"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sourceFiles",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the experiment data",
+      "rdfs:label": "sourceFiles",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Experiment"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
       "@id": "cvisb:ELISA",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing an ELISA result for a Patient in the Center for Viral Systems Biology experiments",
@@ -575,9 +945,31 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ELISA"
+      ]
+    },
+    {
       "@id": "cvisb:virus",
       "@type": "rdf:Property",
-      "rdfs:comment": "Virus tested in ELISA (Ebola or Lassa)",
+      "rdfs:comment": "Virus tested in ELISA (Ebola, Lassa, or SARS-CoV-2)",
       "rdfs:label": "virus",
       "schema:domainIncludes": [
         {
@@ -593,7 +985,8 @@
       "marginality": "required",
       "schema:Enumeration": [
         "Ebola",
-        "Lassa"
+        "Lassa",
+        "SARS-CoV-2"
       ],
       "authenticated": false
     },
@@ -641,7 +1034,8 @@
       "schema:Enumeration": [
         "positive",
         "negative",
-        "indeterminate"
+        "indeterminate",
+        null
       ],
       "authenticated": false
     },
@@ -701,6 +1095,120 @@
       "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of this dataset, usually the host organization",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the dataset (stored as an object, not a string)",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of changes / corrections made to the data",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:sourceFiles",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the ELISA data",
+      "rdfs:label": "sourceFiles",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ELISA"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
     },
     {
       "@id": "cvisb:AndersenSequencing",
@@ -954,6 +1462,36 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:species",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Species of patient (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)",
+      "rdfs:label": "species",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "schema:Enumeration": [
+        "Homo sapiens",
+        "Hylomyscus pamfi",
+        "Mastomys erythroleucus",
+        "Mastomys natalensis",
+        "rodent",
+        null
+      ],
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:alternateIdentifier",
       "@type": "rdf:Property",
       "rdfs:comment": "Alternative ID(s) used for patient (including G-number, S-number, or C-numbers, available to consortia members only)",
@@ -1112,10 +1650,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:updateNotes",
+      "@id": "cvisb:dataStatus",
       "@type": "rdf:Property",
-      "rdfs:comment": "A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.",
-      "rdfs:label": "updateNotes",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
@@ -1123,18 +1661,22 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:UpdateLog"
+          "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
     },
     {
-      "@id": "cvisb:_source",
+      "@id": "cvisb:sourceFiles",
       "@type": "rdf:Property",
-      "rdfs:comment": "Internal tracking of who supplied the patient metadata",
-      "rdfs:label": "_source",
+      "rdfs:comment": "Internal tracking of who / which file(s) supplied the patient metadata",
+      "rdfs:label": "sourceFiles",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
@@ -1148,15 +1690,15 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "one",
+      "owl:cardinality": "many",
       "marginality": "recommended",
       "authenticated": true
     },
     {
-      "@id": "cvisb:_version",
+      "@id": "cvisb:version",
       "@type": "rdf:Property",
-      "rdfs:comment": "Version number of patient, auto-assigned by CViSB database",
-      "rdfs:label": "_version",
+      "rdfs:comment": "Version number of patient data",
+      "rdfs:label": "version",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
@@ -1177,7 +1719,7 @@
     {
       "@id": "cvisb:cohort",
       "@type": "rdf:Property",
-      "rdfs:comment": "Cohort for virus exposure: Ebola, Lassa, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for.",
+      "rdfs:comment": "Cohort for virus exposure: Ebola, Lassa, COVID-19, or control.  Note that this is not a diagnosis, but rather what the patient was being evaluated for.",
       "rdfs:label": "cohort",
       "schema:domainIncludes": [
         {
@@ -1194,6 +1736,7 @@
       "schema:Enumeration": [
         "Ebola",
         "Lassa",
+        "COVID-19",
         "Control",
         "Unknown"
       ],
@@ -1228,7 +1771,7 @@
     {
       "@id": "cvisb:country",
       "@type": "rdf:Property",
-      "rdfs:comment": "Country where Patient lives",
+      "rdfs:comment": "Country where Patient was exposed to the virus",
       "rdfs:label": "Country",
       "schema:domainIncludes": [
         {
@@ -1244,52 +1787,14 @@
         "@id": "schema:geographicArea"
       },
       "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:admin2",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Administrative unit 2 for where the Patient lives. Each country has their own specific name for admin 2- Sierra Leone: district, Liberia: district, Guinea: prefecture, Nigeria: local government area",
-      "rdfs:label": "admin2",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:AdministrativeArea"
-        }
-      ],
-      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:admin3",
+      "@id": "cvisb:location",
       "@type": "rdf:Property",
-      "rdfs:comment": "Administrative unit 3 for where the Patient lives. Each country has their own specific name for admin 3- Sierra Leone: chiefdom, Liberia: clan, Guinea: sub-prefecture, Nigeria: wards",
-      "rdfs:label": "admin3",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:AdministrativeArea"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": false
-    },
-    {
-      "@id": "cvisb:homeLocation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates",
-      "rdfs:label": "homeLocation",
+      "rdfs:comment": "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates. SHOULD ONLY INCLUDE LOCATIONS THAT CAN BE RELEASED TO THE PUBLIC.",
+      "rdfs:label": "location",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Patient"
@@ -1301,7 +1806,29 @@
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:homeLocation"
+        "@id": "schema:location"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:locationPrivate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates.  Includes location information that should only be accessed by authorized users.",
+      "rdfs:label": "locationPrivate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:AdministrativeArea"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:location"
       },
       "owl:cardinality": "many",
       "marginality": "recommended",
@@ -1365,6 +1892,25 @@
       "authenticated": true
     },
     {
+      "@id": "cvisb:presentationDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of the first evaluation in the hospital; will be the minimum of the admitDate and evalDate",
+      "rdfs:label": "presentationDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
       "@id": "cvisb:presentationWeek",
       "@type": "rdf:Property",
       "rdfs:comment": "Week of presentation or first sample collection for the patient. Note that this date range could come from the date the patient was admitted to a health care facility, was evaluated, and/or a sample was collected and analyzed for them. This *may* be the week at which the patient was being treated in the acute phase of infection, or the date of first collection for a contact of an acutely ill patient, or it may be the date of a survivor follow-up visit where no data on their acute phase of illness is available.",
@@ -1381,7 +1927,9 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false
+      "authenticated": false,
+      "minimum": 1,
+      "maximum": 52
     },
     {
       "@id": "cvisb:infectionYear",
@@ -1414,7 +1962,7 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:DateRange"
+          "@id": "schema:Date"
         }
       ],
       "owl:cardinality": "one",
@@ -1680,6 +2228,9 @@
         "Fullah",
         "Temne",
         "Krio",
+        "White",
+        "Black",
+        "Asian",
         "Other"
       ]
     },
@@ -1696,12 +2247,13 @@
       "schema:rangeIncludes": [
         {
           "@id": "schema:Float"
+        },
+        {
+          "@id": "schema:Text"
         }
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "minimum": 1,
-      "maximum": 100,
       "authenticated": false
     },
     {
@@ -1764,7 +2316,7 @@
     {
       "@id": "cvisb:LassaExposed",
       "@type": "rdf:Property",
-      "rdfs:comment": "Whether the patient was exposed to another person who had Lassa fever",
+      "rdfs:comment": "Whether the patient was exposed to another person who had Lassa",
       "rdfs:label": "LassaExposed",
       "schema:domainIncludes": [
         {
@@ -1800,6 +2352,113 @@
       "authenticated": true
     },
     {
+      "@id": "cvisb:publisher",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Publisher of the Patient demographic data",
+      "rdfs:label": "publisher",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:publisher"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:citation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Journal article or other publication associated with the patient demographic data (stored as an object, not a string).  If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the patient.",
+      "rdfs:label": "citation",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:citation"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:correction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A list of the changes made to the Patient metadata. Optional, but useful to tag when and/or why specific fields were changed.",
+      "rdfs:label": "correction",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:correction"
+      },
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:symptoms",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of symptoms the patient experienced during or after the course of illness.",
+      "rdfs:label": "symptoms",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:medications",
+      "@type": "rdf:Property",
+      "rdfs:comment": "List of medications administered (or not) to the patient during the course of their treatment.",
+      "rdfs:label": "medications",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Patient"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:elisa",
       "@type": "rdf:Property",
       "rdfs:comment": "List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient",
@@ -1817,101 +2476,6 @@
       "owl:cardinality": "many",
       "marginality": "recommended",
       "authenticated": false
-    },
-    {
-      "@id": "cvisb:rapidDiagostics",
-      "@type": "rdf:Property",
-      "rdfs:comment": "List of rapid Ebola/Lassa dipstick diagnostic results for the patient",
-      "rdfs:label": "rapidDiagostics",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:RDT"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:rtpcr",
-      "@type": "rdf:Property",
-      "rdfs:comment": "List of RT-PCR results for the patient",
-      "rdfs:label": "rtpcr",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:RTPCR"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:symptoms",
-      "@type": "rdf:Property",
-      "rdfs:comment": "List of symptoms for the patient",
-      "rdfs:label": "symptoms",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:SymptomList"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:comaScore",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Observations of the patient's activity, to calculate Glasgow Coma Score",
-      "rdfs:label": "comaScore",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ComaScore"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:medications",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Medications administered to patient during his/her stay in the hospital",
-      "rdfs:label": "medications",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Patient"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Medication"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
     },
     {
       "@id": "cvisb:Sample",
@@ -2046,6 +2610,28 @@
       "authenticated": true
     },
     {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique public patient id. Will be added into the database via join",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Sample"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:privatePatientID",
       "@type": "rdf:Property",
       "rdfs:comment": "Unique *private* patient id, e.g. G-number, S-number, C-number",
@@ -2105,7 +2691,7 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": true
     },
     {
@@ -2115,16 +2701,16 @@
       "rdfs:label": "samplingDate",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:Experiment"
+          "@id": "cvisb:Sample"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Date"
+          "@id": "cvisb:DateRange"
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
@@ -2217,7 +2803,7 @@
     {
       "@id": "cvisb:species",
       "@type": "rdf:Property",
-      "rdfs:comment": "Source of sample (human or rat)",
+      "rdfs:comment": "Species of sample (Homo sapiens, Hylomyscus pamfi, Mastomys erythroleucus, Mastomys natalensis, rodent, etc)",
       "rdfs:label": "species",
       "schema:domainIncludes": [
         {
@@ -2235,9 +2821,12 @@
       "owl:cardinality": "one",
       "marginality": "recommended",
       "schema:Enumeration": [
-        "human",
-        "rat",
-        "monkey"
+        "Homo sapiens",
+        "Hylomyscus pamfi",
+        "Mastomys erythroleucus",
+        "Mastomys natalensis",
+        "rodent",
+        null
       ],
       "authenticated": false
     },
@@ -2364,7 +2953,7 @@
         }
       ],
       "owl:cardinality": "many",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": true
     },
     {
@@ -2645,7 +3234,21 @@
         "NG",
         "LR",
         "GN",
-        "US"
+        "ML",
+        "TG",
+        "CI",
+        "US",
+        "IT",
+        "CD",
+        "CH",
+        "DE",
+        "GB",
+        "CG",
+        "GA",
+        "GH",
+        "MX",
+        "JO",
+        "BJ"
       ]
     },
     {
@@ -2671,14 +3274,7 @@
       },
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": false,
-      "schema:Enumeration": [
-        "https://www.iso.org/obp/ui/#iso:code:3166:SL",
-        "https://www.iso.org/obp/ui/#iso:code:3166:NG",
-        "https://www.iso.org/obp/ui/#iso:code:3166:LR",
-        "https://www.iso.org/obp/ui/#iso:code:3166:GN",
-        "https://www.iso.org/obp/ui/#iso:code:3166:US"
-      ]
+      "authenticated": false
     },
     {
       "@id": "cvisb:name",
@@ -2709,7 +3305,21 @@
         "Nigeria",
         "Liberia",
         "Guinea",
-        "United States"
+        "Togo",
+        "Mali",
+        "Cote d'Ivoire",
+        "United States",
+        "Germany",
+        "Ghana",
+        "Gabon",
+        "United Kingdom",
+        "Italy",
+        "Switzerland",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Mexico",
+        "Jordan",
+        "Benin"
       ]
     },
     {
@@ -2798,6 +3408,28 @@
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RespiratoryRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "RespiratoryRate"
+      ]
     },
     {
       "@id": "cvisb:time",
@@ -3021,10 +3653,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:ViralSeqData",
+      "@id": "cvisb:VirusSeqData",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing viral sequencing data in the Center for Viral Systems Biology.",
-      "rdfs:label": "ViralSeqData",
+      "rdfs:label": "VirusSeqData",
       "rdfs:subClassOf": {
         "@id": "cvisb:Data"
       },
@@ -3033,13 +3665,35 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:VirusSeqData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "VirusSeqData"
+      ]
+    },
+    {
       "@id": "cvisb:virus",
       "@type": "rdf:Property",
       "rdfs:comment": "Virus sequenced",
       "rdfs:label": "virus",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3055,7 +3709,34 @@
       "authenticated": false,
       "schema:Enumeration": [
         "Ebola",
-        "Lassa"
+        "Lassa",
+        "SARS-CoV-2"
+      ]
+    },
+    {
+      "@id": "cvisb:virusSegment",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Segment of the virus sequenced, for Lassa (S or L)",
+      "rdfs:label": "virusSegment",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:VirusSeqData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "L",
+        "S"
       ]
     },
     {
@@ -3065,7 +3746,7 @@
       "rdfs:label": "referenceSeq",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3077,7 +3758,7 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
@@ -3087,7 +3768,7 @@
       "rdfs:label": "isReferenceSeq",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3096,7 +3777,7 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
@@ -3106,7 +3787,7 @@
       "rdfs:label": "DNAsequence",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3122,13 +3803,57 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:alignedDNAsequence",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Aligned, curated DNA sequence for the virus",
+      "rdfs:label": "alignedDNAsequence",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:VirusSeqData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:AAsequence",
       "@type": "rdf:Property",
-      "rdfs:comment": "Amino acid sequence for the virus",
+      "rdfs:comment": "Raw amino acid sequence for the virus",
       "rdfs:label": "AAsequence",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:alignedAAsequence",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Aligned, curated amino acid sequence for the virus",
+      "rdfs:label": "alignedAAsequence",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3150,7 +3875,7 @@
       "rdfs:label": "SNPsequence",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:ViralSeqData"
+          "@id": "cvisb:VirusSeqData"
         }
       ],
       "schema:rangeIncludes": [
@@ -3320,10 +4045,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:author",
+      "@id": "cvisb:creator",
       "@type": "rdf:Property",
-      "rdfs:comment": "Author(s) of the code repository",
-      "rdfs:label": "author",
+      "rdfs:comment": "Author/creator(s) of the code repository",
+      "rdfs:label": "creator",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:SoftwareSourceCode"
@@ -3338,7 +4063,7 @@
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:author"
+        "@id": "schema:creator"
       },
       "owl:cardinality": "many",
       "marginality": "recommended",
@@ -3357,6 +4082,9 @@
       "schema:rangeIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
         }
       ],
       "schema:sameAs": {
@@ -3469,6 +4197,28 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystolicPressure"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "SystolicPressure"
+      ]
+    },
+    {
       "@id": "cvisb:time",
       "@type": "rdf:Property",
       "rdfs:comment": "Date and time of SystolicPressure measurement",
@@ -3512,17 +4262,17 @@
       "rdfs:comment": "A schema describing a series of observations about a patient, to calculate a Glasgow Coma Score in the Center for Viral Systems Biology experiments",
       "rdfs:label": "ComaScore",
       "rdfs:subClassOf": {
-        "@id": "schema:Thing"
+        "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
     },
     {
-      "@id": "cvisb:daysSinceAdmit",
+      "@id": "cvisb:@type",
       "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between the admission date and when when the coma score was evaluated. At initial clinical presentation, daysSinceAdmit = 0",
-      "rdfs:label": "daysSinceAdmit",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:ComaScore"
@@ -3530,12 +4280,15 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Integer"
+          "@id": "schema:Text"
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ComaScore"
+      ]
     },
     {
       "@id": "cvisb:glasgowComaScore",
@@ -3634,6 +4387,28 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BodyTemperature"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "BodyTemperature"
+      ]
+    },
+    {
       "@id": "cvisb:time",
       "@type": "rdf:Property",
       "rdfs:comment": "Date and time of BodyTemperature measurement",
@@ -3669,97 +4444,6 @@
       ],
       "owl:cardinality": "one",
       "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:UpdateLog",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a UpdateLog in the Center for Viral Systems Biology experiments. Used to keep track of specific changes to metadata.",
-      "rdfs:label": "UpdateLog",
-      "rdfs:subClassOf": {
-        "@id": "health:UpdateLog"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:notes",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Text log describing why changes were made.",
-      "rdfs:label": "notes",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:UpdateLog"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:updatedBy",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Who made the update",
-      "rdfs:label": "updatedBy",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:UpdateLog"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:dateModified",
-      "@type": "rdf:Property",
-      "rdfs:comment": "When the update happened",
-      "rdfs:label": "dateModified",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:UpdateLog"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "schema:sameAs": {
-        "@id": "schema:dateModified"
-      },
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:updatedVariables",
-      "@type": "rdf:Property",
-      "rdfs:comment": "A list of variables/fields affected by the changes.",
-      "rdfs:label": "updatedVariables",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:UpdateLog"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
       "authenticated": true
     },
     {
@@ -3800,2322 +4484,34 @@
       },
       "owl:cardinality": "one",
       "marginality": "required",
-      "schema:Enumeration": [
-        "Southern",
-        "Eastern",
-        "Northern",
-        "Western",
-        "North West",
-        "Pujehun",
-        "Port Loko",
-        "Bonthe",
-        "Bo",
-        "Kambia",
-        "Kailahun",
-        "Koinadugu",
-        "Bombali",
-        "Moyamba",
-        "Kenema",
-        "Tonkolili",
-        "Kono",
-        "Western Area Rural",
-        "Western Area Urban",
-        "Yakemu Kpukumu",
-        "Koya",
-        "Bureh Kasseh Ma",
-        "Panga Kabonde",
-        "Galliness Perri",
-        "Kpaka",
-        "Bum",
-        "Komboya",
-        "Valunia",
-        "Barri",
-        "Buya Romende",
-        "Bramaia",
-        "Kpanda Kemo",
-        "Kwamebai Krim",
-        "Nongoba Bullom",
-        "Sittia",
-        "Makpele",
-        "Malen",
-        "Mono Sakrim",
-        "Sowa",
-        "Panga krim",
-        "Penguia",
-        "Pejeh(Futa peje",
-        "Soro Gbema",
-        "Bendu-Cha",
-        "Sulima",
-        "Dema",
-        "Imperri",
-        "Jong",
-        "Sanda Loko",
-        "Sogbeni",
-        "Yawbeko",
-        "Dasse",
-        "Selenga",
-        "Bagruwa",
-        "Bonthe Urban",
-        "Bumpeh",
-        "Simbaru",
-        "Fakunya",
-        "Gaura",
-        "Kagboro",
-        "Luawa",
-        "Kandu Leppiama",
-        "Kowa",
-        "Kaiyamba",
-        "Lower Banta",
-        "Kongbora",
-        "Kamajei",
-        "Langrama",
-        "Bagbo",
-        "Kori",
-        "Dama",
-        "Ribbi",
-        "Boama",
-        "Dodo",
-        "Timdale",
-        "Upper Banta",
-        "Gorama Mende",
-        "Koya",
-        "Lower Bambara",
-        "Malegohun",
-        "Niawa",
-        "Njaluahun",
-        "Nomo",
-        "Nongowa",
-        "Small Bo",
-        "Wandor",
-        "Tunkia",
-        "Kenema Town",
-        "Dea",
-        "Jawie",
-        "Kissi Kama",
-        "Kissi Teng",
-        "Kissi Tongi",
-        "Kpeje Bongre",
-        "Kpeje West",
-        "Malema",
-        "Mandu",
-        "Gbinle Dixing",
-        "Upper Bambara",
-        "Jaiama Bongor",
-        "Yawei",
-        "Badjia",
-        "Bagbwe(Bagbe)",
-        "Bumpe Ngao",
-        "Gbo",
-        "Kakua",
-        "Kalansogoia",
-        "Marampa",
-        "Lugbu",
-        "Tikonko",
-        "Niawa Lenga",
-        "Maforki",
-        "Wonde",
-        "Bo Town",
-        "Dibia",
-        "Kunike Barina",
-        "Gbonkolenken",
-        "Kafe Simiria",
-        "Malal Mara",
-        "Kholifa Mabang",
-        "Kholifa Rowala",
-        "Kunike",
-        "Dembelia - Sink",
-        "Sambaya",
-        "Tane",
-        "Yoni",
-        "Kaffu Bullom",
-        "Lokomasama",
-        "Masimera",
-        "Sanda Magbolont",
-        "Fiama",
-        "TMS",
-        "Lei",
-        "Soa",
-        "Gbane",
-        "Gbane Kandor",
-        "Gbense",
-        "Kamara",
-        "Mafindor",
-        "Nimikoro",
-        "Tankoro",
-        "Koidu Town",
-        "Nimiyama",
-        "Sandor",
-        "Toli",
-        "Diang",
-        "Folosaba Dembel",
-        "Kasunko",
-        "Wara Wara Bafod",
-        "Mongo",
-        "Neya",
-        "Sengbe",
-        "Nieni",
-        "Mambolo",
-        "Wara Wara Yagal",
-        "Biriwa",
-        "Gbanti Kamarank",
-        "Bombali Sebora",
-        "Gbendembu Ngowa",
-        "Libeisaygahun",
-        "Magbaimba Ndorhahun",
-        "Paki Masabong",
-        "Makari Gbanti",
-        "Safroko Limba",
-        "Sanda Tendaran",
-        "Sella Limba",
-        "Tambakha",
-        "Makeni Town",
-        "Magbema",
-        "Masungbala",
-        "Samu",
-        "Tonko Limba",
-        "Koya Rural",
-        "Mountain Rural",
-        "Waterloo Rural",
-        "York Rural",
-        "Central I",
-        "East I",
-        "East II",
-        "Central II",
-        "West III",
-        "West I",
-        "West II",
-        "Gorama Kono",
-        "East III",
-        "Tasso Island",
-        "Bagollay",
-        "Bapawa",
-        "Batowa",
-        "Bekowa",
-        "Deyombo",
-        "Fortune",
-        "Kpukumu",
-        "Seiwoh",
-        "Yabai",
-        "Mathirie",
-        "Rogbla",
-        "Bakoi",
-        "Jakema II",
-        "Kemo-Bo",
-        "Banyande",
-        "Pelegbulor",
-        "Jassende Kpeima",
-        "Jassende Masaoma",
-        "Kabonde",
-        "Fikie",
-        "Tongowa",
-        "Vanjelu",
-        "Dakona",
-        "Gbengain",
-        "Kondogbe",
-        "Petifu Bana",
-        "Gbondubum",
-        "Duramania",
-        "Senjehun",
-        "Sewama",
-        "Taokunor",
-        "Kwako Lanten",
-        "Massa Settie",
-        "Mosenten Sahen II",
-        "Tubla",
-        "Bohol",
-        "Bullom",
-        "Garinga",
-        "Gbangbassa",
-        "Gbap",
-        "Hahun",
-        "Kessie",
-        "Manyime",
-        "Pelewahun",
-        "Salma",
-        "Solon",
-        "Torma Subu",
-        "Sahaya",
-        "Sahn-Gbegu",
-        "Sampoh",
-        "Roponka",
-        "Fallay",
-        "Jougba",
-        "Karjei",
-        "Bondor",
-        "Dabeni",
-        "Laimba",
-        "Malla",
-        "Sonjour I",
-        "Sonjour II",
-        "Tetima",
-        "Jassende Ngoleima",
-        "Dakona",
-        "Gendema I",
-        "Gendema II",
-        "Jakema I",
-        "Kemo-wa",
-        "Joya",
-        "Kemokai",
-        "Kortugbu",
-        "Mallah",
-        "Mewah",
-        "Jassende Ngoleima",
-        "Nyango - Njeigbla",
-        "Nyango-Ngoleihun",
-        "Parvu",
-        "Sarbah",
-        "Lower Kayiemba",
-        "Samba",
-        "Upper Kayiemba",
-        "Kengo",
-        "Panga",
-        "Pessekeh",
-        "Setti-Yakanday",
-        "Samagbe",
-        "Kakpanda",
-        "Seitua",
-        "Gbomotie",
-        "Selimeh",
-        "Bahoin",
-        "Kahaimoh",
-        "Kemoh",
-        "Sabba II",
-        "Korwa",
-        "Lower Pemba",
-        "Seijeila",
-        "Taukunor",
-        "Sowa",
-        "Upper Pemba",
-        "Kemoh",
-        "Makpondo",
-        "Masanda Majagbe",
-        "Pullie",
-        "Sitta",
-        "Fassei",
-        "Nimima",
-        "Pemagbie",
-        "Samba",
-        "Somasa",
-        "Koilenga",
-        "Pejeh East",
-        "Pejeh West",
-        "Kemokai",
-        "Kengo",
-        "Kiazombo",
-        "Mano - River",
-        "Massaquoi I",
-        "Massaquoi II",
-        "Moiwebu",
-        "Sabba I",
-        "Upper Geoma",
-        "Zoker I",
-        "Zoker II",
-        "Zombo",
-        "Lower Geoma",
-        "Gba-Cha",
-        "Sokenteh",
-        "Laylay",
-        "Tissagbe",
-        "Yallan-gbokie",
-        "Koimato",
-        "Lanje",
-        "Tamba",
-        "Torma",
-        "Yargbe",
-        "Tun-Tun Sullay",
-        "Yawma",
-        "Chepo",
-        "Dema",
-        "Yoh",
-        "Yikie Karbay",
-        "Turtle Islands",
-        "Babum",
-        "Bapus",
-        "Bigo",
-        "Baoma",
-        "Moimaligie",
-        "Basiaka",
-        "Bayengbe",
-        "Sokrapan",
-        "Beyinga",
-        "Falewuja",
-        "Kumabeh-Kwe",
-        "Landi-Ngere",
-        "Timbo",
-        "Sopan-Cleveland",
-        "Tucker-Nyambe",
-        "Bewoni",
-        "Gbonge",
-        "Bamba",
-        "Gonoh",
-        "Kamai",
-        "Kwalloh",
-        "Moh",
-        "Ngepay",
-        "Saama",
-        "Yoni",
-        "Bakumba",
-        "Beyorgboh",
-        "Ndopie",
-        "Pengor",
-        "Baryegbe",
-        "Hahun",
-        "Ketaway",
-        "Semabu",
-        "Old Town",
-        "Mobulie",
-        "Yorma",
-        "Kawaya",
-        "Bonthe Town",
-        "Benduma",
-        "Bambuibu Tommy",
-        "Kigbai",
-        "Mani",
-        "Bongoya",
-        "Mokassi",
-        "Moseilolo",
-        "Bellentin",
-        "Palima",
-        "Sembehun",
-        "Wonkifore",
-        "Bumpeh",
-        "Greema",
-        "Saiama",
-        "Kassipoto",
-        "Mamu",
-        "Domboma",
-        "Massah",
-        "Moforay",
-        "Mokebbie",
-        "Motobon",
-        "Moyemi",
-        "Foya Tewei",
-        "Samu",
-        "Yengessa",
-        "Jayahun",
-        "Kenema",
-        "Mano",
-        "Niti Korley",
-        "Taninahun Gomoh",
-        "Taninahun Kapuima",
-        "Timindi",
-        "Fallay",
-        "Fakoi",
-        "Gandorhun Central",
-        "Kovella",
-        "Sandaru",
-        "Kpangulgo",
-        "Kunyafoi",
-        "Maninga",
-        "Njawa",
-        "Songo",
-        "Mobeh",
-        "Tangbla",
-        "To - Ndambalenga",
-        "Mofindor",
-        "Tullu",
-        "Bendu A",
-        "Gbuallay",
-        "Sembehun",
-        "Bendu B",
-        "Bumpetoke",
-        "Mano",
-        "Konolor",
-        "Mambo",
-        "Mofuss",
-        "Mokandor",
-        "Borley",
-        "Mokebe",
-        "Mokobo",
-        "Rembe",
-        "Mamanka",
-        "Mopaileh",
-        "Moyah",
-        "Moyibo",
-        "Ngiehun",
-        "Tassoh",
-        "Moforay",
-        "Thumba A",
-        "Thumba B",
-        "Tabe",
-        "Yondu",
-        "Angigboya",
-        "Koromboya",
-        "Mofindoh",
-        "Kpange",
-        "Lungili",
-        "Mobonor",
-        "Mendegelema",
-        "Waliwahun",
-        "Lombama",
-        "Mosoe",
-        "Kowama",
-        "Mogbuama",
-        "Ngiegombu",
-        "Ngoahun",
-        "Tawovehun",
-        "Gibina",
-        "Gondama",
-        "Korjei",
-        "Mokorewo",
-        "Mongere",
-        "Kpangbalia",
-        "Mosongla",
-        "Mowoto",
-        "Senehun",
-        "Taninihun",
-        "Tongieh",
-        "Zone - 1",
-        "Zone - 2",
-        "Zone - 3",
-        "Zone - 4",
-        "Zone - 5",
-        "Zone - 6",
-        "Zone - 7",
-        "Kpandobu",
-        "Fowai",
-        "Mosumana",
-        "Ngiyeiya",
-        "Njagbahun",
-        "Njama",
-        "Tawoveihun",
-        "Bengelloh",
-        "Mokotawa",
-        "Gbangbatoke",
-        "Largoh",
-        "Kukuna",
-        "Ndendemoya",
-        "Ngolala",
-        "Njagbahun",
-        "Wulbange",
-        "Kentineh",
-        "Makera",
-        "Klajie",
-        "Masanka",
-        "Masarakulay",
-        "Motonkoh",
-        "Mobureh",
-        "Motoni",
-        "Kimaya",
-        "Upper Ribbi",
-        "Yoni",
-        "Karteh",
-        "Bembellor",
-        "Gambia",
-        "Gbehan",
-        "Kamasunu",
-        "Kambotoke",
-        "Mendekelema",
-        "Kebail",
-        "Mandu",
-        "Mye",
-        "Nonkoba",
-        "Sahan",
-        "Tombeh",
-        "Yapoma",
-        "Bei-Kelleh",
-        "Kenafallay",
-        "Kepay",
-        "Mogongbe",
-        "Songbo",
-        "Dakowa",
-        "Danyadejo",
-        "Dassama",
-        "Lower Dabor",
-        "Upper Dabor",
-        "Bambara",
-        "Bonya",
-        "Bundoryama",
-        "Gorama",
-        "Korgay",
-        "Seiwor",
-        "Giebu",
-        "Joru",
-        "Kokoru",
-        "Biatong",
-        "Famanjo",
-        "Kaklawa",
-        "Kualley",
-        "Gboro-Lokoma",
-        "Karga",
-        "Sonnie",
-        "Laminaia",
-        "Joi",
-        "Koya Gbundohun",
-        "Menima",
-        "Serabu",
-        "Upper Koya",
-        "Sansangie",
-        "Njeiwoma",
-        "Bonya",
-        "Korjei Ngieya",
-        "Seduya",
-        "Fallay",
-        "Gboro",
-        "Korjei Buima",
-        "Konjo Buiima",
-        "Nyawa",
-        "Sei",
-        "Hulorhun Njagbudor",
-        "Hulorhun Njeigor",
-        "Konjo Njeigor",
-        "Konjo Yematanga",
-        "Lower Torgboma",
-        "Upper Torgboma",
-        "Bandawor",
-        "Kpatawa",
-        "Gboo",
-        "Mabondor",
-        "Niawa",
-        "Vaama",
-        "Faama",
-        "Ngiebu",
-        "Dagbanya",
-        "Dakpana",
-        "Kona Foiya",
-        "Bundoryama",
-        "Gbo Kakajama B",
-        "Kona Kpindibu",
-        "Gbo Lambayama B",
-        "Kagbado Kamboima",
-        "Kagbado Njeigbla",
-        "Fonde",
-        "Yalenga",
-        "Fallay",
-        "Gorama",
-        "Niawa",
-        "Kamboma",
-        "Niawa",
-        "Sowa",
-        "Songhai",
-        "Daru",
-        "Gegbwema",
-        "Giewoma",
-        "Jewahun",
-        "Tongorwa",
-        "Shekaia",
-        "Kuawuma",
-        "Taninahun",
-        "Boryongor",
-        "Gbogbeima",
-        "Kemoh",
-        "Airfield",
-        "Gbo Kakajama A-Bur",
-        "Gbo Kakajama A-Lum",
-        "Bulima",
-        "Gbo Lambayama A-Le",
-        "Gbo Lambayama A-Re",
-        "Gbo Kakajama A-Tec",
-        "Gbo Kakajama A-Nja",
-        "Gbo Kakajama A-Kpa",
-        "Gbo Kakajama A-Kis",
-        "Sulaimania",
-        "Gbo Kakajama A-Shi",
-        "Gbo Lambayama A-Nd",
-        "Gbo Lambayama A-Ny",
-        "Gbo Lambayama A-Fo",
-        "Gbo Kakajama A-Lam",
-        "Gbo Lambayama A-Go",
-        "Gbo Lambayama A-RT",
-        "Kumatandu",
-        "Gbo Lambayama A-Ko",
-        "Baiwalla",
-        "Dodo",
-        "Sakiema",
-        "Sienga",
-        "Mahera",
-        "Bobor",
-        "Kaio",
-        "Lower Giebu",
-        "Lower Luyengeh",
-        "Mano",
-        "Teneba Bramaia",
-        "Sowa",
-        "Upper Giebu",
-        "Upper Luyengeh",
-        "Dakaleley",
-        "Kama Teng",
-        "Gao",
-        "Kama Toh",
-        "Bumasadu",
-        "Konio",
-        "Kundu",
-        "Mano-Sewallu",
-        "Lela",
-        "Torli",
-        "Bende Bengu",
-        "Tongi Tingi",
-        "Konio",
-        "Pokorli",
-        "Bongre",
-        "Borkou",
-        "Falloh",
-        "Jorwu",
-        "Manowa",
-        "Marwei",
-        "Mende Buima",
-        "Seimaya",
-        "Bunumbu",
-        "Golama",
-        "Kpaewa",
-        "Kpindima",
-        "Baoma",
-        "Gbela",
-        "Giehun",
-        "Lower Kpombali",
-        "Luawa Foguiya",
-        "Upper Kpombali",
-        "Bamburu",
-        "Njagbla",
-        "Pelegbambeima",
-        "Upper Sami",
-        "Gbongre",
-        "Levuma Jeigbla",
-        "Lower Kuiva",
-        "Jonga",
-        "Upper Kuiva",
-        "Bombowa",
-        "Dan Sei",
-        "Falley",
-        "Fauya",
-        "Turaya",
-        "Kargbu",
-        "Keimaya",
-        "Lower Nyawa",
-        "Sei I",
-        "Sei II",
-        "Upper Nyawa",
-        "Gbinle",
-        "Bambara",
-        "Bomaru-guma",
-        "Goleiwoma",
-        "Lower Baimba",
-        "Mano",
-        "Golu",
-        "Korbu",
-        "Naiahun",
-        "Bendu",
-        "Kuiva Buima",
-        "Kuiva Jagor",
-        "Kuivawa",
-        "Damai",
-        "Fallay",
-        "Kpallay",
-        "Niagorehun",
-        "Njargbahun",
-        "Sei",
-        "Bum",
-        "Gorapon",
-        "Jimmi",
-        "Tissana",
-        "Jongo",
-        "Kemoh",
-        "Niawa",
-        "Nyallay",
-        "Samawa",
-        "Bambawo",
-        "Fallay",
-        "Lower Pataloo",
-        "Upper Kama",
-        "Mawojeh",
-        "Njeima",
-        "Sonnah",
-        "Upper Pataloo",
-        "Kemoh",
-        "Bongo",
-        "Bumpe",
-        "Foya",
-        "Kpetema",
-        "Sahn",
-        "Serabu",
-        "Sewama",
-        "Taninahun",
-        "Nyawa",
-        "Walihun",
-        "Yengema",
-        "Gbo",
-        "Maryu",
-        "Lower Kama",
-        "Lower Niawa",
-        "Nekpondo",
-        "Tongowa",
-        "Upper Baimba",
-        "Upper Niawa",
-        "Korjeh",
-        "Kpandobu",
-        "Mangaru",
-        "Sei",
-        "Nguabu",
-        "Nyallay",
-        "Nyawa",
-        "Keisua",
-        "Kamakathie",
-        "Samamie",
-        "Sewa",
-        "Sindeh",
-        "Lunsar-Robis",
-        "Gao",
-        "Kamba",
-        "Kargbevu",
-        "Kemoh",
-        "Bainyawa",
-        "Magbao",
-        "Yorma",
-        "Kamakilla",
-        "Baimba",
-        "Mambawa",
-        "Lower Niawa",
-        "Upper Niawa",
-        "Yalenga",
-        "Kaduawo",
-        "Mokpendeh",
-        "Morku",
-        "Magbankitha",
-        "Ngolamajie",
-        "Njagbla I",
-        "Yarlenga",
-        "Njagbla II",
-        "Deilenga",
-        "Kendebu",
-        "Central Kargoi",
-        "Seiwa",
-        "Sendeh",
-        "Magbengbeh",
-        "Lunia",
-        "Ngovo",
-        "Seilenga",
-        "Lower Kargoi",
-        "Manyeh",
-        "Upper Kargoi",
-        "East Ward-Batiema",
-        "East Ward-Bumpeh-W",
-        "East Ward-Gbondo T",
-        "East Ward-Kindia T",
-        "East Ward-Lower Sa",
-        "East Ward-Manjama",
-        "East Ward-Messima",
-        "East Ward-Moriba T",
-        "North Ward-Bo Numb",
-        "North Ward-Kissy Town",
-        "Makump",
-        "West Ward-Kandeh T",
-        "North Ward-Njai To",
-        "Kasokira",
-        "North Ward-Reservation",
-        "West Ward-Lewabu -",
-        "Masaba",
-        "West Ward-Moriba T",
-        "West Ward-Nikibu -",
-        "West Ward-Njagboim",
-        "Lower Massakong",
-        "Petifu Mayawa A",
-        "Lower Polie",
-        "Petifu Mayawa B",
-        "Simiria",
-        "Rogbalan",
-        "Mayeppoh",
-        "Fuladugu",
-        "Marunia",
-        "Petifu Mayeppoh",
-        "Upper Massakong",
-        "Upper Polie",
-        "Yiben",
-        "Yele Manowo",
-        "Mabonto",
-        "Kakallain",
-        "Kabaia",
-        "Kamarugu",
-        "Makelfa",
-        "Makontande",
-        "Mayaso",
-        "Lower Section",
-        "Upper Section",
-        "Mabilafu",
-        "Kumrabai",
-        "Bo Road",
-        "Mabang",
-        "Marunia Sakie",
-        "Lal-Lenken",
-        "Makump",
-        "Mamuntha",
-        "Mayatha",
-        "Massebay",
-        "Mayossoh",
-        "Old Magburaka",
-        "Mamurie",
-        "Makali",
-        "Makong",
-        "Masingbi",
-        "Mathonkara",
-        "Wonkibor",
-        "Lunsar-Madigbo",
-        "Makoba",
-        "Rolal",
-        "Sanda",
-        "Lunsar-Mamanso",
-        "Semorkanie",
-        "Thamah",
-        "Thambaya",
-        "Wana",
-        "Lunsar-Mines",
-        "Yenkeh",
-        "Kiamp Kakolo",
-        "Lunsar-Old Town",
-        "Malal",
-        "Numula 5",
-        "Manewa",
-        "Mara",
-        "Matanka",
-        "Sambaya",
-        "Rochen",
-        "Borowah",
-        "Maboboh Koray",
-        "Mapakie",
-        "Buyan",
-        "Dayie",
-        "Makrugbeh",
-        "Mange-bana",
-        "Mabureh Mende",
-        "Mathunkara",
-        "Mange Morie",
-        "Malanchor",
-        "Matotoka",
-        "Makeni Rokefula",
-        "Foindu",
-        "Gaindema",
-        "Macrogba",
-        "Magbengbe",
-        "Malompor",
-        "Petifu-Lower",
-        "Karine",
-        "Marenka",
-        "Minthormore",
-        "Mamaka",
-        "Masengbe",
-        "Kalangba",
-        "Mayira",
-        "Petifu Upper",
-        "Ronietta",
-        "Kambia Morie",
-        "Konta Ferry",
-        "Mabombo",
-        "Makana",
-        "Yoni",
-        "Barmoi",
-        "Kagbanthama",
-        "Kaiyeabor",
-        "Romeni",
-        "Rotifunk",
-        "Yali-Sanda",
-        "Kayembor",
-        "Foredugu",
-        "Filligungee",
-        "Gbaran Kamba",
-        "Kamasundu",
-        "Mabureh Buya",
-        "Konta Kargbo",
-        "Manungbu",
-        "Robis",
-        "Rokel",
-        "Rosint",
-        "Worreh Mapoteh",
-        "Mafonda",
-        "Makabari",
-        "Foronkoya",
-        "Kasongha",
-        "Lungi",
-        "Mahera",
-        "Yongro",
-        "Mamanki",
-        "Mayaya",
-        "Rosint",
-        "Fondu",
-        "Magbandoma",
-        "Benkia",
-        "Gbabai",
-        "Foredugu",
-        "Futa",
-        "Kagbala A",
-        "Kagbala B",
-        "Magbeni",
-        "Marefa",
-        "Matene",
-        "Rosarr",
-        "Mawoma",
-        "Robia",
-        "Rokel",
-        "Sanda",
-        "Tumba",
-        "Benkia",
-        "Gbainty",
-        "Kamasondo",
-        "Kantaya",
-        "Katonga",
-        "Komrabai",
-        "Konta",
-        "Magbokorr",
-        "Mannah",
-        "Mapiterr",
-        "Matheng",
-        "Petifu",
-        "Royema",
-        "Batpolon",
-        "Falaba",
-        "Fenka",
-        "Gberray Bana",
-        "Gberray Morie",
-        "Gberray Thunkara",
-        "Gbonko Mayira",
-        "Kabata",
-        "Komrabai-Waterloo",
-        "Kondato",
-        "Maboni",
-        "Maforay",
-        "Magbeni",
-        "Makorobolai",
-        "Malal",
-        "Mamanso",
-        "Mapolie",
-        "Maronko",
-        "Mathera",
-        "Moria",
-        "Old Port Loko",
-        "Lunsar-Technical",
-        "Romaka",
-        "Rosarr",
-        "Sanda",
-        "Lunsar-Path Bana",
-        "Sendugu",
-        "Tauya",
-        "Lunsar-Baipolon",
-        "Lunsar-Four Road -",
-        "Lunsar-Kenneday",
-        "Lunsar-Mabai",
-        "Magbele",
-        "Mange",
-        "Marampa",
-        "Biki",
-        "Mawullay",
-        "Petifu Madina",
-        "Rogballan",
-        "Rolankonoh",
-        "Masimera",
-        "Biss-Manika",
-        "Katick",
-        "Maconteh",
-        "Mamalikie",
-        "Matuku",
-        "Mayola-Thatha",
-        "Nonkoba",
-        "Rokel",
-        "Masien",
-        "Rokon/Komboya",
-        "Yoni-Pet",
-        "Bankro",
-        "Gbaneh-Loko",
-        "Kokar",
-        "Gbogbodo",
-        "Gbonko",
-        "Kantia",
-        "Layamantmetank",
-        "Magbolontor",
-        "Malkiya",
-        "Mankneh",
-        "Menthen",
-        "Robis",
-        "Rotigbonko",
-        "Sendugu",
-        "Gbaray Bana",
-        "Kambia",
-        "Kanu",
-        "Kargbo",
-        "Konkorie",
-        "Mafonikay",
-        "Magbafth",
-        "Magbapsa",
-        "Sangbada",
-        "Malakuray",
-        "Maron",
-        "Robombeh",
-        "Tasso Island",
-        "Dumbia",
-        "Fiama",
-        "Tensendakor",
-        "Kooma",
-        "Yorkor",
-        "Gbikidakor",
-        "Kamara",
-        "Maikandor",
-        "Gbane Kandor",
-        "Gbane Kour",
-        "Gbane Tetema",
-        "Gbendekor",
-        "Yanbidu",
-        "Bassia",
-        "Banfinfeh",
-        "Banyafeh",
-        "Banyakor",
-        "Moindefeh",
-        "Moindekor",
-        "Dangbaidu",
-        "Gbondu",
-        "Kongofinja",
-        "Sukudu",
-        "Dia",
-        "Kamara",
-        "Kensay",
-        "Lei",
-        "Tankoro",
-        "Tingi-Kor",
-        "Yawai",
-        "Kamiendor",
-        "Kutey",
-        "Mafindor",
-        "Bafinfeh",
-        "Bandafafeh",
-        "Njama",
-        "Gbogboafeh",
-        "Jaiama",
-        "Masayiefeh",
-        "Gbense-Sina Town",
-        "Bafinfeh",
-        "Bafinfeh",
-        "Gbense-Moindekor",
-        "Dangbaidu",
-        "Njeikor",
-        "Foidu Mongor",
-        "Gbense-Moindefeh",
-        "Kokongokuma",
-        "Maindu",
-        "Mofinkor",
-        "Sawa Buma",
-        "Tensekor",
-        "Tankoro",
-        "Woafeh",
-        "Bawadu",
-        "Tankoro-Kinsey",
-        "Tankoro-New Sembeh",
-        "Tankoro-Lebanon",
-        "Tankoro-Kwaquima",
-        "Kunbulun 1",
-        "Kunbulun 2",
-        "Manan",
-        "Mawundea",
-        "Numula 1",
-        "Numula 2",
-        "Numula 3",
-        "Numula 4",
-        "Sinkunia",
-        "Darakuru",
-        "Gbenekoro",
-        "Kania",
-        "Kondembaia",
-        "Lengekoro",
-        "Sokurala",
-        "Balandugu",
-        "Dogoloya",
-        "Fissaya I",
-        "Fissaya II",
-        "Nomokoya",
-        "Gbentu III",
-        "Herekor",
-        "Kalia",
-        "Kakallain",
-        "Kamba",
-        "Lagor",
-        "Gbonkobor",
-        "Musaia",
-        "Sankan I",
-        "Sankan II",
-        "Kaponpon",
-        "Kasunko",
-        "Kayaka",
-        "Tamiso I",
-        "Tamiso II",
-        "Benadugu",
-        "Deldugu",
-        "Mankalia",
-        "Mongo I",
-        "Mongo II",
-        "Kalangba",
-        "Morifindugu",
-        "Kulor",
-        "Neya I",
-        "Neya II",
-        "Heremakono",
-        "Nyedu",
-        "Barawa",
-        "Pampakoh",
-        "Kalian",
-        "Bendugu",
-        "Wollay",
-        "Yiffin",
-        "Semamaia",
-        "Koinadugu",
-        "Lower Kamadugu",
-        "Bilimaia",
-        "Biribaia",
-        "Dara",
-        "Upper Kamadugu",
-        "Yiraia",
-        "Yogomaia",
-        "Falaba",
-        "Fudea",
-        "Ganya",
-        "Gberia Fotombu",
-        "Gberia-Timbako",
-        "Kaliyereh",
-        "Kambaia",
-        "Koindu-Kura",
-        "Sonkoya",
-        "Bafodia",
-        "Kadanso",
-        "Kakoya",
-        "Mambolo",
-        "Kamanikie",
-        "Kamayortortor",
-        "Kambalia",
-        "Kambia",
-        "Taelia",
-        "Zone 1",
-        "Zone 2",
-        "Zone 3",
-        "Zone 4",
-        "Zone 5",
-        "Zone 6",
-        "Zone 7",
-        "Kabakeh/Balandugu",
-        "Bumban",
-        "Bumbandain",
-        "Karassa",
-        "Kagbankuna",
-        "Kamabai",
-        "Kamaranka",
-        "Karina",
-        "Kayonkoro",
-        "Makumray A",
-        "Kafala",
-        "Kagbaran Dokom B",
-        "Makumray B",
-        "Konta",
-        "Matotoka",
-        "Gbenkfay",
-        "Gbonkobana",
-        "Kambia",
-        "Kayourgbor",
-        "Laminaya",
-        "Makulon",
-        "Rogberay",
-        "Romaneh",
-        "Royeama A",
-        "Royeama B",
-        "Sakuma A",
-        "Sakuma B",
-        "Sendugu A",
-        "Sendugu B",
-        "Garanganwa",
-        "Makarihiteh",
-        "Makump",
-        "Gbendembu",
-        "Kalangba",
-        "Kania",
-        "Makeregbohun",
-        "Lobanga",
-        "Lohindie",
-        "Loko-Madina",
-        "Makai",
-        "Mamaka",
-        "Mamukay",
-        "Tanyehun",
-        "Masongbo",
-        "Matehun",
-        "Mayorthan",
-        "Sahun",
-        "Tambiama",
-        "Batkanu",
-        "Mafonda",
-        "Magbaingba",
-        "Magbanamba",
-        "Makaiba",
-        "Makayrembay",
-        "Simbaya",
-        "Mandawahun",
-        "Manyakoi",
-        "Mayankay",
-        "Robaka",
-        "Rotha-Tha",
-        "Hunduwa",
-        "Kababala",
-        "Kagberay",
-        "Kawungulu",
-        "Kathegeya",
-        "Makendema",
-        "Mambiama",
-        "Manjahagha",
-        "Sokudala",
-        "Yana",
-        "Gborbana",
-        "Mabanta",
-        "Magbenteh",
-        "Mangay",
-        "Mankene",
-        "Masongbo A",
-        "Rosint",
-        "Masongbo B",
-        "Punthun",
-        "Kathanthan",
-        "Tonkoba",
-        "Yainkassa",
-        "Mapaki",
-        "Masabong",
-        "Mayagba",
-        "Rosanda",
-        "Maparay",
-        "Binkolo",
-        "Bombali Bana",
-        "Kabonka",
-        "Kasengbeh",
-        "Kayassi",
-        "Mabamba",
-        "Masapi",
-        "Banka",
-        "Benia",
-        "Kaindema",
-        "Kamalu",
-        "Kania",
-        "Kindia",
-        "Laminaya",
-        "Rothatha",
-        "Madina",
-        "Maharibo",
-        "Makapa",
-        "Makwie Loko",
-        "Manathi",
-        "Kalangba",
-        "Kukuna",
-        "Marampa",
-        "Masisan",
-        "Mateboi",
-        "Rogbin",
-        "Rogboreh",
-        "Rosos",
-        "Sendugu",
-        "Yankabala",
-        "Bugami",
-        "Kamakwie",
-        "Kamankoh",
-        "Kayimbor",
-        "Magbonkoni I",
-        "Magbonkoni II",
-        "Manonkoh",
-        "Samia",
-        "Dugutha",
-        "Makari Gbanti - Mi",
-        "Moria",
-        "Paramount Chief Se",
-        "Simibue",
-        "Thalla",
-        "Bombali Sebora - B",
-        "Makari Gbanti -Mas",
-        "Bombali Sebora - K",
-        "Bombali Sebora - Makeni",
-        "Bombali Sebora - R",
-        "Bombali Sebora - T",
-        "Bombali Sebora - W",
-        "Banguraia",
-        "Fortumboyie",
-        "Gberekhuray",
-        "Gbolon",
-        "Kabaya",
-        "Kanku Bramaia",
-        "Kua Bramaia",
-        "Katalan",
-        "Mafaray",
-        "Maton",
-        "Rogberay",
-        "Sanda",
-        "Tawuya",
-        "Bombe",
-        "Kamba",
-        "Kambia",
-        "Kargbulor",
-        "Robat",
-        "Rokupr",
-        "Tormina",
-        "Kalenkay",
-        "Matetie",
-        "Mayakie",
-        "Robis",
-        "Rowollon",
-        "Tombo-Wallah",
-        "Bamoi",
-        "Mange",
-        "Benna",
-        "Kawula",
-        "Kayenkassa",
-        "Mapolon",
-        "Maserie",
-        "Matengha",
-        "Matilba",
-        "Nonko",
-        "Samu",
-        "Sumbuya",
-        "Thalla",
-        "Bubuya",
-        "Kpanga Koimato",
-        "Kassiri",
-        "Koya",
-        "Kychom",
-        "Lusenia",
-        "Mafufuneh",
-        "Makuma",
-        "Mapotolon",
-        "Moribaia",
-        "Rokon",
-        "Rosinor",
-        "Bubuya",
-        "Kathanthineh",
-        "Magbonkoh",
-        "Sowonde",
-        "Mamankoh",
-        "Fabaina Area",
-        "Madonkeh",
-        "Magbafti",
-        "Malambay",
-        "Newton",
-        "Songo",
-        "Bathurst",
-        "Charlotte",
-        "Gloucester",
-        "Leicester",
-        "Regent",
-        "Benguema Village A",
-        "Campbell Town Vill",
-        "Waterloo Village A",
-        "Hastings Village A",
-        "Gbendembu",
-        "Goderich-Adonkia/M",
-        "Goderich-Funkia",
-        "Hamilton",
-        "Kent",
-        "Albert Academy",
-        "Kossoh Town",
-        "Sattia/Tombo",
-        "York",
-        "Bombay",
-        "Mountain Regent",
-        "Sorie Town",
-        "Susan's Bay",
-        "Tower Hill",
-        "Connaught Hospital",
-        "Sanders Brook",
-        "Cline Town",
-        "Fourah Bay",
-        "Coconut Farm/ Asho",
-        "Foulah Town",
-        "Ginger Hall",
-        "Kissy Brook",
-        "Magazine",
-        "Mount Aureol",
-        "Quarry",
-        "Congo Water I",
-        "Allen Town I",
-        "Congo Water II",
-        "Allen Town II",
-        "Bottom Oku",
-        "Grass Field",
-        "Industrial Estate",
-        "Kuntolor",
-        "Jalloh Terrace",
-        "Kissy Brook",
-        "Lowcost Housing",
-        "Kissy Bye Pass I",
-        "Mamba Ridge I",
-        "Mamba Ridge II",
-        "Kissy Bye Pass II",
-        "Kissy Mental",
-        "Kissy Mess Mess",
-        "Mayenkineh",
-        "Old Warf",
-        "Njaifeh",
-        "Pamuronko",
-        "Portee",
-        "Thunderhill",
-        "Robis",
-        "Rokupa",
-        "Shell",
-        "Cockerill-Aberdeen",
-        "Ascension Town",
-        "Brookfields",
-        "Kingtom",
-        "Kroo Town",
-        "Brookfields-Congo",
-        "Brookfields-Red Pu",
-        "Congo Town",
-        "George Brook (Dwor",
-        "New England-Hannes",
-        "New England-Hill C",
-        "Cockle-Bay /Colleg",
-        "Tengbeh Town",
-        "Aberdeen",
-        "Hill Station",
-        "Juba/Kaningo",
-        "Njagbakahun",
-        "Lumley",
-        "Malama/Kamayama",
-        "Murray Town",
-        "Pipeline/Wilkinson",
-        "Wilberforce",
-        "Lower Sami",
-        "Jagor",
-        "Ngiewoma-Njeigor",
-        "Kufuru",
-        "Gorahun",
-        "Gbane Yemao",
-        "Mongo",
-        "Bunabu",
-        "Kangama",
-        "Selokoma",
-        "Koaro",
-        "Peyifeh",
-        "Tama",
-        "Fakongofeh",
-        "Kawafeh",
-        "Samgbafeh",
-        "Sinkongofeh",
-        "Sumunjifeh",
-        "Tharma Forest",
-        "Yawatanda",
-        "Sawa Fiama",
-        "Komadu",
-        "Kwidu",
-        "Konta",
-        "Kamassassa",
-        "Yebaya",
-        "Marunia Koray",
-        "Saradu",
-        "Sumbaria",
-        "Kahekay",
-        "Yurika",
-        "Ba-Kobotu",
-        "Benkeh",
-        "Njagbema",
-        "Yeima",
-        "Lower Ribbi",
-        "Pembaar",
-        "Abia",
-        "Adamawa",
-        "Akwa Ibom",
-        "Anambra",
-        "Bauchi",
-        "Bayelsa",
-        "Benue",
-        "Borno",
-        "Cross River",
-        "Delta",
-        "Ebonyi",
-        "Edo",
-        "Ekiti",
-        "Enugu",
-        "Federal Capital Territory",
-        "Gombe",
-        "Imo",
-        "Jigawa",
-        "Kaduna",
-        "Kano",
-        "Katsina",
-        "Kebbi",
-        "Kogi",
-        "Kwara",
-        "Lagos",
-        "Nasarawa",
-        "Niger",
-        "Ogun",
-        "Ondo",
-        "Osun",
-        "Oyo",
-        "Plateau",
-        "Rivers",
-        "Sokoto",
-        "Taraba",
-        "Yobe",
-        "Zamfara",
-        "Aba North",
-        "Aba South",
-        "Arochukwu",
-        "Bende",
-        "Ikwuano",
-        "Isiala-Ngwa North",
-        "Isiala-Ngwa South",
-        "Isiukwuato",
-        "Obi Ngwa",
-        "Ohafia",
-        "Osisioma Ngwa",
-        "Ugwunagbo",
-        "Ukwa East",
-        "Ukwa West",
-        "Umu-Nneochi",
-        "Umuahia North",
-        "Umuahia South",
-        "Demsa",
-        "Fufore",
-        "Ganye",
-        "Girei",
-        "Gombi",
-        "Guyuk",
-        "Hong",
-        "Jada",
-        "Lamurde",
-        "Madagali",
-        "Maiha",
-        "Mayo-Belwa",
-        "Michika",
-        "Mubi North",
-        "Mubi South",
-        "Numan",
-        "Shelleng",
-        "Song",
-        "Toungo",
-        "Yola North",
-        "Yola South",
-        "Abak",
-        "Eastern Obolo",
-        "Eket",
-        "Esit - Eket",
-        "Essien Udim",
-        "Etim Ekpo",
-        "Etinan",
-        "Ibeno",
-        "Ibesikpo Asutan",
-        "Ibiono Ibom",
-        "Ika",
-        "Ikono",
-        "Ikot Abasi",
-        "Ikot Ekpene",
-        "Ini",
-        "Itu",
-        "Mbo",
-        "Mkpat Enin",
-        "Nsit Atai",
-        "Nsit Ibom",
-        "Nsit Ubium",
-        "Obot Akara",
-        "Okobo",
-        "Onna",
-        "Oron",
-        "Oruk Anam",
-        "Udung Uko",
-        "Ukanafun",
-        "Uruan",
-        "Urue-Offong/Oruko",
-        "Uyo",
-        "Aguata",
-        "Anambra East",
-        "Anambra West",
-        "Anaocha",
-        "Awka North",
-        "Awka South",
-        "Ayamelum",
-        "Dunukofia",
-        "Ekwusigo",
-        "Idemili North",
-        "Idemili South",
-        "Ihiala",
-        "Njikoka",
-        "Nnewi North",
-        "Nnewi South",
-        "Ogbaru",
-        "Onitsha North",
-        "Onitsha South",
-        "Orumba North",
-        "Orumba South",
-        "Oyi",
-        "Alkaleri",
-        "Bauchi",
-        "Bogoro",
-        "Damban",
-        "Darazo",
-        "Dass",
-        "Gamawa",
-        "Ganjuwa",
-        "Giade",
-        "Itas/Gadau",
-        "Jama'are",
-        "Katagum",
-        "Kirfi",
-        "Misau",
-        "Ningi",
-        "Shira",
-        "Tafawa-Balewa",
-        "Toro",
-        "Warji",
-        "Zaki",
-        "Brass",
-        "Ekeremor",
-        "Kolokuma/Opokuma",
-        "Nembe",
-        "Ogbia",
-        "Sagbama",
-        "Southern Ijaw",
-        "Yenegoa",
-        "Ado",
-        "Agatu",
-        "Apa",
-        "Buruku",
-        "Gboko",
-        "Guma",
-        "Gwer East",
-        "Gwer West",
-        "Katsina-Ala",
-        "Konshisha",
-        "Kwande",
-        "Logo",
-        "Makurdi",
-        "Obi",
-        "Ogbadibo",
-        "Ohimini",
-        "Oju",
-        "Okpokwu",
-        "Oturkpo",
-        "Tarka",
-        "Ukum",
-        "Ushongo",
-        "Vandeikya",
-        "Abadam",
-        "Askira/Uba",
-        "Bama",
-        "Bayo",
-        "Biu",
-        "Chibok",
-        "Damboa",
-        "Dikwa",
-        "Gubio",
-        "Guzamala",
-        "Gwoza",
-        "Hawul",
-        "Jere",
-        "Kaga",
-        "Kala/Balge",
-        "Konduga",
-        "Kukawa",
-        "Kwaya Kusar",
-        "Mafa",
-        "Magumeri",
-        "Maiduguri",
-        "Marte",
-        "Mobbar",
-        "Monguno",
-        "Ngala",
-        "Nganzai",
-        "Shani",
-        "Abi",
-        "Akamkpa",
-        "Akpabuyo",
-        "Bekwara",
-        "Biase",
-        "Boki",
-        "Calabar-Municipal",
-        "Calabar South",
-        "Etung",
-        "Ikom",
-        "Obanliku",
-        "Obubra",
-        "Obudu",
-        "Odukpani",
-        "Ogoja",
-        "Yakurr",
-        "Yala",
-        "Bakassi",
-        "Aniocha North",
-        "Aniocha South",
-        "Bomadi",
-        "Burutu",
-        "Ethiope East",
-        "Ethiope West",
-        "Ika North East",
-        "Ika South",
-        "Isoko North",
-        "Isoko South",
-        "Ndokwa East",
-        "Ndokwa West",
-        "Okpe",
-        "Oshimili North",
-        "Oshimili South",
-        "Patani",
-        "Sapele",
-        "Udu",
-        "Ughelli North",
-        "Ughelli South",
-        "Ukwuani",
-        "Uvwie",
-        "Warri North",
-        "Warri South",
-        "Warri South West",
-        "Abakaliki",
-        "Afikpo North",
-        "Afikpo South",
-        "Ebonyi",
-        "Ezza North",
-        "Ezza South",
-        "Ikwo",
-        "Ishielu",
-        "Ivo",
-        "Izzi",
-        "Ohaozara",
-        "Ohaukwu",
-        "Onicha",
-        "Akoko-Edo",
-        "Egor",
-        "Esan Central",
-        "Esan North East",
-        "Esan South East",
-        "Esan West",
-        "Etsako Central",
-        "Etsako East",
-        "Etsako West",
-        "Igueben",
-        "Ikpoba-Okha",
-        "Oredo",
-        "Orhionmwon",
-        "Ovia North East",
-        "Ovia South West",
-        "Owan East",
-        "Owan West",
-        "Uhunmwonde",
-        "Ado Ekiti",
-        "Aiyekire (Gbonyin)",
-        "Efon",
-        "Ekiti East",
-        "Ekiti South West",
-        "Ekiti West",
-        "Emure",
-        "Ido-Osi",
-        "Ijero",
-        "Ikere",
-        "Ikole",
-        "Ilejemeji",
-        "Irepodun/Ifelodun",
-        "Ise/Orun",
-        "Moba",
-        "Oye",
-        "Aninri",
-        "Awgu",
-        "Enugu East",
-        "Enugu North",
-        "Enugu South",
-        "Ezeagu",
-        "Igbo-Etiti",
-        "Igbo-Eze North",
-        "Igbo-Eze South",
-        "Isi-Uzo",
-        "Nkanu East",
-        "Nkanu West",
-        "Nsukka",
-        "Oji-River",
-        "Udenu",
-        "Udi",
-        "Uzo-Uwani",
-        "Abaji",
-        "Abuja Municipal",
-        "Bwari",
-        "Gwagwalada",
-        "Kuje",
-        "Kwali",
-        "Akko",
-        "Balanga",
-        "Billiri",
-        "Dukku",
-        "Funakaye",
-        "Gombe",
-        "Kaltungo",
-        "Kwami",
-        "Nafada",
-        "Shomgom",
-        "Yamaltu/Deba",
-        "Aboh-Mbaise",
-        "Ahiazu-Mbaise",
-        "Ehime-Mbano",
-        "Ezinihitte",
-        "Ideato North",
-        "Ideato South",
-        "Ihitte/Uboma",
-        "Ikeduru",
-        "Isiala Mbano",
-        "Isu",
-        "Mbaitoli",
-        "Ngor-Okpala",
-        "Njaba",
-        "Nkwerre",
-        "Nwangele",
-        "Obowo",
-        "Oguta",
-        "Ohaji/Egbema",
-        "Okigwe",
-        "Orlu",
-        "Orsu",
-        "Oru East",
-        "Oru West",
-        "Owerri-Municipal",
-        "Owerri North",
-        "Owerri West",
-        "Unuimo",
-        "Auyo",
-        "Babura",
-        "Biriniwa",
-        "Birni Kudu",
-        "Buji",
-        "Dutse",
-        "Gagarawa",
-        "Garki",
-        "Gumel",
-        "Guri",
-        "Gwaram",
-        "Gwiwa",
-        "Hadejia",
-        "Jahun",
-        "Kafin Hausa",
-        "Kaugama",
-        "Kazaure",
-        "Kiri Kasamma",
-        "Kiyawa",
-        "Maigatari",
-        "Malam Madori",
-        "Miga",
-        "Ringim",
-        "Roni",
-        "Sule-Tankarkar",
-        "Taura",
-        "Yankwashi",
-        "Birnin-Gwari",
-        "Chikun",
-        "Giwa",
-        "Igabi",
-        "Ikara",
-        "Jaba",
-        "Jema'a",
-        "Kachia",
-        "Kaduna North",
-        "Kaduna South",
-        "Kagarko",
-        "Kajuru",
-        "Kaura",
-        "Kauru",
-        "Kubau",
-        "Kudan",
-        "Lere",
-        "Markafi",
-        "Sabon-Gari",
-        "Sanga",
-        "Soba",
-        "Zango-Kataf",
-        "Zaria",
-        "Ajingi",
-        "Albasu",
-        "Bagwai",
-        "Bebeji",
-        "Bichi",
-        "Bunkure",
-        "Dala",
-        "Dambatta",
-        "Dawakin Kudu",
-        "Dawakin Tofa",
-        "Doguwa",
-        "Fagge",
-        "Gabasawa",
-        "Garko",
-        "Garum Mallam",
-        "Gaya",
-        "Gezawa",
-        "Gwale",
-        "Gwarzo",
-        "Kabo",
-        "Kano Municipal",
-        "Karaye",
-        "Kibiya",
-        "Kiru",
-        "Kumbotso",
-        "Kunchi",
-        "Kura",
-        "Madobi",
-        "Makoda",
-        "Minjibir",
-        "Nasarawa",
-        "Rano",
-        "Rimin Gado",
-        "Rogo",
-        "Shanono",
-        "Sumaila",
-        "Takai",
-        "Tarauni",
-        "Tofa",
-        "Tsanyawa",
-        "Tudun Wada",
-        "Ungogo",
-        "Warawa",
-        "Wudil",
-        "Bakori",
-        "Batagarawa",
-        "Batsari",
-        "Baure",
-        "Bindawa",
-        "Charanchi",
-        "Dan Musa",
-        "Dandume",
-        "Danja",
-        "Daura",
-        "Dutsi",
-        "Dutsin-Ma",
-        "Faskari",
-        "Funtua",
-        "Ingawa",
-        "Jibia",
-        "Kafur",
-        "Kaita",
-        "Kankara",
-        "Kankia",
-        "Katsina",
-        "Kurfi",
-        "Kusada",
-        "Mai'adua",
-        "Malumfashi",
-        "Mani",
-        "Mashi",
-        "Matazu",
-        "Musawa",
-        "Rimi",
-        "Sabuwa",
-        "Safana",
-        "Sandamu",
-        "Zango",
-        "Aleiro",
-        "Arewa-Dandi",
-        "Argungu",
-        "Augie",
-        "Bagudo",
-        "Birnin Kebbi",
-        "Bunza",
-        "Dandi",
-        "Fakai",
-        "Gwandu",
-        "Jega",
-        "Kalgo",
-        "Koko/Besse",
-        "Maiyama",
-        "Ngaski",
-        "Sakaba",
-        "Shanga",
-        "Suru",
-        "Wasagu/Danko",
-        "Yauri",
-        "Zuru",
-        "Adavi",
-        "Ajaokuta",
-        "Ankpa",
-        "Bassa",
-        "Dekina",
-        "Ibaji",
-        "Idah",
-        "Igalamela-Odolu",
-        "Ijumu",
-        "Kabba/Bunu",
-        "Kogi",
-        "Lokoja",
-        "Mopa-Muro",
-        "Ofu",
-        "Ogori/Magongo",
-        "Okehi",
-        "Okene",
-        "Olamabolo",
-        "Omala",
-        "Yagba East",
-        "Yagba West",
-        "Asa",
-        "Baruten",
-        "Edu",
-        "Ekiti",
-        "Ifelodun",
-        "Ilorin East",
-        "Ilorin South",
-        "Ilorin West",
-        "Irepodun",
-        "Isin",
-        "Kaiama",
-        "Moro",
-        "Offa",
-        "Oke-Ero",
-        "Oyun",
-        "Pategi",
-        "Agege",
-        "Ajeromi-Ifelodun",
-        "Alimosho",
-        "Amuwo-Odofin",
-        "Apapa",
-        "Badagry",
-        "Epe",
-        "Eti-Osa",
-        "Ibeju/Lekki",
-        "Ifako-Ijaye",
-        "Ikeja",
-        "Ikorodu",
-        "Kosofe",
-        "Lagos Island",
-        "Lagos Mainland",
-        "Mushin",
-        "Ojo",
-        "Oshodi-Isolo",
-        "Shomolu",
-        "Surulere",
-        "Akwanga",
-        "Awe",
-        "Doma",
-        "Karu",
-        "Keana",
-        "Keffi",
-        "Kokona",
-        "Lafia",
-        "Nasarawa-Eggon",
-        "Nasarawa",
-        "Obi",
-        "Toto",
-        "Wamba",
-        "Agaie",
-        "Agwara",
-        "Bida",
-        "Borgu",
-        "Bosso",
-        "Chanchaga",
-        "Edati",
-        "Gbako",
-        "Gurara",
-        "Katcha",
-        "Kontagora",
-        "Lapai",
-        "Lavun",
-        "Magama",
-        "Mariga",
-        "Mashegu",
-        "Mokwa",
-        "Muya",
-        "Paikoro",
-        "Rafi",
-        "Rijau",
-        "Shiroro",
-        "Suleja",
-        "Tafa",
-        "Wushishi",
-        "Abeokuta North",
-        "Abeokuta South",
-        "Ado-Odo/Ota",
-        "Egbado North",
-        "Egbado South",
-        "Ewekoro",
-        "Ifo",
-        "Ijebu East",
-        "Ijebu North",
-        "Ijebu North East",
-        "Ijebu Ode",
-        "Ikenne",
-        "Imeko-Afon",
-        "Ipokia",
-        "Obafemi-Owode",
-        "Odeda",
-        "Odogbolu",
-        "Ogun waterside",
-        "Remo North",
-        "Shagamu",
-        "Akoko North East",
-        "Akoko North West",
-        "Akoko South East",
-        "Akoko South West",
-        "Akure North",
-        "Akure South",
-        "Ese-Odo",
-        "Idanre",
-        "Ifedore",
-        "Ilaje",
-        "Ile-Oluji-Okeigbo",
-        "Irele",
-        "Odigbo",
-        "Okitipupa",
-        "Ondo East",
-        "Ondo West",
-        "Ose",
-        "Owo",
-        "Aiyedade",
-        "Aiyedire",
-        "Atakumosa East",
-        "Atakumosa West",
-        "Boluwaduro",
-        "Boripe",
-        "Ede North",
-        "Ede South",
-        "Egbedore",
-        "Ejigbo",
-        "Ife Central",
-        "Ife East",
-        "Ife North",
-        "Ife South",
-        "Ifedayo",
-        "Ifelodun",
-        "Ila",
-        "Ilesha East",
-        "Ilesha West",
-        "Irepodun",
-        "Irewole",
-        "Isokan",
-        "Iwo",
-        "Obokun",
-        "Odo-Otin",
-        "Ola-oluwa",
-        "Olorunda",
-        "Oriade",
-        "Orolu",
-        "Osogbo",
-        "Afijio",
-        "Akinyele",
-        "Atiba",
-        "Atigbo",
-        "Egbeda",
-        "Ibadan North",
-        "Ibadan North East",
-        "Ibadan North West",
-        "Ibadan South East",
-        "Ibadan South West",
-        "Ibarapa Central",
-        "Ibarapa East",
-        "Ibarapa North",
-        "Ido",
-        "Irepo",
-        "Iseyin",
-        "Itesiwaju",
-        "Iwajowa",
-        "Kajola",
-        "Lagelu",
-        "Ogbomosho North",
-        "Ogbomosho South",
-        "Ogo Oluwa",
-        "Olorunsogo",
-        "Oluyole",
-        "Ona-Ara",
-        "Orelope",
-        "Ori Ire",
-        "Oyo East",
-        "Oyo West",
-        "Saki East",
-        "Saki West",
-        "Surulere",
-        "Barikin Ladi",
-        "Bassa",
-        "Bokkos",
-        "Jos East",
-        "Jos North",
-        "Jos South",
-        "Kanam",
-        "Kanke",
-        "Langtang North",
-        "Langtang South",
-        "Mangu",
-        "Mikang",
-        "Pankshin",
-        "Qua'an Pan",
-        "Riyom",
-        "Shendam",
-        "Wase",
-        "Abua/Odual",
-        "Ahoada East",
-        "Ahoada West",
-        "Akuku Toru",
-        "Andoni",
-        "Asari-Toru",
-        "Bonny",
-        "Degema",
-        "Eleme",
-        "Emohua",
-        "Etche",
-        "Gokana",
-        "Ikwerre",
-        "Khana",
-        "Obia/Akpor",
-        "Ogba/Egbema/Ndoni",
-        "Ogu/Bolo",
-        "Okrika",
-        "Omumma",
-        "Opobo/Nkoro",
-        "Oyigbo",
-        "Port-Harcourt",
-        "Tai",
-        "Binji",
-        "Bodinga",
-        "Dange-Shuni",
-        "Gada",
-        "Goronyo",
-        "Gudu",
-        "Gwadabawa",
-        "Illela",
-        "Isa",
-        "Kebbe",
-        "Kware",
-        "Rabah",
-        "Sabon Birni",
-        "Shagari",
-        "Silame",
-        "Sokoto North",
-        "Sokoto South",
-        "Tambuwal",
-        "Tangaza",
-        "Tureta",
-        "Wamako",
-        "Wurno",
-        "Yabo",
-        "Ardo-Kola",
-        "Bali",
-        "Donga",
-        "Gashaka",
-        "Gassol",
-        "Ibi",
-        "Jalingo",
-        "Karim-Lamido",
-        "Kurmi",
-        "Lau",
-        "Sardauna",
-        "Takum",
-        "Ussa",
-        "Wukari",
-        "Yorro",
-        "Zing",
-        "Bade",
-        "Bursari",
-        "Damaturu",
-        "Fika",
-        "Fune",
-        "Geidam",
-        "Gujba",
-        "Gulani",
-        "Jakusko",
-        "Karasuwa",
-        "Machina",
-        "Nangere",
-        "Nguru",
-        "Potiskum",
-        "Tarmua",
-        "Yunusari",
-        "Yusufari",
-        "Anka",
-        "Bakura",
-        "Birnin Magaji",
-        "Bukkuyum",
-        "Bungudu",
-        "Gummi",
-        "Gusau",
-        "Kaura Namoda",
-        "Maradun",
-        "Maru",
-        "Shinkafi",
-        "Talata Mafara",
-        "Tsafe",
-        "Zurmi"
-      ],
       "authenticated": false
+    },
+    {
+      "@id": "cvisb:locationType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of location for the patient: home, exposure location (presumably where he/she was infected), or unknown",
+      "rdfs:label": "locationType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:AdministrativeArea"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "home",
+        "exposure",
+        "unknown"
+      ]
     },
     {
       "@id": "cvisb:alternateName",
@@ -6161,12 +4557,14 @@
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "required",
+      "marginality": "recommended",
       "schema:Enumeration": [
         "province",
         "district",
         "chiefdom",
         "village",
+        "city",
+        "country",
         "prefecture",
         "sub-prefecture",
         "clan",
@@ -6227,75 +4625,6 @@
       "owl:cardinality": "one",
       "marginality": "optional",
       "authenticated": false
-    },
-    {
-      "@id": "cvisb:SymptomList",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing an SymptomList for a Patient in the Center for Viral Systems Biology experiments",
-      "rdfs:label": "SymptomList",
-      "rdfs:subClassOf": {
-        "@id": "schema:Thing"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:timepoint",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Description of when the symptoms were observed (e.g. at survivor enrollment, initial presentation in hospital, etc.)",
-      "rdfs:label": "timepoint",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SymptomList"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:daysSinceAdmit",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0",
-      "rdfs:label": "daysSinceAdmit",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SymptomList"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "schema:Integer"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:symptoms",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Array of symptoms observed in or reported by the patient at the timepoint.",
-      "rdfs:label": "symptoms",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:SymptomList"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Symptom"
-        }
-      ],
-      "owl:cardinality": "one",
-      "marginality": "required",
-      "authenticated": true
     },
     {
       "@id": "cvisb:DataCatalog",
@@ -6674,6 +5003,30 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:releaseNotes",
+      "@type": "rdf:Property",
+      "rdfs:comment": null,
+      "rdfs:label": "releaseNotes",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataCatalog"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:sameAs": [
+        {
+          "@id": "schema:releaseNotes"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:schemaVersion",
       "@type": "rdf:Property",
       "rdfs:comment": "Version of DataCatalog schema",
@@ -6882,15 +5235,15 @@
       "@id": "cvisb:piccolo",
       "@type": "rdf:Property",
       "rdfs:comment": "Object of Piccolo data measured for the patient at the timepoint.",
-      "rdfs:label": "symptoms",
+      "rdfs:label": "piccolo",
       "schema:domainIncludes": [
         {
-          "@id": "cvisb:PiccoloData"
+          "@id": "cvisb:PiccoloMeasurement"
         }
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "cvisb:Symptom"
+          "@id": "cvisb:PiccoloData"
         }
       ],
       "owl:cardinality": "one",
@@ -6908,6 +5261,28 @@
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:PiccoloData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "PiccoloData"
+      ]
     },
     {
       "@id": "cvisb:alanineAminotransferase",
@@ -7204,6 +5579,56 @@
       "maximum": 140
     },
     {
+      "@id": "cvisb:ReleaseNote",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing the ReleaseNote for the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ReleaseNote",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:category",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Which part of the website has been updated.",
+      "rdfs:label": "category",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseNote"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:note",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Explanation of what was changed in the release",
+      "rdfs:label": "note",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseNote"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:SampleLocation",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing a the location of a sample in the Center for Viral Systems Biology",
@@ -7396,6 +5821,175 @@
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of symptom",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Sequela",
+        "AcuteSymptom"
+      ]
+    },
+    {
+      "@id": "cvisb:timepoint",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Description of when the symptoms were observed (e.g. at survivor enrollment, initial presentation in hospital, etc.)",
+      "rdfs:label": "timepoint",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:daysSinceAdmit",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Number of days between the admission date and when symptoms were observed. At initial clinical presentation, daysSinceAdmit = 0",
+      "rdfs:label": "daysSinceAdmit",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:dateModified",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of last update (YYYY-MM-DD)",
+      "rdfs:label": "dateModified",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:dateModified"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:updatedBy",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Person who updated the experiment data",
+      "rdfs:label": "updatedBy",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Version number of experiment",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Number"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:dataStatus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "description of whether the data is considered preliminary (subject to review) or finalized. Note that \"final\" data can still be modified.",
+      "rdfs:label": "dataStatus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "preliminary",
+        "final"
+      ]
+    },
+    {
+      "@id": "cvisb:releaseDate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date upon which the data should be made publicly available.",
+      "rdfs:label": "releaseDate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
       "@id": "cvisb:joint_pain",
@@ -8576,6 +7170,139 @@
       "authenticated": true
     },
     {
+      "@id": "cvisb:rheumatologicalSequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Rheumatological",
+      "rdfs:label": "rheumatologicalSequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:rheumatologicalGISequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Other Rheumatological and Gastrointestinal",
+      "rdfs:label": "rheumatologicalGISequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:pyschNeuroSequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Psychiatric and Neurological",
+      "rdfs:label": "pyschNeuroSequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:cardiacGISequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Cardiac and Other Gastrointestinal",
+      "rdfs:label": "cardiacGISequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:opthoAudioSequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Ophthamological and Auditory",
+      "rdfs:label": "opthoAudioSequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:constitutionalSequelae",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Sequelae Cluster of Symptoms - Constitutional",
+      "rdfs:label": "constitutionalSequelae",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:acuteRespiratoryDistressSyndrome",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Acute respiratory distress syndrome",
+      "rdfs:label": "acuteRespiratoryDistressSyndrome",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Symptom"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:DiastolicPressure",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing a single diastolic blood pressure datapoint collected from patients in the Center for Viral Systems Biology.",
@@ -8586,6 +7313,28 @@
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DiastolicPressure"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "DiastolicPressure"
+      ]
     },
     {
       "@id": "cvisb:time",
@@ -8966,10 +7715,51 @@
       }
     },
     {
-      "@id": "cvisb:virus",
+      "@id": "cvisb:@type",
       "@type": "rdf:Property",
-      "rdfs:comment": "Virus tested in ELISA (Ebola or Lassa)",
-      "rdfs:label": "virus",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RDT"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "RDT"
+      ]
+    },
+    {
+      "@id": "cvisb:antigen",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Antigen tested in RDT",
+      "rdfs:label": "antigen",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RDT"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:infectiousAgent",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Infectious agent tested in RDT (Ebola, Lassa, Plasmodium, or SARS-CoV-2)",
+      "rdfs:label": "infectiousAgent",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:RDT"
@@ -8984,7 +7774,9 @@
       "marginality": "required",
       "schema:Enumeration": [
         "Ebola",
-        "Lassa"
+        "Lassa",
+        "Plasmodium",
+        "SARS-CoV-2"
       ],
       "authenticated": true
     },
@@ -9050,6 +7842,31 @@
       },
       "owl:cardinality": "one",
       "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:identifier",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Unique identifier of the Organization",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:identifier"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
       "authenticated": false
     },
     {
@@ -9240,6 +8057,28 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type, used for internal purposes; should be Organization",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Organization"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Organization"
+      ]
+    },
+    {
       "@id": "cvisb:DataDownload",
       "@type": "rdfs:Class",
       "rdfs:comment": "A schema describing DataDownload in the Center for Viral Systems Biology",
@@ -9305,7 +8144,7 @@
     {
       "@id": "cvisb:includedInDataset",
       "@type": "rdf:Property",
-      "rdfs:comment": "A unique identifier for the Dataset that the DataDownload is contained in. Note: should be an internal, CViSB identifier;",
+      "rdfs:comment": "A unique identifier for the Dataset that the DataDownload is contained in. Note: should be an internal, CViSB identifier. Must match Dataset:identifier options",
       "rdfs:label": "includedInDataset",
       "schema:domainIncludes": [
         {
@@ -9320,7 +8159,26 @@
       },
       "owl:cardinality": "one",
       "marginality": "required",
-      "authenticated": false
+      "authenticated": false,
+      "schema:Enumeration": [
+        "hla",
+        "metagenome-seq",
+        "ebola-virus-seq",
+        "lassa-virus-seq",
+        "sarscov2-virus-seq",
+        "bcr",
+        "tcr",
+        "systems-serology",
+        "systems-serology-32783920",
+        "rtpcr-32783920",
+        "blood-chemistry-vhf",
+        "blood-counts-vhf",
+        "vitals-vhf",
+        "rtpcr-vhf",
+        "rapid-diagnostics-vhf",
+        "sensor-vitals-vhf",
+        "clinical-observations-vhf"
+      ]
     },
     {
       "@id": "cvisb:identifier",
@@ -9427,6 +8285,28 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "URL pointing to information about the file, e.g. landing page for the content.",
+      "rdfs:label": "contentUrl",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataDownload"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:url"
+      },
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
+    },
+    {
       "@id": "cvisb:contentUrlRepository",
       "@type": "rdf:Property",
       "rdfs:comment": "Name of the repository where the file is stored, e.g. the NIH's Sequence Read Archive",
@@ -9446,7 +8326,8 @@
       "schema:Enumeration": [
         "SRA",
         "AWS",
-        "GitHub"
+        "GitHub",
+        "GenBank"
       ],
       "authenticated": false
     },
@@ -9482,6 +8363,9 @@
       "schema:rangeIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
         }
       ],
       "schema:sameAs": {
@@ -9527,6 +8411,7 @@
       "owl:cardinality": "one",
       "marginality": "required",
       "schema:Enumeration": [
+        "curated data",
         "raw data",
         "analyzed data",
         "summary data"
@@ -9554,9 +8439,101 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:measurementCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)",
+      "rdfs:label": "measurementCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataDownload"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA sequencing",
+        "virus sequencing",
+        "metagenome sequencing",
+        "immune repertoire sequencing",
+        "Systems Serology",
+        "clinical measurements",
+        "clinical observations"
+      ]
+    },
+    {
+      "@id": "cvisb:variableMeasured",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).",
+      "rdfs:label": "variableMeasured",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:DataDownload"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:variableMeasured"
+      },
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA genotype",
+        "metagenome sequence",
+        "Ebola virus sequence",
+        "Lassa virus sequence",
+        "SARS-CoV-2 virus sequence",
+        "BCR sequence",
+        "TCR sequence",
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "NKD-CD107a",
+        "IgG2",
+        "FcRg2b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA1",
+        "FcRg3A",
+        "RCA",
+        "IgG3",
+        "IgM",
+        "IgG4",
+        "IgA2",
+        "SNA",
+        "IgG1",
+        "NT50",
+        "metabolomics",
+        "blood chemistry",
+        "blood cell count",
+        "vitals",
+        "virus level",
+        "patient antibody response",
+        "acute symptoms",
+        "sequelae",
+        "coma score"
+      ]
+    },
+    {
       "@id": "cvisb:measurementTechnique",
       "@type": "rdf:Property",
-      "rdfs:comment": "A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).",
+      "rdfs:comment": "A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.",
       "rdfs:label": "measurementTechnique",
       "schema:domainIncludes": [
         {
@@ -9574,19 +8551,20 @@
       "schema:sameAs": {
         "@id": "schema:measurementTechnique"
       },
-      "owl:cardinality": "one",
+      "owl:cardinality": "many",
       "marginality": "required",
       "schema:Enumeration": [
-        "HLA sequencing",
-        "viral sequencing",
-        "metagenome sequencing",
-        "BCR sequencing",
-        "TCR sequencing",
-        "Systems Serology",
-        "Metabolomics",
-        "blood chemistry",
-        "vitals",
-        "other"
+        "Nucleic Acid Sequencing",
+        "RNA sequencing",
+        "Immune Repertoire Deep Sequencing",
+        "serology",
+        "Blood Chemistry Measurement",
+        "Vital Signs Measurement",
+        "Rapid Antigen Test",
+        "Reverse Transcriptase-Polymerase Chain Reaction",
+        "Blood Cell Count",
+        "ELISA",
+        "Clinical Observation"
       ],
       "authenticated": false
     },
@@ -9712,10 +8690,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:author",
+      "@id": "cvisb:creator",
       "@type": "rdf:Property",
-      "rdfs:comment": "Author of this DataDownload, can be a person or an organization. Usually specified in Dataset object.",
-      "rdfs:label": "author",
+      "rdfs:comment": "Author/creator of this DataDownload, can be a person or an organization. Usually specified in Dataset object.",
+      "rdfs:label": "creator",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:DataDownload"
@@ -9727,7 +8705,7 @@
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:author"
+        "@id": "schema:creator"
       },
       "owl:cardinality": "many",
       "marginality": "optional",
@@ -9860,9 +8838,40 @@
       "authenticated": false
     },
     {
+      "@id": "cvisb:measurementCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A supercategory of the technique or technology used in an Experiment (or Dataset or DataDownload, DataCatalog)",
+      "rdfs:label": "measurementCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Dataset"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "xsd:string"
+        },
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA sequencing",
+        "virus sequencing",
+        "metagenome sequencing",
+        "immune repertoire sequencing",
+        "Systems Serology",
+        "clinical measurements",
+        "clinical observations"
+      ]
+    },
+    {
       "@id": "cvisb:measurementTechnique",
       "@type": "rdf:Property",
-      "rdfs:comment": "A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).",
+      "rdfs:comment": "A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured). Ideally aligned with NCIT, EFO, or OBI ontologies.",
       "rdfs:label": "measurementTechnique",
       "schema:domainIncludes": [
         {
@@ -9880,26 +8889,27 @@
       "schema:sameAs": {
         "@id": "schema:measurementTechnique"
       },
-      "owl:cardinality": "one",
+      "owl:cardinality": "many",
       "marginality": "required",
       "schema:Enumeration": [
-        "HLA sequencing",
-        "viral sequencing",
-        "metagenome sequencing",
-        "BCR sequencing",
-        "TCR sequencing",
-        "Systems Serology",
-        "metabolomics",
-        "blood chemistry",
-        "vitals",
-        "other"
+        "Nucleic Acid Sequencing",
+        "RNA sequencing",
+        "Immune Repertoire Deep Sequencing",
+        "serology",
+        "Blood Chemistry Measurement",
+        "Vital Signs Measurement",
+        "Rapid Antigen Test",
+        "Reverse Transcriptase-Polymerase Chain Reaction",
+        "Blood Cell Count",
+        "ELISA",
+        "Clinical Observation"
       ],
       "authenticated": false
     },
     {
       "@id": "cvisb:variableMeasured",
       "@type": "rdf:Property",
-      "rdfs:comment": "A technique or technology used in a Dataset (or DataDownload, DataCatalog), corresponding to the method used for measuring the corresponding variable(s) (described using variableMeasured).",
+      "rdfs:comment": "The variable measured in an Experiment (or Dataset or DataDownload, DataCatalog).",
       "rdfs:label": "variableMeasured",
       "schema:domainIncludes": [
         {
@@ -9908,9 +8918,6 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
@@ -9918,8 +8925,47 @@
         "@id": "schema:variableMeasured"
       },
       "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": false
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLA genotype",
+        "metagenome sequence",
+        "Ebola virus sequence",
+        "Lassa virus sequence",
+        "SARS-CoV-2 virus sequence",
+        "BCR sequence",
+        "TCR sequence",
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "NKD-CD107a",
+        "IgG2",
+        "FcRg2b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA1",
+        "FcRg3A",
+        "RCA",
+        "IgG3",
+        "IgM",
+        "IgG4",
+        "IgA2",
+        "SNA",
+        "IgG1",
+        "NT50",
+        "metabolomics",
+        "blood chemistry",
+        "blood cell count",
+        "vitals",
+        "virus level",
+        "patient antibody response",
+        "acute symptoms",
+        "sequelae",
+        "coma score"
+      ]
     },
     {
       "@id": "cvisb:url",
@@ -9982,12 +9028,22 @@
       "authenticated": false,
       "schema:Enumeration": [
         "hla",
-        "viralseq",
-        "metagenomeseq",
+        "metagenome-seq",
+        "ebola-virus-seq",
+        "lassa-virus-seq",
+        "sarscov2-virus-seq",
         "bcr",
         "tcr",
-        "systemsserology",
-        "metabolomics"
+        "systems-serology",
+        "systems-serology-32783920",
+        "rtpcr-32783920",
+        "blood-chemistry-vhf",
+        "blood-counts-vhf",
+        "vitals-vhf",
+        "rtpcr-vhf",
+        "rapid-diagnostics-vhf",
+        "sensor-vitals-vhf",
+        "clinical-observations-vhf"
       ]
     },
     {
@@ -10153,10 +9209,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:author",
+      "@id": "cvisb:creator",
       "@type": "rdf:Property",
-      "rdfs:comment": "Author of this dataset, can be a person or an organization",
-      "rdfs:label": "author",
+      "rdfs:comment": "Author/creator of this dataset, should be an organization",
+      "rdfs:label": "creator",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Dataset"
@@ -10168,7 +9224,7 @@
         }
       ],
       "schema:sameAs": {
-        "@id": "schema:author"
+        "@id": "schema:creator"
       },
       "owl:cardinality": "many",
       "marginality": "required",
@@ -10197,10 +9253,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:_version",
+      "@id": "cvisb:version",
       "@type": "rdf:Property",
-      "rdfs:comment": "Version of dataset, auto-assigned by CViSB database",
-      "rdfs:label": "_version",
+      "rdfs:comment": "Version of dataset",
+      "rdfs:label": "version",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Dataset"
@@ -10310,6 +9366,9 @@
       "schema:rangeIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
+        },
+        {
+          "@id": "cvisb:Organization"
         }
       ],
       "schema:sameAs": {
@@ -10374,6 +9433,28 @@
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:OxygenSaturation"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "OxygenSaturation"
+      ]
     },
     {
       "@id": "cvisb:time",
@@ -10552,6 +9633,28 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HeartRate"
+      ]
+    },
+    {
       "@id": "cvisb:time",
       "@type": "rdf:Property",
       "rdfs:comment": "Date and time of heart rate measurement",
@@ -10611,6 +9714,103 @@
         "PhysIQ",
         "conventional"
       ]
+    },
+    {
+      "@id": "cvisb:ReleaseSummary",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing the ReleaseSummary for the Center for Viral Systems Biology experiments",
+      "rdfs:label": "ReleaseSummary",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      },
+      "schema:sameAs": {
+        "@id": "schema:ReleaseSummary"
+      }
+    },
+    {
+      "@id": "cvisb:datePublished",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date of release for the particular version.",
+      "rdfs:label": "datePublished",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Date"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:version",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Formal release version of CViSB data catalog, manually created. Assigned in the style of https://semver.org/, where version number is formatted like MAJOR.MINOR.PATCH",
+      "rdfs:label": "version",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:version"
+      },
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:description",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Notes specifying what in particular was updated.",
+      "rdfs:label": "description",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "cvisb:ReleaseNote"
+        }
+      ],
+      "owl:cardinality": "many",
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:abstract",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Overview summary of what was changed in the most recent update.",
+      "rdfs:label": "abstract",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ReleaseSummary"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "optional",
+      "authenticated": false
     },
     {
       "@id": "cvisb:Person",
@@ -10810,211 +10010,9 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:Vitals",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing vitals collected from patients in the Center for Viral Systems Biology.",
-      "rdfs:label": "Vitals",
-      "rdfs:subClassOf": {
-        "@id": "cvisb:Data"
-      },
-      "schema:isPartOf": {
-        "@id": "https://data.cvisb.org/schema"
-      }
-    },
-    {
-      "@id": "cvisb:heartRate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Heart rate for a patient in beats per minute, captured through a PhysIQ wearable sensor or a standard heart rate monitor",
-      "rdfs:label": "heartRate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:HeartRate"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:respiratoryRate",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Respiratory rate for a patient, captured through a PhysIQ wearable sensor or a standard clinical measurement",
-      "rdfs:label": "respiratoryRate",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:RespiratoryRate"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:oxygenSaturation",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Measured blood oxygen saturation",
-      "rdfs:label": "oxygenSaturation",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:OxygenSaturation"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:systolicPressure",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Systolic blood pressure",
-      "rdfs:label": "systolicPressure",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:SystolicPressure"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:diastolicPressure",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Diastolic blood pressure",
-      "rdfs:label": "diastolicPressure",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:DiastolicPressure"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:meanArterialPressure",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Mean artertial blood pressure",
-      "rdfs:label": "meanArterialPressure",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:MeanArterialPressure"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:skinTemperature",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Skin temperature of a patient, typically captured through a PhysIQ wearable sensor",
-      "rdfs:label": "skinTemperature",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:SkinTemperature"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:bodyTemperature",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Core body temperature of a patient",
-      "rdfs:label": "bodyTemperature",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:BodyTemperature"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:ECG",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Single lead trace electrocardigram a patient, typically captured through a PhysIQ wearable sensor",
-      "rdfs:label": "ECG",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:ECGPoint"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
-      "@id": "cvisb:accelerometry",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Three-axis motion of a patient, captured through an accelerometer, typically captured through a PhysIQ wearable sensor",
-      "rdfs:label": "accelerometry",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:Vitals"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "cvisb:Accelerometry"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "recommended",
-      "authenticated": true
-    },
-    {
       "@id": "cvisb:ScholarlyArticle",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a ScholarlyArticle (a.k.a a paper) in the Center for Viral Systems Biology",
+      "rdfs:comment": "A schema describing a ScholarlyArticle (a.k.a. a paper) in the Center for Viral Systems Biology",
       "rdfs:label": "ScholarlyArticle",
       "rdfs:subClassOf": {
         "@id": "schema:ScholarlyArticle"
@@ -11025,6 +10023,28 @@
       "schema:sameAs": {
         "@id": "schema:ScholarlyArticle"
       }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type, used for internal purposes. Should be ScholarlyArticle",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "ScholarlyArticle"
+      ]
     },
     {
       "@id": "cvisb:identifier",
@@ -11045,7 +10065,7 @@
         "@id": "schema:identifier"
       },
       "owl:cardinality": "one",
-      "marginality": "recommended",
+      "marginality": "required",
       "authenticated": false
     },
     {
@@ -11071,10 +10091,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:DOI",
+      "@id": "cvisb:doi",
       "@type": "rdf:Property",
       "rdfs:comment": "DOI for publication",
-      "rdfs:label": "DOI",
+      "rdfs:label": "doi",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
@@ -11093,10 +10113,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:PMID",
+      "@id": "cvisb:pmid",
       "@type": "rdf:Property",
       "rdfs:comment": "Pubmed ID for publication",
-      "rdfs:label": "PMID",
+      "rdfs:label": "pmid",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:ScholarlyArticle"
@@ -11197,6 +10217,28 @@
       ],
       "schema:sameAs": {
         "@id": "schema:datePublished"
+      },
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:pagination",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Any description of pages that is not separated into pageStart and pageEnd; for example, \"1-6, 9, 55\" or \"10-12, 46-49\".",
+      "rdfs:label": "pagination",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:ScholarlyArticle"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "schema:pageStart"
       },
       "owl:cardinality": "one",
       "marginality": "recommended",
@@ -11341,10 +10383,10 @@
       }
     },
     {
-      "@id": "cvisb:A",
+      "@id": "cvisb:@type",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the A locus of HLA",
-      "rdfs:label": "A",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11352,23 +10394,21 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "required",
       "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "schema:Enumeration": [
+        "HLAData"
+      ]
     },
     {
-      "@id": "cvisb:B",
+      "@id": "cvisb:allele",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the B locus of HLA",
-      "rdfs:label": "B",
+      "rdfs:comment": "Allele call",
+      "rdfs:label": "allele",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11376,23 +10416,18 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
-      "@id": "cvisb:C",
+      "@id": "cvisb:locus",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the C locus of HLA",
-      "rdfs:label": "C",
+      "rdfs:comment": "Locus of the allele",
+      "rdfs:label": "locus",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11400,23 +10435,18 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
-      "@id": "cvisb:DPA1",
+      "@id": "cvisb:novel",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DPA1 locus of HLA",
-      "rdfs:label": "DPA1",
+      "rdfs:comment": "Whether the allele is a novel mutation",
+      "rdfs:label": "novel",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11424,23 +10454,18 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
+          "@id": "schema:Boolean"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
-      "@id": "cvisb:DPB1",
+      "@id": "cvisb:cohort",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DPB1 locus of HLA",
-      "rdfs:label": "DPB1",
+      "rdfs:comment": "Cohort of the patient",
+      "rdfs:label": "cohort",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11448,23 +10473,18 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
-      "@id": "cvisb:DQA1",
+      "@id": "cvisb:outcome",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DQA1 locus of HLA",
-      "rdfs:label": "DQA1",
+      "rdfs:comment": "Outcome of the patient",
+      "rdfs:label": "outcome",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11472,23 +10492,18 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
-      "@id": "cvisb:DQB1",
+      "@id": "cvisb:patientID",
       "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DQB1 locus of HLA",
-      "rdfs:label": "DQB1",
+      "rdfs:comment": "Public patientID of the patient",
+      "rdfs:label": "patientID",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:HLAData"
@@ -11496,113 +10511,12 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
-        {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
-    },
-    {
-      "@id": "cvisb:DRB1",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DRB1 locus of HLA",
-      "rdfs:label": "DRB1",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:HLAData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
-    },
-    {
-      "@id": "cvisb:DRB3",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DRB3 locus of HLA",
-      "rdfs:label": "DRB3",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:HLAData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
-    },
-    {
-      "@id": "cvisb:DRB4",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DRB4 locus of HLA",
-      "rdfs:label": "DRB4",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:HLAData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
-    },
-    {
-      "@id": "cvisb:DRB5",
-      "@type": "rdf:Property",
-      "rdfs:comment": "Genotype call for the DRB5 locus of HLA",
-      "rdfs:label": "DRB5",
-      "schema:domainIncludes": [
-        {
-          "@id": "cvisb:HLAData"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "xsd:string"
-        },
-        {
-          "@id": "schema:Text"
-        }
-      ],
-      "owl:cardinality": "many",
-      "marginality": "required",
-      "authenticated": false,
-      "minItems": 2,
-      "maxItems": 2
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
     },
     {
       "@id": "cvisb:SkinTemperature",
@@ -11678,21 +10592,305 @@
       ]
     },
     {
-      "@id": "cvisb:SystemsSerology",
+      "@id": "cvisb:BloodCountData",
       "@type": "rdfs:Class",
-      "rdfs:comment": "A schema describing a Systems Serology Experiment in the Center for Viral Systems Biology",
-      "rdfs:label": "SystemsSerology",
+      "rdfs:comment": "A schema describing complete blood count analysis of patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "BloodCountData",
       "rdfs:subClassOf": {
-        "@id": "schema:Thing"
+        "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "BloodCountData"
+      ]
+    },
+    {
+      "@id": "cvisb:wholeBloodCount",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whole blood count from complete blood count measurement (cells / uL)",
+      "rdfs:label": "wholeBloodCount",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:hemoglobin",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Hemoglobin (g/dL); Complete Blood Count measurement",
+      "rdfs:label": "hemoglobin",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:platelets",
+      "@type": "rdf:Property",
+      "rdfs:comment": "platelets (/uL); Complete Blood Count measurement",
+      "rdfs:label": "platelets",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:neutrophils",
+      "@type": "rdf:Property",
+      "rdfs:comment": "neutrophils (% age); Complete Blood Count measurement",
+      "rdfs:label": "neutrophils",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:bands",
+      "@type": "rdf:Property",
+      "rdfs:comment": "bands (% age); Complete Blood Count measurement",
+      "rdfs:label": "bands",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:lymphocytes",
+      "@type": "rdf:Property",
+      "rdfs:comment": "lymphocytes (% age); Complete Blood Count measurement",
+      "rdfs:label": "lymphocytes",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:monocytes",
+      "@type": "rdf:Property",
+      "rdfs:comment": "monocytes (% age); Complete Blood Count measurement",
+      "rdfs:label": "monocytes",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:eosinophils",
+      "@type": "rdf:Property",
+      "rdfs:comment": "eosinophils (% age); Complete Blood Count measurement",
+      "rdfs:label": "eosinophils",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:basophils",
+      "@type": "rdf:Property",
+      "rdfs:comment": "basophils (% age); Complete Blood Count measurement",
+      "rdfs:label": "basophils",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:prothrombinTime",
+      "@type": "rdf:Property",
+      "rdfs:comment": "prothrombin time (seconds); Complete Blood Count measurement",
+      "rdfs:label": "prothrombinTime",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:internationalNormalizationRatio",
+      "@type": "rdf:Property",
+      "rdfs:comment": "international normalization ratio; Complete Blood Count measurement",
+      "rdfs:label": "internationalNormalizationRatio",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:dDimer",
+      "@type": "rdf:Property",
+      "rdfs:comment": "D-Dimer test; Complete Blood Count measurement",
+      "rdfs:label": "dDimer",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:BloodCountData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:SystemsSerology",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a Systems Serology Experiment in the Center for Viral Systems Biology",
+      "rdfs:label": "SystemsSerology",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "SystemsSerology"
+      ]
+    },
+    {
       "@id": "cvisb:assayType",
       "@type": "rdf:Property",
-      "rdfs:comment": "Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, NKD-CD107a, NKD-IFNg, NKD-MIP-1b",
+      "rdfs:comment": "Type of Systems Serology assay.  Options: ADNP, ADCD, ADCP, ADNKA_CD107a, ADNKA_IFNg, ADNKA_MIP1b",
       "rdfs:label": "assayType",
       "schema:domainIncludes": [
         {
@@ -11707,8 +10905,31 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "required",
+      "schema:Enumeration": [
+        "ADNP",
+        "ADCD",
+        "ADCP",
+        "ADNKA_CD107a",
+        "ADNKA_IFNg",
+        "ADNKA_MIP1b",
+        "FcRg2A",
+        "NKD-MIP1b",
+        "IgA2",
+        "NKD-CD107a",
+        "IgG4",
+        "IgG2",
+        "IgM",
+        "SNA",
+        "IgG3",
+        "FcRg3A",
+        "IgA1",
+        "IgG1",
+        "RCA",
+        "FcRg2b",
+        "NT50"
+      ],
       "authenticated": false
     },
     {
@@ -11729,7 +10950,7 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
@@ -11751,15 +10972,15 @@
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
     {
-      "@id": "cvisb:assayResult",
+      "@id": "cvisb:value",
       "@type": "rdf:Property",
-      "rdfs:comment": "Assay result",
-      "rdfs:label": "assayResult",
+      "rdfs:comment": "Assay result. Should be available in almost all cases; however, due to material limitations, controls are occasionally null.",
+      "rdfs:label": "value",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:SystemsSerology"
@@ -11767,13 +10988,129 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "xsd:string"
-        },
+          "@id": "schema:Float"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:valueCategory",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Assay result, grouped into qualitative groups: 'low_none', 'moderate', or 'high'",
+      "rdfs:label": "valueCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
         {
           "@id": "schema:Text"
         }
       ],
-      "owl:cardinality": "many",
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:valueCategoryNumeric",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Assay result, grouped into qualitative groups: 'low_none' (1), 'moderate' (2), or 'high' (3)",
+      "rdfs:label": "valueCategory",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:antigen",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Antigen used in the Systems Serology experiment; either against Lassa virus, Ebola virus, or SARS-CoV-2 virus",
+      "rdfs:label": "antigen",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:antigenVirus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Antigen used in the Systems Serology experiment; either against Lassa, Ebola, or SARS-CoV-2",
+      "rdfs:label": "antigenVirus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Ebola",
+        "Lassa",
+        "SARS-CoV-2"
+      ]
+    },
+    {
+      "@id": "cvisb:antigenSource",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Source (URL) where the antigen can be acquired.",
+      "rdfs:label": "antigenSource",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:controlType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "If the sample was a control sample, indicates what type of control (positive control, negative control, no absorbance control, etc.)",
+      "rdfs:label": "controlType",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:SystemsSerology"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
       "marginality": "recommended",
       "authenticated": false
     },
@@ -11849,9 +11186,31 @@
       }
     },
     {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:RTPCR"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "RTPCR"
+      ]
+    },
+    {
       "@id": "cvisb:virus",
       "@type": "rdf:Property",
-      "rdfs:comment": "Virus tested in RT-PCR (Ebola or Lassa)",
+      "rdfs:comment": "Virus tested in RT-PCR (Ebola, Lassa, or SARS-CoV-2)",
       "rdfs:label": "virus",
       "schema:domainIncludes": [
         {
@@ -11867,7 +11226,8 @@
       "marginality": "required",
       "schema:Enumeration": [
         "Ebola",
-        "Lassa"
+        "Lassa",
+        "SARS-CoV-2"
       ],
       "authenticated": true
     },
@@ -11939,17 +11299,17 @@
       "rdfs:comment": "A schema describing an Medication for a Patient in the Center for Viral Systems Biology experiments",
       "rdfs:label": "Medication",
       "rdfs:subClassOf": {
-        "@id": "schema:Thing"
+        "@id": "cvisb:Data"
       },
       "schema:isPartOf": {
         "@id": "https://data.cvisb.org/schema"
       }
     },
     {
-      "@id": "cvisb:drug",
+      "@id": "cvisb:name",
       "@type": "rdf:Property",
       "rdfs:comment": "Drug name",
-      "rdfs:label": "drug",
+      "rdfs:label": "name",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Medication"
@@ -11962,13 +11322,13 @@
       ],
       "owl:cardinality": "one",
       "marginality": "required",
-      "authenticated": true
+      "authenticated": false
     },
     {
-      "@id": "cvisb:daysSinceAdmit",
+      "@id": "cvisb:isDrugAdministered",
       "@type": "rdf:Property",
-      "rdfs:comment": "Number of days between the admission date and when when the coma score was evaluated. At initial clinical presentation, daysSinceAdmit = 0",
-      "rdfs:label": "daysSinceAdmit",
+      "rdfs:comment": "Whether the drug is administered (true/false)",
+      "rdfs:label": "isDrugAdministered",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Medication"
@@ -11976,12 +11336,34 @@
       ],
       "schema:rangeIncludes": [
         {
-          "@id": "schema:Integer"
+          "@id": "schema:Boolean"
         }
       ],
       "owl:cardinality": "one",
-      "marginality": "recommended",
-      "authenticated": true
+      "marginality": "required",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:Medication"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "Medication"
+      ]
     },
     {
       "@id": "cvisb:dateAdministered",
@@ -12038,7 +11420,7 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     },
     {
       "@id": "cvisb:doseUnits",
@@ -12057,7 +11439,7 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     },
     {
       "@id": "cvisb:doseFrequency",
@@ -12076,7 +11458,7 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     },
     {
       "@id": "cvisb:doseDuration",
@@ -12095,7 +11477,7 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     },
     {
       "@id": "cvisb:drugRoute",
@@ -12114,7 +11496,7 @@
       ],
       "owl:cardinality": "one",
       "marginality": "recommended",
-      "authenticated": true
+      "authenticated": false
     }
   ]
 }
