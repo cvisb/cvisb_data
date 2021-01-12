@@ -602,10 +602,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:AVLinactivated",
+      "@id": "cvisb:avlInactivated",
       "@type": "rdf:Property",
       "rdfs:comment": "Whether a plasma or serum sample is AVL-inactivated",
-      "rdfs:label": "AVLinactivated",
+      "rdfs:label": "avlInactivated",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Sample"
