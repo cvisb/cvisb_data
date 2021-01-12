@@ -1015,10 +1015,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:ELISAresult",
+      "@id": "cvisb:elisaResult",
       "@type": "rdf:Property",
       "rdfs:comment": "Result of ELISA, either positive/negative/indeterminate",
-      "rdfs:label": "ELISAresult",
+      "rdfs:label": "elisaResult",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:ELISA"
@@ -1040,10 +1040,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:ELISAvalue",
+      "@id": "cvisb:elisaValue",
       "@type": "rdf:Property",
       "rdfs:comment": "Result of ELISA, as a quantitative calibrated value",
-      "rdfs:label": "ELISAvalue",
+      "rdfs:label": "elisaValue",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:ELISA"
@@ -3555,10 +3555,10 @@
       }
     },
     {
-      "@id": "cvisb:SNP",
+      "@id": "cvisb:snp",
       "@type": "rdf:Property",
       "rdfs:comment": "Single nucleotide polymorphism, e.g. Q9H",
-      "rdfs:label": "SNP",
+      "rdfs:label": "snp",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:SNPData"
@@ -3577,10 +3577,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:SNPdetected",
+      "@id": "cvisb:snpDetected",
       "@type": "rdf:Property",
       "rdfs:comment": "Whether or not the SNP was found in the sequencing",
-      "rdfs:label": "SNPdetected",
+      "rdfs:label": "snpDetected",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:SNPData"
@@ -3596,10 +3596,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:SNPlocation",
+      "@id": "cvisb:snpLocation",
       "@type": "rdf:Property",
       "rdfs:comment": "Amino acid number of the SNP, relative to the reference sequence.",
-      "rdfs:label": "SNPlocation",
+      "rdfs:label": "snpLocation",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:SNPData"
@@ -3781,10 +3781,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:DNAsequence",
+      "@id": "cvisb:dnaSequence",
       "@type": "rdf:Property",
       "rdfs:comment": "DNA sequence for the virus",
-      "rdfs:label": "DNAsequence",
+      "rdfs:label": "dnaSequence",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:VirusSeqData"
@@ -3825,10 +3825,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:AAsequence",
+      "@id": "cvisb:aaSequence",
       "@type": "rdf:Property",
       "rdfs:comment": "Raw amino acid sequence for the virus",
-      "rdfs:label": "AAsequence",
+      "rdfs:label": "aaSequence",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:VirusSeqData"
@@ -3869,10 +3869,10 @@
       "authenticated": false
     },
     {
-      "@id": "cvisb:SNP",
+      "@id": "cvisb:snpSequence",
       "@type": "rdf:Property",
       "rdfs:comment": "single nucleotide polymorphisms for the virus",
-      "rdfs:label": "SNPsequence",
+      "rdfs:label": "snpSequence",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:VirusSeqData"
@@ -6714,10 +6714,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:RUQtenderness",
+      "@id": "cvisb:ruqTenderness",
       "@type": "rdf:Property",
       "rdfs:comment": "If the patient is observed to have right upper quadrant (RUQ) tenderness",
-      "rdfs:label": "RUQtenderness",
+      "rdfs:label": "ruqTenderness",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:Symptom"
@@ -7781,10 +7781,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:RDTresult",
+      "@id": "cvisb:rdtResult",
       "@type": "rdf:Property",
       "rdfs:comment": "Result of RDT, either positive/negative",
-      "rdfs:label": "RDTresult",
+      "rdfs:label": "rdtResult",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:RDT"
@@ -11232,10 +11232,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:RTPCRresult",
+      "@id": "cvisb:rtpcrResult",
       "@type": "rdf:Property",
       "rdfs:comment": "Result of RT-PCR, either positive/negative/indeterminate",
-      "rdfs:label": "RTPCRresult",
+      "rdfs:label": "rtpcrResult",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:RTPCR"
@@ -11256,10 +11256,10 @@
       "authenticated": true
     },
     {
-      "@id": "cvisb:RTPCRvalue",
+      "@id": "cvisb:rtpcrValue",
       "@type": "rdf:Property",
       "rdfs:comment": "Result of RT-PCR, Ct value",
-      "rdfs:label": "RTPCRvalue",
+      "rdfs:label": "rtpcrValue",
       "schema:domainIncludes": [
         {
           "@id": "cvisb:RTPCR"
