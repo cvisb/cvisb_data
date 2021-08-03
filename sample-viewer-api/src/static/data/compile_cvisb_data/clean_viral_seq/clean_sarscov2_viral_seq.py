@@ -28,7 +28,7 @@ def create_data():
         for patient in metadata
     ]
 
-    experiments    = [create_experiment(patient['patientID'], patient['sourceCitation']) for patient in patients]
+    experiments    = [create_experiment(patient['patientID'], patient['citation']) for patient in patients]
     experiment_ids = [e['experimentID'] for e in experiments]
 
     data_downloads = [create_data_download(name, url, experiment_ids) for name, url in data_files.items()]
@@ -42,8 +42,8 @@ def create_data():
     }
 
     for name, data in output.items():
-        print("{name} {len(data)}")
-        save(name, data, segmented=false)
+        print(f"{name} {len(data)}")
+        save(name, data, segmented=True)
 
 def get_metadata_from_github():
     metadata         = requests.get("https://raw.githubusercontent.com/andersen-lab/HCoV-19-Genomics/master/metadata.csv")
@@ -55,8 +55,8 @@ def get_metadata_from_github():
 
 def get_metadata_from_gcloud_files():
     file_path    = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_cloud_files')
-    bams_path    = path.join(file_path, 'bam_files.txt')
-    fastas_path  = path.join(file_path, 'consensus_files.txt')
+    bams_path    = path.join(file_path, 'bam_files-2020-11-13.txt')
+    fastas_path  = path.join(file_path, 'consensus_files-2020-11-13.txt')
     sras_path    = path.join(file_path, 'SraRunTable.csv')
     url_for_file = {}
     
@@ -104,12 +104,12 @@ def create_dataset(data_downloads):
         '@context':             'http://schema.org/',
         '@type':                'Dataset',
         'identifier':           'sarscov2-virus-seq',
-        'creator':              [helpers.getlabauthor('Kristian')],
+        'creator':              [helpers.getLabAuthor('Kristian')],
         'publisher':            [search_alliance],
         'funding':              helpers.cvisb_funding,
         'license':              'https://creativecommons.org/licenses/by/4.0/',
         'name':                 'SARS-CoV-2 Virus Sequencing',
-        'variableMeasured':     'SARS-CoV-2 virus sequence',
+        'variableMeasured':     ['SARS-CoV-2 virus sequence'],
         'measurementTechnique': ['Nucleic Acid Sequencing'],
         'measurementCategory':  'virus sequencing',
         'includedInDataset':    'sarscov2-virus-seq',
@@ -137,7 +137,7 @@ def create_data_download(name, url, experiment_ids):
     
     return datadownload
 
-def create_experiment(patient_id, source_citation):
+def create_experiment(patient_id, citation):
     data = create_experiment_data_from_fasta(patient_id)
     experiment =  {
         "experimentID":         patient_id + '-sarscov2',
@@ -146,10 +146,9 @@ def create_experiment(patient_id, source_citation):
         "measurementTechnique": 'Nucleic Acid Sequencing',
         "includedInDataset":    'sarscov2-virus-seq',
         "dateModified":         today,
-        "sourceCitation":       source_citation,
+        "citation":             citation,
         "data":                 data,
     }
-    import pdb;pdb.set_trace()
 
     return experiment
 
@@ -185,7 +184,7 @@ def create_patient(patient_id, patient_source, location, sample_date):
         "alternateIdentifier":  [patient_id],
         "infectionYear":        2020,
         'publisher':            helpers.cvisb,
-        "sourceCitation":       [patient_source],
+        "citation":             [patient_source],
         "updatedBy":            "Julia Mullen",
         "country":              country,
     }
@@ -262,6 +261,10 @@ def save(name, data, segmented=False):
     """
     Saves name, data in batches of 200 e.g., 'patients0.json, patients200.json'
     """
+    output_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output-8-2021')
+    if not path.exists(output_path):
+        mkdir(output_path)
+
     if segmented:
         i = 0
         while i < len(data):
@@ -269,14 +272,14 @@ def save(name, data, segmented=False):
             if j > len(data):
                 j = len(data)
 
-            file_path = path.join(path.dirname(path.abspath(__file__)), 'sarscov2_output', f'{name}{i}.json')
+            file_path = path.join(output_path, f'{name}{i}.json')
             with open(file_path, 'w') as output_file:
                 json.dump(data[i:j], output_file)
 
             i = j
     else:
         # usual case, just save like normal
-        file_path = path.join(path.dirname(path.abspath(__file__)), 'scov2_newoutput', f'{name}.json')
+        file_path = path.join(output_path, f'{name}.json')
         with open(file_path, 'w') as output_file:
             json.dump(data, output_file)
 
