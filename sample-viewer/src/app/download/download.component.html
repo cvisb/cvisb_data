@@ -1,0 +1,117 @@
+  <div class="container-justified container-dataset-name align-items-center mb-4 pb-4">
+    <div class="container align-items-center">
+      <h1 class="dataset-name">
+        Download <a [routerLink]="['/dataset/' + id]">{{datasetName}} data</a>
+      </h1>
+
+      <div [ngClass]="[iconID, 'expt-type', 'mat-shadow', 'dataset-icon', 'download-icon']">
+        <svg-icon [icon]="iconID"></svg-icon>
+      </div>
+    </div>
+
+    <div class="container align-items-center">
+      <form [formGroup]="whichDataForm" class="container">
+        <mat-checkbox color="primary" formControlName="experiment" class="mr-3">
+          include experimental data
+        </mat-checkbox>
+        <mat-checkbox color="primary" formControlName="patient" class="mr-3">
+          include patient metadata
+        </mat-checkbox>
+      </form>
+
+      <button mat-raised-button color="primary" (click)="downloadData()">Download</button>
+    </div>
+  </div>
+
+  <div class="spinner-container-centered container" *ngIf="isLoading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+
+
+
+  <div class="container-column w-100" id="filtered-summary" *ngIf="summary">
+    <h2 *ngIf="total || total === 0">
+      You selected <b>{{total.toLocaleString()}}</b> experiments
+    </h2>
+
+    <div class="container">
+      <div id="cohort-count" class="mr-3">
+        <h4 class="filter-label">cohort</h4>
+        <app-mini-donut [data]="summary['cohort']" [height]="65" [margin]="{ top: 2, bottom: 2, left: 2, right: 135 }" [filterable]="false"></app-mini-donut>
+      </div>
+
+      <div class="grid-item grid-column-container mr-3" id="outcome-count">
+        <h4 class="filter-label">outcome</h4>
+        <app-mini-barplot [data]="summary['outcome']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 70 }" [filterable]="false"></app-mini-barplot>
+      </div>
+
+      <div class="grid-item grid-column-container mr-3" id="country-count">
+        <h4 class="filter-label">country</h4>
+        <div class="grid-row-container">
+          <app-choropleth [data]="summary['country']"></app-choropleth>
+          <app-dot-plot [data]="summary['country']"></app-dot-plot>
+        </div>
+      </div>
+
+      <div class="grid-item grid-column-container mr-3" id="outcome-count">
+        <h4 class="filter-label">host</h4>
+        <app-mini-barplot [data]="summary['species']" [height]="55" [width]="75" [margin]="{ top: 2, bottom: 2, left: 50, right: 170 }" [filterable]="false"></app-mini-barplot>
+      </div>
+
+      <div class="grid-item grid-row-container mr-3" id="year-file-count">
+        <div id="year-count" class="grid-column-container">
+          <h4 class="filter-label">year</h4>
+          <app-filterable-histogram [data]="summary['year']" [xDomain]="[1979, 2020]" [filterable]="false" [height]="40" [width]="110" [min_width_unknown]="0" [unknown]="false" [numXTicks]="3" [filter_title]="'uniqueid'"></app-filterable-histogram>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container w-100">
+    <div class="container-column dwnld-filter-container">
+      <h5 class="m-0">Filters</h5>
+      <button mat-button mat-raised-button class="mt-2 mb-3" (click)="clearFilters()">clear filters</button>
+      <form [formGroup]="filterForm">
+        <div *ngFor="let key of filterKeys" class="mb-3 filter-group">
+          <h6 class="m-0">{{key}}</h6>
+          <div formArrayName="{{key}}">
+            <div *ngFor="let option of filterForm.get(key)['controls']; let i = index">
+              <small formGroupName="{{i}}">
+                <mat-checkbox color="primary" [formControl]="option.get('selected')" class="mr-3">
+                  {{option.get("term").value}} ({{option.get("count").value}})
+                </mat-checkbox>
+              </small>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="download-table" *ngIf="dataSource && dataSource.data">
+      <table mat-table [dataSource]="dataSource" matSort class="download-table">
+
+        <ng-container *ngFor="let key of columns" [matColumnDef]="key.id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">{{ key.label }}</th>
+          <td mat-cell *matCellDef="let element" class="td-padded">
+            <span *ngIf="key.id == 'file'; else normal_td">
+              <div class="file-type" [ngClass]="element.additionalType ? element.additionalType.replace(' ', '-') : 'unknown-type'" *ngIf="element.file">
+                {{ element.additionalType ? element.additionalType : 'unknown type'}}
+              </div>
+              <a [href]="element.contentUrl" target="_blank">
+                {{element.file}}
+              </a>
+            </span>
+            <ng-template #normal_td>
+              {{ key.id.toLowerCase().includes("date") ? (element[key.id] | date:'d MMM yyyy') : element[key.id] }}
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+
+    </div>
+  </div>

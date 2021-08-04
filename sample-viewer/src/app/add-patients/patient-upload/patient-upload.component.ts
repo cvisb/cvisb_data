@@ -1,10 +1,10 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 // import { ApiService, AuthService, GetPatientsService, CheckIdsService } from '../../_services/';
-import { ApiService, AuthService, GetPatientsService, } from '../../_services/';
+import { ApiService, AuthService } from '../../_services/';
+import { Subscription } from "rxjs";
 
 import { CvisbUser } from '../../_models';
-
 
 import { cloneDeep } from 'lodash';
 
@@ -14,7 +14,7 @@ import { cloneDeep } from 'lodash';
   templateUrl: './patient-upload.component.html',
   styleUrls: ['./patient-upload.component.scss']
 })
-export class PatientUploadComponent implements OnInit {
+export class PatientUploadComponent implements OnDestroy {
   user: CvisbUser;
   fileType: string;
   uploadResponse: string;
@@ -34,27 +34,32 @@ export class PatientUploadComponent implements OnInit {
   fileKB: number;
   uploading: Boolean = false;
   maxUploadKB: number = 50; // actually 1 MB, but I want them to all resolve within 1 min.
+  loading: Boolean = false;
+  loadingSubscription: Subscription;
+  progressSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
     private apiSvc: ApiService,
-    private authSvc: AuthService,
-    private patientSvc: GetPatientsService,
-    // private idSvc: CheckIdsService,
+    private authSvc: AuthService
   ) {
-    authSvc.userState$.subscribe((user: CvisbUser) => {
+    this.userSubscription = this.authSvc.userState$.subscribe((user: CvisbUser) => {
       this.user = user;
     })
 
-    apiSvc.uploadProgressState$.subscribe((progress: number) => {
+    this.progressSubscription = this.apiSvc.uploadProgressState$.subscribe((progress: number) => {
       this.uploadProgress = progress;
     })
 
+    this.loadingSubscription = this.apiSvc.loadingState$.subscribe(loading => this.loading = loading)
+
+
   }
 
-  ngOnInit() {
-  }
-
-  ngOnChanges() {
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
+    this.progressSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   deletePatients() {
@@ -110,24 +115,24 @@ export class PatientUploadComponent implements OnInit {
 
       // listen for the file to be loaded; then save the result.
       reader.onload = (e) => {
-        this.uploadResponse = "File uploaded; review the new and replacement patient IDs and then upload";
+        this.uploadResponse = "File uploaded; checking if the records already exist in the database.";
 
         this.data2upload = this.prepData(reader.result);
-        console.log(this.data2upload )
+        console.log(this.data2upload)
 
         this.uploadSize = Math.floor((this.dataLength / this.fileKB) * this.maxUploadKB);
         // double check upload size is greater than 0.
         this.uploadSize = this.uploadSize === 0 ? 1 : this.uploadSize;
 
-        this.apiSvc.prepUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+        this.apiSvc.prepPatientUpload("patient", "patientID", this.data2upload).subscribe(dupes => {
+          this.uploadResponse = "Review the new and replacement IDs and then upload";
           console.log(dupes)
-          dupes.sort((a,b) => a < b ? -1 : 1);
+          dupes.sort((a, b) => a < b ? -1 : 1);
           this.dupes = dupes;
           this.replacementIDs = this.data2upload.filter(d => d["_id"]).map(d => d["patientID"]);
-          this.replacementIDs.sort((a,b) => a < b ? -1 : 1);
+          this.replacementIDs.sort((a, b) => a < b ? -1 : 1);
           this.newIDs = this.data2upload.filter(d => !d["_id"]).map(d => d["patientID"]);
-          this.newIDs.sort((a,b) => a < b ? -1 : 1);
-
+          this.newIDs.sort((a, b) => a < b ? -1 : 1);
         })
         // Clear input so can re-upload the same file.
         document.getElementById("file_uploader")['value'] = "";
@@ -136,7 +141,7 @@ export class PatientUploadComponent implements OnInit {
 
   }
 
-  uploadData(){
+  uploadData() {
     this.uploading = true;
     console.log(this.data2upload);
     this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";

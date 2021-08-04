@@ -29,17 +29,29 @@
   schema:isPartOf:
     "@id":               https://data.cvisb.org/schema
 
-- "@id":                 cvisb:drug
+- "@id":                 cvisb:name
   "@type":               rdf:Property
   rdfs:comment:          Drug name
-  rdfs:label:            drug
+  rdfs:label:            name
   schema:domainIncludes:
     - "@id":             cvisb:Medication
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           required
-  authenticated:         true
+  authenticated:         false
+
+- "@id":                 cvisb:isDrugAdministered
+  "@type":               rdf:Property
+  rdfs:comment:          Whether the drug is administered (true/false)
+  rdfs:label:            isDrugAdministered
+  schema:domainIncludes:
+    - "@id":             cvisb:Medication
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
 
 - "@id":                 cvisb:@type
   "@type":               rdf:Property
@@ -90,7 +102,7 @@
     - "@id":             schema:Float
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
 - "@id":                 cvisb:doseUnits
   "@type":               rdf:Property
@@ -102,7 +114,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
 - "@id":                 cvisb:doseFrequency
   "@type":               rdf:Property
@@ -114,7 +126,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
 - "@id":                 cvisb:doseDuration
   "@type":               rdf:Property
@@ -126,7 +138,7 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
 - "@id":                 cvisb:drugRoute
   "@type":               rdf:Property
@@ -138,4 +150,4 @@
     - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false

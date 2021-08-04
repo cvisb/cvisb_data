@@ -9,38 +9,54 @@ ID_DICT = f"{DATADIR}/output_data/patients/patients_2019-09-13_PRIVATE_dict.json
 
 # --- patients ---
 # ACUTE_IDS_FILE = f"{DATADIR}/input_data/patient_rosters/additional_IDdict_v3_2019-10-23.csv"
-ACUTE_IDS_FILE = f"{DATADIR}/input_data/patient_rosters/complete_acuteid_roster_v1_2019-11-01.xlsx"
-ACUTE_LASSA_FILE = f"{DATADIR}/input_data/patient_rosters/acuteLassa_patientdata_v2_2019-06-12_PRIVATE.csv"
-ACUTE_LASSA_IDS = f"{DATADIR}/input_data/patient_rosters/acuteLassa_IDdict_v1_2019-03-27_PRIVATE.xlsx"
-SURVIVOR_IDS = f"{DATADIR}/input_data/patient_rosters/survivor_IDdict_v2_2019-03-06_PRIVATE.xlsx"
-SURVIVOR_EBOLA_FILE = f"{DATADIR}/input_data/patient_rosters/ebolaSurvivors_metadata_v2_2019-03-13_PRIVATE.xlsx"
-PATIENTS_UPDATEDBY = "John Schieffelin"
+PATIENT_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/DisseminationData_31Aug20.xlsx"
+PATIENTS_UPDATEDBY = "Emily Engel"
 PATIENTS_DATE = today
-PATIENTS_VERSION = 0.2
+PATIENTS_VERSION = 0.3
 
 # --- hla ---
-HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_20191024.csv"
-HLA_DATE = today
-HLA_VERSION = 0.2
+HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_2020-01-30.csv"
+HLA_DATE = "2020-11-23"
+HLA_VERSION = 0.3
 HLA_UPDATEDBY = "Matthias Pauthner"
 
 # --- lassa virus seq ---
+ALIGNMENTS = [
+    {"virus": "Lassa",
+     "segment": "S",
+     "filename": "LASV_NP-GP_2020.11.23.fasta",
+     "description": "Lassa virus NP-GP curated alignment",
+     "curated": True,
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP_GPC_2020.11.23.fasta"},
+    {"virus": "Lassa",
+     "segment": "L",
+     "filename": "LASV_L_Z_2020.11.23.fasta",
+     "description": "Lassa virus L-Z curated alignment",
+     "curated": True,
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2020.11.23.fasta"},
+    {"virus": "Ebola",
+     "segment": None,
+     "filename": "EBOV_ORFs_2020.08.04.fasta",
+     "curated": True,
+     "description": "Ebola virus curated alignment",
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2020.08.04.fasta"}
+]
 # LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
-LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2019.11.21.fasta"
-LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L-Z_2019-11-22.fasta"
-LVIRAL_LFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2019.11.26.fasta"
-# LVIRAL_RAWFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.fasta"
-LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_up_public_curated_2019.11.25.csv"
-LVIRAL_DATE = today
-LVIRAL_VERSION = 0.2
+LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2020.11.23.fasta"
+LVIRAL_SFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_non_curated_2020.11.23.fasta"
+LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_2020.11.23.fasta"
+LVIRAL_LFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2020.11.23.fasta"
+LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_lasv_curated_2020.11.23.csv"
+LVIRAL_DATE = "2020-11-23"
+LVIRAL_VERSION = 0.3
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
-EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_curated_2020.06.22.fasta"
-EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_non_curated_2020.06.22.fasta"
-EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.06.22.csv"
-EVIRAL_DATE = today
-EVIRAL_VERSION = 0.2
+EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_curated_2020.08.04.fasta"
+EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_non_curated_2020.08.04.fasta"
+EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.08.03.csv"
+EVIRAL_DATE = "2020-11-16"
+EVIRAL_VERSION = 0.3
 EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
@@ -63,10 +79,15 @@ EXPTCOLS = ['privatePatientID', 'experimentID', 'sampleID', 'visitCode', 'batchI
 
 
 # for non-KGH patients: what info should be
-PATIENTCOLS = ["patientID", "alternateIdentifier", "hasPatientData", "hasSurvivorData",
-               "dateModified", "updatedBy", "cohort", "outcome", "country", "countryName", "admin2", "admin3", "homeLocation", "exposureLocation",
-               "infectionYear", "species", 'sourceFiles', 'correction',
-               'publisher', 'citation']
+PATIENTCOLS = [
+                "patientID", "species", "alternateIdentifier",
+                "hasPatientData", "hasSurvivorData",
+                "dateModified", "updatedBy", "dataStatus",
+                'sourceFiles', "version",
+                "cohort", "outcome",
+                "country", "countryName", "location", "locationPrivate",
+                "infectionYear",
+                'publisher', 'citation','correction']
 
 # For all experiments, to relate sample <--> experiment
 SAMPLECOLS = ["creatorInitials", "sampleLabel",

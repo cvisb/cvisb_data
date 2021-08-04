@@ -60,6 +60,11 @@ $nav-width: 215px;
     border: none;
   }
 
+  &.COVID-19 {
+    background: lighten($covid-lt, 10%);
+    border: none;
+  }
+
   &.Control {
     background: $grey-50;
   }
@@ -76,6 +81,12 @@ $nav-width: 215px;
   &.Ebola {
     color: $ebola-md;
     -webkit-text-stroke-color: $ebola-color;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  &.COVID-19 {
+    color: $covid-md;
+    -webkit-text-stroke-color: $covid-color;
     -webkit-text-stroke-width: 1px;
   }
 
@@ -101,6 +112,7 @@ $nav-width: 215px;
 
 .cohort-group {
   font-size: 1.35em;
+  flex-shrink: 0;
 }
 
 .altIDs {

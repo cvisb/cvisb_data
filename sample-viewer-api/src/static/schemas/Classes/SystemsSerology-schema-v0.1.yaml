@@ -63,6 +63,21 @@
                         - ADNKA_CD107a
                         - ADNKA_IFNg
                         - ADNKA_MIP1b
+                        - FcRg2A
+                        - NKD-MIP1b
+                        - IgA2
+                        - NKD-CD107a
+                        - IgG4
+                        - IgG2
+                        - IgM
+                        - SNA
+                        - IgG3
+                        - FcRg3A
+                        - IgA1
+                        - IgG1
+                        - RCA
+                        - FcRg2b
+                        - NT50
   authenticated:         false
 
 - "@id":                 cvisb:assayReadout
@@ -140,7 +155,7 @@
   schema:rangeIncludes:
     - "@id":             schema:Text
   owl:cardinality:       one
-  marginality:           required
+  marginality:           recommended
   authenticated:         false
 
 - "@id":                 cvisb:antigenVirus

@@ -28,7 +28,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["includedInDataCatalog"] = ["https://data.cvisb.org/"]
 
     # descriptions
-    ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity."
+    ds["description"] = "Systems Serology aims to define the features of the humoral immune response against a given pathogen. Systems Serology analysis includes measurement of the levels antigen-specific antibodies within individual patients, measurement of antibody-mediated induction of innate immune cell effector functions, measurement of binding of antigen-specific antibodies to Fc-receptors, and measurement of neutralizing activity. Samples are taken from Ebola or Lassa Fever patients, convalescent survivors, or household contacts of these patients in Sierra Leone."
 
     # credit
     ds['creator'] = [helpers.getLabAuthor("Galit")]
@@ -44,7 +44,7 @@ def get_serology_dataset(dateModified, downloads, experiments, version, datasetI
     ds["dataDownloadIDs"] = helpers.getUnique(downloads, "identifier")
 
     measTechs = helpers.getUnique(experiments, "measurementTechnique")
-    keywords = ["systems serology", "Ebola", "Ebola virus", "EBOV", "Lassa", "Lassa virus", "LASV"]
+    keywords = ["Systems Serology", "Ebola", "Ebola virus", "EBOV", "Lassa", "Lassa virus", "LASV"]
     keywords.extend(measTechs)
     ds["keywords"] = keywords
     ds["measurementTechnique"] = measTechs

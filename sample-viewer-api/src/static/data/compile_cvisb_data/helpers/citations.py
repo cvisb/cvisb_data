@@ -28,26 +28,24 @@ def convertAuthor(authorObj):
             'familyName': family
             })
 
-
-def getSource(row):
-    if((row.citation == row.citation) & (row.citation is not None)):
-        citation = deepcopy(row.citation)
-        if(type(citation) == list):
-            for cite in citation:
-                cite["@type"] = "ScholarlyArticle"
-            return(citation)
-        else:
-            citation['@type'] = "ScholarlyArticle"
-            return([citation])
+def getSource(row, pmids):
+    citations = []
+    for pmid in pmids:
+        citation = getCitation(pmid)
+        if((citation == citation) & (citation is not None)):
+            citations.append(citation)
+    if(len(citations) > 0):
+        return(citations)
     if((row.publisher == row.publisher) & (row.publisher is not None)):
-        publisher = deepcopy(row.publisher)
-        if(type(publisher) == list):
-            for pub in publisher:
-                pub["@type"] = "Organization"
-            return(publisher)
+        if(type(row.publisher) == list):
+            return(row.publisher)
         else:
-            publisher['@type'] = "Organization"
-            return([publisher])
+            return([row.publisher])
+    if((row.creator == row.creator) & (row.creator is not None)):
+        if(type(row.creator) == list):
+            return(row.creator)
+        else:
+            return([row.creator])
     default = [{"identifier": 'unknown', "@type": "Organization", "name": "unknown"}]
     return(default)
 
@@ -67,6 +65,7 @@ def getCitation(pmid, verbose=True, ncbi_stub=ncbi_stub):
                     citation['doi'] = citation_raw['DOI']
                 except:
                     pass
+                citation['@type'] = "ScholarlyArticle"
                 citation['pmid'] = citation_raw['PMID']
                 citation["identifier"] = citation_raw['id']
                 citation["issn"] = citation_raw['ISSN']
@@ -102,7 +101,8 @@ def createCitationDict(df, pmidCol= "source_PMID"):
     pmids = getUnique(df, pmidCol)
 
     citation_dict = {}
-    for id in pmids:
+    for i, id in enumerate(pmids, start=1):
+        print(f"Starting citation lookup {i} of {len(pmids)}")
         cite = getCitation(id)
         citation_dict[id] = cite
     return(citation_dict)
@@ -138,7 +138,8 @@ def splitCreateCitationDict(df, pmidCol= "pubmedID", delim=";"):
     pmids = np.unique(vfunc(id_string.split(delim)))
 
     citation_dict = {}
-    for id in pmids:
+    for i, id in enumerate(pmids, start=1):
+        print(f"Starting citation lookup {i} of {len(pmids)}")
         cite = getCitation(id)
         citation_dict[id] = cite
     return(citation_dict)
@@ -179,6 +180,13 @@ cvisb = {
         "url": "https://cvisb.org/",
         "email": "info@cvisb.org"
     }
+}
+
+kgh = {
+    "@type": "Organization",
+    "identifier": "KGH",
+    "url": "https://vhfc.org/consortium/partners/",
+    "name": "Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"
 }
 
 cvisb_funding = [{

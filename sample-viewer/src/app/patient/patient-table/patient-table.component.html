@@ -109,9 +109,9 @@
     <ng-container matColumnDef="availableData">
       <th mat-header-cell *matHeaderCellDef>available data</th>
       <td mat-cell *matCellDef="let element">
-        <div class="expt-type expt-type-hover" *ngFor="let expt of element.availableData" [matTooltip]="(expt | experimentObject)['datasetName']" matTooltipPosition="above" [ngClass]="(expt | experimentObject)['dataset_id']">
+        <div class="expt-type expt-type-hover" *ngFor="let expt of element.availableData" [matTooltip]="(expt | experimentObject)['datasetName']" matTooltipPosition="above" [ngClass]="[(expt | experimentObject)['icon_id']]">
           <a [routerLink]="['/patient', element.patientID]" [fragment]="(expt | experimentObject)['anchor_link'] | stripWhitespace">
-            <svg-icon [icon]="(expt | experimentObject)['dataset_id']" [ngClass]="(expt | experimentObject)['dataset_id'] + '-icon'"></svg-icon>
+            <svg-icon [icon]="(expt | experimentObject)['icon_id']"></svg-icon>
           </a>
         </div>
 

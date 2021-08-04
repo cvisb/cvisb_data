@@ -32,7 +32,7 @@ export class DatasetResolver implements Resolve<any> {
   // Since `get-datasets.resolver` is recycled and re-used between different datasets, need to clear it, so you don't have viral seq data saved when you call the HLA page.
   // Could create separate resolvers for each dataset type and cache the results...
   resolve(route: ActivatedRouteSnapshot) {
-    let dsid = route.data.dsid;
+    let dsid = route.data.dsid ? route.data.dsid : route.params.dsid;
     // Send result --> this.result, which saves it to transferState
     return this.datasetSvc.getDataset(dsid);
 

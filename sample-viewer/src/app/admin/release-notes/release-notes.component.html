@@ -30,8 +30,10 @@
       </div>
     </div>
 
+    <p class="orange py-2">{{ release.abstract }}</p>
+
     <div *ngFor="let notes of release.description">
-      <h4>{{ notes.endpoint }}</h4>
+      <h4>{{ notes.category }}</h4>
       <ul class="release">
         <li *ngFor="let note of notes.note">
           {{ note }}

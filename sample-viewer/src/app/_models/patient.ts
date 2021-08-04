@@ -46,6 +46,7 @@ export class Patient {
   correction: string;
   citation: Citation[];
   publisher: Organization;
+  source: Organization[]
 }
 
 export class UnknownCount {
@@ -148,7 +149,7 @@ export class PatientDownload {
   infectionDate: string;
   infectionYear: number;
   citation: string;
-  source: string;
+  source?: string;
   correction: string;
   dataStatus: string;
 

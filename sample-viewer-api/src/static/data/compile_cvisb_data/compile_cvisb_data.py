@@ -7,14 +7,15 @@
 # @email:       lhughes@scripps.edu
 # @license:     Apache-2.0
 # @date:        31 October 2019
-# @use:         python compile_cvisb_data.py # imports / saves all
-# @use:         python compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
+# @use:         python3 compile_cvisb_data.py # imports / saves all
+# @use:         python3 compile_cvisb_data.py -t patients hla lassa-virus-seq # only runs compilation for patient data (from Tulane), HLA data (from Andersen lab), Lassa virus sequencing data (from Andersen lab)
+# @use:         python3 compile_cvisb_data.py -t ebola-virus-seq -f EBOV_seq
 
 import pandas as pd
 import argparse
 import json
 import logging
-from helpers import setupLogging, log_msg, getSource, listify
+from helpers import setupLogging, log_msg, listify
 from datetime import datetime
 from math import ceil
 
@@ -40,6 +41,7 @@ parser.add_argument("--types", "-t", required=False,
                     type=str, default=["patients", "hla", "lassa-virus-seq", "systems-serology"])
                     # type=str, default=["patients", "hla", "lassa-virus-seq", "ebola-virus-seq", "systems-serology"])
 parser.add_argument('--verbose', '-v', default=True, action='store_false', help='whether to print log file to the console')
+parser.add_argument('--filename', '-f', type=str, default="CViSB", help='file stub name')
 
 
 """
@@ -58,12 +60,12 @@ SWITCHER = {
     "systems-serology": lambda: serology.clean_serology(config.SEROLOGY_FILE, config.EXPTCOLS,
     config.SEROLOGY_UPDATEDBY, config.SEROLOGY_DATE, config.SEROLOGY_VERSION, config.VERBOSE, config.EXPORTDIR),
     "lassa-virus-seq": lambda: viralseq.clean_lassa_viral_seq(config.EXPORTDIR, config.LVIRAL_LFILE, config.LVIRAL_SFILE,
-                                                        config.LVIRAL_LFILE_UNCURATED, config.LVIRAL_MDFILE,
-                                                        config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
+                                                        config.LVIRAL_LFILE_UNCURATED, config.LVIRAL_SFILE_UNCURATED, config.LVIRAL_MDFILE,
+                                                        config.ALIGNMENTS, config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE, config.EXPORTDIR),
     "ebola-virus-seq": lambda: viralseq.clean_ebola_viral_seq(config.EXPORTDIR, config.EVIRAL_ALIGNEDFILE, config.EVIRAL_FILE_UNCURATED,
-                                                        config.EVIRAL_MDFILE,
+                                                        config.EVIRAL_MDFILE, config.ALIGNMENTS, 
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.EVIRAL_DATE, config.EVIRAL_VERSION, config.EVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE)
@@ -85,7 +87,7 @@ Compiles together all data after they have been cleaned, compiled, and coerced i
 the CViSB data schema format.  After each cleanup function has been called, the data
 are saved as a .json to be uploaded.
 """
-def compile_data(args, chunk_size=300):
+def compile_data(args, chunk_size=150):
     config.VERBOSE = args.verbose
     log_msg(f"{datetime.today()}: starting CViSB data cleanup", args.verbose)
     # empty arrays to hold results
@@ -138,26 +140,28 @@ def compile_data(args, chunk_size=300):
     # --- save jsons ---
     if(not args.nosave):
         saveJson(
-            combined['sample'], f"{config.EXPORTDIR}/samples/CViSB__sample_ALL_{config.today}.json")
+            combined['sample'], f"{config.EXPORTDIR}/samples/{config.today}_sample_{args.filename}_ALL.json")
         saveJson(
-            combined['dataset'], f"{config.EXPORTDIR}/datasets/CViSB__dataset_ALL_{config.today}.json")
-        saveJson(combined['datadownload'],
-                 f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload_ALL_{config.today}.json")
+            combined['dataset'], f"{config.EXPORTDIR}/datasets/{config.today}_dataset_{args.filename}_ALL.json")
+        if(len(combined['datadownload']) > chunk_size):
+            for i in range(0, ceil(len(combined["datadownload"])/chunk_size)):
+                saveJson(combined['datadownload'].iloc[i*chunk_size:(i+1)*chunk_size],
+                 f"{config.EXPORTDIR}/datadownloads/{config.today}_datadownload_{args.filename}_ALL_{i}.json")
 
         if(len(combined['patient']) > chunk_size):
             for i in range(0, ceil(len(combined["patient"])/chunk_size)):
                 saveJson(combined['patient'].iloc[i*chunk_size:(i+1)*chunk_size],
-                         f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}_{i}.json")
+                         f"{config.EXPORTDIR}/patients/{config.today}_{args.filename}_patient_ALL_{i}.json")
         else:
-            saveJson(combined['patient'], f"{config.EXPORTDIR}/patients/CViSB__patient_ALL_{config.today}.json")
+            saveJson(combined['patient'], f"{config.EXPORTDIR}/patients/{config.today}_patient_{args.filename}_ALL.json")
 
         if(len(combined['experiment']) > chunk_size):
             for i in range(0, ceil(len(combined["experiment"])/chunk_size)):
                 saveJson(combined['experiment'].iloc[i*chunk_size:(i+1)*chunk_size],
-                         f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}_{i}.json")
+                         f"{config.EXPORTDIR}/experiments/{config.today}_experiment_{args.filename}_ALL_{i}.json")
         else:
             saveJson(combined['experiment'],
-                 f"{config.EXPORTDIR}/experiments/CViSB__experiment_ALL_{config.today}.json")
+                 f"{config.EXPORTDIR}/experiments/{config.today}_experiment_{args.filename}_ALL.json")
 
     # --- save a sample of the data ---
     sample_n = args.export_sample
@@ -187,11 +191,11 @@ def compile_data(args, chunk_size=300):
         else:
             esample = combined['experiment']
 
-        saveJson(psample, f"{config.EXPORTDIR}/patients/CViSB__patient-randomsample_{config.today}.json")
-        saveJson(ssample, f"{config.EXPORTDIR}/samples/CViSB__sample-randomsample_{config.today}.json")
-        saveJson(dssample, f"{config.EXPORTDIR}/datasets/CViSB__dataset-randomsample_{config.today}.json")
-        saveJson(dsample, f"{config.EXPORTDIR}/datadownloads/CViSB__datadownload-randomsample_{config.today}.json")
-        saveJson(esample, f"{config.EXPORTDIR}/experiments/CViSB__experiment-randomsample_{config.today}.json")
+        saveJson(psample, f"{config.EXPORTDIR}/patients/{args.filename}__patient-randomsample_{config.today}.json")
+        saveJson(ssample, f"{config.EXPORTDIR}/samples/{args.filename}__sample-randomsample_{config.today}.json")
+        saveJson(dssample, f"{config.EXPORTDIR}/datasets/{args.filename}__dataset-randomsample_{config.today}.json")
+        saveJson(dsample, f"{config.EXPORTDIR}/datadownloads/{args.filename}__datadownload-randomsample_{config.today}.json")
+        saveJson(esample, f"{config.EXPORTDIR}/experiments/{args.filename}__experiment-randomsample_{config.today}.json")
 
     return(combined)
 
@@ -201,11 +205,6 @@ any global changes that need to be made at the end.
 For example: creating `sourceCitation`, which is `row.citation ? row.citation : rowpublisher;`
 """
 def cleanCombined(patients, samples, experiments, datasets, datadownloads):
-    if(len(experiments) > 0):
-        experiments['sourceCitation'] = experiments.apply(getSource, axis = 1)
-    if(len(patients) > 0):
-        patients['sourceCitation'] = patients.apply(getSource, axis = 1)
-
     combined = {"patient": patients, "sample": samples, "dataset": datasets,
                 "datadownload": datadownloads, "experiment": experiments}
     return(combined)

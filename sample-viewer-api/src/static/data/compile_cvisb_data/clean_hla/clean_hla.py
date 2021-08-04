@@ -2,6 +2,7 @@
 # Mainly: standardize variable names, classifications
 # And convert to a long dataset from wide
 import pandas as pd
+import numpy as np
 import helpers
 import re
 import json
@@ -47,7 +48,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
 
     # Replace - with NA
     for col in hla_cols:
-        dupes[col].replace(r'\-', pd.np.nan, regex=True, inplace=True)
+        dupes[col].replace(r'\-', np.nan, regex=True, inplace=True)
     # exact_dupes = dupes[dupes.duplicated(keep=False, subset=hla_cols)]
 
     # Less conservative estimation of duplication:
@@ -92,6 +93,10 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     df['outcome'] = df['Outcome'].apply(lambda x: helpers.cleanOutcome(x))
     df['cohort'] = df['Status '].apply(lambda x: helpers.cleanCohort(x))
     df['country'] = df['Location'].apply(lambda x: helpers.getCountry(x))
+    df['countryName'] = df.country.apply(lambda x: helpers.getCountryName(x["identifier"]))
+    df['location'] = df.country.apply(lambda x: addLocationType(x))
+    df['locationPrivate'] = df.location
+    df["infectionYear"] = None # just needed for variable listing
 
     # Check for duplicates
     # dupe_cols =  ["privatePatientID", "ID", "gID", "sID", "cohort", "outcome", "Typing Institution"]
@@ -150,7 +155,7 @@ exptCols, patientCols, sampleCols, downloadCols, saveJsons, verbose, datasetID="
     df_long['locus'] = df_long.locus.apply(cleanLoci)
 
     # Check all NANs are really nan
-    df_long.allele.replace(r'\-', pd.np.nan, regex=True, inplace=True)
+    df_long.allele.replace(r'\-', np.nan, regex=True, inplace=True)
     # From 2019-01-09 calls: 1095 '-' + 213 NaNs.
     # Double check no other '-', etc.
     df_long.allele.value_counts(dropna=False)
@@ -213,3 +218,7 @@ def simplifyAllele(row, hla_cols):
                 allele.append(call[1] + call[2])
     allele.sort()
     return("_".join(allele))
+
+def addLocationType(obj, type = "home"):
+    obj["locationType"] = "home"
+    return(obj)

@@ -1,4 +1,99 @@
 # Prod
+### 2020-11-24
+* Updated Lassa-virus-seq data (dataset, downloads, experiments, patients)
+* Rebuilt schema (minor changes to Symptoms)
+
+### 2020-11-19
+* Rebuilt schema (minor changes to DataCatalog)
+
+### 2020-11-17 / 2020-11-18
+* Deleted /patient index and recreated, without `infectionDate` as a `DateRange`
+  - KGH acute patients
+  - KGH survivor patients (excluding those w/ a G-id)
+  - SARS-CoV-2 sequencing patients
+  - EBOV sequencing patients (non-KGH)
+  - LASV sequencing patients (non-KGH)
+* New datasets
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* New datadownloads
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* New experiments
+  - removed and updated ebola-virus-seq
+  - systems-serology-32783920 (SARS-CoV-2 serology)
+  - rtcpr-32783920
+  - blood-counts-vhf
+  - blood-chemistry-vhf
+  - rtpcr-vhf
+  - rapid-diagnostics-vhf
+  - vitals-vhf
+* updated data catalog
+* rebuilt schema
+* sync'd public/private indices
+
+### 2020-11-03
+* Wiped and updated SARS-CoV-2 experiments to include "data" field
+* Updated datacatalog
+* public/private sync
+
+### 2020-09-15
+* Wiped, reinstalled and `npm update fix`'d node_modules.
+
+### 2020-08-28
+ * Wiped and readded SARS-CoV-2 experiment data, now totals 1195 again.
+ * pub/priv sync
+ 
+### 2020-08-27
+ * Wiped and readded SARS-CoV-2 experiment data adding sourceCitation
+ * Wiped and readded SARS-CoV-2 patient information removing duplicate entries
+ * SARS-CoV-2 totals now 1134 experiments and 1195 patients
+ * Reran public / private sync
+
+### 2020-08-27 v0.2.3
+* Re-ran schema generation to add Ghana
+* Wiped and reloaded `ebola-virus-seq`
+    -	1 dataset
+    - 2,309 experiments
+    - 2,310 data downloads
+* Wiped, re-ran, and reloaded `lassa-virus-seq`
+    -	1 dataset
+    - 1,318 experiments
+    - 1,807 data downloads
+* Updated datacatalog
+
+Not updated but logging:
+* HLA
+  - 1 dataset
+  - 370 experiments
+  - 371 data downloads
+* Serology (Ebola/Lassa)
+  - 1 dataset
+  - 2,554 experiments
+  - 1 data download
+* SARS-CoV-2 Virus Seq
+  - 1 dataset
+  - 1,195 experiments
+  - 1,195 patients
+
+    
+### 2020-08-25
+* Updated schema (prod and dev): added Country options for Jordan and Mexico.
+* Added in SARS-CoV2 sequencing data.
+* synchronized public + private
+
 ### 2020-06-23
 * Updated schema (prod and dev): removed requiredness of country
 * updated Ebola virus sequence data
@@ -94,6 +189,10 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2020-09-15
+* Ran into disk space issues; released 2GB from the swapfile
+* Removed, reinstalled, and `npm audit fix`'d `node_modules`
+
 ### 2020-02-18: Angular 9 install
 1. cleaned up a few random things
 - Added json import to `tsconfig.json`

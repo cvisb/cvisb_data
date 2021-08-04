@@ -1,3 +1,7 @@
+<div class="spinner-container container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
 <mat-form-field>
   <mat-label>Select an endpoint</mat-label>
   <mat-select [(value)]="endpoint">
@@ -11,15 +15,48 @@
 <!-- <div class="upload-button"> -->
 <div class="upload-button" *ngIf="user.write">
   <!-- Dummy for styling -->
-  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Upload data</button>
+  <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Load file</button>
   <!-- Actual workhorse to upload the data on the client side -->
   <input hidden class="d-none" type="file" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".csv,.xlsx,.xls,.json" id="file_uploader">
+
+  <button style="margin-left: 25px" type="button" mat-raised-button color="warn" [disabled]="!data2upload || uploading" (click)="uploadData()">Upload data</button>
 
 
   <div class="client-responses">
 
     <ng-container *ngIf="uploadResponse">
       <h1>{{ uploadResponse }}</h1>
+
+      <!-- data replacement comments -->
+      <ng-container *ngIf="data2upload && !uploading">
+        <ng-container *ngIf="dupes && dupes.length">
+          <h3 class="warning">These records have multiple entries in the database.</h3>
+          <p>
+            This is probably an error! Delete the duplicates. If you proceed with the upload, the first entry will be overwritten, and the other ones will remain unchanged.
+          </p>
+          <span *ngFor="let item of dupes" class="mr-3">
+            {{item}}
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="replacementIDs && replacementIDs.length">
+          <h3 class="warning">Existing IDs which will be overwritten</h3>
+          <p>
+            These records already exist in the database. They will be overwritten.
+          </p>
+          <span *ngFor="let id of replacementIDs" class="mr-3">
+            {{id}}
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="newIDs && newIDs.length">
+          <h3>New IDs to add:</h3>
+          <span *ngFor="let id of newIDs" class="mr-3">
+            {{id}}
+          </span>
+        </ng-container>
+      </ng-container>
+
       <mat-progress-bar mode="determinate" [value]="uploadProgress" class="progress-bar"></mat-progress-bar>
       <p class="pct-complete">
         {{ uploadProgress | number:'1.0-0' }}% complete

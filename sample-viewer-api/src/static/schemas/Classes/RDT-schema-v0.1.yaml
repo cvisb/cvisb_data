@@ -46,10 +46,22 @@
 
 
 # identifier
-- "@id":                 cvisb:virus
+- "@id":                 cvisb:antigen
   "@type":               rdf:Property
-  rdfs:comment:          Virus tested in ELISA (Ebola, Lassa, or SARS-CoV-2)
-  rdfs:label:            virus
+  rdfs:comment:          Antigen tested in RDT
+  rdfs:label:            antigen
+  schema:domainIncludes:
+    - "@id":             cvisb:RDT
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:infectiousAgent
+  "@type":               rdf:Property
+  rdfs:comment:          Infectious agent tested in RDT (Ebola, Lassa, Plasmodium, or SARS-CoV-2)
+  rdfs:label:            infectiousAgent
   schema:domainIncludes:
     - "@id":             cvisb:RDT
   schema:rangeIncludes:
@@ -59,6 +71,7 @@
   schema:Enumeration:
                           - Ebola
                           - Lassa
+                          - Plasmodium
                           - SARS-CoV-2
   authenticated:         true
 

@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
 export class DataQualityService {
   facetVar: string = "cohort.keyword";
   variablesExist: Object[] = [
-    { group: "provenance", variables: ['dateModified', 'dataStatus', 'sourceFiles', 'citation', 'sourceCitation'] },
+    { group: "provenance", variables: ['dateModified', 'dataStatus', 'sourceFiles', 'citation'] },
     {
       group: "demographics", variables: [
         'patientID', 'species', 'occupation', 'ethnicity', 'age', 'height', 'weight', 'pregnant',

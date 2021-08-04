@@ -1,0 +1,23 @@
+.current-version {
+  font-size: 3em;
+  text-align: center;
+}
+
+.huge {
+  font-size: 48px;
+  display: inline-flex;
+  vertical-align: top !important;
+  line-height: 48px;
+}
+
+.catalog {
+  color: #00abe5;
+}
+
+.blue-underline {
+  border-bottom: 1px solid #00abe5;
+}
+
+::ng-deep .mat-datepicker-content .mat-calendar {
+    background: #fffffff0 !important;
+}

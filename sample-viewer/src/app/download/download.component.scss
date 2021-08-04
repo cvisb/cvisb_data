@@ -1,0 +1,30 @@
+@import '../../sass/variables.scss';
+
+.dwnld-filter-container {
+  background: $grey-50;
+  border-right: 2px solid $grey-200;
+  padding: 0.5rem 1rem;
+}
+
+.filter-group {
+  border-bottom: 1px solid $grey-300;
+  padding-bottom: 0.5rem;
+}
+
+#filtered-summary {
+  border-top: 1px solid $grey-600;
+  border-bottom: 1px solid $grey-600;
+  padding: 0.5rem 0;
+}
+
+.download-table {
+  width: 50%;
+}
+
+.td-padded {
+  padding: 0 0.75rem !important;
+}
+
+.download-icon {
+  margin-left: 0.75em !important;
+}

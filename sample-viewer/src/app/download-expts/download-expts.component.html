@@ -1,0 +1,12 @@
+<h1>Download experimental data</h1>
+
+<div *ngIf="datasets$ | async as datasets">
+  <div *ngFor="let dataset of datasets; let idx = index" class="container-column mb-4">
+    <a class="dataset-links" [routerLink]="['/download', dataset.identifier]">
+      {{dataset.name}}
+    </a>
+    <small>
+      {{dataset.description}}
+    </small>
+  </div>
+</div>

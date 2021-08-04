@@ -14,6 +14,7 @@ export class UploadComponent implements OnInit {
     { label: "samples", path: "sample" },
     { label: "dataset", path: "dataset" },
     { label: "patients", path: "patient" },
+    { label: "catalog", path: "catalog" },
     { label: "delete", path: "delete" }
   ]
 

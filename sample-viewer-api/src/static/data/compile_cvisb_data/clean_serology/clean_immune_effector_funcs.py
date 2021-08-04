@@ -60,7 +60,7 @@ def clean_immune_effector_funcs(filename, expt_cols, updatedBy, dateModified, ve
     # --- experiment classifications ---
     df['includedInDataset'] = "systems-serology"
     df['measurementCategory'] = "Systems Serology"
-    df['measurementTechnique'] = "serology"
+    df['measurementTechnique'] = "Serology"
     df['variableMeasured'] = df.assay
 
     # --- Credit ---

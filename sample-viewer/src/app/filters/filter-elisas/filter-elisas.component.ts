@@ -60,7 +60,7 @@ export class FilterElisasComponent implements OnInit, OnDestroy {
 
 ngOnDestroy() {
   this.formSubscription.unsubscribe();
-  
+
   if (this.patientSubscription) {
     this.patientSubscription.unsubscribe();
   }
@@ -72,7 +72,7 @@ ngOnDestroy() {
   // Get method to grab the formArray within formGroup
   // https://github.com/angular/angular-cli/issues/6099#issuecomment-297982698
   get elisaArray() {
-    return this.elisaForm.get('elisaGroups') as FormArray;;
+    return this.elisaForm.get('elisaGroups') as FormArray;
   }
 
   createGroup(): FormGroup {

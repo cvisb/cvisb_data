@@ -113,6 +113,7 @@
                            - Vital Signs Measurement
                            - Rapid Antigen Test
                            - Reverse Transcriptase-Polymerase Chain Reaction
+                           - Blood Cell Count
                            - ELISA
                            - Clinical Observation
   authenticated:         false
@@ -144,15 +145,30 @@
                            - ADNKA_CD107a
                            - ADNKA_IFNg
                            - ADNKA_MIP1b
+                           - NKD-CD107a
+                           - IgG2
+                           - FcRg2b
+                           - FcRg2A
+                           - NKD-MIP1b
+                           - IgA1
+                           - FcRg3A
+                           - RCA
+                           - IgG3
+                           - IgM
+                           - IgG4
+                           - IgA2
+                           - SNA
+                           - IgG1
+                           - NT50
                            - metabolomics
                            - blood chemistry
+                           - blood cell count
                            - vitals
                            - virus level
                            - patient antibody response
                            - acute symptoms
                            - sequelae
                            - coma score
-                           - medications
 
 # URL
 - "@id":                 cvisb:url
@@ -207,12 +223,15 @@
                            - bcr
                            - tcr
                            - systems-serology
-                           - metabolomics
-                           - blood-chemistry
-                           - sensor-vitals
-                           - rapid-diagnostics
-                           - RT-PCR
-                           - clinical-observations
+                           - systems-serology-32783920
+                           - rtpcr-32783920
+                           - blood-chemistry-vhf
+                           - blood-counts-vhf
+                           - vitals-vhf
+                           - rtpcr-vhf
+                           - rapid-diagnostics-vhf
+                           - sensor-vitals-vhf
+                           - clinical-observations-vhf
 
 - "@id":                 cvisb:@id
   "@type":               rdf:Property
@@ -435,6 +454,7 @@
     - "@id":             cvisb:Dataset
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
+    - "@id":             cvisb:Organization
   schema:sameAs:
     "@id":               schema:citation
   owl:cardinality:       many

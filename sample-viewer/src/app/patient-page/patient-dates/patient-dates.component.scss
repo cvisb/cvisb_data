@@ -38,6 +38,11 @@
     color: $ebola-md;
   }
 
+  &.COVID-19 {
+    background: lighten($covid-lt, 10%);
+    color: $covid-md;
+  }
+
   &.Lassa {
     background: lighten($lassa-md, 33%);
     color: $lassa-md;

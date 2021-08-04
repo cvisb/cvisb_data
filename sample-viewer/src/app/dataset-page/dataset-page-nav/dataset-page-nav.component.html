@@ -1,7 +1,20 @@
 <nav class="dataset-links">
-  <ul class="level0">
+  <ul class="level0" *ngIf="isCustom; else default">
     <li *ngFor="let link of links[id]">
       <a class="link" [routerLink]="['../', id]" [fragment]="link.key" (click)="onAnchorClick(link.key)">{{link.name}}</a>
     </li>
+    <li>
+      <a class="link" [routerLink]="['/download/' + id]">Download data</a>
+    </li>
   </ul>
+  <ng-template #default>
+    <ul class="level0">
+      <li *ngFor="let link of links['default']">
+        <a class="link" [routerLink]="['../', id]" [fragment]="link.key" (click)="onAnchorClick(link.key)">{{link.name}}</a>
+      </li>
+      <li>
+        <a class="link" [routerLink]="['/download/' + id]">Download data</a>
+      </li>
+    </ul>
+  </ng-template>
 </nav>

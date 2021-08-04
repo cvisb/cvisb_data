@@ -13,15 +13,6 @@ import yaml
 import fnmatch
 import csv
 
-# How expected files should be combined:
-schema_grps = {
-# 'sample': ['sample-schema', 'SampleLocation-schema', 'derivedSample-schema'],
-# 'experiment': ['andersenSequencing', 'ELISA', 'experiment', 'RDT', 'RepertoireSequencing', 'rt_pcrResult', 'sequencingExperiment', 'systemsSerology'],
-# 'patient': ['Patient'],
-# 'dataset': ['Dataset', 'DataDownload', 'DataCatalog']
-}
-
-
 def open_yaml(yaml_file):
     '''Convert input yaml file as JSON file.'''
     with open(yaml_file) as in_f:
@@ -31,9 +22,9 @@ def open_yaml(yaml_file):
         # with open(outfile, 'w') as out_f:
         #     json.dump(schema_data, out_f, indent=2)
 
-# files = os.listdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
-# os.chdir("/Users/laurahughes/GitHub/sample_viewer_web/sample-viewer-api/src/static/schemas/")
-# context_file = "cvisb-context.yaml"
+files = os.listdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes")
+os.chdir("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/")
+context_file = "cvisb-context.yaml"
 
 # file="/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/schemas/Classes/Patient-schema-v0.1.yaml"
 # schema = open_yaml(file)
@@ -58,7 +49,8 @@ def get_validation(schema):
     with open(validation_file, 'w') as out_f:
         json.dump(validation_schema, out_f, indent=2)
 
-def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", output_file = None):
+
+def convert(context_file, schema_files = schema_files, schema_dir = "Classes", output_file = None):
     current_dir = os.curdir
     schema_dir = f'{current_dir}/{schema_dir}'
 
@@ -68,8 +60,13 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
     yamls = []
     for file in all_files:
         if fnmatch.fnmatch(file, "*.yaml"):
-            yamls.append(file)
-
+            if(len(schema_files)):
+                for schema_file in schema_files:
+                    if fnmatch.fnmatch(file, f"{schema_file}*"):
+                        yamls.append(file)
+            else:
+                yamls.append(file)
+    schema_grps = {}
     schema_grps['schemadotorg'] = yamls
     context = open_yaml(f"{current_dir}/{context_file}")
 
@@ -82,7 +79,8 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
 
     # Loop over schema groups
     for key, sel_files in schema_grps.items():
-        output_file = f"{os.path.splitext(context_file)[0].split('-')[0] + '-' + key + '-' + version + '.jsonld'}"
+        if(output_file is None):
+            output_file = f"{os.path.splitext(context_file)[0].split('-')[0] + '-' + key + '-' + version + '.jsonld'}"
 
         schema_graph = []
 
@@ -90,6 +88,7 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
         for sel_file in sel_files:
             for file in all_files:
                 if fnmatch.fnmatch(file, sel_file):
+                    # print(sel_file)
                     schema = open_yaml(f"{schema_dir}/{file}")
                     schema_graph.extend(schema)
 
@@ -97,8 +96,16 @@ def convert(context_file, schema_grps = schema_grps, schema_dir = "Classes", out
 
         with open(output_file, 'w') as out_f:
             json.dump(schema_data, out_f, indent=2)
+        print("DONE!")
 
-convert("cvisb-context.yaml")
+# Call the conversion
+# Convert a subset, for testing
+schema_files = []
+
+# All files
+#  ["Accelerometry-schema-v0.1.yaml", "AdministrativeArea-schema-v0.1.yaml", "AndersenSequencing-schema-v0.1.yaml", "BloodCountData-schema-v0.1.yaml", "BodyTemperature-schema-v0.1.yaml", "ComaScore-schema-v0.1.yaml", "ContactPoint-schema-v0.1.yaml", "Country-schema-v0.1.yaml", "Data-schema-v0.1.yaml", "DataCatalog-schema-v0.1.yaml", "DataDownload-schema-v0.1.yaml", "Dataset-schema-v0.1.yaml", "DateRange-schema-v0.1.yaml", "DerivedSample-schema-v0.1.yaml", "DiastolicPressure-schema-v0.1.yaml", "ECGPoint-schema-v0.1.yaml", "ELISA-schema-v0.1.yaml", "Experiment-schema-v0.1.yaml", "HLAData-schema-v0.1.yaml", "HeartRate-schema-v0.1.yaml", "MeanArterialPressure-schema-v0.1.yaml", "Medication-schema-v0.1.yaml", "MonetaryGrant-schema-v0.1.yaml", "Organization-schema-v0.1.yaml", "OxygenSaturation-schema-v0.1.yaml", "Patient-schema-v0.1.yaml", "Person-schema-v0.1.yaml", "PiccoloData-schema-v0.1.yaml", "PiccoloMeasurement-schema-v0.1.yaml", "Place-schema-v0.1.yaml", "PostalAddress-schema-v0.1.yaml", "RDT-schema-v0.1.yaml", "RTPCR-schema-v0.1.yaml", "ReleaseNote-schema-v0.1.yaml", "ReleaseSummary-schema-v0.1.yaml", "RepertoireSequencing-schema-v0.1.yaml", "RespiratoryRate-schema-v0.1.yaml", "SNPData-schema-v0.1.yaml", "Sample-schema-v0.1.yaml", "SampleLocation-schema-v0.1.yaml", "ScholarlyArticle-schema-v0.1.yaml", "SequencingExperiment-schema-v0.1.yaml", "SkinTemperature-schema-v0.1.yaml", "SoftwareSourceCode-schema-v0.1.yaml", "Symptom-schema-v0.1.yaml", "SystemsSerology-schema-v0.1.yaml", "SystolicPressure-schema-v0.1.yaml", "ViralSeqData-schema-v0.1.yaml"]
+
+convert("cvisb-context.yaml", schema_files = schema_files, output_file="cvisb_schemaorg.jsonld")
 
 if __name__ == '__main__':
     context_file = sys.argv[1]

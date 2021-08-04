@@ -31,7 +31,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
 
   // plot sizes
   private element: any;
-  @Input() private margin: any = { top: 2, bottom: 2, left: 40, right: 100 };
+  @Input() private margin: any = { top: 2, bottom: 2, left: 50, right: 100 };
 
   @Input() private height: number;
   @Input() private width: number = 70;
@@ -158,7 +158,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
       let keys = this.data.map(d => d.term);
 
       // If there are no bulk values, set to the keys.
-      if (this.options.length === 0) {
+      if (!this.options || this.options.length === 0) {
         this.options = keys;
       } else {
         let missing_data = this.options.filter(d => !keys.includes(d));
@@ -166,6 +166,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
           this.data.push({ term: d, count: 0 });
         })
       }
+
 
       // if selectedCohorts doesn't exist, set to the cohorts.
       if (!this.selectedOutcomes) {
@@ -249,7 +250,7 @@ export class MiniBarplotComponent implements AfterViewInit, OnDestroy {
         .attr("y", (d: any) => this.y(d[this.name_var]) + this.y.bandwidth() / 2)
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .classed('disabled', (d: any) => d.count === 0)
-        .text((d: any) => (d.count))
+        .text((d: any) => d3.format(",")(d.count))
         .transition(t)
         .attr("x", (d: any) => this.x(d.count));
 

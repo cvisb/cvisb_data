@@ -59,7 +59,7 @@ def get_metadata_from_gcloud_files():
     fastas_path  = path.join(file_path, 'consensus_files-2020-11-13.txt')
     sras_path    = path.join(file_path, 'SraRunTable.csv')
     url_for_file = {}
-    
+
     with open(sras_path, newline='') as sra_file:
         sra_dict = {remove_location_patient_id(sra['Library Name']): sra['Run']
                     for sra in csv.DictReader(sra_file)}
@@ -134,7 +134,7 @@ def create_data_download(name, url, experiment_ids):
         "dateModified":         today,
         "experimentIDs":        experiment_ids,
     }
-    
+
     return datadownload
 
 def create_experiment(patient_id, citation):
@@ -194,7 +194,7 @@ def create_patient(patient_id, patient_source, location, sample_date):
         week = create_week(confirm_date)
         patient['presentationDate'] = sample_date
         patient['presentationWeek'] = week
-        
+
     except ValueError:
         # sample_date is not in YYYY-MM-DD format
         pass
@@ -232,7 +232,7 @@ def create_location(location_string):
 
     country = {'name': name}
 
-    country = {  
+    country = {
         "@type": "Country",
         "name":  name,
         "administrativeUnit": 0,
@@ -241,7 +241,7 @@ def create_location(location_string):
         "url": f"https://www.iso.org/obp/ui/#iso:code:3166:{identifier}"
     }
 
-    home_location = { 
+    home_location = {
         "name":  city,
     }
     return country, home_location

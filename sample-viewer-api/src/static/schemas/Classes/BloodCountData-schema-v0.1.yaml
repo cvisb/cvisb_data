@@ -1,0 +1,167 @@
+- "@id":                 cvisb:BloodCountData
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing complete blood count analysis of patients in the Center for Viral Systems Biology.
+  rdfs:label:            BloodCountData
+  rdfs:subClassOf:
+    "@id":               cvisb:Data
+  schema:isPartOf:
+    "@id":               https://data.cvisb.org/schema
+
+
+- "@id":                 cvisb:@type
+  "@type":               rdf:Property
+  rdfs:comment:          Type of data
+  rdfs:label:            "@type"
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           required
+  authenticated:         false
+  schema:Enumeration:
+                           - BloodCountData
+
+- "@id":                 cvisb:wholeBloodCount
+  "@type":               rdf:Property
+  rdfs:comment:          "Whole blood count from complete blood count measurement (cells / uL)"
+  rdfs:label:            wholeBloodCount
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:hemoglobin
+  "@type":               rdf:Property
+  rdfs:comment:          "Hemoglobin (g/dL); Complete Blood Count measurement"
+  rdfs:label:            hemoglobin
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:platelets
+  "@type":               rdf:Property
+  rdfs:comment:          "platelets (/uL); Complete Blood Count measurement"
+  rdfs:label:            platelets
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:neutrophils
+  "@type":               rdf:Property
+  rdfs:comment:          "neutrophils (% age); Complete Blood Count measurement"
+  rdfs:label:            neutrophils
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:bands
+  "@type":               rdf:Property
+  rdfs:comment:          "bands (% age); Complete Blood Count measurement"
+  rdfs:label:            bands
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:lymphocytes
+  "@type":               rdf:Property
+  rdfs:comment:          "lymphocytes (% age); Complete Blood Count measurement"
+  rdfs:label:            lymphocytes
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:monocytes
+  "@type":               rdf:Property
+  rdfs:comment:          "monocytes (% age); Complete Blood Count measurement"
+  rdfs:label:            monocytes
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:eosinophils
+  "@type":               rdf:Property
+  rdfs:comment:          "eosinophils (% age); Complete Blood Count measurement"
+  rdfs:label:            eosinophils
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:basophils
+  "@type":               rdf:Property
+  rdfs:comment:          "basophils (% age); Complete Blood Count measurement"
+  rdfs:label:            basophils
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Integer
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:prothrombinTime
+  "@type":               rdf:Property
+  rdfs:comment:          "prothrombin time (seconds); Complete Blood Count measurement"
+  rdfs:label:            prothrombinTime
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:internationalNormalizationRatio
+  "@type":               rdf:Property
+  rdfs:comment:          "international normalization ratio; Complete Blood Count measurement"
+  rdfs:label:            internationalNormalizationRatio
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+
+- "@id":                 cvisb:dDimer
+  "@type":               rdf:Property
+  rdfs:comment:          "D-Dimer test; Complete Blood Count measurement"
+  rdfs:label:            dDimer
+  schema:domainIncludes:
+    - "@id":             cvisb:BloodCountData
+  schema:rangeIncludes:
+    - "@id":             schema:Float
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true

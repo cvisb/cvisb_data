@@ -178,28 +178,30 @@ export class FilterableHistogramComponent implements AfterViewInit, OnChanges {
   // }
 
   prepData() {
-    // Split data into numeric + non-numeric data
-    this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
-    this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
+    if (this.data) {
+      // Split data into numeric + non-numeric data
+      this.num_data = this.data.filter((d: any) => typeof (d.term) === 'number');
+      this.unknown_data = this.data.filter((d: any) => typeof (d.term) !== 'number');
 
-    // combine together the values below the limit
-    if (this.windsorized) {
-      this.xDomain = this.xDomain.filter(d => d >= this.windsorized);
-      this.xDomain.push(this.windsorized); // add in windsorized value
+      // combine together the values below the limit
+      if (this.windsorized) {
+        this.xDomain = this.xDomain.filter(d => d >= this.windsorized);
+        this.xDomain.push(this.windsorized); // add in windsorized value
 
-      let windsorData = this.num_data.filter((d: any) => d.term < this.windsorized);
-      let windsorCount = windsorData.reduce((prev, curr) => prev + curr['count'], 0);
+        let windsorData = this.num_data ? this.num_data.filter((d: any) => d.term < this.windsorized) : [];
+        let windsorCount = windsorData.reduce((prev, curr) => prev + curr['count'], 0);
 
-      this.num_data = this.num_data.filter((d: any) => d.term >= this.windsorized);
-      this.num_data.push({ term: this.windsorized, count: windsorCount });
+        this.num_data = this.num_data.filter((d: any) => d.term >= this.windsorized);
+        this.num_data.push({ term: this.windsorized, count: windsorCount });
+      }
+
+      // create linear range of values
+      this.xDomain = d3.range(d3.min(this.xDomain), d3.max(this.xDomain) + 1);
+
+      // Add in any values if they're missing.
+      this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
+      this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
     }
-
-    // create linear range of values
-    this.xDomain = d3.range(d3.min(this.xDomain), d3.max(this.xDomain) + 1);
-
-    // Add in any values if they're missing.
-    this.num_data = this.requestSvc.addMissing(this.num_data, this.xDomain);
-    this.unknown_data = this.requestSvc.addMissing(this.unknown_data, ['unknown']);
   }
 
   createPlot() {

@@ -210,15 +210,15 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version number of patient, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:comment:          Version number of patient data
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
@@ -282,54 +282,30 @@
   marginality:           recommended
   authenticated:         false
 
-- "@id":                 cvisb:admin2
+- "@id":                 cvisb:location
   "@type":               rdf:Property
-  rdfs:comment:          "Administrative unit 2 for where the Patient was exposed to the virus or lives. Each country has their own specific name for admin 2- Sierra Leone: district, Liberia: district, Guinea: prefecture, Nigeria: local government area"
-  rdfs:label:            admin2
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             cvisb:AdministrativeArea
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:admin3
-  "@type":               rdf:Property
-  rdfs:comment:          "Administrative unit 3 for where the Patient was exposed to the virus or lives. Each country has their own specific name for admin 3- Sierra Leone: chiefdom, Liberia: clan, Guinea: sub-prefecture, Nigeria: wards"
-  rdfs:label:            admin3
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             cvisb:AdministrativeArea
-  owl:cardinality:       one
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:homeLocation
-  "@type":               rdf:Property
-  rdfs:comment:          "The most specific geographic location of the home of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
-  rdfs:label:            homeLocation
+  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates. SHOULD ONLY INCLUDE LOCATIONS THAT CAN BE RELEASED TO THE PUBLIC."
+  rdfs:label:            location
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
   schema:sameAs:
-    "@id":               schema:homeLocation
+    "@id":               schema:location
   owl:cardinality:       many
   marginality:           recommended
-  authenticated:         true
+  authenticated:         false
 
-- "@id":                 cvisb:exposureLocation
+- "@id":                 cvisb:locationPrivate
   "@type":               rdf:Property
-  rdfs:comment:          "The most specific geographic location of the presumed infection/exposure of the patient to the virus. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village name, and/or GPS coordinates"
-  rdfs:label:            exposureLocation
+  rdfs:comment:          "The most specific geographic location of the patient. Could be a combination of country (Administrative Unit 0), district (Administrative Unit 2), chiefdom (Administrative Unit 3), Village/City name, and/or GPS coordinates.  Includes location information that should only be accessed by authorized users."
+  rdfs:label:            locationPrivate
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:AdministrativeArea
   schema:sameAs:
-    "@id":               schema:exposureLocation
+    "@id":               schema:location
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         true
@@ -419,7 +395,7 @@
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
-    - "@id":             cvisb:Date
+    - "@id":             schema:Date
   owl:cardinality:       one
   marginality:           optional
   authenticated:         true
@@ -599,6 +575,9 @@
                           - Fullah
                           - Temne
                           - Krio
+                          - White
+                          - Black
+                          - Asian
                           - Other
 
 # age
@@ -610,10 +589,9 @@
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             schema:Float
+    - "@id":             schema:Text
   owl:cardinality:       one
   marginality:           recommended
-  minimum:               1
-  maximum:               100
   authenticated:         false
 
 # height
@@ -696,27 +674,15 @@
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
-  rdfs:comment:          Journal article or other publication associated with the patient demographic data (stored as an object, not a string)
+  rdfs:comment:          Journal article or other publication associated with the patient demographic data (stored as an object, not a string).  If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the patient.
   rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Patient
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
+    - "@id":             cvisb:Organization
   schema:sameAs:
     "@id":               schema:citation
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:sourceCitation
-  "@type":               rdf:Property
-  rdfs:comment:          "Citation object(s) for the patient data. Should be journal article or other publication associated with the patient data; if no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the patient."
-  rdfs:label:            sourceCitation
-  schema:domainIncludes:
-    - "@id":             cvisb:Patient
-  schema:rangeIncludes:
-    - "@id":             cvisb:ScholarlyArticle
-    - "@id":             cvisb:Organization
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -736,7 +702,31 @@
   authenticated:         false
 
 
-# ELISAs
+# ELISAs, clinical data
+- "@id":                 cvisb:symptoms
+  "@type":               rdf:Property
+  rdfs:comment:          List of symptoms the patient experienced during or after the course of illness.
+  rdfs:label:            symptoms
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Symptom
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:medications
+  "@type":               rdf:Property
+  rdfs:comment:          List of medications administered (or not) to the patient during the course of their treatment.
+  rdfs:label:            medications
+  schema:domainIncludes:
+    - "@id":             cvisb:Patient
+  schema:rangeIncludes:
+    - "@id":             cvisb:Medication
+  owl:cardinality:       many
+  marginality:           recommended
+  authenticated:         false
+
 - "@id":                 cvisb:elisa
   "@type":               rdf:Property
   rdfs:comment:          List of ELISA results (IgG, IgM, Ag for Ebola/Lassa antigen) for the patient

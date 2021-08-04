@@ -1,5 +1,6 @@
 import re
 import pandas as pd
+import numpy as np
 # from . import updateError
 
 
@@ -42,7 +43,7 @@ def splitGID(id):
         return(ids)
     else:
         # Ignore NaNs
-        return(pd.np.nan)
+        return(np.nan)
 
 
 def checkIDtype(id):
@@ -319,3 +320,10 @@ def makePublicPatientID(row, publicID_col='study specific number'):
 def arr2str(arr, delim="/"):
     if(arr == arr):
         return(delim.join(arr))
+
+def combineIDs(row, idList=["gID", "sID", "patientID"]):
+    arr = []
+    for id in idList:
+        if((row[id] == row[id]) & (row[id] is not None)):
+            arr.append(row[id])
+    return(arr)

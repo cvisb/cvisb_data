@@ -5,6 +5,6 @@ export class ReleaseNote {
 }
 
 export class Note {
-  endpoint: string;
+  category: string;
   description: string[];
 }

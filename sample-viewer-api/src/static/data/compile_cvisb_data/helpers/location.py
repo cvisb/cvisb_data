@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from .logging import log_msg
 # df = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/data/input_data/patient_rosters/acuteLassa_metadata_v2_2019-06-12.csv")
 # sl = pd.read_csv("/Users/laurahughes/GitHub/cvisb_data/sample-viewer-api/src/static/geo/SLE/sle_adm4_UNOCHA.csv")
@@ -64,7 +65,7 @@ def cleanDistrict(district):
         if district_clean in adm2:
             return( {'administrativeType': 'district', 'administrativeUnit': 2,'name': district_clean})
     else:
-        return(pd.np.nan)
+        return(np.nan)
 
         # Clean up Western Area; assuming the Urban part of the district, since everyone is within Freetown.
         # if (district.lower() == "western area"):
@@ -143,12 +144,26 @@ def getCountry(countryID, verbose=True):
         "identifier": "LR",
         "url": "https://www.iso.org/obp/ui/#iso:code:3166:LR"
         })
-    elif((countryID == "LR") | (countryID == "ITA") | (countryID == "Italy")):
+    elif((countryID == "IT") | (countryID == "ITA") | (countryID == "Italy")):
         return({
         "@type": "Country",
         "name": "Italy",
         "identifier": "IT",
         "url": "https://www.iso.org/obp/ui/#iso:code:3166:IT"
+        })
+    elif((countryID == "GH") | (countryID == "GHA") | (countryID == "Ghana")):
+        return({
+        "@type": "Country",
+        "name": "Ghana",
+        "identifier": "GH",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:GH"
+        })
+    elif((countryID == "BJ") | (countryID == "BEN") | (countryID == "Benin")):
+        return({
+        "@type": "Country",
+        "name": "Benin",
+        "identifier": "BJ",
+        "url": "https://www.iso.org/obp/ui/#iso:code:3166:BJ"
         })
     elif((countryID == "US") | (countryID == "USA") | (countryID == "United States") | (countryID == "United States of America")):
         return({
@@ -202,7 +217,7 @@ def getCountry(countryID, verbose=True):
     else:
         if(countryID == countryID):
             log_msg(f"WARNING: no country found for location: {countryID}", verbose)
-        return(pd.np.nan)
+        return(np.nan)
 
 def getCountryName(countryID):
     """
@@ -224,3 +239,32 @@ def pullCountryName(countryObj):
         return(countryObj['name'])
     except:
         pass
+
+def getLocation(row):
+    loc = []
+    if(row.country == row.country):
+        row.country["locationType"] = "unknown"
+        row.country["administrativeType"] = "country"
+        loc.append(row.country)
+    if(row.District == row.District):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "district",
+        "administrativeUnit": 2,
+        'name': row.District,
+        'locationType': 'unknown'})
+    if(row.Chiefdom == row.Chiefdom):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "chiefdom",
+        "administrativeUnit": 3,
+        'name': row.Chiefdom,
+        'locationType': 'unknown'})
+    return(loc)
+
+def getPrivateLocation(row):
+    loc = row.location.copy()
+    if(row.Village == row.Village):
+        loc.append({'@type': 'AdministrativeArea',
+        "administrativeType": "village",
+  'name': row.Village,
+  'locationType': 'unknown'})
+    return(loc)

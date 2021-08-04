@@ -26,7 +26,10 @@
     <div class="container-column source-group">
       <div class="source" *ngIf="source">
         <span class="variable-label">source: </span>
-        <span class="variable-value">{{source}}</span>
+        <span class="variable-value" *ngFor="let item of source; let i = index">
+          {{item.name}}
+          <span *ngIf="i < source.length - 1">, </span>
+        </span>
       </div>
 
       <app-format-citation [citations]="citation" verbosity="basic" class="citation" *ngIf="citation"></app-format-citation>

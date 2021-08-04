@@ -13,8 +13,8 @@
 
             <h2 class="container-column container-title">
               <div class="container container-dataset-name">
-                <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
-                  <svg-icon [icon]="dataset.identifier"></svg-icon>
+                <div [ngClass]="[dataset.icon, dataset.icon + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+                  <svg-icon [icon]="dataset.icon"></svg-icon>
                 </div>
                 <div class="dataset-name">
                   {{dataset.name}}
@@ -46,9 +46,9 @@
 
 
       <div id="files">
-        <h3>Download files and view metadata</h3>
-
-        <app-file-list [datasetID]="dataset.identifier"></app-file-list>
+        <h3 class="download-link">
+          <a class="link" [routerLink]="['/download/' + dataset.identifier]">Download data</a>
+        </h3>
       </div>
 
     </div>

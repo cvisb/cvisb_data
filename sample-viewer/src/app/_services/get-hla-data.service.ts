@@ -51,7 +51,7 @@ export class GetHlaDataService {
 
   getHLAdata(patientID?: string): Observable<Object> {
     let params = new HttpParams()
-      .set("q", 'includedInDataset: hla')
+      .set("q", 'includedInDataset.keyword: hla')
       .set("fields", "data, publisher, dateModified");
 
     if (patientID) {
@@ -95,7 +95,7 @@ export class GetHlaDataService {
     let pQuery = `cohort:${patientOptions.cohort.join(",")} AND outcome:${patientOptions.outcome.join(",")}`;
 
     let params = new HttpParams()
-      .set("q", 'includedInDataset:hla')
+      .set("q", 'includedInDataset.keyword:hla')
       .set("fields", "data")
       .set("patientQuery", pQuery);
 
@@ -135,7 +135,7 @@ export class GetHlaDataService {
     // https://dev.cvisb.org/api/patient/query?q=__all__&experimentQuery=measurementTechnique:"HLA%20sequencing"&size=0&facets=cohort.keyword,%20outcome.keyword&facet_size=10000
     let patientParams = new HttpParams()
       .set("q", "__all__")
-      .set("experimentQuery", 'includedInDataset:hla')
+      .set("experimentQuery", 'includedInDataset.keyword:hla')
       .set("facets", "cohort.keyword, outcome.keyword")
       .set("facet_size", "10000");
 

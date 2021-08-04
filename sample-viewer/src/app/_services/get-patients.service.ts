@@ -147,7 +147,6 @@ export class GetPatientsService {
       .set("fields", "alternateIdentifier");
 
     return this.apiSvc.fetchAll('patient', params).pipe(
-      tap(d => console.log(d.slice(0,4))),
       map((res: any) => {
         let ids = uniq(flatMapDeep(res, d => d['alternateIdentifier']));
         return ids;
@@ -190,9 +189,9 @@ export class GetPatientsService {
 
   getAllPatientsSummary(): Observable<PatientSummary> {
     return forkJoin([this.getPatientIDs(), this.getPatientSummary(new HttpParams().set("q", "__all__")), this.exptSvc.getExptCounts()]).pipe(
-       map(([patientIDs, patientSummary, expts]) => {
-         patientSummary["experiments"] = expts;
-         patientSummary["patientIDs"] = patientIDs;
+      map(([patientIDs, patientSummary, expts]) => {
+        patientSummary["experiments"] = expts;
+        patientSummary["patientIDs"] = patientIDs;
 
         let years = patientSummary.patientYears.filter((d: any) => Number.isInteger(d.term)).map((d: any) => d.term);
         let minYear = Math.min(...years);
@@ -258,6 +257,18 @@ export class GetPatientsService {
     ]).pipe(
       // tap(data => console.log(data)),
       map(([patientData, exptData, sampleData]) => {
+        if (patientData) {
+          if (patientData.citation) {
+            patientData["source"] = patientData.citation;
+            patientData["source"].forEach(d => {
+              d["name"] = d["@type"] && d["@type"] == "ScholarlyArticle" ? `${d["author"][0]["givenName"]} ${d["author"][0]["familyName"]} ${d["journalName"]} ${this.datePipe.transform(d["datePublished"], "yyyy")}` : d.name;
+            })
+
+          } else {
+            patientData["source"] = patientData.publisher ? [patientData.publisher] : null;
+          }
+
+        }
         return ({ patient: patientData, experiments: exptData, samples: sampleData })
       })
     )
@@ -342,13 +353,13 @@ export class GetPatientsService {
     )
   }
 
-  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'experimentID', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'sourceCitation', 'variableMeasured']): Observable<any> {
+  getIndividualExpts(patientID: string, fields: string[] = ['citation', 'correction', 'creator', 'cvisb_data', 'data', 'dataStatus', 'dateModified', 'experimentID', 'genbankID', 'visitCode', 'includedInDataset', 'publisher', 'releaseDate', 'segment', 'variableMeasured']): Observable<any> {
     let experimentParams = new HttpParams()
       .set("q", "__all__")
       .set("patientID", `"${patientID}"`)
       .set("fields", fields.join(","))
       .set("sort", "visitCode.keyword")
-      .set("pageSize", "1000");
+      .set("size", "1000");
 
     return this.myhttp.get<ESResult>(environment.api_url + "/api/experiment/query", {
       observe: 'response',
@@ -359,6 +370,7 @@ export class GetPatientsService {
       pluck("body"),
       pluck("hits"),
       map(exptData => {
+        console.log(exptData)
 
         let groupedExpts = chain(exptData).groupBy('includedInDataset')
           .map((items, id) => {

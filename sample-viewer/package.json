@@ -22,7 +22,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "~0.900.3",
+    "@angular-devkit/build-angular": "^0.1001.1",
     "@angular/animations": "^9.0.1",
     "@angular/cdk": "^9.0.0",
     "@angular/common": "^9.0.1",
@@ -56,7 +56,7 @@
     "express": "^4.15.2",
     "leaflet": "^1.5.1",
     "moment": "^2.24.0",
-    "npm": "^6.13.7",
+    "npm": "^6.14.8",
     "rxjs": "~6.5.4",
     "ts-loader": "^6.2.1",
     "tslib": "^1.10.0",

@@ -31,10 +31,10 @@
     "@id":               https://data.cvisb.org/schema
 
 # name
-- "@id":                 cvisb:endpoint
+- "@id":                 cvisb:category
   "@type":               rdf:Property
   rdfs:comment:          Which part of the website has been updated.
-  rdfs:label:            endpoint
+  rdfs:label:            category
   schema:domainIncludes:
     - "@id":             cvisb:ReleaseNote
   schema:rangeIncludes:

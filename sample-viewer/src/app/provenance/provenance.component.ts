@@ -16,7 +16,7 @@ export class ProvenanceComponent implements OnInit {
   @Input() embargoLabel: string;
   @Input() embargoed: boolean = false;
   @Input() dataStatus: string;
-  @Input() source: string = "Center for Viral Systems Biology";
+  @Input() source: any;
   @Input() changes: string;
   @Input() public_data: boolean = false;
   @Input() cvisb_data: boolean;
@@ -27,7 +27,15 @@ export class ProvenanceComponent implements OnInit {
   ngOnInit() {
     // Search within any part of the string for CViSB
     if (this.source) {
-      this.cvisb_data = this.source.indexOf("Center for Viral Systems Biology") >= 0;
+      if(!Array.isArray(this.source)){
+        if(typeof(this.source) == "string") {
+          this.source = [{name: this.source}];
+        } else if(typeof(this.source) == "object") {
+          this.source = [this.source];
+        }
+      }
+
+      this.cvisb_data = this.source.some((d: any) => d.name.includes("Center for Viral Systems Biology"));
     } else {
       this.cvisb_data = false;
     }
@@ -39,7 +47,7 @@ export class ProvenanceComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CorrectionsComponent, {
       width: '450px',
-      data: { correction: changes, label: this.embargoLabel}
+      data: { correction: changes, label: this.embargoLabel }
     });
   }
 

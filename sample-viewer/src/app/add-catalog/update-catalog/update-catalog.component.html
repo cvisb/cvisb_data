@@ -1,0 +1,141 @@
+<div class="upload-group">
+  <div class="page-header catalog">
+    <h1 class="data">Update Data Catalog</h1>
+  </div>
+</div>
+
+<div class="container align-items-center">
+  <button mat-raised-button color="primary"
+  class="huge pointer py-2 container align-items-center mr-3" (click)="uploadCatalog()">
+    <mat-icon aria-hidden="false" aria-label="upload data catalog" class=" huge mr-3">cloud_upload</mat-icon>
+    Upload
+  </button>
+  upload status: {{ uploadResponse }}
+  </div>
+
+<div class="container-justified align-items-center mb-2 pb-4 blue-underline">
+  <div id="current-version">
+    <h3>Current version</h3>
+    <table *ngIf="currentVersion && currentVersion.length">
+      <thead>
+        <tr>
+          <th>
+            major
+          </th>
+          <th>
+          </th>
+          <th>
+            minor
+          </th>
+          <th>
+          </th>
+          <th>
+            patch
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="current-version">
+          <td class="major">{{currentVersion[0]}}</td>
+          <td>
+            .
+          </td>
+          <td class="minor">{{currentVersion[1]}}</td>
+          <td>
+            .
+          </td>
+          <td class="patch">{{currentVersion[2]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="new-version">
+    <h3>New version</h3>
+    <form [formGroup]="versionForm" class="container" id="new-version">
+      <mat-form-field appearance="fill">
+        <mat-label>major</mat-label>
+        <input matInput required formControlName="major">
+        <mat-hint align="end">Major release of data</mat-hint>
+        <!-- <mat-error *ngIf="versionForm['major'].errors.required">required</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>minor</mat-label>
+        <input matInput required formControlName="minor">
+        <mat-hint align="end">Minor release of data</mat-hint>
+        <!-- <mat-error *ngIf="minor.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>patch</mat-label>
+        <input matInput required formControlName="patch">
+        <mat-hint align="end">Patch (correction, minor changes)</mat-hint>
+        <!-- <mat-error *ngIf="patch.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div class="container-justified">
+  <div id="release-notes">
+    <h3>Release Notes</h3>
+    <form [formGroup]="summaryForm" class="container" id="overall-summary">
+      <mat-form-field appearance="fill" class="mr-3">
+        <mat-label>overview of changes</mat-label>
+        <textarea matInput required formControlName="abstract"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>publication date</mat-label>
+        <input matInput required formControlName="datePublished" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+
+
+    <div id="changes">
+      <h4>Specific changes</h4>
+      <p>
+        If you have multiple changes for the same category &mdash; for instance, two data uploads&mdash; add them as separate release notes.  They'll be combined before the upload.
+        </p>
+
+      <div class="container align-items-center">
+        <form [formGroup]="releaseForm" class="container" id="release-notes-form">
+          <div formArrayName="noteGroups">
+            <div *ngFor="let group of noteArray.controls; let i = index;" class="container">
+              <div [formGroupName]="i">
+                <mat-form-field appearance="fill" class="mr-3">
+                  <mat-label>category</mat-label>
+                  <mat-select required formControlName="category">
+                    <mat-option *ngFor="let opt of categories" [value]="opt">{{opt}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mr-3">
+                  <mat-label>description</mat-label>
+                  <textarea matInput required formControlName="note"></textarea>
+                </mat-form-field>
+              </div>
+              <button mat-icon-button color="warn" (click)="deleteNote($event, i)">
+                <mat-icon aria-hidden="false" class="pointer warning" aria-label="delete release note">delete_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+        <button mat-icon-button color="primary" (click)="addNote()">
+          <mat-icon aria-hidden="false" class="huge pointer" aria-label="add release note">add_box</mat-icon>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="preview">
+    <h3>Preview: new release note</h3>
+    <pre>
+    {{newNote | json}}
+    </pre>
+  </div>
+</div>

@@ -8,11 +8,11 @@
 
     <div class="container dataset-count-container">
       <div class="dataset-count">
-        {{datasets.length  }} available datasets:
+        {{datasets.length }} available datasets:
       </div>
       <ng-container *ngFor="let dataset of datasets; let idx = index">
         <!-- <a class="dataset-links" [routerLink]="'/dataset'" [fragment]="dataset.identifer" (click)="scroll(target)"> -->
-          {{dataset.name}}
+        {{dataset.name}}
         <!-- </a> -->
         <span class="data-separator" *ngIf="idx < datasets.length - 1"></span>
       </ng-container>
@@ -28,9 +28,9 @@
         <div class="container container-header">
 
           <div class="container container-title">
-            <div [ngClass]="[dataset.identifier, dataset.identifier + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
+            <div [ngClass]="[dataset.icon, dataset.icon + '-icon', 'expt-type', 'mat-shadow', 'dataset-icon']">
               <a [routerLink]="['/dataset', dataset.identifier]">
-                <svg-icon [icon]="dataset.identifier"></svg-icon>
+                <svg-icon [icon]="dataset.icon"></svg-icon>
               </a>
             </div>
 
@@ -54,3 +54,11 @@
     </div>
 
   </div>
+
+</div>
+
+<ng-template #loading>
+  <div class="spinner-container container" id="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

@@ -33,7 +33,7 @@ export class DatasetPageComponent implements OnInit {
 
     // Set page name
     if (this.route.snapshot.data['datasetData']) {
-      this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']} ${this.route.snapshot.data.title}`)
+      this.titleSvc.setTitle(`${this.route.snapshot.data['datasetData']['name']}`)
     }
 
     // Show terms, if they haven't been displayed before:

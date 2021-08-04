@@ -198,6 +198,20 @@
   marginality:           recommended
   authenticated:         false
 
+- "@id":                 cvisb:timepoint
+  "@type":               rdf:Property
+  rdfs:comment:          Descriptive time of data collection, like "survivor enrollment" or "patient admission". Note that "patient admission" is assumed but not confirmed to be the date of admission to KGH.
+  rdfs:label:            timepoint
+  schema:domainIncludes:
+    - "@id":             cvisb:Experiment
+  schema:rangeIncludes:
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         true
+  schema:Enumeration:
+                           - patient admission
+                           - survivor enrollment
 
 # measurementTechnique
 - "@id":                 cvisb:variableMeasured
@@ -227,15 +241,30 @@
                            - ADNKA_CD107a
                            - ADNKA_IFNg
                            - ADNKA_MIP1b
+                           - NKD-CD107a
+                           - IgG2
+                           - FcRg2b
+                           - FcRg2A
+                           - NKD-MIP1b
+                           - IgA1
+                           - FcRg3A
+                           - RCA
+                           - IgG3
+                           - IgM
+                           - IgG4
+                           - IgA2
+                           - SNA
+                           - IgG1
+                           - NT50
                            - metabolomics
                            - blood chemistry
+                           - blood cell count
                            - vitals
                            - virus level
                            - patient antibody response
                            - acute symptoms
                            - sequelae
                            - coma score
-                           - medications
 
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
@@ -260,6 +289,7 @@
                            - Vital Signs Measurement
                            - Rapid Antigen Test
                            - Reverse Transcriptase-Polymerase Chain Reaction
+                           - Blood Cell Count
                            - ELISA
                            - Clinical Observation
 
@@ -307,12 +337,14 @@
                            - bcr
                            - tcr
                            - systems-serology
-                           - metabolomics
-                           - blood-chemistry
-                           - sensor-vitals
-                           - rapid-diagnostics
-                           - RT-PCR
-                           - clinical-observations
+                           - systems-serology-32783920
+                           - rtpcr-32783920
+                           - blood-chemistry-vhf
+                           - blood-counts-vhf
+                           - vitals-vhf
+                           - rtpcr-vhf
+                           - rapid-diagnostics-vhf
+                           - sensor-vitals-vhf
 
 # when updated
 - "@id":                 cvisb:dateModified
@@ -344,10 +376,10 @@
   authenticated:         true
 
   # versions
-- "@id":                 cvisb:_version
+- "@id":                 cvisb:version
   "@type":               rdf:Property
-  rdfs:comment:          Version number of experiment, auto-assigned by CViSB database
-  rdfs:label:            _version
+  rdfs:comment:          Version number of experiment
+  rdfs:label:            version
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
@@ -369,7 +401,7 @@
     - "@id":             "cvisb:Organization"
   schema:sameAs:
     "@id":               "schema:creator"
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
 
@@ -389,27 +421,15 @@
 
 - "@id":                 cvisb:citation
   "@type":               rdf:Property
-  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string)
+  rdfs:comment:          Journal article or other publication associated with the dataset (stored as an object, not a string). If no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment."
   rdfs:label:            citation
   schema:domainIncludes:
     - "@id":             cvisb:Experiment
   schema:rangeIncludes:
     - "@id":             cvisb:ScholarlyArticle
+    - "@id":             cvisb:Organization
   schema:sameAs:
     "@id":               schema:citation
-  owl:cardinality:       many
-  marginality:           recommended
-  authenticated:         false
-
-- "@id":                 cvisb:sourceCitation
-  "@type":               rdf:Property
-  rdfs:comment:          "Citation object(s) for the experiment. Should be journal article or other publication associated with the experiment; if no citation exists (as in, the experiment hasn't been published yet), should be the publisher associated with the experiment."
-  rdfs:label:            sourceCitation
-  schema:domainIncludes:
-    - "@id":             cvisb:Experiment
-  schema:rangeIncludes:
-    - "@id":             cvisb:ScholarlyArticle
-    - "@id":             cvisb:Organization
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -483,13 +503,18 @@
     - "@id":             cvisb:VirusSeqData
     - "@id":             cvisb:SystemsSerology
     - "@id":             cvisb:PiccoloData
-    - "@id":             cvisb:Vitals
+    - "@id":             cvisb:BloodCountData
+    - "@id":             cvisb:HeartRate
+    - "@id":             cvisb:ComaScore
+    - "@id":             cvisb:BodyTemperature
+    - "@id":             cvisb:OxygenSaturation
+    - "@id":             cvisb:SystolicPressure
+    - "@id":             cvisb:DiastolicPressure
+    - "@id":             cvisb:RespiratoryRate
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR
     - "@id":             cvisb:ELISA
-    - "@id":             cvisb:SymptomList
     - "@id":             cvisb:ComaScore
-    - "@id":             cvisb:Medication
   owl:cardinality:       many
   marginality:           recommended
   authenticated:         false
@@ -503,6 +528,6 @@
   schema:rangeIncludes:
     - "@id":             xsd:string
     - "@id":             schema:Text
-  owl:cardinality:       one
+  owl:cardinality:       many
   marginality:           recommended
   authenticated:         true

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://data.cvisb.org/sitemap.xml

@@ -1,5 +1,5 @@
-<div class="container" id="patientID" *ngIf="patientData$ | async as patientData">
-  <div class="patient-container" *ngIf="patientData.patient as patient">
+<div class="container" id="patientID" *ngIf="patientData$ | async as patientData; else noData">
+  <div class="patient-container" *ngIf="patientData.patient as patient; else noData">
 
     <app-patient-nav class="nav patient-nav" [ngClass]="patient.cohort" [cohort]="patient.cohort" [expts]="exptTypes"></app-patient-nav>
 
@@ -37,7 +37,7 @@
         </mat-expansion-panel-header>
 
         <div class="container patient-metadata">
-          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [changes]="patient.correction" [source]="patient.publisher" class="provenance"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" embargoLabel="Demographic" [changes]="patient.correction" [source]="patient.source" [citation]="patient.citation" class="provenance"></app-provenance>
 
           <div class="container patient-demographics">
             <app-patient-demographics [patient]="patient"></app-patient-demographics>
@@ -108,6 +108,7 @@
               <app-patient-hla *ngSwitchCase="'hla'" [data]="expt['data']" [patientID]="patient.patientID"></app-patient-hla>
               <app-patient-viral-seq *ngSwitchCase="'ebola-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
               <app-patient-viral-seq *ngSwitchCase="'lassa-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
+              <app-patient-viral-seq *ngSwitchCase="'sarscov2-virus-seq'" [sequences]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-viral-seq>
               <app-patient-serology *ngSwitchCase="'systems-serology'" [data]="expt['data']" [datasetID]="expt.dataset_id" [patientID]="patient.patientID"></app-patient-serology>
             </ng-container>
           </mat-expansion-panel>
@@ -134,3 +135,7 @@
   </div>
 
 </div>
+
+<ng-template #noData>
+  No patient data found
+</ng-template>

@@ -61,8 +61,10 @@
                           - GB
                           - CG
                           - GA
+                          - GH
                           - MX
                           - JO
+                          - BJ
 
 - "@id":                 cvisb:url
   "@type":               rdf:Property
@@ -112,6 +114,7 @@
                           - "Cote d'Ivoire"
                           - United States
                           - Germany
+                          - Ghana
                           - Gabon
                           - United Kingdom
                           - Italy
@@ -120,6 +123,7 @@
                           - Republic of the Congo
                           - Mexico
                           - Jordan
+                          - Benin
 
 - "@id":                 cvisb:alternateName
   "@type":               rdf:Property

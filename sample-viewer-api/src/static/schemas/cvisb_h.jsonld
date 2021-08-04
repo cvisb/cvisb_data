@@ -1,0 +1,259 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cvisb": "https://data.cvisb.org/jsonschema/"
+  },
+  "version": 0.1,
+  "@id": "https://data.cvisb.org/jsonschema/v0.1",
+  "@graph": [
+    {
+      "@id": "cvisb:HeartRate",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing a single Heart Rate datapoint collected from patients in the Center for Viral Systems Biology.",
+      "rdfs:label": "HeartRate",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HeartRate"
+      ]
+    },
+    {
+      "@id": "cvisb:time",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Date and time of heart rate measurement",
+      "rdfs:label": "time",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:DateTime"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:heartRate",
+      "@type": "rdf:Property",
+      "rdfs:comment": "heart rate, in beats per minute",
+      "rdfs:label": "heartRate",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Integer"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": true
+    },
+    {
+      "@id": "cvisb:collectionInstrument",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the measurement was recorded using a PhysIQ sensor or a conventional measurement by a nurse/doctor",
+      "rdfs:label": "collectionInstrument",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HeartRate"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": true,
+      "schema:Enumeration": [
+        "PhysIQ",
+        "conventional"
+      ]
+    },
+    {
+      "@id": "cvisb:HLAData",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A schema describing Human Leukocyte Antigen (HLA) Genotype calls in the Center for Viral Systems Biology.",
+      "rdfs:label": "HLAData",
+      "rdfs:subClassOf": {
+        "@id": "cvisb:Data"
+      },
+      "schema:isPartOf": {
+        "@id": "https://data.cvisb.org/schema"
+      }
+    },
+    {
+      "@id": "cvisb:@type",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Type of data",
+      "rdfs:label": "@type",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "required",
+      "authenticated": false,
+      "schema:Enumeration": [
+        "HLAData"
+      ]
+    },
+    {
+      "@id": "cvisb:allele",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Allele call",
+      "rdfs:label": "allele",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:locus",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Locus of the allele",
+      "rdfs:label": "locus",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:novel",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Whether the allele is a novel mutation",
+      "rdfs:label": "novel",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Boolean"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:cohort",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Cohort of the patient",
+      "rdfs:label": "cohort",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:outcome",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Outcome of the patient",
+      "rdfs:label": "outcome",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    },
+    {
+      "@id": "cvisb:patientID",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Public patientID of the patient",
+      "rdfs:label": "patientID",
+      "schema:domainIncludes": [
+        {
+          "@id": "cvisb:HLAData"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Text"
+        }
+      ],
+      "owl:cardinality": "one",
+      "marginality": "recommended",
+      "authenticated": false
+    }
+  ]
+}

@@ -31,10 +31,10 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
   // --- plot sizes ---
   private element: any; // selector for SVG DIV
   // @Input() right_margin: number;
-  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 135 };
+  @Input() private margin: any = { top: 2, bottom: 2, left: 2, right: 175 };
   private width: number;
   private hole_frac: number = 0.5;
-  private checkboxX: number = 110;
+  private checkboxX: number = 130;
 
   // --- Selectors ---
   private donut: any; // dotplot
@@ -140,7 +140,7 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
       let keys = this.data.map(d => d.term);
 
       // If there are no bulk values, set to the keys.
-      if (this.cohorts.length === 0) {
+      if (!this.cohorts || this.cohorts.length === 0) {
         this.cohorts = keys;
       } else {
         let missing_data = this.cohorts.filter(d => !keys.includes(d));
@@ -272,7 +272,7 @@ export class MiniDonutComponent implements AfterViewInit, OnChanges, OnDestroy {
         .style("font-size", Math.min(this.y.bandwidth(), 14))
         .attr("y", (d: any) => this.y(d.term) + this.y.bandwidth() / 2)
         .classed('disabled', (d: any) => d.count === 0)
-        .text((d: any) => `${d.term}: ${d.count}`);
+        .text((d: any) => `${d.term}: ${d3.format(",")(d.count)}`);
 
       if (this.filterable) {
         let checkmarkEnter = annotationGroupEnter
