@@ -163,7 +163,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
 def getPublisher(row, varName="CViSB_data"):
     # Check binary if CVISB_data
     if(row[varName]):
-        return([helpers.cvisb])
+        return(helpers.cvisb)
 
 def getExptID(row, virus):
     if(virus == "Ebola"):
