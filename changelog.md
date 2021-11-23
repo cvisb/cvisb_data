@@ -1,4 +1,11 @@
 # Prod
+
+### 2021-11-23 v0.2.4
+* Wiped and reloaded `ebola-virus-seq`
+    -	1 dataset
+    - 2,309 experiments
+    - 2,310 data downloads
+
 ### 2020-11-24
 * Updated Lassa-virus-seq data (dataset, downloads, experiments, patients)
 * Rebuilt schema (minor changes to Symptoms)
