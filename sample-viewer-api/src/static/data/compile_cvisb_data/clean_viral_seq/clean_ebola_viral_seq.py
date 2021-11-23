@@ -76,7 +76,7 @@ def clean_ebola_viral_seq(export_dir, alignment_file, uncurated_file, metadata_f
     md['samplingDate'] = md.collection_date.apply(checkDate)
     md['species'] = md.host.apply(helpers.convertSpecies)
     # Patient timepoints
-    md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x))
+    md['visitCode'] = md.patient_timepoint.apply(lambda x: str(x) if (x is not None) & (x == x) else None)
     # Note: not technically true; if a KGH patient, could have patient / survivor data.
     # But-- since only uploading the non-KGH patient data, should be fine.
     md['hasPatientData'] = False
@@ -170,7 +170,10 @@ def getExptID(row, virus):
         expt_stub = "EBOV_seq_"
     if(virus == "Lassa"):
         expt_stub = "LASV_seq_"
-    return(expt_stub + row.patientID + row.visitCode)
+    if((row.visitCode == row.visitCode) & (row.visitCode is not None)):
+        return(expt_stub + row.patientID + row.visitCode)
+    else:
+        return(expt_stub + row.patientID)
 
 def getDNAseq(alignment_file, uncurated_alignment, virus, seq_type="DNAsequence", segment=None, data_type="VirusSeqData"):
     all_seq = list(SeqIO.parse(alignment_file, "fasta"))
