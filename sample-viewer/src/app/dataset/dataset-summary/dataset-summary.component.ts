@@ -11,7 +11,6 @@ export class DatasetSummaryComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.dataset)
   }
 
 }
