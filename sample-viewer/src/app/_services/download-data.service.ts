@@ -60,18 +60,15 @@ export class DownloadDataService {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
-      // console.log(authState)
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
     })
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      console.log(this.qParams)
     })
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParamArray = qParams;
-      console.log(qParams)
     })
   }
 
@@ -92,8 +89,6 @@ export class DownloadDataService {
 
   // Main switch function to call the downloading of data
   getDownloadableData(filetype: string, data: any[], filename?: string) {
-    console.log("Starting download")
-    console.log(data)
     switch (filetype) {
       // --- patients ---
       case ("patients"):
@@ -101,7 +96,6 @@ export class DownloadDataService {
 
         this.patientSvc.fetchAllPatients(this.qParams).subscribe((patients: PatientDownload[]) => {
           data = patients;
-          console.log(patients)
           this.parseData(patients, filetype, filename);
         });
         break;
@@ -174,9 +168,6 @@ export class DownloadDataService {
 
   // General function to convert an array into a tab-delimited string for download.
   parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t', filterBlank: boolean = true) {
-    console.log("parsing")
-    console.log(data)
-    console.log(filename)
     // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
@@ -234,7 +225,6 @@ export class DownloadDataService {
   }
 
   downloadFasta(data: any[], id: string) {
-    console.log(data)
     let seqdata = data;
     let dwnld_data = "";
     let lineDelimiter = "\n";
@@ -282,7 +272,6 @@ export class DownloadDataService {
     // Download experiment and patient data
     if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id, patientQuery).subscribe(data => {
-        console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
@@ -323,7 +312,6 @@ export class DownloadDataService {
           })
           return (d.data)
         })
-        console.log(seqData)
         this.downloadFasta(seqData, id)
         break;
       case ("SystemsSerology"):
@@ -334,12 +322,10 @@ export class DownloadDataService {
         break;
       case ("HLAData"):
         let hlaData = data.flatMap(expt => this.flattenHLA(expt))
-        console.log(hlaData)
 
         this.parseData(hlaData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       default:
-        console.log(data)
         this.saveData(JSON.stringify(data), `${this.today}_cvisb_${id}${this.auth_stub}.json`, "application/json");
 
         break;
