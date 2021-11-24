@@ -1,4 +1,18 @@
 # Prod
+### 2021-11-24
+* Pulled dev branch
+* `sudo n 12.22.7` --> update Node to node-v12.22.7
+
+* `npx @angular/cli@10 update @angular/material@10 --force` --> upgrade to Angular Material 10
+* `npx @angular/cli@10 update @angular/core@10 @angular/cli@10` --> upgrade to Angular 10.2.3
+* `ng update`
+
+### 2021-11-23 v0.2.4
+* Wiped and reloaded `ebola-virus-seq`
+    -	1 dataset
+    - 2,309 experiments
+    - 2,310 data downloads
+
 ### 2020-11-24
 * Updated Lassa-virus-seq data (dataset, downloads, experiments, patients)
 * Rebuilt schema (minor changes to Symptoms)
@@ -55,7 +69,7 @@
 ### 2020-08-28
  * Wiped and readded SARS-CoV-2 experiment data, now totals 1195 again.
  * pub/priv sync
- 
+
 ### 2020-08-27
  * Wiped and readded SARS-CoV-2 experiment data adding sourceCitation
  * Wiped and readded SARS-CoV-2 patient information removing duplicate entries
@@ -88,7 +102,7 @@ Not updated but logging:
   - 1,195 experiments
   - 1,195 patients
 
-    
+
 ### 2020-08-25
 * Updated schema (prod and dev): added Country options for Jordan and Mexico.
 * Added in SARS-CoV2 sequencing data.
