@@ -402,8 +402,8 @@ export class GetPatientsService {
   fetchAllPatients(qParams): Observable<PatientDownload[]> {
     return this.apiSvc.fetchAll("patient", qParams).pipe(
       map((patients) => {
-        // console.log("end of API")
-        // console.log(patients)
+        console.log("end of API")
+        console.log(patients)
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
         patients = patients.map(patient => {
