@@ -407,7 +407,9 @@ export class GetPatientsService {
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
         patients = patients.map(patient => {
+          if(patient){
           return (new PatientDownload(patient, this.datePipe));
+        }
         })
         return (patients);
       })

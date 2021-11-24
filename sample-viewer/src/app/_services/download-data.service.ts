@@ -149,7 +149,7 @@ export class DownloadDataService {
 
         break;
       default:
-        this.parseData(data, filetype, `${this.today}_cvisb_data${this.auth_stub}.tsv`);
+        this.saveData(JSON.stringify(data), `${this.today}_cvisb_data${this.auth_stub}.json`, "application/json");
         break;
     }
   }
