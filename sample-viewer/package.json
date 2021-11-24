@@ -22,7 +22,7 @@
   },
   "private": true,
   "dependencies": {
-  "@angular-devkit/build-angular": "^0.1002.3",
+    "@angular-devkit/build-angular": "^0.1002.3",
     "@angular-devkit/schematics": "^13.0.3",
     "@angular/animations": "^10.2.5",
     "@angular/cdk": "^10.2.7",
@@ -62,8 +62,8 @@
     "ts-loader": "^6.2.1",
     "tslib": "^2.0.0",
     "ui-select": "^0.19.8",
-    "zone.js": "~0.10.2"  
-},
+    "zone.js": "~0.10.2"
+  },
   "devDependencies": {
     "@angular/cli": "^10.2.3",
     "@angular/compiler-cli": "^10.2.5",
@@ -89,6 +89,6 @@
     "ts-node": "~8.5.2",
     "tslint": "~6.1.0",
     "typescript": "4.0.8",
-    "webpack-cli": "^3.3.10"  
-}
+    "webpack-cli": "^3.3.10"
+  }
 }
