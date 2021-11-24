@@ -59,7 +59,7 @@
           <a [routerLink]="['/dataset', expt.term]">
             <div class="container count-pair">
               <div class="count-value">
-                {{expt.count}}
+                {{expt.count.toLocaleString()}}
               </div>
               <div class="count-label">
                 {{expt.datasetName}} experiments

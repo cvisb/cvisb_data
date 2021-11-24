@@ -378,6 +378,7 @@ export class GetPatientsService {
             return {
               dataset_id: id,
               datasetName: filtered['datasetName'],
+              iconID: filtered['icon_id'],
               data: items,
               count: items.length,
               embargoed: items.some((d: any) => d.embargoed === true),
