@@ -60,18 +60,15 @@ export class DownloadDataService {
     this.today = this.datePipe.transform(new Date(), "yyyy-MM-dd");
 
     this.authSvc.authState$.subscribe((authState: AuthState) => {
-      // console.log(authState)
       this.auth_stub = authState.authorized ? "_PRIVATE" : "";
     })
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      // console.log(this.qParams)
     })
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParamArray = qParams;
-      // console.log(qParams)
     })
   }
 
@@ -132,7 +129,6 @@ export class DownloadDataService {
           filename = `${this.today}_CViSB-SystemsSerology`
         }
 
-        // this.exptSvc.getExptsPatients("ebola-viral-seq").subscribe(data => {
         this.exptSvc.getExptsPatients(filetype, null).subscribe(data => {
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
@@ -147,7 +143,7 @@ export class DownloadDataService {
 
         break;
       default:
-        this.parseData(data, filetype, `${this.today}_cvisb_data${this.auth_stub}.tsv`);
+        this.saveData(JSON.stringify(data), `${this.today}_cvisb_data${this.auth_stub}.json`, "application/json");
         break;
     }
   }
@@ -276,7 +272,6 @@ export class DownloadDataService {
     // Download experiment and patient data
     if (includeExpt && includePatient) {
       this.exptSvc.getExptsPatients(id, patientQuery).subscribe(data => {
-        console.log(data)
         let patientData = data['patient'].map((patient: Patient) => {
           return (new PatientDownload(patient, this.dateRangePipe));
         });
@@ -317,37 +312,39 @@ export class DownloadDataService {
           })
           return (d.data)
         })
-        console.log(seqData)
         this.downloadFasta(seqData, id)
         break;
       case ("SystemsSerology"):
         let seroData = data.map((expt: SystemsSerology) => {
-          return (new SerologyDownload( expt))
+          return (new SerologyDownload(expt))
         })
         this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       case ("HLAData"):
-      let hlaData = data.flatMap(expt => this.flattenHLA(expt))
-      console.log(hlaData)
+        let hlaData = data.flatMap(expt => this.flattenHLA(expt))
 
         this.parseData(hlaData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
+        break;
+      default:
+        this.saveData(JSON.stringify(data), `${this.today}_cvisb_${id}${this.auth_stub}.json`, "application/json");
+
         break;
     }
   }
 
   flattenHLA(expt) {
     return expt.data.map(datum => {
-      return({
+      return ({
         patientID: expt["privatePatientID"],
         visitCode: expt["visitCode"],
         experimentID: expt["experimentID"],
         isControl: expt["isControl"],
         experimentDate: expt["experimentDate"],
         citation: expt.citation ? expt.citation.map(d => d.url).join(", ") : null,
-        publisher : expt.publisher ? expt.publisher.name : null,
-        dataStatus : expt.dataStatus,
-        dateModified : expt.dateModified,
-        correction : expt.correction,
+        publisher: expt.publisher ? expt.publisher.name : null,
+        dataStatus: expt.dataStatus,
+        dateModified: expt.dateModified,
+        correction: expt.correction,
         locus: datum["locus"],
         allele: datum["allele"],
         novel: datum["novel"]
