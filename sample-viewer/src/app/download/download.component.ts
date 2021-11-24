@@ -40,7 +40,7 @@ export class DownloadComponent implements OnInit, OnDestroy {
     { id: "infectionYear", label: "infection year" },
     { id: "sequenceLength", label: "sequence length" },
     { id: "experimentDate", label: "experiment date" },
-    { id: "file", label: "file" },
+    // { id: "file", label: "file" },
     { id: "dateModified", label: "date modified" }];
   displayedColumns: string[];
 
