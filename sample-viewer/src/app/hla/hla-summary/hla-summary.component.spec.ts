@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HlaSummaryComponent } from './hla-summary.component';
 
@@ -6,7 +6,7 @@ describe('HlaSummaryComponent', () => {
   let component: HlaSummaryComponent;
   let fixture: ComponentFixture<HlaSummaryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HlaSummaryComponent ]
     })

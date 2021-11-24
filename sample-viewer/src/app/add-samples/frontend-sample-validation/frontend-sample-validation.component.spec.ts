@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FrontendSampleValidationComponent } from './frontend-sample-validation.component';
 
@@ -6,7 +6,7 @@ describe('FrontendSampleValidationComponent', () => {
   let component: FrontendSampleValidationComponent;
   let fixture: ComponentFixture<FrontendSampleValidationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FrontendSampleValidationComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SampleMetadataComponent } from './sample-metadata.component';
 
@@ -6,7 +6,7 @@ describe('SampleMetadataComponent', () => {
   let component: SampleMetadataComponent;
   let fixture: ComponentFixture<SampleMetadataComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SampleMetadataComponent ]
     })

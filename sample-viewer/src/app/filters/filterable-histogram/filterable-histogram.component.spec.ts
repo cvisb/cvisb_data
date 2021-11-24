@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FilterableHistogramComponent } from './filterable-histogram.component';
 
@@ -6,7 +6,7 @@ describe('FilterableHistogramComponent', () => {
   let component: FilterableHistogramComponent;
   let fixture: ComponentFixture<FilterableHistogramComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterableHistogramComponent ]
     })
