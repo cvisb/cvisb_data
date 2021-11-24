@@ -75,7 +75,7 @@ def get_curated(dateModified, version, experiments, datasetVirus, filename, desc
 
     # credit
     ds['creator'] = [helpers.getLabAuthor("KGA")]
-    ds['publisher'] = [helpers.cvisb]
+    ds['publisher'] = helpers.cvisb
 
     # --- possibly variable, each time ---
     ds["version"] = version
