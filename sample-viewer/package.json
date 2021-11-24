@@ -22,19 +22,20 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.1002.3",
+  "@angular-devkit/build-angular": "^0.1002.3",
     "@angular-devkit/schematics": "^13.0.3",
-    "@angular/animations": "^11.2.14",
+    "@angular/animations": "^10.2.5",
     "@angular/cdk": "^10.2.7",
-    "@angular/common": "^11.2.14",
-    "@angular/compiler": "^11.2.14",
+    "@angular/common": "^10.2.5",
+    "@angular/compiler": "^10.2.5",
+    "@angular/core": "^10.2.5",
     "@angular/flex-layout": "8.0.0-beta.27",
-    "@angular/forms": "^11.2.14",
+    "@angular/forms": "^10.2.5",
     "@angular/material": "^10.2.7",
-    "@angular/platform-browser": "^11.2.14",
-    "@angular/platform-browser-dynamic": "^11.2.14",
-    "@angular/platform-server": "^11.2.14",
-    "@angular/router": "^11.2.14",
+    "@angular/platform-browser": "^10.2.5",
+    "@angular/platform-browser-dynamic": "^10.2.5",
+    "@angular/platform-server": "^10.2.5",
+    "@angular/router": "^10.2.5",
     "@asymmetrik/ngx-leaflet": "^6.0.1",
     "@fortawesome/angular-fontawesome": "^0.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
@@ -61,11 +62,12 @@
     "ts-loader": "^6.2.1",
     "tslib": "^2.0.0",
     "ui-select": "^0.19.8",
-    "zone.js": "~0.10.2"
-  },
+    "zone.js": "~0.10.2"  
+},
   "devDependencies": {
-    "@angular/compiler-cli": "^11.2.14",
-    "@angular/language-service": "^11.2.14",
+    "@angular/cli": "^10.2.3",
+    "@angular/compiler-cli": "^10.2.5",
+    "@angular/language-service": "^10.2.5",
     "@nguniversal/builders": "^9.0.0",
     "@schematics/angular": "^8.3.19",
     "@types/d3": "^5.7.2",
@@ -86,7 +88,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.5.2",
     "tslint": "~6.1.0",
-    "typescript": "4.1.6",
-    "webpack-cli": "^3.3.10"
-  }
+    "typescript": "4.0.8",
+    "webpack-cli": "^3.3.10"  
+}
 }
