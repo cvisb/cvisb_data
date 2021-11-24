@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { 'path': 'dataset', 'label': 'data', 'selected': false },
     { 'path': 'patient', 'label': 'patients', 'selected': false },
     { 'path': 'sample', 'label': 'samples', 'selected': false },
+    { 'path': 'software', 'label': 'software', 'selected': false },
     { 'path': 'upload', 'label': 'upload', 'selected': false },
     { 'path': 'documentation', 'label': 'documentation', 'selected': false },
   ]
