@@ -11,7 +11,6 @@ export class SoftwareComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.software)
   }
 
 }

@@ -1,4 +1,17 @@
 # Prod
+### 2021-11-24
+* Pulled dev branch
+* `sudo n 12.22.7` --> update Node to node-v12.22.7
+
+* `npx @angular/cli@10 update @angular/material@10 --force` --> upgrade to Angular Material 10
+* `npx @angular/cli@10 update @angular/core@10 @angular/cli@10` --> upgrade to Angular 10.2.3
+* `ng update`
+* That update sequence accidentally --> Angular Core 11 being installed.
+* `npm uninstall @angular/cli`
+* `npm uninstall @angular/core`
+* `rm -r node_modules`
+* `npm install`
+* `npx @angular/cli@10 update @angular/core@10 @angular/cli@10`
 
 ### 2021-11-23 v0.2.4
 * Wiped and reloaded `ebola-virus-seq`

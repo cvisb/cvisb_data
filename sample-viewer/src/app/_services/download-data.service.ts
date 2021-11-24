@@ -66,12 +66,12 @@ export class DownloadDataService {
 
     requestSvc.patientParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParams = this.requestSvc.reducePatientParams(qParams);
-      // console.log(this.qParams)
+      console.log(this.qParams)
     })
 
     requestSvc.sampleParamsState$.subscribe((qParams: RequestParamArray) => {
       this.qParamArray = qParams;
-      // console.log(qParams)
+      console.log(qParams)
     })
   }
 
@@ -92,6 +92,7 @@ export class DownloadDataService {
 
   // Main switch function to call the downloading of data
   getDownloadableData(filetype: string, data: any[], filename?: string) {
+    console.log("Starting dowload")
     switch (filetype) {
       // --- patients ---
       case ("patients"):
@@ -172,6 +173,9 @@ export class DownloadDataService {
 
   // General function to convert an array into a tab-delimited string for download.
   parseData(data: any[], filetype: string, filename: string, columnDelimiter: string = '\t', filterBlank: boolean = true) {
+    console.log("parsing")
+    console.log(data)
+    console.log(filename)
     // technically, tab-separated, since some things have commas in names.
     const lineDelimiter = '\n';
 
