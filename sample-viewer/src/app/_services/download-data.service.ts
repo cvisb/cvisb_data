@@ -92,7 +92,8 @@ export class DownloadDataService {
 
   // Main switch function to call the downloading of data
   getDownloadableData(filetype: string, data: any[], filename?: string) {
-    console.log("Starting dowload")
+    console.log("Starting download")
+    console.log(data)
     switch (filetype) {
       // --- patients ---
       case ("patients"):
@@ -100,6 +101,7 @@ export class DownloadDataService {
 
         this.patientSvc.fetchAllPatients(this.qParams).subscribe((patients: PatientDownload[]) => {
           data = patients;
+          console.log(patients)
           this.parseData(patients, filetype, filename);
         });
         break;
@@ -133,7 +135,6 @@ export class DownloadDataService {
           filename = `${this.today}_CViSB-SystemsSerology`
         }
 
-        // this.exptSvc.getExptsPatients("ebola-viral-seq").subscribe(data => {
         this.exptSvc.getExptsPatients(filetype, null).subscribe(data => {
           let patientData = data['patient'].map((patient: Patient) => {
             return (new PatientDownload(patient, this.dateRangePipe));
@@ -233,6 +234,7 @@ export class DownloadDataService {
   }
 
   downloadFasta(data: any[], id: string) {
+    console.log(data)
     let seqdata = data;
     let dwnld_data = "";
     let lineDelimiter = "\n";
@@ -326,32 +328,37 @@ export class DownloadDataService {
         break;
       case ("SystemsSerology"):
         let seroData = data.map((expt: SystemsSerology) => {
-          return (new SerologyDownload( expt))
+          return (new SerologyDownload(expt))
         })
         this.parseData(seroData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
       case ("HLAData"):
-      let hlaData = data.flatMap(expt => this.flattenHLA(expt))
-      console.log(hlaData)
+        let hlaData = data.flatMap(expt => this.flattenHLA(expt))
+        console.log(hlaData)
 
         this.parseData(hlaData, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
+        break;
+      default:
+        console.log(data)
+
+        this.parseData(data, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
     }
   }
 
   flattenHLA(expt) {
     return expt.data.map(datum => {
-      return({
+      return ({
         patientID: expt["privatePatientID"],
         visitCode: expt["visitCode"],
         experimentID: expt["experimentID"],
         isControl: expt["isControl"],
         experimentDate: expt["experimentDate"],
         citation: expt.citation ? expt.citation.map(d => d.url).join(", ") : null,
-        publisher : expt.publisher ? expt.publisher.name : null,
-        dataStatus : expt.dataStatus,
-        dateModified : expt.dateModified,
-        correction : expt.correction,
+        publisher: expt.publisher ? expt.publisher.name : null,
+        dataStatus: expt.dataStatus,
+        dateModified: expt.dateModified,
+        correction: expt.correction,
         locus: datum["locus"],
         allele: datum["allele"],
         novel: datum["novel"]
