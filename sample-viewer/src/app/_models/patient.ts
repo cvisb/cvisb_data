@@ -189,6 +189,7 @@ export class PatientDownload {
     this.correction = patient.correction;
 
     if (patient.symptoms && patient.symptoms[0]) {
+      console.log(patient.symptoms)
       this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'] ? patient.symptoms[0]['symptoms']['blurry_vision'] : null;
       this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'] ? patient.symptoms[0]['symptoms']['burning_eyes'] : null;
       this.dry_eyes = patient.symptoms[0]['symptoms']['dry_eyes'] ? patient.symptoms[0]['symptoms']['dry_eyes'] : null;
