@@ -340,8 +340,8 @@ export class DownloadDataService {
         break;
       default:
         console.log(data)
+        this.saveData(JSON.stringify(data), `${this.today}_cvisb_${id}${this.auth_stub}.json`, "application/json");
 
-        this.parseData(data, id, `${this.today}_cvisb_${id}${this.auth_stub}.tsv`);
         break;
     }
   }
