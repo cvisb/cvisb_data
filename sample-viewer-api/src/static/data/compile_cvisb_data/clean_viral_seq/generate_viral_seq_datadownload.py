@@ -18,6 +18,7 @@ def get_viralseq_downloads(alignments, dateModified, downloads, experiments, ver
     ds['variableMeasured'] = ds.variableMeasured.apply(
         helpers.listify)
     ds['citation'] = ds.citation.apply(helpers.listify)
+    ds['publisher'] = ds.publisher.apply(helpers.listify)
 
 
     for file in alignments:
@@ -75,7 +76,7 @@ def get_curated(dateModified, version, experiments, datasetVirus, filename, desc
 
     # credit
     ds['creator'] = [helpers.getLabAuthor("KGA")]
-    ds['publisher'] = helpers.cvisb
+    ds['publisher'] = [helpers.cvisb]
 
     # --- possibly variable, each time ---
     ds["version"] = version
