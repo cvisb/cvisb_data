@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SoftwareComponent } from './software.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
 
 // --- routing ---
 import { SoftwareRoutingModule } from './software-routing.module';
@@ -9,7 +11,8 @@ import { SoftwareRoutingModule } from './software-routing.module';
   declarations: [SoftwareComponent],
   imports: [
     CommonModule,
-    SoftwareRoutingModule
+    SoftwareRoutingModule,
+    MatChipsModule, MatButtonModule
   ]
 })
 export class SoftwareModule { }
