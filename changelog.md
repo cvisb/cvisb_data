@@ -203,6 +203,35 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2021-11-23
+* rebuilt schemas.
+
+### 2021-11-22: Upgrade to Angular 10
+* `npm uninstall @angular/cli` --> remove local version of angular client
+* `npm uninstall -g @angular/cli` --> remove global version of angular clientw
+* `sudo n 12.22.7` --> update Node to node-v12.22.7
+* Still installed; find symlinked file with
+  * `which ng` --> /usr/bin/ng
+  * ls -lh | grep ng within the folder to find the symlinks --> `../lib/node_modules/@angular/cli/bin/ng`
+https://stackoverflow.com/questions/43070441/cannot-uninstall-angular-cli?rq=1
+* `sudo rm -rf /lib/node_modules/@angular`
+* `sudo rm -rf /usr/bin/ng`
+* `sudo npm install -g @angular/cli@10.2.3`
+```
+npm ERR! Your cache folder contains root-owned files, due to a bug in
+npm ERR! previous versions of npm which has since been addressed.
+npm ERR!
+npm ERR! To permanently fix this problem, please run:
+npm ERR!   sudo chown -R 1000:1000 "/home/ubuntu/.npm"
+```
+* git commit package.json changes
+* `npx @angular/cli@10 update @angular/material@10 --force`
+
+
+* `ng update`
+
+
+
 ### 2020-09-15
 * Ran into disk space issues; released 2GB from the swapfile
 * Removed, reinstalled, and `npm audit fix`'d `node_modules`

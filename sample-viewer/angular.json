@@ -24,12 +24,14 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }]
-            ,              "optimization": true
-}
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true
+            }
           }
         },
         "build": {
@@ -56,7 +58,10 @@
               "./node_modules/leaflet/dist/leaflet.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src", "src/sass"]
+              "includePaths": [
+                "src",
+                "src/sass"
+              ]
             },
             "scripts": []
           },
@@ -68,10 +73,12 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -191,5 +198,8 @@
       }
     }
   },
-  "defaultProject": "sample-viewer"
+  "defaultProject": "sample-viewer",
+  "cli": {
+    "analytics": "efdea48f-6bec-4eae-a820-8623cabbdea9"
+  }
 }

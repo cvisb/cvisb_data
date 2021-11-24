@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AlleleCirclePackingComponent } from './allele-circle-packing.component';
 
@@ -6,7 +6,7 @@ describe('AlleleCirclePackingComponent', () => {
   let component: AlleleCirclePackingComponent;
   let fixture: ComponentFixture<AlleleCirclePackingComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AlleleCirclePackingComponent ]
     })

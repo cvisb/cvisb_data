@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RedirectComponent } from './redirect.component';
 
@@ -6,7 +6,7 @@ describe('RedirectComponent', () => {
   let component: RedirectComponent;
   let fixture: ComponentFixture<RedirectComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RedirectComponent ]
     })

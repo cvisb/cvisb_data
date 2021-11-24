@@ -9,10 +9,10 @@ ID_DICT = f"{DATADIR}/output_data/patients/patients_2019-09-13_PRIVATE_dict.json
 
 # --- patients ---
 # ACUTE_IDS_FILE = f"{DATADIR}/input_data/patient_rosters/additional_IDdict_v3_2019-10-23.csv"
-PATIENT_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/DisseminationData_31Aug20.xlsx"
+PATIENT_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/DisseminationData_2Nov20.xlsx"
 PATIENTS_UPDATEDBY = "Emily Engel"
 PATIENTS_DATE = today
-PATIENTS_VERSION = 0.3
+PATIENTS_VERSION = 0.4
 
 # --- hla ---
 HLA_FILE = f"{DATADIR}/input_data/expt_summary_data/HLA/Genotype_calls_2020-01-30.csv"
@@ -42,21 +42,21 @@ ALIGNMENTS = [
      "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2020.08.04.fasta"}
 ]
 # LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
-LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2020.11.23.fasta"
-LVIRAL_SFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_non_curated_2020.11.23.fasta"
+LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2021.11.23.fasta"
+LVIRAL_SFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_non_curated_2021.11.23.fasta"
 LVIRAL_LFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_2020.11.23.fasta"
 LVIRAL_LFILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_L_Z_non_curated_2020.11.23.fasta"
-LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_lasv_curated_2020.11.23.csv"
-LVIRAL_DATE = "2020-11-23"
-LVIRAL_VERSION = 0.3
+LVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_lasv_curated_2021.11.23.csv"
+LVIRAL_DATE = "2021-11-23"
+LVIRAL_VERSION = 0.4
 LVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 # --- ebola virus seq ---
-EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_curated_2020.08.04.fasta"
-EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_non_curated_2020.08.04.fasta"
-EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2020.08.03.csv"
-EVIRAL_DATE = "2020-11-16"
-EVIRAL_VERSION = 0.3
+EVIRAL_ALIGNEDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_curated_2021.11.23.fasta"
+EVIRAL_FILE_UNCURATED = f"{DATADIR}/input_data/expt_summary_data/viral_seq/EBOV_ORFs_up_public_non_curated_2021.11.23.fasta"
+EVIRAL_MDFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/dataset_ebola_up_public_curated_2021.11.23.csv"
+EVIRAL_DATE = "2021-11-23"
+EVIRAL_VERSION = 0.4
 EVIRAL_UPDATEDBY = "Raphaëlle Klitting"
 
 
