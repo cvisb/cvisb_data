@@ -189,17 +189,17 @@ export class PatientDownload {
     this.correction = patient.correction;
 
     if (patient.symptoms && patient.symptoms[0]) {
-      this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'];
-      this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'];
-      this.dry_eyes = patient.symptoms[0]['symptoms']['dry_eyes'];
-      this.eye_foreign_body_sensation = patient.symptoms[0]['symptoms']['eye_foreign_body_sensation'];
-      this.eye_pain = patient.symptoms[0]['symptoms']['eye_pain'];
-      this.hearing_loss = patient.symptoms[0]['symptoms']['hearing_loss'];
-      this.joint_pain = patient.symptoms[0]['symptoms']['joint_pain'];
-      this.light_sensitivity = patient.symptoms[0]['symptoms']['light_sensitivity'];
-      this.muscle_pain = patient.symptoms[0]['symptoms']['muscle_pain'];
-      this.ringing_in_ears = patient.symptoms[0]['symptoms']['ringing_in_ears'];
-      this.vision_loss = patient.symptoms[0]['symptoms']['vision_loss']
+      this.blurry_vision = patient.symptoms[0]['symptoms']['blurry_vision'] ? patient.symptoms[0]['symptoms']['blurry_vision'] : null;
+      this.burning_eyes = patient.symptoms[0]['symptoms']['burning_eyes'] ? patient.symptoms[0]['symptoms']['burning_eyes'] : null;
+      this.dry_eyes = patient.symptoms[0]['symptoms']['dry_eyes'] ? patient.symptoms[0]['symptoms']['dry_eyes'] : null;
+      this.eye_foreign_body_sensation = patient.symptoms[0]['symptoms']['eye_foreign_body_sensation'] ? patient.symptoms[0]['symptoms']['eye_foreign_body_sensation'] : null;
+      this.eye_pain = patient.symptoms[0]['symptoms']['eye_pain'] ? patient.symptoms[0]['symptoms']['eye_pain'] : null;
+      this.hearing_loss = patient.symptoms[0]['symptoms']['hearing_loss'] ? patient.symptoms[0]['symptoms']['hearing_loss'] : null;
+      this.joint_pain = patient.symptoms[0]['symptoms']['joint_pain'] ? patient.symptoms[0]['symptoms']['joint_pain']: null;
+      this.light_sensitivity = patient.symptoms[0]['symptoms']['light_sensitivity'] ? patient.symptoms[0]['symptoms']['light_sensitivity'] : null;
+      this.muscle_pain = patient.symptoms[0]['symptoms']['muscle_pain'] ? patient.symptoms[0]['symptoms']['muscle_pain'] : null;
+      this.ringing_in_ears = patient.symptoms[0]['symptoms']['ringing_in_ears'] ? patient.symptoms[0]['symptoms']['ringing_in_ears'] : null;
+      this.vision_loss = patient.symptoms[0]['symptoms']['vision_loss'] ? patient.symptoms[0]['symptoms']['vision_loss'] : null;
     }
 
     if (patient.elisa && patient.elisa[0]) {
