@@ -37,8 +37,8 @@
   schema:domainIncludes:
     - "@id":             cvisb:MonetaryGrant
   schema:rangeIncludes:
-    # - "@id":             cvisb:Organization
-    - "@id":             schema:Text
+    - "@id":             cvisb:Organization
+    # - "@id":             schema:Text
   schema:sameAs:
     "@id":               schema:funder
   owl:cardinality:       one
