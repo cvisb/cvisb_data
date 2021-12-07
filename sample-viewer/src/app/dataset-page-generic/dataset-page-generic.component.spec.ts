@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DatasetPageGenericComponent } from './dataset-page-generic.component';
 
@@ -6,7 +6,7 @@ describe('DatasetPageGenericComponent', () => {
   let component: DatasetPageGenericComponent;
   let fixture: ComponentFixture<DatasetPageGenericComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DatasetPageGenericComponent ]
     })

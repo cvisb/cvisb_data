@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SmallMultipleComparisonComponent } from './small-multiple-comparison.component';
 
@@ -6,7 +6,7 @@ describe('SmallMultipleComparisonComponent', () => {
   let component: SmallMultipleComparisonComponent;
   let fixture: ComponentFixture<SmallMultipleComparisonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SmallMultipleComparisonComponent ]
     })

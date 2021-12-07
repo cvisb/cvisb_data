@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         map(([patients, samples, expts]) => {
           // patients
-          this.patientCount = patients['total'];
+          this.patientCount = patients['total'].toLocaleString();
 
           let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
 
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
             });
 
           // Samples
-          this.sampleCount = samples['total'];
+          this.sampleCount = samples['total'].toLocaleString();
 
           let sampleDiv = d3.select("#sample").selectAll(".count-value");
 

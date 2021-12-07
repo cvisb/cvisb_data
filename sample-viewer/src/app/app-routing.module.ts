@@ -52,6 +52,7 @@ const appRoutes: Routes = [
 
   { path: 'documentation', component: AboutDataComponent, pathMatch: 'full', data: { title: 'Data | CViSB' } },
   { path: 'schema', component: SchemaComponent, pathMatch: 'full', data: { title: 'Schema | CViSB' } },
+  { path: 'software', loadChildren: () => import('./software/software.module').then(m => m.SoftwareModule), pathMatch: 'full', data: { title: 'Software | CViSB' } },
   { path: 'redirect', component: RedirectComponent, pathMatch: 'full', data: { title: 'Redirecting... | CViSB Data' } },
   { path: 'unauthorized', component: UnauthorizedComponent, pathMatch: 'full', data: { title: 'Unauthorized user | CViSB Data' } },
   { path: 'about', component: AboutComponent, pathMatch: 'full', data: { title: 'About | CViSB Data' } },
@@ -68,7 +69,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, { enableTracing: false, scrollPositionRestoration: 'enabled', initialNavigation: 'enabled' } // <-- true = debugging purposes
+    RouterModule.forRoot(appRoutes, { enableTracing: false, scrollPositionRestoration: 'enabled', initialNavigation: 'enabled', relativeLinkResolution: 'legacy' } // <-- true = debugging purposes
+ // <-- true = debugging purposes
 )],
   exports: [RouterModule]
 })

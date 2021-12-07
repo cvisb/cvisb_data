@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MiniBarplotComponent } from './mini-barplot.component';
 
@@ -6,7 +6,7 @@ describe('MiniBarplotComponent', () => {
   let component: MiniBarplotComponent;
   let fixture: ComponentFixture<MiniBarplotComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MiniBarplotComponent ]
     })

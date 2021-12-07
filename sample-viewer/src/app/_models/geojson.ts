@@ -6,10 +6,11 @@ export class Geojson {
 }
 
 export class GeojsonProperties {
-  country: string;
-  identifier: string;
+  country?: string;
+  identifier?: string;
   subregion?: string;
   count?: number;
+  FID?: string | number;
 }
 
 export class Geometry {

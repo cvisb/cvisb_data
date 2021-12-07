@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h1>Software</h1>
+</div>
+<p>
+  Software and tools developed by CViSB
+</p>
+
+<div *ngFor="let tool of software" class="mb-4 bg-light">
+
+  <div class="d-flex">
+    <div *ngIf="tool.url; else noUrl">
+      <a *ngIf="tool.url" href="{{tool.url}}" target="_blank">
+        <h4 class="m-0 mr-3">
+          {{tool.name}}
+        </h4>
+      </a>
+    </div>
+    <ng-template #noUrl>
+      <h4>
+        {{tool.name}}
+      </h4>
+    </ng-template>
+
+    <div class="tertiary language" *ngFor="let cat of tool.programmingLanguage">{{cat}}</div>
+    <div class="primary category" *ngFor="let cat of tool.applicationCategory">{{cat}}</div>
+    <div class="secondary category" *ngFor="let cat of tool.applicationSubCategory">{{cat}}</div>
+
+
+  </div>
+
+
+  <small>
+    {{tool.description}}
+  </small>
+
+  <div class="border-top d-flex">
+    <div class="mr-3">
+      funded by:
+      <span *ngFor="let funder of tool.funder">
+        {{funder}}
+      </span>
+    </div>
+
+    <div *ngIf="tool.license && tool.license != 'None'">
+      license: {{tool.license}}
+    </div>
+
+
+
+  </div>
+
+</div>

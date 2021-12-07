@@ -378,6 +378,7 @@ export class GetPatientsService {
             return {
               dataset_id: id,
               datasetName: filtered['datasetName'],
+              iconID: filtered['icon_id'],
               data: items,
               count: items.length,
               embargoed: items.some((d: any) => d.embargoed === true),
@@ -406,7 +407,9 @@ export class GetPatientsService {
         // last iteration returns undefined; filter out
         // Also call PatientDownload to tidy the results
         patients = patients.map(patient => {
-          return (new PatientDownload(patient, this.datePipe));
+          if (patient) {
+            return (new PatientDownload(patient, this.datePipe));
+          }
         })
         return (patients);
       })
