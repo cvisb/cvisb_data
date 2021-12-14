@@ -299,8 +299,9 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
-### 2021-12-14: Upgrade Angular 10.2.3 to Angular 11.2.14
+### 2021-12-14: Upgrade Angular 10.2.3 to Angular 11.2.15
 `npx @angular/cli@11 update @angular/core@11 @angular/cli@11 --force`
+`npx @angular/cli@11 update @angular/material@11 --force`
 
 
 
