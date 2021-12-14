@@ -65,8 +65,8 @@ export class ChoroplethComponent implements AfterViewInit {
 
     this.isWestAfrica = this.data.every(d => westafrica.includes(d.identifier));
     if (this.isWestAfrica) {
-      this.map_data = WEST_AFRICA_JSON['features'];
-      this.basemap = AFRICA_JSON['features'] as any;
+      this.map_data = WEST_AFRICA_JSON;
+      this.basemap = AFRICA_JSON as any;
 
       // --- mapping scales ---
       // Bounding box was manually chosen to crop the area to the bounding box of interest:
@@ -119,8 +119,8 @@ export class ChoroplethComponent implements AfterViewInit {
         .scale(scale)                       // This is like the zoom
         .translate([this.width / 2, this.height / 2]);
     } else {
-      this.map_data = WORLD['features'];
-      this.basemap = WORLD_FUSED['features'];
+      this.map_data = WORLD;
+      this.basemap = WORLD_FUSED;
 
       // First: calculate the coordinates in degrees to get the center of the map and the parallel for the projection (center latitude)
       // bounds returned as [[left, bottom] [right, top]] == [[minLon minLat] [maxLon maxLat]]
