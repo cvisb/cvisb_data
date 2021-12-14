@@ -32,7 +32,7 @@ $square-height: 2em;
 
 .helper-text {
   font-size: 0.75em;
-  margin-left: $square-width/2;
+  margin-left: math.div($square-width, 2);
   color: $grey-400;
   margin-bottom: 5px;
   display: flex;
