@@ -12,7 +12,7 @@
 @include mat-core-theme($candy-app-theme);
 @include mat-progress-spinner-theme($candy-app-theme);
 // not super universal, but if they're not included in the styles and added component-wide, they seem to be overriden by Chrome stylings.
-// seems to be the places where /deep/ styling is needed.
+// seems to be the places where ::ng-deep styling is needed.
 @include mat-tooltip-theme($candy-app-theme);
 @include mat-button-theme($candy-app-theme);
 @include mat-select-theme($candy-app-theme);

@@ -1,4 +1,7 @@
 # Prod
+### 2021-12-14
+* Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
+
 ### 2021-11-24
 * Pulled dev branch
 * `sudo n 12.22.7` --> update Node to node-v12.22.7
@@ -209,6 +212,9 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2021-12-14
+* Upgraded to Angular 11.2.15 via local --> package.json update, wipe of `node_modules` and `npm install`
+
 ### 2021-11-23
 * rebuilt schemas.
 
@@ -299,9 +305,14 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
+### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
+`npx @angular/cli@12 update @angular/core@12 @angular/cli@12 --force`
+
+
 ### 2021-12-14: Upgrade Angular 10.2.3 to Angular 11.2.15
 `npx @angular/cli@11 update @angular/core@11 @angular/cli@11 --force`
 `npx @angular/cli@11 update @angular/material@11 --force`
+`ng update` --> `npm install`
 
 
 
