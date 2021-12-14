@@ -1,4 +1,5 @@
 @use '~@angular/material' as mat;
+@use 'sass:math';
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
 @include mat.expansion-theme($candy-app-theme);
