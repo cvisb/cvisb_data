@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
-@include mat-input-theme($candy-app-theme);
+@include mat.input-theme($candy-app-theme);
 
 .search input[type=text] {
   width: 1em;

@@ -1,5 +1,6 @@
+@use '~@angular/material' as mat;
 @import '../../../sass/material-theme.scss';
-@include mat-expansion-panel-theme($candy-app-theme);
+@include mat.expansion-theme($candy-app-theme);
 
 .clear-filter {
   justify-content: space-between;

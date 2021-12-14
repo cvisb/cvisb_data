@@ -1,13 +1,13 @@
 // Include the common styles for Angular Material. We include this here so that you only
+@use '~@angular/material' as mat;
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@import '~@angular/material/theming';
 // @include mat-core();
 
 @import 'variables'; // custom variables, usually colors
 
-$custom-typography: mat-typography-config($font-family: "'Open Sans', 'Helvetica Neue', sans-serif");
-@include mat-core($custom-typography);
+$custom-typography: mat.define-typography-config($font-family: "'Open Sans', 'Helvetica Neue', sans-serif");
+@include mat.core($custom-typography);
 
 // Primary palette
 // https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=3398cb&secondary.color=fd7a56
@@ -36,8 +36,8 @@ $custom-primary: (
     500: white,
     600: white,
     700: white,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
+    800: rgba(white, 0.87),
+    900: rgba(white, 0.87),
     A100: $default-color,
     A200: white,
     A400: white,
@@ -71,8 +71,8 @@ $custom-accent: (
     500: white,
     600: white,
     700: white,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
+    800: rgba(white, 0.87),
+    900: rgba(white, 0.87),
     A100: $default-color,
     A200: $default-color,
     A400: white,
@@ -104,8 +104,8 @@ $custom-accent-redder: (
     500: white,
     600: white,
     700: white,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
+    800: rgba(white, 0.87),
+    900: rgba(white, 0.87),
     A100: $default-color,
     A200: white,
     A400: white,
@@ -140,9 +140,9 @@ $custom-accent-redder: (
   @return null;
 }
 
-$candy-app-primary: mat-palette($custom-primary);
-$candy-app-accent:  mat-palette($custom-accent, A200, A100, A400);
-$candy-app-warn: mat-palette($custom-accent-redder);
+$candy-app-primary: mat.define-palette($custom-primary);
+$candy-app-accent:  mat.define-palette($custom-accent, A200, A100, A400);
+$candy-app-warn: mat.define-palette($custom-accent-redder);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+$candy-app-theme: mat.define-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
