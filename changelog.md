@@ -1,6 +1,9 @@
 # Prod
 ### 2021-12-15
 * Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
+* Updated npm to 8.3.0: `sudo npm install -g npm@latest`
+* Updgraded node to current version (16.13.1): `sudo n stable`
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
 
 ### 2021-12-14
 * Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
@@ -218,6 +221,7 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 ### 2021-12-15
 * Updated npm to 8.3.0: `sudo npm install -g npm@latest`
 * Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
+* Updgraded node to current version (16.13.1): `sudo n stable`
 
 ### 2021-12-14
 * Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
