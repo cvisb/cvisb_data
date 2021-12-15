@@ -312,7 +312,10 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 ### 2021-12-15: Upgrade Angular 12.2.14 to Angular 13.1.1
 `npx @angular/cli@13 update @angular/core@13 @angular/cli@13 --force`
 `npx @angular/cli@13 update @angular/material@13 --force `
-`ng update` --> `npm install` --> `ng update`
+`ng update @nguniversal/common@10 --force`
+`ng update @nguniversal/common@11 --force`
+`ng update @nguniversal/common@12 --force`
+`ng update @nguniversal/common --force`
 `npm audit fix`
 
 ### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
