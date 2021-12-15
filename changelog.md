@@ -1,4 +1,7 @@
 # Prod
+### 2021-12-15
+* Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
+
 ### 2021-12-14
 * Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
 
@@ -212,6 +215,10 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2021-12-15
+* Updated npm to 8.3.0: `sudo npm install -g npm@latest`
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
+
 ### 2021-12-14
 * Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
 * Upgraded to Angular 11.2.15 via local --> package.json update, wipe of `node_modules` and `npm install`
@@ -306,6 +313,15 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
+### 2021-12-15: Upgrade Angular 12.2.14 to Angular 13.1.1
+`npx @angular/cli@13 update @angular/core@13 @angular/cli@13 --force`
+`npx @angular/cli@13 update @angular/material@13 --force `
+`ng update @nguniversal/common@10 --force`
+`ng update @nguniversal/common@11 --force`
+`ng update @nguniversal/common@12 --force`
+`ng update @nguniversal/common@13 --force`
+`npm audit fix`
+
 ### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
 `npx @angular/cli@12 update @angular/core@12 @angular/cli@12 --force`
 `npx @angular/cli@12 update @angular/material@12 --force `
