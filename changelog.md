@@ -2,8 +2,36 @@
 ### 2021-12-15
 * Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
 * Updated npm to 8.3.0: `sudo npm install -g npm@latest`
-* Updgraded node to current version (16.13.1): `sudo n stable`
-* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
+* Upgraded node to higher version (14.15.4; latest had dependency issues.): `sudo n 14.15.4`
+* `npm cache verify` to clean the cache.
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` to clear security audits.
+Final specs for local, dev, prod:
+```
+Angular CLI: 13.1.1
+Node: 14.15.4
+Package Manager: npm 6.14.10
+OS: linux x64
+
+Angular: 13.1.0
+... animations, cdk, common, compiler, compiler-cli, core, forms
+... language-service, material, platform-browser
+... platform-browser-dynamic, platform-server, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1301.1
+@angular-devkit/build-angular   13.1.1
+@angular-devkit/core            13.1.1
+@angular-devkit/schematics      13.1.1
+@angular/cli                    13.1.1
+@angular/flex-layout            8.0.0-beta.27
+@nguniversal/builders           13.0.1
+@nguniversal/common             13.0.1
+@nguniversal/express-engine     13.0.1
+@schematics/angular             8.3.29
+rxjs                            6.5.5
+typescript                      4.5.4
+```
 
 ### 2021-12-14
 * Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
@@ -221,7 +249,7 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 ### 2021-12-15
 * Updated npm to 8.3.0: `sudo npm install -g npm@latest`
 * Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
-* Updgraded node to current version (16.13.1): `sudo n stable`
+* Upgraded node to higher version (14.15.4; latest had dependency issues.): `sudo n 14.15.4`
 
 ### 2021-12-14
 * Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
