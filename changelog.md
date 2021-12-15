@@ -1,4 +1,7 @@
 # Prod
+### 2021-12-15
+* Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
+
 ### 2021-12-14
 * Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
 
@@ -306,6 +309,12 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
+### 2021-12-15: Upgrade Angular 12.2.14 to Angular 13.2.14
+`npx @angular/cli@13 update @angular/core@13 @angular/cli@13 --force`
+`npx @angular/cli@13 update @angular/material@13 --force `
+`ng update` --> `npm install` --> `ng update`
+`npm audit fix`
+
 ### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
 `npx @angular/cli@12 update @angular/core@12 @angular/cli@12 --force`
 `npx @angular/cli@12 update @angular/material@12 --force `
