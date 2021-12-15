@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @import '../../../sass/variables.scss';
 @import '../../../sass/material-theme.scss';
-@include mat-expansion-panel-theme($candy-app-theme);
+@include mat.expansion-theme($candy-app-theme);
 
 .curation-explanation {
   background: lighten($lassa-md, 35%);

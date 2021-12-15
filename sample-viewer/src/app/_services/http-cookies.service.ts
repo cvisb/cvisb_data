@@ -17,8 +17,7 @@ interface IHttpOptions {
   headers?: HttpHeaders | {
     [header: string]: string | string[];
   };
-  params?: HttpParams | {
-    [param: string]: string | string[];
+  params?: HttpParams | { [param: string]: string | number | boolean | readonly (string | number | boolean)[];
   };
   reportProgress?: boolean;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';

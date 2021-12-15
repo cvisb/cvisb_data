@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 // activate cookie for server-side rendering
 // from https://github.com/angular/angular/issues/15730#issuecomment-572992686
 import * as xhr2 from 'xhr2';
-import { XhrFactory } from '@angular/common/http';
+import { XhrFactory } from '@angular/common';
 
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {

@@ -7,7 +7,7 @@ import { MyHttpClient } from './http-cookies.service';
 
 import { environment } from "../../environments/environment";
 
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import { ESFacetTerms, PatientTimepoints } from '../_models';
 
