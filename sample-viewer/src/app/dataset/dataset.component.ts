@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { getDatasetsService, AuthService } from '../_services';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dataset',
@@ -12,12 +12,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dataset.component.scss']
 })
 
-export class DatasetComponent implements OnInit {
+export class DatasetComponent implements OnDestroy {
   datasets$: Observable<Object[]>;
   // datasets: any[];
   metadata: Object;
   anything_selected: boolean = false;
-
+  loadingSubscription: Subscription;
+  loading: boolean = false;
 
   constructor(
     private datasetSvc: getDatasetsService,
@@ -29,9 +30,10 @@ export class DatasetComponent implements OnInit {
     this.titleSvc.setTitle(this.route.snapshot.data.title);
 
     this.datasets$ = this.datasetSvc.getDatasets();
-    // this.datasetSvc.getDatasets().subscribe((datasets) => {
-    //   console.log(datasets)
-    // });
+
+    this.loadingSubscription = this.datasetSvc.loadingState$.subscribe(loading => {
+      this.loading = loading
+    })
 
     // Show terms, if they haven't been displayed before:
     this.authSvc.popupTerms();
@@ -41,7 +43,7 @@ export class DatasetComponent implements OnInit {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
   }
-
 }

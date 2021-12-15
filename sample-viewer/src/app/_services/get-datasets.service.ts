@@ -57,6 +57,8 @@ export class getDatasetsService {
   }
 
   getDatasets(id?: string, idVar?: string): Observable<Dataset[]> {
+    this.loadingSubject.next(true);
+
     let qstring: string;
     let fieldString: string = "";
 
@@ -77,9 +79,11 @@ export class getDatasetsService {
         pluck("hits"),
         // based on https://stackoverflow.com/questions/55516707/loop-array-and-return-data-for-each-id-in-observable (2nd answer)
         mergeMap((datasetResults: any) => {
+          console.log(datasetResults)
           let summaryCalls = datasetResults.map((d: Dataset) => d.identifier).map((id: string) => this.getDatasetCounts(id));
           return forkJoin(...summaryCalls).pipe(
             map((summaryData) => {
+              console.log(summaryData)
               let datasets = datasetResults;
 
               datasets.forEach((dataset: Dataset, idx: number) => {
@@ -93,7 +97,8 @@ export class getDatasetsService {
               console.log(e)
               throwError(e);
               return (new Observable<any>())
-            })
+            }),
+            finalize(() => this.loadingSubject.next(false))
           )
         })
       );
