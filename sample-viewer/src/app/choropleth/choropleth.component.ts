@@ -7,10 +7,10 @@ import { select, scaleSequential, interpolateYlGnBu, geoBounds, geoPath, geoEqua
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
 // import * as topojson from 'topojson-client';
 
-import * as WEST_AFRICA_JSON from '../../assets/geo/naturalearth_west-africa.json';
-import * as AFRICA_JSON from '../../assets/geo/naturalearth_africa.json';
-import * as WORLD from '../../assets/geo/world.json';
-import * as WORLD_FUSED from '../../assets/geo/world_fused.json';
+import WEST_AFRICA_JSON from '../../assets/geo/naturalearth_west-africa.json';
+import AFRICA_JSON from '../../assets/geo/naturalearth_africa.json';
+import WORLD from '../../assets/geo/world.json';
+import WORLD_FUSED from '../../assets/geo/world_fused.json';
 
 @Component({
   selector: 'app-choropleth',

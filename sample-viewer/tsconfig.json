@@ -11,7 +11,9 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "target": "es2015",
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "typeRoots": [
       "node_modules/@types"
     ],
