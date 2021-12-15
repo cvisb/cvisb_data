@@ -68,6 +68,9 @@ export class ChoroplethComponent implements AfterViewInit {
       this.map_data = WEST_AFRICA_JSON;
       this.basemap = AFRICA_JSON as any;
 
+      console.log(this.map_data)
+      console.log(this.basemap)
+
       // --- mapping scales ---
       // Bounding box was manually chosen to crop the area to the bounding box of interest:
       // W: Guinea Western boundary
@@ -121,6 +124,9 @@ export class ChoroplethComponent implements AfterViewInit {
     } else {
       this.map_data = WORLD;
       this.basemap = WORLD_FUSED;
+
+      console.log(this.map_data)
+      console.log(this.basemap)
 
       // First: calculate the coordinates in degrees to get the center of the map and the parallel for the projection (center latitude)
       // bounds returned as [[left, bottom] [right, top]] == [[minLon minLat] [maxLon maxLat]]
