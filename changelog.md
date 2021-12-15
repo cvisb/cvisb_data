@@ -213,6 +213,7 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 
 # Dev
 ### 2021-12-14
+* Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
 * Upgraded to Angular 11.2.15 via local --> package.json update, wipe of `node_modules` and `npm install`
 
 ### 2021-11-23
@@ -311,6 +312,7 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 `ng update` --> `npm install` --> `ng update`
 `npm audit fix`
 * fixed error in choropleth.component.ts: file import
+* fixed typescript error in MyHttpClient extension
 
 ### 2021-12-14: Upgrade Angular 10.2.3 to Angular 11.2.15
 `npx @angular/cli@11 update @angular/core@11 @angular/cli@11 --force`
