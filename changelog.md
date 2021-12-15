@@ -215,6 +215,10 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2021-12-15
+* Updated npm to 8.3.0: `sudo npm install -g npm@latest`
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
+
 ### 2021-12-14
 * Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
 * Upgraded to Angular 11.2.15 via local --> package.json update, wipe of `node_modules` and `npm install`
@@ -315,7 +319,7 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 `ng update @nguniversal/common@10 --force`
 `ng update @nguniversal/common@11 --force`
 `ng update @nguniversal/common@12 --force`
-`ng update @nguniversal/common --force`
+`ng update @nguniversal/common@13 --force`
 `npm audit fix`
 
 ### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
