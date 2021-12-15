@@ -32,7 +32,6 @@ export class DatasetComponent implements OnDestroy {
     this.datasets$ = this.datasetSvc.getDatasets();
 
     this.loadingSubscription = this.datasetSvc.loadingState$.subscribe(loading => {
-      console.log(loading)
       this.loading = loading
     })
 
