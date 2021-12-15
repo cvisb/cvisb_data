@@ -65,8 +65,7 @@ export class HomeComponent implements OnInit {
 
           // experiments
           this.experimentCount = expts;
-
-          console.log(expts)
+          expts.sort((a,b) => b.count - a.count)
         })
       );
   }
