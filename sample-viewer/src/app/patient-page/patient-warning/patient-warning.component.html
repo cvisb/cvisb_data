@@ -1,6 +1,6 @@
 <div class="warning-banner" *ngIf="embargoed || preliminary || privateData">
   <div class="warning-header">{{ (embargoed || privateData) ?
-  (preliminary ? "Some data for this patient cannot be shared and/or may change:" : "Some data for this patient cannot be shared:" ) :
+  (preliminary ? "Some data for this patient cannot be shared outside CViSB and/or may change:" : "Some data for this patient cannot be shared:" ) :
   "Some data for this patient may change:" }}</div>
   <table>
     <!-- <tr *ngIf="embargoed">
