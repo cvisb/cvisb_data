@@ -12,17 +12,23 @@
           <h1>Patient {{ patient.patientLabel }}</h1>
         </div>
 
-        <div class="cohort-group">
-          <span class="cohort" [ngClass]="patient.cohort">{{ patient.cohort }}</span>
-          <span class="outcome" [ngClass]="[patient.outcome, patient.cohort]">{{ patient.outcome }}</span>
+        <div class="d-flex flex-column">
+          <div class="cohort-group">
+            <span class="cohort" [ngClass]="patient.cohort">{{ patient.cohort }}</span>
+            <span class="outcome" [ngClass]="[patient.outcome, patient.cohort]">{{ patient.outcome }}</span>
+          </div>
+
+          <div id="download">
+            <button mat-button mat-primary (click)="downloadAllData()">
+              Download data
+              <mat-icon aria-label="download" [matTooltip]="'Download all data on patient' + patient.patientLabel">file_download</mat-icon>
+            </button>
+          </div>
         </div>
+
       </div>
 
-      <div id="download">
-        <button mat-button mat-primary (click)="downloadAllData()">
-          <mat-icon aria-label="download" matTooltip="Download data">cloud_download</mat-icon>
-        </button>
-      </div>
+
 
       <!-- IDS -->
       <div class="container patient-ids">
@@ -75,8 +81,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true" [data]="patient"
-          source="Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"></app-provenance>
+          <app-provenance [dateModified]="patient.dateModified" class="provenance" [embargoed]="true" [data]="patient" source="Viral Hemorrhagic Fever Consortium / Kenema Government Hospital"></app-provenance>
           <app-patient-symptoms [patient]="patient"></app-patient-symptoms>
         </mat-expansion-panel>
       </ng-container>
@@ -104,12 +109,11 @@
         </mat-expansion-panel>  -->
 
         <!-- Experimental Data -->
-         <ng-container *ngFor="let expt of experiments">
+        <ng-container *ngFor="let expt of experiments">
           <mat-expansion-panel class="panel-group" [id]="expt.iconID" [expanded]="hlaPanelState" (opened)="hlaPanelState = true" (closed)="hlaPanelState = false">
             <mat-expansion-panel-header [collapsedHeight]="dataPanelHeight" [expandedHeight]="dataPanelHeight">
               <mat-panel-title class="panel-title">
-                <app-provenance-title class="flex-grow1" [title]="expt.datasetName" [data]="expt"
-                [icon]="expt.dataset_id" [embargoed]="getEmbargoed(expt.dataset_id)" [dataStatus]="getPrelim(expt.dataset_id)"></app-provenance-title>
+                <app-provenance-title class="flex-grow1" [title]="expt.datasetName" [data]="expt" [icon]="expt.dataset_id" [embargoed]="getEmbargoed(expt.dataset_id)" [dataStatus]="getPrelim(expt.dataset_id)"></app-provenance-title>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container [ngSwitch]="expt.dataset_id">
