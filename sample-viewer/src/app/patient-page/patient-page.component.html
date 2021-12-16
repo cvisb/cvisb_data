@@ -18,7 +18,7 @@
             <span class="outcome" [ngClass]="[patient.outcome, patient.cohort]">{{ patient.outcome }}</span>
           </div>
 
-          <div id="download">
+          <div id="download" class="mt-2">
             <button mat-raised-button mat-primary (click)="downloadAllData()" [matTooltip]="'Download all data on patient ' + patient.patientLabel" class="d-flex align-items-center">
               Download data
               <mat-icon aria-label="download">file_download</mat-icon>
