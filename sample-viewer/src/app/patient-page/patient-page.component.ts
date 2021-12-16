@@ -124,6 +124,11 @@ export class PatientPageComponent {
     )
   }
 
+  downloadAllData() {
+    console.log(this.expts)
+    console.log(this.patientData$)
+  }
+
   // collapses array of ELISA results down.
   // getELISA(returnVar: string): Object {
   //   // let elisa = this.patient.elisa;

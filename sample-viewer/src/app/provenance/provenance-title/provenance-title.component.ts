@@ -11,10 +11,15 @@ export class ProvenanceTitleComponent implements OnInit {
   @Input() private: boolean = false;
   @Input() dataStatus: string;
   @Input() icon: string;
+  @Input() data: any;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  downloadData() {
+    console.log(this.data)
   }
 
 }
