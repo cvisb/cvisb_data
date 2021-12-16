@@ -12,16 +12,16 @@
           <h1>Patient {{ patient.patientLabel }}</h1>
         </div>
 
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column justify-content-between">
           <div class="cohort-group">
             <span class="cohort" [ngClass]="patient.cohort">{{ patient.cohort }}</span>
             <span class="outcome" [ngClass]="[patient.outcome, patient.cohort]">{{ patient.outcome }}</span>
           </div>
 
           <div id="download">
-            <button mat-button mat-primary (click)="downloadAllData()">
+            <button mat-button mat-primary (click)="downloadAllData()" [matTooltip]="'Download all data on patient ' + patient.patientLabel" class="d-flex align-items-center">
               Download data
-              <mat-icon aria-label="download" [matTooltip]="'Download all data on patient' + patient.patientLabel">file_download</mat-icon>
+              <mat-icon aria-label="download">file_download</mat-icon>
             </button>
           </div>
         </div>

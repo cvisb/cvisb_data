@@ -15,6 +15,7 @@ import { ProvenanceModule } from '../provenance/provenance.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -49,6 +50,7 @@ import { CorrectionsComponent } from '../_dialogs/corrections/corrections.compon
     MatSnackBarModule,
     MatTableModule,
     MatIconModule,
+    MatButtonModule,
     PipesModule,
     PatientTimepointsModule,
     FormatCitationModule,
