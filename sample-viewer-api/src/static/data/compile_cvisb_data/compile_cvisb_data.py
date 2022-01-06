@@ -65,7 +65,7 @@ SWITCHER = {
                                                         config.LVIRAL_DATE, config.LVIRAL_VERSION, config.LVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE, config.EXPORTDIR),
     "ebola-virus-seq": lambda: viralseq.clean_ebola_viral_seq(config.EXPORTDIR, config.EVIRAL_ALIGNEDFILE, config.EVIRAL_FILE_UNCURATED,
-                                                        config.EVIRAL_MDFILE, config.ALIGNMENTS, 
+                                                        config.EVIRAL_MDFILE, config.ALIGNMENTS,
                                                         config.EXPTCOLS, config.PATIENTCOLS, config.SAMPLECOLS, config.DOWNLOADCOLS,
                                                         config.EVIRAL_DATE, config.EVIRAL_VERSION, config.EVIRAL_UPDATEDBY,
                                                         config.SAVEINIVIDUAL, config.VERBOSE)
