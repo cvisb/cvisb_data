@@ -1,4 +1,10 @@
 # Prod
+### 2026-01-06
+* Updated Ebola virus sequencing data (dataset, downloads, experiments)
+* Updated Lassa virus sequencing data (dataset, downloads, experiments)
+* Reloaded all dataset objects (accidental delete)
+* Sync'd public <-> private
+
 ### 2021-12-15
 * Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
 * Updated npm to 8.3.0: `sudo npm install -g npm@latest`
