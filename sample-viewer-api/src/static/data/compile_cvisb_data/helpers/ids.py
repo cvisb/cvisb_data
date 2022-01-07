@@ -261,7 +261,7 @@ def getPrivateContactGroup(id):
         return(c3[2])
 
 def checkPrivateID(id):
-    s3 = re.search("(S\-)(\d\d\d)", id)
+    s3 = re.search("^(S\-)(\d\d\d)$", id)
     if(s3):
         return(True)
     g4 = re.search("(G\-)(\d\d\d\d)", id)

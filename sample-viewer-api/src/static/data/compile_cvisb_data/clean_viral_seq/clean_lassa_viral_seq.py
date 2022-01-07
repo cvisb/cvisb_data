@@ -187,7 +187,7 @@ def clean_lassa_viral_seq(export_dir, alignment_file_L, alignment_file_S, alignm
     # Remove redundant patient data
     # first: remove the data points that Raph has designated as being duplicate.
     original = len(new_patients)
-    new_patients = new_patients[~new_patients.duplicate]
+    new_patients = new_patients[new_patients.duplicate == 0]
     helpers.log_msg(f"{original - len(new_patients)} removed because they're duplicate sequences.", verbose)
     dupe_patients2 = new_patients[new_patients.duplicated(subset = patientDupeCols, keep=False)]
     if(len(dupe_patients2) > 0):
