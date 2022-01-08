@@ -144,6 +144,9 @@ export class DataUploadComponent implements OnDestroy {
             break;
         }
 
+        console.log(`Uploaded file`)
+        console.log(file)
+
         this.apiSvc.prepUpload(this.endpoint, uniqueID, this.data2upload).subscribe(dupes => {
           this.uploadResponse = "Review the new and replacement IDs and then upload";
           dupes.sort((a, b) => a < b ? -1 : 1);
