@@ -27,19 +27,19 @@ ALIGNMENTS = [
      "filename": "LASV_NP-GP_2020.11.23.fasta",
      "description": "Lassa virus NP-GP curated alignment",
      "curated": True,
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP_GPC_2020.11.23.fasta"},
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_NP_GPC_2021.11.24.fasta"},
     {"virus": "Lassa",
      "segment": "L",
      "filename": "LASV_L_Z_2020.11.23.fasta",
      "description": "Lassa virus L-Z curated alignment",
      "curated": True,
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2020.11.23.fasta"},
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/lassa/LASV_L_Z_2021.11.24.fasta"},
     {"virus": "Ebola",
      "segment": None,
      "filename": "EBOV_ORFs_2020.08.04.fasta",
      "curated": True,
      "description": "Ebola virus curated alignment",
-     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2020.08.04.fasta"}
+     "url": "https://raw.githubusercontent.com/cvisb/curated-alignments/master/ebola/EBOV_ORFs_2021.11.24.fasta"}
 ]
 # LVIRAL_AAFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_curated_aln_2019.09.11_duplicates_public.translated.fasta"
 LVIRAL_SFILE = f"{DATADIR}/input_data/expt_summary_data/viral_seq/LASV_NP_GPC_2021.11.25.fasta"
