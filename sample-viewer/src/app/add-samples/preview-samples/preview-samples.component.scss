@@ -1,9 +1,10 @@
+@use '@angular/material' as mat;
 @import "../../../sass/material-theme.scss";
 @import "../../../sass/variables.scss";
-@include mat-sort-theme($candy-app-theme);
-@include mat-table-theme($candy-app-theme);
-@include mat-expansion-panel-theme($candy-app-theme);
-@include mat-paginator-theme($candy-app-theme);
+@include mat.sort-theme($candy-app-theme);
+@include mat.table-theme($candy-app-theme);
+@include mat.expansion-theme($candy-app-theme);
+@include mat.paginator-theme($candy-app-theme);
 
 
 .mat-column-missing {

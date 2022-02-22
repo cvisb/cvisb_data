@@ -144,6 +144,8 @@ export class DataUploadComponent implements OnDestroy {
             break;
         }
 
+        console.log(`Uploaded file: ${file.name}`)
+
         this.apiSvc.prepUpload(this.endpoint, uniqueID, this.data2upload).subscribe(dupes => {
           this.uploadResponse = "Review the new and replacement IDs and then upload";
           dupes.sort((a, b) => a < b ? -1 : 1);
@@ -174,11 +176,11 @@ export class DataUploadComponent implements OnDestroy {
 
   uploadData() {
     this.uploading = true;
-    console.log(this.data2upload);
+    // console.log(this.data2upload);
     this.uploadResponse = "Sending data to the database.  Be patient! This can take a few minutes";
     this.apiSvc.putPiecewise(this.endpoint, this.data2upload, this.uploadSize).subscribe(
       responses => {
-        console.log(responses)
+        // console.log(responses)
 
         let result = this.apiSvc.tidyPutResponse(responses, this.dataLength, this.endpoint + "s");
 

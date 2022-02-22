@@ -14,7 +14,7 @@ import { MergeService } from './merge.service';
 import { ApiService } from './api.service';
 
 import { nest, sum } from 'd3';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'

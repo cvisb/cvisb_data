@@ -13,8 +13,6 @@ import { environment } from '../../environments/environment';
 
 import { faDna, faTable, faUsers } from '@fortawesome/free-solid-svg-icons';
 
-import * as d3 from 'd3';
-
 import { ApiService, GetDatacatalogService, GetExperimentsService } from '../_services';
 import { Observable } from 'rxjs';
 
@@ -55,8 +53,6 @@ export class HomeComponent implements OnInit {
 
   getSummaryCounts() {
     let patientParams = new HttpParams().set("q", "__all__");
-    let transitionSync = d3.transition().duration(5000);
-
 
     return forkJoin(this.apiSvc.get("patient", patientParams, 0), this.apiSvc.get("sample", patientParams, 0), this.exptSvc.getExptCounts())
       .pipe(
@@ -64,47 +60,12 @@ export class HomeComponent implements OnInit {
           // patients
           this.patientCount = patients['total'].toLocaleString();
 
-          let patientDiv = d3.selectAll("#patient").selectAll(".count-value");
-
-          patientDiv.transition(transitionSync)
-            // .duration(transitionTime)
-            .tween("text", function(_) {
-              let countMax = this['textContent'];
-              var i = <any>d3.interpolate(0, countMax);
-              return function(t) {
-                d3.select(this).text(Math.round(i(t)));
-              };
-            });
-
           // Samples
           this.sampleCount = samples['total'].toLocaleString();
 
-          let sampleDiv = d3.select("#sample").selectAll(".count-value");
-
-          sampleDiv.transition(transitionSync)
-            // .duration(transitionTime * (925/5039))
-            .tween("text", function(_) {
-              let countMax = this['textContent'];
-              var i = <any>d3.interpolate(0, countMax);
-              return function(t) {
-                d3.select(this).text(Math.round(i(t)));
-              };
-            });
           // experiments
           this.experimentCount = expts;
-
-
-          let dataDiv = d3.selectAll("#dataset").selectAll(".count-value");
-
-          dataDiv.transition(transitionSync)
-            // .duration(transitionTime * (312/5039))
-            .tween("text", function(_) {
-              let countMax = this['textContent'];
-              var i = <any>d3.interpolate(0, countMax);
-              return function(t) {
-                d3.select(this).text(Math.round(i(t)));
-              };
-            });
+          expts.sort((a,b) => b.count - a.count)
         })
       );
   }

@@ -6,6 +6,11 @@
 
     {{ title }}
   </div>
+  <div id="download" v-if="data && data.length">
+    <button mat-button mat-primary (click)="downloadData()">
+      <mat-icon aria-label="download" matTooltip="Download data">file_download</mat-icon>
+    </button>
+  </div>
 
   <div class="container container-icons">
     <i class="fas fa-lock private-icon header-icon" matTooltip="includes private data; do not share" *ngIf="private"></i>

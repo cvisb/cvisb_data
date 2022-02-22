@@ -1,4 +1,5 @@
 // Custom color specifications
+@use '@angular/material' as mat;
 @import './sass/variables.scss'; // custom variables, usually colors
 // @import 'sass/variables'; // custom variables, usually colors
 @import './sass/material-theme.scss'; // @import 'custom_colors';
@@ -9,21 +10,21 @@
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat-core-theme($candy-app-theme);
-@include mat-progress-spinner-theme($candy-app-theme);
+@include mat.core-theme($candy-app-theme);
+@include mat.progress-spinner-theme($candy-app-theme);
 // not super universal, but if they're not included in the styles and added component-wide, they seem to be overriden by Chrome stylings.
-// seems to be the places where /deep/ styling is needed.
-@include mat-tooltip-theme($candy-app-theme);
-@include mat-button-theme($candy-app-theme);
-@include mat-select-theme($candy-app-theme);
-@include mat-form-field-theme($candy-app-theme);
-@include mat-checkbox-theme(mat-light-theme(mat-palette($mat-grey), $candy-app-primary, $candy-app-warn));
-@include mat-snack-bar-theme($candy-app-theme);
-@include mat-stepper-theme($candy-app-theme);
-@include mat-radio-theme($candy-app-theme);
-@include mat-dialog-theme($candy-app-theme);
-@include mat-progress-bar-theme($candy-app-theme);
-@include mat-autocomplete-theme($candy-app-theme);
+// seems to be the places where ::ng-deep styling is needed.
+@include mat.tooltip-theme($candy-app-theme);
+@include mat.button-theme($candy-app-theme);
+@include mat.select-theme($candy-app-theme);
+@include mat.form-field-theme($candy-app-theme);
+@include mat.checkbox-theme(mat.define-light-theme(mat.define-palette(mat.$grey-palette), $candy-app-primary, $candy-app-warn));
+@include mat.snack-bar-theme($candy-app-theme);
+@include mat.stepper-theme($candy-app-theme);
+@include mat.radio-theme($candy-app-theme);
+@include mat.dialog-theme($candy-app-theme);
+@include mat.progress-bar-theme($candy-app-theme);
+@include mat.autocomplete-theme($candy-app-theme);
 
 body {
   font-family: $font-default;

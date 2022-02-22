@@ -1,5 +1,6 @@
+@use '@angular/material' as mat;
 @import "../../../sass/material-theme.scss";
-@include mat-chips-theme($candy-app-theme);
+@include mat.chips-theme($candy-app-theme);
 
 .patient-id-filter {
   width: 250px;

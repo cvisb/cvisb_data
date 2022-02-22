@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { DatasetSummaryModule } from '../dataset-summary/dataset-summary.module';
 import { AdminModule } from '../admin/admin.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // --- components ---
 import { DatasetComponent } from './dataset.component'
@@ -19,6 +20,7 @@ import { getDatasetsService } from '../_services';
 @NgModule({
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
     DatasetRoutingModule,
     RouterModule,
     SvgIconModule,

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // --- Modules ---
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 import { SvgIconModule } from '../svg-icon/svg-icon.module';
 import { FormatCitationModule } from '../format-citation/format-citation.module';
 
@@ -15,6 +16,7 @@ import { ProvenanceTitleComponent } from './provenance-title/provenance-title.co
   imports: [
     CommonModule,
     MatButtonModule,
+    MatIconModule,
     MatTooltipModule,
     FormatCitationModule,
     SvgIconModule

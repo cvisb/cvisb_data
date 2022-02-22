@@ -1,4 +1,47 @@
 # Prod
+### 2026-01-06
+* Updated Ebola virus sequencing data (dataset, downloads, experiments)
+* Updated Lassa virus sequencing data (dataset, downloads, experiments)
+* Reloaded all dataset objects (accidental delete)
+* Sync'd public <-> private
+
+### 2021-12-15
+* Upgraded to Angular 12.2.14 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`. Ran `npm audit fix`
+* Updated npm to 8.3.0: `sudo npm install -g npm@latest`
+* Upgraded node to higher version (14.15.4; latest had dependency issues.): `sudo n 14.15.4`
+* `npm cache verify` to clean the cache.
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` to clear security audits.
+Final specs for local, dev, prod:
+```
+Angular CLI: 13.1.1
+Node: 14.15.4
+Package Manager: npm 6.14.10
+OS: linux x64
+
+Angular: 13.1.0
+... animations, cdk, common, compiler, compiler-cli, core, forms
+... language-service, material, platform-browser
+... platform-browser-dynamic, platform-server, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1301.1
+@angular-devkit/build-angular   13.1.1
+@angular-devkit/core            13.1.1
+@angular-devkit/schematics      13.1.1
+@angular/cli                    13.1.1
+@angular/flex-layout            8.0.0-beta.27
+@nguniversal/builders           13.0.1
+@nguniversal/common             13.0.1
+@nguniversal/express-engine     13.0.1
+@schematics/angular             8.3.29
+rxjs                            6.5.5
+typescript                      4.5.4
+```
+
+### 2021-12-14
+* Upgraded to Angular 11.2.15 via local --> dev --> package.json update, wipe of `node_modules` and `npm install`
+
 ### 2021-11-24
 * Pulled dev branch
 * `sudo n 12.22.7` --> update Node to node-v12.22.7
@@ -209,6 +252,15 @@ vim  ~/cvisb/pyenv/lib/python3.5/site-packages/biothings/web/api/es/query.py
 - all indices wiped and recreated
 
 # Dev
+### 2021-12-15
+* Updated npm to 8.3.0: `sudo npm install -g npm@latest`
+* Upgraded to Angular 13.1.1 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix` sequentially to clear security audits.
+* Upgraded node to higher version (14.15.4; latest had dependency issues.): `sudo n 14.15.4`
+
+### 2021-12-14
+* Upgraded to Angular 12.2.14 via local --> package.json update, wipe of `node_modules` and `npm install`. Also ran `npm audit fix`
+* Upgraded to Angular 11.2.15 via local --> package.json update, wipe of `node_modules` and `npm install`
+
 ### 2021-11-23
 * rebuilt schemas.
 
@@ -299,6 +351,28 @@ After syncing dev/local versions, did a final removal of package-lock.json and n
 - auth list updated
 
 # Local
+### 2021-12-15: Upgrade Angular 12.2.14 to Angular 13.1.1
+`npx @angular/cli@13 update @angular/core@13 @angular/cli@13 --force`
+`npx @angular/cli@13 update @angular/material@13 --force `
+`ng update @nguniversal/common@10 --force`
+`ng update @nguniversal/common@11 --force`
+`ng update @nguniversal/common@12 --force`
+`ng update @nguniversal/common@13 --force`
+`npm audit fix`
+
+### 2021-12-14: Upgrade Angular 11.2.15 to Angular 12.2.14
+`npx @angular/cli@12 update @angular/core@12 @angular/cli@12 --force`
+`npx @angular/cli@12 update @angular/material@12 --force `
+`ng update` --> `npm install` --> `ng update`
+`npm audit fix`
+* fixed error in choropleth.component.ts: file import
+* fixed typescript error in MyHttpClient extension
+
+### 2021-12-14: Upgrade Angular 10.2.3 to Angular 11.2.15
+`npx @angular/cli@11 update @angular/core@11 @angular/cli@11 --force`
+`npx @angular/cli@11 update @angular/material@11 --force`
+`ng update` --> `npm install` --> `ng update`
+
 
 2020-02-13+
 - Upgraded to Angular 9, updated all packages.
