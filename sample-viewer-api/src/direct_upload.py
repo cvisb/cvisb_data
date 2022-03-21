@@ -97,34 +97,6 @@ def upload(ret, entity=None, _id=None, dry_run=True):
 def uploader(folder):
     reg = re.compile(r"([a-z]*)s\d*\.json")
     data = [f for f in listdir(folder) if isfile(join(folder, f))]
-    for f in data:
-        print(f)
-        index =  reg.search(f).group(1)
-        if 'dataset' in index:
-            ds, dsi = f, index
-            continue
-        with open(join(folder, f), 'r') as data_file:
-            full_file_data = [json.loads(line) for line in data_file]
-            if 'patient' in index:
-                for f in full_file_data:
-                    if f.get('country') == '':
-                        del f['country']
-            try:
-                upload(full_file_data, index)#, dry_run=False)
-            except Exception:
-                print(line)
-                print(join(folder, f))
-                raise
-
-    
-    # do dataset last
-    with open(join(folder, ds), 'r') as data_file:
-        data_segment = json.load(data_file)
-    upload(data_segment, dsi, dry_run=False)
-
-def categorical_uploader(folder):
-    reg = re.compile(r"([a-z]*)s\d*\.json")
-    data = [f for f in listdir(folder) if isfile(join(folder, f))]
     to_upload = defaultdict(list)
     for f in data:
         print(f)
@@ -150,19 +122,7 @@ def categorical_uploader(folder):
                 raise
         
     return
-    #for index, full_data in to_upload.enumerate()
-    #if 'patient' in index:
-    #    for f in full_file_data:
-    #        if f.get('country') == '':
-    #            del f['country']
-    #try:
-    #    upload(full_file_data, index)#, dry_run=False)
 
-    #
-    ## do dataset last
-    #with open(join(folder, ds), 'r') as data_file:
-    #    data_segment = json.load(data_file)
-    #upload(data_segment, dsi, dry_run=False)
 def deleter():
     queries = {
         'experiment':   'includedInDataset:sarscov2-virus-seq',
@@ -189,4 +149,4 @@ def deleter():
         
 if __name__ == '__main__':
     #deleter()
-    categorical_uploader('/home/ubuntu/sarscov2_output/sarscov2_output_2022_1')
+    uploader('/home/ubuntu/sarscov2_output/sarscov2_output_2022_1')
