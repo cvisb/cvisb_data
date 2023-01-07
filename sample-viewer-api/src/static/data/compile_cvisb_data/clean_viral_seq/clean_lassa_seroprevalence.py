@@ -127,7 +127,7 @@ for index, row in df.iterrows():
     experiments.append(experiment)
     patients.append(patient)
 
-def save(name, data, segmented=False):
+def save(name, data, segmented=False, segment_size=200):
     """
     Saves name, data in batches of 200 e.g., 'patients0.json, patients200.json'
     """
@@ -138,7 +138,7 @@ def save(name, data, segmented=False):
     if segmented:
         i = 0
         while i < len(data):
-            j = i + 20
+            j = i + segment_size
             if j > len(data):
                 j = len(data)
 
@@ -146,10 +146,8 @@ def save(name, data, segmented=False):
             with open(file_path, 'w') as output_file:
                 json.dump(data[i:j], output_file)
 
-            return # remove
             i = j
     else:
-        # usual case, just save like normal
         file_path = path.join(output_path, f'{name}.json')
         with open(file_path, 'w') as output_file:
             json.dump(data, output_file)
