@@ -115,6 +115,7 @@
                            - Reverse Transcriptase-Polymerase Chain Reaction
                            - Blood Cell Count
                            - ELISA
+                           - Household surveys; Household assessments; dried blood spot (DBS) collection
                            - Clinical Observation
   authenticated:         false
 
@@ -169,6 +170,7 @@
                            - acute symptoms
                            - sequelae
                            - coma score
+                           - Household measurements in relation to presence of LASV IgG antibodies
 
 # URL
 - "@id":                 cvisb:url
@@ -218,6 +220,7 @@
                            - hla
                            - metagenome-seq
                            - ebola-virus-seq
+                           - lassa-household-measurements
                            - lassa-virus-seq
                            - sarscov2-virus-seq
                            - bcr

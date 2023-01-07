@@ -265,6 +265,7 @@
                            - acute symptoms
                            - sequelae
                            - coma score
+                           - Household measurements in relation to presence of LASV IgG antibodies
 
 - "@id":                 cvisb:measurementTechnique
   "@type":               rdf:Property
@@ -331,6 +332,7 @@
   schema:Enumeration:
                            - hla
                            - metagenome-seq
+                           - lassa-household-measurements
                            - ebola-virus-seq
                            - lassa-virus-seq
                            - sarscov2-virus-seq
@@ -510,6 +512,7 @@
     - "@id":             cvisb:OxygenSaturation
     - "@id":             cvisb:SystolicPressure
     - "@id":             cvisb:DiastolicPressure
+    - "@id":             cvisb:SurveyData
     - "@id":             cvisb:RespiratoryRate
     - "@id":             cvisb:RDT
     - "@id":             cvisb:RTPCR

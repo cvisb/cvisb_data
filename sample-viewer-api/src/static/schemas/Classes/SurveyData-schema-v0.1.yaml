@@ -1,0 +1,344 @@
+# Forked from https://github.com/data2health/schemas/blob/master/Dataset/Dataset.yaml
+# Cross-referencing where applicable:
+# Verified structure using:
+#
+
+---
+# "@context":
+#   dct:                 "http://purl.org/dc/terms/"
+#   owl:                 "http://www.w3.org/2002/07/owl#"
+#   rdf:                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+#   rdfa:                "http://www.w3.org/ns/rdfa#"
+#   rdfs:                "http://www.w3.org/2000/01/rdf-schema#"
+#   schema:              "http://schema.org/"
+#   xsd:                 "http://www.w3.org/2001/XMLSchema#"
+#
+#   # bsc:               "http://bioschemas.org/"
+#   # bts:               "http://schema.biothings.io/"
+#   cvisb:               "https://data.cvisb.org/jsonschema/"
+#
+# "@id":                 "https://data.cvisb.org/jsonschema/SurveyData/0.1"
+#
+# "@graph":
+
+- "@id":                 cvisb:SurveyData
+  "@type":               rdfs:Class
+  rdfs:comment:          A schema describing an SurveyData in the Center for Viral Systems Biology. Contains information on living arrangements.
+  rdfs:label:            SurveyData
+  rdfs:subClassOf:
+    "@id":               schema:Thing
+  schema:isPartOf:
+    "@id":               https://data.cvisb.org/schema
+  root_entity:           true
+
+- "@id":                 cvisb:occupation
+  "@type":               rdf:Property
+  rdfs:comment:          Occupational Category of participant (only analyzed on participant's over 15 years old)
+  rdfs:label:            occupation
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Farming
+                           - Domestic
+                           - Trade
+                           - Education
+                           - Other
+                           - Mining
+                           - Healthcare
+                           - Transportation
+                           - Baby
+                           - Child
+
+- "@id":                 cvisb:waterType
+  "@type":               rdf:Property
+  rdfs:comment:          Type of water source used.
+  rdfs:label:            waterType
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Hand pump well
+                           - Tap
+                           - Stream
+                           - Open well
+                           - Other
+
+- "@id":                 cvisb:roofMaterial
+  "@type":               rdf:Property
+  rdfs:comment:          Type of roofing material used.
+  rdfs:label:            roofMaterial
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Thatched
+                           - Corrugated
+
+- "@id":                 cvisb:floorMaterial
+  "@type":               rdf:Property
+  rdfs:comment:          Type of floor materials.
+  rdfs:label:            floorMaterial
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Mud only
+                           - Mud with cement
+                           - Cement without tile
+                           - Cement with tile
+                           - Other
+
+
+
+- "@id":                 cvisb:floorMaterial
+  "@type":               rdf:Property
+  rdfs:comment:          Type of floor materials.
+  rdfs:label:            floorMaterial
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Mud only
+                           - Mud with cement
+                           - Cement without tile
+                           - Cement with tile
+                           - Other
+
+- "@id":                 cvisb:toiletCondition
+  "@type":               rdf:Property
+  rdfs:comment:          Fieldworker assessment of toilet facility's condition
+  rdfs:label:            wallMaterial
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - Very Poor
+                           - Poor
+                           - Fair
+                           - Good
+                           - Very Good
+                           - Other
+
+- "@id":                 cvisb:waterstoreCovered
+  "@type":               rdf:Property
+  rdfs:comment:          Is the water stored for use by household covered?
+  rdfs:label:            waterstoreCovered
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:bushesDistance
+  "@type":               rdf:Property
+  rdfs:comment:          Distance of household to bushes/wild land
+  rdfs:label:            bushesDistance
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - A<5m
+                           - B5-20m
+                           - C>20m
+
+- "@id":                 cvisb:veggieDistance
+  "@type":               rdf:Property
+  rdfs:comment:          Distance of household to cultivated land or vegetable gardens
+  rdfs:label:            veggieDistance
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - A<5m
+                           - B5-20m
+                           - C>20m
+
+- "@id":                 cvisb:refuseDistance
+  "@type":               rdf:Property
+  rdfs:comment:          Distance of household to refuse/trash/garbage pits
+  rdfs:label:            refuseDistance
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - A<5m
+                           - B5-20m
+                           - C>20m
+
+- "@id":                 cvisb:toiletDistance
+  "@type":               rdf:Property
+  rdfs:comment:          Distance of household to most commonly used toilet facility
+  rdfs:label:            toiletDistance
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - A<5m
+                           - B5-20m
+                           - C>20m
+
+- "@id":                 cvisb:waterDistance
+  "@type":               rdf:Property
+  rdfs:comment:          Distance of household to most commonly used water source
+  rdfs:label:            waterDistance
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             xsd:string
+    - "@id":             schema:Text
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+  schema:Enumeration:
+                           - A<5m
+                           - B5-20m
+                           - C>20m
+
+- "@id":                 cvisb:cement
+  "@type":               rdf:Property
+  rdfs:comment:          Cement including in building materials of house?
+  rdfs:label:            cement
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:waterInRoom
+  "@type":               rdf:Property
+  rdfs:comment:          Water stored in participant's sleeping space?
+  rdfs:label:            foodInRoom
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:rodentFecesInRoom
+  "@type":               rdf:Property
+  rdfs:comment:          Rodent feces observed in participant's sleeping space?
+  rdfs:label:            rodentFecesInRoom
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:rodentFecesInHouse
+  "@type":               rdf:Property
+  rdfs:comment:          Rodent feces observed indoors?
+  rdfs:label:            rodentFecesInHouse
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:foodInRoom
+  "@type":               rdf:Property
+  rdfs:comment:          Food stored in participant's sleeping space?
+  rdfs:label:            foodInRoom
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:waterInHouse
+  "@type":               rdf:Property
+  rdfs:comment:          Water stored indoors?
+  rdfs:label:            waterInHouse
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:foodInHouse
+  "@type":               rdf:Property
+  rdfs:comment:          Food stored indoors?
+  rdfs:label:            foodInHouse
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
+
+- "@id":                 cvisb:rodentHoles
+  "@type":               rdf:Property
+  rdfs:comment:          Rodent holes observed on exterior of home?
+  rdfs:label:            rodentHoles
+  schema:domainIncludes:
+    - "@id":             cvisb:SurveyData
+  schema:rangeIncludes:
+    - "@id":             schema:Boolean
+  owl:cardinality:       one
+  marginality:           recommended
+  authenticated:         false
