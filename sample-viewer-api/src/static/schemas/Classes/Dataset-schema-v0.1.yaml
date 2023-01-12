@@ -115,7 +115,9 @@
                            - Reverse Transcriptase-Polymerase Chain Reaction
                            - Blood Cell Count
                            - ELISA
-                           - Household surveys; Household assessments; dried blood spot (DBS) collection
+                           - Household surveys
+                           - Household assessments
+                           - dried blood spot (DBS) collection
                            - Clinical Observation
   authenticated:         false
 
