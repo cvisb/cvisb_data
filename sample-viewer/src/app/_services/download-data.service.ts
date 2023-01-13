@@ -162,7 +162,9 @@ export class DownloadDataService {
       document.body.appendChild(hiddenElement);
       hiddenElement.click();
 
-      this.dialogRef.close();
+      if(this.dialogRef) {
+        this.dialogRef.close();
+      }
     }
   }
 
