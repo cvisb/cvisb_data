@@ -1,0 +1,40 @@
+@import '../../sass/material-theme';
+
+.dataset-description {
+  font-size: 1.5em;
+}
+.dataset-description-sm {
+  font-size: 1em;
+}
+
+button {
+  text-transform: uppercase;
+  font-weight: 300;
+  background: primary(700);
+  color: white;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid primary(900);
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+  &:hover {
+    background: primary(900);
+  }
+}
