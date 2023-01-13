@@ -42,6 +42,7 @@ const appRoutes: Routes = [
   { path: 'dataset/lassa-viral-seq', pathMatch: 'full', redirectTo: "/dataset/lassa-virus-seq" },
   { path: 'dataset/ebola-viral-seq', pathMatch: 'full', redirectTo: "/dataset/ebola-virus-seq" },
   { path: 'dataset/sarscov2-viral-seq', pathMatch: 'full', redirectTo: "/dataset/sarscov2-virus-seq" },
+  { path: 'dataset/lassa-epi-2023', loadChildren: () => import('./peer-dataset/peer-dataset.module').then(m => m.PeerDatasetModule), pathMatch: 'full', data: { title: 'PEER Data' } },
   { path: 'dataset/CViSB-SystemsSerology.csv', loadChildren: () => import('./download-data/download-data.module').then(m => m.DownloadDataModule), pathMatch: 'full', data: { title: 'Data | CViSB', dsid: "systems-serology" } },
   { path: 'dataset/:dsid', loadChildren: () => import('./dataset-page-generic/dataset-page-generic.module').then(m => m.DatasetPageGenericModule), pathMatch: 'full' },
   { path: 'dataset', loadChildren: () => import('./dataset/dataset.module').then(m => m.DatasetModule), pathMatch: 'full', data: { title: 'Data | CViSB' } },
