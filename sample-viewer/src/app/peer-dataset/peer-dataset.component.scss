@@ -1,5 +1,12 @@
 @import '../../sass/material-theme';
 
+.dataset-description {
+  font-size: 1.5em;
+}
+.dataset-description-sm {
+  font-size: 1em;
+}
+
 button {
   text-transform: uppercase;
   font-weight: 300;

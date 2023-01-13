@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class PeerDatasetComponent implements OnInit {
   data: Object[];
+  dateModified: String = "22 November 2022";
   dict: Object[];
 
   constructor(private httpClient: HttpClient,
