@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 
 import { DownloadDataService } from "../_services/download-data.service";
 
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-peer-dataset',
   templateUrl: './peer-dataset.component.html',
@@ -21,7 +23,6 @@ export class PeerDatasetComponent implements OnInit {
     })
 
     this.httpClient.get("assets/data/2023_PEER_HealthData_Public_dict.json").subscribe((data: any) => {
-      console.log(data)
       this.dict = data;
     })
   }
